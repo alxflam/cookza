@@ -1,0 +1,211 @@
+{
+    "app": {
+        "title": "Cookly"
+    },
+    "functions": {
+        "addRecipe": "Add Recipe",
+        "listRecipes": "List Recipes",
+        "shoppingList": "Shopping List",
+        "mealPlanner": "Meal Planner"
+    },
+    "recipe": {
+        "createRecipe": "Create Recipe",
+        "editRecipe": "Edit Recipe",
+        "recipeName": "Recipe Name",
+        "recipeDesc": "Recipe Description",
+        "duration": "Duration",
+        "min": "min",
+        "difficulty": {
+            "easy": "easy",
+            "medium": "medium",
+            "hard": "hard"
+        },
+        "tags": {
+            "vegan": "Vegan",
+            "vegetarian": "Vegetarian",
+            "meat": "Meat",
+            "fish": "Fish"
+        },
+        "servings": "Servings",
+        "ingredientsForServings": "Ingredients for {0} Servings",
+        "amount": "Amount",
+        "Scale": "Scale",
+        "Ingredient": "Ingredient"
+    },
+    "ui": {
+        "addRow": "Add Row",
+        "addImageLong": "Add an image from the gallery or take a picture",
+        "recipe": {
+            "1": "Recipe",
+            "else": "Recipes"
+        },
+        "result": {
+            "1": "Result",
+            "else": "Results"
+        },
+        "settings": "Settings",
+        "share": "Share",
+        "edit": "Edit",
+        "delete": "Delete",
+        "cancel": "Cancel",
+        "confirmDelete": "Do you really want to delete {0}?",
+        "export": "Export",
+        "import": "Import",
+        "selectRecipes": "Select Recipes"
+    },
+    "onboarding": {},
+    "unitOfMeasure": {
+        "MMT": {
+            "1": "mm",
+            "else": "mm"
+        },
+        "CMT": {
+            "1": "cm",
+            "else": "cm"
+        },
+        "MTR": {
+            "1": "m",
+            "else": "m"
+        },
+        "GRM": {
+            "1": "g",
+            "else": "g"
+        },
+        "KGM": {
+            "1": "kg",
+            "else": "kg"
+        },
+        "MLT": {
+            "1": "ml",
+            "else": "ml"
+        },
+        "CLT": {
+            "1": "cl",
+            "else": "cl"
+        },
+        "DLT": {
+            "1": "dl",
+            "else": "dl"
+        },
+        "LTR": {
+            "1": "l",
+            "else": "l"
+        },
+        "H87": {
+            "1": "piece",
+            "else": "pieces"
+        },
+        "G21": {
+            "1": "cup",
+            "else": "cups"
+        },
+        "G24": {
+            "1": "tablespoon",
+            "else": "tablespoons"
+        },
+        "G25": {
+            "1": "teaspoon",
+            "else": "teaspoons"
+        },
+        "BG": {
+            "1": "bag",
+            "else": "bags"
+        },
+        "LEF": {
+            "1": "leaf",
+            "else": "leafs"
+        },
+        "X2": {
+            "1": "bunch",
+            "else": "bunches"
+        },
+        "X4": {
+            "1": "drop",
+            "else": "drops"
+        },
+        "CA": {
+            "1": "can",
+            "else": "cans"
+        },
+        "BO": {
+            "1": "bottle",
+            "else": "bottles"
+        },
+        "STC": {
+            "1": "stick",
+            "else": "sticks"
+        },
+        "PR": {
+            "1": "pair",
+            "else": "pair"
+        },
+        "PA": {
+            "1": "packet",
+            "else": "packets"
+        },
+        "PTN": {
+            "1": "portion",
+            "else": "portions"
+        },
+        "BR": {
+            "1": "bar",
+            "else": "bars"
+        },
+        "RO": {
+            "1": "roll",
+            "else": "rolls"
+        },
+        "14": {
+            "1": "shot",
+            "else": "shots"
+        },
+        "SR": {
+            "1": "strip",
+            "else": "strips"
+        },
+        "TU": {
+            "1": "tube",
+            "else": "tube"
+        },
+        "SLI": {
+            "1": "slice",
+            "else": "slices"
+        },
+        "GLA": {
+            "1": "glass",
+            "else": "glasses"
+        },
+        "HAN": {
+            "1": "handful",
+            "else": "handful"
+        },
+        "PIN": {
+            "1": "pinch",
+            "else": "pinches"
+        },
+        "BOW": {
+            "1": "bowl",
+            "else": "bowls"
+        },
+        "STE": {
+            "1": "stem",
+            "else": "stems"
+        },
+        "CUB": {
+            "1": "cube",
+            "else": "cubes"
+        },
+        "CLO": {
+            "1": "clove",
+            "else": "cloves"
+        },
+        "ROT": {
+            "1": "root",
+            "else": "roots"
+        },
+        "TWG": {
+            "1": "twig",
+            "else": "twigs"
+        }
+    }
+}

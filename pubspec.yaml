@@ -1,0 +1,47 @@
+name: cookly
+description: A new Flutter project.
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  provider: ^4.0.5
+  font_awesome_flutter: ^8.8.1
+  flutter_rating_bar: ^3.0.1+1
+  image_picker: ^0.6.5
+  share: ^0.6.4
+  firebase_ml_vision: ^0.9.3+8
+  http: ^0.12.0+4
+  path: ^1.6.4
+  path_provider: ^1.6.7
+  json_annotation: ^3.0.1
+  introduction_screen: ^1.0.8
+  dots_indicator: ^1.1.0
+  get_it: ^4.0.1
+  flutter_translate: ^1.6.0
+  flutter_translate_annotations: ^1.0.1
+  file_picker: ^1.8.0+1
+  share_extend: ^1.1.5
+  
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  build_runner: ^1.8.1
+  json_serializable: ^3.3.0
+  flutter_translate_gen: ^1.2.4
+
+flutter:
+
+  uses-material-design: true
+
+  assets:
+    - assets/i18n/
+
