@@ -11,11 +11,11 @@ void main() {
 
       sl.registerSingleton<IdGenerator>(UniqueKeyIdGenerator());
 
-      var url = 'http://api.chefkoch.de/v2/recipes/922651197624364';
+      var id = '922651197624364';
 
       var cut = Chefkoch();
 
-      var result = await cut.getRecipe(url);
+      var result = await cut.getRecipe(id);
 
       expect(result.name, 'Philadelphia-Hähnchen');
       expect(result.rating, 4);
