@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cookly/model/json/ingredient.dart';
 import 'package:cookly/model/json/ingredient_note.dart';
 import 'package:cookly/model/json/recipe.dart';
 import 'package:cookly/services/service_locator.dart';
@@ -31,8 +32,7 @@ class Chefkoch {
     recipe.servings = (json['servings']);
     recipe.duration = (json['totalTime']);
 
-    List<String> instructions =
-        LineSplitter.split(json['instructions'].toString());
+    var instructions = LineSplitter.split(json['instructions']);
 
     instructions.forEach((element) => recipe.instructions.add(element));
 
@@ -45,7 +45,7 @@ class Chefkoch {
         recipe.ingredients.add(IngredientNote(
             amount: ingredient['amount'],
             unitOfMeasure: targetUom != null ? targetUom.id : '',
-            ingredient: ingredient['name']));
+            ingredient: Ingredient(name: ingredient['name'])));
       }
     }
 

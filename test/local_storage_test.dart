@@ -5,9 +5,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  TestWidgetsFlutterBinding.ensureInitialized();
-
   setUpAll(() async {
+    TestWidgetsFlutterBinding.ensureInitialized();
+
     // Create a temporary directory.
     final directory = await Directory.systemTemp.createTemp();
 
@@ -27,14 +27,14 @@ void main() {
 
       return null;
     });
+  });
 
-    test('Deserializing Json Profile', () async {
-      var cut = LocalStorageProvider();
+  test('Deserializing Json Profile', () async {
+    var cut = LocalStorageProvider();
 
-      bool exists = await cut.profileFileExists();
-      expect(exists, false);
+    bool exists = await cut.profileFileExists();
+    expect(exists, false);
 
-      expect(1, 1);
-    });
+    expect(1, 1);
   });
 }
