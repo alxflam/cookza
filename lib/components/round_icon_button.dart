@@ -10,9 +10,12 @@ class RoundIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Ink(
-      decoration: ShapeDecoration(
-        shape: RoundedRectangleBorder(),
-      ),
+      // decoration: ShapeDecoration(
+      //   shape: RoundedRectangleBorder(
+      //     borderRadius: BorderRadius.circular(50),
+      //   ),
+      //   color: Colors.grey,
+      // ),
       child: IconButton(
         icon: FaIcon(
           this.icon,

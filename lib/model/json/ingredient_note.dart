@@ -18,6 +18,12 @@ class IngredientNote {
 
   IngredientNote({this.ingredient, this.unitOfMeasure, this.amount});
 
+  IngredientNote.create() {
+    this.ingredient = Ingredient(name: '');
+    this.amount = 0;
+    this.unitOfMeasure = '';
+  }
+
   factory IngredientNote.fromJson(Map<String, dynamic> json) =>
       _$IngredientNoteFromJson(json);
 

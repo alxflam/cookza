@@ -1,31 +1,15 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:cookly/components/main_app_drawer.dart';
 import 'package:cookly/constants.dart';
 import 'package:cookly/localization/keys.dart';
-import 'package:cookly/model/json/profile.dart';
-import 'package:cookly/model/json/recipe.dart';
-import 'package:cookly/model/recipe_edit_model.dart';
-import 'package:cookly/model/recipe_selection_model.dart';
-import 'package:cookly/model/recipe_view_model.dart';
-import 'package:cookly/screens/new_recipe_screen.dart';
+import 'package:cookly/model/view/recipe_edit_model.dart';
 import 'package:cookly/screens/recipe_list_screen.dart';
-import 'package:cookly/screens/recipe_screen.dart';
-import 'package:cookly/screens/recipe_selection_screen.dart';
-import 'package:cookly/services/api/chefkoch.dart';
-import 'package:cookly/services/app_profile.dart';
-import 'package:cookly/services/data_store.dart';
-import 'package:cookly/services/service_locator.dart';
-import 'package:cookly/services/share_receive_handler.dart';
+import 'package:cookly/screens/recipe_modify/new_recipe_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_translate/flutter_translate.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
-  static final id = 'homeScreen';
+  static final id = 'home';
 
   static const platform = const MethodChannel('app.channel.shared.data');
 
@@ -39,16 +23,17 @@ class HomeScreen extends StatelessWidget {
     //   }
     // });
 
+// TODO: as this is platform dependent, refactor it to a service call!
     // get share handler
-    var handler = sl.get<ShareReceiveHandler>();
+    // var handler = sl.get<ShareReceiveHandler>();
 
-    // handle shared text
-    var data = await _getSharedText();
-    handler.handleReceivedText(data, context);
+    // // handle shared text
+    // var data = await _getSharedText();
+    // handler.handleReceivedText(data, context);
 
-    // handle shared json
-    var jsonData = await _getSharedJson();
-    handler.handleReceivedJson(jsonData, context);
+    // // handle shared json
+    // var jsonData = await _getSharedJson();
+    // handler.handleReceivedJson(jsonData, context);
   }
 
   /// read shared text

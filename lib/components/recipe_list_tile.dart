@@ -1,6 +1,6 @@
 import 'package:cookly/constants.dart';
-import 'package:cookly/model/recipe_view_model.dart';
-import 'package:cookly/screens/recipe_screen.dart';
+import 'package:cookly/model/view/recipe_view_model.dart';
+import 'package:cookly/screens/recipe_view/recipe_screen.dart';
 import 'package:cookly/services/app_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

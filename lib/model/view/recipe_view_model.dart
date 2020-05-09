@@ -1,8 +1,7 @@
-import 'dart:io';
-
 import 'package:cookly/constants.dart';
 import 'package:cookly/model/json/ingredient_note.dart';
 import 'package:cookly/model/json/recipe.dart';
+import 'package:cookly/model/view/recipe_ingredient_model.dart';
 import 'package:flutter/material.dart';
 
 class RecipeViewModel extends ChangeNotifier {
@@ -47,8 +46,12 @@ class RecipeViewModel extends ChangeNotifier {
     }
   }
 
-  List<IngredientNote> get ingredients {
-    return this._recipe.ingredients;
+  List<RecipeIngredientModel> get ingredients {
+    return this
+        ._recipe
+        .ingredients
+        .map((e) => RecipeIngredientModel.of(e))
+        .toList();
   }
 
   String getScaleAt(int index) {

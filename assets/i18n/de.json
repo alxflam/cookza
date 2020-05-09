@@ -29,7 +29,7 @@
         "servings": "Portionen",
         "ingredientsForServings": "Zutaten für {0} Portionen",
         "amount": "Menge",
-        "Scale": "Einheit",
+        "unit": "Einheit",
         "Ingredient": "Zutat"
     },
     "ui": {

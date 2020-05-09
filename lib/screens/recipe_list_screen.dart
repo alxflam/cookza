@@ -1,8 +1,6 @@
 import 'package:cookly/components/recipe_list_tile.dart';
 import 'package:cookly/constants.dart';
 import 'package:cookly/localization/keys.dart';
-import 'package:cookly/model/recipe_view_model.dart';
-import 'package:cookly/screens/recipe_screen.dart';
 import 'package:cookly/services/app_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
@@ -10,7 +8,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 class RecipeListScreen extends StatelessWidget {
-  static final String id = 'recipeListScreen';
+  static final String id = 'recipes';
 
   @override
   Widget build(BuildContext context) {

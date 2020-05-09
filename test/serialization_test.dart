@@ -2,6 +2,7 @@ import 'package:cookly/model/json/ingredient.dart';
 import 'package:cookly/model/json/ingredient_note.dart';
 import 'package:cookly/model/json/profile.dart';
 import 'package:cookly/model/json/recipe.dart';
+import 'package:cookly/model/json/recipe_list.dart';
 import 'package:cookly/services/id_gen.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
@@ -39,19 +40,17 @@ void main() {
         ],
       );
 
-      var cut = Profile(
-        recipes: [
-          recipe,
-        ],
-      );
+      var cut = Profile(recipeList: RecipeList(recipes: [recipe]));
 
       // IngredientNoteToJson => instance to json!
 
       var json = cut.toJson();
       Profile deserialized = Profile.fromJson(json);
 
-      expect(deserialized.recipes.first.name, 'A sample recipe');
-      expect(deserialized.recipes.first.ingredients.first.ingredient.name,
+      expect(deserialized.recipeList.recipes.first.name, 'A sample recipe');
+      expect(
+          deserialized
+              .recipeList.recipes.first.ingredients.first.ingredient.name,
           'Onion');
     },
   );

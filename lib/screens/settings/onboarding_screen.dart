@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 
 class OnBoardingScreen extends StatelessWidget {
-  static final String id = 'onBoardingScreen';
+  static final String id = 'onBoarding';
 
   void _onIntroEnd(context) {
     Navigator.pop(context);

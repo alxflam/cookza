@@ -40,6 +40,9 @@ const kTagMap = {
   'drink': kDrinkIcon,
 };
 
+/// units
+const kUoMPortion = 'PTN';
+
 /// formatter
 var kDateFormatter = DateFormat('dd.MM.yyyy');
 var kFileNameDateFormatter = DateFormat('dd_MM_yyyy');

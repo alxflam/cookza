@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:cookly/model/json/ingredient_note.dart';
 import 'package:cookly/model/json/recipe.dart';
-import 'package:cookly/model/recipe_view_model.dart';
 import 'package:cookly/services/service_locator.dart';
 import 'package:cookly/services/unit_of_measure.dart';
 import 'package:http/http.dart' as http;

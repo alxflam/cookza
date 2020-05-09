@@ -2,10 +2,10 @@ import 'dart:convert';
 
 import 'package:cookly/constants.dart';
 import 'package:cookly/model/json/profile.dart';
-import 'package:cookly/model/recipe_edit_model.dart';
-import 'package:cookly/model/recipe_selection_model.dart';
-import 'package:cookly/model/recipe_view_model.dart';
-import 'package:cookly/screens/new_recipe_screen.dart';
+import 'package:cookly/model/view/recipe_edit_model.dart';
+import 'package:cookly/model/view/recipe_selection_model.dart';
+import 'package:cookly/model/view/recipe_view_model.dart';
+import 'package:cookly/screens/recipe_modify/new_recipe_screen.dart';
 import 'package:cookly/screens/recipe_selection_screen.dart';
 import 'package:cookly/services/api/chefkoch.dart';
 import 'package:flutter/cupertino.dart';
@@ -44,12 +44,12 @@ class ShareReceiveHandler {
       return;
     }
     var importData = Profile.fromJson(json.decode(text));
-    var viewModel =
-        importData.recipes.map((item) => RecipeViewModel.of(item)).toList();
+    var viewModel = importData.recipeList.recipes
+        .map((item) => RecipeViewModel.of(item))
+        .toList();
 
     // todo: create named constructors for import / export instead of giving a parameter
-    var model = RecipeSelectionModel(
-        mode: DATA_EXCHANGE_DIRECTION.IMPORT, recipes: viewModel);
+    var model = RecipeSelectionModel(SELECTION_MODE.IMPORT, viewModel);
     Navigator.pushNamed(context, RecipeSelectionScreen.id, arguments: model);
     print('received json $text');
   }

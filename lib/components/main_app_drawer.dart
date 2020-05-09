@@ -1,8 +1,7 @@
 import 'package:cookly/localization/keys.dart';
-import 'package:cookly/model/recipe_edit_model.dart';
-import 'package:cookly/model/recipe_view_model.dart';
-import 'package:cookly/screens/new_recipe_screen.dart';
-import 'package:cookly/screens/settings_screen.dart';
+import 'package:cookly/model/view/recipe_edit_model.dart';
+import 'package:cookly/screens/recipe_modify/new_recipe_screen.dart';
+import 'package:cookly/screens/settings/settings_screen.dart';
 import 'package:cookly/services/app_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
@@ -14,7 +13,7 @@ import '../constants.dart';
 class MainAppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final TextStyle textStyle = Theme.of(context).textTheme.body1;
+    final TextStyle textStyle = Theme.of(context).textTheme.subtitle1;
 
     final List<Widget> aboutBoxChildren = <Widget>[
       SizedBox(height: 24),

@@ -4,8 +4,8 @@ import 'dart:io';
 import 'package:cookly/model/json/image_map.dart';
 import 'package:cookly/model/json/profile.dart';
 import 'package:cookly/model/json/recipe.dart';
-import 'package:cookly/model/recipe_view_model.dart';
-import 'package:cookly/services/data_store.dart';
+import 'package:cookly/model/view/recipe_view_model.dart';
+import 'package:cookly/services/abstract/data_store.dart';
 import 'package:cookly/services/local_storage.dart';
 import 'package:cookly/services/service_locator.dart';
 import 'package:flutter/material.dart';
@@ -16,8 +16,12 @@ class AppProfile extends ChangeNotifier {
   AppProfile(this._profile);
 
   void addOrUpdateRecipe(Recipe recipe) {
-    this._profile.recipes.removeWhere((element) => element.id == recipe.id);
-    this._profile.recipes.add(recipe);
+    this
+        ._profile
+        .recipeList
+        .recipes
+        .removeWhere((element) => element.id == recipe.id);
+    this._profile.recipeList.recipes.add(recipe);
     sl.get<DataStore>().save(_profile);
     notifyListeners();
   }
@@ -25,14 +29,14 @@ class AppProfile extends ChangeNotifier {
   Profile get profile => _profile;
 
   void deleteRecipe(String id) {
-    this._profile.recipes.removeWhere((element) => element.id == id);
+    this._profile.recipeList.recipes.removeWhere((element) => element.id == id);
     sl.get<DataStore>().save(_profile);
     // todo delete the leftover image: make a settings screen to show all images for checking purposes
     notifyListeners();
   }
 
   int get countRecipes {
-    return this._profile?.recipes?.length;
+    return this._profile?.recipeList?.recipes?.length;
   }
 
   String get lastAddedRecipe {
@@ -45,13 +49,14 @@ class AppProfile extends ChangeNotifier {
 
   UnmodifiableListView<RecipeViewModel> get recipes {
     List<RecipeViewModel> result =
-        _profile.recipes.map((f) => getRecipeById(f.id)).toList();
+        _profile.recipeList.recipes.map((f) => getRecipeById(f.id)).toList();
     return UnmodifiableListView(result);
   }
 
   RecipeViewModel getRecipeById(String id) {
     Recipe recipe = this
         ._profile
+        .recipeList
         .recipes
         .firstWhere((item) => item.id == id, orElse: () => null);
     return RecipeViewModel.of(recipe);
@@ -60,6 +65,7 @@ class AppProfile extends ChangeNotifier {
   Future<FileImage> getRecipeImage(String id) async {
     Recipe recipe = this
         ._profile
+        .recipeList
         .recipes
         .firstWhere((item) => item.id == id, orElse: () => null);
     if (recipe != null) {
@@ -94,5 +100,15 @@ class AppProfile extends ChangeNotifier {
     }
 
     await sl.get<DataStore>().saveImageMapping(result);
+  }
+
+  List<Recipe> getRawRecipes(List<String> ids) {
+    List<Recipe> result = [];
+    for (var recipe in this.profile.recipeList.recipes) {
+      if (ids.contains(recipe.id)) {
+        result.add(recipe);
+      }
+    }
+    return result;
   }
 }

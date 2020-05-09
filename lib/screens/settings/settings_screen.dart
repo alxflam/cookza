@@ -1,20 +1,20 @@
 import 'package:cookly/constants.dart';
 import 'package:cookly/localization/keys.dart';
-import 'package:cookly/model/recipe_selection_model.dart';
-import 'package:cookly/model/recipe_view_model.dart';
-import 'package:cookly/screens/camera.dart';
-import 'package:cookly/screens/ocr_screen.dart';
-import 'package:cookly/screens/onboarding_screen.dart';
+import 'package:cookly/model/view/recipe_selection_model.dart';
+import 'package:cookly/model/view/recipe_view_model.dart';
+import 'package:cookly/screens/settings/camera.dart';
+import 'package:cookly/screens/settings/ocr_screen.dart';
+import 'package:cookly/screens/settings/onboarding_screen.dart';
 import 'package:cookly/screens/recipe_selection_screen.dart';
-import 'package:cookly/services/data_store.dart';
+import 'package:cookly/services/abstract/data_store.dart';
+import 'package:cookly/services/abstract/recipe_file_import.dart';
 import 'package:cookly/services/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:path_provider/path_provider.dart';
 
 class SettingsScreen extends StatelessWidget {
-  static final String id = 'settingsScreen';
+  static final String id = 'settings';
 
   @override
   Widget build(BuildContext context) {
@@ -49,9 +49,8 @@ class SettingsScreen extends StatelessWidget {
               // fetch all recipes the app currently stores
               var recipes = sl.get<DataStore>().appProfile.recipes;
               // create the view model with type export
-              var model = RecipeSelectionModel(
-                  mode: DATA_EXCHANGE_DIRECTION.EXPORT,
-                  recipes: recipes.toList());
+              var model =
+                  RecipeSelectionModel(SELECTION_MODE.EXPORT, recipes.toList());
               // navigate to the selection screen
               Navigator.pushNamed(context, RecipeSelectionScreen.id,
                   arguments: model);
@@ -61,17 +60,7 @@ class SettingsScreen extends StatelessWidget {
             title: Text(translate(Keys.Ui_Import)),
             leading: FaIcon(FontAwesomeIcons.fileImport),
             onTap: () async {
-              // open the file selection dialog for the user to select a json file
-              var recipes = await sl.get<DataStore>().getRecipesFromJsonFile();
-              // construct the list of recipes fom the json
-              var viewModel =
-                  recipes.map((item) => RecipeViewModel.of(item)).toList();
-              // create the view model with type import
-              var model = RecipeSelectionModel(
-                  mode: DATA_EXCHANGE_DIRECTION.IMPORT, recipes: viewModel);
-              // navigate to the selection screen
-              Navigator.pushNamed(context, RecipeSelectionScreen.id,
-                  arguments: model);
+              sl.get<RecipeFileImport>().parseAndImport(context);
             },
           ),
           ListTile(

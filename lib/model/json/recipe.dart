@@ -2,7 +2,6 @@ import 'package:cookly/constants.dart';
 import 'package:cookly/model/json/ingredient_note.dart';
 import 'package:cookly/services/id_gen.dart';
 import 'package:cookly/services/service_locator.dart';
-import 'package:intl/intl.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'recipe.g.dart';

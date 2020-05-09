@@ -1,4 +1,3 @@
-import 'package:cookly/localization/keys.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 
 /// metric unit of measures supporting conversion
@@ -19,35 +18,35 @@ var metricUoM = [
 Set<String> nonMetricUoMIds = [
   // codes standardized by UNECE/CEFACT Trade Facilitation Recommendation No.20
   'H87', // piece
-  'G21', // cup
+  // 'G21', // cup
   'G24', // tablespoon
   'G25', // teaspoon
-  'BG', // bag
+  // 'BG', // bag
   'LEF', // leaf
-  'X2', // bunch
+  // 'X2', // bunch
   'X4', // drop
-  'CA', // can
-  'BO', // bottle
-  'STC', // stick
+  // 'CA', // can
+  // 'BO', // bottle
+  // 'STC', // stick
   'PR', // pair
-  'PA', // packet
+  // 'PA', // packet
   'PTN', // portion
-  'BR', // bar
-  'RO', // roll
+  // 'BR', // bar
+  // 'RO', // roll
   '14', // shot
-  'SR', // strip
-  'TU', // tube
+  // 'SR', // strip
+  // 'TU', // tube
   // from here on non standardized unit codes
   'SLI', // slice
-  'GLA', // glass
-  'HAN', // handful
+  // 'GLA', // glass
+  // 'HAN', // handful
   'PIN', // pinch
-  'BOW', // bowl
-  'STE', // stem
-  'CUB', // cubes
+  // 'BOW', // bowl
+  // 'STE', // stem
+  // 'CUB', // cubes
   'CLO', // clove
-  'ROT', // root
-  'TWG', // twig
+  // 'ROT', // root
+  // 'TWG', // twig
 ].toSet();
 
 Set<UnitOfMeasure> nonMetricUoM =
@@ -55,6 +54,7 @@ Set<UnitOfMeasure> nonMetricUoM =
 
 abstract class UnitOfMeasureProvider {
   List<UnitOfMeasure> getAll();
+  UnitOfMeasure getUnitOfMeasureById(final String id);
 }
 
 class UnitOfMeasure {
@@ -167,21 +167,27 @@ class AmountedUnitOfMeasure {
 }
 
 class StaticUnitOfMeasure implements UnitOfMeasureProvider {
+  @override
   UnitOfMeasure getUnitOfMeasureById(final String id) {
+    if (id == null) {
+      return null; // call with null may occur from the UI if used inside a DropDown
+    }
     var targetId = id.toUpperCase();
-    var metric = metricUoM.firstWhere((e) => targetId == e._id);
+    var metric =
+        metricUoM.firstWhere((e) => targetId == e._id, orElse: () => null);
     if (metric != null) {
       return metric;
     }
-    var nonMetric = nonMetricUoM.firstWhere((e) => targetId == e._id);
+    var nonMetric =
+        nonMetricUoM.firstWhere((e) => targetId == e._id, orElse: () => null);
     return nonMetric;
   }
 
   @override
   List<UnitOfMeasure> getAll() {
-    // List<String> result = [];
-    // metricScales.values.forEach((i) => result.addAll(i));
-    // nonMetricScales.keys.forEach((i) => result.add(i));
-    // return result;
+    List<UnitOfMeasure> uoms = [];
+    metricUoM.forEach((i) => uoms.add(i));
+    uoms.addAll(nonMetricUoM.toList());
+    return uoms;
   }
 }

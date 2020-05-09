@@ -50,7 +50,7 @@ class Keys {
 
   static const String Recipe_Amount = 'recipe.amount';
 
-  static const String Recipe_Scale = 'recipe.Scale';
+  static const String Recipe_Unit = 'recipe.unit';
 
   static const String Recipe_Ingredient = 'recipe.Ingredient';
 

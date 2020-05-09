@@ -3,8 +3,10 @@ import 'dart:io';
 import 'package:cookly/model/json/ingredient.dart';
 import 'package:cookly/model/json/ingredient_note.dart';
 import 'package:cookly/model/json/recipe.dart';
-import 'package:cookly/services/data_store.dart';
+import 'package:cookly/model/view/recipe_ingredient_model.dart';
+import 'package:cookly/services/abstract/data_store.dart';
 import 'package:cookly/services/service_locator.dart';
+import 'package:cookly/services/unit_of_measure.dart';
 import 'package:flutter/cupertino.dart';
 
 abstract class RecipeEditStep extends ChangeNotifier {
@@ -96,7 +98,7 @@ class RecipeImageEditStep extends RecipeEditStep {
   }
 
   @override
-  bool vaildate() {
+  vaildate() {
     // nothing to validate
   }
 }
@@ -182,6 +184,11 @@ class RecipeIngredientEditStep extends RecipeEditStep {
     notifyListeners();
   }
 
+  void addNewIngredient(RecipeIngredientModel item) {
+    this._ingredients.add(item.toIngredientNote());
+    notifyListeners();
+  }
+
   void addEmptyIngredient() {
     _addEmptyIngredient();
     notifyListeners();
@@ -189,12 +196,15 @@ class RecipeIngredientEditStep extends RecipeEditStep {
 
   void _addEmptyIngredient() {
     this._ingredients.add(
-          IngredientNote(amount: 0, ingredient: Ingredient(name: '')),
+          IngredientNote(
+              amount: 0, ingredient: Ingredient(name: ''), unitOfMeasure: ''),
         );
   }
 
-  String getScaleAt(int index) {
-    return this._ingredients[index].unitOfMeasure;
+  UnitOfMeasure getScaleAt(int index) {
+    return sl
+        .get<UnitOfMeasureProvider>()
+        .getUnitOfMeasureById(_ingredients[index].unitOfMeasure);
   }
 
   double getAmountAt(int index) {
@@ -214,8 +224,8 @@ class RecipeIngredientEditStep extends RecipeEditStep {
     notifyListeners();
   }
 
-  void setIngredient(int index, String ingredient) {
-    this._ingredients[index].ingredient.name = ingredient;
+  void setIngredient(int index, Ingredient ingredient) {
+    this._ingredients[index].ingredient = ingredient;
   }
 
   void removeIngredient(int index) {
@@ -223,12 +233,15 @@ class RecipeIngredientEditStep extends RecipeEditStep {
     notifyListeners();
   }
 
-  List<IngredientNote> get ingredients {
-    return this._ingredients;
+  List<RecipeIngredientModel> get ingredients {
+    return this._ingredients.map((i) => RecipeIngredientModel.of(i)).toList();
   }
 
   @override
   void applyFrom(Recipe recipe) {
+    assert(recipe != null);
+    assert(recipe.ingredients != null);
+    assert(recipe.servings != null);
     this._ingredients = recipe.ingredients;
     this._servings = recipe.servings;
   }
@@ -255,6 +268,10 @@ class RecipeInstructionEditStep extends RecipeEditStep {
   List<String> _instructions = [];
 
   List<String> get instructions => _instructions;
+
+  RecipeInstructionEditStep() {
+    _instructions.add('');
+  }
 
   void setInstruction(String text, int index) {
     while (_instructions.length <= index) {

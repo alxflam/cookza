@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:file_picker/file_picker.dart';
 import 'package:path_provider/path_provider.dart';
 
 abstract class StorageProvider {
@@ -29,6 +28,7 @@ class LocalStorageProvider implements StorageProvider {
   }
 
   Future<File> _getLocalFile(String name) async {
+    print('getLocalFile called');
     final path = await _localPath;
     return File('$path/$name');
   }
@@ -41,11 +41,16 @@ class LocalStorageProvider implements StorageProvider {
 
   @override
   Future<File> getProfileFile() async {
+    print('getProfileFile called');
     var exists = await profileFileExists();
+
+    print('profile file exists: $exists');
     if (!exists) {
+      print('profile file does not exist');
       // save empty dummy file so we don't run into file not found exceptions
       await saveProfileFile('');
     }
+    print('after save profile in getProfileFile');
     final file = await _getLocalFile(profileFileName);
     return file;
   }

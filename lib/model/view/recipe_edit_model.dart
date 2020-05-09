@@ -1,7 +1,7 @@
 import 'package:cookly/model/json/recipe.dart';
-import 'package:cookly/model/recipe_edit_step.dart';
+import 'package:cookly/model/view/recipe_edit_step.dart';
+import 'package:cookly/services/abstract/data_store.dart';
 import 'package:cookly/services/app_profile.dart';
-import 'package:cookly/services/data_store.dart';
 import 'package:cookly/services/service_locator.dart';
 import 'package:flutter/material.dart';
 

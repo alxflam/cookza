@@ -1,15 +1,15 @@
 import 'package:cookly/localization/keys.dart';
-import 'package:cookly/screens/camera.dart';
+import 'package:cookly/screens/settings/camera.dart';
 import 'package:cookly/screens/home_screen.dart';
-import 'package:cookly/screens/new_recipe_screen.dart';
-import 'package:cookly/screens/ocr_screen.dart';
-import 'package:cookly/screens/onboarding_screen.dart';
+import 'package:cookly/screens/new_ingredient_screen.dart';
+import 'package:cookly/screens/settings/ocr_screen.dart';
+import 'package:cookly/screens/settings/onboarding_screen.dart';
 import 'package:cookly/screens/recipe_list_screen.dart';
-import 'package:cookly/screens/recipe_screen.dart';
+import 'package:cookly/screens/recipe_modify/new_recipe_screen.dart';
 import 'package:cookly/screens/recipe_selection_screen.dart';
-import 'package:cookly/screens/settings_screen.dart';
-import 'package:cookly/services/api/chefkoch.dart';
-import 'package:cookly/services/data_store.dart';
+import 'package:cookly/screens/recipe_view/recipe_screen.dart';
+import 'package:cookly/screens/settings/settings_screen.dart';
+import 'package:cookly/services/abstract/data_store.dart';
 import 'package:cookly/services/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
@@ -17,7 +17,6 @@ import 'package:flutter_translate/localization_delegate.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter/services.dart';
 
 void main() async {
   var delegate = await LocalizationDelegate.create(
@@ -42,6 +41,8 @@ class CooklyApp extends StatelessWidget {
     // warten bis DataStore initialisiert wurde!!
 
     var localizationDelegate = LocalizedApp.of(context).delegate;
+
+    print('Cookly App build method called');
 
     return LocalizationProvider(
       state: LocalizationProvider.of(context).state,
@@ -76,6 +77,7 @@ class CooklyApp extends StatelessWidget {
                   RecipeListScreen.id: (context) => RecipeListScreen(),
                   RecipeSelectionScreen.id: (context) =>
                       RecipeSelectionScreen(),
+                  NewIngredientScreen.id: (context) => NewIngredientScreen(),
                 },
               ),
             );

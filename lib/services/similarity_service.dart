@@ -1,8 +1,7 @@
-import 'package:cookly/model/recipe_view_model.dart';
-import 'package:cookly/services/data_store.dart';
+import 'package:cookly/model/view/recipe_view_model.dart';
+import 'package:cookly/services/abstract/data_store.dart';
 import 'package:cookly/services/levenshtein.dart';
 import 'package:cookly/services/service_locator.dart';
-import 'dart:math';
 
 class SimilarityService {
   Future<List<RecipeViewModel>> getSimilarRecipes(String id) async {

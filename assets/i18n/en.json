@@ -29,7 +29,7 @@
         "servings": "Servings",
         "ingredientsForServings": "Ingredients for {0} Servings",
         "amount": "Amount",
-        "Scale": "Scale",
+        "unit": "Unit",
         "Ingredient": "Ingredient"
     },
     "ui": {
