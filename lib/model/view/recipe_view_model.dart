@@ -6,10 +6,17 @@ import 'package:flutter/material.dart';
 
 class RecipeViewModel extends ChangeNotifier {
   Recipe _recipe;
+  int _servings;
+  List<IngredientNote> _ingredients = [];
 
-  RecipeViewModel.of(this._recipe);
+  RecipeViewModel.of(this._recipe) {
+    this._servings = this._recipe.servings;
+    for (var note in this._recipe.ingredients) {
+      this._ingredients.add(IngredientNote.from(note));
+    }
+  }
 
-  int get servings => _recipe.servings;
+  int get servings => _servings;
   String get id => _recipe.id;
   String get name => _recipe.name;
   String get description => _recipe.shortDescription;
@@ -31,14 +38,6 @@ class RecipeViewModel extends ChangeNotifier {
   get containsFish => _recipe.tags.contains('fish');
   List<String> get tags => _recipe.tags;
 
-  void setServings(int servings) {
-    if (servings < 1 || servings > 20) {
-      return;
-    }
-    this._recipe.servings = servings;
-    notifyListeners();
-  }
-
   void setRating(int rating) {
     if (rating < 6 && rating > -1) {
       this._recipe.rating = rating;
@@ -47,23 +46,19 @@ class RecipeViewModel extends ChangeNotifier {
   }
 
   List<RecipeIngredientModel> get ingredients {
-    return this
-        ._recipe
-        .ingredients
-        .map((e) => RecipeIngredientModel.of(e))
-        .toList();
+    return this._ingredients.map((e) => RecipeIngredientModel.of(e)).toList();
   }
 
   String getScaleAt(int index) {
-    return this._recipe.ingredients[index].unitOfMeasure;
+    return this._ingredients[index].unitOfMeasure;
   }
 
   double getAmountAt(int index) {
-    return this._recipe.ingredients[index].amount;
+    return this._ingredients[index].amount;
   }
 
   String getIngredientAt(int index) {
-    return this._recipe.ingredients[index].ingredient.name;
+    return this._ingredients[index].ingredient.name;
   }
 
   String getInstruction(int index) {
@@ -71,5 +66,29 @@ class RecipeViewModel extends ChangeNotifier {
       return '';
     }
     return _recipe.instructions[index];
+  }
+
+  void decreaseServings() {
+    this._servings = this._servings <= 1 ? this._servings : this._servings - 1;
+    _updateIngredients(_servings);
+  }
+
+  void increaseServings() {
+    this._servings = this._servings > 20 ? this._servings : this._servings + 1;
+    _updateIngredients(_servings);
+  }
+
+  void _updateIngredients(int servings) {
+    var baseServings = _recipe.servings;
+    var ratio = servings / baseServings;
+    print('ratio for ing is $ratio');
+
+    for (var i = 0; i < _recipe.ingredients.length; i++) {
+      var baseAmount = _recipe.ingredients[i].amount;
+      _ingredients[i].amount = baseAmount * ratio;
+      print('calculated amount is ${_ingredients[i].amount}');
+    }
+
+    notifyListeners();
   }
 }

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:cookly/constants.dart';
 import 'package:cookly/model/json/profile.dart';
+import 'package:cookly/model/json/recipe_list.dart';
 import 'package:cookly/model/view/recipe_edit_model.dart';
 import 'package:cookly/model/view/recipe_selection_model.dart';
 import 'package:cookly/model/view/recipe_view_model.dart';
@@ -43,14 +44,21 @@ class ShareReceiveHandler {
     if (text == null || text.isEmpty) {
       return;
     }
-    var importData = Profile.fromJson(json.decode(text));
-    var viewModel = importData.recipeList.recipes
-        .map((item) => RecipeViewModel.of(item))
-        .toList();
+
+    // find out what kind of json we got
+
+    var map = jsonDecode(text);
+    print('received json $map');
+
+    var isRecipeList = map['recipes'] != null;
+    if (isRecipeList) {}
+
+    var importData = RecipeList.fromJson(map);
+    var viewModel =
+        importData.recipes.map((item) => RecipeViewModel.of(item)).toList();
 
     // todo: create named constructors for import / export instead of giving a parameter
-    var model = RecipeSelectionModel(SELECTION_MODE.IMPORT, viewModel);
+    var model = RecipeSelectionModel.forImport(viewModel);
     Navigator.pushNamed(context, RecipeSelectionScreen.id, arguments: model);
-    print('received json $text');
   }
 }

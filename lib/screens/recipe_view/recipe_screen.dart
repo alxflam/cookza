@@ -3,6 +3,7 @@ import 'package:cookly/localization/keys.dart';
 import 'package:cookly/model/view/recipe_edit_model.dart';
 import 'package:cookly/model/view/recipe_view_model.dart';
 import 'package:cookly/screens/home_screen.dart';
+import 'package:cookly/screens/meal_plan/meal_plan_screen.dart';
 import 'package:cookly/screens/recipe_modify/new_recipe_screen.dart';
 import 'package:cookly/screens/recipe_view/ingredients_tab.dart';
 import 'package:cookly/screens/recipe_view/instructions_tab.dart';
@@ -25,6 +26,8 @@ class PopupMenuButtonChoices {
       const PopupMenuButtonChoices._internal(Keys.Ui_Share, Icons.share);
   static const EDIT =
       const PopupMenuButtonChoices._internal(Keys.Ui_Edit, Icons.edit);
+  static const ADD_MEAL_PLAN = const PopupMenuButtonChoices._internal(
+      Keys.Functions_Mealplanner, Icons.edit);
   static const DELETE =
       const PopupMenuButtonChoices._internal(Keys.Ui_Delete, Icons.delete);
 }
@@ -53,15 +56,43 @@ class RecipeScreen extends StatelessWidget {
                 itemBuilder: (context) {
                   return [
                     PopupMenuItem(
-                      child: Icon(PopupMenuButtonChoices.SHARE.icon),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Icon(PopupMenuButtonChoices.SHARE.icon),
+                          Text(PopupMenuButtonChoices.SHARE.toString())
+                        ],
+                      ),
                       value: PopupMenuButtonChoices.SHARE,
                     ),
                     PopupMenuItem(
-                      child: Icon(PopupMenuButtonChoices.EDIT.icon),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Icon(PopupMenuButtonChoices.EDIT.icon),
+                          Text(PopupMenuButtonChoices.EDIT.toString())
+                        ],
+                      ),
                       value: PopupMenuButtonChoices.EDIT,
                     ),
                     PopupMenuItem(
-                      child: Icon(PopupMenuButtonChoices.DELETE.icon),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Icon(PopupMenuButtonChoices.ADD_MEAL_PLAN.icon),
+                          Text(PopupMenuButtonChoices.ADD_MEAL_PLAN.toString())
+                        ],
+                      ),
+                      value: PopupMenuButtonChoices.ADD_MEAL_PLAN,
+                    ),
+                    PopupMenuItem(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Icon(PopupMenuButtonChoices.DELETE.icon),
+                          Text(PopupMenuButtonChoices.DELETE.toString())
+                        ],
+                      ),
                       value: PopupMenuButtonChoices.DELETE,
                     ),
                   ];
@@ -74,6 +105,10 @@ class RecipeScreen extends StatelessWidget {
                     case PopupMenuButtonChoices.EDIT:
                       Navigator.pushNamed(context, NewRecipeScreen.id,
                           arguments: RecipeEditModel.modify(baseModel.recipe));
+                      break;
+                    case PopupMenuButtonChoices.ADD_MEAL_PLAN:
+                      Navigator.pushNamed(context, MealPlanScreen.id,
+                          arguments: baseModel.id);
                       break;
                     case PopupMenuButtonChoices.DELETE:
                       showDialog(

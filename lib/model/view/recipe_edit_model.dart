@@ -77,4 +77,11 @@ class RecipeEditModel extends ChangeNotifier {
     print('model step decreased to $_currentStep');
     notifyListeners();
   }
+
+  void goToStep(int step) {
+    if (step < this.countSteps && step >= 0) {
+      _currentStep = step;
+    }
+    notifyListeners();
+  }
 }

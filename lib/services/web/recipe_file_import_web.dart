@@ -41,7 +41,7 @@ class RecipeFileImportImpl extends RecipeFileImport {
           var viewModel =
               result.map((item) => RecipeViewModel.of(item)).toList();
           // create the view model with type import
-          var model = RecipeSelectionModel(SELECTION_MODE.IMPORT, viewModel);
+          var model = RecipeSelectionModel.forImport(viewModel);
           // navigate to the selection screen
           Navigator.pushNamed(context, RecipeSelectionScreen.id,
               arguments: model);

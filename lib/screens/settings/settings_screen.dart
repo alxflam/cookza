@@ -22,64 +22,49 @@ class SettingsScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(translate(Keys.Ui_Settings)),
       ),
-      body: ListView(
-        children: <Widget>[
-          // SwitchListTile(
-          //   title: Text('Switch'),
-          //   value: false,
-          //   onChanged: (bool value) {},
-          //   secondary: const Icon(Icons.lightbulb_outline),
-          // ),
-          // RadioListTile<SingingCharacter>(
-          //   title: const Text('Lafayette'),
-          //   value: SingingCharacter.lafayette,
-          //   groupValue: _character,
-          //   onChanged: (SingingCharacter value) {},
-          // ),
-          // RadioListTile<SingingCharacter>(
-          //   title: const Text('Thomas Jefferson'),
-          //   value: SingingCharacter.jefferson,
-          //   groupValue: _character,
-          //   onChanged: (SingingCharacter value) {},
-          // ),
-          ListTile(
-            title: Text(translate(Keys.Ui_Export)),
-            leading: FaIcon(FontAwesomeIcons.fileExport),
-            onTap: () {
-              // fetch all recipes the app currently stores
-              var recipes = sl.get<DataStore>().appProfile.recipes;
-              // create the view model with type export
-              var model =
-                  RecipeSelectionModel(SELECTION_MODE.EXPORT, recipes.toList());
-              // navigate to the selection screen
-              Navigator.pushNamed(context, RecipeSelectionScreen.id,
-                  arguments: model);
-            },
-          ),
-          ListTile(
-            title: Text(translate(Keys.Ui_Import)),
-            leading: FaIcon(FontAwesomeIcons.fileImport),
-            onTap: () async {
-              sl.get<RecipeFileImport>().parseAndImport(context);
-            },
-          ),
-          ListTile(
-            title: Text('§Test OCR'),
-            onTap: () => Navigator.pushNamed(context, OCRTestScreen.id),
-          ),
-          ListTile(
-            title: Text('§Show Onboarding Intro'),
-            onTap: () => Navigator.pushNamed(context, OnBoardingScreen.id),
-          ),
-          ListTile(
-            title: Text('§Show Changelog'),
-            onTap: () => kNotImplementedDialog(context),
-          ),
-          ListTile(
-            title: Text('§Test Camera Picker'),
-            onTap: () => Navigator.pushNamed(context, MyHomePage.id),
-          ),
-        ],
+      body: Builder(
+        builder: (context) {
+          return ListView(
+            children: <Widget>[
+              ListTile(
+                title: Text(translate(Keys.Ui_Export)),
+                leading: FaIcon(FontAwesomeIcons.fileExport),
+                onTap: () {
+                  // fetch all recipes the app currently stores
+                  var recipes = sl.get<DataStore>().appProfile.recipes;
+                  // create the view model with type export
+                  var model = RecipeSelectionModel.forExport(recipes.toList());
+                  // navigate to the selection screen
+                  Navigator.pushNamed(context, RecipeSelectionScreen.id,
+                      arguments: model);
+                },
+              ),
+              ListTile(
+                title: Text(translate(Keys.Ui_Import)),
+                leading: FaIcon(FontAwesomeIcons.fileImport),
+                onTap: () async {
+                  sl.get<RecipeFileImport>().parseAndImport(context);
+                },
+              ),
+              ListTile(
+                title: Text('§Test OCR'),
+                onTap: () => Navigator.pushNamed(context, OCRTestScreen.id),
+              ),
+              ListTile(
+                title: Text('§Show Onboarding Intro'),
+                onTap: () => Navigator.pushNamed(context, OnBoardingScreen.id),
+              ),
+              ListTile(
+                title: Text('§Show Changelog'),
+                onTap: () => kNotImplementedDialog(context),
+              ),
+              ListTile(
+                title: Text('§Test Camera Picker'),
+                onTap: () => Navigator.pushNamed(context, MyHomePage.id),
+              ),
+            ],
+          );
+        },
       ),
     );
   }

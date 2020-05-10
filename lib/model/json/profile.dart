@@ -1,12 +1,15 @@
-import 'package:cookly/constants.dart';
-import 'package:cookly/model/json/recipe.dart';
+import 'package:cookly/model/json/meal_plan.dart';
 import 'package:cookly/model/json/recipe_list.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'profile.g.dart';
 
-dynamic _toJson(RecipeList recipes) {
+dynamic _recipeListToJson(RecipeList recipes) {
   return recipes.toJson();
+}
+
+dynamic _mealPlanToJson(MealPlan plan) {
+  return plan.toJson();
 }
 
 @JsonSerializable()
@@ -16,8 +19,18 @@ class Profile {
 
   Map<String, dynamic> toJson() => _$ProfileToJson(this);
 
-  @JsonKey(nullable: false, toJson: _toJson)
+  @JsonKey(nullable: false, toJson: _recipeListToJson)
   RecipeList recipeList;
 
-  Profile({this.recipeList});
+  @JsonKey(nullable: false, toJson: _mealPlanToJson)
+  MealPlan mealPlan;
+
+  Profile({this.recipeList, this.mealPlan}) {
+    if (this.recipeList == null) {
+      this.recipeList = RecipeList();
+    }
+    if (this.mealPlan == null) {
+      this.mealPlan = MealPlan();
+    }
+  }
 }

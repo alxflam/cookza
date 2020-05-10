@@ -1,5 +1,6 @@
 import 'package:cookly/localization/keys.dart';
 import 'package:cookly/model/view/recipe_edit_model.dart';
+import 'package:cookly/screens/meal_plan/meal_plan_screen.dart';
 import 'package:cookly/screens/recipe_modify/new_recipe_screen.dart';
 import 'package:cookly/screens/settings/settings_screen.dart';
 import 'package:cookly/services/app_profile.dart';
@@ -71,7 +72,9 @@ class MainAppDrawer extends StatelessWidget {
           ListTile(
             title: Text(translate(Keys.Functions_Mealplanner)),
             leading: Icon(kMealPlannerIconData),
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(context, MealPlanScreen.id);
+            },
           ),
           ListTile(
             title: Text(translate(Keys.Functions_Shoppinglist)),

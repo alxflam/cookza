@@ -23,12 +23,12 @@ class OverviewTab extends StatelessWidget {
                   flex: 1,
                   child: Container(
                     height: 400,
-                    // decoration: BoxDecoration(
-                    //   image: DecorationImage(
-                    //       fit: BoxFit.fitWidth,
-                    //       alignment: FractionalOffset.center,
-                    //       image: snapshot.data),
-                    // ),
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                          fit: BoxFit.fitWidth,
+                          alignment: FractionalOffset.center,
+                          image: snapshot.data),
+                    ),
                   ),
                 );
               } else {

@@ -2,8 +2,12 @@ import 'package:cookly/components/main_app_drawer.dart';
 import 'package:cookly/constants.dart';
 import 'package:cookly/localization/keys.dart';
 import 'package:cookly/model/view/recipe_edit_model.dart';
+import 'package:cookly/screens/meal_plan/meal_plan_screen.dart';
 import 'package:cookly/screens/recipe_list_screen.dart';
 import 'package:cookly/screens/recipe_modify/new_recipe_screen.dart';
+import 'package:cookly/services/service_locator.dart';
+import 'package:cookly/services/share_receive_handler.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_translate/flutter_translate.dart';
@@ -23,17 +27,19 @@ class HomeScreen extends StatelessWidget {
     //   }
     // });
 
-// TODO: as this is platform dependent, refactor it to a service call!
-    // get share handler
-    // var handler = sl.get<ShareReceiveHandler>();
+    // check for shared content on mobile platforms
+    if (!kIsWeb) {
+      // get share handler
+      var handler = sl.get<ShareReceiveHandler>();
 
-    // // handle shared text
-    // var data = await _getSharedText();
-    // handler.handleReceivedText(data, context);
+      // handle shared text
+      var data = await _getSharedText();
+      handler.handleReceivedText(data, context);
 
-    // // handle shared json
-    // var jsonData = await _getSharedJson();
-    // handler.handleReceivedJson(jsonData, context);
+      // handle shared json
+      var jsonData = await _getSharedJson();
+      handler.handleReceivedJson(jsonData, context);
+    }
   }
 
   /// read shared text
@@ -112,7 +118,8 @@ class HomeScreen extends StatelessWidget {
                 ),
                 Expanded(
                   child: ReusableCard(
-                    onPress: () => kNotImplementedDialog(context),
+                    onPress: () =>
+                        Navigator.pushNamed(context, MealPlanScreen.id),
                     color: Colors.teal.shade900,
                     cardChild: IconContent(
                       icon: kMealPlannerIconData,

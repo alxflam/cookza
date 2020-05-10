@@ -11,8 +11,8 @@ Recipe _$RecipeFromJson(Map<String, dynamic> json) {
     id: json['id'] as String,
     name: json['name'] as String,
     shortDescription: json['shortDescription'] as String ?? '',
-    creationDate: _dateFromJson(json['creationDate'] as String),
-    modificationDate: _dateFromJson(json['modificationDate'] as String),
+    creationDate: kDateFromJson(json['creationDate'] as String),
+    modificationDate: kDateFromJson(json['modificationDate'] as String),
     duration: json['duration'] as int,
     diff: _$enumDecodeNullable(_$DIFFICULTYEnumMap, json['diff']) ??
         DIFFICULTY.MEDIUM,
@@ -40,8 +40,8 @@ Map<String, dynamic> _$RecipeToJson(Recipe instance) {
     }
   }
 
-  writeNotNull('creationDate', _dateToJson(instance.creationDate));
-  writeNotNull('modificationDate', _dateToJson(instance.modificationDate));
+  writeNotNull('creationDate', kDateToJson(instance.creationDate));
+  writeNotNull('modificationDate', kDateToJson(instance.modificationDate));
   val['name'] = instance.name;
   writeNotNull('shortDescription', instance.shortDescription);
   val['duration'] = instance.duration;

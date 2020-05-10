@@ -63,20 +63,26 @@ class ListOfIngredients extends StatelessWidget {
 class ListOfIngredientsHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    int servings = 2;
-
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        RoundIconButton(
-          icon: FontAwesomeIcons.minus,
-        ),
-        Text(translate(Keys.Recipe_Ingredientsforservings,
-            args: {"0": servings})),
-        RoundIconButton(
-          icon: FontAwesomeIcons.plus,
-        ),
-      ],
-    );
+    return Consumer<RecipeViewModel>(builder: (context, model, child) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          RoundIconButton(
+            icon: FontAwesomeIcons.minus,
+            onPress: () {
+              model.decreaseServings();
+            },
+          ),
+          Text(translate(Keys.Recipe_Ingredientsforservings,
+              args: {"0": model.servings})),
+          RoundIconButton(
+            icon: FontAwesomeIcons.plus,
+            onPress: () {
+              model.increaseServings();
+            },
+          ),
+        ],
+      );
+    });
   }
 }

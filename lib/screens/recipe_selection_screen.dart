@@ -113,6 +113,7 @@ class RecipeSelectionScreen extends StatelessWidget {
           },
         );
       case SELECTION_MODE.REFERENCE_INGREDIENT:
+      case SELECTION_MODE.ADD_TO_MEAL_PLAN:
         return IconButton(
             icon: FaIcon(FontAwesomeIcons.check),
             onPressed: model.selectedRecipes.length == 0

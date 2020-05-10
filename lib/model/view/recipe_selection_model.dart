@@ -1,8 +1,9 @@
 import 'package:cookly/model/json/recipe.dart';
 import 'package:cookly/model/view/recipe_view_model.dart';
+import 'package:cookly/screens/recipe_selection_screen.dart';
 import 'package:flutter/cupertino.dart';
 
-enum SELECTION_MODE { EXPORT, IMPORT, REFERENCE_INGREDIENT }
+enum SELECTION_MODE { EXPORT, IMPORT, REFERENCE_INGREDIENT, ADD_TO_MEAL_PLAN }
 
 class RecipeSelectionModel extends ChangeNotifier {
   List<String> _selected = [];
@@ -13,17 +14,41 @@ class RecipeSelectionModel extends ChangeNotifier {
   int _countSelected = 0;
   final SELECTION_MODE _mode;
   SELECTION_MODE get mode => _mode;
+  final bool _allowMultiSelection;
 
-  RecipeSelectionModel(this._mode, this._recipes) {
-    if (this._mode != SELECTION_MODE.REFERENCE_INGREDIENT) {
-      _recipes.forEach((item) => _selected.add(item.id));
-    }
+  RecipeSelectionModel.forAddMealPlan(this._recipes)
+      : this._mode = SELECTION_MODE.ADD_TO_MEAL_PLAN,
+        this._allowMultiSelection = false {
+    _init();
+  }
+
+  RecipeSelectionModel.forReferenceIngredient(this._recipes)
+      : this._mode = SELECTION_MODE.REFERENCE_INGREDIENT,
+        this._allowMultiSelection = false {
+    _init();
+  }
+
+  RecipeSelectionModel.forExport(this._recipes)
+      : this._mode = SELECTION_MODE.EXPORT,
+        this._allowMultiSelection = true {
+    _recipes.forEach((item) => _selected.add(item.id));
+    _init();
+  }
+
+  RecipeSelectionModel.forImport(this._recipes)
+      : this._mode = SELECTION_MODE.IMPORT,
+        this._allowMultiSelection = true {
+    _recipes.forEach((item) => _selected.add(item.id));
+    _init();
+  }
+
+  void _init() {
     _filtered.addAll(_recipes);
     _countAllRecipes = _recipes.length;
     _countSelected = _selected.length;
   }
 
-  get isMultiSelection => _mode != SELECTION_MODE.REFERENCE_INGREDIENT;
+  get isMultiSelection => _allowMultiSelection;
   get countSelected => _countSelected;
   get countAll => _countAllRecipes;
   set selected(String id) {
@@ -43,7 +68,7 @@ class RecipeSelectionModel extends ChangeNotifier {
   }
 
   String getRecipeName(int index) {
-    return _recipes[index].name;
+    return _filtered[index].name;
   }
 
   void switchSelection(int index) {
@@ -74,7 +99,7 @@ class RecipeSelectionModel extends ChangeNotifier {
       _filtered.addAll(_recipes);
     } else {
       for (var item in _recipes) {
-        if (item.name.contains(value)) {
+        if (item.name.toLowerCase().contains(value.toLowerCase())) {
           _filtered.add(item);
         } else {
           if (_selected.contains(item.id)) {

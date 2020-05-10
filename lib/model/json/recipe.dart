@@ -6,22 +6,6 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'recipe.g.dart';
 
-DateTime _dateFromJson(String date) {
-  if (date != null) {
-    return kDateFormatter.parse(date);
-  } else {
-    return null;
-  }
-}
-
-String _dateToJson(DateTime date) {
-  if (date != null) {
-    return kDateFormatter.format(date);
-  } else {
-    return null;
-  }
-}
-
 enum DIFFICULTY { EASY, MEDIUM, HARD }
 
 @JsonSerializable(includeIfNull: false)
@@ -32,9 +16,9 @@ class Recipe {
 
   @JsonKey(nullable: false)
   String id;
-  @JsonKey(toJson: _dateToJson, fromJson: _dateFromJson)
+  @JsonKey(toJson: kDateToJson, fromJson: kDateFromJson)
   DateTime creationDate;
-  @JsonKey(toJson: _dateToJson, fromJson: _dateFromJson)
+  @JsonKey(toJson: kDateToJson, fromJson: kDateFromJson)
   DateTime modificationDate;
 
   @JsonKey(nullable: false)

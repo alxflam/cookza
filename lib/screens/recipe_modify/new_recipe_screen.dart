@@ -73,6 +73,10 @@ class NewRecipeStepper extends StatelessWidget {
     Provider.of<RecipeEditModel>(context, listen: false).previousStep();
   }
 
+  void stepPressed(BuildContext context, int step) {
+    Provider.of<RecipeEditModel>(context, listen: false).goToStep(step);
+  }
+
   List<Step> getSteps(BuildContext context) {
     return [
       getOverviewStep(context),
@@ -94,7 +98,7 @@ class NewRecipeStepper extends StatelessWidget {
           nextButtonPressed(context);
         },
         onStepTapped: (step) {
-          kNotImplementedDialog(context);
+          stepPressed(context, step);
         },
         onStepCancel: () {
           cancelButtonPressed(context);

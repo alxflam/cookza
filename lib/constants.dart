@@ -43,6 +43,23 @@ const kTagMap = {
 /// units
 const kUoMPortion = 'PTN';
 
+/// json conversion
+DateTime kDateFromJson(String date) {
+  if (date != null) {
+    return kDateFormatter.parse(date);
+  } else {
+    return null;
+  }
+}
+
+String kDateToJson(DateTime date) {
+  if (date != null) {
+    return kDateFormatter.format(date);
+  } else {
+    return null;
+  }
+}
+
 /// formatter
 var kDateFormatter = DateFormat('dd.MM.yyyy');
 var kFileNameDateFormatter = DateFormat('dd_MM_yyyy');

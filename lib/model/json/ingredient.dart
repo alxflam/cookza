@@ -15,6 +15,12 @@ class Ingredient {
 
   Ingredient({this.name, this.kal, this.recipeReference});
 
+  Ingredient.from(Ingredient ingredient) {
+    this.name = ingredient.name;
+    this.recipeReference = ingredient.recipeReference;
+    this.kal = ingredient.kal;
+  }
+
   factory Ingredient.fromJson(Map<String, dynamic> json) =>
       _$IngredientFromJson(json);
 

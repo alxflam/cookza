@@ -1,4 +1,5 @@
 import 'package:cookly/localization/keys.dart';
+import 'package:cookly/screens/meal_plan/meal_plan_screen.dart';
 import 'package:cookly/screens/settings/camera.dart';
 import 'package:cookly/screens/home_screen.dart';
 import 'package:cookly/screens/new_ingredient_screen.dart';
@@ -71,6 +72,7 @@ class CooklyApp extends StatelessWidget {
                   RecipeScreen.id: (context) => RecipeScreen(),
                   NewRecipeScreen.id: (context) => NewRecipeScreen(),
                   SettingsScreen.id: (context) => SettingsScreen(),
+                  MealPlanScreen.id: (context) => MealPlanScreen(),
                   OCRTestScreen.id: (context) => OCRTestScreen(),
                   OnBoardingScreen.id: (context) => OnBoardingScreen(),
                   MyHomePage.id: (context) => MyHomePage(),
