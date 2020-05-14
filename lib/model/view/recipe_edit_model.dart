@@ -47,7 +47,7 @@ class RecipeEditModel extends ChangeNotifier {
 
   void _validate() {
     for (var step in _stepModels) {
-      step.vaildate();
+      step.validate();
     }
   }
 
@@ -61,9 +61,7 @@ class RecipeEditModel extends ChangeNotifier {
     profile.addOrUpdateRecipe(_targetRecipe);
 
     // todo let the profile handle that and only delegate here to the profile!
-    if (imageStepModel.image != null) {
-      await profile.addImage(file: imageStepModel.image, id: _targetRecipe.id);
-    }
+    await profile.updateImage(file: imageStepModel.image, id: _targetRecipe.id);
   }
 
   void nextStep() {

@@ -3,10 +3,12 @@
         "title": "Cookly"
     },
     "functions": {
-        "addRecipe": "Rezept hinzufügen",
+        "addRecipe": "Neues Rezept",
         "listRecipes": "Alle Rezepte",
         "shoppingList": "Einkaufsliste",
-        "mealPlanner": "Essensplan"
+        "mealPlanner": "Essensplan",
+        "leftovers": "Resteverwertung",
+        "marketplace": "Online Rezepte"
     },
     "recipe": {
         "createRecipe": "Rezept erstellen",
@@ -32,6 +34,11 @@
         "unit": "Einheit",
         "Ingredient": "Zutat"
     },
+    "theme": {
+        "title": "Themes",
+        "light": "Light Theme",
+        "dark": "Dark Theme"
+    },
     "ui": {
         "addRow": "Zeile hinzufügen",
         "addImageLong": "Bild hinzufügen",
@@ -52,6 +59,13 @@
         "export": "Export",
         "import": "Import",
         "selectRecipes": "Rezepte auswählen"
+    },
+    "settings": {
+        "weekDurationDesc": "Anzahl der Wochen, die im Essensplaner verfügbar sind.",
+        "oneWeek": "Eine Woche",
+        "twoWeeks": "Zwei Wochen",
+        "stdServingsDesc": "Die Standardportionsgröße wird für neu hinzugefügte Mahlzeiten verwendet. Die Anzahl der Portionen kann anschließend jederzeit geändert werden.",
+        "stdServings": "Standard Portionsgröße"
     },
     "onboarding": {},
     "unitOfMeasure": {
@@ -100,12 +114,12 @@
             "else": "Tassen"
         },
         "G24": {
-            "1": "Esslöffel",
-            "else": "Esslöffel"
+            "1": "EL",
+            "else": "EL"
         },
         "G25": {
-            "1": "Teelöffel",
-            "else": "Teelöffel"
+            "1": "TL",
+            "else": "TL"
         },
         "BG": {
             "1": "Beutel",
@@ -116,7 +130,7 @@
             "else": "Blätter"
         },
         "X2": {
-            "1": "Bündel",
+            "1": "Bund",
             "else": "Bündel"
         },
         "X4": {

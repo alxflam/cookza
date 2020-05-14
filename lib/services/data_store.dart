@@ -102,19 +102,32 @@ class LocalStorageDataStore implements DataStore {
         fileExtension = '.jpg';
       }
       String targetPath = '$path/${entry.key}$fileExtension';
-      File(targetPath).createSync(
-          recursive:
-              true); // recursive creates the parent image directory if it does not yet exist
-      File targetFile = await entry.value.copy(targetPath);
-      bool exists = await targetFile.exists();
-      if (!exists) {
-        throw 'image could not be saved!';
+      var target = File(targetPath);
+      if (!target.existsSync()) {
+        // recursive creates the parent image directory if it does not yet exist
+        File(targetPath).createSync(recursive: true);
       }
-      targetFile.writeAsBytesSync(entry.value.readAsBytesSync(), flush: true);
-      print('image saved at ${targetFile.path}');
+      // File targetFile = await entry.value.copy(targetPath);
+      // bool exists = await targetFile.exists();
+      // if (!exists) {
+      //   throw 'image could not be saved!';
+      // }
+      target.writeAsBytesSync(entry.value.readAsBytesSync(), flush: true);
+      print('image saved at ${target.path}');
       result.putIfAbsent(entry.key, () => targetPath);
     }
     return result;
+  }
+
+  Future<void> deleteImage(String id) async {
+    String path = await sl.get<StorageProvider>().getImageDirectory();
+    // TODO: could it be other extensions...?
+    String fileExtension = '.jpg';
+    String targetPath = '$path/${id}$fileExtension';
+    var file = File(targetPath);
+    if (file.existsSync()) {
+      file.deleteSync();
+    }
   }
 
   @override

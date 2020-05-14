@@ -21,4 +21,6 @@ abstract class DataStore {
   void importRecipes(List<Recipe> recipes);
 
   Future<List<Recipe>> getRecipesFromJsonFile();
+
+  Future<void> deleteImage(String id);
 }

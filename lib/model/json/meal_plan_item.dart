@@ -6,13 +6,13 @@ part 'meal_plan_item.g.dart';
 @JsonSerializable(includeIfNull: false)
 class MealPlanItem {
   @JsonKey(toJson: kDateToJson, fromJson: kDateFromJson)
-  DateTime creationDate;
+  DateTime date;
 
   @JsonKey(nullable: false)
-  String recipeReference;
+  Map<String, int> recipeReferences;
 
-  MealPlanItem({this.creationDate, this.recipeReference}) {
-    assert(this.recipeReference != null && this.recipeReference.isNotEmpty);
+  MealPlanItem({this.date, this.recipeReferences}) {
+    assert(this.recipeReferences != null);
   }
 
   factory MealPlanItem.fromJson(Map<String, dynamic> json) =>

@@ -2,8 +2,10 @@ import 'dart:collection';
 import 'dart:io';
 
 import 'package:cookly/model/json/image_map.dart';
+import 'package:cookly/model/json/meal_plan.dart';
 import 'package:cookly/model/json/profile.dart';
 import 'package:cookly/model/json/recipe.dart';
+import 'package:cookly/model/view/recipe_meal_plan_model.dart';
 import 'package:cookly/model/view/recipe_view_model.dart';
 import 'package:cookly/services/abstract/data_store.dart';
 import 'package:cookly/services/local_storage.dart';
@@ -86,20 +88,35 @@ class AppProfile extends ChangeNotifier {
     return null;
   }
 
-  Future<void> addImage({File file, String id}) async {
+  Future<void> updateImage({File file, String id}) async {
     Map<String, File> imageMap = {
       id: file,
     };
 
-    Map<String, String> imageMapping =
-        await sl.get<DataStore>().copyImages(imageMap);
+    // there's no file selected
+    if (file == null) {
+      List<LocalImage> result = await sl.get<DataStore>().getImageMapping();
+      var entry =
+          result.firstWhere((e) => e.recipeReference == id, orElse: () => null);
+      if (entry != null) {
+        // the file got deleted, remove all references
+        result.removeWhere((e) => e.recipeReference == id);
+        await sl.get<DataStore>().deleteImage(id);
+        await sl.get<DataStore>().saveImageMapping(result);
+      } else {
+        // previously no image file existed - nothing to update
+      }
+    } else {
+      // file got added or was updated
+      Map<String, String> imageMapping =
+          await sl.get<DataStore>().copyImages(imageMap);
+      List<LocalImage> result = await sl.get<DataStore>().getImageMapping();
+      for (var entry in imageMapping.entries) {
+        result.add(LocalImage(entry.key, entry.value));
+      }
 
-    List<LocalImage> result = await sl.get<DataStore>().getImageMapping();
-    for (var entry in imageMapping.entries) {
-      result.add(LocalImage(entry.key, entry.value));
+      await sl.get<DataStore>().saveImageMapping(result);
     }
-
-    await sl.get<DataStore>().saveImageMapping(result);
   }
 
   List<Recipe> getRawRecipes(List<String> ids) {
@@ -110,5 +127,27 @@ class AppProfile extends ChangeNotifier {
       }
     }
     return result;
+  }
+
+  MealPlanViewModel mealPlanModel(BuildContext context) {
+    var locale = Localizations.localeOf(context);
+    return MealPlanViewModel.of(locale, this._profile.mealPlan);
+  }
+
+  void updateMealPlan(MealPlan mealPlan) {
+    this._profile.mealPlan = mealPlan;
+    sl.get<DataStore>().save(_profile);
+  }
+
+  void setRating(int rating, String id) {
+    var recipe = this
+        .profile
+        .recipeList
+        .recipes
+        .firstWhere((element) => element.id == id, orElse: () => null);
+    if (recipe != null) {
+      recipe.rating = rating;
+      this.addOrUpdateRecipe(recipe);
+    }
   }
 }

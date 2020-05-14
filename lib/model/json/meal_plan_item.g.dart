@@ -8,8 +8,8 @@ part of 'meal_plan_item.dart';
 
 MealPlanItem _$MealPlanItemFromJson(Map<String, dynamic> json) {
   return MealPlanItem(
-    creationDate: kDateFromJson(json['creationDate'] as String),
-    recipeReference: json['recipeReference'] as String,
+    date: kDateFromJson(json['date'] as String),
+    recipeReferences: Map<String, int>.from(json['recipeReferences'] as Map),
   );
 }
 
@@ -22,7 +22,7 @@ Map<String, dynamic> _$MealPlanItemToJson(MealPlanItem instance) {
     }
   }
 
-  writeNotNull('creationDate', kDateToJson(instance.creationDate));
-  val['recipeReference'] = instance.recipeReference;
+  writeNotNull('date', kDateToJson(instance.date));
+  val['recipeReferences'] = instance.recipeReferences;
   return val;
 }

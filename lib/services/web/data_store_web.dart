@@ -111,4 +111,10 @@ class LocalStorageDataStore implements DataStore {
   Future<List<Recipe>> getRecipesFromJsonFile() async {
     // configure file selection dialog
   }
+
+  @override
+  Future<void> deleteImage(String id) {
+    // TODO: implement deleteImage
+    throw UnimplementedError();
+  }
 }

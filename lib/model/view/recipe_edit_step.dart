@@ -10,7 +10,7 @@ import 'package:cookly/services/unit_of_measure.dart';
 import 'package:flutter/cupertino.dart';
 
 abstract class RecipeEditStep extends ChangeNotifier {
-  vaildate();
+  validate();
   void applyTo(Recipe recipe);
   void applyFrom(Recipe recipe);
 }
@@ -55,13 +55,11 @@ class RecipeOverviewEditStep extends RecipeEditStep {
   }
 
   @override
-  vaildate() {
+  validate() {
     if (name.isEmpty) {
       throw 'Assign a Recipe name';
     }
-    if (description.isEmpty) {
-      throw 'Assign a Recipe description';
-    }
+    // description can be empty
     if (duration <= 0) {
       throw 'Assign a Recipe duration';
     }
@@ -98,7 +96,7 @@ class RecipeImageEditStep extends RecipeEditStep {
   }
 
   @override
-  vaildate() {
+  validate() {
     // nothing to validate
   }
 }
@@ -168,7 +166,7 @@ class RecipeTagEditStep extends RecipeEditStep {
   }
 
   @override
-  vaildate() {
+  validate() {
     // allow adding no tags at all
   }
 }
@@ -253,7 +251,7 @@ class RecipeIngredientEditStep extends RecipeEditStep {
   }
 
   @override
-  vaildate() {
+  validate() {
     if (_ingredients.isEmpty) {
       throw 'There are no ingredients assigned to the recipe';
     }
@@ -316,7 +314,7 @@ class RecipeInstructionEditStep extends RecipeEditStep {
   }
 
   @override
-  vaildate() {
+  validate() {
     // there are instructions and there's no empty instruction
 
     if (_instructions.isEmpty ||

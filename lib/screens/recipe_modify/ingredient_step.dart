@@ -140,7 +140,7 @@ List<DataRow> _getIngredientRows(
                     model.setAmount(i, result.amount);
                     model.setIngredient(i, result.ingredient);
                     model.setScale(i, result.unitOfMeasure);
-                  } else if (result != null && result.isDeleted) {
+                  } else {
                     model.removeIngredient(i);
                   }
                 }

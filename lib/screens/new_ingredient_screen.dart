@@ -76,9 +76,9 @@ class NewIngredientScreen extends StatelessWidget {
                               ),
                             );
                           } else {
-                            List<DropdownMenuItem> items = sl
-                                .get<UnitOfMeasureProvider>()
-                                .getAll()
+                            List<UnitOfMeasure> uoms =
+                                sl.get<UnitOfMeasureProvider>().getVisible();
+                            List<DropdownMenuItem> items = uoms
                                 // todo null check on uom
                                 // let it not be null, but have an empty uom instead
                                 // which returns an empty string instead of trying to translate the id
@@ -94,7 +94,9 @@ class NewIngredientScreen extends StatelessWidget {
                                 .toList();
                             return Expanded(
                               child: DropdownButtonFormField<UnitOfMeasure>(
-                                  value: model.uom,
+                                  value: uoms.contains(model.uom)
+                                      ? model.uom
+                                      : null,
                                   items: items,
                                   decoration: InputDecoration(
                                     isDense: true,
@@ -169,6 +171,19 @@ class NewIngredientScreen extends StatelessWidget {
                             Navigator.pop(context);
                           },
                           child: Icon(Icons.cancel),
+                          color: Colors.grey,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 16,
+                      ),
+                      Expanded(
+                        child: RaisedButton(
+                          onPressed: () {
+                            model.setDeleted();
+                            Navigator.pop(context, model);
+                          },
+                          child: Icon(Icons.delete),
                           color: Colors.red,
                         ),
                       ),

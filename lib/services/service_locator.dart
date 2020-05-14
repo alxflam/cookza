@@ -4,6 +4,7 @@ import 'package:cookly/services/abstract/recipe_file_import.dart';
 import 'package:cookly/services/id_gen.dart';
 import 'package:cookly/services/local_storage.dart';
 import 'package:cookly/services/share_receive_handler.dart';
+import 'package:cookly/services/shared_preferences_provider.dart';
 import 'package:cookly/services/similarity_service.dart';
 import 'package:cookly/services/unit_of_measure.dart';
 import 'package:get_it/get_it.dart';
@@ -25,6 +26,9 @@ void setupServiceLocator() {
   sl.registerSingleton<ShareReceiveHandler>(ShareReceiveHandler());
   sl.registerSingleton<RecipeFileImport>(RecipeFileImportImpl());
   sl.registerSingleton<RecipeFileExport>(RecipeFileExportImpl());
+
+  sl.registerSingletonAsync<SharedPreferencesProvider>(
+      () async => SharedPreferencesProviderImpl().init());
 
   sl.registerSingletonAsync<DataStore>(
       () async => LocalStorageDataStore().init());

@@ -17,6 +17,10 @@ class Keys {
 
   static const String Functions_Mealplanner = 'functions.mealPlanner';
 
+  static const String Functions_Leftovers = 'functions.leftovers';
+
+  static const String Functions_Marketplace = 'functions.marketplace';
+
   static const String Recipe_Createrecipe = 'recipe.createRecipe';
 
   static const String Recipe_Editrecipe = 'recipe.editRecipe';
@@ -54,6 +58,12 @@ class Keys {
 
   static const String Recipe_Ingredient = 'recipe.Ingredient';
 
+  static const String Theme_Title = 'theme.title';
+
+  static const String Theme_Light = 'theme.light';
+
+  static const String Theme_Dark = 'theme.dark';
+
   static const String Ui_Addrow = 'ui.addRow';
 
   static const String Ui_Addimagelong = 'ui.addImageLong';
@@ -79,6 +89,16 @@ class Keys {
   static const String Ui_Import = 'ui.import';
 
   static const String Ui_Selectrecipes = 'ui.selectRecipes';
+
+  static const String Settings_Weekdurationdesc = 'settings.weekDurationDesc';
+
+  static const String Settings_Oneweek = 'settings.oneWeek';
+
+  static const String Settings_Twoweeks = 'settings.twoWeeks';
+
+  static const String Settings_Stdservingsdesc = 'settings.stdServingsDesc';
+
+  static const String Settings_Stdservings = 'settings.stdServings';
 
   static const String Unitofmeasure_Mmt = 'unitOfMeasure.MMT';
 

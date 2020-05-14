@@ -79,5 +79,5 @@ class RecipeIngredientModel extends ChangeNotifier {
     this._note.unitOfMeasure = uom.id;
   }
 
-  void setDeleted() => _deleted = false;
+  void setDeleted() => _deleted = true;
 }

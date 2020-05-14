@@ -2,6 +2,9 @@ import 'package:cookly/constants.dart';
 import 'package:cookly/model/json/ingredient_note.dart';
 import 'package:cookly/model/json/recipe.dart';
 import 'package:cookly/model/view/recipe_ingredient_model.dart';
+import 'package:cookly/services/abstract/data_store.dart';
+import 'package:cookly/services/app_profile.dart';
+import 'package:cookly/services/service_locator.dart';
 import 'package:flutter/material.dart';
 
 class RecipeViewModel extends ChangeNotifier {
@@ -41,6 +44,8 @@ class RecipeViewModel extends ChangeNotifier {
   void setRating(int rating) {
     if (rating < 6 && rating > -1) {
       this._recipe.rating = rating;
+      AppProfile profile = sl.get<DataStore>().appProfile;
+      profile.setRating(rating, _recipe.id);
       notifyListeners();
     }
   }

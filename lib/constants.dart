@@ -5,13 +5,15 @@ import 'package:intl/intl.dart';
 /// Icons
 const kAppIconData = Icons.local_dining;
 const kRecipesIconData = FontAwesomeIcons.bookOpen;
-const kMealPlannerIconData = FontAwesomeIcons.pagelines;
-const kShoppingListIconData = FontAwesomeIcons.tasks;
+const kLeftoversIconData = FontAwesomeIcons.recycle;
+const kMarketplaceIconData = FontAwesomeIcons.globe;
+const kMealPlannerIconData = FontAwesomeIcons.calendarAlt;
+const kShoppingListIconData = FontAwesomeIcons.shoppingCart;
 const kIngredientsIconData = FontAwesomeIcons.seedling;
 const kSimilarRecipesIconData = FontAwesomeIcons.compressAlt;
 const kInfoIconData = FontAwesomeIcons.info;
 const kVeganIcon = FontAwesomeIcons.seedling;
-const kVegetarianIcon = FontAwesomeIcons.egg;
+const kVegetarianIcon = FontAwesomeIcons.cheese;
 const kMeatIcon = FontAwesomeIcons.drumstickBite;
 const kFishIcon = FontAwesomeIcons.fish;
 const kSummerIcon = FontAwesomeIcons.sun;

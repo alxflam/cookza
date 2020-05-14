@@ -3,10 +3,12 @@
         "title": "Cookly"
     },
     "functions": {
-        "addRecipe": "Add Recipe",
+        "addRecipe": "New Recipe",
         "listRecipes": "List Recipes",
         "shoppingList": "Shopping List",
-        "mealPlanner": "Meal Planner"
+        "mealPlanner": "Meal Planner",
+        "leftovers": "Leftover Reuse",
+        "marketplace": "Marketplace"
     },
     "recipe": {
         "createRecipe": "Create Recipe",
@@ -32,6 +34,11 @@
         "unit": "Unit",
         "Ingredient": "Ingredient"
     },
+    "theme": {
+        "title": "Themes",
+        "light": "Light Theme",
+        "dark": "Dark Theme"
+    },
     "ui": {
         "addRow": "Add Row",
         "addImageLong": "Add an image from the gallery or take a picture",
@@ -52,6 +59,13 @@
         "export": "Export",
         "import": "Import",
         "selectRecipes": "Select Recipes"
+    },
+    "settings": {
+        "weekDurationDesc": "Set how many weeks are available for planning.",
+        "oneWeek": "One Week",
+        "twoWeeks": "Two Weeks",
+        "stdServingsDesc": "The standard servings size is being used to determine the servings size for newly added meals. You can always adjust the servings size for any meal later.",
+        "stdServings": "Standard Servings Size"
     },
     "onboarding": {},
     "unitOfMeasure": {

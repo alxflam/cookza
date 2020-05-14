@@ -62,7 +62,7 @@ Column _getInstructionRows(
             keyboardType: TextInputType.multiline,
             maxLines: null,
             controller: textController,
-            autofocus: true,
+            autofocus: textController.text.isEmpty ? true : false,
           ),
         ),
       ],

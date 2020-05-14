@@ -1,3 +1,5 @@
+import 'package:cookly/services/service_locator.dart';
+import 'package:cookly/services/shared_preferences_provider.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 
 /// metric unit of measures supporting conversion
@@ -18,35 +20,35 @@ var metricUoM = [
 Set<String> nonMetricUoMIds = [
   // codes standardized by UNECE/CEFACT Trade Facilitation Recommendation No.20
   'H87', // piece
-  // 'G21', // cup
+  'G21', // cup
   'G24', // tablespoon
   'G25', // teaspoon
-  // 'BG', // bag
+  'BG', // bag
   'LEF', // leaf
-  // 'X2', // bunch
+  'X2', // bunch
   'X4', // drop
-  // 'CA', // can
-  // 'BO', // bottle
-  // 'STC', // stick
+  'CA', // can
+  'BO', // bottle
+  'STC', // stick
   'PR', // pair
-  // 'PA', // packet
+  'PA', // packet
   'PTN', // portion
-  // 'BR', // bar
-  // 'RO', // roll
+  'BR', // bar
+  'RO', // roll
   '14', // shot
-  // 'SR', // strip
-  // 'TU', // tube
+  'SR', // strip
+  'TU', // tube
   // from here on non standardized unit codes
   'SLI', // slice
-  // 'GLA', // glass
-  // 'HAN', // handful
+  'GLA', // glass
+  'HAN', // handful
   'PIN', // pinch
-  // 'BOW', // bowl
-  // 'STE', // stem
-  // 'CUB', // cubes
+  'BOW', // bowl
+  'STE', // stem
+  'CUB', // cubes
   'CLO', // clove
-  // 'ROT', // root
-  // 'TWG', // twig
+  'ROT', // root
+  'TWG', // twig
 ].toSet();
 
 Set<UnitOfMeasure> nonMetricUoM =
@@ -54,6 +56,7 @@ Set<UnitOfMeasure> nonMetricUoM =
 
 abstract class UnitOfMeasureProvider {
   List<UnitOfMeasure> getAll();
+  List<UnitOfMeasure> getVisible();
   UnitOfMeasure getUnitOfMeasureById(final String id);
 }
 
@@ -64,7 +67,7 @@ class UnitOfMeasure {
 
   /// returns the display name
   String get displayName {
-    return translate('unitOfMeasure.$_id');
+    return translatePlural('unitOfMeasure.$_id', 1);
   }
 
   /// returns the display name depending on the count of items referenced
@@ -189,5 +192,15 @@ class StaticUnitOfMeasure implements UnitOfMeasureProvider {
     metricUoM.forEach((i) => uoms.add(i));
     uoms.addAll(nonMetricUoM.toList());
     return uoms;
+  }
+
+  @override
+  List<UnitOfMeasure> getVisible() {
+    var result = this.getAll();
+    var prefs = sl.get<SharedPreferencesProvider>();
+
+    return result
+        .where((element) => prefs.isUnitOfMeasureVisible(element.id))
+        .toList();
   }
 }

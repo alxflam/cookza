@@ -46,7 +46,7 @@ class MainAppDrawer extends StatelessWidget {
                       width: 20,
                     ),
                     Text(
-                      'Cookly 1.0.0',
+                      'Cookly',
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
                     ),

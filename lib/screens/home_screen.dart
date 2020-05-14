@@ -11,6 +11,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HomeScreen extends StatelessWidget {
   static final id = 'home';
@@ -80,11 +81,9 @@ class HomeScreen extends StatelessWidget {
                     onPress: () => Navigator.pushNamed(
                         context, NewRecipeScreen.id,
                         arguments: RecipeEditModel.create()),
-
-                    // RecipeViewModel()),
                     color: Colors.teal.shade900,
                     cardChild: IconContent(
-                      icon: Icons.add,
+                      icon: Icons.star,
                       label: translate(Keys.Functions_Addrecipe),
                     ),
                   ),
@@ -95,7 +94,7 @@ class HomeScreen extends StatelessWidget {
                         Navigator.pushNamed(context, RecipeListScreen.id),
                     color: Colors.teal.shade900,
                     cardChild: IconContent(
-                      icon: Icons.list,
+                      icon: kRecipesIconData,
                       label: translate(Keys.Functions_Listrecipes),
                     ),
                   ),
@@ -124,6 +123,32 @@ class HomeScreen extends StatelessWidget {
                     cardChild: IconContent(
                       icon: kMealPlannerIconData,
                       label: translate(Keys.Functions_Mealplanner),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: ReusableCard(
+                    onPress: () => kNotImplementedDialog(context),
+                    color: Colors.teal.shade900,
+                    cardChild: IconContent(
+                      icon: kLeftoversIconData,
+                      label: translate(Keys.Functions_Leftovers),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: ReusableCard(
+                    onPress: () => kNotImplementedDialog(context),
+                    color: Colors.teal.shade900,
+                    cardChild: IconContent(
+                      icon: kMarketplaceIconData,
+                      label: translate(Keys.Functions_Marketplace),
                     ),
                   ),
                 ),
@@ -170,7 +195,7 @@ class IconContent extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Icon(
+        FaIcon(
           icon,
           size: 80,
         ),

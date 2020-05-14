@@ -1,8 +1,10 @@
 import 'package:cookly/localization/keys.dart';
+import 'package:cookly/model/view/settings/theme_model.dart';
 import 'package:cookly/screens/meal_plan/meal_plan_screen.dart';
 import 'package:cookly/screens/settings/camera.dart';
 import 'package:cookly/screens/home_screen.dart';
 import 'package:cookly/screens/new_ingredient_screen.dart';
+import 'package:cookly/screens/settings/meal_plan_settings_screen.dart';
 import 'package:cookly/screens/settings/ocr_screen.dart';
 import 'package:cookly/screens/settings/onboarding_screen.dart';
 import 'package:cookly/screens/recipe_list_screen.dart';
@@ -10,7 +12,10 @@ import 'package:cookly/screens/recipe_modify/new_recipe_screen.dart';
 import 'package:cookly/screens/recipe_selection_screen.dart';
 import 'package:cookly/screens/recipe_view/recipe_screen.dart';
 import 'package:cookly/screens/settings/settings_screen.dart';
+import 'package:cookly/screens/settings/theme_settings_screen.dart';
+import 'package:cookly/screens/settings/uom_visibility_settings_screen.dart';
 import 'package:cookly/services/abstract/data_store.dart';
+import 'package:cookly/services/app_profile.dart';
 import 'package:cookly/services/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
@@ -26,15 +31,18 @@ void main() async {
   );
 
   setupServiceLocator();
+  // TODO keep it here?
+  await GetIt.I.allReady();
+
   runApp(
     LocalizedApp(
       delegate,
-      CooklyApp(),
+      ProviderChainApp(),
     ),
   );
 }
 
-class CooklyApp extends StatelessWidget {
+class ProviderChainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // change notifier provider at root level to enable access to the app profile from everywhere in the app
@@ -43,58 +51,75 @@ class CooklyApp extends StatelessWidget {
 
     var localizationDelegate = LocalizedApp.of(context).delegate;
 
-    print('Cookly App build method called');
-
     return LocalizationProvider(
       state: LocalizationProvider.of(context).state,
-      child: FutureBuilder(
-        future: GetIt.I.allReady(),
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.hasData) {
-            return ChangeNotifierProvider(
-              create: (BuildContext context) {
-                return sl.get<DataStore>().appProfile;
-              },
-              child: MaterialApp(
-                title: translate(Keys.App_Title),
-                localizationsDelegates: [
-                  GlobalMaterialLocalizations.delegate,
-                  GlobalWidgetsLocalizations.delegate,
-                  localizationDelegate
-                ],
-                supportedLocales: localizationDelegate.supportedLocales,
-                locale: localizationDelegate.currentLocale,
-                debugShowCheckedModeBanner: false,
-                theme: ThemeData.dark(),
-                initialRoute: HomeScreen.id,
-                routes: {
-                  HomeScreen.id: (context) => HomeScreen(),
-                  RecipeScreen.id: (context) => RecipeScreen(),
-                  NewRecipeScreen.id: (context) => NewRecipeScreen(),
-                  SettingsScreen.id: (context) => SettingsScreen(),
-                  MealPlanScreen.id: (context) => MealPlanScreen(),
-                  OCRTestScreen.id: (context) => OCRTestScreen(),
-                  OnBoardingScreen.id: (context) => OnBoardingScreen(),
-                  MyHomePage.id: (context) => MyHomePage(),
-                  RecipeListScreen.id: (context) => RecipeListScreen(),
-                  RecipeSelectionScreen.id: (context) =>
-                      RecipeSelectionScreen(),
-                  NewIngredientScreen.id: (context) => NewIngredientScreen(),
-                },
-              ),
-            );
-          } else {
-            // not yet ready - local json being processed
-            return Center(
-              child: Container(
-                width: 100,
-                height: 100,
-                child: CircularProgressIndicator(),
-              ),
-            );
-          }
-        },
+      child:
+          // FutureBuilder(
+          //   future: GetIt.I.allReady(),
+          //   builder: (BuildContext context, AsyncSnapshot snapshot) {
+          //     if (snapshot.hasData) {
+          //       return
+          ChangeNotifierProvider<AppProfile>(
+        create: (context) => sl.get<DataStore>().appProfile,
+        child: ChangeNotifierProvider<ThemeModel>(
+          create: (context) => ThemeModel(),
+          child: CooklyMaterialApp(localizationDelegate: localizationDelegate),
+        ),
       ),
+    );
+    // } else {
+    //   // not yet ready - local json being processed
+    //   return Center(
+    //     child: Container(
+    //       width: 100,
+    //       height: 100,
+    //       child: CircularProgressIndicator(),
+    //     ),
+    //   );
+    // }
+    // },
+    //   ),
+    // );
+  }
+}
+
+class CooklyMaterialApp extends StatelessWidget {
+  const CooklyMaterialApp({
+    @required this.localizationDelegate,
+  });
+
+  final LocalizationDelegate localizationDelegate;
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: translate(Keys.App_Title),
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        localizationDelegate
+      ],
+      supportedLocales: localizationDelegate.supportedLocales,
+      locale: localizationDelegate.currentLocale,
+      debugShowCheckedModeBanner: false,
+      theme: Provider.of<ThemeModel>(context).current,
+      initialRoute: HomeScreen.id,
+      routes: {
+        HomeScreen.id: (context) => HomeScreen(),
+        RecipeScreen.id: (context) => RecipeScreen(),
+        NewRecipeScreen.id: (context) => NewRecipeScreen(),
+        SettingsScreen.id: (context) => SettingsScreen(),
+        MealPlanScreen.id: (context) => MealPlanScreen(),
+        OCRTestScreen.id: (context) => OCRTestScreen(),
+        OnBoardingScreen.id: (context) => OnBoardingScreen(),
+        MyHomePage.id: (context) => MyHomePage(),
+        RecipeListScreen.id: (context) => RecipeListScreen(),
+        RecipeSelectionScreen.id: (context) => RecipeSelectionScreen(),
+        NewIngredientScreen.id: (context) => NewIngredientScreen(),
+        UoMVisibilityScreen.id: (context) => UoMVisibilityScreen(),
+        ThemeSettingsScreen.id: (context) => ThemeSettingsScreen(),
+        MealPlanSettingsScreen.id: (context) => MealPlanSettingsScreen(),
+      },
     );
   }
 }

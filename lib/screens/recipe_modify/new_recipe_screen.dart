@@ -9,7 +9,17 @@ import 'package:cookly/screens/recipe_modify/overview_step.dart';
 import 'package:cookly/screens/recipe_modify/tag_step.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+
+saveModel(BuildContext context, RecipeEditModel model) async {
+  try {
+    await model.save();
+    Navigator.pushReplacementNamed(context, HomeScreen.id);
+  } catch (e) {
+    kErrorDialog(context, 'Error occured while saving', e.toString());
+  }
+}
 
 class NewRecipeScreen extends StatelessWidget {
   static final String id = 'newRecipe';
@@ -23,6 +33,14 @@ class NewRecipeScreen extends StatelessWidget {
         title: model.isCreate
             ? Text(translate(Keys.Recipe_Createrecipe))
             : Text(translate(Keys.Recipe_Editrecipe)),
+        actions: <Widget>[
+          IconButton(
+            icon: FaIcon(FontAwesomeIcons.save),
+            onPressed: () async {
+              saveModel(context, model);
+            },
+          ),
+        ],
       ),
       body: ChangeNotifierProvider(
         create: (context) => model,
@@ -43,14 +61,7 @@ class NewRecipeStepper extends StatelessWidget {
     if (model.currentStep + 1 < model.countSteps) {
       nextStep(context);
     } else {
-      try {
-        await model.save();
-        Navigator.pushReplacementNamed(context, HomeScreen.id);
-        // Navigator.pushReplacementNamed(context, RecipeScreen.id,
-        //     arguments: model.recipeId);
-      } catch (e) {
-        kErrorDialog(context, 'Error occured while saving', e.toString());
-      }
+      saveModel(context, model);
     }
   }
 
