@@ -35,13 +35,18 @@ class MealPlanViewModel extends ChangeNotifier {
   String _recipeIdForAddition;
 
   MealPlanViewModel.of(this._locale, MealPlan plan) {
+    var now = DateTime.now();
+    var today = DateTime(now.year, now.month, now.day);
     for (var item in plan.items) {
-      bool skip = item.date.isBefore(DateTime.now().add(Duration(days: 1)));
+      bool skip = item.date.isBefore(today);
       if (!skip) {
         entries.add(MealPlanDateEntry.of(_locale, item));
       }
     }
 
+    // also do a first date calculation
+
+// only last date calculation
     var lastDate = entries.isNotEmpty
         ? entries.last._date
         : DateTime.now().subtract(Duration(days: 1));

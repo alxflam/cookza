@@ -5,8 +5,8 @@ import 'package:cookly/model/view/recipe_edit_model.dart';
 import 'package:cookly/screens/meal_plan/meal_plan_screen.dart';
 import 'package:cookly/screens/recipe_list_screen.dart';
 import 'package:cookly/screens/recipe_modify/new_recipe_screen.dart';
+import 'package:cookly/services/abstract/receive_intent_handler.dart';
 import 'package:cookly/services/service_locator.dart';
-import 'package:cookly/services/share_receive_handler.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -16,40 +16,24 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class HomeScreen extends StatelessWidget {
   static final id = 'home';
 
-  static const platform = const MethodChannel('app.channel.shared.data');
-
   void init(BuildContext context) async {
-    // todo: maybe needed if app is completely closed when intent is received
-    // SystemChannels.lifecycle.setMessageHandler((msg) {
-    //   if (msg.contains('resumed')) {
-    //     _getSharedText().then((d) {
-    //       handleReceivedText(d, context);
-    //     });
-    //   }
-    // });
-
     // check for shared content on mobile platforms
     if (!kIsWeb) {
+      // setup share intent listener
+      SystemChannels.lifecycle.setMessageHandler((msg) {
+        if (msg == AppLifecycleState.resumed.toString()) {
+          var handler = sl.get<ReceiveIntentHandler>();
+          handler.handleSharedText(context);
+          handler.handleSharedJson(context);
+        }
+      });
+
       // get share handler
-      var handler = sl.get<ShareReceiveHandler>();
-
-      // handle shared text
-      var data = await _getSharedText();
-      handler.handleReceivedText(data, context);
-
-      // handle shared json
-      var jsonData = await _getSharedJson();
-      handler.handleReceivedJson(jsonData, context);
+      var handler = sl.get<ReceiveIntentHandler>();
+      handler.handleSharedText(context);
+      handler.handleSharedJson(context);
     }
   }
-
-  /// read shared text
-  Future<String> _getSharedText() async =>
-      await platform.invokeMethod('getSharedText');
-
-  /// read shared json
-  Future<String> _getSharedJson() async =>
-      await platform.invokeMethod('getSharedJson');
 
   @override
   Widget build(BuildContext context) {

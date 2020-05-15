@@ -20,38 +20,43 @@ class MainActivity: FlutterActivity() {
 
 
     override fun configureFlutterEngine(@NonNull flutterEngine: FlutterEngine) {
-        GeneratedPluginRegistrant.registerWith(flutterEngine);
+    
+      GeneratedPluginRegistrant.registerWith(flutterEngine);
 
-    val intent = getIntent()
+      val intent = getIntent()
+      handleIntent(intent)
+
+      MethodChannel(getFlutterEngine()!!.getDartExecutor()!!.getBinaryMessenger(), "app.channel.shared.data").setMethodCallHandler(
+        object: MethodCallHandler {
+          override fun onMethodCall(call: MethodCall, result: Result) {
+            if (call.method.contentEquals("getSharedText"))
+            {
+              result.success(sharedText)
+              sharedText = ""
+            }
+            if (call.method.contentEquals("getSharedJson"))
+            {
+              result.success(sharedJson)
+              sharedJson = ""
+            }
+          }
+        }
+      )
+  }
+
+  internal fun handleIntent(intent:Intent) {
     val action = intent.getAction()
     val type = intent.getType()
     if (Intent.ACTION_SEND.equals(action) && type != null)
     {
-      System.out.println("Share intent for type: " + type);
       if ("text/plain" == type)
       {
         handleSendText(intent)
       }
-       if ("application/json" == type ) {
-         handleSendJson(intent)
-       }
+      if ("application/json" == type ) {
+        handleSendJson(intent)
+      }
     }
-
-    MethodChannel(getFlutterEngine()!!.getDartExecutor()!!.getBinaryMessenger(), "app.channel.shared.data").setMethodCallHandler(
-      object: MethodCallHandler {
-        override fun onMethodCall(call: MethodCall, result: Result) {
-          if (call.method.contentEquals("getSharedText"))
-          {
-            result.success(sharedText)
-            sharedText = ""
-          }
-          if (call.method.contentEquals("getSharedJson"))
-          {
-            result.success(sharedJson)
-            sharedJson = ""
-          }
-        }
-      })
   }
 
   internal fun handleSendText(intent: Intent) {
@@ -69,8 +74,10 @@ class MainActivity: FlutterActivity() {
     sharedJson = content
   }
 
-//   override fun onNewIntent(intent:Intent) {
-//       super.onNewIntent(intent)
-//       handleSendText(intent)
-//   }
+  override fun onNewIntent(intent:Intent) {
+    // called when app is resumed from paused state (background)
+    // e.g. when shared to app but app was already open
+    super.onNewIntent(intent)
+    handleIntent(intent)
+  }
 }

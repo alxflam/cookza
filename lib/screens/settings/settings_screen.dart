@@ -3,10 +3,12 @@ import 'package:cookly/localization/keys.dart';
 import 'package:cookly/model/view/recipe_selection_model.dart';
 import 'package:cookly/model/view/recipe_view_model.dart';
 import 'package:cookly/screens/settings/camera.dart';
+import 'package:cookly/screens/settings/export_settings_screen.dart';
 import 'package:cookly/screens/settings/meal_plan_settings_screen.dart';
 import 'package:cookly/screens/settings/ocr_screen.dart';
 import 'package:cookly/screens/settings/onboarding_screen.dart';
 import 'package:cookly/screens/recipe_selection_screen.dart';
+import 'package:cookly/screens/settings/saved_images_screen.dart';
 import 'package:cookly/screens/settings/theme_settings_screen.dart';
 import 'package:cookly/screens/settings/uom_visibility_settings_screen.dart';
 import 'package:cookly/services/abstract/data_store.dart';
@@ -32,15 +34,8 @@ class SettingsScreen extends StatelessWidget {
               ListTile(
                 title: Text(translate(Keys.Ui_Export)),
                 leading: FaIcon(FontAwesomeIcons.fileExport),
-                onTap: () {
-                  // fetch all recipes the app currently stores
-                  var recipes = sl.get<DataStore>().appProfile.recipes;
-                  // create the view model with type export
-                  var model = RecipeSelectionModel.forExport(recipes.toList());
-                  // navigate to the selection screen
-                  Navigator.pushNamed(context, RecipeSelectionScreen.id,
-                      arguments: model);
-                },
+                onTap: () =>
+                    Navigator.pushNamed(context, ExportSettingsScreen.id),
               ),
               ListTile(
                 title: Text(translate(Keys.Ui_Import)),
@@ -68,6 +63,13 @@ class SettingsScreen extends StatelessWidget {
                 leading: FaIcon(kMealPlannerIconData),
                 onTap: () {
                   Navigator.pushNamed(context, MealPlanSettingsScreen.id);
+                },
+              ),
+              ListTile(
+                title: Text('§Saved Images'),
+                leading: FaIcon(FontAwesomeIcons.camera),
+                onTap: () {
+                  Navigator.pushNamed(context, SavedImagesScreen.id);
                 },
               ),
               ListTile(

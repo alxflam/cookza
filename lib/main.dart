@@ -4,6 +4,7 @@ import 'package:cookly/screens/meal_plan/meal_plan_screen.dart';
 import 'package:cookly/screens/settings/camera.dart';
 import 'package:cookly/screens/home_screen.dart';
 import 'package:cookly/screens/new_ingredient_screen.dart';
+import 'package:cookly/screens/settings/export_settings_screen.dart';
 import 'package:cookly/screens/settings/meal_plan_settings_screen.dart';
 import 'package:cookly/screens/settings/ocr_screen.dart';
 import 'package:cookly/screens/settings/onboarding_screen.dart';
@@ -11,6 +12,7 @@ import 'package:cookly/screens/recipe_list_screen.dart';
 import 'package:cookly/screens/recipe_modify/new_recipe_screen.dart';
 import 'package:cookly/screens/recipe_selection_screen.dart';
 import 'package:cookly/screens/recipe_view/recipe_screen.dart';
+import 'package:cookly/screens/settings/saved_images_screen.dart';
 import 'package:cookly/screens/settings/settings_screen.dart';
 import 'package:cookly/screens/settings/theme_settings_screen.dart';
 import 'package:cookly/screens/settings/uom_visibility_settings_screen.dart';
@@ -119,6 +121,8 @@ class CooklyMaterialApp extends StatelessWidget {
         UoMVisibilityScreen.id: (context) => UoMVisibilityScreen(),
         ThemeSettingsScreen.id: (context) => ThemeSettingsScreen(),
         MealPlanSettingsScreen.id: (context) => MealPlanSettingsScreen(),
+        SavedImagesScreen.id: (context) => SavedImagesScreen(),
+        ExportSettingsScreen.id: (context) => ExportSettingsScreen(),
       },
     );
   }
