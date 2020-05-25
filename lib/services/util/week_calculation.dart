@@ -17,3 +17,15 @@ int weekNumberOf(DateTime date) {
   // the elapsedDays are zero, hence one day needs to be added
   return 1 + ((elapsedDays + 1) / 7).floor();
 }
+
+bool isSameDay(DateTime first, DateTime second) {
+  if (first == null) {
+    return false;
+  }
+  if (second == null) {
+    return false;
+  }
+  return first.day == second.day &&
+      first.month == second.month &&
+      first.year == second.year;
+}

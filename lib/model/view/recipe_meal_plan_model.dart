@@ -6,6 +6,7 @@ import 'package:cookly/services/shared_preferences_provider.dart';
 import 'package:cookly/services/util/week_calculation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class MealDragModel {
   int _origin;
@@ -17,7 +18,7 @@ class MealDragModel {
   MealDragModel(this._recipe, this._origin);
 }
 
-class MealPlanRecipeModel {
+class MealPlanRecipeModel with ChangeNotifier {
   String _name;
   String _id;
   int _servings;
@@ -27,6 +28,11 @@ class MealPlanRecipeModel {
   String get name => _name;
   String get id => _id;
   int get servings => _servings;
+
+  void setServings(BuildContext context, int value) {
+    _servings = value;
+    notifyListeners();
+  }
 }
 
 class MealPlanViewModel extends ChangeNotifier {
@@ -35,39 +41,46 @@ class MealPlanViewModel extends ChangeNotifier {
   String _recipeIdForAddition;
 
   MealPlanViewModel.of(this._locale, MealPlan plan) {
+    // first retrieve how many weeks should be shown
+    var targetWeeks = sl.get<SharedPreferencesProvider>().getMealPlanWeeks();
+
+    // then identify the start date
     var now = DateTime.now();
     var today = DateTime(now.year, now.month, now.day);
+
+    // for each persisted item, use it if it is not in the past and contains any persisted state (recipes have been added)
     for (var item in plan.items) {
       bool skip = item.date.isBefore(today);
-      if (!skip) {
+      if (!skip &&
+          item.recipeReferences != null &&
+          item.recipeReferences.isNotEmpty) {
         entries.add(MealPlanDateEntry.of(_locale, item));
       }
     }
 
-    // also do a first date calculation
-
-// only last date calculation
+    // then identify the end date of the persisted state (if none is there - yesterdays date)
     var lastDate = entries.isNotEmpty
         ? entries.last._date
-        : DateTime.now().subtract(Duration(days: 1));
-    var targetLastDate = DateTime.now().add(Duration(days: 13));
-    var missingDays = lastDate.difference(targetLastDate).inDays;
-    missingDays = missingDays < 0 ? missingDays * -1 : missingDays;
-    // add the missing days so we always have a list of two weeks
-    // TODO: make this a preference setting (e.g. 7, 14, or custom amount of days)
-    for (var i = 0; i < missingDays; i++) {
-      entries.add(MealPlanDateEntry.empty(
-          _locale, lastDate.add(Duration(days: i + 1))));
+        : today.add(Duration(days: targetWeeks * 7));
+
+    // check if we start the period on a monday: we always want to show full weeks for the targetWeeks,
+    // therefore if we open the meal plan on a wednesday and targetWeeks is two, we will have the rest of the week (5 days) + two weeks shown
+    var offset = DateTime.monday == today.weekday ? -1 : 7 - today.weekday;
+    var minLastDate =
+        today.add(Duration(days: offset)).add(Duration(days: targetWeeks * 7));
+    if (minLastDate.isAfter(lastDate)) {
+      lastDate = minLastDate;
     }
-    for (var i = 0; i < entries.length; i = i + 2) {
-      if (i < entries.length - 1) {
-        var date = entries[i]._date;
-        var nextDate = entries[i + 1]._date;
-        var diffDays = date.difference(nextDate).inDays;
-        if (diffDays > 1) {
-          // TODO: fix gaps in data => no days need to be stored which do not contain any data
-          throw 'corrupted data';
-        }
+
+    // next fill up dates currently not occupied (there has not been any persisted state for these)
+    var days = lastDate.difference(today).inDays;
+    this._sort();
+    for (var i = 0; i <= days; i++) {
+      var day = today.add(Duration(days: i));
+
+      if (entries.length <= i || !isSameDay(entries[i]._date, day)) {
+        entries.add(MealPlanDateEntry.empty(_locale, day));
+        this._sort();
       }
     }
 
@@ -130,9 +143,28 @@ class MealPlanViewModel extends ChangeNotifier {
 
     return MealPlan(items: items);
   }
+
+  void recipeModelChanged(MealPlanRecipeModel mealPlanRecipeModel) {
+    this._save();
+  }
+
+  Map<String, int> getRecipesForInterval(
+      DateTime firstDate, DateTime lastDate) {
+    Map<String, int> result = {};
+    for (var item in entries) {
+      if (item.date.isAfter(firstDate.subtract(Duration(days: 1))) &&
+          item.date.isBefore(lastDate.add(Duration(days: 1)))) {
+        for (var recipe in item.recipes) {
+          result.update(recipe.id, (value) => value + recipe.servings,
+              ifAbsent: () => recipe.servings);
+        }
+      }
+    }
+    return result;
+  }
 }
 
-class MealPlanDateEntry {
+class MealPlanDateEntry with ChangeNotifier {
   DateTime _date;
   Map<String, MealPlanRecipeModel> _recipes = {};
   Locale _locale;
@@ -162,6 +194,8 @@ class MealPlanDateEntry {
   }
 
   int get week => weekNumberOf(_date);
+
+  DateTime get date => _date;
 
   List<MealPlanRecipeModel> get recipes => _recipes.values.toList();
 

@@ -2,9 +2,11 @@ import 'package:cookly/components/main_app_drawer.dart';
 import 'package:cookly/constants.dart';
 import 'package:cookly/localization/keys.dart';
 import 'package:cookly/model/view/recipe_edit_model.dart';
+import 'package:cookly/screens/leftovers_screen.dart';
 import 'package:cookly/screens/meal_plan/meal_plan_screen.dart';
 import 'package:cookly/screens/recipe_list_screen.dart';
 import 'package:cookly/screens/recipe_modify/new_recipe_screen.dart';
+import 'package:cookly/screens/shopping_list/shopping_list_overview_screen.dart';
 import 'package:cookly/services/abstract/receive_intent_handler.dart';
 import 'package:cookly/services/service_locator.dart';
 import 'package:flutter/foundation.dart';
@@ -91,7 +93,8 @@ class HomeScreen extends StatelessWidget {
               children: <Widget>[
                 Expanded(
                   child: ReusableCard(
-                    onPress: () => kNotImplementedDialog(context),
+                    onPress: () => Navigator.pushNamed(
+                        context, ShoppingListOverviewScreen.id),
                     color: Colors.teal.shade900,
                     cardChild: IconContent(
                       icon: kShoppingListIconData,
@@ -118,7 +121,8 @@ class HomeScreen extends StatelessWidget {
               children: <Widget>[
                 Expanded(
                   child: ReusableCard(
-                    onPress: () => kNotImplementedDialog(context),
+                    onPress: () =>
+                        Navigator.pushNamed(context, LeftoversScreen.id),
                     color: Colors.teal.shade900,
                     cardChild: IconContent(
                       icon: kLeftoversIconData,

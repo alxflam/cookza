@@ -3,7 +3,13 @@ import 'package:cookly/model/view/recipe_view_model.dart';
 import 'package:cookly/screens/recipe_selection_screen.dart';
 import 'package:flutter/cupertino.dart';
 
-enum SELECTION_MODE { EXPORT, IMPORT, REFERENCE_INGREDIENT, ADD_TO_MEAL_PLAN }
+enum SELECTION_MODE {
+  EXPORT,
+  IMPORT,
+  REFERENCE_INGREDIENT,
+  ADD_TO_MEAL_PLAN,
+  EXPORT_PDF
+}
 
 class RecipeSelectionModel extends ChangeNotifier {
   List<String> _selected = [];
@@ -30,6 +36,13 @@ class RecipeSelectionModel extends ChangeNotifier {
 
   RecipeSelectionModel.forExport(this._recipes)
       : this._mode = SELECTION_MODE.EXPORT,
+        this._allowMultiSelection = true {
+    _recipes.forEach((item) => _selected.add(item.id));
+    _init();
+  }
+
+  RecipeSelectionModel.forExportPDF(this._recipes)
+      : this._mode = SELECTION_MODE.EXPORT_PDF,
         this._allowMultiSelection = true {
     _recipes.forEach((item) => _selected.add(item.id));
     _init();

@@ -56,7 +56,9 @@ class Keys {
 
   static const String Recipe_Unit = 'recipe.unit';
 
-  static const String Recipe_Ingredient = 'recipe.Ingredient';
+  static const String Recipe_Ingredient = 'recipe.ingredient';
+
+  static const String Recipe_Instructions = 'recipe.instructions';
 
   static const String Theme_Title = 'theme.title';
 

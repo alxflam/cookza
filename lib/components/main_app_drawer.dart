@@ -1,8 +1,10 @@
 import 'package:cookly/localization/keys.dart';
 import 'package:cookly/model/view/recipe_edit_model.dart';
 import 'package:cookly/screens/meal_plan/meal_plan_screen.dart';
+import 'package:cookly/screens/recipe_list_screen.dart';
 import 'package:cookly/screens/recipe_modify/new_recipe_screen.dart';
 import 'package:cookly/screens/settings/settings_screen.dart';
+import 'package:cookly/screens/web_login_app.dart';
 import 'package:cookly/services/app_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
@@ -67,7 +69,9 @@ class MainAppDrawer extends StatelessWidget {
           ListTile(
             title: Text(translatePlural(Keys.Ui_Recipe, 2)),
             leading: Icon(kRecipesIconData),
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(context, RecipeListScreen.id);
+            },
           ),
           ListTile(
             title: Text(translate(Keys.Functions_Mealplanner)),
@@ -91,6 +95,11 @@ class MainAppDrawer extends StatelessWidget {
             title: Text(translate(Keys.Ui_Settings)),
             leading: Icon(FontAwesomeIcons.cog),
             onTap: () => Navigator.pushNamed(context, SettingsScreen.id),
+          ),
+          ListTile(
+            title: Text('§Web Login'),
+            leading: Icon(Icons.web),
+            onTap: () => Navigator.pushNamed(context, WebLoginOnAppScreen.id),
           ),
           AboutListTile(
             icon: Icon(kInfoIconData),

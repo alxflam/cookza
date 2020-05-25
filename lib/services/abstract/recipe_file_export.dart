@@ -1,6 +1,4 @@
 import 'package:cookly/constants.dart';
-import 'package:cookly/model/json/profile.dart';
-import 'package:cookly/model/json/recipe.dart';
 import 'package:cookly/model/json/recipe_list.dart';
 import 'package:cookly/services/abstract/data_store.dart';
 import 'package:cookly/services/service_locator.dart';

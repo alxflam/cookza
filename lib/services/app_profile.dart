@@ -7,6 +7,7 @@ import 'package:cookly/model/json/profile.dart';
 import 'package:cookly/model/json/recipe.dart';
 import 'package:cookly/model/view/recipe_meal_plan_model.dart';
 import 'package:cookly/model/view/recipe_view_model.dart';
+import 'package:cookly/model/view/shopping_list.dart';
 import 'package:cookly/services/abstract/data_store.dart';
 import 'package:cookly/services/local_storage.dart';
 import 'package:cookly/services/service_locator.dart';
@@ -64,6 +65,16 @@ class AppProfile extends ChangeNotifier {
     return RecipeViewModel.of(recipe);
   }
 
+  List<RecipeViewModel> getRecipesById(List<String> ids) {
+    return this
+        ._profile
+        .recipeList
+        .recipes
+        .where((item) => ids.contains(item.id))
+        .map((e) => RecipeViewModel.of(e))
+        .toList();
+  }
+
   Future<FileImage> getRecipeImage(String id) async {
     Recipe recipe = this
         ._profile
@@ -80,7 +91,7 @@ class AppProfile extends ChangeNotifier {
             .get<StorageProvider>()
             .fileExists(imageMapping?.imageFilePath);
         if (exists) {
-          /// todo let the storage provider return the image directly
+          /// TODO let the storage provider return the image directly
           return FileImage(File(imageMapping.imageFilePath));
         }
       }
@@ -132,6 +143,19 @@ class AppProfile extends ChangeNotifier {
   MealPlanViewModel mealPlanModel(BuildContext context) {
     var locale = Localizations.localeOf(context);
     return MealPlanViewModel.of(locale, this._profile.mealPlan);
+  }
+
+  List<ShoppingListModel> shoppingLists() {
+    return this
+        ._profile
+        .shoppingLists
+        .items
+        .map((e) => ShoppingListModel.of(e))
+        .toList();
+  }
+
+  ShoppingListOverviewModel shoppingListOverviewModel() {
+    return ShoppingListOverviewModel.of(this._profile.shoppingLists.items);
   }
 
   void updateMealPlan(MealPlan mealPlan) {

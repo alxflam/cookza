@@ -1,12 +1,11 @@
+import 'package:cookly/components/round_icon_button.dart';
 import 'package:cookly/constants.dart';
 import 'package:cookly/localization/keys.dart';
 import 'package:cookly/model/view/recipe_meal_plan_model.dart';
 import 'package:cookly/model/view/recipe_selection_model.dart';
 import 'package:cookly/screens/recipe_selection_screen.dart';
 import 'package:cookly/services/abstract/data_store.dart';
-import 'package:cookly/services/app_profile.dart';
 import 'package:cookly/services/service_locator.dart';
-import 'package:cookly/services/util/week_calculation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -19,7 +18,6 @@ class MealPlanScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     MealPlanViewModel _model =
         sl.get<DataStore>().appProfile.mealPlanModel(context);
-    // Provider.of<AppProfile>(context, listen: false).mealPlanModel(context);
     var _recipeId = ModalRoute.of(context).settings.arguments as String;
     if (_recipeId != null && _recipeId.isNotEmpty) {
       _model.setRecipeForAddition(_recipeId);
@@ -27,7 +25,15 @@ class MealPlanScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(translate(Keys.Functions_Mealplanner)),
+        title: Text(
+          translate(Keys.Functions_Mealplanner),
+        ),
+        actions: [
+          IconButton(
+            icon: Icon(kShoppingListIconData),
+            onPressed: () {},
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: ChangeNotifierProvider<MealPlanViewModel>.value(
@@ -133,58 +139,141 @@ class MealPlanScreen extends StatelessWidget {
   List<Widget> _createRecipeTiles(
       MealPlanViewModel model, int i, BuildContext context) {
     List<Widget> tiles = [];
-    var countRecipes = model.entries[i].recipes.length;
 
     for (var entry in model.entries[i].recipes) {
-      var tile = ListTile(
-        title: Text(entry.name),
-        subtitle: Text(
-            '${entry.servings.toString()} ${translate(Keys.Recipe_Servings)}'),
-        trailing: IconButton(
-          icon: Icon(Icons.delete),
-          onPressed: () {
-            model.removeRecipe(entry.id, i);
-          },
+      var tile = ChangeNotifierProvider.value(
+        value: entry,
+        builder: (context, _) {
+          return Consumer<MealPlanRecipeModel>(
+            builder: (context, recipeModel, _) {
+              return ListTile(
+                dense: true,
+                title: Text(recipeModel.name),
+                subtitle: Text(
+                    '${recipeModel.servings.toString()} ${translate(Keys.Recipe_Servings)}'),
+                trailing: IconButton(
+                  icon: Icon(Icons.edit),
+                  onPressed: () {
+                    var mealPlanViewModel =
+                        Provider.of<MealPlanViewModel>(context, listen: false);
+
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        var _count = recipeModel.servings;
+                        return StatefulBuilder(builder: (context, setState) {
+                          return SimpleDialog(
+                            children: <Widget>[
+                              SingleChildScrollView(
+                                child: Column(
+                                  children: <Widget>[
+                                    Text(
+                                      recipeModel.name,
+                                      style: TextStyle(fontSize: 20),
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: <Widget>[
+                                        Text(translate(Keys.Recipe_Servings)),
+                                        RoundIconButton(
+                                          icon: FontAwesomeIcons.minus,
+                                          onPress: () {
+                                            if (_count > 1) {
+                                              setState(() {
+                                                _count--;
+                                              });
+                                            }
+                                          },
+                                        ),
+                                        Text(_count.toString()),
+                                        RoundIconButton(
+                                          icon: FontAwesomeIcons.plus,
+                                          onPress: () {
+                                            setState(() {
+                                              _count++;
+                                            });
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: <Widget>[
+                                        RaisedButton(
+                                            child: Icon(Icons.check),
+                                            color: Colors.green,
+                                            onPressed: () {
+                                              recipeModel.setServings(
+                                                  context, _count);
+                                              mealPlanViewModel
+                                                  .recipeModelChanged(
+                                                      recipeModel);
+                                              Navigator.pop(context);
+                                            }),
+                                        RaisedButton(
+                                            child: Icon(Icons.delete),
+                                            color: Colors.red,
+                                            onPressed: () {
+                                              model.removeRecipe(
+                                                  recipeModel.id, i);
+
+                                              Navigator.pop(context);
+                                            }),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              )
+                            ],
+                          );
+                        });
+                      },
+                    );
+                  },
+                ),
+              );
+            },
+          );
+        },
+      );
+
+      var feedback = Transform.scale(
+        scale: 2,
+        child: Opacity(
+          opacity: 0.9,
+          child: ConstrainedBox(
+            constraints: BoxConstraints.loose(
+              Size.fromWidth(200),
+            ),
+            child: Container(
+              padding: EdgeInsets.only(bottom: 100),
+              child: Material(
+                color: Colors.transparent,
+                child: Transform.scale(
+                  scale: 0.5,
+                  child: Card(
+                    color: Colors.teal.shade300,
+                    child: ListTile(
+                      title: Text(entry.name),
+                      subtitle: Text(
+                          '${entry.servings.toString()} ${translate(Keys.Recipe_Servings)}'),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
         ),
       );
 
       var draggable = LongPressDraggable<MealDragModel>(
+          dragAnchor: DragAnchor.child,
           maxSimultaneousDrags: 1,
           // axis: Axis.vertical,
           child: tile,
-          feedback: Material(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(maxWidth: 200),
-              child: Expanded(child: tile),
-            ),
-          ),
-
-          // Material(
-          //   child: ClipRRect(
-          //     borderRadius: BorderRadius.circular(25),
-          //     child: ConstrainedBox(
-          //       constraints: BoxConstraints.expand(),
-          //       // child: ClipRRect(
-          //       //   borderRadius: BorderRadius.circular(25),
-          //       child: Container(
-          //         decoration: BoxDecoration(
-          //           color: Colors.cyan.withAlpha(55),
-          //         ),
-          //         child: Center(
-          //           child: Padding(
-          //             padding: EdgeInsets.all(10),
-          //             child: Text(
-          //               entry.name,
-          //               style: TextStyle(fontWeight: FontWeight.bold),
-          //             ),
-          //           ),
-          //         ),
-          //         // ),
-          //       ),
-          //     ),
-          //   ),
-          // ),
-
+          feedback: feedback,
           childWhenDragging: Container(),
           data: MealDragModel(entry, i));
       tiles.add(draggable);
@@ -205,13 +294,5 @@ class MealPlanScreen extends StatelessWidget {
         ),
       ),
     );
-    // return Row(
-    //   mainAxisAlignment: MainAxisAlignment.center,
-    //   children: <Widget>[
-    //     Text(
-    //       i.toString(),
-    //     ),
-    //   ],
-    // );
   }
 }

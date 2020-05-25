@@ -37,7 +37,7 @@ Step getIngredientsStep(BuildContext context) {
                     label: Text(translate(Keys.Recipe_Unit)),
                   ),
                   DataColumn(
-                    label: Text(translate(Keys.Recipe_Ingredient)),
+                    label: Text(translatePlural(Keys.Recipe_Ingredient, 0)),
                   ),
                   DataColumn(label: Text('')),
                 ],

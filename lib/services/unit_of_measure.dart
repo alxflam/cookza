@@ -79,6 +79,10 @@ class UnitOfMeasure {
   String get id {
     return this._id;
   }
+
+  bool canBeConvertedTo(UnitOfMeasure uom) {
+    return uom.id == this.id;
+  }
 }
 
 class MetricUnitOfMeasure extends UnitOfMeasure {
@@ -91,6 +95,14 @@ class MetricUnitOfMeasure extends UnitOfMeasure {
   String get baseUnit => _baseUnit;
 
   double get conversionFactor => _conversionFactor;
+
+  @override
+  bool canBeConvertedTo(UnitOfMeasure uom) {
+    if (uom is MetricUnitOfMeasure) {
+      return uom.baseUnit == this.baseUnit;
+    }
+    return false;
+  }
 }
 
 class AmountedUnitOfMeasure {
@@ -148,7 +160,7 @@ class AmountedUnitOfMeasure {
       List<MetricUnitOfMeasure> sameBaseUnit =
           _getSameBaseUnit(uom, descending: true);
 
-// get descending!
+      // get descending!
       var targetUoM = sameBaseUnit
           .firstWhere((e) => e.conversionFactor < uom.conversionFactor);
 
@@ -166,6 +178,34 @@ class AmountedUnitOfMeasure {
       return AmountedUnitOfMeasure(targetUoM, result);
     }
     return this;
+  }
+
+  AmountedUnitOfMeasure add(AmountedUnitOfMeasure sourceAmountedUoM) {
+    MetricUnitOfMeasure uom = this.uom;
+    MetricUnitOfMeasure uomSource = sourceAmountedUoM.uom;
+
+    assert(uom.baseUnit == uomSource.baseUnit);
+
+    var target = this;
+    var amounted = sourceAmountedUoM;
+    if (uom.id != uomSource.id) {
+      // convert to biggest uom
+      while (uom.conversionFactor != 1) {
+        target = target.nextBiggerUoM();
+      }
+
+      // convert also to biggest uom
+      if (uom.conversionFactor == 1) {
+        var metricUoM = amounted.uom as MetricUnitOfMeasure;
+        while (metricUoM.conversionFactor != 1) {
+          amounted = sourceAmountedUoM.nextBiggerUoM();
+        }
+      }
+
+      return AmountedUnitOfMeasure(target.uom, target.amount + amounted.amount);
+    }
+
+    return AmountedUnitOfMeasure(uom, this.amount + sourceAmountedUoM.amount);
   }
 }
 

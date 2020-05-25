@@ -61,7 +61,10 @@ class LocalStorageDataStore implements DataStore {
   }
 
   @override
-  Future<List<LocalImage>> getImageMapping() {}
+  Future<List<LocalImage>> getImageMapping() {
+    List<LocalImage> result = [];
+    return Future.value(result);
+  }
 
   @override
   Future saveImageMapping(List<LocalImage> images) {}

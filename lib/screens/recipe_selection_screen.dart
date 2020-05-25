@@ -1,12 +1,17 @@
 import 'package:cookly/localization/keys.dart';
 import 'package:cookly/model/view/recipe_selection_model.dart';
 import 'package:cookly/services/abstract/data_store.dart';
+import 'package:cookly/services/abstract/pdf_export.dart';
+import 'package:cookly/services/abstract/pdf_generator.dart';
 import 'package:cookly/services/abstract/recipe_file_export.dart';
 import 'package:cookly/services/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+
+typedef void OnActionButtonPressed(
+    BuildContext context, RecipeSelectionModel model);
 
 class RecipeSelectionScreen extends StatelessWidget {
   static final String id = 'selection';
@@ -26,6 +31,10 @@ class RecipeSelectionScreen extends StatelessWidget {
     final RecipeSelectionModel _model =
         ModalRoute.of(context).settings.arguments;
 
+    final IconData _icon = _getIconForMode(_model.mode);
+    final OnActionButtonPressed _onPressed =
+        _getOnPressedCallbackForMode(_model.mode);
+
     return ChangeNotifierProvider<RecipeSelectionModel>.value(
       value: _model,
       child: Consumer<RecipeSelectionModel>(
@@ -34,7 +43,11 @@ class RecipeSelectionScreen extends StatelessWidget {
             appBar: AppBar(
               title: _getTitle(model),
               actions: <Widget>[
-                _getActionButton(model, context),
+                IconButton(
+                    icon: FaIcon(_icon),
+                    onPressed: () {
+                      _onPressed(context, model);
+                    })
               ],
             ),
             body: Column(
@@ -94,32 +107,50 @@ class RecipeSelectionScreen extends StatelessWidget {
     }
   }
 
-  Widget _getActionButton(RecipeSelectionModel model, BuildContext context) {
-    switch (model.mode) {
+  IconData _getIconForMode(SELECTION_MODE mode) {
+    switch (mode) {
+      case SELECTION_MODE.EXPORT_PDF:
       case SELECTION_MODE.EXPORT:
-        return IconButton(
-          icon: FaIcon(FontAwesomeIcons.fileExport),
-          onPressed: () {
-            sl.get<RecipeFileExport>().exportRecipes(model.selectedRecipes);
-            Navigator.pop(context);
-          },
-        );
+        return FontAwesomeIcons.fileExport;
       case SELECTION_MODE.IMPORT:
-        return IconButton(
-          icon: FaIcon(FontAwesomeIcons.fileImport),
-          onPressed: () {
-            sl.get<DataStore>().importRecipes(model.getSelectedRecipes());
-            Navigator.pop(context);
-          },
-        );
+        return FontAwesomeIcons.fileImport;
       case SELECTION_MODE.REFERENCE_INGREDIENT:
       case SELECTION_MODE.ADD_TO_MEAL_PLAN:
-        return IconButton(
-            icon: FaIcon(FontAwesomeIcons.check),
-            onPressed: model.selectedRecipes.length == 0
-                ? null
-                : () => Navigator.pop(context, model.selectedRecipes.first));
+        return FontAwesomeIcons.check;
     }
-    return Icon(Icons.device_unknown);
+    return Icons.device_unknown;
+  }
+
+  OnActionButtonPressed _getOnPressedCallbackForMode(SELECTION_MODE mode) {
+    switch (mode) {
+      case SELECTION_MODE.EXPORT:
+        return (context, model) {
+          sl.get<RecipeFileExport>().exportRecipes(model.selectedRecipes);
+          Navigator.pop(context);
+        };
+      case SELECTION_MODE.EXPORT_PDF:
+        return (context, model) {
+          var recipes = sl
+              .get<DataStore>()
+              .appProfile
+              .getRecipesById(model.selectedRecipes);
+          var doc = sl.get<PDFGenerator>().generatePDF(recipes);
+          sl.get<PDFExporter>().export(doc);
+          Navigator.pop(context);
+        };
+      case SELECTION_MODE.IMPORT:
+        return (context, model) {
+          sl.get<DataStore>().importRecipes(model.getSelectedRecipes());
+          Navigator.pop(context);
+        };
+      case SELECTION_MODE.REFERENCE_INGREDIENT:
+      case SELECTION_MODE.ADD_TO_MEAL_PLAN:
+        return (context, model) {
+          if (model.selectedRecipes.length > 0) {
+            Navigator.pop(context, model.selectedRecipes.first);
+          }
+        };
+    }
+    return (context, model) {};
   }
 }

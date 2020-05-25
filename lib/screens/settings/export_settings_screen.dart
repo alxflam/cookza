@@ -35,14 +35,12 @@ class ExportSettingsScreen extends StatelessWidget {
           ),
           ListTile(
             title: Text('PDF'),
-            leading: FaIcon(FontAwesomeIcons.fileExport),
+            leading: FaIcon(FontAwesomeIcons.filePdf),
             onTap: () {
               // fetch all recipes the app currently stores
               var recipes = sl.get<DataStore>().appProfile.recipes;
               // create the view model with type export
-              // TODO: the model should contain the export logic call
-              // subclasses of the model for json, pdf export
-              var model = RecipeSelectionModel.forExport(recipes.toList());
+              var model = RecipeSelectionModel.forExportPDF(recipes.toList());
               // navigate to the selection screen
               Navigator.pushNamed(context, RecipeSelectionScreen.id,
                   arguments: model);

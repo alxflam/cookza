@@ -32,7 +32,11 @@
         "ingredientsForServings": "Ingredients for {0} Servings",
         "amount": "Amount",
         "unit": "Unit",
-        "Ingredient": "Ingredient"
+        "ingredient": {
+            "1": "Ingredient",
+            "else": "Ingredients"
+        },
+        "instructions": "Instructions"
     },
     "theme": {
         "title": "Themes",

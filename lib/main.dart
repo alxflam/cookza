@@ -1,5 +1,6 @@
 import 'package:cookly/localization/keys.dart';
 import 'package:cookly/model/view/settings/theme_model.dart';
+import 'package:cookly/screens/leftovers_screen.dart';
 import 'package:cookly/screens/meal_plan/meal_plan_screen.dart';
 import 'package:cookly/screens/settings/camera.dart';
 import 'package:cookly/screens/home_screen.dart';
@@ -16,9 +17,14 @@ import 'package:cookly/screens/settings/saved_images_screen.dart';
 import 'package:cookly/screens/settings/settings_screen.dart';
 import 'package:cookly/screens/settings/theme_settings_screen.dart';
 import 'package:cookly/screens/settings/uom_visibility_settings_screen.dart';
+import 'package:cookly/screens/shopping_list/shopping_list_detail_screen.dart';
+import 'package:cookly/screens/shopping_list/shopping_list_overview_screen.dart';
+import 'package:cookly/screens/web/web_login.dart';
+import 'package:cookly/screens/web_login_app.dart';
 import 'package:cookly/services/abstract/data_store.dart';
 import 'package:cookly/services/app_profile.dart';
 import 'package:cookly/services/service_locator.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:flutter_translate/localization_delegate.dart';
@@ -105,9 +111,10 @@ class CooklyMaterialApp extends StatelessWidget {
       locale: localizationDelegate.currentLocale,
       debugShowCheckedModeBanner: false,
       theme: Provider.of<ThemeModel>(context).current,
-      initialRoute: HomeScreen.id,
+      initialRoute: kIsWeb ? WebLoginScreen.id : HomeScreen.id,
       routes: {
         HomeScreen.id: (context) => HomeScreen(),
+        WebLoginScreen.id: (context) => WebLoginScreen(),
         RecipeScreen.id: (context) => RecipeScreen(),
         NewRecipeScreen.id: (context) => NewRecipeScreen(),
         SettingsScreen.id: (context) => SettingsScreen(),
@@ -123,6 +130,11 @@ class CooklyMaterialApp extends StatelessWidget {
         MealPlanSettingsScreen.id: (context) => MealPlanSettingsScreen(),
         SavedImagesScreen.id: (context) => SavedImagesScreen(),
         ExportSettingsScreen.id: (context) => ExportSettingsScreen(),
+        LeftoversScreen.id: (context) => LeftoversScreen(),
+        WebLoginOnAppScreen.id: (context) => WebLoginOnAppScreen(),
+        ShoppingListOverviewScreen.id: (context) =>
+            ShoppingListOverviewScreen(),
+        ShoppingListDetailScreen.id: (context) => ShoppingListDetailScreen(),
       },
     );
   }

@@ -1,17 +1,26 @@
+import 'package:cookly/constants.dart';
+import 'package:cookly/localization/keys.dart';
 import 'package:cookly/model/view/recipe_view_model.dart';
 import 'package:cookly/services/abstract/pdf_generator.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
-class PdfGeneratorImpl implements PdfGenerator {
+class PDFGeneratorImpl implements PDFGenerator {
   List<List<String>> _getIngredientList(RecipeViewModel recipe) {
     List<List<String>> result = [];
 
+    result.add([
+      translate(Keys.Recipe_Amount),
+      translate(Keys.Recipe_Unit),
+      translatePlural(Keys.Recipe_Ingredient, 1)
+    ]);
+
     for (var ingredient in recipe.ingredients) {
       result.add([
+        kFormatAmount(ingredient.amount),
         ingredient.uomDisplayText,
-        ingredient.amount.toStringAsFixed(2),
         ingredient.name
       ]);
     }
@@ -77,13 +86,23 @@ class PdfGeneratorImpl implements PdfGenerator {
               ),
             ),
             pw.Paragraph(text: recipe.description),
-            pw.Header(level: 1, text: 'Ingredients'),
+            pw.Header(
+                level: 1, text: translatePlural(Keys.Recipe_Ingredient, 2)),
             pw.Table.fromTextArray(
               context: context,
-              border: pw.TableBorder(width: 0),
+              border: pw.TableBorder(
+                  width: 0,
+                  left: false,
+                  right: false,
+                  top: false,
+                  bottom: false,
+                  horizontalInside: false,
+                  verticalInside: false),
+              headerAlignment: pw.Alignment.center,
+              cellAlignment: pw.Alignment.center,
               data: _getIngredientList(recipe),
             ),
-            pw.Header(level: 1, text: 'Instructions'),
+            pw.Header(level: 1, text: translate(Keys.Recipe_Instructions)),
             pw.Column(
               children: _getInstructions(recipe),
             ),
@@ -92,8 +111,6 @@ class PdfGeneratorImpl implements PdfGenerator {
       );
     }
 
-    // to save as file:
-    // final file = File("example.pdf");
-    // await file.writeAsBytes(pdf.save());
+    return doc;
   }
 }

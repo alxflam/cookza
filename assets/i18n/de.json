@@ -32,7 +32,11 @@
         "ingredientsForServings": "Zutaten für {0} Portionen",
         "amount": "Menge",
         "unit": "Einheit",
-        "Ingredient": "Zutat"
+        "ingredient": {
+            "1": "Zutat",
+            "else": "Zutaten"
+        },
+        "instructions": "Zubereitung"
     },
     "theme": {
         "title": "Themes",
@@ -107,7 +111,7 @@
         },
         "H87": {
             "1": "Stück",
-            "else": "Stücke"
+            "else": "Stück"
         },
         "G21": {
             "1": "Tasse",

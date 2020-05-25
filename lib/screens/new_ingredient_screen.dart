@@ -210,8 +210,8 @@ class NewIngredientScreen extends StatelessWidget {
 
       return Expanded(
         child: TextFormField(
-          decoration:
-              InputDecoration(labelText: translate(Keys.Recipe_Ingredient)),
+          decoration: InputDecoration(
+              labelText: translatePlural(Keys.Recipe_Ingredient, 1)),
           controller: ingredientController,
           keyboardType: TextInputType.text,
         ),

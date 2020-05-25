@@ -26,7 +26,7 @@ class ListOfIngredients extends StatelessWidget {
                     label: Text(translate(Keys.Recipe_Unit)),
                   ),
                   DataColumn(
-                    label: Text(translate(Keys.Recipe_Ingredient)),
+                    label: Text(translatePlural(Keys.Recipe_Ingredient, 1)),
                   ),
                 ],
                 rows: _buildIngredientRows(context, model),
