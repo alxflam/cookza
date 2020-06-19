@@ -1,7 +1,10 @@
 import 'package:cookly/localization/keys.dart';
-import 'package:cookly/model/json/recipe.dart';
-import 'package:cookly/model/view/recipe_edit_model.dart';
-import 'package:cookly/model/view/recipe_edit_step.dart';
+import 'package:cookly/model/entities/abstract/recipe_collection_entity.dart';
+import 'package:cookly/model/entities/abstract/recipe_entity.dart';
+import 'package:cookly/services/recipe_manager.dart';
+import 'package:cookly/services/service_locator.dart';
+import 'package:cookly/viewmodel/recipe_edit/recipe_edit_model.dart';
+import 'package:cookly/viewmodel/recipe_edit/recipe_edit_step.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:provider/provider.dart';
@@ -44,6 +47,7 @@ Step getOverviewStep(BuildContext context) {
                     labelText: translate(Keys.Recipe_Recipedesc)),
                 controller: descController,
               ),
+              _getCollectionDropDown(context, model),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -107,5 +111,45 @@ Step getOverviewStep(BuildContext context) {
         },
       ),
     ),
+  );
+}
+
+Widget _getCollectionDropDown(
+    BuildContext context, RecipeOverviewEditStep model) {
+  return FutureBuilder(
+    future: sl.get<RecipeManager>().collections,
+    builder: (context, snapshot) {
+      if (snapshot.hasData && snapshot.data.isNotEmpty) {
+        var collections = snapshot.data as List<RecipeCollectionEntity>;
+        print(collections);
+        List<DropdownMenuItem<RecipeCollectionEntity>> items = collections
+            .map((item) => DropdownMenuItem<RecipeCollectionEntity>(
+                child: Text(item.name), value: item))
+            .toList();
+
+        if (model.collection == null) {
+          model.collection = collections.first;
+        }
+
+        var selectedCollection =
+            collections.contains(model.collection) ? model.collection : null;
+
+        print('selected coll: $selectedCollection');
+
+        return DropdownButtonFormField<RecipeCollectionEntity>(
+          value: selectedCollection,
+          items: items,
+          decoration: InputDecoration(
+            isDense: true,
+            labelText: '§Collection',
+          ),
+          onChanged: (RecipeCollectionEntity value) {
+            model.collection = value;
+          },
+        );
+      }
+
+      return Container();
+    },
   );
 }

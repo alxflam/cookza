@@ -9,6 +9,7 @@ part of 'recipe.dart';
 Recipe _$RecipeFromJson(Map<String, dynamic> json) {
   return Recipe(
     id: json['id'] as String,
+    recipeCollection: json['recipeCollection'] as String,
     name: json['name'] as String,
     shortDescription: json['shortDescription'] as String ?? '',
     creationDate: kDateFromJson(json['creationDate'] as String),
@@ -32,6 +33,7 @@ Recipe _$RecipeFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$RecipeToJson(Recipe instance) {
   final val = <String, dynamic>{
     'id': instance.id,
+    'recipeCollection': instance.recipeCollection,
   };
 
   void writeNotNull(String key, dynamic value) {

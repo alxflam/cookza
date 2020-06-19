@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:cookly/model/entities/abstract/recipe_entity.dart';
+import 'package:cookly/model/entities/json/recipe_entity.dart';
 import 'package:cookly/model/json/ingredient.dart';
 import 'package:cookly/model/json/ingredient_note.dart';
 import 'package:cookly/model/json/recipe.dart';
@@ -10,7 +12,7 @@ import 'package:http/http.dart' as http;
 class Chefkoch {
   static final String url = 'https://api.chefkoch.de/v2/recipes/';
 
-  Future<Recipe> getRecipe(String id) async {
+  Future<RecipeEntity> getRecipe(String id) async {
     var result = await http.get('$url$id');
     if (result.statusCode != 200) {
       throw "Error contacting Chefkoch.de - pleasy try again later";
@@ -49,6 +51,6 @@ class Chefkoch {
       }
     }
 
-    return recipe;
+    return RecipeEntityJson.of(recipe);
   }
 }

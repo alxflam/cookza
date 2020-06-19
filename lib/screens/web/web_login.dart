@@ -1,5 +1,8 @@
 import 'package:barcode_widget/barcode_widget.dart';
+import 'package:cookly/components/padded_qr_code.dart';
 import 'package:cookly/screens/home_screen.dart';
+import 'package:cookly/services/firebase_provider.dart';
+import 'package:cookly/services/service_locator.dart';
 import 'package:flutter/material.dart';
 
 class WebLoginScreen extends StatelessWidget {
@@ -16,23 +19,20 @@ class WebLoginScreen extends StatelessWidget {
   }
 
   _barcode(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 20),
-      child: Center(
-        child: Card(
-          child: BarcodeWidget(
-            barcode: Barcode.qrCode(),
-            data: '1234567890',
-            width: 400,
-            height: 400,
-            margin: EdgeInsets.all(20),
-            padding: EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              color: Colors.white,
-            ),
-          ),
-        ),
+    return FutureBuilder(
+      future: sl.get<FirebaseProvider>().initializeWebLogin(
+        (BuildContext context) {
+          print('navigating to home screen as it seems a login was granted');
+          Navigator.pushReplacementNamed(context, HomeScreen.id);
+        },
+        context,
       ),
+      builder: (context, AsyncSnapshot<String> snapshot) {
+        if (snapshot.hasData) {
+          return PaddedQRCode(snapshot.data, 400, 400);
+        }
+        return CircularProgressIndicator();
+      },
     );
   }
 

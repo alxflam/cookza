@@ -1,14 +1,14 @@
 import 'dart:convert';
 
 import 'package:cookly/constants.dart';
-import 'package:cookly/model/json/profile.dart';
+import 'package:cookly/model/entities/json/recipe_entity.dart';
 import 'package:cookly/model/json/recipe_list.dart';
-import 'package:cookly/model/view/recipe_edit_model.dart';
-import 'package:cookly/model/view/recipe_selection_model.dart';
-import 'package:cookly/model/view/recipe_view_model.dart';
+import 'package:cookly/viewmodel/recipe_edit/recipe_edit_model.dart';
+import 'package:cookly/viewmodel/recipe_selection_model.dart';
 import 'package:cookly/screens/recipe_modify/new_recipe_screen.dart';
 import 'package:cookly/screens/recipe_selection_screen.dart';
 import 'package:cookly/services/api/chefkoch.dart';
+import 'package:cookly/viewmodel/recipe_view/recipe_view_model.dart';
 import 'package:flutter/cupertino.dart';
 
 class ShareReceiveHandler {
@@ -54,8 +54,9 @@ class ShareReceiveHandler {
     if (isRecipeList) {}
 
     var importData = RecipeList.fromJson(map);
-    var viewModel =
-        importData.recipes.map((item) => RecipeViewModel.of(item)).toList();
+    var viewModel = importData.recipes
+        .map((item) => RecipeViewModel.of(RecipeEntityJson.of(item)))
+        .toList();
 
     // todo: create named constructors for import / export instead of giving a parameter
     var model = RecipeSelectionModel.forImport(viewModel);

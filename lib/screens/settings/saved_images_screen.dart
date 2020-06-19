@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cookly/services/abstract/data_store.dart';
+import 'package:cookly/services/image_manager.dart';
 import 'package:cookly/services/local_storage.dart';
 import 'package:cookly/services/service_locator.dart';
 import 'package:flutter/material.dart';
@@ -24,8 +25,8 @@ class SavedImagesScreen extends StatelessWidget {
               itemBuilder: (context, index) {
                 var name = files[index].path.split('/').last;
                 var id = name.split('.').first;
-                var recipes =
-                    sl.get<DataStore>().appProfile.getRawRecipes([id]);
+                var recipes = [];
+                // sl.get<ImageManager>().appProfile.getRawRecipes([id]);
 
                 var recipeName = recipes == null || recipes.isEmpty
                     ? 'Deleted'

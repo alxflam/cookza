@@ -1,7 +1,6 @@
 import 'package:cookly/components/main_app_drawer.dart';
 import 'package:cookly/constants.dart';
 import 'package:cookly/localization/keys.dart';
-import 'package:cookly/model/view/recipe_edit_model.dart';
 import 'package:cookly/screens/leftovers_screen.dart';
 import 'package:cookly/screens/meal_plan/meal_plan_screen.dart';
 import 'package:cookly/screens/recipe_list_screen.dart';
@@ -9,6 +8,7 @@ import 'package:cookly/screens/recipe_modify/new_recipe_screen.dart';
 import 'package:cookly/screens/shopping_list/shopping_list_overview_screen.dart';
 import 'package:cookly/services/abstract/receive_intent_handler.dart';
 import 'package:cookly/services/service_locator.dart';
+import 'package:cookly/viewmodel/recipe_edit/recipe_edit_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -28,6 +28,7 @@ class HomeScreen extends StatelessWidget {
           handler.handleSharedText(context);
           handler.handleSharedJson(context);
         }
+        return Future.value(null);
       });
 
       // get share handler

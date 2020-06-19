@@ -1,5 +1,6 @@
 import 'package:cookly/localization/keys.dart';
-import 'package:cookly/model/view/recipe_selection_model.dart';
+import 'package:cookly/services/recipe_manager.dart';
+import 'package:cookly/viewmodel/recipe_selection_model.dart';
 import 'package:cookly/screens/recipe_selection_screen.dart';
 import 'package:cookly/services/abstract/data_store.dart';
 import 'package:cookly/services/service_locator.dart';
@@ -25,7 +26,9 @@ class ExportSettingsScreen extends StatelessWidget {
             leading: FaIcon(FontAwesomeIcons.fileExport),
             onTap: () {
               // fetch all recipes the app currently stores
-              var recipes = sl.get<DataStore>().appProfile.recipes;
+              // TODO
+              var recipes = [];
+              // sl.get<RecipeManager>().appProfile.recipes;
               // create the view model with type export
               var model = RecipeSelectionModel.forExport(recipes.toList());
               // navigate to the selection screen
@@ -38,7 +41,9 @@ class ExportSettingsScreen extends StatelessWidget {
             leading: FaIcon(FontAwesomeIcons.filePdf),
             onTap: () {
               // fetch all recipes the app currently stores
-              var recipes = sl.get<DataStore>().appProfile.recipes;
+              // TODO:
+              var recipes = [];
+              //sl.get<ImageManager>().appProfile.recipes;
               // create the view model with type export
               var model = RecipeSelectionModel.forExportPDF(recipes.toList());
               // navigate to the selection screen

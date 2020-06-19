@@ -1,18 +1,23 @@
-import 'dart:io';
+import 'dart:collection';
 
-import 'package:cookly/model/view/recipe_view_model.dart';
-import 'package:cookly/services/abstract/data_store.dart';
+import 'package:cookly/model/entities/abstract/ingredient_note_entity.dart';
+import 'package:cookly/model/entities/abstract/recipe_entity.dart';
 import 'package:cookly/services/levenshtein.dart';
+import 'package:cookly/services/recipe_manager.dart';
 import 'package:cookly/services/service_locator.dart';
 
 class SimilarityService {
-  Future<List<RecipeViewModel>> getSimilarRecipes(String id) async {
-    List<RecipeViewModel> result = [];
-    var profile = sl.get<DataStore>().appProfile;
+  Future<List<RecipeEntity>> getSimilarRecipes(
+      RecipeEntity sourceRecipe) async {
+    List<RecipeEntity> result = [];
 
-    var recipe = profile.getRecipeById(id);
     // immediately return if the recipe does not exist or does not contain any ingredients
-    if (recipe == null || recipe.ingredients.isEmpty) {
+    if (sourceRecipe == null) {
+      return result;
+    }
+
+    var sourceIngredients = await sourceRecipe.ingredients;
+    if (sourceIngredients.isEmpty) {
       return result;
     }
 
@@ -21,23 +26,26 @@ class SimilarityService {
     //  then add one to the counter
     //  if the source recipe contains more than 33% of the same ingredients, add it as possibly similar
 
-    var recipes = profile.recipes;
+    var recipes = await sl.get<RecipeManager>().getAllRecipes();
+
     var ingredients =
-        recipe.ingredients.map((element) => element.ingredient).toSet();
+        sourceIngredients.map((element) => element.ingredient).toSet();
     var count = 0;
     for (var item in recipes) {
-      if (item.id == id) {
+      if (item.id == sourceRecipe.id) {
         continue;
       }
       count = 0;
 
+      var ing = await item.ingredients;
+
       for (var origIng in ingredients) {
-        if (this.containsIngredient(item, origIng.name)) {
+        if (this.containsIngredient(ing, origIng.name)) {
           count++;
         }
       }
 
-      if (count > item.ingredients.length / 3) {
+      if (count > ing.length / 3) {
         result.add(item);
       }
     }
@@ -45,8 +53,10 @@ class SimilarityService {
     return result;
   }
 
-  bool containsIngredient(RecipeViewModel recipe, String targetIngredient) {
-    for (var ing in recipe.ingredients) {
+  bool containsIngredient(
+      UnmodifiableListView<IngredientNoteEntity> ingredients,
+      String targetIngredient) {
+    for (var ing in ingredients) {
       var res = levenshtein(ing.ingredient.name, targetIngredient);
       if (res < (ing.ingredient.name.length / 2)) {
         return true;
@@ -55,16 +65,17 @@ class SimilarityService {
     return false;
   }
 
-  Future<List<RecipeViewModel>> getRecipesContaining(
+  Future<List<RecipeEntity>> getRecipesContaining(
       List<String> targetIngredients) async {
-    final result = Future(() {
-      var recipes = sl.get<DataStore>().appProfile.recipes;
-      List<RecipeViewModel> result = [];
+    final result = Future(() async {
+      var recipes = await sl.get<RecipeManager>().getAllRecipes();
+      List<RecipeEntity> result = [];
 
       for (var recipe in recipes) {
         var containsAll = true;
+        var ing = await recipe.ingredients;
         for (var ingredient in targetIngredients) {
-          if (!this.containsIngredient(recipe, ingredient)) {
+          if (!this.containsIngredient(ing, ingredient)) {
             containsAll = false;
             break;
           }

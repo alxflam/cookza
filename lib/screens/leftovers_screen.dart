@@ -1,11 +1,11 @@
 import 'package:cookly/components/recipe_list_tile.dart';
 import 'package:cookly/localization/keys.dart';
-import 'package:cookly/model/view/recipe_view_model.dart';
+import 'package:cookly/model/entities/abstract/recipe_entity.dart';
 import 'package:cookly/services/service_locator.dart';
 import 'package:cookly/services/similarity_service.dart';
+import 'package:cookly/viewmodel/recipe_view/recipe_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
-import 'package:provider/provider.dart';
 
 class LeftoversScreen extends StatelessWidget {
   static final String id = 'leftovers';
@@ -88,7 +88,7 @@ class _LeftoversBodyState extends State<LeftoversBody> {
                 .getRecipesContaining(this._ingredients),
             builder: (context, snapshot) {
               if (snapshot.hasData && snapshot.data.length > 0) {
-                var result = snapshot.data as List<RecipeViewModel>;
+                var result = snapshot.data as List<RecipeEntity>;
                 return Expanded(
                   child: ListView.builder(
                     itemCount: result.length,

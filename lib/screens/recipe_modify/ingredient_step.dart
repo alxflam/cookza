@@ -1,11 +1,11 @@
 import 'package:cookly/components/round_icon_button.dart';
 import 'package:cookly/constants.dart';
 import 'package:cookly/localization/keys.dart';
-import 'package:cookly/model/json/ingredient_note.dart';
-import 'package:cookly/model/view/recipe_edit_model.dart';
-import 'package:cookly/model/view/recipe_edit_step.dart';
-import 'package:cookly/model/view/recipe_ingredient_model.dart';
+import 'package:cookly/model/entities/mutable/mutable_ingredient_note.dart';
 import 'package:cookly/screens/new_ingredient_screen.dart';
+import 'package:cookly/viewmodel/recipe_edit/recipe_edit_model.dart';
+import 'package:cookly/viewmodel/recipe_edit/recipe_edit_step.dart';
+import 'package:cookly/viewmodel/recipe_edit/recipe_ingredient_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -94,9 +94,8 @@ Widget _getServingsRow(RecipeIngredientEditStep model) {
 Widget _getAddRowButton(BuildContext context, RecipeIngredientEditStep model) {
   return FlatButton.icon(
     onPressed: () async {
-      var ingredientNote = IngredientNote.create();
-
-      RecipeIngredientModel ingModel = RecipeIngredientModel.of(ingredientNote);
+      RecipeIngredientModel ingModel =
+          RecipeIngredientModel.of(MutableIngredientNote.empty());
 
       var result = await Navigator.pushNamed(context, NewIngredientScreen.id,
           arguments: ingModel) as RecipeIngredientModel;
@@ -138,7 +137,8 @@ List<DataRow> _getIngredientRows(
                   if (!result.isDeleted) {
                     // todo: create single apply from method
                     model.setAmount(i, result.amount);
-                    model.setIngredient(i, result.ingredient);
+                    // todo mutable ingredient
+                    // model.setIngredient(i, result.ingredient);
                     model.setScale(i, result.unitOfMeasure);
                   } else {
                     model.removeIngredient(i);

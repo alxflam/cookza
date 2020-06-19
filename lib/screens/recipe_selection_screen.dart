@@ -1,5 +1,6 @@
 import 'package:cookly/localization/keys.dart';
-import 'package:cookly/model/view/recipe_selection_model.dart';
+import 'package:cookly/services/recipe_manager.dart';
+import 'package:cookly/viewmodel/recipe_selection_model.dart';
 import 'package:cookly/services/abstract/data_store.dart';
 import 'package:cookly/services/abstract/pdf_export.dart';
 import 'package:cookly/services/abstract/pdf_generator.dart';
@@ -66,20 +67,21 @@ class RecipeSelectionScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: model.countAll,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      leading: _getLeadingIcon(model, index),
-                      title: Text(
-                        model.getRecipeName(index),
-                      ),
-                      onTap: () {
-                        model.switchSelection(index);
-                      },
-                    );
-                  },
+                Flexible(
+                  child: ListView.builder(
+                    itemCount: model.countAll,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        leading: _getLeadingIcon(model, index),
+                        title: Text(
+                          model.getRecipeName(index),
+                        ),
+                        onTap: () {
+                          model.switchSelection(index);
+                        },
+                      );
+                    },
+                  ),
                 ),
               ],
             ),
@@ -130,24 +132,26 @@ class RecipeSelectionScreen extends StatelessWidget {
         };
       case SELECTION_MODE.EXPORT_PDF:
         return (context, model) {
-          var recipes = sl
-              .get<DataStore>()
-              .appProfile
-              .getRecipesById(model.selectedRecipes);
+          // TODO
+          var recipes = [];
+          // sl
+          //     .get<RecipeManager>()
+          //     .getRecipesById(model.selectedRecipes);
           var doc = sl.get<PDFGenerator>().generatePDF(recipes);
           sl.get<PDFExporter>().export(doc);
           Navigator.pop(context);
         };
       case SELECTION_MODE.IMPORT:
         return (context, model) {
-          sl.get<DataStore>().importRecipes(model.getSelectedRecipes());
+          // TODO
+          // sl.get<RecipeManager>().importRecipes(model.getSelectedRecipes());
           Navigator.pop(context);
         };
       case SELECTION_MODE.REFERENCE_INGREDIENT:
       case SELECTION_MODE.ADD_TO_MEAL_PLAN:
         return (context, model) {
           if (model.selectedRecipes.length > 0) {
-            Navigator.pop(context, model.selectedRecipes.first);
+            Navigator.pop(context, model.selectedRecipeEntities.first);
           }
         };
     }

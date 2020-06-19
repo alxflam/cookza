@@ -1,3 +1,4 @@
+import 'package:cookly/model/firebase/firebase_recipe.dart';
 import 'package:cookly/model/json/ingredient.dart';
 import 'package:cookly/model/json/ingredient_note.dart';
 import 'package:cookly/model/json/profile.dart';

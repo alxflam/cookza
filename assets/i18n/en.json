@@ -62,7 +62,9 @@
         "confirmDelete": "Do you really want to delete {0}?",
         "export": "Export",
         "import": "Import",
-        "selectRecipes": "Select Recipes"
+        "selectRecipes": "Select Recipes",
+        "web": "Web",
+        "addUser": "Add User"
     },
     "settings": {
         "weekDurationDesc": "Set how many weeks are available for planning.",

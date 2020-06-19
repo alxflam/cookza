@@ -1,4 +1,4 @@
-import 'package:cookly/model/view/recipe_view_model.dart';
+import 'package:cookly/viewmodel/recipe_view/recipe_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -14,8 +14,8 @@ class CookingInstructions extends StatelessWidget {
               List<Row> instructions = [];
 
               for (var i = 0; i < model.instructions.length; i++) {
-                instructions.add(
-                    _buildStep(content: model.instructions[i], num: i + 1));
+                instructions.add(_buildStep(
+                    content: model.instructions[i].text, num: i + 1));
               }
 
               return Column(

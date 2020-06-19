@@ -1,7 +1,7 @@
 import 'package:cookly/constants.dart';
 import 'package:cookly/localization/keys.dart';
-import 'package:cookly/model/view/recipe_view_model.dart';
 import 'package:cookly/services/abstract/pdf_generator.dart';
+import 'package:cookly/viewmodel/recipe_view/recipe_view_model.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 
 import 'package:pdf/pdf.dart';
@@ -31,7 +31,7 @@ class PDFGeneratorImpl implements PDFGenerator {
   List<pw.Bullet> _getInstructions(RecipeViewModel recipe) {
     List<pw.Bullet> result = [];
     for (var instruction in recipe.instructions) {
-      result.add(pw.Bullet(text: instruction));
+      result.add(pw.Bullet(text: instruction.text));
     }
     return result;
   }

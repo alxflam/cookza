@@ -1,18 +1,28 @@
 import 'dart:io';
 
+import 'package:cookly/model/entities/abstract/ingredient_entity.dart';
+import 'package:cookly/model/entities/abstract/ingredient_note_entity.dart';
+import 'package:cookly/model/entities/abstract/instruction_entity.dart';
+import 'package:cookly/model/entities/abstract/recipe_collection_entity.dart';
+import 'package:cookly/model/entities/abstract/recipe_entity.dart';
+import 'package:cookly/model/entities/mutable/mutable_ingredient.dart';
+import 'package:cookly/model/entities/mutable/mutable_ingredient_note.dart';
+import 'package:cookly/model/entities/mutable/mutable_instruction.dart';
+import 'package:cookly/model/entities/mutable/mutable_recipe.dart';
 import 'package:cookly/model/json/ingredient.dart';
-import 'package:cookly/model/json/ingredient_note.dart';
-import 'package:cookly/model/json/recipe.dart';
-import 'package:cookly/model/view/recipe_ingredient_model.dart';
+import 'package:cookly/services/image_manager.dart';
+import 'package:cookly/services/recipe_manager.dart';
 import 'package:cookly/services/abstract/data_store.dart';
 import 'package:cookly/services/service_locator.dart';
 import 'package:cookly/services/unit_of_measure.dart';
 import 'package:flutter/cupertino.dart';
 
+import 'recipe_ingredient_model.dart';
+
 abstract class RecipeEditStep extends ChangeNotifier {
   validate();
-  void applyTo(Recipe recipe);
-  void applyFrom(Recipe recipe);
+  void applyTo(MutableRecipe recipe);
+  void applyFrom(RecipeEntity recipe);
 }
 
 class RecipeOverviewEditStep extends RecipeEditStep {
@@ -22,6 +32,7 @@ class RecipeOverviewEditStep extends RecipeEditStep {
   DIFFICULTY _difficulty = DIFFICULTY.EASY;
   DateTime creationDate = DateTime.now();
   final DateTime modificationDate = DateTime.now();
+  RecipeCollectionEntity collection;
 
   int get duration => _duration;
   DIFFICULTY get difficulty => _difficulty;
@@ -37,21 +48,25 @@ class RecipeOverviewEditStep extends RecipeEditStep {
   }
 
   @override
-  void applyTo(Recipe recipe) {
+  void applyTo(MutableRecipe recipe) {
     recipe.name = this.name;
-    recipe.shortDescription = this.description;
-    recipe.diff = this.difficulty;
+    recipe.description = this.description;
+    recipe.difficulty = this.difficulty;
     recipe.duration = this.duration;
     recipe.modificationDate = this.modificationDate;
+    recipe.recipeCollectionId = this.collection.id;
   }
 
   @override
-  void applyFrom(Recipe recipe) {
+  void applyFrom(RecipeEntity recipe) async {
     this.name = recipe.name;
-    this.description = recipe.shortDescription;
-    this.difficulty = recipe.diff;
+    this.description = recipe.description;
+    this.difficulty = recipe.difficulty;
     this.duration = recipe.duration;
     this.creationDate = recipe.creationDate;
+    var collection =
+        await sl.get<RecipeManager>().collectionByID(recipe.recipeCollectionId);
+    this.collection = collection;
   }
 
   @override
@@ -59,7 +74,6 @@ class RecipeOverviewEditStep extends RecipeEditStep {
     if (name.isEmpty) {
       throw 'Assign a Recipe name';
     }
-    // description can be empty
     if (duration <= 0) {
       throw 'Assign a Recipe duration';
     }
@@ -71,6 +85,7 @@ class RecipeOverviewEditStep extends RecipeEditStep {
 
 class RecipeImageEditStep extends RecipeEditStep {
   File _image;
+  dynamic _initialState;
 
   File get image => _image;
 
@@ -79,25 +94,34 @@ class RecipeImageEditStep extends RecipeEditStep {
     notifyListeners();
   }
 
-  @override
-  void applyTo(Recipe recipe) {
-    // actually there's nothing to do here
-    // the image is applied / saved separately
+  bool get imageChanged {
+    return this._initialState != this._image;
   }
 
   @override
-  void applyFrom(Recipe recipe) {
-    var currentImage = sl.get<DataStore>().appProfile.getRecipeImage(recipe.id);
-    currentImage.then((value) {
-      if (value != null) {
-        this._image = value.file;
-      }
-    });
+  void applyTo(MutableRecipe recipe) {
+    // actually there's nothing to do here if the user chose an image
+    // the image is applied / saved separately as it first needs to be uploaded before we can determine the image path
+    if (this._image == null) {
+      recipe.image = null;
+    }
+  }
+
+  @override
+  void applyFrom(RecipeEntity recipe) {
+    var currentImage = recipe.image;
+
+    if (currentImage != null && currentImage.isNotEmpty) {
+      this._initialState = currentImage;
+      // TODO: retrieve saved image as file
+      // var url = await sl.get<ImageManager>().getRecipeImageURL(recipe.id);
+      // this._image = image;
+    }
   }
 
   @override
   validate() {
-    // nothing to validate
+    // nothing to validate - it's fine if the user chose no image
   }
 }
 
@@ -156,12 +180,12 @@ class RecipeTagEditStep extends RecipeEditStep {
   }
 
   @override
-  void applyFrom(Recipe recipe) {
+  void applyFrom(RecipeEntity recipe) {
     this._tags = recipe.tags;
   }
 
   @override
-  void applyTo(Recipe recipe) {
+  void applyTo(MutableRecipe recipe) {
     recipe.tags = this._tags;
   }
 
@@ -173,7 +197,7 @@ class RecipeTagEditStep extends RecipeEditStep {
 
 class RecipeIngredientEditStep extends RecipeEditStep {
   int _servings = 1;
-  List<IngredientNote> _ingredients = [];
+  List<MutableIngredientNote> _ingredients = [];
 
   int get servings => _servings;
 
@@ -183,7 +207,7 @@ class RecipeIngredientEditStep extends RecipeEditStep {
   }
 
   void addNewIngredient(RecipeIngredientModel item) {
-    this._ingredients.add(item.toIngredientNote());
+    this._ingredients.add(MutableIngredientNote.of(item.toIngredientNote()));
     notifyListeners();
   }
 
@@ -193,10 +217,7 @@ class RecipeIngredientEditStep extends RecipeEditStep {
   }
 
   void _addEmptyIngredient() {
-    this._ingredients.add(
-          IngredientNote(
-              amount: 0, ingredient: Ingredient(name: ''), unitOfMeasure: ''),
-        );
+    this._ingredients.add(MutableIngredientNote.empty());
   }
 
   UnitOfMeasure getScaleAt(int index) {
@@ -222,8 +243,8 @@ class RecipeIngredientEditStep extends RecipeEditStep {
     notifyListeners();
   }
 
-  void setIngredient(int index, Ingredient ingredient) {
-    this._ingredients[index].ingredient = ingredient;
+  void setIngredient(int index, IngredientEntity ingredient) {
+    this._ingredients[index].ingredient = MutableIngredient.of(ingredient);
   }
 
   void removeIngredient(int index) {
@@ -236,17 +257,22 @@ class RecipeIngredientEditStep extends RecipeEditStep {
   }
 
   @override
-  void applyFrom(Recipe recipe) {
+  void applyFrom(RecipeEntity recipe) {
     assert(recipe != null);
     assert(recipe.ingredients != null);
     assert(recipe.servings != null);
-    this._ingredients = recipe.ingredients;
+
+    recipe.ingredients.then((value) {
+      var ing = value.map((e) => MutableIngredientNote.of(e)).toList();
+      this._ingredients = ing;
+    });
+
     this._servings = recipe.servings;
   }
 
   @override
-  void applyTo(Recipe recipe) {
-    recipe.ingredients = this._ingredients;
+  void applyTo(MutableRecipe recipe) {
+    recipe.ingredientList = this._ingredients;
     recipe.servings = this._servings;
   }
 
@@ -263,24 +289,24 @@ class RecipeIngredientEditStep extends RecipeEditStep {
 }
 
 class RecipeInstructionEditStep extends RecipeEditStep {
-  List<String> _instructions = [];
+  List<MutableInstruction> _instructions = [];
 
-  List<String> get instructions => _instructions;
+  List<InstructionEntity> get instructions => _instructions;
 
   RecipeInstructionEditStep() {
-    _instructions.add('');
+    _instructions.add(MutableInstruction.empty());
   }
 
   void setInstruction(String text, int index) {
     while (_instructions.length <= index) {
-      _instructions.add('');
+      _instructions.add(MutableInstruction.empty());
     }
-    _instructions[index] = text;
+    _instructions[index].text = text;
   }
 
-  String getInstruction(int index) {
+  InstructionEntity getInstruction(int index) {
     if (index > _instructions.length) {
-      return '';
+      return null;
     }
     return _instructions[index];
   }
@@ -291,7 +317,9 @@ class RecipeInstructionEditStep extends RecipeEditStep {
   }
 
   void addInstruction(String text) {
-    this._instructions.add(text == null ? '' : text);
+    this._instructions.add(text == null
+        ? MutableInstruction.empty()
+        : MutableInstruction.withValues(text: text));
   }
 
   void removeInstruction(int i) {
@@ -304,22 +332,30 @@ class RecipeInstructionEditStep extends RecipeEditStep {
   }
 
   @override
-  void applyFrom(Recipe recipe) {
-    this._instructions = recipe.instructions;
+  void applyFrom(RecipeEntity recipe) {
+    recipe.instructions.then((value) {
+      var instructions = value.map((e) => MutableInstruction.of(e)).toList();
+      this._instructions = instructions;
+    });
   }
 
   @override
-  void applyTo(Recipe recipe) {
-    recipe.instructions = this._instructions;
+  void applyTo(MutableRecipe recipe) {
+    for (var i = 0; i < this._instructions.length; i++) {
+      this._instructions[i].step = i + 1;
+    }
+    recipe.instructionList = this._instructions;
   }
 
   @override
   validate() {
     // there are instructions and there's no empty instruction
-
-    if (_instructions.isEmpty ||
-        _instructions.where((f) => f.isEmpty).length > 0) {
+    if (_instructions.isEmpty) {
       throw 'There are no instructions assigned to the recipe';
+    }
+    if (_instructions.where((f) => f.text == null || f.text.isEmpty).length >
+        0) {
+      throw 'There are empty instructions assigned';
     }
   }
 }

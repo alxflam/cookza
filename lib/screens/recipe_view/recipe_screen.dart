@@ -1,7 +1,6 @@
 import 'package:cookly/constants.dart';
 import 'package:cookly/localization/keys.dart';
-import 'package:cookly/model/view/recipe_edit_model.dart';
-import 'package:cookly/model/view/recipe_view_model.dart';
+import 'package:cookly/model/entities/abstract/recipe_entity.dart';
 import 'package:cookly/screens/home_screen.dart';
 import 'package:cookly/screens/meal_plan/meal_plan_screen.dart';
 import 'package:cookly/screens/recipe_modify/new_recipe_screen.dart';
@@ -10,6 +9,10 @@ import 'package:cookly/screens/recipe_view/instructions_tab.dart';
 import 'package:cookly/screens/recipe_view/overview_tab.dart';
 import 'package:cookly/screens/recipe_view/similar_recipes_tab.dart';
 import 'package:cookly/services/app_profile.dart';
+import 'package:cookly/services/recipe_manager.dart';
+import 'package:cookly/services/service_locator.dart';
+import 'package:cookly/viewmodel/recipe_edit/recipe_edit_model.dart';
+import 'package:cookly/viewmodel/recipe_view/recipe_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -37,11 +40,9 @@ class RecipeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String recipeId = ModalRoute.of(context).settings.arguments as String;
+    final RecipeEntity recipe = ModalRoute.of(context).settings.arguments;
 
-    RecipeViewModel baseModel =
-        Provider.of<AppProfile>(context, listen: false).getRecipeById(recipeId);
-
+    RecipeViewModel baseModel = RecipeViewModel.of(recipe);
     return ChangeNotifierProvider<RecipeViewModel>(
       create: (BuildContext context) {
         return baseModel;
@@ -108,7 +109,7 @@ class RecipeScreen extends StatelessWidget {
                       break;
                     case PopupMenuButtonChoices.ADD_MEAL_PLAN:
                       Navigator.pushNamed(context, MealPlanScreen.id,
-                          arguments: baseModel.id);
+                          arguments: baseModel.recipe);
                       break;
                     case PopupMenuButtonChoices.DELETE:
                       showDialog(
@@ -140,9 +141,10 @@ class RecipeScreen extends StatelessWidget {
                                 ),
                                 color: Colors.red,
                                 onPressed: () {
-                                  Provider.of<AppProfile>(context,
-                                          listen: false)
-                                      .deleteRecipe(baseModel.id);
+                                  sl
+                                      .get<RecipeManager>()
+                                      .deleteRecipe(baseModel.recipe);
+
                                   Navigator.pushNamed(context, HomeScreen.id);
                                 },
                               ),

@@ -62,7 +62,9 @@
         "confirmDelete": "Soll {0} wirklich gelöscht werden?",
         "export": "Export",
         "import": "Import",
-        "selectRecipes": "Rezepte auswählen"
+        "selectRecipes": "Rezepte auswählen",
+        "web": "Web",
+        "addUser": "Add User"
     },
     "settings": {
         "weekDurationDesc": "Anzahl der Wochen, die im Essensplaner verfügbar sind.",

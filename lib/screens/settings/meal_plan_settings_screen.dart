@@ -1,5 +1,5 @@
 import 'package:cookly/localization/keys.dart';
-import 'package:cookly/model/view/settings/meal_plan_settings_model.dart';
+import 'package:cookly/viewmodel/settings/meal_plan_settings_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:provider/provider.dart';

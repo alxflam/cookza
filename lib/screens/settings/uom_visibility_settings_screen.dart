@@ -1,9 +1,8 @@
 import 'package:cookly/localization/keys.dart';
-import 'package:cookly/model/view/settings/uom_visibility_settings_model.dart';
+import 'package:cookly/viewmodel/settings/uom_visibility_settings_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class UoMVisibilityScreen extends StatelessWidget {
   static final String id = 'uomVisibility';

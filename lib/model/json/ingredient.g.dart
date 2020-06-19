@@ -9,7 +9,6 @@ part of 'ingredient.dart';
 Ingredient _$IngredientFromJson(Map<String, dynamic> json) {
   return Ingredient(
     name: json['name'] as String,
-    kal: json['kal'] as int,
     recipeReference: json['recipeReference'] as String,
   );
 }
@@ -26,6 +25,5 @@ Map<String, dynamic> _$IngredientToJson(Ingredient instance) {
   }
 
   writeNotNull('recipeReference', instance.recipeReference);
-  writeNotNull('kal', instance.kal);
   return val;
 }

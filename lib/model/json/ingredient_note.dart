@@ -9,7 +9,7 @@ dynamic _toJson(Ingredient ingredient) {
 
 @JsonSerializable(includeIfNull: false)
 class IngredientNote {
-  @JsonKey(nullable: false, toJson: _toJson)
+  @JsonKey(toJson: _toJson)
   Ingredient ingredient;
   @JsonKey(defaultValue: '')
   String unitOfMeasure;

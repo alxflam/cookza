@@ -92,6 +92,10 @@ class Keys {
 
   static const String Ui_Selectrecipes = 'ui.selectRecipes';
 
+  static const String Ui_Web = 'ui.web';
+
+  static const String Ui_Adduser = 'ui.addUser';
+
   static const String Settings_Weekdurationdesc = 'settings.weekDurationDesc';
 
   static const String Settings_Oneweek = 'settings.oneWeek';

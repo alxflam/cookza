@@ -1,4 +1,5 @@
 import 'package:cookly/constants.dart';
+import 'package:cookly/model/entities/abstract/recipe_entity.dart';
 import 'package:cookly/model/json/ingredient_note.dart';
 import 'package:cookly/services/id_gen.dart';
 import 'package:cookly/services/service_locator.dart';
@@ -6,16 +7,23 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'recipe.g.dart';
 
-enum DIFFICULTY { EASY, MEDIUM, HARD }
-
 @JsonSerializable(includeIfNull: false)
 class Recipe {
-  factory Recipe.fromJson(Map<String, dynamic> json) => _$RecipeFromJson(json);
+  factory Recipe.fromJson(Map<String, dynamic> json, {String id}) {
+    var instance = _$RecipeFromJson(json);
+    instance.documentID = id;
+    return instance;
+  }
 
   Map<String, dynamic> toJson() => _$RecipeToJson(this);
 
+  @JsonKey(ignore: true)
+  String documentID;
   @JsonKey(nullable: false)
   String id;
+  @JsonKey(nullable: false)
+  String recipeCollection;
+
   @JsonKey(toJson: kDateToJson, fromJson: kDateFromJson)
   DateTime creationDate;
   @JsonKey(toJson: kDateToJson, fromJson: kDateFromJson)
@@ -44,6 +52,7 @@ class Recipe {
   Recipe.editCopyFrom(Recipe recipe) {
     // todo handle keep same id in edit mode
     this.id = recipe.id;
+    this.recipeCollection = recipe.recipeCollection;
     this.name = recipe.name;
     this.shortDescription = recipe.shortDescription;
     this.duration = recipe.duration;
@@ -58,6 +67,7 @@ class Recipe {
 
   Recipe(
       {this.id,
+      this.recipeCollection,
       this.name,
       this.shortDescription,
       this.creationDate,

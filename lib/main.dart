@@ -1,5 +1,7 @@
 import 'package:cookly/localization/keys.dart';
-import 'package:cookly/model/view/settings/theme_model.dart';
+import 'package:cookly/screens/collections/share_account_screen.dart';
+import 'package:cookly/viewmodel/settings/theme_model.dart';
+import 'package:cookly/screens/groups/recipe_group.dart';
 import 'package:cookly/screens/leftovers_screen.dart';
 import 'package:cookly/screens/meal_plan/meal_plan_screen.dart';
 import 'package:cookly/screens/settings/camera.dart';
@@ -53,41 +55,15 @@ void main() async {
 class ProviderChainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // change notifier provider at root level to enable access to the app profile from everywhere in the app
-    // todo future builder hier, um zu verhindern dass null zurückgeliefert wird
-    // warten bis DataStore initialisiert wurde!!
-
     var localizationDelegate = LocalizedApp.of(context).delegate;
 
     return LocalizationProvider(
       state: LocalizationProvider.of(context).state,
-      child:
-          // FutureBuilder(
-          //   future: GetIt.I.allReady(),
-          //   builder: (BuildContext context, AsyncSnapshot snapshot) {
-          //     if (snapshot.hasData) {
-          //       return
-          ChangeNotifierProvider<AppProfile>(
-        create: (context) => sl.get<DataStore>().appProfile,
-        child: ChangeNotifierProvider<ThemeModel>(
-          create: (context) => ThemeModel(),
-          child: CooklyMaterialApp(localizationDelegate: localizationDelegate),
-        ),
+      child: ChangeNotifierProvider<ThemeModel>(
+        create: (context) => ThemeModel(),
+        child: CooklyMaterialApp(localizationDelegate: localizationDelegate),
       ),
     );
-    // } else {
-    //   // not yet ready - local json being processed
-    //   return Center(
-    //     child: Container(
-    //       width: 100,
-    //       height: 100,
-    //       child: CircularProgressIndicator(),
-    //     ),
-    //   );
-    // }
-    // },
-    //   ),
-    // );
   }
 }
 
@@ -135,6 +111,8 @@ class CooklyMaterialApp extends StatelessWidget {
         ShoppingListOverviewScreen.id: (context) =>
             ShoppingListOverviewScreen(),
         ShoppingListDetailScreen.id: (context) => ShoppingListDetailScreen(),
+        RecipeGroupScreen.id: (context) => RecipeGroupScreen(),
+        ShareAccountScreen.id: (context) => ShareAccountScreen(),
       },
     );
   }

@@ -1,12 +1,12 @@
 import 'package:cookly/constants.dart';
 import 'package:cookly/localization/keys.dart';
-import 'package:cookly/model/view/recipe_edit_model.dart';
 import 'package:cookly/screens/home_screen.dart';
 import 'package:cookly/screens/recipe_modify/image_step.dart';
 import 'package:cookly/screens/recipe_modify/ingredient_step.dart';
 import 'package:cookly/screens/recipe_modify/instructions_step.dart';
 import 'package:cookly/screens/recipe_modify/overview_step.dart';
 import 'package:cookly/screens/recipe_modify/tag_step.dart';
+import 'package:cookly/viewmodel/recipe_edit/recipe_edit_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

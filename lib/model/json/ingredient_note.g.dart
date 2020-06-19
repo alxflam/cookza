@@ -8,7 +8,9 @@ part of 'ingredient_note.dart';
 
 IngredientNote _$IngredientNoteFromJson(Map<String, dynamic> json) {
   return IngredientNote(
-    ingredient: Ingredient.fromJson(json['ingredient'] as Map<String, dynamic>),
+    ingredient: json['ingredient'] == null
+        ? null
+        : Ingredient.fromJson(json['ingredient'] as Map<String, dynamic>),
     unitOfMeasure: json['unitOfMeasure'] as String ?? '',
     amount: (json['amount'] as num).toDouble(),
   );

@@ -1,11 +1,10 @@
 import 'package:cookly/constants.dart';
 import 'package:cookly/model/json/ingredient_note.dart';
 import 'package:cookly/model/json/shopping_list.dart';
-import 'package:cookly/model/view/recipe_meal_plan_model.dart';
-import 'package:cookly/services/abstract/data_store.dart';
-import 'package:cookly/services/ingredients_calculator.dart';
+import 'package:cookly/services/meal_plan_manager.dart';
 import 'package:cookly/services/service_locator.dart';
 import 'package:cookly/services/unit_of_measure.dart';
+import 'package:cookly/viewmodel/meal_plan/recipe_meal_plan_model.dart';
 import 'package:flutter/material.dart';
 
 class ShoppingListOverviewModel extends ChangeNotifier {
@@ -36,8 +35,10 @@ class ShoppingListModel extends ChangeNotifier {
   List<ShoppingListItemModel> getItems(BuildContext context) {
     // lazy initialize on first get call
     if (_items.isEmpty && _recipeReferences.isNotEmpty) {
-      MealPlanViewModel mealPlan =
-          sl.get<DataStore>().appProfile.mealPlanModel(context);
+      var locale = Localizations.localeOf(context);
+
+      // TODO: pass the viewmodel directly as a constructor argument...
+      MealPlanViewModel mealPlan = MealPlanViewModel.of(locale, null);
 
       // collect all recipes planned for the given duration
       for (var item in mealPlan.entries) {
@@ -52,9 +53,10 @@ class ShoppingListModel extends ChangeNotifier {
       }
 
       // next create a set of the required ingredients
-      var ingredients =
-          sl.get<IngredientsCalculator>().getIngredients(_recipeReferences);
-
+      // TODO: next thing to fix after firestore migration...
+      // var ingredients =
+      //     sl.get<IngredientsCalculator>().getIngredients(_recipeReferences);
+      var ingredients = [];
       // at last create the view model representation of the list of ingredients
       var uomProvider = sl.get<UnitOfMeasureProvider>();
       for (var item in ingredients) {

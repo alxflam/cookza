@@ -1,5 +1,4 @@
-import 'package:cookly/constants.dart';
-import 'package:cookly/model/view/shopping_list.dart';
+import 'package:cookly/viewmodel/shopping_list/shopping_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:share_extend/share_extend.dart';

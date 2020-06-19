@@ -1,7 +1,7 @@
 import 'package:cookly/components/recipe_list_tile.dart';
-import 'package:cookly/model/view/recipe_view_model.dart';
 import 'package:cookly/services/service_locator.dart';
 import 'package:cookly/services/similarity_service.dart';
+import 'package:cookly/viewmodel/recipe_view/recipe_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -10,7 +10,7 @@ class SimilarRecipesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<RecipeViewModel>(builder: (context, model, child) {
       return FutureBuilder(
-          future: sl.get<SimilarityService>().getSimilarRecipes(model.id),
+          future: sl.get<SimilarityService>().getSimilarRecipes(model.recipe),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.hasData) {
               if (snapshot.data.length == 0) {

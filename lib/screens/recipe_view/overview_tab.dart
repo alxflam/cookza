@@ -1,6 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cookly/constants.dart';
-import 'package:cookly/model/view/recipe_view_model.dart';
 import 'package:cookly/services/app_profile.dart';
+import 'package:cookly/services/image_manager.dart';
+import 'package:cookly/services/service_locator.dart';
+import 'package:cookly/viewmodel/recipe_view/recipe_view_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -15,10 +18,10 @@ class OverviewTab extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           FutureBuilder(
-            future: Provider.of<AppProfile>(context, listen: false)
-                .getRecipeImage(model.id),
+            future:
+                sl.get<ImageManager>().getRecipeImageURL(model.recipe.image),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
-              if (snapshot.hasData) {
+              if (snapshot.hasData && snapshot.data.isNotEmpty) {
                 return Expanded(
                   flex: 1,
                   child: Container(
@@ -27,7 +30,7 @@ class OverviewTab extends StatelessWidget {
                       image: DecorationImage(
                           fit: BoxFit.fitWidth,
                           alignment: FractionalOffset.center,
-                          image: snapshot.data),
+                          image: CachedNetworkImageProvider(snapshot.data)),
                     ),
                   ),
                 );

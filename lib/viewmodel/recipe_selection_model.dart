@@ -1,6 +1,5 @@
-import 'package:cookly/model/json/recipe.dart';
-import 'package:cookly/model/view/recipe_view_model.dart';
-import 'package:cookly/screens/recipe_selection_screen.dart';
+import 'package:cookly/model/entities/abstract/recipe_entity.dart';
+import 'package:cookly/viewmodel/recipe_view/recipe_view_model.dart';
 import 'package:flutter/cupertino.dart';
 
 enum SELECTION_MODE {
@@ -71,7 +70,14 @@ class RecipeSelectionModel extends ChangeNotifier {
 
   List<String> get selectedRecipes => _selected;
 
-  List<Recipe> getSelectedRecipes() => _filtered
+  List<RecipeEntity> get selectedRecipeEntities {
+    return _recipes
+        .where((e) => _selected.contains(e.id))
+        .map((e) => e.recipe)
+        .toList();
+  }
+
+  List<RecipeEntity> getSelectedRecipes() => _filtered
       .where((item) => _selected.contains(item.id))
       .map((item) => item.recipe)
       .toList();

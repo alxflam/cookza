@@ -1,5 +1,7 @@
+import 'package:cookly/model/firebase/meal_plan/firebase_meal_plan.dart';
 import 'package:cookly/model/json/ingredient_note.dart';
 import 'package:cookly/services/abstract/data_store.dart';
+import 'package:cookly/services/recipe_manager.dart';
 import 'package:cookly/services/service_locator.dart';
 import 'package:cookly/services/unit_of_measure.dart';
 
@@ -12,8 +14,9 @@ class IngredientsCalculatorImpl implements IngredientsCalculator {
   List<IngredientNote> getIngredients(Map<String, int> ids) {
     List<IngredientNote> result = [];
 
-    var recipes =
-        sl.get<DataStore>().appProfile.getRawRecipes(ids.keys.toList());
+    // TODO implement get by ID
+    var recipes = [];
+    //  sl.get<RecipeManager>().getRecipesByID(ids.keys.toList());
 
     for (var entry in ids.entries) {
       var recipe = recipes.firstWhere((element) => element.id == entry.key,

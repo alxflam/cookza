@@ -1,6 +1,6 @@
 import 'package:cookly/localization/keys.dart';
-import 'package:cookly/model/view/recipe_edit_model.dart';
-import 'package:cookly/model/view/recipe_edit_step.dart';
+import 'package:cookly/viewmodel/recipe_edit/recipe_edit_model.dart';
+import 'package:cookly/viewmodel/recipe_edit/recipe_edit_step.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:provider/provider.dart';
@@ -43,10 +43,15 @@ Column _getInstructionRows(
 
   for (var i = 0; i < model.instructions.length; i++) {
     var textController =
-        TextEditingController(text: model.getInstruction(i).toString());
+        TextEditingController(text: model.getInstruction(i).text);
 
     textController
         .addListener(() => model.setInstruction(textController.text, i));
+
+    var autofocus =
+        textController.text.isEmpty && i == model.instructions.length - 1
+            ? true
+            : false;
 
     var row = Row(
       children: <Widget>[
@@ -58,11 +63,11 @@ Column _getInstructionRows(
         ),
         Expanded(
           child: TextFormField(
+            autofocus: autofocus,
             minLines: 1,
             keyboardType: TextInputType.multiline,
             maxLines: null,
             controller: textController,
-            autofocus: textController.text.isEmpty ? true : false,
           ),
         ),
       ],

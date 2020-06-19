@@ -1,12 +1,14 @@
-import 'package:cookly/model/json/meal_plan.dart';
-import 'package:cookly/model/json/meal_plan_item.dart';
+import 'package:cookly/model/entities/abstract/meal_plan_entity.dart';
+import 'package:cookly/model/entities/abstract/recipe_entity.dart';
+import 'package:cookly/model/entities/firebase/meal_plan_entity.dart';
 import 'package:cookly/services/abstract/data_store.dart';
+import 'package:cookly/services/meal_plan_manager.dart';
+import 'package:cookly/services/recipe_manager.dart';
 import 'package:cookly/services/service_locator.dart';
 import 'package:cookly/services/shared_preferences_provider.dart';
 import 'package:cookly/services/util/week_calculation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 
 class MealDragModel {
   int _origin;
@@ -38,9 +40,10 @@ class MealPlanRecipeModel with ChangeNotifier {
 class MealPlanViewModel extends ChangeNotifier {
   List<MealPlanDateEntry> entries = [];
   Locale _locale;
-  String _recipeIdForAddition;
+  RecipeEntity _recipeForAddition;
 
-  MealPlanViewModel.of(this._locale, MealPlan plan) {
+  // TODO: create mutable version of MealPlanEntity!!
+  MealPlanViewModel.of(this._locale, MealPlanEntity plan) {
     // first retrieve how many weeks should be shown
     var targetWeeks = sl.get<SharedPreferencesProvider>().getMealPlanWeeks();
 
@@ -51,9 +54,7 @@ class MealPlanViewModel extends ChangeNotifier {
     // for each persisted item, use it if it is not in the past and contains any persisted state (recipes have been added)
     for (var item in plan.items) {
       bool skip = item.date.isBefore(today);
-      if (!skip &&
-          item.recipeReferences != null &&
-          item.recipeReferences.isNotEmpty) {
+      if (!skip && item.recipes != null && item.recipes.isNotEmpty) {
         entries.add(MealPlanDateEntry.of(_locale, item));
       }
     }
@@ -93,7 +94,7 @@ class MealPlanViewModel extends ChangeNotifier {
   }
 
   void _save() {
-    sl.get<DataStore>().appProfile.updateMealPlan(this._toMealPlan());
+    // sl.get<MealPlanManager>().updateMealPlan(this._toMealPlan());
   }
 
   void moveRecipe(MealDragModel data, int target) {
@@ -109,8 +110,9 @@ class MealPlanViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addRecipe(int index, String id) {
-    var name = sl.get<DataStore>().appProfile.getRecipeById(id)?.name;
+  void addRecipe(int index, String id) async {
+    var recipe = await sl.get<RecipeManager>().getRecipeById(id);
+    var name = recipe != null ? recipe.name : 'unknown recipe';
     var servings =
         sl.get<SharedPreferencesProvider>().getMealPlanStandardServingsSize();
 
@@ -119,29 +121,37 @@ class MealPlanViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setRecipeForAddition(String id) {
-    _recipeIdForAddition = id;
+  void addRecipeFromEntity(int index, RecipeEntity entity) {
+    entries[index].addRecipe(
+        MealPlanRecipeModel(entity.id, entity.name, entity.servings));
+    _save();
+    notifyListeners();
+  }
+
+  void setRecipeForAddition(RecipeEntity recipe) {
+    _recipeForAddition = recipe;
   }
 
   void addByNavigation(int index) {
-    addRecipe(index, _recipeIdForAddition);
-    _recipeIdForAddition = null;
+    addRecipeFromEntity(index, _recipeForAddition);
+    _recipeForAddition = null;
     notifyListeners();
   }
 
   bool get addByNavigationRequired =>
-      _recipeIdForAddition != null && _recipeIdForAddition.isNotEmpty
+      _recipeForAddition != null && _recipeForAddition.id.isNotEmpty
           ? true
           : false;
 
-  MealPlan _toMealPlan() {
-    List<MealPlanItem> items = [];
+  MealPlanEntity _toMealPlan() {
+    // List<MealPlanDateItem> items = [];
 
-    for (var entry in entries) {
-      items.add(entry.toMealPlanItem());
-    }
+    // for (var entry in entries) {
+    //   items.add(entry.toMealPlanItem());
+    // }
 
-    return MealPlan(items: items);
+    // return MealPlanEntityFirebase.
+    return null;
   }
 
   void recipeModelChanged(MealPlanRecipeModel mealPlanRecipeModel) {
@@ -169,11 +179,10 @@ class MealPlanDateEntry with ChangeNotifier {
   Map<String, MealPlanRecipeModel> _recipes = {};
   Locale _locale;
 
-  MealPlanDateEntry.of(this._locale, MealPlanItem item) {
+  MealPlanDateEntry.of(this._locale, MealPlanDateEntity item) {
     this._date = item.date;
-    for (var entry in item.recipeReferences.entries) {
-      var name = sl.get<DataStore>().appProfile.getRecipeById(entry.key)?.name;
-      this.addRecipe(MealPlanRecipeModel(entry.key, name, entry.value));
+    for (var entry in item.recipes) {
+      this.addRecipe(MealPlanRecipeModel(entry.id, entry.name, entry.servings));
     }
   }
 
@@ -188,6 +197,7 @@ class MealPlanDateEntry with ChangeNotifier {
   }
 
   String get header {
+    // TODO: keep the formatter static somewhere
     var day = DateFormat.EEEE(this._locale.toString()).format(_date);
     var date = DateFormat('d.MM.yyyy').format(_date);
     return '$day, $date';
@@ -199,9 +209,9 @@ class MealPlanDateEntry with ChangeNotifier {
 
   List<MealPlanRecipeModel> get recipes => _recipes.values.toList();
 
-  MealPlanItem toMealPlanItem() {
-    Map<String, int> recipeReferences = Map.fromIterable(this._recipes.values,
-        key: (e) => e.id, value: (e) => e.servings);
-    return MealPlanItem(date: this._date, recipeReferences: recipeReferences);
-  }
+  // MealPlanItem toMealPlanItem() {
+  //   Map<String, int> recipeReferences = Map.fromIterable(this._recipes.values,
+  //       key: (e) => e.id, value: (e) => e.servings);
+  //   return MealPlanDateEntry(date: this._date, recipeReferences: recipeReferences);
+  // }
 }

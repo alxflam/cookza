@@ -1,6 +1,15 @@
 import 'package:barcode_scan/barcode_scan.dart';
+import 'package:cookly/constants.dart';
+import 'package:cookly/localization/keys.dart';
+import 'package:cookly/model/firebase/general/firebase_handshake.dart';
+import 'package:cookly/services/abstract/platform_info.dart';
+import 'package:cookly/services/firebase_provider.dart';
+import 'package:cookly/services/mobile/qr_scanner.dart';
+import 'package:cookly/services/service_locator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 class WebLoginOnAppScreen extends StatelessWidget {
   static final String id = 'webLoginOnApp';
@@ -9,12 +18,16 @@ class WebLoginOnAppScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('§Web'),
+        title: Text('${translate(Keys.App_Title)} ${translate(Keys.Ui_Web)}'),
         actions: [
           IconButton(
             icon: Icon(Icons.add),
-            onPressed: () {
-              this._scanQRCode();
+            onPressed: () async {
+              String content = await sl.get<QRScanner>().scanQRCode();
+
+              if (content != null && content.isNotEmpty) {
+                sl.get<FirebaseProvider>().enableWebLoginFor(content);
+              }
             },
           ),
         ],
@@ -23,63 +36,86 @@ class WebLoginOnAppScreen extends StatelessWidget {
         padding: EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             CircleAvatar(
+              backgroundColor: Colors.transparent.withAlpha(40),
               child: FaIcon(
                 FontAwesomeIcons.desktop,
                 size: 40,
               ),
               radius: 45,
             ),
-            Card(
-              child: ListView(
-                shrinkWrap: true,
-                children: [
-                  ListTile(
-                    leading: FaIcon(FontAwesomeIcons.windows),
-                    title: Text('Last Active: '),
-                    subtitle: Text('windows'),
-                  ),
-                  ListTile(
-                    leading: FaIcon(FontAwesomeIcons.apple),
-                    title: Text('Last Active: '),
-                    subtitle: Text('apple'),
-                  ),
-                  ListTile(
-                    leading: FaIcon(FontAwesomeIcons.linux),
-                    title: Text('Last Active: '),
-                    subtitle: Text('linux'),
-                  )
-                ],
-              ),
-            ),
-            RaisedButton(
-              onPressed: () {},
-              child: Row(
-                children: [
-                  Icon(FontAwesomeIcons.signOutAlt),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Text('Log off from all devices'),
-                ],
-              ),
+            StreamProvider<List<FirebaseHandshake>>.value(
+              value: sl.get<FirebaseProvider>().webAppSessions(),
+              child: LogIns(),
             ),
           ],
         ),
       ),
     );
   }
+}
 
-  void _scanQRCode() async {
-    var options = ScanOptions(
-      restrictFormat: [BarcodeFormat.qr],
+class LogIns extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    var handshakes = Provider.of<List<FirebaseHandshake>>(context);
+    var platformInfo = sl.get<PlatformInfo>();
+
+    if (handshakes == null || handshakes.isEmpty) {
+      return Container();
+    }
+
+    return Padding(
+      padding: EdgeInsets.only(top: 20),
+      child: Column(
+        children: [
+          Card(
+            margin: EdgeInsets.all(0),
+            child: Flexible(
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: handshakes.length,
+                itemBuilder: (context, index) {
+                  var item = handshakes[index];
+                  var date =
+                      kDateFormatter.format(item.creationTimestamp.toDate());
+                  return ListTile(
+                    leading:
+                        FaIcon(platformInfo.getOSIcon(item.operatingSystem)),
+                    title: Text('$date'),
+                    subtitle: Text(item.browser),
+                    trailing: IconButton(
+                      icon: Icon(Icons.delete),
+                      onPressed: () {
+                        sl
+                            .get<FirebaseProvider>()
+                            .logOffFromWebClient(item.requestor);
+                      },
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+          RaisedButton(
+            onPressed: () {
+              sl.get<FirebaseProvider>().logOffAllWebClient();
+            },
+            color: Colors.orange,
+            child: Row(
+              children: [
+                Icon(FontAwesomeIcons.signOutAlt),
+                SizedBox(
+                  width: 20,
+                ),
+                Text('Log off from all devices'),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
-
-    var scanResult = await BarcodeScanner.scan(options: options);
-
-    print('scanned: ${scanResult.rawContent}');
-
-    // ...
   }
 }

@@ -1,17 +1,13 @@
 import 'package:cookly/constants.dart';
 import 'package:cookly/localization/keys.dart';
-import 'package:cookly/model/view/recipe_selection_model.dart';
-import 'package:cookly/model/view/recipe_view_model.dart';
 import 'package:cookly/screens/settings/camera.dart';
 import 'package:cookly/screens/settings/export_settings_screen.dart';
 import 'package:cookly/screens/settings/meal_plan_settings_screen.dart';
 import 'package:cookly/screens/settings/ocr_screen.dart';
 import 'package:cookly/screens/settings/onboarding_screen.dart';
-import 'package:cookly/screens/recipe_selection_screen.dart';
 import 'package:cookly/screens/settings/saved_images_screen.dart';
 import 'package:cookly/screens/settings/theme_settings_screen.dart';
 import 'package:cookly/screens/settings/uom_visibility_settings_screen.dart';
-import 'package:cookly/services/abstract/data_store.dart';
 import 'package:cookly/services/abstract/recipe_file_import.dart';
 import 'package:cookly/services/service_locator.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +19,22 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TextStyle textStyle = Theme.of(context).textTheme.subtitle1;
+
+    final List<Widget> aboutBoxChildren = <Widget>[
+      SizedBox(height: 24),
+      RichText(
+        text: TextSpan(
+          children: <TextSpan>[
+            TextSpan(
+                style: textStyle,
+                text:
+                    'Cookly enables you to store, collect and share your favourite recipes in a data-privacy friendly manner.'),
+          ],
+        ),
+      ),
+    ];
+
     return Scaffold(
       appBar: AppBar(
         title: Text(translate(Keys.Ui_Settings)),
@@ -64,6 +76,13 @@ class SettingsScreen extends StatelessWidget {
                 onTap: () {
                   Navigator.pushNamed(context, MealPlanSettingsScreen.id);
                 },
+              ),
+              AboutListTile(
+                icon: Icon(kInfoIconData),
+                applicationVersion: '2020-05',
+                applicationIcon: Icon(kAppIconData),
+                applicationLegalese: '© 2020',
+                aboutBoxChildren: aboutBoxChildren,
               ),
               ListTile(
                 title: Text('§Saved Images'),

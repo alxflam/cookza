@@ -1,11 +1,10 @@
-import 'package:cookly/constants.dart';
 import 'package:cookly/localization/keys.dart';
-import 'package:cookly/model/json/shopping_list.dart';
-import 'package:cookly/model/view/recipe_meal_plan_model.dart';
-import 'package:cookly/model/view/shopping_list.dart';
 import 'package:cookly/screens/shopping_list/shopping_list_detail_screen.dart';
 import 'package:cookly/services/abstract/data_store.dart';
+import 'package:cookly/services/meal_plan_manager.dart';
 import 'package:cookly/services/service_locator.dart';
+import 'package:cookly/viewmodel/meal_plan/recipe_meal_plan_model.dart';
+import 'package:cookly/viewmodel/shopping_list/shopping_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -16,8 +15,9 @@ class ShoppingListOverviewScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ShoppingListOverviewModel _model =
-        sl.get<DataStore>().appProfile.shoppingListOverviewModel();
+    // TODO:
+    ShoppingListOverviewModel _model = ShoppingListOverviewModel.of([]);
+    // sl.get<ShoppingListManager>().appProfile.shoppingListOverviewModel();
 
     return Scaffold(
       appBar: AppBar(
@@ -27,9 +27,11 @@ class ShoppingListOverviewScreen extends StatelessWidget {
         actions: [
           IconButton(
             icon: Icon(Icons.add),
-            onPressed: () {
+            onPressed: () async {
+              var locale = Localizations.localeOf(context);
+              var entity = await sl.get<MealPlanManager>().mealPlan;
               MealPlanViewModel _mealPlan =
-                  sl.get<DataStore>().appProfile.mealPlanModel(context);
+                  MealPlanViewModel.of(locale, entity);
               var firstDate = _mealPlan.entries.first.date;
               var lastDate = _mealPlan.entries.last.date;
               var recipes =

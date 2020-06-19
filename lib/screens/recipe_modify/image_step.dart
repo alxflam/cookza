@@ -1,9 +1,8 @@
 import 'dart:io';
 
 import 'package:cookly/localization/keys.dart';
-import 'package:cookly/model/view/recipe_edit_model.dart';
-import 'package:cookly/model/view/recipe_edit_step.dart';
-import 'package:cookly/screens/recipe_modify/new_recipe_screen.dart';
+import 'package:cookly/viewmodel/recipe_edit/recipe_edit_model.dart';
+import 'package:cookly/viewmodel/recipe_edit/recipe_edit_step.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:image_picker/image_picker.dart';

@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:cookly/model/json/meal_plan.dart';
 import 'package:cookly/model/json/meal_plan_item.dart';
-import 'package:cookly/model/view/recipe_meal_plan_model.dart';
+import 'package:cookly/viewmodel/recipe_meal_plan_model.dart';
 import 'package:cookly/services/abstract/data_store.dart';
 import 'package:cookly/services/app_profile.dart';
 import 'package:cookly/services/service_locator.dart';

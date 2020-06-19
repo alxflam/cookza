@@ -1,9 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 
 /// Icons
 const kAppIconData = Icons.local_dining;
+const kWebAppData = FontAwesomeIcons.desktop;
 const kRecipesIconData = FontAwesomeIcons.bookOpen;
 const kLeftoversIconData = FontAwesomeIcons.recycle;
 const kMarketplaceIconData = FontAwesomeIcons.globe;
@@ -24,6 +26,11 @@ const kCakeIcon = FontAwesomeIcons.birthdayCake;
 const kSoupIcon = FontAwesomeIcons.mugHot;
 const kSweetsIcon = FontAwesomeIcons.iceCream;
 const kDrinkIcon = FontAwesomeIcons.cocktail;
+
+const kVeganTag = 'vegan';
+const kVegetarianTag = 'vegetarian';
+const kFishTag = 'fish';
+const kMeatTag = 'meat';
 
 /// tags
 /// todo: read this mapping on startup from a json, then user can add and refine tags and associate icons
@@ -62,12 +69,25 @@ String kDateToJson(DateTime date) {
   }
 }
 
+Timestamp kTimestampFromJson(dynamic val) {
+  if (val is Timestamp) {
+    return val;
+  } else if (val is Map) {
+    return Timestamp(val['_seconds'], val['_nanoseconds']);
+  }
+  throw 'timestamp can not be parsed';
+}
+
+dynamic kTimestampToJson(Timestamp val) {
+  return val;
+}
+
 /// formatter
 var kDateFormatter = DateFormat('dd.MM.yyyy');
 var kFileNameDateFormatter = DateFormat('dd_MM_yyyy');
 
 String kFormatAmount(double amount) {
-  if (amount == 0) {
+  if (amount == null || amount == 0) {
     return '';
   }
   return amount % 1 == 0
