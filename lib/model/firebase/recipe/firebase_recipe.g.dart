@@ -21,7 +21,7 @@ FirebaseRecipe _$FirebaseRecipeFromJson(Map<String, dynamic> json) {
     rating: json['rating'] as int ?? 0,
     servings: json['servings'] as int ?? 1,
     image: json['image'] as String,
-    recipeGroupId: json['recipeGroupId'] as String,
+    recipeGroupID: json['recipeGroupID'] as String,
   );
 }
 
@@ -44,7 +44,7 @@ Map<String, dynamic> _$FirebaseRecipeToJson(FirebaseRecipe instance) {
   writeNotNull('rating', instance.rating);
   writeNotNull('servings', instance.servings);
   writeNotNull('image', instance.image);
-  val['recipeGroupId'] = instance.recipeGroupId;
+  val['recipeGroupID'] = instance.recipeGroupID;
   writeNotNull('difficulty', _$DIFFICULTYEnumMap[instance.difficulty]);
   val['tags'] = instance.tags;
   return val;

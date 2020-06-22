@@ -1,4 +1,3 @@
-import 'package:cookly/services/abstract/data_store.dart';
 import 'package:cookly/services/abstract/pdf_export.dart';
 import 'package:cookly/services/abstract/pdf_generator.dart';
 import 'package:cookly/services/abstract/platform_info.dart';
@@ -20,10 +19,6 @@ import 'package:cookly/services/shared_preferences_provider.dart';
 import 'package:cookly/services/similarity_service.dart';
 import 'package:cookly/services/unit_of_measure.dart';
 import 'package:get_it/get_it.dart';
-
-// /// datastore: use shared_preferences (web) or local file system (mobile)
-// import 'package:cookly/services/data_store.dart'
-//     if (dart.library.html) 'package:cookly/services/web/data_store_web.dart';
 
 /// recipe import: use file_picker (mobile) or open a explorer window (web)
 import 'package:cookly/services/mobile/recipe_file_import_app.dart'
@@ -63,9 +58,6 @@ void setupServiceLocator() {
 
   sl.registerSingletonAsync<SharedPreferencesProvider>(
       () async => SharedPreferencesProviderImpl().init());
-
-  // sl.registerSingletonAsync<DataStore>(
-  //     () async => LocalStorageDataStore().init());
 
   sl.registerSingletonAsync<FirebaseProvider>(
       () async => FirebaseProvider().init());

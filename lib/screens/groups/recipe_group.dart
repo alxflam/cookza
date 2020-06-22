@@ -4,7 +4,6 @@ import 'package:cookly/services/mobile/qr_scanner.dart';
 import 'package:cookly/services/recipe_manager.dart';
 import 'package:cookly/services/service_locator.dart';
 import 'package:cookly/viewmodel/recipe_group/recipe_group_model.dart';
-import 'package:cookly/viewmodel/recipe_view/recipe_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

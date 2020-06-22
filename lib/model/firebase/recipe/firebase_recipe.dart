@@ -41,7 +41,7 @@ class FirebaseRecipe {
   @JsonKey(nullable: true)
   String image;
   @JsonKey(nullable: false)
-  String recipeGroupId;
+  String recipeGroupID;
 
   @JsonKey(defaultValue: DIFFICULTY.MEDIUM)
   DIFFICULTY difficulty;
@@ -62,7 +62,7 @@ class FirebaseRecipe {
     this.rating,
     this.servings,
     this.image,
-    this.recipeGroupId,
+    this.recipeGroupID,
   }) {
     // initalize values
     if (this.tags == null) {
@@ -95,7 +95,7 @@ class FirebaseRecipe {
       servings: recipe.servings,
       image: recipe.image,
       documentID: recipe.id,
-      recipeGroupId: recipe.recipeCollectionId,
+      recipeGroupID: recipe.recipeCollectionId,
     );
 
     if (recipe is RecipeEntityFirebase) {

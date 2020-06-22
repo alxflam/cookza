@@ -121,7 +121,6 @@ Widget _getCollectionDropDown(
     builder: (context, snapshot) {
       if (snapshot.hasData && snapshot.data.isNotEmpty) {
         var collections = snapshot.data as List<RecipeCollectionEntity>;
-        print(collections);
         List<DropdownMenuItem<RecipeCollectionEntity>> items = collections
             .map((item) => DropdownMenuItem<RecipeCollectionEntity>(
                 child: Text(item.name), value: item))
@@ -132,7 +131,7 @@ Widget _getCollectionDropDown(
         }
 
         var selectedCollection =
-            collections.contains(model.collection) ? model.collection : null;
+            collections.firstWhere((e) => e.id == model.collection.id);
 
         print('selected coll: $selectedCollection');
 

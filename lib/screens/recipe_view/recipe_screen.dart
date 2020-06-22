@@ -8,7 +8,6 @@ import 'package:cookly/screens/recipe_view/ingredients_tab.dart';
 import 'package:cookly/screens/recipe_view/instructions_tab.dart';
 import 'package:cookly/screens/recipe_view/overview_tab.dart';
 import 'package:cookly/screens/recipe_view/similar_recipes_tab.dart';
-import 'package:cookly/services/app_profile.dart';
 import 'package:cookly/services/recipe_manager.dart';
 import 'package:cookly/services/service_locator.dart';
 import 'package:cookly/viewmodel/recipe_edit/recipe_edit_model.dart';

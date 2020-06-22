@@ -52,6 +52,16 @@ views are being fed by streams of data so they directly react to changes occurri
 * has an array of used recipes
 * each meal plan has a reference to a meal plan collection => access control
 
+* if a user always has only a single meal plan...
+* then A invites B
+* the former meal plan of B would need to be deleted 
+* B requires offer from A to delete it's own meal plan, but A needs to add B to it's meal plan..
+* hence easier to have multiple meal plans and let the user delete the unused ones...?
+* or a cloud function makes sure adding the user and deleting a meal plan is handled in a transaction?
+
+// TODO:
+recipes nicht als subcollection => sonst muss bei move von einer group in andere immer 3x delete + 3x add ausgeführt werden
+=> als main collection wird nur das referenzfeld geändert mit einem merge update
 
 ## Web App Login
 

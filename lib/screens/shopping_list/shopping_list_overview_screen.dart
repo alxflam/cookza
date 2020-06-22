@@ -28,10 +28,8 @@ class ShoppingListOverviewScreen extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.add),
             onPressed: () async {
-              var locale = Localizations.localeOf(context);
               var entity = await sl.get<MealPlanManager>().mealPlan;
-              MealPlanViewModel _mealPlan =
-                  MealPlanViewModel.of(locale, entity);
+              MealPlanViewModel _mealPlan = MealPlanViewModel.of(entity);
               var firstDate = _mealPlan.entries.first.date;
               var lastDate = _mealPlan.entries.last.date;
               var recipes =

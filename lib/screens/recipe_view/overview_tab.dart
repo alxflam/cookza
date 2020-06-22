@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cookly/constants.dart';
-import 'package:cookly/services/app_profile.dart';
 import 'package:cookly/services/image_manager.dart';
 import 'package:cookly/services/service_locator.dart';
 import 'package:cookly/viewmodel/recipe_view/recipe_view_model.dart';

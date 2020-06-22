@@ -1,8 +1,11 @@
 import 'dart:collection';
 
+import 'package:cookly/constants.dart';
 import 'package:cookly/model/entities/abstract/ingredient_note_entity.dart';
 import 'package:cookly/model/entities/abstract/instruction_entity.dart';
 import 'package:cookly/model/entities/abstract/recipe_entity.dart';
+import 'package:cookly/model/entities/json/ingredient_note_entity.dart';
+import 'package:cookly/model/entities/json/instruction_entity.dart';
 import 'package:cookly/model/json/recipe.dart';
 
 class RecipeEntityJson implements RecipeEntity {
@@ -13,68 +16,59 @@ class RecipeEntityJson implements RecipeEntity {
   }
 
   @override
-  // TODO: implement description
-  String get description => throw UnimplementedError();
+  String get description => _recipe.shortDescription;
 
   @override
-  // TODO: implement difficulty
-  DIFFICULTY get difficulty => throw UnimplementedError();
+  DIFFICULTY get difficulty => _recipe.diff;
 
   @override
-  // TODO: implement duration
-  int get duration => throw UnimplementedError();
+  int get duration => _recipe.duration;
 
   @override
-  // TODO: implement id
-  String get id => throw UnimplementedError();
+  String get id => _recipe.id;
 
   @override
-  // TODO: implement ingredients
   Future<UnmodifiableListView<IngredientNoteEntity>> get ingredients =>
-      throw UnimplementedError();
+      Future.value(UnmodifiableListView(_recipe.ingredients
+          .map((e) => IngredientNoteEntityJson.of(e))
+          .toList()));
 
   @override
-  // TODO: implement instructions
-  Future<UnmodifiableListView<InstructionEntity>> get instructions =>
-      throw UnimplementedError();
+  Future<UnmodifiableListView<InstructionEntity>> get instructions {
+    var result = UnmodifiableListView(
+        _recipe.instructions.map((e) => InstructionEntityJson.of(e)).toList());
+    return Future.value(result);
+  }
 
   @override
-  // TODO: implement name
-  String get name => throw UnimplementedError();
+  String get name => _recipe.name;
 
   @override
-  // TODO: implement rating
-  int get rating => throw UnimplementedError();
+  int get rating => _recipe.rating;
 
   @override
-  // TODO: implement recipeCollectionId
-  String get recipeCollectionId => throw UnimplementedError();
+  String get recipeCollectionId => '';
 
   @override
-  // TODO: implement servings
-  int get servings => throw UnimplementedError();
+  int get servings => _recipe.servings;
 
   @override
-  // TODO: implement tags
-  UnmodifiableListView<String> get tags => throw UnimplementedError();
+  UnmodifiableListView<String> get tags => UnmodifiableListView(_recipe.tags);
 
   @override
-  // TODO: implement creationDate
-  DateTime get creationDate => throw UnimplementedError();
+  DateTime get creationDate => _recipe.creationDate;
 
   @override
-  // TODO: implement creationDateFormatted
-  String get creationDateFormatted => throw UnimplementedError();
+  String get creationDateFormatted =>
+      kDateFormatter.format(_recipe.creationDate);
 
   @override
-  // TODO: implement modificationDate
-  DateTime get modificationDate => throw UnimplementedError();
+  DateTime get modificationDate => _recipe.modificationDate;
 
   @override
-  // TODO: implement modificationDateFormatted
-  String get modificationDateFormatted => throw UnimplementedError();
+  String get modificationDateFormatted =>
+      kDateFormatter.format(_recipe.modificationDate);
 
   @override
-  // TODO: implement image
-  String get image => throw UnimplementedError();
+  String get image => '';
 }

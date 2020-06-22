@@ -9,6 +9,7 @@ import 'package:cookly/model/entities/firebase/instruction_entity.dart';
 import 'package:cookly/model/entities/firebase/meal_plan_entity.dart';
 import 'package:cookly/model/entities/firebase/recipe_collection_entity.dart';
 import 'package:cookly/model/entities/firebase/recipe_entity.dart';
+import 'package:cookly/model/entities/mutable/mutable_recipe.dart';
 import 'package:cookly/model/firebase/collections/firebase_recipe_collection.dart';
 import 'package:cookly/model/firebase/firebase_util.dart';
 import 'package:cookly/model/firebase/general/firebase_handshake.dart';
@@ -267,9 +268,8 @@ class FirebaseProvider {
   /// todo: option to get all or only from a specific recipe group
   Stream<List<RecipeEntity>> recipes() {
     return _firestore
-        .collection(RECIPE_GROUPS)
-        .document(this._currentRecipeGroup)
         .collection(RECIPES)
+        .where('recipeGroupID', isEqualTo: this._currentRecipeGroup)
         .snapshots()
         .map((e) => e.documents
             .map((e) => RecipeEntityFirebase.of(
@@ -290,11 +290,7 @@ class FirebaseProvider {
     var instructions = await FirebaseInstruction.from(recipe);
 
     // using batch instead of transaction as it should be possible to create recipes in offline mode
-    var recipeDocRef = _firestore
-        .collection(RECIPE_GROUPS)
-        .document(recipe.recipeCollectionId)
-        .collection(RECIPES)
-        .document();
+    var recipeDocRef = _firestore.collection(RECIPES).document();
 
     var ingredientsDocRef =
         _firestore.collection(INGREDIENTS).document(recipeDocRef.documentID);
@@ -329,11 +325,7 @@ class FirebaseProvider {
     var ingredients = await FirebaseIngredient.from(recipe);
     var instructions = await FirebaseInstruction.from(recipe);
 
-    var recipeDocRef = _firestore
-        .collection(RECIPE_GROUPS)
-        .document(recipe.recipeCollectionId)
-        .collection(RECIPES)
-        .document(recipe.id);
+    var recipeDocRef = _firestore.collection(RECIPES).document(recipe.id);
 
     var batch = _firestore.batch();
     batch.setData(recipeDocRef, baseRecipe.toJson());
@@ -360,12 +352,7 @@ class FirebaseProvider {
   }
 
   Future<void> deleteRecipe(RecipeEntity recipe) async {
-    await _firestore
-        .collection(RECIPE_GROUPS)
-        .document(recipe.recipeCollectionId)
-        .collection(RECIPES)
-        .document(recipe.id)
-        .delete();
+    await _firestore.collection(RECIPES).document(recipe.id).delete();
     print('deleted recipe ${recipe.id}');
   }
 
@@ -387,6 +374,7 @@ class FirebaseProvider {
 
     _firestore.runTransaction((transaction) {
       transaction.delete(collection);
+
       // TODO also delete all recipes and other associated data
     });
   }
@@ -417,19 +405,14 @@ class FirebaseProvider {
     return docData.ingredients
         .map((e) => IngredientNoteEntityFirebase.of(e))
         .toList();
-
-    // return doc.
-    //     .map((e) => IngredientNoteEntityFirebase.of(
-    //         FirebaseIngredient.fromJson(e.data, e.documentID)))
-    //     .toList();
   }
 
   Future<List<RecipeEntity>> getAllRecipes() async {
     var collections = await recipeCollectionsAsList();
 
     var docs = await _firestore
-        .collectionGroup(RECIPES)
-        .where('recipeGroupId', whereIn: collections.map((e) => e.id).toList())
+        .collection(RECIPES)
+        .where('recipeGroupID', whereIn: collections.map((e) => e.id).toList())
         .getDocuments();
 
     print('all documents retrieved ${docs.documents.length} results');
@@ -453,13 +436,13 @@ class FirebaseProvider {
 
     var result =
         data.instructions.map((e) => InstructionEntityFirebase.of(e)).toList();
-    result.sort((a, b) => a.step.compareTo(b.step));
+    result.sort((a, b) {
+      if (a.step == null || b.step == null) {
+        return 0;
+      }
+      return a.step.compareTo(b.step == null ? 0 : b.step);
+    });
     return result;
-
-    // return docs.documents
-    //     .map((e) => InstructionEntityFirebase.of(
-    //         FirebaseInstruction.fromJson(e.data, e.documentID)))
-    //     .toList();
   }
 
   Future<void> updateRating(RecipeEntity recipe, int rating) {
@@ -475,7 +458,7 @@ class FirebaseProvider {
   Future<MealPlanEntity> mealPlan() async {
     var snapshot = await _firestore
         .collection(MEAL_PLANS)
-        .where('user.${this.userUid}', isGreaterThan: '')
+        .where('users.${this.userUid}', isGreaterThan: '')
         .limit(1)
         .getDocuments();
 
@@ -493,8 +476,9 @@ class FirebaseProvider {
     return model;
   }
 
-  Future<void> updateMealPlan(MealPlanEntity entity) async {
+  Future<String> saveMealPlan(MealPlanEntity entity) async {
     DocumentReference docRef;
+    // TODO: somehow the ID is always null even if saved...return the documentID!!!
     if (entity.id != null && entity.id.isNotEmpty) {
       docRef = _firestore.collection(MEAL_PLANS).document(entity.id);
     } else {
@@ -503,6 +487,24 @@ class FirebaseProvider {
 
     var data = FirebaseMealPlanDocument.from(entity);
 
-    return docRef.setData(data.toJson());
+    await docRef.setData(data.toJson());
+
+    return docRef.documentID;
+  }
+
+  Future<void> addUserToMealPlan(
+      String documentID, String userID, String name) {
+    var doc = _firestore.collection(MEAL_PLANS).document(documentID);
+
+    return doc.setData({'users.$userUid': name}, merge: true);
+  }
+
+  Future<void> importRecipes(List<RecipeEntity> recipes) async {
+    for (var recipe in recipes) {
+      var target = MutableRecipe.of(recipe);
+      target.id = null;
+      target.recipeCollectionId = this.currentRecipeGroup;
+      await _createRecipe(target);
+    }
   }
 }

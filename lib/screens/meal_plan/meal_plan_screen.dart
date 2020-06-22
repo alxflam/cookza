@@ -2,7 +2,9 @@ import 'package:cookly/components/round_icon_button.dart';
 import 'package:cookly/constants.dart';
 import 'package:cookly/localization/keys.dart';
 import 'package:cookly/model/entities/abstract/recipe_entity.dart';
+import 'package:cookly/screens/shopping_list/shopping_list_overview_screen.dart';
 import 'package:cookly/services/meal_plan_manager.dart';
+import 'package:cookly/services/mobile/qr_scanner.dart';
 import 'package:cookly/services/recipe_manager.dart';
 import 'package:cookly/viewmodel/meal_plan/recipe_meal_plan_model.dart';
 import 'package:cookly/viewmodel/recipe_selection_model.dart';
@@ -12,7 +14,21 @@ import 'package:cookly/viewmodel/recipe_view/recipe_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+
+class PopupMenuButtonChoices {
+  final _key;
+  final _icon;
+  const PopupMenuButtonChoices._internal(this._key, this._icon);
+  toString() => translate(_key);
+  IconData get icon => this._icon;
+
+  static const SHOPPING_LIST = const PopupMenuButtonChoices._internal(
+      Keys.Functions_Shoppinglist, kShoppingListIconData);
+  static const ADD_USER =
+      const PopupMenuButtonChoices._internal(Keys.Ui_Adduser, Icons.add);
+}
 
 class MealPlanScreen extends StatelessWidget {
   static final String id = 'mealPlan';
@@ -27,9 +43,44 @@ class MealPlanScreen extends StatelessWidget {
           translate(Keys.Functions_Mealplanner),
         ),
         actions: [
-          IconButton(
-            icon: Icon(kShoppingListIconData),
-            onPressed: () {},
+          PopupMenuButton(
+            itemBuilder: (context) {
+              return [
+                PopupMenuItem(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Icon(PopupMenuButtonChoices.ADD_USER.icon),
+                      Text(PopupMenuButtonChoices.ADD_USER.toString())
+                    ],
+                  ),
+                  value: PopupMenuButtonChoices.ADD_USER,
+                ),
+                PopupMenuItem(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Icon(PopupMenuButtonChoices.SHOPPING_LIST.icon),
+                      Text(PopupMenuButtonChoices.SHOPPING_LIST.toString())
+                    ],
+                  ),
+                  value: PopupMenuButtonChoices.SHOPPING_LIST,
+                ),
+              ];
+            },
+            onSelected: (value) {
+              switch (value) {
+                case PopupMenuButtonChoices.SHOPPING_LIST:
+                  Navigator.pushReplacementNamed(
+                      context, ShoppingListOverviewScreen.id);
+                  break;
+                case PopupMenuButtonChoices.ADD_USER:
+                  _addUser(context);
+                  break;
+                default:
+                  break;
+              }
+            },
           ),
         ],
       ),
@@ -37,10 +88,7 @@ class MealPlanScreen extends StatelessWidget {
         future: sl.get<MealPlanManager>().mealPlan,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            var locale = Localizations.localeOf(context);
-
-            MealPlanViewModel _model =
-                MealPlanViewModel.of(locale, snapshot.data);
+            MealPlanViewModel _model = MealPlanViewModel.of(snapshot.data);
 
             if (_recipe != null && _recipe.id.isNotEmpty) {
               _model.setRecipeForAddition(_recipe);
@@ -97,7 +145,7 @@ class MealPlanScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      model.entries[i].header,
+                      _getWeekDayHeaderText(context, model.entries[i]),
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                     ),
@@ -311,5 +359,22 @@ class MealPlanScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String _getWeekDayHeaderText(BuildContext context, MealPlanDateEntry entry) {
+    var locale = Localizations.localeOf(context);
+    var day = DateFormat.EEEE(locale.toString()).format(entry.date);
+    var date = DateFormat('d.MM.yyyy').format(entry.date);
+    return '$day, $date';
+  }
+
+  void _addUser(BuildContext context) async {
+    // scan a qr code
+    var scanResult = await sl.get<QRScanner>().scanQRCode();
+    // TODO: add some alidation that the given string is a user id => check if the user exists?
+    if (scanResult != null && scanResult.isNotEmpty) {
+      // then add the user
+      await sl.get<MealPlanManager>().addUser(scanResult, 'some User');
+    }
   }
 }

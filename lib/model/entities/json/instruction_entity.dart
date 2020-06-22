@@ -8,10 +8,10 @@ class InstructionEntityJson implements InstructionEntity {
   }
 
   @override
-  String get image => throw UnsupportedError('image is not implemented');
+  String get image => null;
 
   @override
-  int get step => throw UnsupportedError('step is not supported');
+  int get step => null;
 
   @override
   String get text => this._instruction;

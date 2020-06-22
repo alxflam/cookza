@@ -38,7 +38,7 @@ class ShoppingListModel extends ChangeNotifier {
       var locale = Localizations.localeOf(context);
 
       // TODO: pass the viewmodel directly as a constructor argument...
-      MealPlanViewModel mealPlan = MealPlanViewModel.of(locale, null);
+      MealPlanViewModel mealPlan = MealPlanViewModel.of(null);
 
       // collect all recipes planned for the given duration
       for (var item in mealPlan.entries) {

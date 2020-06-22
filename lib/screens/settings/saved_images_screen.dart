@@ -1,7 +1,5 @@
 import 'dart:io';
 
-import 'package:cookly/services/abstract/data_store.dart';
-import 'package:cookly/services/image_manager.dart';
 import 'package:cookly/services/local_storage.dart';
 import 'package:cookly/services/service_locator.dart';
 import 'package:flutter/material.dart';
@@ -46,6 +44,7 @@ class SavedImagesScreen extends StatelessWidget {
   }
 
   Future<List<File>> _getImageFiles() async {
+    // TODO: hwo to handle google storage images
     String path = await sl.get<StorageProvider>().getImageDirectory();
     var files = Directory(path).listSync();
     List<File> result = [];

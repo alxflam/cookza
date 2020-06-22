@@ -45,6 +45,9 @@ class MutableRecipe implements RecipeEntity {
     this._id = entity.id;
     this._recipeCollectionId = entity.recipeCollectionId;
 
+    _origIngredients = entity.ingredients;
+    _origInstructions = entity.instructions;
+
     entity.ingredients.then((value) {
       var list = value.map((e) => MutableIngredientNote.of(e)).toList();
       this._ingredients = list;
@@ -70,6 +73,8 @@ class MutableRecipe implements RecipeEntity {
   @override
   String get description => this._description;
 
+  set id(String value) => this._id = value;
+
   set description(String value) {
     this._description = value;
   }
@@ -93,7 +98,9 @@ class MutableRecipe implements RecipeEntity {
 
   @override
   Future<UnmodifiableListView<IngredientNoteEntity>> get ingredients async {
-    return Future.value(UnmodifiableListView(this._ingredients));
+    var original = await this._origIngredients;
+    return Future.value(UnmodifiableListView(
+        this._ingredients == null ? original : this._ingredients));
   }
 
   set ingredientList(List<IngredientNoteEntity> value) {
@@ -101,8 +108,10 @@ class MutableRecipe implements RecipeEntity {
   }
 
   @override
-  Future<UnmodifiableListView<InstructionEntity>> get instructions {
-    return Future.value(UnmodifiableListView(this._instructions));
+  Future<UnmodifiableListView<InstructionEntity>> get instructions async {
+    var original = await this._origInstructions;
+    return Future.value(UnmodifiableListView(
+        this._instructions == null ? original : this._instructions));
   }
 
   set instructionList(List<InstructionEntity> value) {
@@ -137,8 +146,8 @@ class MutableRecipe implements RecipeEntity {
   @override
   String get recipeCollectionId => this._recipeCollectionId;
 
-  set recipeCollectionId(String id) {
-    this._recipeCollectionId = id;
+  set recipeCollectionId(String value) {
+    this._recipeCollectionId = value;
   }
 
   @override

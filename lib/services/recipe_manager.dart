@@ -33,6 +33,8 @@ abstract class RecipeManager {
   Future<RecipeEntity> getRecipeById(String key);
 
   Future<void> updateRating(RecipeEntity recipe, int rating);
+
+  Future<void> importRecipes(List<RecipeEntity> recipes);
 }
 
 // todo: extract an interface for the FirebaseProvider and use it also for local storage provider if that is needed
@@ -117,5 +119,10 @@ class RecipeManagerFirebase implements RecipeManager {
   @override
   Future<void> updateRating(RecipeEntity recipe, int rating) {
     return sl.get<FirebaseProvider>().updateRating(recipe, rating);
+  }
+
+  @override
+  Future<void> importRecipes(List<RecipeEntity> recipes) {
+    return sl.get<FirebaseProvider>().importRecipes(recipes);
   }
 }

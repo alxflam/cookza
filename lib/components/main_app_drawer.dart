@@ -5,12 +5,10 @@ import 'package:cookly/screens/recipe_list_screen.dart';
 import 'package:cookly/screens/recipe_modify/new_recipe_screen.dart';
 import 'package:cookly/screens/settings/settings_screen.dart';
 import 'package:cookly/screens/web_login_app.dart';
-import 'package:cookly/services/app_profile.dart';
 import 'package:cookly/viewmodel/recipe_edit/recipe_edit_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
 
 import '../constants.dart';
 

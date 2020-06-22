@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:cookly/services/local_storage.dart';
+import 'package:cookly/services/service_locator.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 abstract class ImageManager {
@@ -7,6 +9,7 @@ abstract class ImageManager {
   Future<void> deleteRecipeImage(String recipeId);
   Future<String> getRecipeImageURL(String recipeId);
   String getRecipeImagePath(String recipeId);
+  Future<File> getRecipeImageFile(String recipeID);
 }
 
 class ImageManagerFirebase implements ImageManager {
@@ -45,5 +48,19 @@ class ImageManagerFirebase implements ImageManager {
   @override
   String getRecipeImagePath(String recipeId) {
     return 'images/recipe/$recipeId.jpg';
+  }
+
+  @override
+  Future<File> getRecipeImageFile(String recipeID) async {
+    var imageDirectory = await sl.get<StorageProvider>().getImageDirectory();
+    var cacheFile = File('$imageDirectory/$recipeID');
+    if (!cacheFile.existsSync()) {
+      StorageReference reference =
+          _storage.ref().child(getRecipeImagePath(recipeID));
+      var task = reference.writeToFile(cacheFile);
+      await task.future;
+    }
+
+    return cacheFile;
   }
 }

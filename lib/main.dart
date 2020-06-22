@@ -23,8 +23,6 @@ import 'package:cookly/screens/shopping_list/shopping_list_detail_screen.dart';
 import 'package:cookly/screens/shopping_list/shopping_list_overview_screen.dart';
 import 'package:cookly/screens/web/web_login.dart';
 import 'package:cookly/screens/web_login_app.dart';
-import 'package:cookly/services/abstract/data_store.dart';
-import 'package:cookly/services/app_profile.dart';
 import 'package:cookly/services/service_locator.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

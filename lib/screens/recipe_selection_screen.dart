@@ -143,8 +143,7 @@ class RecipeSelectionScreen extends StatelessWidget {
         };
       case SELECTION_MODE.IMPORT:
         return (context, model) {
-          // TODO
-          // sl.get<RecipeManager>().importRecipes(model.getSelectedRecipes());
+          sl.get<RecipeManager>().importRecipes(model.getSelectedRecipes());
           Navigator.pop(context);
         };
       case SELECTION_MODE.REFERENCE_INGREDIENT:

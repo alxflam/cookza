@@ -37,7 +37,8 @@ class FirebaseIngredient {
 
   static Future<List<FirebaseIngredient>> from(RecipeEntity recipe) async {
     List<FirebaseIngredient> result = [];
-    for (var item in await recipe.ingredients) {
+    var ing = await recipe.ingredients;
+    for (var item in ing) {
       result.add(FirebaseIngredient(
           ingredient: Ingredient(
               name: item.ingredient.name,

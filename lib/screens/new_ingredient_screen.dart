@@ -203,7 +203,7 @@ class NewIngredientScreen extends StatelessWidget {
     );
   }
 
-  _getRecipeWidget(RecipeIngredientModel model, BuildContext context) async {
+  Widget _getRecipeWidget(RecipeIngredientModel model, BuildContext context) {
     if (model.isRecipeReference) {
       return FutureBuilder<RecipeViewModel>(
         future: model.recipe,

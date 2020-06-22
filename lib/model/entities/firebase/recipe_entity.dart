@@ -41,7 +41,7 @@ class RecipeEntityFirebase implements RecipeEntity {
   Future<UnmodifiableListView<IngredientNoteEntity>> get ingredients async {
     if (this._ingredients.isEmpty) {
       this._ingredients = await sl.get<FirebaseProvider>().recipeIngredients(
-          this._recipe.recipeGroupId, this._recipe.documentID);
+          this._recipe.recipeGroupID, this._recipe.documentID);
     }
     return Future.value(UnmodifiableListView(this._ingredients));
   }
@@ -50,7 +50,7 @@ class RecipeEntityFirebase implements RecipeEntity {
   Future<UnmodifiableListView<InstructionEntity>> get instructions async {
     if (this._instructions.isEmpty) {
       this._instructions = await sl.get<FirebaseProvider>().recipeInstructions(
-          this._recipe.recipeGroupId, this._recipe.documentID);
+          this._recipe.recipeGroupID, this._recipe.documentID);
     }
     return Future.value(UnmodifiableListView(this._instructions));
   }
@@ -62,7 +62,7 @@ class RecipeEntityFirebase implements RecipeEntity {
   int get rating => this._recipe.rating;
 
   @override
-  String get recipeCollectionId => this._recipe.recipeGroupId;
+  String get recipeCollectionId => this._recipe.recipeGroupID;
 
   @override
   int get servings => this._recipe.servings;

@@ -25,9 +25,9 @@ class RecipeListTile extends StatelessWidget {
             );
           }
           return FutureBuilder(
-            future: sl.get<ImageManager>().getRecipeImageURL(item.image),
+            future: sl.get<ImageManager>().getRecipeImageFile(item.id),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
-              if (snapshot.hasData && snapshot.data.isNotEmpty) {
+              if (snapshot.hasData) {
                 return AspectRatio(
                   aspectRatio: 2 / 1,
                   child: Container(
@@ -36,7 +36,7 @@ class RecipeListTile extends StatelessWidget {
                       image: DecorationImage(
                         fit: BoxFit.fitWidth,
                         alignment: FractionalOffset.center,
-                        image: CachedNetworkImageProvider(snapshot.data),
+                        image: FileImage(snapshot.data),
                       ),
                     ),
                   ),

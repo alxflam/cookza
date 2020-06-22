@@ -74,9 +74,12 @@ class FirebaseMealPlanDocument {
   Map<String, dynamic> toJson() => _$FirebaseMealPlanDocumentToJson(this);
 
   static from(MealPlanEntity entity) {
-    var users =
+    Map<String, String> users =
         Map.fromIterable(entity.users, key: (e) => e.id, value: (e) => e.name);
-    var items = entity.items.map((e) => FirebaseMealPlanDate.from(e)).toList();
+    var items = entity.items
+        .where((e) => e.recipes.isNotEmpty)
+        .map((e) => FirebaseMealPlanDate.from(e))
+        .toList();
     return FirebaseMealPlanDocument(items: items, users: users);
   }
 
