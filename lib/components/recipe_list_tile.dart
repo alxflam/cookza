@@ -25,7 +25,7 @@ class RecipeListTile extends StatelessWidget {
             );
           }
           return FutureBuilder(
-            future: sl.get<ImageManager>().getRecipeImageFile(item.id),
+            future: sl.get<ImageManager>().getRecipeImageFile(item),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {
                 return AspectRatio(

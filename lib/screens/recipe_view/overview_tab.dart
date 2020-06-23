@@ -17,10 +17,9 @@ class OverviewTab extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           FutureBuilder(
-            future:
-                sl.get<ImageManager>().getRecipeImageURL(model.recipe.image),
+            future: sl.get<ImageManager>().getRecipeImageFile(model.recipe),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
-              if (snapshot.hasData && snapshot.data.isNotEmpty) {
+              if (snapshot.hasData) {
                 return Expanded(
                   flex: 1,
                   child: Container(
@@ -29,7 +28,7 @@ class OverviewTab extends StatelessWidget {
                       image: DecorationImage(
                           fit: BoxFit.fitWidth,
                           alignment: FractionalOffset.center,
-                          image: CachedNetworkImageProvider(snapshot.data)),
+                          image: FileImage(snapshot.data)),
                     ),
                   ),
                 );

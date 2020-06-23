@@ -108,14 +108,12 @@ class RecipeImageEditStep extends RecipeEditStep {
   }
 
   @override
-  void applyFrom(RecipeEntity recipe) {
+  void applyFrom(RecipeEntity recipe) async {
     var currentImage = recipe.image;
 
     if (currentImage != null && currentImage.isNotEmpty) {
       this._initialState = currentImage;
-      // TODO: retrieve saved image as file
-      // var url = await sl.get<ImageManager>().getRecipeImageURL(recipe.id);
-      // this._image = image;
+      this._image = await sl.get<ImageManager>().getRecipeImageFile(recipe);
     }
   }
 

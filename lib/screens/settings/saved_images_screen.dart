@@ -24,12 +24,24 @@ class SavedImagesScreen extends StatelessWidget {
                 var name = files[index].path.split('/').last;
                 var id = name.split('.').first;
                 var recipes = [];
-                // sl.get<ImageManager>().appProfile.getRawRecipes([id]);
 
                 var recipeName = recipes == null || recipes.isEmpty
                     ? 'Deleted'
                     : recipes.first.name;
                 return ListTile(
+                  leading: AspectRatio(
+                    aspectRatio: 2 / 1,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        image: DecorationImage(
+                          fit: BoxFit.fitWidth,
+                          alignment: FractionalOffset.center,
+                          image: FileImage(files[index]),
+                        ),
+                      ),
+                    ),
+                  ),
                   title: Text('Name: $name, Recipe: $recipeName'),
                   subtitle: Text('Path: ${files[index].path}'),
                 );
@@ -44,7 +56,6 @@ class SavedImagesScreen extends StatelessWidget {
   }
 
   Future<List<File>> _getImageFiles() async {
-    // TODO: hwo to handle google storage images
     String path = await sl.get<StorageProvider>().getImageDirectory();
     var files = Directory(path).listSync();
     List<File> result = [];

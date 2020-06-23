@@ -58,39 +58,31 @@ class RecipeEditModel extends ChangeNotifier {
       model.applyTo(_targetRecipe);
     }
 
-    // retrieve the enxt document id if a new recipe is being created
-    var recipeId = _targetRecipe.id;
+    // retrieve the next document id if a new recipe is being created
     if (this._mode == MODE.CREATE) {
-      recipeId = sl
+      _targetRecipe.id = sl
           .get<RecipeManager>()
           .getNextRecipeDocumentId(_targetRecipe.recipeCollectionId);
     }
 
     if (imageStepModel.imageChanged) {
       // upload the image for the given recipe
-      var path = sl.get<ImageManager>().getRecipeImagePath(recipeId);
+      var path = sl.get<ImageManager>().getRecipeImagePath(_targetRecipe.id);
       if (imageStepModel.image == null) {
         // delete the image if exists
-        sl.get<ImageManager>().deleteRecipeImage(recipeId);
+        sl.get<ImageManager>().deleteRecipeImage(_targetRecipe.id);
       } else {
         // upload the image
-        // TODO: only upload if the image changed - the model needs to keep that information!
         sl
             .get<ImageManager>()
-            .uploadRecipeImage(recipeId, imageStepModel.image);
+            .uploadRecipeImage(_targetRecipe.id, imageStepModel.image);
+        // set the image path on the recipe
+        _targetRecipe.image = path;
       }
-      // set the image path on the recipe
-      _targetRecipe.image = path;
     }
 
     // then save the recipe
     await sl.get<RecipeManager>().createOrUpdate(_targetRecipe);
-
-    // AppProfile profile = sl.get<DataStore>().appProfile;
-    // profile.addOrUpdateRecipe(_targetRecipe);
-
-    // // todo let the profile handle that and only delegate here to the profile!
-    // await profile.updateImage(file: imageStepModel.image, id: _targetRecipe.id);
   }
 
   void nextStep() {

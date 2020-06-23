@@ -387,11 +387,7 @@ class FirebaseProvider {
   }
 
   String getNextRecipeDocumentId(String recipeGroup) {
-    var recipeDocRef = _firestore
-        .collection(RECIPE_GROUPS)
-        .document(recipeGroup)
-        .collection(RECIPES)
-        .document();
+    var recipeDocRef = _firestore.collection(RECIPES).document();
 
     return recipeDocRef.documentID;
   }
@@ -446,11 +442,7 @@ class FirebaseProvider {
   }
 
   Future<void> updateRating(RecipeEntity recipe, int rating) {
-    var recipeDocRef = _firestore
-        .collection(RECIPE_GROUPS)
-        .document(recipe.recipeCollectionId)
-        .collection(RECIPES)
-        .document(recipe.id);
+    var recipeDocRef = _firestore.collection(RECIPES).document(recipe.id);
 
     return recipeDocRef.setData({'rating': rating}, merge: true);
   }

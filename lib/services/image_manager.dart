@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cookly/model/entities/abstract/recipe_entity.dart';
 import 'package:cookly/services/local_storage.dart';
 import 'package:cookly/services/service_locator.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -9,7 +10,7 @@ abstract class ImageManager {
   Future<void> deleteRecipeImage(String recipeId);
   Future<String> getRecipeImageURL(String recipeId);
   String getRecipeImagePath(String recipeId);
-  Future<File> getRecipeImageFile(String recipeID);
+  Future<File> getRecipeImageFile(RecipeEntity entity);
 }
 
 class ImageManagerFirebase implements ImageManager {
@@ -51,14 +52,32 @@ class ImageManagerFirebase implements ImageManager {
   }
 
   @override
-  Future<File> getRecipeImageFile(String recipeID) async {
+  Future<File> getRecipeImageFile(RecipeEntity entity) async {
     var imageDirectory = await sl.get<StorageProvider>().getImageDirectory();
-    var cacheFile = File('$imageDirectory/$recipeID');
-    if (!cacheFile.existsSync()) {
-      StorageReference reference =
-          _storage.ref().child(getRecipeImagePath(recipeID));
-      var task = reference.writeToFile(cacheFile);
-      await task.future;
+    var cacheFile = File('$imageDirectory/${entity.id}.jpg');
+
+    if (cacheFile.existsSync()) {
+      var imgDate = cacheFile.lastModifiedSync();
+      var isBefore = imgDate.isBefore(entity.modificationDate);
+      if (isBefore) {
+        cacheFile.deleteSync();
+      } else {
+        return cacheFile;
+      }
+    }
+
+    if (entity.image != null && entity.image.isNotEmpty) {
+      try {
+        StorageReference reference = _storage.ref().child(entity.image);
+        var task = reference.writeToFile(cacheFile);
+        var bytes = (await task.future).totalByteCount;
+        print('$bytes downloaded');
+      } catch (StorageException) {
+        // the image for the given recipe does not exist
+        return null;
+      }
+    } else {
+      cacheFile = null;
     }
 
     return cacheFile;

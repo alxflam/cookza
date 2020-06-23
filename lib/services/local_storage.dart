@@ -26,7 +26,12 @@ class LocalStorageProvider implements StorageProvider {
   @override
   Future<String> getImageDirectory() async {
     String path = await _localPath;
-    return '$path/$imageSubdirectory';
+    var imageDirectoryPath = '$path/$imageSubdirectory';
+    var directory = Directory(imageDirectoryPath);
+    if (!directory.existsSync()) {
+      directory.createSync();
+    }
+    return imageDirectoryPath;
   }
 
   @override
