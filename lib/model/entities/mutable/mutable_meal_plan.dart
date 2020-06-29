@@ -1,9 +1,6 @@
-import 'dart:collection';
-
 import 'package:cookly/model/entities/abstract/meal_plan_entity.dart';
 import 'package:cookly/model/entities/abstract/user_entity.dart';
 import 'package:cookly/services/util/week_calculation.dart';
-import 'package:cookly/viewmodel/meal_plan/recipe_meal_plan_model.dart';
 
 class MutableMealPlan implements MealPlanEntity {
   List<UserEntity> _users;
@@ -12,9 +9,11 @@ class MutableMealPlan implements MealPlanEntity {
 
   List<MutableMealPlanDateEntity> _items = [];
 
+  String _groupID;
+
   MutableMealPlan.of(MealPlanEntity entity, int weeks) {
     this._id = id;
-    this._users = List.of(entity.users);
+    this._groupID = entity.groupID;
     init(entity, weeks);
   }
 
@@ -23,10 +22,6 @@ class MutableMealPlan implements MealPlanEntity {
 
   @override
   List<MutableMealPlanDateEntity> get items => this._items;
-
-  @override
-  UnmodifiableListView<UserEntity> get users =>
-      UnmodifiableListView(this._users);
 
   void init(MealPlanEntity entity, int weeks) {
     // identify the start date
@@ -55,8 +50,6 @@ class MutableMealPlan implements MealPlanEntity {
       lastDate = minLastDate;
     }
 
-    // TODO: somehow adds persistetd date twice...
-
     // next fill up dates currently not occupied (there has not been any persisted state for these)
     var days = lastDate.difference(today).inDays;
     this._sort();
@@ -76,6 +69,9 @@ class MutableMealPlan implements MealPlanEntity {
   void _sort() {
     this._items.sort((a, b) => a.date.compareTo(b.date));
   }
+
+  @override
+  String get groupID => this._groupID;
 }
 
 class MutableMealPlanDateEntity implements MealPlanDateEntity {

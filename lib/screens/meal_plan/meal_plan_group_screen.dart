@@ -1,9 +1,9 @@
-import 'package:cookly/model/entities/abstract/recipe_collection_entity.dart';
+import 'package:cookly/model/entities/abstract/meal_plan_collection_entity.dart';
 import 'package:cookly/model/entities/abstract/user_entity.dart';
+import 'package:cookly/services/meal_plan_manager.dart';
 import 'package:cookly/services/mobile/qr_scanner.dart';
-import 'package:cookly/services/recipe_manager.dart';
 import 'package:cookly/services/service_locator.dart';
-import 'package:cookly/viewmodel/recipe_group/recipe_group_model.dart';
+import 'package:cookly/viewmodel/meal_plan/meal_plan_group_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -27,19 +27,19 @@ class PopupMenuButtonChoices {
       Keys.Ui_Leavegroup, Icons.exit_to_app);
 }
 
-class RecipeGroupScreen extends StatelessWidget {
-  static final String id = 'recipeGroup';
+class MealPlanGroupScreen extends StatelessWidget {
+  static final String id = 'mealPlanGroup';
 
   @override
   Widget build(BuildContext context) {
-    final RecipeCollectionEntity _model =
+    final MealPlanCollectionEntity _model =
         ModalRoute.of(context).settings.arguments;
 
-    var viewModel = RecipeGroupViewModel.of(_model);
+    var viewModel = MealPlanGroupViewModel.of(_model);
 
-    return ChangeNotifierProvider<RecipeGroupViewModel>.value(
+    return ChangeNotifierProvider<MealPlanGroupViewModel>.value(
       value: viewModel,
-      child: Consumer<RecipeGroupViewModel>(
+      child: Consumer<MealPlanGroupViewModel>(
         builder: (context, model, _) {
           return Scaffold(
             appBar: AppBar(
@@ -111,7 +111,7 @@ class RecipeGroupScreen extends StatelessWidget {
                 ),
               ],
             ),
-            body: Consumer<RecipeGroupViewModel>(
+            body: Consumer<MealPlanGroupViewModel>(
               builder: (context, model, _) {
                 return Builder(
                   builder: (context) {
@@ -152,7 +152,7 @@ class RecipeGroupScreen extends StatelessWidget {
     );
   }
 
-  void _editCollection(BuildContext _context, RecipeGroupViewModel model) {
+  void _editCollection(BuildContext _context, MealPlanGroupViewModel model) {
     // show a dialog to rename the collection
     // TODO: create a dedicated view model with change notifier to update app bar title on rename!
     showDialog(
@@ -217,7 +217,7 @@ class RecipeGroupScreen extends StatelessWidget {
     );
   }
 
-  void _deleteCollection(BuildContext context, RecipeGroupViewModel model) {
+  void _deleteCollection(BuildContext context, MealPlanGroupViewModel model) {
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -251,7 +251,7 @@ class RecipeGroupScreen extends StatelessWidget {
               ),
               color: Colors.red,
               onPressed: () {
-                sl.get<RecipeManager>().deleteCollection(model.entity);
+                sl.get<MealPlanManager>().deleteCollection(model.entity);
                 Navigator.of(context).pop();
               },
             ),
@@ -261,7 +261,7 @@ class RecipeGroupScreen extends StatelessWidget {
     );
   }
 
-  void _addUser(BuildContext context, RecipeGroupViewModel model) async {
+  void _addUser(BuildContext context, MealPlanGroupViewModel model) async {
     // scan a qr code
     var scanResult = await sl.get<QRScanner>().scanQRCode();
     if (scanResult != null && scanResult.isNotEmpty) {
@@ -269,11 +269,11 @@ class RecipeGroupScreen extends StatelessWidget {
       // also supply in QR Code or provide a dialog for the granting user
 
       // then add the user
-      model.addUser(scanResult, 'some User');
+      model.addUser(scanResult, 'some new User');
     }
   }
 
-  void _leaveGroup(BuildContext context, RecipeGroupViewModel model) async {
+  void _leaveGroup(BuildContext context, MealPlanGroupViewModel model) async {
     await model.leaveGroup();
     Navigator.pop(context);
   }

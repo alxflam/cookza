@@ -70,8 +70,8 @@ class MealPlanViewModel extends ChangeNotifier {
   }
 
   void addRecipe(int index, String id) async {
-    var recipe = await sl.get<RecipeManager>().getRecipeById(id);
-    var name = recipe != null ? recipe.name : 'unknown recipe';
+    var recipe = await sl.get<RecipeManager>().getRecipeById([id]);
+    var name = recipe != null ? recipe.first.name : 'unknown recipe';
     var servings =
         sl.get<SharedPreferencesProvider>().getMealPlanStandardServingsSize();
 
@@ -120,6 +120,13 @@ class MealPlanViewModel extends ChangeNotifier {
       }
     }
     return result;
+  }
+
+  void addNote(int index, String text) {
+    _mealPlan.items[index]
+        .addRecipe(MutableMealPlanRecipeEntity.fromValues(null, text, null));
+    _save();
+    notifyListeners();
   }
 }
 

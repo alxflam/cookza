@@ -57,7 +57,7 @@ FirebaseMealPlanDocument _$FirebaseMealPlanDocumentFromJson(
             ? null
             : FirebaseMealPlanDate.fromJson(e as Map<String, dynamic>))
         ?.toList(),
-    users: Map<String, String>.from(json['users'] as Map),
+    groupID: json['groupID'] as String,
   );
 }
 
@@ -72,6 +72,6 @@ Map<String, dynamic> _$FirebaseMealPlanDocumentToJson(
   }
 
   writeNotNull('items', kListToJson(instance.items));
-  val['users'] = instance.users;
+  val['groupID'] = instance.groupID;
   return val;
 }

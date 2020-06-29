@@ -12,7 +12,7 @@ class RecipeFileExportImpl extends RecipeFileExport {
     String directory = await sl.get<StorageProvider>().getTempDirectory();
     var file = File('$directory/${this.getExportFileName()}.json');
 
-    var model = this.idsToExportModel(ids);
+    var model = await this.idsToExportModel(ids);
     var json = model.toJson();
 
     await file.writeAsString(jsonEncode(json));

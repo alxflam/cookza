@@ -30,11 +30,13 @@ abstract class RecipeManager {
 
   Future<List<RecipeEntity>> getAllRecipes();
 
-  Future<RecipeEntity> getRecipeById(String key);
+  Future<List<RecipeEntity>> getRecipeById(List<String> ids);
 
   Future<void> updateRating(RecipeEntity recipe, int rating);
 
   Future<void> importRecipes(List<RecipeEntity> recipes);
+
+  Future<void> leaveRecipeGroup(RecipeCollectionEntity entity);
 }
 
 // todo: extract an interface for the FirebaseProvider and use it also for local storage provider if that is needed
@@ -112,8 +114,8 @@ class RecipeManagerFirebase implements RecipeManager {
   }
 
   @override
-  Future<RecipeEntity> getRecipeById(String id) {
-    //  return await sl.get<FirebaseProvider>().getRecipeById(id);
+  Future<List<RecipeEntity>> getRecipeById(List<String> id) async {
+    return await sl.get<FirebaseProvider>().getRecipeById(id);
   }
 
   @override
@@ -124,5 +126,10 @@ class RecipeManagerFirebase implements RecipeManager {
   @override
   Future<void> importRecipes(List<RecipeEntity> recipes) {
     return sl.get<FirebaseProvider>().importRecipes(recipes);
+  }
+
+  @override
+  Future<void> leaveRecipeGroup(RecipeCollectionEntity entity) {
+    return sl.get<FirebaseProvider>().leaveRecipeGroup(entity.id);
   }
 }

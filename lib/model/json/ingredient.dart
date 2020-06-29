@@ -1,3 +1,4 @@
+import 'package:cookly/model/entities/abstract/ingredient_entity.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'ingredient.g.dart';
@@ -13,6 +14,11 @@ class Ingredient {
   Ingredient({this.name, this.recipeReference});
 
   Ingredient.from(Ingredient ingredient) {
+    this.name = ingredient.name;
+    this.recipeReference = ingredient.recipeReference;
+  }
+
+  Ingredient.fromEntity(IngredientEntity ingredient) {
     this.name = ingredient.name;
     this.recipeReference = ingredient.recipeReference;
   }

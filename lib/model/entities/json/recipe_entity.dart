@@ -1,4 +1,6 @@
 import 'dart:collection';
+import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:cookly/constants.dart';
 import 'package:cookly/model/entities/abstract/ingredient_note_entity.dart';
@@ -71,4 +73,8 @@ class RecipeEntityJson implements RecipeEntity {
 
   @override
   String get image => '';
+
+  Uint8List get imageAsBytes {
+    return base64.decode(_recipe.serializedImage);
+  }
 }

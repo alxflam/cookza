@@ -5,7 +5,7 @@ import 'package:cookly/services/abstract/recipe_file_export.dart';
 class RecipeFileExportImpl extends RecipeFileExport {
   @override
   void exportRecipes(List<String> ids) async {
-    var model = this.idsToExportModel(ids);
+    var model = await this.idsToExportModel(ids);
 
     var json = model.toJson();
     var exportJson = jsonEncode(json);

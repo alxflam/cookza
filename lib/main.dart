@@ -1,5 +1,6 @@
 import 'package:cookly/localization/keys.dart';
 import 'package:cookly/screens/collections/share_account_screen.dart';
+import 'package:cookly/screens/meal_plan/meal_plan_group_screen.dart';
 import 'package:cookly/viewmodel/settings/theme_model.dart';
 import 'package:cookly/screens/groups/recipe_group.dart';
 import 'package:cookly/screens/leftovers_screen.dart';
@@ -111,6 +112,7 @@ class CooklyMaterialApp extends StatelessWidget {
         ShoppingListDetailScreen.id: (context) => ShoppingListDetailScreen(),
         RecipeGroupScreen.id: (context) => RecipeGroupScreen(),
         ShareAccountScreen.id: (context) => ShareAccountScreen(),
+        MealPlanGroupScreen.id: (context) => MealPlanGroupScreen(),
       },
     );
   }

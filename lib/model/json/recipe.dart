@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:cookly/constants.dart';
 import 'package:cookly/model/entities/abstract/recipe_entity.dart';
 import 'package:cookly/model/json/ingredient_note.dart';
 import 'package:cookly/services/id_gen.dart';
+import 'package:cookly/services/image_manager.dart';
 import 'package:cookly/services/service_locator.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -12,6 +15,32 @@ class Recipe {
   factory Recipe.fromJson(Map<String, dynamic> json, {String id}) {
     var instance = _$RecipeFromJson(json);
     instance.documentID = id;
+    return instance;
+  }
+
+  static Future<Recipe> applyFrom(RecipeEntity entity) async {
+    var instance = Recipe();
+    instance.name = entity.name;
+    instance.shortDescription = entity.description;
+    instance.recipeCollection = entity.recipeCollectionId;
+    instance.creationDate = entity.creationDate;
+    instance.modificationDate = entity.modificationDate;
+    instance.duration = entity.duration;
+    instance.rating = entity.rating;
+    instance.servings = entity.servings;
+    instance.diff = entity.difficulty;
+    instance.tags = entity.tags;
+    var ins = await entity.instructions;
+    instance.instructions = ins.map((e) => e.text).toList();
+    var ing = await entity.ingredients;
+    instance.ingredients =
+        ing.map((e) => IngredientNote.fromEntity(e)).toList();
+    if (entity.image != null && entity.image.isNotEmpty) {
+      var imageFile = await sl.get<ImageManager>().getRecipeImageFile(entity);
+      List<int> imageBytes = imageFile.readAsBytesSync();
+      String base64Image = base64.encode(imageBytes);
+      instance.serializedImage = base64Image;
+    }
     return instance;
   }
 
@@ -39,6 +68,8 @@ class Recipe {
   int rating;
   @JsonKey(defaultValue: 1)
   int servings;
+  @JsonKey(nullable: true)
+  String serializedImage;
 
   @JsonKey(defaultValue: DIFFICULTY.MEDIUM)
   DIFFICULTY diff;
@@ -48,22 +79,6 @@ class Recipe {
   List<IngredientNote> ingredients;
   @JsonKey(nullable: false)
   List<String> instructions;
-
-  Recipe.editCopyFrom(Recipe recipe) {
-    // todo handle keep same id in edit mode
-    this.id = recipe.id;
-    this.recipeCollection = recipe.recipeCollection;
-    this.name = recipe.name;
-    this.shortDescription = recipe.shortDescription;
-    this.duration = recipe.duration;
-    this.diff = recipe.diff;
-    this.tags = recipe.tags;
-    this.ingredients = recipe.ingredients.toList();
-    this.instructions = recipe.instructions.toList();
-    this.creationDate = recipe.creationDate;
-    this.modificationDate = DateTime.now();
-    this.servings = recipe.servings;
-  }
 
   Recipe(
       {this.id,
@@ -78,7 +93,8 @@ class Recipe {
       this.ingredients,
       this.instructions,
       this.rating,
-      this.servings}) {
+      this.servings,
+      this.serializedImage}) {
     // initalize values
     if (this.id == null) {
       this.id = sl.get<IdGenerator>().id;

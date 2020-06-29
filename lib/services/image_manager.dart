@@ -35,6 +35,12 @@ class ImageManagerFirebase implements ImageManager {
     StorageReference reference =
         _storage.ref().child(getRecipeImagePath(recipeId));
 
+    // save local cache
+    var imageDirectory = await sl.get<StorageProvider>().getImageDirectory();
+    var cacheFile = File('$imageDirectory/$recipeId.jpg');
+    cacheFile.writeAsBytesSync(file.readAsBytesSync());
+
+    // upload the file
     print('start upload');
     StorageUploadTask uploadTask = reference.putFile(
         file,

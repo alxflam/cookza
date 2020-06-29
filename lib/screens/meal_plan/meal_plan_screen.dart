@@ -1,6 +1,8 @@
+import 'package:cookly/components/meal_plan_groups_drawer.dart';
 import 'package:cookly/components/round_icon_button.dart';
 import 'package:cookly/constants.dart';
 import 'package:cookly/localization/keys.dart';
+import 'package:cookly/model/entities/abstract/meal_plan_entity.dart';
 import 'package:cookly/model/entities/abstract/recipe_entity.dart';
 import 'package:cookly/screens/shopping_list/shopping_list_overview_screen.dart';
 import 'package:cookly/services/meal_plan_manager.dart';
@@ -17,19 +19,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-class PopupMenuButtonChoices {
-  final _key;
-  final _icon;
-  const PopupMenuButtonChoices._internal(this._key, this._icon);
-  toString() => translate(_key);
-  IconData get icon => this._icon;
-
-  static const SHOPPING_LIST = const PopupMenuButtonChoices._internal(
-      Keys.Functions_Shoppinglist, kShoppingListIconData);
-  static const ADD_USER =
-      const PopupMenuButtonChoices._internal(Keys.Ui_Adduser, Icons.add);
-}
-
 class MealPlanScreen extends StatelessWidget {
   static final String id = 'mealPlan';
 
@@ -38,77 +27,72 @@ class MealPlanScreen extends StatelessWidget {
     var _recipe = ModalRoute.of(context).settings.arguments as RecipeEntity;
 
     return Scaffold(
+      drawer: MealPlanGroupsDrawer(),
       appBar: AppBar(
         title: Text(
           translate(Keys.Functions_Mealplanner),
         ),
         actions: [
-          PopupMenuButton(
-            itemBuilder: (context) {
-              return [
-                PopupMenuItem(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Icon(PopupMenuButtonChoices.ADD_USER.icon),
-                      Text(PopupMenuButtonChoices.ADD_USER.toString())
-                    ],
-                  ),
-                  value: PopupMenuButtonChoices.ADD_USER,
-                ),
-                PopupMenuItem(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Icon(PopupMenuButtonChoices.SHOPPING_LIST.icon),
-                      Text(PopupMenuButtonChoices.SHOPPING_LIST.toString())
-                    ],
-                  ),
-                  value: PopupMenuButtonChoices.SHOPPING_LIST,
-                ),
-              ];
-            },
-            onSelected: (value) {
-              switch (value) {
-                case PopupMenuButtonChoices.SHOPPING_LIST:
-                  Navigator.pushReplacementNamed(
-                      context, ShoppingListOverviewScreen.id);
-                  break;
-                case PopupMenuButtonChoices.ADD_USER:
-                  _addUser(context);
-                  break;
-                default:
-                  break;
-              }
+          IconButton(
+            icon: Icon(kShoppingListIconData),
+            onPressed: () {
+              Navigator.pushReplacementNamed(
+                  context, ShoppingListOverviewScreen.id);
             },
           ),
         ],
       ),
-      body: FutureBuilder(
-        future: sl.get<MealPlanManager>().mealPlan,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            MealPlanViewModel _model = MealPlanViewModel.of(snapshot.data);
-
-            if (_recipe != null && _recipe.id.isNotEmpty) {
-              _model.setRecipeForAddition(_recipe);
-            }
-
-            return SingleChildScrollView(
-              child: ChangeNotifierProvider<MealPlanViewModel>.value(
-                value: _model,
-                child: Consumer<MealPlanViewModel>(
-                  builder: (context, model, widget) {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: _buildMainLayout(context, model),
-                    );
-                  },
-                ),
+      body: Builder(
+        builder: (context) {
+          var currentGroup = sl.get<MealPlanManager>().currentCollection;
+          if (currentGroup == null || currentGroup.isEmpty) {
+            return Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  RaisedButton(
+                    child: Text('Select or create a meal plan group'),
+                    onPressed: () => Scaffold.of(context).openDrawer(),
+                  )
+                ],
               ),
             );
           }
-          return Container();
+
+          return FutureBuilder(
+            future: sl.get<MealPlanManager>().mealPlan,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                MealPlanEntity data = snapshot.data;
+                if (data.id == null || data.id.isEmpty) {
+                  //
+                } else {}
+
+                MealPlanViewModel _model = MealPlanViewModel.of(snapshot.data);
+
+                if (_recipe != null && _recipe.id.isNotEmpty) {
+                  _model.setRecipeForAddition(_recipe);
+                }
+
+                return SingleChildScrollView(
+                  child: ChangeNotifierProvider<MealPlanViewModel>.value(
+                    value: _model,
+                    child: Consumer<MealPlanViewModel>(
+                      builder: (context, model, widget) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: _buildMainLayout(context, model),
+                        );
+                      },
+                    ),
+                  ),
+                );
+              }
+              return Container();
+            },
+          );
         },
       ),
     );
@@ -157,21 +141,9 @@ class MealPlanScreen extends StatelessWidget {
                           model.addByNavigation(i);
                           return;
                         }
-                        // else open selection screen
-                        // fetch all recipes the app currently stores
-                        var recipes =
-                            await sl.get<RecipeManager>().getAllRecipes();
 
-                        // create the view model with type reference ingredient
-                        var selModel = RecipeSelectionModel.forAddMealPlan(
-                            recipes.map((e) => RecipeViewModel.of(e)).toList());
-                        // navigate to the selection screen
-                        var result = await Navigator.pushNamed(
-                            context, RecipeSelectionScreen.id,
-                            arguments: selModel) as RecipeEntity;
-                        if (result != null && result.id.isNotEmpty) {
-                          model.addRecipeFromEntity(i, result);
-                        }
+                        // else open selection screen or add a note
+                        _showSelectAddModeDialog(context, model, i);
                       },
                     ),
                   ],
@@ -214,8 +186,10 @@ class MealPlanScreen extends StatelessWidget {
               return ListTile(
                 dense: true,
                 title: Text(recipeModel.name),
-                subtitle: Text(
-                    '${recipeModel.servings.toString()} ${translate(Keys.Recipe_Servings)}'),
+                subtitle: recipeModel.servings != null
+                    ? Text(
+                        '${recipeModel.servings.toString()} ${translate(Keys.Recipe_Servings)}')
+                    : null,
                 trailing: IconButton(
                   icon: Icon(Icons.edit),
                   onPressed: () {
@@ -236,31 +210,41 @@ class MealPlanScreen extends StatelessWidget {
                                       recipeModel.name,
                                       style: TextStyle(fontSize: 20),
                                     ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: <Widget>[
-                                        Text(translate(Keys.Recipe_Servings)),
-                                        RoundIconButton(
-                                          icon: FontAwesomeIcons.minus,
-                                          onPress: () {
-                                            if (_count > 1) {
-                                              setState(() {
-                                                _count--;
-                                              });
-                                            }
-                                          },
-                                        ),
-                                        Text(_count.toString()),
-                                        RoundIconButton(
-                                          icon: FontAwesomeIcons.plus,
-                                          onPress: () {
-                                            setState(() {
-                                              _count++;
-                                            });
-                                          },
-                                        ),
-                                      ],
+                                    Builder(
+                                      builder: (context) {
+                                        // if it's only a note, don't show the servings
+                                        if (_count == null) {
+                                          return Container();
+                                        }
+
+                                        return Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: <Widget>[
+                                            Text(translate(
+                                                Keys.Recipe_Servings)),
+                                            RoundIconButton(
+                                              icon: FontAwesomeIcons.minus,
+                                              onPress: () {
+                                                if (_count > 1) {
+                                                  setState(() {
+                                                    _count--;
+                                                  });
+                                                }
+                                              },
+                                            ),
+                                            Text(_count.toString()),
+                                            RoundIconButton(
+                                              icon: FontAwesomeIcons.plus,
+                                              onPress: () {
+                                                setState(() {
+                                                  _count++;
+                                                });
+                                              },
+                                            ),
+                                          ],
+                                        );
+                                      },
                                     ),
                                     Row(
                                       mainAxisAlignment:
@@ -368,13 +352,130 @@ class MealPlanScreen extends StatelessWidget {
     return '$day, $date';
   }
 
-  void _addUser(BuildContext context) async {
-    // scan a qr code
-    var scanResult = await sl.get<QRScanner>().scanQRCode();
-    // TODO: add some alidation that the given string is a user id => check if the user exists?
-    if (scanResult != null && scanResult.isNotEmpty) {
-      // then add the user
-      await sl.get<MealPlanManager>().addUser(scanResult, 'some User');
-    }
+  void _showSelectAddModeDialog(
+      BuildContext context, MealPlanViewModel model, int index) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Builder(
+          // builder is needed to get a new context for the Provider
+          builder: (context) {
+            return SimpleDialog(
+              title: Text('Choose Mode'),
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    Flexible(
+                      flex: 1,
+                      child: RaisedButton(
+                        child: Text('Add Note'),
+                        onPressed: () {
+                          // close dialog
+                          Navigator.pop(context);
+
+                          // open note dialog
+                          _showAddNoteDialog(context, model, index);
+                        },
+                      ),
+                    ),
+                    Flexible(
+                      flex: 1,
+                      child: RaisedButton(
+                        child: Text('Add Recipe'),
+                        onPressed: () async {
+                          // fetch all recipes the app currently stores
+                          var recipes =
+                              await sl.get<RecipeManager>().getAllRecipes();
+
+                          // create the view model with type reference ingredient
+                          var selModel = RecipeSelectionModel.forAddMealPlan(
+                              recipes
+                                  .map((e) => RecipeViewModel.of(e))
+                                  .toList());
+                          // navigate to the selection screen
+                          var result = await Navigator.pushNamed(
+                              context, RecipeSelectionScreen.id,
+                              arguments: selModel) as RecipeEntity;
+                          if (result != null && result.id.isNotEmpty) {
+                            model.addRecipeFromEntity(index, result);
+                          }
+
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+
+  void _showAddNoteDialog(
+      BuildContext context, MealPlanViewModel model, int index) {
+    showDialog(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        var controller = TextEditingController(text: '');
+
+        return Builder(
+          // builder is needed to get a new context for the Provider
+          builder: (context) {
+            return SimpleDialog(
+              title: Text('Add Note'),
+              children: [
+                SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.all(10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Expanded(
+                              child: TextFormField(
+                                controller: controller,
+                                maxLines: 1,
+                                autofocus: true,
+                                decoration: InputDecoration(hintText: 'Note'),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          RaisedButton(
+                              child: Icon(Icons.save),
+                              color: Colors.green,
+                              onPressed: () async {
+                                model.addNote(index, controller.text);
+                                Navigator.pop(context);
+                              }),
+                          RaisedButton(
+                              child: Icon(Icons.cancel),
+                              color: Colors.red,
+                              onPressed: () {
+                                Navigator.pop(context);
+                              }),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
   }
 }

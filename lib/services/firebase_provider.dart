@@ -1,15 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cookly/model/entities/abstract/ingredient_note_entity.dart';
+import 'package:cookly/model/entities/abstract/meal_plan_collection_entity.dart';
 import 'package:cookly/model/entities/abstract/meal_plan_entity.dart';
 import 'package:cookly/model/entities/abstract/recipe_collection_entity.dart';
 import 'package:cookly/model/entities/abstract/recipe_entity.dart';
 import 'package:cookly/model/entities/abstract/user_entity.dart';
 import 'package:cookly/model/entities/firebase/ingredient_note_entity.dart';
 import 'package:cookly/model/entities/firebase/instruction_entity.dart';
+import 'package:cookly/model/entities/firebase/meal_plan_collection_entity.dart';
 import 'package:cookly/model/entities/firebase/meal_plan_entity.dart';
 import 'package:cookly/model/entities/firebase/recipe_collection_entity.dart';
 import 'package:cookly/model/entities/firebase/recipe_entity.dart';
 import 'package:cookly/model/entities/mutable/mutable_recipe.dart';
+import 'package:cookly/model/firebase/collections/firebase_meal_plan_collection.dart';
 import 'package:cookly/model/firebase/collections/firebase_recipe_collection.dart';
 import 'package:cookly/model/firebase/firebase_util.dart';
 import 'package:cookly/model/firebase/general/firebase_handshake.dart';
@@ -46,6 +49,55 @@ class FirebaseProvider {
   FirebaseProvider();
 
   String get currentRecipeGroup => _currentRecipeGroup;
+
+  Stream<List<MealPlanCollectionEntity>> get mealPlanGroups {
+    return _firestore
+        .collection(MEAL_PLAN_GROUPS)
+        .where('users.$userUid', isGreaterThan: '')
+        .snapshots()
+        .map((e) => e.documents
+            .map((e) => MealPlanCollectionEntityFirebase.of(
+                FirebaseMealPlanCollection.fromJson(e.data, e.documentID)))
+            .toList());
+  }
+
+  /// create a new recipe collection
+  Future<MealPlanCollectionEntityFirebase> createMealPlanGroup(
+      String name) async {
+    var document = await _firestore.collection(MEAL_PLAN_GROUPS).add(
+          FirebaseMealPlanCollection(
+            name: name,
+            creationTimestamp: Timestamp.now(),
+            users: {this.userUid: 'owner'},
+          ).toJson(),
+        );
+    var model = await document.get();
+    print('created meal plan collection ${document.documentID}');
+
+    return MealPlanCollectionEntityFirebase.of(
+        FirebaseMealPlanCollection.fromJson(model.data, model.documentID));
+  }
+
+  Future<void> renameMealPlanCollection(
+      String name, MealPlanCollectionEntity entity) async {
+    return _firestore
+        .collection(MEAL_PLAN_GROUPS)
+        .document(entity.id)
+        .setData({'name': name}, merge: true);
+  }
+
+  /// retrieve all recipe collections the user can access
+  Future<List<MealPlanCollectionEntity>> mealPlanCollectionsAsList() async {
+    var docs = await _firestore
+        .collection(MEAL_PLAN_GROUPS)
+        .where('users.$userUid', isGreaterThan: '')
+        .getDocuments();
+
+    return docs.documents
+        .map((e) => MealPlanCollectionEntityFirebase.of(
+            FirebaseMealPlanCollection.fromJson(e.data, e.documentID)))
+        .toList();
+  }
 
   /// initialize firebase connection by ensuring the user is logged in
   Future<FirebaseProvider> init() async {
@@ -270,6 +322,7 @@ class FirebaseProvider {
     return _firestore
         .collection(RECIPES)
         .where('recipeGroupID', isEqualTo: this._currentRecipeGroup)
+        .orderBy('name')
         .snapshots()
         .map((e) => e.documents
             .map((e) => RecipeEntityFirebase.of(
@@ -367,23 +420,42 @@ class FirebaseProvider {
         FirebaseRecipeCollection.fromJson(doc.data, doc.documentID));
   }
 
-  void deleteRecipeCollection(String id) {
+  Future<void> deleteRecipeCollection(String id) async {
     // TODO: if collection has more than the current user, we should not allow deletion
 
     var collection = _firestore.collection(RECIPE_GROUPS).document(id);
 
-    _firestore.runTransaction((transaction) {
+    await _firestore.runTransaction((transaction) {
       transaction.delete(collection);
 
       // TODO also delete all recipes and other associated data
     });
   }
 
-  void addUserToCollection(
-      RecipeCollectionEntity model, String userID, String name) async {
-    var docRef = _firestore.collection(RECIPE_GROUPS).document(userID);
+  Future<void> deleteMealPlanCollection(String id) async {
+    // TODO: if collection has more than the current user, we should not allow deletion
 
-    return await docRef.setData({'users.${userID}': name}, merge: true);
+    var collection = _firestore.collection(MEAL_PLAN_GROUPS).document(id);
+
+    await _firestore.runTransaction((transaction) {
+      transaction.delete(collection);
+
+      // TODO also delete all meal plans and other associated data
+    });
+  }
+
+  Future<void> addUserToCollection(
+      RecipeCollectionEntity model, String newUserID, String name) async {
+    var docRef = _firestore.collection(RECIPE_GROUPS).document(model.id);
+
+    return await docRef.updateData({'users.$newUserID': name});
+  }
+
+  Future<void> addUserToMealPlanCollection(
+      MealPlanCollectionEntity model, String newUserID, String name) async {
+    var docRef = _firestore.collection(MEAL_PLAN_GROUPS).document(model.id);
+
+    return await docRef.updateData({'users.$newUserID': name});
   }
 
   String getNextRecipeDocumentId(String recipeGroup) {
@@ -419,7 +491,17 @@ class FirebaseProvider {
         .toList();
   }
 
-  Future<RecipeEntity> getRecipeById(String id) async {}
+  Future<List<RecipeEntity>> getRecipeById(List<String> ids) async {
+    var docs = await _firestore
+        .collection(RECIPES)
+        .where(FieldPath.documentId, whereIn: ids)
+        .getDocuments();
+
+    return docs.documents
+        .map((e) => RecipeEntityFirebase.of(
+            FirebaseRecipe.fromJson(e.data, id: e.documentID)))
+        .toList();
+  }
 
   Future<List<InstructionEntityFirebase>> recipeInstructions(
       String recipeGroup, String recipeID) async {
@@ -447,17 +529,17 @@ class FirebaseProvider {
     return recipeDocRef.setData({'rating': rating}, merge: true);
   }
 
-  Future<MealPlanEntity> mealPlan() async {
+  Future<MealPlanEntity> mealPlan(String groupID) async {
     var snapshot = await _firestore
         .collection(MEAL_PLANS)
-        .where('users.${this.userUid}', isGreaterThan: '')
+        .where('groupID', isEqualTo: groupID)
         .limit(1)
         .getDocuments();
 
     var parsedDoc;
 
     if (snapshot.documents.isEmpty) {
-      parsedDoc = FirebaseMealPlanDocument.empty(this.userUid);
+      parsedDoc = FirebaseMealPlanDocument.empty(this.userUid, groupID);
     } else {
       var document = snapshot.documents.first;
       parsedDoc =
@@ -474,7 +556,8 @@ class FirebaseProvider {
     if (entity.id != null && entity.id.isNotEmpty) {
       docRef = _firestore.collection(MEAL_PLANS).document(entity.id);
     } else {
-      docRef = _firestore.collection(MEAL_PLANS).document();
+      // creation with same id as the corresponding group
+      docRef = _firestore.collection(MEAL_PLANS).document(entity.groupID);
     }
 
     var data = FirebaseMealPlanDocument.from(entity);
@@ -484,13 +567,6 @@ class FirebaseProvider {
     return docRef.documentID;
   }
 
-  Future<void> addUserToMealPlan(
-      String documentID, String userID, String name) {
-    var doc = _firestore.collection(MEAL_PLANS).document(documentID);
-
-    return doc.setData({'users.$userUid': name}, merge: true);
-  }
-
   Future<void> importRecipes(List<RecipeEntity> recipes) async {
     for (var recipe in recipes) {
       var target = MutableRecipe.of(recipe);
@@ -498,5 +574,21 @@ class FirebaseProvider {
       target.recipeCollectionId = this.currentRecipeGroup;
       await _createRecipe(target);
     }
+  }
+
+  Future<void> leaveMealPlanGroup(String id) async {
+    var docRef = _firestore.collection(MEAL_PLAN_GROUPS).document(id);
+
+    return _firestore.runTransaction((transaction) {
+      transaction.set(docRef, {'users.$userUid': null});
+    });
+  }
+
+  Future<void> leaveRecipeGroup(String id) async {
+    var docRef = _firestore.collection(RECIPE_GROUPS).document(id);
+
+    return _firestore.runTransaction((transaction) {
+      transaction.set(docRef, {'users.$userUid': null});
+    });
   }
 }

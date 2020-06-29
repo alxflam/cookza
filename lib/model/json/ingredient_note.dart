@@ -1,3 +1,4 @@
+import 'package:cookly/model/entities/abstract/ingredient_note_entity.dart';
 import 'package:cookly/model/json/ingredient.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -26,6 +27,12 @@ class IngredientNote {
 
   IngredientNote.from(IngredientNote note) {
     this.ingredient = Ingredient.from(note.ingredient);
+    this.amount = note.amount;
+    this.unitOfMeasure = note.unitOfMeasure;
+  }
+
+  IngredientNote.fromEntity(IngredientNoteEntity note) {
+    this.ingredient = Ingredient.fromEntity(note.ingredient);
     this.amount = note.amount;
     this.unitOfMeasure = note.unitOfMeasure;
   }

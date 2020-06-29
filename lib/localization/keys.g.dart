@@ -96,6 +96,8 @@ class Keys {
 
   static const String Ui_Adduser = 'ui.addUser';
 
+  static const String Ui_Leavegroup = 'ui.leaveGroup';
+
   static const String Settings_Weekdurationdesc = 'settings.weekDurationDesc';
 
   static const String Settings_Oneweek = 'settings.oneWeek';

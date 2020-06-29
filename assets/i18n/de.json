@@ -64,7 +64,8 @@
         "import": "Import",
         "selectRecipes": "Rezepte auswählen",
         "web": "Web",
-        "addUser": "Add User"
+        "addUser": "Add User",
+        "leaveGroup": "Gruppe verlassen"
     },
     "settings": {
         "weekDurationDesc": "Anzahl der Wochen, die im Essensplaner verfügbar sind.",

@@ -46,26 +46,23 @@ class MealPlanRecipeEntityFirebase implements MealPlanRecipeEntity {
 
 class MealPlanEntityFirebase implements MealPlanEntity {
   List<MealPlanDateEntity> _items;
-  UnmodifiableListView<UserEntity> _users;
   String _id;
+
+  String _groupID;
 
   MealPlanEntityFirebase.of(FirebaseMealPlanDocument document) {
     this._id = document.documentID;
+    this._groupID = document.groupID;
     this._items =
         document.items.map((e) => MealPlanDateEntityFirebase.of(e)).toList();
-    this._users = UnmodifiableListView(document.users.entries
-        .map((e) => UserEntityFirebase.from(
-              FirebaseRecipeUser(id: e.key, name: e.value),
-            ))
-        .toList());
   }
 
   @override
   List<MealPlanDateEntity> get items => this._items;
 
   @override
-  UnmodifiableListView<UserEntity> get users => this._users;
+  String get id => this._id;
 
   @override
-  String get id => this._id;
+  String get groupID => this._groupID;
 }

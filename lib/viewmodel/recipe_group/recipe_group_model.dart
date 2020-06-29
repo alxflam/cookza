@@ -24,4 +24,16 @@ class RecipeGroupViewModel with ChangeNotifier {
   String get name {
     return _name;
   }
+
+  void addUser(String userID, String name) async {
+    await sl
+        .get<RecipeManager>()
+        .addUserToCollection(this.entity, userID, name);
+
+    notifyListeners();
+  }
+
+  Future<void> leaveGroup() async {
+    return sl.get<RecipeManager>().leaveRecipeGroup(this.entity);
+  }
 }

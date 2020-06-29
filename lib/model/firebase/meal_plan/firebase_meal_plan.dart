@@ -59,10 +59,13 @@ class FirebaseMealPlanDocument {
   @JsonKey(toJson: kListToJson)
   List<FirebaseMealPlanDate> items;
 
-  @JsonKey(nullable: false)
-  Map<String, String> users;
+  // @JsonKey(nullable: false)
+  // Map<String, String> users;
 
-  FirebaseMealPlanDocument({this.documentID, this.items, this.users});
+  @JsonKey(nullable: false)
+  String groupID;
+
+  FirebaseMealPlanDocument({this.documentID, this.items, this.groupID});
 
   factory FirebaseMealPlanDocument.fromJson(
       Map<String, dynamic> json, String id) {
@@ -74,16 +77,14 @@ class FirebaseMealPlanDocument {
   Map<String, dynamic> toJson() => _$FirebaseMealPlanDocumentToJson(this);
 
   static from(MealPlanEntity entity) {
-    Map<String, String> users =
-        Map.fromIterable(entity.users, key: (e) => e.id, value: (e) => e.name);
     var items = entity.items
         .where((e) => e.recipes.isNotEmpty)
         .map((e) => FirebaseMealPlanDate.from(e))
         .toList();
-    return FirebaseMealPlanDocument(items: items, users: users);
+    return FirebaseMealPlanDocument(items: items, groupID: entity.groupID);
   }
 
-  static empty(String userID) {
-    return FirebaseMealPlanDocument(items: [], users: {userID: 'OWNER'});
+  static empty(String userID, String groupID) {
+    return FirebaseMealPlanDocument(groupID: groupID, items: []);
   }
 }

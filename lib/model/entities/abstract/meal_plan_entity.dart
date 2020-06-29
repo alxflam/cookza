@@ -1,7 +1,3 @@
-import 'dart:collection';
-
-import 'package:cookly/model/entities/abstract/user_entity.dart';
-
 abstract class MealPlanDateEntity {
   DateTime get date;
 
@@ -16,8 +12,7 @@ abstract class MealPlanRecipeEntity {
 
 abstract class MealPlanEntity {
   String get id;
-
-  UnmodifiableListView<UserEntity> get users;
+  String get groupID;
 
   List<MealPlanDateEntity> get items;
 }

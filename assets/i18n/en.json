@@ -64,7 +64,8 @@
         "import": "Import",
         "selectRecipes": "Select Recipes",
         "web": "Web",
-        "addUser": "Add User"
+        "addUser": "Add User",
+        "leaveGroup": "Leave Group"
     },
     "settings": {
         "weekDurationDesc": "Set how many weeks are available for planning.",

@@ -9,10 +9,12 @@ part 'firebase_meal_plan_collection.g.dart';
 class FirebaseMealPlanCollection {
   @JsonKey(ignore: true)
   String documentID;
+  @JsonKey(nullable: false)
+  String name;
   @JsonKey(fromJson: kTimestampFromJson, toJson: kTimestampToJson)
   Timestamp creationTimestamp;
-  @JsonKey(toJson: kListToJson)
-  List<FirebaseRecipeUser> users;
+  @JsonKey(nullable: false)
+  Map<String, String> users;
 
   factory FirebaseMealPlanCollection.fromJson(
       Map<String, dynamic> json, String id) {
@@ -25,6 +27,7 @@ class FirebaseMealPlanCollection {
 
   FirebaseMealPlanCollection({
     this.creationTimestamp,
+    this.name,
     this.users,
   }) {
     if (this.creationTimestamp == null) {
@@ -32,6 +35,9 @@ class FirebaseMealPlanCollection {
     }
     if (this.users.isEmpty) {
       throw 'a meal plan collection without users can not be created';
+    }
+    if (this.name.isEmpty) {
+      throw 'a meal plan collection without name can not be created';
     }
   }
 }

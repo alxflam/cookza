@@ -52,14 +52,15 @@ class RecipeEditModel extends ChangeNotifier {
     }
   }
 
-  Future<void> save() async {
+  Future<String> save() async {
     _validate();
     for (var model in _stepModels) {
       model.applyTo(_targetRecipe);
     }
 
-    // retrieve the next document id if a new recipe is being created
-    if (this._mode == MODE.CREATE) {
+    // retrieve the next document id if a new recipe is being created with an image
+    // then we need to know the recipe id in advance to upload the image
+    if (this._mode == MODE.CREATE && imageStepModel.image != null) {
       _targetRecipe.id = sl
           .get<RecipeManager>()
           .getNextRecipeDocumentId(_targetRecipe.recipeCollectionId);
@@ -73,7 +74,7 @@ class RecipeEditModel extends ChangeNotifier {
         sl.get<ImageManager>().deleteRecipeImage(_targetRecipe.id);
       } else {
         // upload the image
-        sl
+        await sl
             .get<ImageManager>()
             .uploadRecipeImage(_targetRecipe.id, imageStepModel.image);
         // set the image path on the recipe
@@ -82,7 +83,9 @@ class RecipeEditModel extends ChangeNotifier {
     }
 
     // then save the recipe
-    await sl.get<RecipeManager>().createOrUpdate(_targetRecipe);
+    var documentID =
+        await sl.get<RecipeManager>().createOrUpdate(_targetRecipe);
+    return documentID;
   }
 
   void nextStep() {

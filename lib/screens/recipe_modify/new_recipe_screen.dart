@@ -1,11 +1,13 @@
 import 'package:cookly/constants.dart';
 import 'package:cookly/localization/keys.dart';
-import 'package:cookly/screens/home_screen.dart';
 import 'package:cookly/screens/recipe_modify/image_step.dart';
 import 'package:cookly/screens/recipe_modify/ingredient_step.dart';
 import 'package:cookly/screens/recipe_modify/instructions_step.dart';
 import 'package:cookly/screens/recipe_modify/overview_step.dart';
 import 'package:cookly/screens/recipe_modify/tag_step.dart';
+import 'package:cookly/screens/recipe_view/recipe_screen.dart';
+import 'package:cookly/services/recipe_manager.dart';
+import 'package:cookly/services/service_locator.dart';
 import 'package:cookly/viewmodel/recipe_edit/recipe_edit_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
@@ -14,8 +16,15 @@ import 'package:provider/provider.dart';
 
 saveModel(BuildContext context, RecipeEditModel model) async {
   try {
-    await model.save();
-    Navigator.pushReplacementNamed(context, HomeScreen.id);
+    var id = await model.save();
+    if (model.isCreate) {
+      var result = await sl.get<RecipeManager>().getRecipeById([id]);
+      if (result.length == 1) {
+        Navigator.pushReplacementNamed(context, RecipeScreen.id,
+            arguments: result.first);
+      }
+    }
+    Navigator.pop(context);
   } catch (e) {
     kErrorDialog(context, 'Error occured while saving', e.toString());
   }

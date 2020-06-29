@@ -27,6 +27,7 @@ Recipe _$RecipeFromJson(Map<String, dynamic> json) {
         (json['instructions'] as List).map((e) => e as String).toList(),
     rating: json['rating'] as int ?? 0,
     servings: json['servings'] as int ?? 1,
+    serializedImage: json['serializedImage'] as String,
   );
 }
 
@@ -49,6 +50,7 @@ Map<String, dynamic> _$RecipeToJson(Recipe instance) {
   val['duration'] = instance.duration;
   writeNotNull('rating', instance.rating);
   writeNotNull('servings', instance.servings);
+  writeNotNull('serializedImage', instance.serializedImage);
   writeNotNull('diff', _$DIFFICULTYEnumMap[instance.diff]);
   val['tags'] = instance.tags;
   writeNotNull('ingredients', kListToJson(instance.ingredients));

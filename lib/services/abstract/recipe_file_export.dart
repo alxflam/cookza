@@ -1,6 +1,7 @@
 import 'package:cookly/constants.dart';
+import 'package:cookly/model/json/recipe.dart';
 import 'package:cookly/model/json/recipe_list.dart';
-import 'package:cookly/services/image_manager.dart';
+import 'package:cookly/services/recipe_manager.dart';
 import 'package:cookly/services/service_locator.dart';
 
 abstract class RecipeFileExport {
@@ -10,10 +11,14 @@ abstract class RecipeFileExport {
     return 'cooklyRecipes${kFileNameDateFormatter.format(DateTime.now())}';
   }
 
-  // TODO: rework from firebase
-  RecipeList idsToExportModel(List<String> ids) {
-    var recipes = []; // sl.get<ImageManager>().getRecipesByID(ids);
+  Future<RecipeList> idsToExportModel(List<String> ids) async {
+    var recipes = await sl.get<RecipeManager>().getRecipeById(ids);
+    var result = [];
+    for (var item in recipes) {
+      var recipe = await Recipe.applyFrom(item);
+      result.add(recipe);
+    }
 
-    return RecipeList(recipes: recipes);
+    return RecipeList(recipes: result);
   }
 }

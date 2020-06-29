@@ -10,17 +10,16 @@ FirebaseMealPlanCollection _$FirebaseMealPlanCollectionFromJson(
     Map<String, dynamic> json) {
   return FirebaseMealPlanCollection(
     creationTimestamp: kTimestampFromJson(json['creationTimestamp']),
-    users: (json['users'] as List)
-        ?.map((e) => e == null
-            ? null
-            : FirebaseRecipeUser.fromJson(e as Map<String, dynamic>))
-        ?.toList(),
+    name: json['name'] as String,
+    users: Map<String, String>.from(json['users'] as Map),
   );
 }
 
 Map<String, dynamic> _$FirebaseMealPlanCollectionToJson(
     FirebaseMealPlanCollection instance) {
-  final val = <String, dynamic>{};
+  final val = <String, dynamic>{
+    'name': instance.name,
+  };
 
   void writeNotNull(String key, dynamic value) {
     if (value != null) {
@@ -30,6 +29,6 @@ Map<String, dynamic> _$FirebaseMealPlanCollectionToJson(
 
   writeNotNull(
       'creationTimestamp', kTimestampToJson(instance.creationTimestamp));
-  writeNotNull('users', kListToJson(instance.users));
+  val['users'] = instance.users;
   return val;
 }
