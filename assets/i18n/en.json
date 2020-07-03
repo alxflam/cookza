@@ -32,6 +32,7 @@
         "ingredientsForServings": "Ingredients for {0} Servings",
         "amount": "Amount",
         "unit": "Unit",
+        "unitLongPlural": "Units of Measure",
         "ingredient": {
             "1": "Ingredient",
             "else": "Ingredients"
@@ -65,7 +66,9 @@
         "selectRecipes": "Select Recipes",
         "web": "Web",
         "addUser": "Add User",
-        "leaveGroup": "Leave Group"
+        "leaveGroup": "Leave Group",
+        "confirmLeave": "Do you really want to leave {0}?",
+        "shareAccount": "Share Account"
     },
     "settings": {
         "weekDurationDesc": "Set how many weeks are available for planning.",

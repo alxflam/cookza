@@ -1,27 +1,24 @@
-import 'package:cookly/model/firebase/meal_plan/firebase_meal_plan.dart';
 import 'package:cookly/model/json/ingredient_note.dart';
-import 'package:cookly/services/abstract/data_store.dart';
 import 'package:cookly/services/recipe_manager.dart';
 import 'package:cookly/services/service_locator.dart';
 import 'package:cookly/services/unit_of_measure.dart';
 
 abstract class IngredientsCalculator {
-  List<IngredientNote> getIngredients(Map<String, int> ids);
+  Future<List<IngredientNote>> getIngredients(Map<String, int> ids);
 }
 
 class IngredientsCalculatorImpl implements IngredientsCalculator {
   @override
-  List<IngredientNote> getIngredients(Map<String, int> ids) {
+  Future<List<IngredientNote>> getIngredients(Map<String, int> ids) async {
     List<IngredientNote> result = [];
 
-    // TODO implement get by ID
-    var recipes = [];
-    //  sl.get<RecipeManager>().getRecipesByID(ids.keys.toList());
+    var recipes =
+        await sl.get<RecipeManager>().getRecipeById(ids.keys.toList());
 
     for (var entry in ids.entries) {
       var recipe = recipes.firstWhere((element) => element.id == entry.key,
           orElse: null);
-      for (var note in recipe.ingredients) {
+      for (var note in await recipe.ingredients) {
         // check if ingredient already exists
 
         var baseServings = recipe.servings;
@@ -36,7 +33,7 @@ class IngredientsCalculatorImpl implements IngredientsCalculator {
         // if it does not, directly add it
         if (sameIngredient.isEmpty) {
           var amount = note.amount * ratio;
-          var newNote = IngredientNote.from(note);
+          var newNote = IngredientNote.fromEntity(note);
           newNote.amount = amount;
           result.add(newNote);
           continue;

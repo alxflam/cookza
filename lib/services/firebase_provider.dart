@@ -1,10 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cookly/model/entities/abstract/ingredient_note_entity.dart';
 import 'package:cookly/model/entities/abstract/meal_plan_collection_entity.dart';
 import 'package:cookly/model/entities/abstract/meal_plan_entity.dart';
 import 'package:cookly/model/entities/abstract/recipe_collection_entity.dart';
 import 'package:cookly/model/entities/abstract/recipe_entity.dart';
-import 'package:cookly/model/entities/abstract/user_entity.dart';
 import 'package:cookly/model/entities/firebase/ingredient_note_entity.dart';
 import 'package:cookly/model/entities/firebase/instruction_entity.dart';
 import 'package:cookly/model/entities/firebase/meal_plan_collection_entity.dart';
@@ -14,17 +12,16 @@ import 'package:cookly/model/entities/firebase/recipe_entity.dart';
 import 'package:cookly/model/entities/mutable/mutable_recipe.dart';
 import 'package:cookly/model/firebase/collections/firebase_meal_plan_collection.dart';
 import 'package:cookly/model/firebase/collections/firebase_recipe_collection.dart';
-import 'package:cookly/model/firebase/firebase_util.dart';
 import 'package:cookly/model/firebase/general/firebase_handshake.dart';
-import 'package:cookly/model/firebase/general/firebase_user.dart';
 import 'package:cookly/model/firebase/meal_plan/firebase_meal_plan.dart';
 import 'package:cookly/model/firebase/recipe/firebase_ingredient.dart';
 import 'package:cookly/model/firebase/recipe/firebase_instruction.dart';
 import 'package:cookly/model/firebase/recipe/firebase_recipe.dart';
-import 'package:cookly/model/json/recipe.dart';
+import 'package:cookly/screens/web/web_landing_screen.dart';
 import 'package:cookly/services/abstract/platform_info.dart';
 import 'package:cookly/services/service_locator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 typedef OnAcceptWebLogin = void Function(BuildContext context);
@@ -42,7 +39,10 @@ class FirebaseProvider {
   static const MEAL_PLAN_GROUPS = 'mealPlanGroups';
   static const MEAL_PLANS = 'mealPlans';
 
+  String _webSessionHandshake;
+
   FirebaseUser _currentUser;
+  String _ownerUserID;
 
   String _currentRecipeGroup;
 
@@ -104,23 +104,28 @@ class FirebaseProvider {
     var user = await _auth.currentUser();
     _currentUser = user;
     if (user == null) {
-      var result = await _auth.signInAnonymously();
-      _currentUser = result.user;
+      await _signInAnonymously();
     }
+    _ownerUserID = _currentUser.uid;
 
     print('logged in anonymously using token ${_currentUser.uid}');
 
     var coll = await this.recipeCollectionsAsList();
     print('coll is $coll');
     print('collection size is: ${coll.length}');
-    if (coll.isEmpty) {
+    if (coll.isEmpty && !kIsWeb) {
       var collection = await this.createRecipeCollection('default');
       this._currentRecipeGroup = collection.id;
-    } else {
+    } else if (coll.isNotEmpty) {
       this._currentRecipeGroup = coll.first.id;
     }
 
     return this;
+  }
+
+  Future _signInAnonymously() async {
+    var result = await _auth.signInAnonymously();
+    _currentUser = result.user;
   }
 
   /// returns the UID assigned to the currently logged in user
@@ -131,6 +136,14 @@ class FirebaseProvider {
   /// called by the web app to create an initial requestor-handshake document
   Future<String> initializeWebLogin(
       OnAcceptWebLogin onLoginAccepted, BuildContext context) async {
+    if (_webSessionHandshake != null) {
+      return _webSessionHandshake;
+    }
+
+    if (this._currentUser == null) {
+      await _signInAnonymously();
+    }
+
     var platformInfo = sl.get<PlatformInfo>();
 
     var newHandshakeEntry = FirebaseHandshake(
@@ -148,18 +161,15 @@ class FirebaseProvider {
         .snapshots()
         .listen(
       (event) {
-        var target = FirebaseHandshake.fromJson(event.data, event.documentID);
-        // wait until somebody accepts the offer
-        if (target.owner != null) {
-          // store the repository ID
-          this._currentRecipeGroup = target.recipeCollection;
-          // navigate to the home screen
-          onLoginAccepted.call(context);
+        if (!event.exists) {
+          return _handleWebReceivedLogOff(context);
         }
+        _handleWebReceivedLogIn(context, event, onLoginAccepted);
       },
     );
 
-    return document.documentID;
+    _webSessionHandshake = document.documentID;
+    return _webSessionHandshake;
   }
 
   ///  signals the web app that access has been granted
@@ -176,10 +186,14 @@ class FirebaseProvider {
     }
 
     handshake.owner = userUid;
-    handshake.recipeCollection = this._currentRecipeGroup;
 
     var recipeGroupSnapshot = await _firestore
         .collection(RECIPE_GROUPS)
+        .where('users.$userUid', isGreaterThan: '')
+        .getDocuments();
+
+    var mealPlanGroupSnapshot = await _firestore
+        .collection(MEAL_PLAN_GROUPS)
         .where('users.$userUid', isGreaterThan: '')
         .getDocuments();
 
@@ -188,9 +202,16 @@ class FirebaseProvider {
     await _firestore.runTransaction((transaction) {
       // for each group we have access to, grant access to the given user
       for (var item in recipeGroupSnapshot.documents) {
-        transaction.set(
+        transaction.update(
           item.reference,
-          {'users.${handshake.requestor}': USER_ROLE.OWNER},
+          {'users.${handshake.requestor}': 'Web Session'},
+        );
+      }
+
+      for (var item in mealPlanGroupSnapshot.documents) {
+        transaction.update(
+          item.reference,
+          {'users.${handshake.requestor}': 'Web Session'},
         );
       }
 
@@ -226,11 +247,24 @@ class FirebaseProvider {
         .where('users.$userUid', isGreaterThan: '')
         .getDocuments();
 
+    var mealPlanGroupSnapshot = await _firestore
+        .collection(MEAL_PLAN_GROUPS)
+        .where('users.$userUid', isGreaterThan: '')
+        .getDocuments();
+
     await _firestore.runTransaction((transaction) {
       // for each group we have access to, grant access to the given user
       for (var item in recipeGroupSnapshot.documents) {
         // setting the map value to null will remove the entry
-        transaction.set(
+        transaction.update(
+          item.reference,
+          {'users.$requestor': null},
+        );
+      }
+
+      for (var item in mealPlanGroupSnapshot.documents) {
+        // setting the map value to null will remove the entry
+        transaction.update(
           item.reference,
           {'users.$requestor': null},
         );
@@ -255,18 +289,46 @@ class FirebaseProvider {
   }
 
   /// log off from all web client sessions
-  void logOffAllWebClient() {
-    _firestore
+  Future<void> logOffAllWebClient() async {
+    var handshakeSnapshots = await _firestore
         .collection(HANDSHAKES)
         .where('owner', isEqualTo: userUid)
-        .getDocuments()
-        .then(
-          (value) => value.documents.forEach(
-            (element) {
-              element.reference.delete();
-            },
-          ),
-        );
+        .getDocuments();
+
+    var recipeGroupSnapshot = await _firestore
+        .collection(RECIPE_GROUPS)
+        .where('users.$userUid', isGreaterThan: '')
+        .getDocuments();
+
+    var mealPlanGroupSnapshot = await _firestore
+        .collection(MEAL_PLAN_GROUPS)
+        .where('users.$userUid', isGreaterThan: '')
+        .getDocuments();
+
+    return await _firestore.runTransaction((transaction) {
+      for (var item in handshakeSnapshots.documents) {
+        var requestor = item.data['requestor'];
+
+        for (var item in recipeGroupSnapshot.documents) {
+          // setting the map value to null will remove the entry
+          transaction.update(
+            item.reference,
+            {'users.$requestor': null},
+          );
+        }
+
+        for (var item in mealPlanGroupSnapshot.documents) {
+          // setting the map value to null will remove the entry
+          transaction.update(
+            item.reference,
+            {'users.$requestor': null},
+          );
+        }
+
+        // delete the handshake
+        transaction.delete(item.reference);
+      }
+    });
   }
 
   /// create a new recipe collection
@@ -580,7 +642,7 @@ class FirebaseProvider {
     var docRef = _firestore.collection(MEAL_PLAN_GROUPS).document(id);
 
     return _firestore.runTransaction((transaction) {
-      transaction.set(docRef, {'users.$userUid': null});
+      transaction.update(docRef, {'users.$userUid': null});
     });
   }
 
@@ -588,7 +650,36 @@ class FirebaseProvider {
     var docRef = _firestore.collection(RECIPE_GROUPS).document(id);
 
     return _firestore.runTransaction((transaction) {
-      transaction.set(docRef, {'users.$userUid': null});
+      transaction.update(docRef, {'users.$userUid': null});
     });
+  }
+
+  Future<MealPlanCollectionEntity> getMealPlanGroupByID(String id) async {
+    var doc = await _firestore.collection(MEAL_PLAN_GROUPS).document(id).get();
+
+    return MealPlanCollectionEntityFirebase.of(
+        FirebaseMealPlanCollection.fromJson(doc.data, doc.documentID));
+  }
+
+  void _handleWebReceivedLogIn(
+      BuildContext context, DocumentSnapshot event, OnAcceptWebLogin callback) {
+    var target = FirebaseHandshake.fromJson(event.data, event.documentID);
+    // wait until somebody accepts the offer
+    if (target.owner != null) {
+      // update owners uid
+      _ownerUserID = target.owner;
+      // navigate to the home screen
+      callback.call(context);
+    }
+  }
+
+  Future<void> _handleWebReceivedLogOff(BuildContext context) async {
+    this._ownerUserID = null;
+    this._currentUser = null;
+    this._webSessionHandshake = null;
+    await this._auth.signOut();
+    
+    // TODO: nav to does not work as context has by this time already been deactivated
+    // Navigator.pushReplacementNamed(context, WebLandingPage.id);
   }
 }

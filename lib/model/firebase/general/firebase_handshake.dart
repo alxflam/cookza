@@ -12,8 +12,6 @@ class FirebaseHandshake {
   String requestor;
   @JsonKey(nullable: false)
   String owner;
-  @JsonKey(nullable: false)
-  String recipeCollection;
   @JsonKey(fromJson: kTimestampFromJson, toJson: kTimestampToJson)
   Timestamp creationTimestamp;
   @JsonKey(nullable: false)
@@ -32,7 +30,6 @@ class FirebaseHandshake {
   FirebaseHandshake(
       {this.requestor,
       this.owner,
-      this.recipeCollection,
       this.creationTimestamp,
       this.operatingSystem,
       this.browser}) {

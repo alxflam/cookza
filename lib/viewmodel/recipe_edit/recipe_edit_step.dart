@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:cookly/model/entities/abstract/ingredient_entity.dart';
-import 'package:cookly/model/entities/abstract/ingredient_note_entity.dart';
 import 'package:cookly/model/entities/abstract/instruction_entity.dart';
 import 'package:cookly/model/entities/abstract/recipe_collection_entity.dart';
 import 'package:cookly/model/entities/abstract/recipe_entity.dart';
@@ -9,10 +8,8 @@ import 'package:cookly/model/entities/mutable/mutable_ingredient.dart';
 import 'package:cookly/model/entities/mutable/mutable_ingredient_note.dart';
 import 'package:cookly/model/entities/mutable/mutable_instruction.dart';
 import 'package:cookly/model/entities/mutable/mutable_recipe.dart';
-import 'package:cookly/model/json/ingredient.dart';
 import 'package:cookly/services/image_manager.dart';
 import 'package:cookly/services/recipe_manager.dart';
-import 'package:cookly/services/abstract/data_store.dart';
 import 'package:cookly/services/service_locator.dart';
 import 'package:cookly/services/unit_of_measure.dart';
 import 'package:flutter/cupertino.dart';

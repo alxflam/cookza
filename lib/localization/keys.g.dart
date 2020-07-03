@@ -56,6 +56,8 @@ class Keys {
 
   static const String Recipe_Unit = 'recipe.unit';
 
+  static const String Recipe_Unitlongplural = 'recipe.unitLongPlural';
+
   static const String Recipe_Ingredient = 'recipe.ingredient';
 
   static const String Recipe_Instructions = 'recipe.instructions';
@@ -97,6 +99,10 @@ class Keys {
   static const String Ui_Adduser = 'ui.addUser';
 
   static const String Ui_Leavegroup = 'ui.leaveGroup';
+
+  static const String Ui_Confirmleave = 'ui.confirmLeave';
+
+  static const String Ui_Shareaccount = 'ui.shareAccount';
 
   static const String Settings_Weekdurationdesc = 'settings.weekDurationDesc';
 

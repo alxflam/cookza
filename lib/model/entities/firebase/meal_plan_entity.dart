@@ -1,9 +1,4 @@
-import 'dart:collection';
-
 import 'package:cookly/model/entities/abstract/meal_plan_entity.dart';
-import 'package:cookly/model/entities/abstract/user_entity.dart';
-import 'package:cookly/model/entities/firebase/user_entity.dart';
-import 'package:cookly/model/firebase/general/firebase_user.dart';
 import 'package:cookly/model/firebase/meal_plan/firebase_meal_plan.dart';
 
 class MealPlanDateEntityFirebase implements MealPlanDateEntity {

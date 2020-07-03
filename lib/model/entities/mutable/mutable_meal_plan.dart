@@ -1,10 +1,7 @@
 import 'package:cookly/model/entities/abstract/meal_plan_entity.dart';
-import 'package:cookly/model/entities/abstract/user_entity.dart';
 import 'package:cookly/services/util/week_calculation.dart';
 
 class MutableMealPlan implements MealPlanEntity {
-  List<UserEntity> _users;
-
   String _id;
 
   List<MutableMealPlanDateEntity> _items = [];

@@ -1,11 +1,12 @@
 import 'package:cookly/localization/keys.dart';
 import 'package:cookly/screens/collections/share_account_screen.dart';
 import 'package:cookly/screens/meal_plan/meal_plan_group_screen.dart';
+import 'package:cookly/screens/settings/about_screen.dart';
+import 'package:cookly/screens/web/web_landing_screen.dart';
 import 'package:cookly/viewmodel/settings/theme_model.dart';
 import 'package:cookly/screens/groups/recipe_group.dart';
 import 'package:cookly/screens/leftovers_screen.dart';
 import 'package:cookly/screens/meal_plan/meal_plan_screen.dart';
-import 'package:cookly/screens/settings/camera.dart';
 import 'package:cookly/screens/home_screen.dart';
 import 'package:cookly/screens/new_ingredient_screen.dart';
 import 'package:cookly/screens/settings/export_settings_screen.dart';
@@ -40,7 +41,6 @@ void main() async {
   );
 
   setupServiceLocator();
-  // TODO keep it here?
   await GetIt.I.allReady();
 
   runApp(
@@ -86,7 +86,7 @@ class CooklyMaterialApp extends StatelessWidget {
       locale: localizationDelegate.currentLocale,
       debugShowCheckedModeBanner: false,
       theme: Provider.of<ThemeModel>(context).current,
-      initialRoute: kIsWeb ? WebLoginScreen.id : HomeScreen.id,
+      initialRoute: kIsWeb ? WebLandingPage.id : HomeScreen.id,
       routes: {
         HomeScreen.id: (context) => HomeScreen(),
         WebLoginScreen.id: (context) => WebLoginScreen(),
@@ -96,7 +96,6 @@ class CooklyMaterialApp extends StatelessWidget {
         MealPlanScreen.id: (context) => MealPlanScreen(),
         OCRTestScreen.id: (context) => OCRTestScreen(),
         OnBoardingScreen.id: (context) => OnBoardingScreen(),
-        MyHomePage.id: (context) => MyHomePage(),
         RecipeListScreen.id: (context) => RecipeListScreen(),
         RecipeSelectionScreen.id: (context) => RecipeSelectionScreen(),
         NewIngredientScreen.id: (context) => NewIngredientScreen(),
@@ -113,6 +112,8 @@ class CooklyMaterialApp extends StatelessWidget {
         RecipeGroupScreen.id: (context) => RecipeGroupScreen(),
         ShareAccountScreen.id: (context) => ShareAccountScreen(),
         MealPlanGroupScreen.id: (context) => MealPlanGroupScreen(),
+        AboutScreen.id: (context) => AboutScreen(),
+        WebLandingPage.id: (context) => WebLandingPage(),
       },
     );
   }

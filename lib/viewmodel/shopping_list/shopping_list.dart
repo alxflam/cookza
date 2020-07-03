@@ -1,7 +1,6 @@
 import 'package:cookly/constants.dart';
 import 'package:cookly/model/json/ingredient_note.dart';
 import 'package:cookly/model/json/shopping_list.dart';
-import 'package:cookly/services/meal_plan_manager.dart';
 import 'package:cookly/services/service_locator.dart';
 import 'package:cookly/services/unit_of_measure.dart';
 import 'package:cookly/viewmodel/meal_plan/recipe_meal_plan_model.dart';

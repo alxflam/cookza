@@ -154,7 +154,6 @@ class MealPlanGroupScreen extends StatelessWidget {
 
   void _editCollection(BuildContext _context, MealPlanGroupViewModel model) {
     // show a dialog to rename the collection
-    // TODO: create a dedicated view model with change notifier to update app bar title on rename!
     showDialog(
       context: _context,
       barrierDismissible: false, // user must tap button!
@@ -263,18 +262,54 @@ class MealPlanGroupScreen extends StatelessWidget {
 
   void _addUser(BuildContext context, MealPlanGroupViewModel model) async {
     // scan a qr code
-    var scanResult = await sl.get<QRScanner>().scanQRCode();
-    if (scanResult != null && scanResult.isNotEmpty) {
-      // TODO: how to handle the name of the user:
-      // also supply in QR Code or provide a dialog for the granting user
-
+    var scanResult = await sl.get<QRScanner>().scanUserQRCode();
+    if (scanResult != null) {
       // then add the user
-      model.addUser(scanResult, 'some new User');
+      model.addUser(scanResult.id, scanResult.name);
     }
   }
 
   void _leaveGroup(BuildContext context, MealPlanGroupViewModel model) async {
-    await model.leaveGroup();
-    Navigator.pop(context);
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(translate(Keys.Ui_Delete)),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(
+                  translate(
+                    Keys.Ui_Confirmleave,
+                    args: {"0": model.name},
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text(
+                translate(Keys.Ui_Cancel),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            FlatButton(
+              child: Text(
+                translate(Keys.Ui_Leavegroup),
+              ),
+              color: Colors.red,
+              onPressed: () async {
+                await model.leaveGroup();
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }

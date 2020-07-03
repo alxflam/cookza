@@ -38,6 +38,13 @@ class ThemeModel with ChangeNotifier {
 
   ThemeData get current => _currentTheme;
 
+  Color get tileAccentColor {
+//    if (_currentTheme == kDarkTheme) {
+    return Color(0xFF021B2E);
+    //  }
+    // return Colors.blue.shade300;
+  }
+
   String getCurrentThemeKey() {
     var theme = kAllThemes.entries
         .firstWhere((e) => e.value == _currentTheme, orElse: () => null);

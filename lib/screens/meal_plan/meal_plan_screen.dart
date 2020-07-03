@@ -6,13 +6,13 @@ import 'package:cookly/model/entities/abstract/meal_plan_entity.dart';
 import 'package:cookly/model/entities/abstract/recipe_entity.dart';
 import 'package:cookly/screens/shopping_list/shopping_list_overview_screen.dart';
 import 'package:cookly/services/meal_plan_manager.dart';
-import 'package:cookly/services/mobile/qr_scanner.dart';
 import 'package:cookly/services/recipe_manager.dart';
 import 'package:cookly/viewmodel/meal_plan/recipe_meal_plan_model.dart';
 import 'package:cookly/viewmodel/recipe_selection_model.dart';
 import 'package:cookly/screens/recipe_selection_screen.dart';
 import 'package:cookly/services/service_locator.dart';
 import 'package:cookly/viewmodel/recipe_view/recipe_view_model.dart';
+import 'package:cookly/viewmodel/settings/theme_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -25,86 +25,100 @@ class MealPlanScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var _recipe = ModalRoute.of(context).settings.arguments as RecipeEntity;
+    var currentGroup = sl.get<MealPlanManager>().currentCollection;
 
-    return Scaffold(
-      drawer: MealPlanGroupsDrawer(),
-      appBar: AppBar(
-        title: Text(
-          translate(Keys.Functions_Mealplanner),
-        ),
-        actions: [
-          IconButton(
-            icon: Icon(kShoppingListIconData),
-            onPressed: () {
-              Navigator.pushReplacementNamed(
-                  context, ShoppingListOverviewScreen.id);
-            },
-          ),
-        ],
-      ),
-      body: Builder(
-        builder: (context) {
-          var currentGroup = sl.get<MealPlanManager>().currentCollection;
-          if (currentGroup == null || currentGroup.isEmpty) {
-            return Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  RaisedButton(
-                    child: Text('Select or create a meal plan group'),
-                    onPressed: () => Scaffold.of(context).openDrawer(),
-                  )
-                ],
+    return FutureBuilder(
+      future: currentGroup == null
+          ? Future.value(null)
+          : sl.get<MealPlanManager>().getCollectionByID(currentGroup),
+      builder: (context, snapshot) {
+        return Scaffold(
+          drawer: MealPlanGroupsDrawer(),
+          appBar: AppBar(
+            title: snapshot.data == null
+                ? Text(translate(Keys.Functions_Mealplanner))
+                : Text(snapshot.data.name),
+            actions: [
+              IconButton(
+                icon: Icon(kShoppingListIconData),
+                onPressed: () {
+                  Navigator.pushReplacementNamed(
+                      context, ShoppingListOverviewScreen.id);
+                },
               ),
-            );
-          }
-
-          return FutureBuilder(
-            future: sl.get<MealPlanManager>().mealPlan,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                MealPlanEntity data = snapshot.data;
-                if (data.id == null || data.id.isEmpty) {
-                  //
-                } else {}
-
-                MealPlanViewModel _model = MealPlanViewModel.of(snapshot.data);
-
-                if (_recipe != null && _recipe.id.isNotEmpty) {
-                  _model.setRecipeForAddition(_recipe);
-                }
-
-                return SingleChildScrollView(
-                  child: ChangeNotifierProvider<MealPlanViewModel>.value(
-                    value: _model,
-                    child: Consumer<MealPlanViewModel>(
-                      builder: (context, model, widget) {
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: _buildMainLayout(context, model),
-                        );
-                      },
+            ],
+          ),
+          body: Builder(
+            builder: (context) {
+              if (snapshot.data == null) {
+                return Container(
+                  child: Center(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          RaisedButton(
+                            child: Text('Select or create a meal plan group'),
+                            onPressed: () => Scaffold.of(context).openDrawer(),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 );
               }
-              return Container();
+
+              return FutureBuilder(
+                future: sl.get<MealPlanManager>().mealPlan,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    MealPlanEntity data = snapshot.data;
+                    if (data.id == null || data.id.isEmpty) {
+                      //
+                    } else {}
+
+                    MealPlanViewModel _model =
+                        MealPlanViewModel.of(snapshot.data);
+
+                    if (_recipe != null && _recipe.id.isNotEmpty) {
+                      _model.setRecipeForAddition(_recipe);
+                    }
+
+                    return SingleChildScrollView(
+                      child: ChangeNotifierProvider<MealPlanViewModel>.value(
+                        value: _model,
+                        child: Consumer<MealPlanViewModel>(
+                          builder: (context, model, widget) {
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: _buildMainLayout(context, model),
+                            );
+                          },
+                        ),
+                      ),
+                    );
+                  }
+                  return Container();
+                },
+              );
             },
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 
   List<Widget> _buildMainLayout(BuildContext context, MealPlanViewModel model) {
+    var tileColor = Provider.of<ThemeModel>(context).tileAccentColor;
+
     List<Widget> tiles = [];
     int previousWeek;
     for (var i = 0; i < model.entries.length; i++) {
       var currentWeek = model.entries[i].week;
       if (currentWeek != previousWeek) {
-        var weekTile = _createWeekTile(currentWeek);
+        var weekTile = _createWeekTile(currentWeek, tileColor);
         tiles.add(weekTile);
         previousWeek = currentWeek;
       }
@@ -158,16 +172,13 @@ class MealPlanScreen extends StatelessWidget {
         );
       },
       onWillAccept: (data) {
-        // TODO: change color
+        // TODO: change color while dragging, drag over and leave
         return data is MealDragModel;
       },
       onAccept: (data) {
-        // TODO: change color back
         model.moveRecipe(data, i);
       },
-      onLeave: (data) {
-        // TODO: change color back
-      },
+      onLeave: (data) {},
     );
 
     return body;
@@ -331,11 +342,11 @@ class MealPlanScreen extends StatelessWidget {
     return tiles;
   }
 
-  _createWeekTile(int i) {
+  _createWeekTile(int i, Color backgroundColor) {
     return ListTile(
       title: Center(
         child: CircleAvatar(
-          backgroundColor: Colors.teal,
+          backgroundColor: backgroundColor,
           foregroundColor: Colors.white,
           child: Text(
             i.toString(),

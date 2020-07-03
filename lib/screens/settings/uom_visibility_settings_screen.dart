@@ -14,7 +14,7 @@ class UoMVisibilityScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          translate(Keys.Recipe_Unit),
+          translate(Keys.Recipe_Unitlongplural),
         ),
       ),
       body: ChangeNotifierProvider<UoMVisibilitySettingsModel>.value(

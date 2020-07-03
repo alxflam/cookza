@@ -24,10 +24,6 @@ class MealPlanGroupsTiles extends StatelessWidget {
     var groups = Provider.of<List<MealPlanCollectionEntity>>(context);
     var mealPlanManager = sl.get<MealPlanManager>();
 
-    // if (groups == null || groups.isEmpty) {
-    //   return Container();
-    // }
-
     return Column(
       children: [
         DrawerHeader(

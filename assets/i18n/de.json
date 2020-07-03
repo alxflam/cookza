@@ -32,6 +32,7 @@
         "ingredientsForServings": "Zutaten für {0} Portionen",
         "amount": "Menge",
         "unit": "Einheit",
+        "unitLongPlural": "Mengeneinheiten",
         "ingredient": {
             "1": "Zutat",
             "else": "Zutaten"
@@ -65,7 +66,9 @@
         "selectRecipes": "Rezepte auswählen",
         "web": "Web",
         "addUser": "Add User",
-        "leaveGroup": "Gruppe verlassen"
+        "leaveGroup": "Gruppe verlassen",
+        "confirmLeave": "{0} wirklich verlassen?",
+        "shareAccount": "Account teilen"
     },
     "settings": {
         "weekDurationDesc": "Anzahl der Wochen, die im Essensplaner verfügbar sind.",

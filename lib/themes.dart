@@ -5,7 +5,7 @@ final kAllThemes = {
   'light': kLightTheme,
 };
 
-// 022746
-
-final kDarkTheme = ThemeData.dark().copyWith();
+final kDarkTheme = ThemeData.dark().copyWith(
+  scaffoldBackgroundColor: Colors.grey.shade900,
+);
 final kLightTheme = ThemeData.light().copyWith();

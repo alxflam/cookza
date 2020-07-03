@@ -5,7 +5,6 @@ import 'package:cookly/services/recipe_manager.dart';
 import 'package:cookly/viewmodel/recipe_edit/recipe_ingredient_model.dart';
 import 'package:cookly/viewmodel/recipe_selection_model.dart';
 import 'package:cookly/screens/recipe_selection_screen.dart';
-import 'package:cookly/services/abstract/data_store.dart';
 import 'package:cookly/services/service_locator.dart';
 import 'package:cookly/services/unit_of_measure.dart';
 import 'package:cookly/viewmodel/recipe_view/recipe_view_model.dart';

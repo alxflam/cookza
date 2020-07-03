@@ -1,7 +1,6 @@
 import 'package:cookly/localization/keys.dart';
 import 'package:cookly/services/recipe_manager.dart';
 import 'package:cookly/viewmodel/recipe_selection_model.dart';
-import 'package:cookly/services/abstract/data_store.dart';
 import 'package:cookly/services/abstract/pdf_export.dart';
 import 'package:cookly/services/abstract/pdf_generator.dart';
 import 'package:cookly/services/abstract/recipe_file_export.dart';
@@ -132,12 +131,9 @@ class RecipeSelectionScreen extends StatelessWidget {
         };
       case SELECTION_MODE.EXPORT_PDF:
         return (context, model) {
-          // TODO
-          var recipes = [];
-          // sl
-          //     .get<RecipeManager>()
-          //     .getRecipesById(model.selectedRecipes);
-          var doc = sl.get<PDFGenerator>().generatePDF(recipes);
+          var doc = sl
+              .get<PDFGenerator>()
+              .generatePDF(model.selectedRecipeViewModels);
           sl.get<PDFExporter>().export(doc);
           Navigator.pop(context);
         };

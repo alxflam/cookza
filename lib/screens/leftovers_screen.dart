@@ -3,7 +3,6 @@ import 'package:cookly/localization/keys.dart';
 import 'package:cookly/model/entities/abstract/recipe_entity.dart';
 import 'package:cookly/services/service_locator.dart';
 import 'package:cookly/services/similarity_service.dart';
-import 'package:cookly/viewmodel/recipe_view/recipe_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 

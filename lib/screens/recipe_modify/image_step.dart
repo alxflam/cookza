@@ -23,7 +23,9 @@ Step getImageStep(BuildContext context) {
             var picker = ImagePicker();
             var image = await picker.getImage(
                 source: source, imageQuality: 70, maxWidth: 1000);
-            model.image = File(image.path);
+            if (image != null) {
+              model.image = File(image.path);
+            }
           }
 
           return Column(

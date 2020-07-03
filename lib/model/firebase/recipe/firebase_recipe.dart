@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cookly/constants.dart';
 import 'package:cookly/model/entities/abstract/recipe_entity.dart';
 import 'package:cookly/model/entities/firebase/recipe_entity.dart';
-import 'package:cookly/model/json/recipe.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'firebase_recipe.g.dart';

@@ -70,6 +70,9 @@ class RecipeSelectionModel extends ChangeNotifier {
 
   List<String> get selectedRecipes => _selected;
 
+  List<RecipeViewModel> get selectedRecipeViewModels =>
+      _recipes.where((element) => _selected.contains(element.id)).toList();
+
   List<RecipeEntity> get selectedRecipeEntities {
     return _recipes
         .where((e) => _selected.contains(e.id))

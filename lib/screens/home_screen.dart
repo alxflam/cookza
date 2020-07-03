@@ -9,11 +9,13 @@ import 'package:cookly/screens/shopping_list/shopping_list_overview_screen.dart'
 import 'package:cookly/services/abstract/receive_intent_handler.dart';
 import 'package:cookly/services/service_locator.dart';
 import 'package:cookly/viewmodel/recipe_edit/recipe_edit_model.dart';
+import 'package:cookly/viewmodel/settings/theme_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
   static final id = 'home';
@@ -41,6 +43,9 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     init(context);
+
+    var tileColor = Provider.of<ThemeModel>(context).tileAccentColor;
+
     return Scaffold(
       drawer: MainAppDrawer(),
       appBar: AppBar(
@@ -68,7 +73,7 @@ class HomeScreen extends StatelessWidget {
                     onPress: () => Navigator.pushNamed(
                         context, NewRecipeScreen.id,
                         arguments: RecipeEditModel.create()),
-                    color: Colors.teal.shade900,
+                    color: tileColor,
                     cardChild: IconContent(
                       icon: Icons.star,
                       label: translate(Keys.Functions_Addrecipe),
@@ -79,7 +84,7 @@ class HomeScreen extends StatelessWidget {
                   child: ReusableCard(
                     onPress: () =>
                         Navigator.pushNamed(context, RecipeListScreen.id),
-                    color: Colors.teal.shade900,
+                    color: tileColor,
                     cardChild: IconContent(
                       icon: kRecipesIconData,
                       label: translate(Keys.Functions_Listrecipes),
@@ -96,7 +101,7 @@ class HomeScreen extends StatelessWidget {
                   child: ReusableCard(
                     onPress: () => Navigator.pushNamed(
                         context, ShoppingListOverviewScreen.id),
-                    color: Colors.teal.shade900,
+                    color: tileColor,
                     cardChild: IconContent(
                       icon: kShoppingListIconData,
                       label: translate(Keys.Functions_Shoppinglist),
@@ -107,7 +112,7 @@ class HomeScreen extends StatelessWidget {
                   child: ReusableCard(
                     onPress: () =>
                         Navigator.pushNamed(context, MealPlanScreen.id),
-                    color: Colors.teal.shade900,
+                    color: tileColor,
                     cardChild: IconContent(
                       icon: kMealPlannerIconData,
                       label: translate(Keys.Functions_Mealplanner),
@@ -124,20 +129,10 @@ class HomeScreen extends StatelessWidget {
                   child: ReusableCard(
                     onPress: () =>
                         Navigator.pushNamed(context, LeftoversScreen.id),
-                    color: Colors.teal.shade900,
+                    color: tileColor,
                     cardChild: IconContent(
                       icon: kLeftoversIconData,
                       label: translate(Keys.Functions_Leftovers),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: ReusableCard(
-                    onPress: () => kNotImplementedDialog(context),
-                    color: Colors.teal.shade900,
-                    cardChild: IconContent(
-                      icon: kMarketplaceIconData,
-                      label: translate(Keys.Functions_Marketplace),
                     ),
                   ),
                 ),

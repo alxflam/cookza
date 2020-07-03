@@ -10,6 +10,7 @@ abstract class MealPlanManager {
   set currentCollection(String value);
   Future<void> createCollection(String name);
   Future<void> renameCollection(String name, MealPlanCollectionEntity entity);
+  Future<MealPlanCollectionEntity> getCollectionByID(String id);
 
   Stream<List<MealPlanCollectionEntity>> get collectionsAsStream;
   Future<void> saveMealPlan(MealPlanEntity entity);
@@ -26,6 +27,9 @@ class MealPlanManagerFirebase implements MealPlanManager {
 
   @override
   Future<MealPlanEntity> get mealPlan async {
+    if (currentCollection == null || currentCollection.isEmpty) {
+      return Future.value(null);
+    }
     var result = await sl.get<FirebaseProvider>().mealPlan(currentCollection);
     documentID = result.id;
     return result;
@@ -77,5 +81,10 @@ class MealPlanManagerFirebase implements MealPlanManager {
   @override
   Future<void> leaveGroup(MealPlanCollectionEntity entity) {
     return sl.get<FirebaseProvider>().leaveMealPlanGroup(entity.id);
+  }
+
+  @override
+  Future<MealPlanCollectionEntity> getCollectionByID(String id) {
+    return sl.get<FirebaseProvider>().getMealPlanGroupByID(id);
   }
 }

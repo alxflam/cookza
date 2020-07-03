@@ -1,11 +1,8 @@
 import 'package:cookly/constants.dart';
 import 'package:cookly/localization/keys.dart';
-import 'package:cookly/screens/settings/camera.dart';
+import 'package:cookly/screens/settings/about_screen.dart';
 import 'package:cookly/screens/settings/export_settings_screen.dart';
 import 'package:cookly/screens/settings/meal_plan_settings_screen.dart';
-import 'package:cookly/screens/settings/ocr_screen.dart';
-import 'package:cookly/screens/settings/onboarding_screen.dart';
-import 'package:cookly/screens/settings/saved_images_screen.dart';
 import 'package:cookly/screens/settings/theme_settings_screen.dart';
 import 'package:cookly/screens/settings/uom_visibility_settings_screen.dart';
 import 'package:cookly/services/abstract/recipe_file_import.dart';
@@ -19,22 +16,6 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextStyle textStyle = Theme.of(context).textTheme.subtitle1;
-
-    final List<Widget> aboutBoxChildren = <Widget>[
-      SizedBox(height: 24),
-      RichText(
-        text: TextSpan(
-          children: <TextSpan>[
-            TextSpan(
-                style: textStyle,
-                text:
-                    'Cookly enables you to store, collect and share your favourite recipes in a data-privacy friendly manner.'),
-          ],
-        ),
-      ),
-    ];
-
     return Scaffold(
       appBar: AppBar(
         title: Text(translate(Keys.Ui_Settings)),
@@ -57,7 +38,7 @@ class SettingsScreen extends StatelessWidget {
                 },
               ),
               ListTile(
-                title: Text(translate(Keys.Recipe_Unit)),
+                title: Text(translate(Keys.Recipe_Unitlongplural)),
                 leading: FaIcon(FontAwesomeIcons.unity),
                 onTap: () {
                   Navigator.pushNamed(context, UoMVisibilityScreen.id);
@@ -77,35 +58,13 @@ class SettingsScreen extends StatelessWidget {
                   Navigator.pushNamed(context, MealPlanSettingsScreen.id);
                 },
               ),
-              AboutListTile(
-                icon: Icon(kInfoIconData),
-                applicationVersion: '2020-05',
-                applicationIcon: Icon(kAppIconData),
-                applicationLegalese: '© 2020',
-                aboutBoxChildren: aboutBoxChildren,
-              ),
               ListTile(
-                title: Text('§Saved Images'),
-                leading: FaIcon(FontAwesomeIcons.camera),
+                title: Text(MaterialLocalizations.of(context)
+                    .aboutListTileTitle(translate(Keys.App_Title))),
+                leading: FaIcon(Icons.info),
                 onTap: () {
-                  Navigator.pushNamed(context, SavedImagesScreen.id);
+                  Navigator.pushNamed(context, AboutScreen.id);
                 },
-              ),
-              ListTile(
-                title: Text('§Test OCR'),
-                onTap: () => Navigator.pushNamed(context, OCRTestScreen.id),
-              ),
-              ListTile(
-                title: Text('§Show Onboarding Intro'),
-                onTap: () => Navigator.pushNamed(context, OnBoardingScreen.id),
-              ),
-              ListTile(
-                title: Text('§Show Changelog'),
-                onTap: () => kNotImplementedDialog(context),
-              ),
-              ListTile(
-                title: Text('§Test Camera Picker'),
-                onTap: () => Navigator.pushNamed(context, MyHomePage.id),
               ),
             ],
           );

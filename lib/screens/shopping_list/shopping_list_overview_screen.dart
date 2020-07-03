@@ -1,6 +1,5 @@
 import 'package:cookly/localization/keys.dart';
 import 'package:cookly/screens/shopping_list/shopping_list_detail_screen.dart';
-import 'package:cookly/services/abstract/data_store.dart';
 import 'package:cookly/services/meal_plan_manager.dart';
 import 'package:cookly/services/service_locator.dart';
 import 'package:cookly/viewmodel/meal_plan/recipe_meal_plan_model.dart';
@@ -15,9 +14,8 @@ class ShoppingListOverviewScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO:
+    // TODO: create shopping list view model
     ShoppingListOverviewModel _model = ShoppingListOverviewModel.of([]);
-    // sl.get<ShoppingListManager>().appProfile.shoppingListOverviewModel();
 
     return Scaffold(
       appBar: AppBar(
@@ -32,8 +30,6 @@ class ShoppingListOverviewScreen extends StatelessWidget {
               MealPlanViewModel _mealPlan = MealPlanViewModel.of(entity);
               var firstDate = _mealPlan.entries.first.date;
               var lastDate = _mealPlan.entries.last.date;
-              var recipes =
-                  _mealPlan.getRecipesForInterval(firstDate, lastDate);
 
               var _model = ShoppingListModel(firstDate, lastDate, {});
 

@@ -1,4 +1,3 @@
-import 'package:cookly/model/entities/abstract/user_entity.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'firebase_user.g.dart';

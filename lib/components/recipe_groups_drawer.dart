@@ -24,10 +24,6 @@ class RecipeGroupsTiles extends StatelessWidget {
     var groups = Provider.of<List<RecipeCollectionEntity>>(context);
     var recipeManager = sl.get<RecipeManager>();
 
-    if (groups == null || groups.isEmpty) {
-      return Container();
-    }
-
     return Column(
       children: [
         DrawerHeader(
@@ -50,7 +46,7 @@ class RecipeGroupsTiles extends StatelessWidget {
         Expanded(
           child: ListView.builder(
             padding: EdgeInsets.zero,
-            itemCount: groups.length,
+            itemCount: groups == null ? 0 : groups.length,
             itemBuilder: (context, index) {
               var item = groups[index];
               var isActive = recipeManager.currentCollection == item.id;

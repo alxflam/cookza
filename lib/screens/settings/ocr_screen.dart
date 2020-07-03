@@ -16,6 +16,7 @@ class _OCRTestScreenState extends State<OCRTestScreen> {
   String _text;
 
   Future getImage() async {
+    // TODO: replace deprecated pickImage
     var image = await ImagePicker.pickImage(source: ImageSource.gallery);
 
     setState(() {

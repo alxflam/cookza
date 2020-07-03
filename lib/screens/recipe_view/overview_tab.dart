@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cookly/constants.dart';
 import 'package:cookly/services/image_manager.dart';
 import 'package:cookly/services/service_locator.dart';

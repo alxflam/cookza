@@ -1,4 +1,3 @@
-import 'package:barcode_scan/barcode_scan.dart';
 import 'package:cookly/constants.dart';
 import 'package:cookly/localization/keys.dart';
 import 'package:cookly/model/firebase/general/firebase_handshake.dart';
@@ -23,10 +22,10 @@ class WebLoginOnAppScreen extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.add),
             onPressed: () async {
-              String content = await sl.get<QRScanner>().scanQRCode();
+              var user = await sl.get<QRScanner>().scanUserQRCode();
 
-              if (content != null && content.isNotEmpty) {
-                sl.get<FirebaseProvider>().enableWebLoginFor(content);
+              if (user != null) {
+                sl.get<FirebaseProvider>().enableWebLoginFor(user.id);
               }
             },
           ),
@@ -73,9 +72,8 @@ class LogIns extends StatelessWidget {
         children: [
           Card(
             margin: EdgeInsets.all(0),
-            child: Flexible(
+            child: Expanded(
               child: ListView.builder(
-                shrinkWrap: true,
                 itemCount: handshakes.length,
                 itemBuilder: (context, index) {
                   var item = handshakes[index];

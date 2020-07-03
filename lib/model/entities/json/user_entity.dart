@@ -1,17 +1,10 @@
-import 'package:cookly/model/firebase/general/firebase_user.dart';
+import 'package:cookly/model/entities/abstract/user_entity.dart';
+import 'package:cookly/model/json/user.dart';
 
-enum USER_TYPE { USER, WEB_SESSION }
+class UserEntityJson implements UserEntity {
+  JsonUser _user;
 
-abstract class UserEntity {
-  String get id;
-  String get name;
-  USER_TYPE get type;
-}
-
-class UserEntityFirebase implements UserEntity {
-  FirebaseRecipeUser _user;
-
-  UserEntityFirebase.from(FirebaseRecipeUser user) {
+  UserEntityJson.from(JsonUser user) {
     this._user = user;
   }
 
@@ -22,5 +15,5 @@ class UserEntityFirebase implements UserEntity {
   String get name => this._user.name;
 
   @override
-  USER_TYPE get type => throw UnimplementedError();
+  USER_TYPE get type => this._user.type;
 }

@@ -11,6 +11,8 @@ abstract class SharedPreferencesProvider {
   int getMealPlanStandardServingsSize();
   void setMealPlanWeeks(int weeks);
   int getMealPlanWeeks();
+  String getUserName();
+  void setUserName(String value);
 }
 
 class SharedPreferencesProviderImpl implements SharedPreferencesProvider {
@@ -19,6 +21,7 @@ class SharedPreferencesProviderImpl implements SharedPreferencesProvider {
   static final String mealPlanServingsSizeKey = 'mealPlanServingsSize';
   static final String mealPlanWeeksKey = 'mealPlanWeeks';
   static final String uomVisibilityKeySuffix = '.vis';
+  static final String userName = 'userName';
 
   String getUomVisibilityKey(String uom) => '$uom$uomVisibilityKeySuffix';
 
@@ -70,5 +73,17 @@ class SharedPreferencesProviderImpl implements SharedPreferencesProvider {
   @override
   void setUnitOfMeasureVisibility(String uom, bool visibility) {
     _prefs.setBool(getUomVisibilityKey(uom), visibility);
+  }
+
+  @override
+  String getUserName() {
+    var result = _prefs.getString(userName);
+    return result != null ? result : '';
+  }
+
+  @override
+  void setUserName(String value) {
+    assert(value != null && value.isNotEmpty);
+    this._prefs.setString(userName, value);
   }
 }

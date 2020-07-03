@@ -22,7 +22,6 @@ class SavedImagesScreen extends StatelessWidget {
               itemCount: files.length,
               itemBuilder: (context, index) {
                 var name = files[index].path.split('/').last;
-                var id = name.split('.').first;
                 var recipes = [];
 
                 var recipeName = recipes == null || recipes.isEmpty

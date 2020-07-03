@@ -1,9 +1,15 @@
-import 'package:barcode_widget/barcode_widget.dart';
+import 'dart:convert';
+
 import 'package:cookly/components/padded_qr_code.dart';
+import 'package:cookly/constants.dart';
+import 'package:cookly/model/entities/abstract/user_entity.dart';
+import 'package:cookly/model/json/user.dart';
 import 'package:cookly/screens/home_screen.dart';
 import 'package:cookly/services/firebase_provider.dart';
 import 'package:cookly/services/service_locator.dart';
+import 'package:cookly/viewmodel/settings/theme_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class WebLoginScreen extends StatelessWidget {
   static final String id = 'webLogin';
@@ -29,45 +35,26 @@ class WebLoginScreen extends StatelessWidget {
       ),
       builder: (context, AsyncSnapshot<String> snapshot) {
         if (snapshot.hasData) {
-          return PaddedQRCode(snapshot.data, 400, 400);
+          var json = JsonUser(
+                  id: snapshot.data,
+                  name: 'Cookly Web',
+                  type: USER_TYPE.WEB_SESSION)
+              .toJson();
+
+          var data = jsonEncode(json);
+
+          return PaddedQRCode(data, 400, 400);
         }
         return CircularProgressIndicator();
       },
     );
   }
 
-  _barcodeInfo(BuildContext context) {
-    return Center(
-      child: ConstrainedBox(
-        constraints: BoxConstraints(maxWidth: 400),
-        child: Card(
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Text.rich(
-              TextSpan(
-                children: [
-                  TextSpan(
-                    text: 'Scan the barcode with the app\n',
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  TextSpan(
-                    text: 'See help for more info',
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
   Widget _getSingleColumnContent(BuildContext context) {
     return ListView(
       children: [
+        _barcodeExplanation(context),
         _barcode(context),
-        _barcodeInfo(context),
       ],
     );
   }
@@ -79,55 +66,70 @@ class WebLoginScreen extends StatelessWidget {
       children: [
         Row(
           children: [
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.all(20),
-                child: Card(
-                  child: Padding(
-                    padding: EdgeInsets.all(20),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          '1. Open cookly on your mobile device',
-                          textAlign: TextAlign.left,
-                        ),
-                        Text('2. Open the drawer and select web'),
-                        Text('3. Scan the QR Code'),
-                        RaisedButton(
-                          child: Row(
-                            children: [
-                              Icon(Icons.warning),
-                              SizedBox(
-                                width: 20,
-                              ),
-                              Text('Continue without device sync'),
-                            ],
-                          ),
-                          color: Colors.orange,
-                          onPressed: () {
-                            Navigator.pushReplacementNamed(
-                                context, HomeScreen.id);
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            _barcodeExplanation(context),
             Expanded(
               child: ListView(
                 shrinkWrap: true,
                 children: <Widget>[
                   _barcode(context),
-                  _barcodeInfo(context),
                 ],
               ),
             ),
           ],
         ),
       ],
+    );
+  }
+
+  _barcodeExplanation(BuildContext context) {
+    var tileColor = Provider.of<ThemeModel>(context).tileAccentColor;
+
+    return Expanded(
+      child: Padding(
+        padding: EdgeInsets.all(20),
+        child: Padding(
+          padding: EdgeInsets.all(20),
+          child: Column(
+            // mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Container(
+                height: 210,
+                width: 210,
+                child: Hero(
+                  tag: 'appIcon',
+                  child: CircleAvatar(
+                    backgroundColor: tileColor,
+                    child: Icon(
+                      kAppIconData,
+                      size: 100,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '1. Open cookly on your mobile device',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                  ),
+                  Text(
+                    '2. Open the drawer and select web',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                  ),
+                  Text(
+                    '3. Scan the QR Code',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                  ),
+                ],
+              )
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

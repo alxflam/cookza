@@ -1,8 +1,6 @@
 import 'package:cookly/constants.dart';
-import 'package:cookly/model/entities/abstract/ingredient_entity.dart';
 import 'package:cookly/model/entities/abstract/recipe_entity.dart';
 import 'package:cookly/model/json/ingredient.dart';
-import 'package:cookly/model/json/recipe.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'firebase_ingredient.g.dart';

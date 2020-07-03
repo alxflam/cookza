@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cookly/constants.dart';
-import 'package:cookly/model/firebase/general/firebase_user.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'firebase_recipe_collection.g.dart';
