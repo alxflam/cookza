@@ -69,7 +69,7 @@ class FirebaseProvider {
           FirebaseMealPlanCollection(
             name: name,
             creationTimestamp: Timestamp.now(),
-            users: _getCreationUsersMap(),
+            users: await _getCreationUsersMap(),
           ).toJson(),
         );
     var model = await document.get();
@@ -291,10 +291,7 @@ class FirebaseProvider {
 
   /// log off from all web client sessions
   Future<void> logOffAllWebClient() async {
-    var handshakeSnapshots = await _firestore
-        .collection(HANDSHAKES)
-        .where('owner', isEqualTo: userUid)
-        .getDocuments();
+    QuerySnapshot handshakeSnapshots = await _getAllExistingWebHandshakes();
 
     var recipeGroupSnapshot = await _firestore
         .collection(RECIPE_GROUPS)
@@ -332,13 +329,21 @@ class FirebaseProvider {
     });
   }
 
+  Future<QuerySnapshot> _getAllExistingWebHandshakes() async {
+    var handshakeSnapshots = await _firestore
+        .collection(HANDSHAKES)
+        .where('owner', isEqualTo: userUid)
+        .getDocuments();
+    return handshakeSnapshots;
+  }
+
   /// create a new recipe collection
   Future<RecipeCollectionEntity> createRecipeCollection(String name) async {
     var document = await _firestore.collection(RECIPE_GROUPS).add(
           FirebaseRecipeCollection(
             name: name,
             creationTimestamp: Timestamp.now(),
-            users: _getCreationUsersMap(),
+            users: await _getCreationUsersMap(),
           ).toJson(),
         );
     var model = await document.get();
@@ -683,10 +688,25 @@ class FirebaseProvider {
     sl.get<NavigatorService>().navigateTo(WebLandingPage.id);
   }
 
-  Map<String, String> _getCreationUsersMap() {
-    if (this.userUid == this._ownerUserID) {
-      return {userUid: 'owner'};
+  Future<Map<String, String>> _getCreationUsersMap() async {
+    Map<String, String> result = {};
+
+    if (kIsWeb) {
+      var handshakes = await _getAllExistingWebHandshakes();
+
+      for (var item in handshakes.documents) {
+        var model = FirebaseHandshake.fromJson(item.data, item.documentID);
+        result.putIfAbsent(model.requestor, () => 'Web Session');
+      }
     }
-    return {_ownerUserID: 'owner', this.userUid: 'Web Session'};
+
+    if (this.userUid == this._ownerUserID) {
+      result.putIfAbsent(userUid, () => 'owner');
+    } else {
+      result.putIfAbsent(_ownerUserID, () => 'owner');
+      result.putIfAbsent(userUid, () => 'Web Session');
+    }
+
+    return result;
   }
 }
