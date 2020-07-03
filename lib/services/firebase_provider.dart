@@ -102,6 +102,14 @@ class FirebaseProvider {
 
   /// initialize firebase connection by ensuring the user is logged in
   Future<FirebaseProvider> init() async {
+    if (kIsWeb) {
+      // don't reuse cached sessions on web
+      var user = await _auth.currentUser();
+      if (user != null) {
+        await _auth.signOut();
+      }
+    }
+
     var user = await _auth.currentUser();
     _currentUser = user;
     if (user == null) {
@@ -685,7 +693,7 @@ class FirebaseProvider {
     this._webSessionHandshake = null;
     await this._auth.signOut();
 
-    sl.get<NavigatorService>().navigateTo(WebLandingPage.id);
+    sl.get<NavigatorService>().navigateToNewInitialRoute(WebLandingPage.id);
   }
 
   Future<Map<String, String>> _getCreationUsersMap() async {

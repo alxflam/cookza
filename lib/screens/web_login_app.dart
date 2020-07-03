@@ -72,8 +72,9 @@ class LogIns extends StatelessWidget {
         children: [
           Card(
             margin: EdgeInsets.all(0),
-            child: Expanded(
+            child: Flexible(
               child: ListView.builder(
+                shrinkWrap: true,
                 itemCount: handshakes.length,
                 itemBuilder: (context, index) {
                   var item = handshakes[index];
