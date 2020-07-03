@@ -12,6 +12,7 @@ import 'package:cookly/services/local_storage.dart';
 import 'package:cookly/services/meal_plan_manager.dart';
 import 'package:cookly/services/mobile/qr_scanner.dart';
 import 'package:cookly/services/mobile/receive_intent_handler_app.dart';
+import 'package:cookly/services/navigator_service.dart';
 import 'package:cookly/services/pdf_generator.dart';
 import 'package:cookly/services/recipe_manager.dart';
 import 'package:cookly/services/share_receive_handler.dart';
@@ -55,6 +56,7 @@ void setupServiceLocator() {
   sl.registerSingleton<QRScanner>(QRScanner());
   sl.registerSingleton<ImageManager>(ImageManagerFirebase());
   sl.registerSingleton<MealPlanManager>(MealPlanManagerFirebase());
+  sl.registerSingleton<NavigatorService>(NavigatorService());
 
   sl.registerSingletonAsync<SharedPreferencesProvider>(
       () async => SharedPreferencesProviderImpl().init());

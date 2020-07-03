@@ -3,6 +3,7 @@ import 'package:cookly/screens/collections/share_account_screen.dart';
 import 'package:cookly/screens/meal_plan/meal_plan_group_screen.dart';
 import 'package:cookly/screens/settings/about_screen.dart';
 import 'package:cookly/screens/web/web_landing_screen.dart';
+import 'package:cookly/services/navigator_service.dart';
 import 'package:cookly/viewmodel/settings/theme_model.dart';
 import 'package:cookly/screens/groups/recipe_group.dart';
 import 'package:cookly/screens/leftovers_screen.dart';
@@ -86,6 +87,7 @@ class CooklyMaterialApp extends StatelessWidget {
       locale: localizationDelegate.currentLocale,
       debugShowCheckedModeBanner: false,
       theme: Provider.of<ThemeModel>(context).current,
+      navigatorKey: sl.get<NavigatorService>().navigatorKey,
       initialRoute: kIsWeb ? WebLandingPage.id : HomeScreen.id,
       routes: {
         HomeScreen.id: (context) => HomeScreen(),

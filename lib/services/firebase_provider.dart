@@ -19,6 +19,7 @@ import 'package:cookly/model/firebase/recipe/firebase_instruction.dart';
 import 'package:cookly/model/firebase/recipe/firebase_recipe.dart';
 import 'package:cookly/screens/web/web_landing_screen.dart';
 import 'package:cookly/services/abstract/platform_info.dart';
+import 'package:cookly/services/navigator_service.dart';
 import 'package:cookly/services/service_locator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
@@ -678,8 +679,7 @@ class FirebaseProvider {
     this._currentUser = null;
     this._webSessionHandshake = null;
     await this._auth.signOut();
-    
-    // TODO: nav to does not work as context has by this time already been deactivated
-    // Navigator.pushReplacementNamed(context, WebLandingPage.id);
+
+    sl.get<NavigatorService>().navigateTo(WebLandingPage.id);
   }
 }
