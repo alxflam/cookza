@@ -69,7 +69,7 @@ class FirebaseProvider {
           FirebaseMealPlanCollection(
             name: name,
             creationTimestamp: Timestamp.now(),
-            users: {this.userUid: 'owner'},
+            users: _getCreationUsersMap(),
           ).toJson(),
         );
     var model = await document.get();
@@ -338,7 +338,7 @@ class FirebaseProvider {
           FirebaseRecipeCollection(
             name: name,
             creationTimestamp: Timestamp.now(),
-            users: {userUid: 'owner'},
+            users: _getCreationUsersMap(),
           ).toJson(),
         );
     var model = await document.get();
@@ -681,5 +681,12 @@ class FirebaseProvider {
     await this._auth.signOut();
 
     sl.get<NavigatorService>().navigateTo(WebLandingPage.id);
+  }
+
+  Map<String, String> _getCreationUsersMap() {
+    if (this.userUid == this._ownerUserID) {
+      return {userUid: 'owner'};
+    }
+    return {_ownerUserID: 'owner', this.userUid: 'Web Session'};
   }
 }
