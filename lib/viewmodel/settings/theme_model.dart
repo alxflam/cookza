@@ -14,7 +14,7 @@ class ThemeModelData {
 }
 
 class ThemeModel with ChangeNotifier {
-  ThemeData _currentTheme;
+  CustomTheme _currentTheme;
 
   ThemeModel() {
     String theme =
@@ -22,7 +22,7 @@ class ThemeModel with ChangeNotifier {
     if (theme != null && kAllThemes.containsKey(theme)) {
       _currentTheme = kAllThemes[theme];
     } else {
-      _currentTheme = kDarkTheme;
+      _currentTheme = DarkTheme.create();
     }
   }
 
@@ -36,13 +36,10 @@ class ThemeModel with ChangeNotifier {
         .toList();
   }
 
-  ThemeData get current => _currentTheme;
+  ThemeData get current => _currentTheme.themeData;
 
   Color get tileAccentColor {
-//    if (_currentTheme == kDarkTheme) {
-    return Color(0xFF021B2E);
-    //  }
-    // return Colors.blue.shade300;
+    return _currentTheme.appIconColor;
   }
 
   String getCurrentThemeKey() {
