@@ -6,6 +6,7 @@ import 'package:cookly/screens/recipe_modify/new_recipe_screen.dart';
 import 'package:cookly/screens/settings/settings_screen.dart';
 import 'package:cookly/screens/web_login_app.dart';
 import 'package:cookly/viewmodel/recipe_edit/recipe_edit_model.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -68,12 +69,7 @@ class MainAppDrawer extends StatelessWidget {
             onTap: () => Navigator.pushNamed(context, NewRecipeScreen.id,
                 arguments: RecipeEditModel.create()),
           ),
-          ListTile(
-            title:
-                Text('${translate(Keys.App_Title)} ${translate(Keys.Ui_Web)}'),
-            leading: FaIcon(kWebAppData),
-            onTap: () => Navigator.pushNamed(context, WebLoginOnAppScreen.id),
-          ),
+          _getWebAppListTile(context),
           ListTile(
             title: Text(translate(Keys.Ui_Shareaccount)),
             leading: FaIcon(FontAwesomeIcons.handshake),
@@ -86,6 +82,21 @@ class MainAppDrawer extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+ ListTile _getWebAppListTile(BuildContext context) {
+    if (kIsWeb) {
+       return ListTile(
+      title: Text('${translate(Keys.App_Title)} ${translate(Keys.Ui_Web)}'),
+      leading: FaIcon(kWebAppData),
+      onTap: () => Navigator.pushNamed(context, WebLoginOnAppScreen.id),
+    );
+    }
+    return ListTile(
+      title: Text('${translate(Keys.App_Title)} ${translate(Keys.Ui_Web)}'),
+      leading: FaIcon(kWebAppData),
+      onTap: () => Navigator.pushNamed(context, WebLoginOnAppScreen.id),
     );
   }
 }

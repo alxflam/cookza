@@ -70,33 +70,32 @@ class LogIns extends StatelessWidget {
       padding: EdgeInsets.only(top: 20),
       child: Column(
         children: [
-          Card(
-            margin: EdgeInsets.all(0),
-            child: Flexible(
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: handshakes.length,
-                itemBuilder: (context, index) {
-                  var item = handshakes[index];
-                  var date =
-                      kDateFormatter.format(item.creationTimestamp.toDate());
-                  return ListTile(
-                    leading:
-                        FaIcon(platformInfo.getOSIcon(item.operatingSystem)),
+          Builder(
+            builder: (context) {
+              var col = Column(
+                children: [],
+              );
+              for (var hs in handshakes) {
+                var date = kDateFormatter.format(hs.creationTimestamp.toDate());
+
+                col.children.add(Card(
+                  child: ListTile(
+                    leading: FaIcon(platformInfo.getOSIcon(hs.operatingSystem)),
                     title: Text('$date'),
-                    subtitle: Text(item.browser),
+                    subtitle: Text(hs.browser),
                     trailing: IconButton(
                       icon: Icon(Icons.delete),
                       onPressed: () {
                         sl
                             .get<FirebaseProvider>()
-                            .logOffFromWebClient(item.requestor);
+                            .logOffFromWebClient(hs.requestor);
                       },
                     ),
-                  );
-                },
-              ),
-            ),
+                  ),
+                ));
+              }
+              return col;
+            },
           ),
           RaisedButton(
             onPressed: () {

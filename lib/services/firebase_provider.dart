@@ -52,14 +52,25 @@ class FirebaseProvider {
   String get currentRecipeGroup => _currentRecipeGroup;
 
   Stream<List<MealPlanCollectionEntity>> get mealPlanGroups {
+    return _mealPlanGroupsQuery().snapshots().map((e) => e.documents
+        .map((e) => MealPlanCollectionEntityFirebase.of(
+            FirebaseMealPlanCollection.fromJson(e.data, e.documentID)))
+        .toList());
+  }
+
+  Query _mealPlanGroupsQuery() {
     return _firestore
         .collection(MEAL_PLAN_GROUPS)
-        .where('users.$userUid', isGreaterThan: '')
-        .snapshots()
-        .map((e) => e.documents
-            .map((e) => MealPlanCollectionEntityFirebase.of(
-                FirebaseMealPlanCollection.fromJson(e.data, e.documentID)))
-            .toList());
+        .where('users.$userUid', isGreaterThan: '');
+  }
+
+  Future<List<MealPlanCollectionEntity>> get mealPlanGroupsAsList async {
+    var docs = await _mealPlanGroupsQuery().getDocuments();
+
+    return docs.documents
+        .map((e) => MealPlanCollectionEntityFirebase.of(
+            FirebaseMealPlanCollection.fromJson(e.data, e.documentID)))
+        .toList();
   }
 
   /// create a new recipe collection
@@ -716,5 +727,12 @@ class FirebaseProvider {
     }
 
     return result;
+  }
+
+  Future<MealPlanEntity> getMealPlanByID(String id) async {
+    // TODO: change query to where if ever doc id of meal plan is different from meal plan group
+    var doc = await _firestore.collection(MEAL_PLANS).document(id).get();
+    var parsedDoc = FirebaseMealPlanDocument.fromJson(doc.data, doc.documentID);
+    return MealPlanEntityFirebase.of(parsedDoc);
   }
 }

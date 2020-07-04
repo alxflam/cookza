@@ -1,7 +1,11 @@
 import 'package:cookly/constants.dart';
+import 'package:cookly/model/entities/abstract/meal_plan_collection_entity.dart';
 import 'package:cookly/model/json/ingredient_note.dart';
 import 'package:cookly/model/json/shopping_list.dart';
+import 'package:cookly/services/ingredients_calculator.dart';
+import 'package:cookly/services/meal_plan_manager.dart';
 import 'package:cookly/services/service_locator.dart';
+import 'package:cookly/services/shared_preferences_provider.dart';
 import 'package:cookly/services/unit_of_measure.dart';
 import 'package:cookly/viewmodel/meal_plan/recipe_meal_plan_model.dart';
 import 'package:flutter/material.dart';
@@ -24,48 +28,74 @@ class ShoppingListModel extends ChangeNotifier {
   DateTime _dateFrom;
   DateTime _dateEnd;
 
+  static int _shoppingListDays =
+      sl.get<SharedPreferencesProvider>().getMealPlanWeeks() * 7;
+  DateTime _lastDate;
+  DateTime _firstDate;
+
   List<IngredientNote> _requiredIngredients = [];
   List<IngredientNote> _availableIngredients = [];
   Map<String, int> _recipeReferences = {};
   List<ShoppingListItemModel> _items = [];
 
-  ShoppingListModel(this._dateFrom, this._dateEnd, this._recipeReferences);
+  MealPlanCollectionEntity _collection;
 
-  List<ShoppingListItemModel> getItems(BuildContext context) {
+  ShoppingListModel.from(
+      this._dateFrom, this._dateEnd, this._collection, this._recipeReferences) {
+    _firstDate = DateTime.now();
+    _lastDate = _firstDate.add(Duration(days: _shoppingListDays));
+    // TODO: null values due to notes - handle them earlier?
+    _recipeReferences.removeWhere((key, value) => key == null || value == null);
+  }
+
+  ShoppingListModel.empty()
+      : this.from(DateTime.now(),
+            DateTime.now().add(Duration(days: _shoppingListDays)), null, {});
+
+  Future<List<ShoppingListItemModel>> getItems() async {
     // lazy initialize on first get call
-    if (_items.isEmpty && _recipeReferences.isNotEmpty) {
-      var locale = Localizations.localeOf(context);
+    if (_items.isNotEmpty && _recipeReferences.isNotEmpty) {
+      return this._items;
+    }
 
-      // TODO: pass the viewmodel directly as a constructor argument...
-      MealPlanViewModel mealPlan = MealPlanViewModel.of(null);
+    // TODO: why does it break up here??
+    var mealPlanModel = await sl
+        .get<MealPlanManager>()
+        .getMealPlanByCollectionID(this._collection.id);
+    print('model received');
+    MealPlanViewModel mealPlanViewModel = MealPlanViewModel.of(mealPlanModel);
+    print('view model created');
 
-      // collect all recipes planned for the given duration
-      for (var item in mealPlan.entries) {
-        if (item.recipes.isNotEmpty &&
-            item.date.isBefore(this._dateEnd.add(Duration(days: 1))) &&
-            item.date.isAfter(this._dateFrom.subtract(Duration(days: 1)))) {
-          for (var recipe in item.recipes) {
+    // collect all recipes planned for the given duration
+    for (var item in mealPlanViewModel.entries) {
+      print('check item $item whether its in the date range');
+      if (item.recipes.isNotEmpty &&
+          item.date.isBefore(this._dateEnd.add(Duration(days: 1))) &&
+          item.date.isAfter(this._dateFrom.subtract(Duration(days: 1)))) {
+        for (var recipe in item.recipes) {
+          if (!recipe.isNote) {
             _recipeReferences.update(recipe.id, (value) => value,
                 ifAbsent: () => recipe.servings);
           }
         }
       }
+    }
 
-      // next create a set of the required ingredients
-      // TODO: next thing to fix after firestore migration...
-      // var ingredients =
-      //     sl.get<IngredientsCalculator>().getIngredients(_recipeReferences);
-      var ingredients = [];
-      // at last create the view model representation of the list of ingredients
-      var uomProvider = sl.get<UnitOfMeasureProvider>();
-      for (var item in ingredients) {
-        var itemModel = ShoppingListItemModel(
-            uomProvider.getUnitOfMeasureById(item.unitOfMeasure),
-            item.amount,
-            item.ingredient.name,
-            false);
-        _items.add(itemModel);
-      }
+    // next create a set of the required ingredients
+    // TODO: next thing to fix after firestore migration...
+    print('get ingredients');
+    var ingredients =
+        await sl.get<IngredientsCalculator>().getIngredients(_recipeReferences);
+    print('ingredients received ${ingredients.length}');
+    // at last create the view model representation of the list of ingredients
+    var uomProvider = sl.get<UnitOfMeasureProvider>();
+    for (var item in ingredients) {
+      var itemModel = ShoppingListItemModel(
+          uomProvider.getUnitOfMeasureById(item.unitOfMeasure),
+          item.amount,
+          item.ingredient.name,
+          false);
+      _items.add(itemModel);
     }
 
     return _items;
@@ -100,23 +130,37 @@ class ShoppingListModel extends ChangeNotifier {
   DateTime get dateEnd => _dateEnd;
 
   void decrementDateFrom() {
-    this._dateFrom = this._dateFrom.subtract(Duration(days: 1));
-    notifyListeners();
+    if (this._dateFrom.isAfter(DateTime.now())) {
+      this._dateFrom = this._dateFrom.subtract(Duration(days: 1));
+      notifyListeners();
+    }
   }
 
   void incrementDateFrom() {
-    this._dateFrom = this._dateFrom.add(Duration(days: 1));
-    notifyListeners();
+    if (this._dateFrom.add(Duration(days: 1)).isBefore(_dateEnd)) {
+      this._dateFrom = this._dateFrom.add(Duration(days: 1));
+      notifyListeners();
+    }
   }
 
   void incrementDateEnd() {
-    this._dateEnd = this._dateEnd.add(Duration(days: 1));
-    notifyListeners();
+    if (this._dateEnd.add(Duration(days: 1)).isBefore(_lastDate)) {
+      this._dateEnd = this._dateEnd.add(Duration(days: 1));
+      notifyListeners();
+    }
   }
 
   void decrementDateEnd() {
-    this._dateEnd = this._dateEnd.subtract(Duration(days: 1));
-    notifyListeners();
+    if (this._dateEnd.subtract(Duration(days: 1)).isAfter(this._dateFrom)) {
+      this._dateEnd = this._dateEnd.subtract(Duration(days: 1));
+      notifyListeners();
+    }
+  }
+
+  MealPlanCollectionEntity get collection => this._collection;
+
+  set collection(MealPlanCollectionEntity value) {
+    this._collection = value;
   }
 
   String toShareString() {

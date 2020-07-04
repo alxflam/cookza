@@ -25,6 +25,8 @@ class MealPlanRecipeModel with ChangeNotifier {
     this._entity = entity;
   }
 
+  bool get isNote => _entity.id == null;
+
   String get name => _entity.name;
   String get id => _entity.id;
   int get servings => _entity.servings;
@@ -39,6 +41,9 @@ class MealPlanRecipeModel with ChangeNotifier {
 class MealPlanViewModel extends ChangeNotifier {
   RecipeEntity _recipeForAddition;
   MutableMealPlan _mealPlan;
+
+  int _standardServings =
+      sl.get<SharedPreferencesProvider>().getMealPlanStandardServingsSize();
 
   MealPlanViewModel.of(MealPlanEntity plan) {
     // first retrieve how many weeks should be shown
@@ -72,18 +77,16 @@ class MealPlanViewModel extends ChangeNotifier {
   void addRecipe(int index, String id) async {
     var recipe = await sl.get<RecipeManager>().getRecipeById([id]);
     var name = recipe != null ? recipe.first.name : 'unknown recipe';
-    var servings =
-        sl.get<SharedPreferencesProvider>().getMealPlanStandardServingsSize();
 
-    _mealPlan.items[index]
-        .addRecipe(MutableMealPlanRecipeEntity.fromValues(id, name, servings));
+    _mealPlan.items[index].addRecipe(
+        MutableMealPlanRecipeEntity.fromValues(id, name, _standardServings));
     _save();
     notifyListeners();
   }
 
   void addRecipeFromEntity(int index, RecipeEntity entity) {
     _mealPlan.items[index].addRecipe(MutableMealPlanRecipeEntity.fromValues(
-        entity.id, entity.name, entity.servings));
+        entity.id, entity.name, _standardServings));
     _save();
     notifyListeners();
   }

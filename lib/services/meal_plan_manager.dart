@@ -12,6 +12,8 @@ abstract class MealPlanManager {
   Future<void> renameCollection(String name, MealPlanCollectionEntity entity);
   Future<MealPlanCollectionEntity> getCollectionByID(String id);
 
+  Future<List<MealPlanCollectionEntity>> get collections;
+
   Stream<List<MealPlanCollectionEntity>> get collectionsAsStream;
   Future<void> saveMealPlan(MealPlanEntity entity);
   Future<void> addUserToCollection(
@@ -19,6 +21,8 @@ abstract class MealPlanManager {
   Future<void> deleteCollection(MealPlanCollectionEntity entity);
 
   Future<void> leaveGroup(MealPlanCollectionEntity entity);
+
+  Future<MealPlanEntity> getMealPlanByCollectionID(String id);
 }
 
 class MealPlanManagerFirebase implements MealPlanManager {
@@ -86,5 +90,15 @@ class MealPlanManagerFirebase implements MealPlanManager {
   @override
   Future<MealPlanCollectionEntity> getCollectionByID(String id) {
     return sl.get<FirebaseProvider>().getMealPlanGroupByID(id);
+  }
+
+  @override
+  Future<List<MealPlanCollectionEntity>> get collections {
+    return sl.get<FirebaseProvider>().mealPlanGroupsAsList;
+  }
+
+  @override
+  Future<MealPlanEntity> getMealPlanByCollectionID(String id) {
+    return sl.get<FirebaseProvider>().getMealPlanByID(id);
   }
 }

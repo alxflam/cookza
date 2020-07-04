@@ -1,4 +1,5 @@
 import 'package:cookly/localization/keys.dart';
+import 'package:cookly/model/entities/abstract/meal_plan_collection_entity.dart';
 import 'package:cookly/screens/shopping_list/shopping_list_detail_screen.dart';
 import 'package:cookly/services/meal_plan_manager.dart';
 import 'package:cookly/services/service_locator.dart';
@@ -15,6 +16,8 @@ class ShoppingListOverviewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: create shopping list view model
+    // shopping list per: meal plan group and date range - any user of the meal group may access the shopping list
+    // does not make sense to have different access rules
     ShoppingListOverviewModel _model = ShoppingListOverviewModel.of([]);
 
     return Scaffold(
@@ -26,12 +29,7 @@ class ShoppingListOverviewScreen extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.add),
             onPressed: () async {
-              var entity = await sl.get<MealPlanManager>().mealPlan;
-              MealPlanViewModel _mealPlan = MealPlanViewModel.of(entity);
-              var firstDate = _mealPlan.entries.first.date;
-              var lastDate = _mealPlan.entries.last.date;
-
-              var _model = ShoppingListModel(firstDate, lastDate, {});
+              var _model = ShoppingListModel.empty();
 
               showDialog(
                 context: context,
@@ -45,6 +43,11 @@ class ShoppingListOverviewScreen extends StatelessWidget {
                             SingleChildScrollView(
                               child: Column(
                                 children: <Widget>[
+                                  Row(
+                                    children: [
+                                      _getMealPlanGroupDropDown(context, model),
+                                    ],
+                                  ),
                                   Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceEvenly,
@@ -95,16 +98,25 @@ class ShoppingListOverviewScreen extends StatelessWidget {
                                         child: RaisedButton(
                                           child: Icon(Icons.check),
                                           color: Colors.green,
-                                          onPressed: () {
+                                          onPressed: () async {
+                                            var entity = await sl
+                                                .get<MealPlanManager>()
+                                                .getMealPlanByCollectionID(
+                                                    model.collection.id);
+                                            MealPlanViewModel _mealPlan =
+                                                MealPlanViewModel.of(entity);
+
                                             var recipes =
                                                 _mealPlan.getRecipesForInterval(
                                                     model.dateFrom,
                                                     model.dateEnd);
 
-                                            var newModel = ShoppingListModel(
-                                                model.dateFrom,
-                                                model.dateEnd,
-                                                recipes);
+                                            var newModel =
+                                                ShoppingListModel.from(
+                                                    model.dateFrom,
+                                                    model.dateEnd,
+                                                    model.collection,
+                                                    recipes);
 
                                             Navigator.pushReplacementNamed(
                                                 context,
@@ -164,5 +176,47 @@ class ShoppingListOverviewScreen extends StatelessWidget {
         },
       );
     });
+  }
+
+// TODO: dropdown for the meal plan collection - if there is only one, then set it fixed
+// add possibility to manually add items
+// sync with changes from meal plan by only storing the recipes and their servings
+// and only store checked off ingredients, calculate everything else on the fly
+  Widget _getMealPlanGroupDropDown(
+      BuildContext context, ShoppingListModel model) {
+    return Expanded(
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 20),
+        child: FutureBuilder(
+          future: sl.get<MealPlanManager>().collections,
+          builder: (context, snapshot) {
+            if (snapshot.hasData && snapshot.data.isNotEmpty) {
+              var collections = snapshot.data as List<MealPlanCollectionEntity>;
+              List<DropdownMenuItem<MealPlanCollectionEntity>> items =
+                  collections
+                      .map((item) => DropdownMenuItem<MealPlanCollectionEntity>(
+                          child: Text(item.name), value: item))
+                      .toList();
+
+              model.collection = collections.first;
+
+              return DropdownButtonFormField<MealPlanCollectionEntity>(
+                value: collections.first,
+                items: items,
+                decoration: InputDecoration(
+                  isDense: true,
+                  labelText: '§Collection',
+                ),
+                onChanged: (MealPlanCollectionEntity value) {
+                  model.collection = value;
+                },
+              );
+            }
+
+            return Container();
+          },
+        ),
+      ),
+    );
   }
 }

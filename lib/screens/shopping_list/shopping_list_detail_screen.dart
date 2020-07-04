@@ -28,43 +28,53 @@ class ShoppingListDetailScreen extends StatelessWidget {
                     })
               ],
             ),
-            body: ListView.separated(
-              separatorBuilder: (BuildContext context, int index) => Divider(
-                height: 1,
-              ),
-              itemCount: model.getItems(context).length,
-              itemBuilder: (context, index) {
-                var _item = model.getItems(context)[index];
+            body: FutureBuilder(
+              future: model.getItems(),
+              builder: (context, snapshot) {
+                if (snapshot.data == null || snapshot.data.isEmpty) {
+                  return Container();
+                }
 
-                return ChangeNotifierProvider<ShoppingListItemModel>.value(
-                  value: _item,
-                  child: Consumer<ShoppingListItemModel>(
-                    builder: (context, itemModel, _) {
-                      return CheckboxListTile(
-                        value: itemModel.isNoLongerNeeded,
-                        controlAffinity: ListTileControlAffinity.leading,
-                        onChanged: (value) {
-                          itemModel.setNoLongerNeeded(value);
-                        },
-                        dense: true,
-                        activeColor: Colors.grey,
-                        title: Text(
-                          itemModel.getName(),
-                          style: TextStyle(
-                              decoration: itemModel.isNoLongerNeeded
-                                  ? TextDecoration.lineThrough
-                                  : TextDecoration.none),
-                        ),
-                        subtitle: Text(
-                          '${itemModel.getAmount()} ${itemModel.uom}',
-                          style: TextStyle(
-                              decoration: itemModel.isNoLongerNeeded
-                                  ? TextDecoration.lineThrough
-                                  : TextDecoration.none),
-                        ),
-                      );
-                    },
+                return ListView.separated(
+                  separatorBuilder: (BuildContext context, int index) =>
+                      Divider(
+                    height: 1,
                   ),
+                  itemCount: snapshot.data.length,
+                  itemBuilder: (context, index) {
+                    var _item = snapshot.data[index];
+
+                    return ChangeNotifierProvider<ShoppingListItemModel>.value(
+                      value: _item,
+                      child: Consumer<ShoppingListItemModel>(
+                        builder: (context, itemModel, _) {
+                          return CheckboxListTile(
+                            value: itemModel.isNoLongerNeeded,
+                            controlAffinity: ListTileControlAffinity.leading,
+                            onChanged: (value) {
+                              itemModel.setNoLongerNeeded(value);
+                            },
+                            dense: true,
+                            activeColor: Colors.grey,
+                            title: Text(
+                              itemModel.getName(),
+                              style: TextStyle(
+                                  decoration: itemModel.isNoLongerNeeded
+                                      ? TextDecoration.lineThrough
+                                      : TextDecoration.none),
+                            ),
+                            subtitle: Text(
+                              '${itemModel.getAmount()} ${itemModel.uom}',
+                              style: TextStyle(
+                                  decoration: itemModel.isNoLongerNeeded
+                                      ? TextDecoration.lineThrough
+                                      : TextDecoration.none),
+                            ),
+                          );
+                        },
+                      ),
+                    );
+                  },
                 );
               },
             ),
