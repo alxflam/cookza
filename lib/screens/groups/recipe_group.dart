@@ -117,8 +117,7 @@ class RecipeGroupScreen extends StatelessWidget {
                   builder: (context) {
                     if (model.entity.users.length < 2) {
                       return Center(
-                        child:
-                            Text('You\'re the only user of this collection.'),
+                        child: Text(translate(Keys.Ui_Singlemember)),
                       );
                     }
 
@@ -166,7 +165,7 @@ class RecipeGroupScreen extends StatelessWidget {
           // builder is needed to get a new context for the Provider
           builder: (context) {
             return SimpleDialog(
-              title: Text('Edit Collection'),
+              title: Text(translate(Keys.Ui_Editgroup)),
               children: [
                 SingleChildScrollView(
                   child: Column(
@@ -183,7 +182,7 @@ class RecipeGroupScreen extends StatelessWidget {
                                 maxLines: 1,
                                 autofocus: true,
                                 decoration: InputDecoration(
-                                    hintText: 'Collection name'),
+                                    hintText: translate(Keys.Ui_Groupname)),
                               ),
                             )
                           ],

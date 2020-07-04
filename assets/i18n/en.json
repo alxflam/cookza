@@ -68,14 +68,25 @@
         "addUser": "Add User",
         "leaveGroup": "Leave Group",
         "confirmLeave": "Do you really want to leave {0}?",
-        "shareAccount": "Share Account"
+        "shareAccount": "Share Account",
+        "noFileSelected": "No file was selected",
+        "fileNotFound": "The selected file does not exist",
+        "recipeGroup": "Recipe Group",
+        "createGroup": "Create Group",
+        "editGroup": "Edit Group",
+        "singleMember": "You're the only member of this group",
+        "groupName": "Group Name"
     },
     "settings": {
         "weekDurationDesc": "Set how many weeks are available for planning.",
         "oneWeek": "One Week",
         "twoWeeks": "Two Weeks",
         "stdServingsDesc": "The standard servings size is being used to determine the servings size for newly added meals. You can always adjust the servings size for any meal later.",
-        "stdServings": "Standard Servings Size"
+        "stdServings": "Standard Servings Size",
+        "changelog": "Changelog",
+        "getStarted": "Get Started",
+        "appDescription": "Cookly enables you to store, collect and share your favourite recipes in a data-privacy friendly manner",
+        "copyright": "© 2020 The Great Cookly Foundation"
     },
     "onboarding": {},
     "unitOfMeasure": {

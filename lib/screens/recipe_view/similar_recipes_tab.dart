@@ -22,7 +22,10 @@ class SimilarRecipesScreen extends StatelessWidget {
               return ListView.builder(
                   itemCount: snapshot.data.length,
                   itemBuilder: (context, index) {
-                    return RecipeListTile(item: snapshot.data[index]);
+                    return RecipeListTile(
+                      item: snapshot.data[index],
+                      replaceRoute: true,
+                    );
                   });
             } else {
               return Center(

@@ -18,13 +18,20 @@ saveModel(BuildContext context, RecipeEditModel model) async {
   try {
     var id = await model.save();
     if (model.isCreate) {
+      // create: navigate to recipe view in case save was successful
       var result = await sl.get<RecipeManager>().getRecipeById([id]);
       if (result.length == 1) {
         Navigator.pushReplacementNamed(context, RecipeScreen.id,
             arguments: result.first);
+      } else {
+        kErrorDialog(context, 'Could not find created recipe',
+            'Manually navigate to the recipe');
+        Navigator.pop(context);
       }
+    } else {
+      // update: just pop the screen off, user returns to recipe view
+      Navigator.pop(context);
     }
-    Navigator.pop(context);
   } catch (e) {
     kErrorDialog(context, 'Error occured while saving', e.toString());
   }

@@ -8,13 +8,20 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class RecipeListTile extends StatelessWidget {
   final RecipeEntity item;
-  RecipeListTile({this.item});
+  final bool replaceRoute;
+
+  RecipeListTile({this.item, this.replaceRoute = false});
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       onTap: () {
-        Navigator.pushNamed(context, RecipeScreen.id, arguments: item);
+        if (replaceRoute) {
+          Navigator.pushReplacementNamed(context, RecipeScreen.id,
+              arguments: item);
+        } else {
+          Navigator.pushNamed(context, RecipeScreen.id, arguments: item);
+        }
       },
       leading: Builder(
         builder: (context) {

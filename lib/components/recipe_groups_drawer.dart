@@ -4,7 +4,9 @@ import 'package:cookly/screens/recipe_list_screen.dart';
 import 'package:cookly/services/recipe_manager.dart';
 import 'package:cookly/services/service_locator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 import 'package:provider/provider.dart';
+import 'package:cookly/localization/keys.dart';
 
 class RecipeGroupsDrawer extends StatelessWidget {
   @override
@@ -31,9 +33,8 @@ class RecipeGroupsTiles extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              Text('Recipe Groups'),
               RaisedButton(
-                  child: Text('Create Group'),
+                  child: Text(translate(Keys.Ui_Creategroup)),
                   onPressed: () async {
                     this._createRecipeGroup(context);
                   })
@@ -83,7 +84,7 @@ class RecipeGroupsTiles extends StatelessWidget {
           // builder is needed to get a new context for the Provider
           builder: (context) {
             return SimpleDialog(
-              title: Text('Create Collection'),
+              title: Text(translate(Keys.Ui_Creategroup)),
               children: [
                 SingleChildScrollView(
                   child: Column(
@@ -100,7 +101,7 @@ class RecipeGroupsTiles extends StatelessWidget {
                                 maxLines: 1,
                                 autofocus: true,
                                 decoration: InputDecoration(
-                                    hintText: 'Collection name'),
+                                    hintText: translate(Keys.Ui_Groupname)),
                               ),
                             )
                           ],

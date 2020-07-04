@@ -9,6 +9,8 @@ import 'package:cookly/services/abstract/recipe_file_import.dart';
 import 'package:cookly/viewmodel/recipe_view/recipe_view_model.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_translate/flutter_translate.dart';
+import 'package:cookly/localization/keys.dart';
 
 class RecipeFileImportImpl extends RecipeFileImport {
   @override
@@ -20,14 +22,14 @@ class RecipeFileImportImpl extends RecipeFileImport {
     );
     List<Recipe> result = [];
     if (file == null) {
-      Scaffold.of(context)
-          .showSnackBar(SnackBar(content: Text('No file was selected')));
+      Scaffold.of(context).showSnackBar(
+          SnackBar(content: Text(translate(Keys.Ui_Nofileselected))));
 
       return; // no file selected
     }
     if (!file.existsSync()) {
       Scaffold.of(context).showSnackBar(
-          SnackBar(content: Text('The selected file does not exist')));
+          SnackBar(content: Text(translate(Keys.Ui_Filenotfound))));
       return;
     }
 

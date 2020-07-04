@@ -140,7 +140,7 @@ Widget _getCollectionDropDown(
           items: items,
           decoration: InputDecoration(
             isDense: true,
-            labelText: '§Collection',
+            labelText: translate(Keys.Ui_Recipegroup),
           ),
           onChanged: (RecipeCollectionEntity value) {
             model.collection = value;

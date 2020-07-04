@@ -1,9 +1,11 @@
+import 'package:cookly/localization/keys.dart';
 import 'package:cookly/model/entities/abstract/meal_plan_collection_entity.dart';
 import 'package:cookly/screens/meal_plan/meal_plan_group_screen.dart';
 import 'package:cookly/screens/meal_plan/meal_plan_screen.dart';
 import 'package:cookly/services/meal_plan_manager.dart';
 import 'package:cookly/services/service_locator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 import 'package:provider/provider.dart';
 
 class MealPlanGroupsDrawer extends StatelessWidget {
@@ -31,9 +33,8 @@ class MealPlanGroupsTiles extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              Text('Meal Plan Groups'),
               RaisedButton(
-                  child: Text('Create Group'),
+                  child: Text(translate(Keys.Ui_Creategroup)),
                   onPressed: () async {
                     this._createMealPlanGroup(context);
                   })
@@ -82,7 +83,7 @@ class MealPlanGroupsTiles extends StatelessWidget {
           // builder is needed to get a new context for the Provider
           builder: (context) {
             return SimpleDialog(
-              title: Text('Create Collection'),
+              title: Text(translate(Keys.Ui_Creategroup)),
               children: [
                 SingleChildScrollView(
                   child: Column(
@@ -98,8 +99,8 @@ class MealPlanGroupsTiles extends StatelessWidget {
                                 controller: controller,
                                 maxLines: 1,
                                 autofocus: true,
-                                decoration:
-                                    InputDecoration(hintText: 'Group name'),
+                                decoration: InputDecoration(
+                                    hintText: translate(Keys.Ui_Groupname)),
                               ),
                             )
                           ],

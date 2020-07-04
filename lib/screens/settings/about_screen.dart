@@ -61,7 +61,7 @@ class AboutScreen extends StatelessWidget {
               );
             }),
             Text(
-              '© 2020 The Great Cookly Foundation',
+              translate(Keys.Settings_Copyright),
               style: TextStyle(fontStyle: FontStyle.italic),
             ),
             Padding(
@@ -71,8 +71,7 @@ class AboutScreen extends StatelessWidget {
                   children: <TextSpan>[
                     TextSpan(
                         style: subtitle,
-                        text:
-                            'Cookly enables you to store, collect and share your favourite recipes in a data-privacy friendly manner.'),
+                        text: translate(Keys.Settings_Appdescription)),
                   ],
                 ),
               ),
@@ -80,13 +79,13 @@ class AboutScreen extends StatelessWidget {
             AboutScreenDivider(),
             ListTile(
               leading: FaIcon(FontAwesomeIcons.map),
-              title: Text('§Show Onboarding Intro'),
+              title: Text(translate(Keys.Settings_Getstarted)),
               onTap: () => Navigator.pushNamed(context, OnBoardingScreen.id),
             ),
             AboutScreenDivider(),
             ListTile(
               leading: FaIcon(FontAwesomeIcons.diceD20),
-              title: Text('§Show Changelog'),
+              title: Text(translate(Keys.Settings_Changelog)),
               onTap: () => kNotImplementedDialog(context),
             ),
             AboutScreenDivider(),

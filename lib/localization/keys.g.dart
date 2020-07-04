@@ -104,6 +104,20 @@ class Keys {
 
   static const String Ui_Shareaccount = 'ui.shareAccount';
 
+  static const String Ui_Nofileselected = 'ui.noFileSelected';
+
+  static const String Ui_Filenotfound = 'ui.fileNotFound';
+
+  static const String Ui_Recipegroup = 'ui.recipeGroup';
+
+  static const String Ui_Creategroup = 'ui.createGroup';
+
+  static const String Ui_Editgroup = 'ui.editGroup';
+
+  static const String Ui_Singlemember = 'ui.singleMember';
+
+  static const String Ui_Groupname = 'ui.groupName';
+
   static const String Settings_Weekdurationdesc = 'settings.weekDurationDesc';
 
   static const String Settings_Oneweek = 'settings.oneWeek';
@@ -113,6 +127,14 @@ class Keys {
   static const String Settings_Stdservingsdesc = 'settings.stdServingsDesc';
 
   static const String Settings_Stdservings = 'settings.stdServings';
+
+  static const String Settings_Changelog = 'settings.changelog';
+
+  static const String Settings_Getstarted = 'settings.getStarted';
+
+  static const String Settings_Appdescription = 'settings.appDescription';
+
+  static const String Settings_Copyright = 'settings.copyright';
 
   static const String Unitofmeasure_Mmt = 'unitOfMeasure.MMT';
 
