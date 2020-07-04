@@ -1,21 +1,27 @@
-import 'dart:ui';
-
-import 'package:cookly/model/json/meal_plan.dart';
-import 'package:cookly/model/json/meal_plan_item.dart';
-import 'package:cookly/viewmodel/recipe_meal_plan_model.dart';
-import 'package:cookly/services/abstract/data_store.dart';
-import 'package:cookly/services/app_profile.dart';
+import 'package:cookly/model/entities/abstract/meal_plan_entity.dart';
+import 'package:cookly/model/entities/mutable/mutable_meal_plan.dart';
 import 'package:cookly/services/service_locator.dart';
 import 'package:cookly/services/shared_preferences_provider.dart';
 import 'package:cookly/services/util/week_calculation.dart';
-import 'package:flutter/rendering.dart';
+import 'package:cookly/viewmodel/meal_plan/recipe_meal_plan_model.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:mockito/mockito.dart';
 
-class DataStoreMock extends Mock implements DataStore {}
+class MealPlanEntityMock extends Mock implements MealPlanEntity {
+  var _items = [];
 
-class AppProfileMock extends Mock implements AppProfile {}
+  @override
+  String get id => 'id';
+
+  @override
+  String get groupID => 'id';
+
+  @override
+  List<MealPlanDateEntity> get items => this._items;
+
+  set items(List<MealPlanDateEntity> value) => this._items = value;
+}
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -23,15 +29,11 @@ void main() {
 
   sl.registerSingletonAsync<SharedPreferencesProvider>(
       () async => SharedPreferencesProviderImpl().init());
-  var dataStoreMock = DataStoreMock();
-  sl.registerSingleton<DataStore>(dataStoreMock);
-
-  when(dataStoreMock.appProfile).thenReturn(AppProfileMock());
 
   test(
     'Compute timeline if no persistent data is present',
     () async {
-      var model = MealPlanViewModel.of(Locale('en', 'EN'), MealPlan());
+      var model = MealPlanViewModel.of(MealPlanEntityMock());
 
       var today = DateTime.now();
       var offset = 0;
@@ -53,13 +55,13 @@ void main() {
     () async {
       var today = DateTime.now();
 
-      var model = MealPlanViewModel.of(
-          Locale('en', 'EN'),
-          MealPlan(items: [
-            MealPlanItem(
-                date: today.subtract(Duration(days: 1)),
-                recipeReferences: {"test": 2})
-          ]));
+      var mock = MealPlanEntityMock();
+      var item =
+          MutableMealPlanDateEntity.empty(today.subtract(Duration(days: 1)));
+      item.addRecipe(MutableMealPlanRecipeEntity.fromValues('', 'test', 2));
+      mock.items = [item];
+
+      var model = MealPlanViewModel.of(mock);
 
       var startDate = DateTime(today.year, today.month, today.day);
 
@@ -73,14 +75,12 @@ void main() {
       var today = DateTime.now();
       var endDate = today.add(Duration(days: 20));
 
-      var model = MealPlanViewModel.of(
-        Locale('en', 'EN'),
-        MealPlan(
-          items: [
-            MealPlanItem(date: endDate, recipeReferences: {"test": 2}),
-          ],
-        ),
-      );
+      var mock = MealPlanEntityMock();
+      var item = MutableMealPlanDateEntity.empty(endDate);
+      item.addRecipe(MutableMealPlanRecipeEntity.fromValues('', 'test', 2));
+      mock.items = [item];
+
+      var model = MealPlanViewModel.of(mock);
 
       expect(model.entries.last.date.isAtSameMomentAs(endDate), true);
     },
@@ -93,17 +93,16 @@ void main() {
       var firstPersistedDate = today.add(Duration(days: 3));
       var secondPersistedDate = today.add(Duration(days: 6));
 
-      var model = MealPlanViewModel.of(
-        Locale('en', 'EN'),
-        MealPlan(
-          items: [
-            MealPlanItem(
-                date: firstPersistedDate, recipeReferences: {"test": 2}),
-            MealPlanItem(
-                date: secondPersistedDate, recipeReferences: {"test": 2})
-          ],
-        ),
-      );
+      var mock = MealPlanEntityMock();
+      var item = MutableMealPlanDateEntity.empty(firstPersistedDate);
+      item.addRecipe(MutableMealPlanRecipeEntity.fromValues('', 'test', 2));
+      var secondItem = MutableMealPlanDateEntity.empty(secondPersistedDate);
+      secondItem
+          .addRecipe(MutableMealPlanRecipeEntity.fromValues('', 'test', 2));
+
+      mock.items = [item, secondItem];
+
+      var model = MealPlanViewModel.of(mock);
 
       expect(
           isSameDay(model.entries[2].date,
@@ -133,19 +132,17 @@ void main() {
     () async {
       var today = DateTime.now();
 
-      var model = MealPlanViewModel.of(
-        Locale('en', 'EN'),
-        MealPlan(
-          items: [
-            MealPlanItem(
-                date: today.add(Duration(days: 3)),
-                recipeReferences: {"test": 2}),
-            MealPlanItem(
-                date: today.add(Duration(days: 6)),
-                recipeReferences: {"test": 2})
-          ],
-        ),
-      );
+      var mock = MealPlanEntityMock();
+      var item = MutableMealPlanDateEntity.empty(today.add(Duration(days: 3)));
+      item.addRecipe(MutableMealPlanRecipeEntity.fromValues('', 'test', 2));
+      var secondItem =
+          MutableMealPlanDateEntity.empty(today.add(Duration(days: 6)));
+      secondItem
+          .addRecipe(MutableMealPlanRecipeEntity.fromValues('', 'test', 2));
+
+      mock.items = [item, secondItem];
+
+      var model = MealPlanViewModel.of(mock);
 
       expect(model.entries[3].recipes.length, 1);
       expect(model.entries[6].recipes.length, 1);

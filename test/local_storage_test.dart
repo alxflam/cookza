@@ -20,11 +20,6 @@ void main() {
         return directory.path;
       }
 
-      // create sample json profile file
-      final file =
-          File('$directory.path/${LocalStorageProvider.profileFileName}');
-      await file.writeAsString("");
-
       return null;
     });
   });
@@ -32,9 +27,7 @@ void main() {
   test('Deserializing Json Profile', () async {
     var cut = LocalStorageProvider();
 
-    bool exists = await cut.profileFileExists();
-    expect(exists, false);
-
-    expect(1, 1);
+    String path = await cut.getImageDirectory();
+    expect(path.endsWith('images'), true);
   });
 }

@@ -29,8 +29,10 @@ void main() {
 
       expect(result.name, 'Philadelphia-Hähnchen');
       expect(result.rating, 4);
-      expect(result.instructions.length, 9);
-      expect(result.ingredients.length, 9);
+      var ins = await result.instructions;
+      expect(ins.length, 9);
+      var ing = await result.ingredients;
+      expect(ing.length, 9);
     },
   );
 }
