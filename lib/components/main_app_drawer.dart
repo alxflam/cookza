@@ -5,6 +5,8 @@ import 'package:cookly/screens/recipe_list_screen.dart';
 import 'package:cookly/screens/recipe_modify/new_recipe_screen.dart';
 import 'package:cookly/screens/settings/settings_screen.dart';
 import 'package:cookly/screens/web_login_app.dart';
+import 'package:cookly/services/firebase_provider.dart';
+import 'package:cookly/services/service_locator.dart';
 import 'package:cookly/viewmodel/recipe_edit/recipe_edit_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -85,13 +87,15 @@ class MainAppDrawer extends StatelessWidget {
     );
   }
 
- ListTile _getWebAppListTile(BuildContext context) {
+  ListTile _getWebAppListTile(BuildContext context) {
     if (kIsWeb) {
-       return ListTile(
-      title: Text('${translate(Keys.App_Title)} ${translate(Keys.Ui_Web)}'),
-      leading: FaIcon(kWebAppData),
-      onTap: () => Navigator.pushNamed(context, WebLoginOnAppScreen.id),
-    );
+      return ListTile(
+          title: Text('${translate(Keys.Ui_Logout)}'),
+          leading: Icon(Icons.power_settings_new),
+          onTap: () async {
+            var util = sl.get<FirebaseProvider>();
+            await util.logOffFromWebClient(util.userUid);
+          });
     }
     return ListTile(
       title: Text('${translate(Keys.App_Title)} ${translate(Keys.Ui_Web)}'),

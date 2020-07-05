@@ -252,13 +252,12 @@ class FirebaseProvider {
   }
 
   /// log off from the given web client session
-  void logOffFromWebClient(String requestor) async {
+  Future<void> logOffFromWebClient(String requestor) async {
     // TODO: delete each doc where the owner is the requestor!
-
     var docs = await _firestore
         .collection(HANDSHAKES)
         .where('requestor', isEqualTo: requestor)
-        .where('owner', isEqualTo: userUid)
+        .where('owner', isEqualTo: _ownerUserID)
         .limit(1)
         .getDocuments();
 
@@ -293,19 +292,18 @@ class FirebaseProvider {
       transaction.delete(docs.documents.first.reference);
     });
 
-    _firestore
+    var handshakes = await _firestore
         .collection(HANDSHAKES)
         .where('requestor', isEqualTo: requestor)
         .where('owner', isEqualTo: userUid)
         .limit(1)
-        .getDocuments()
-        .then(
-          (value) => value.documents.forEach(
-            (element) {
-              element.reference.delete();
-            },
-          ),
-        );
+        .getDocuments();
+
+    handshakes.documents.forEach(
+      (element) {
+        element.reference.delete();
+      },
+    );
   }
 
   /// log off from all web client sessions

@@ -75,7 +75,8 @@
         "createGroup": "Create Group",
         "editGroup": "Edit Group",
         "singleMember": "You're the only member of this group",
-        "groupName": "Group Name"
+        "groupName": "Group Name",
+        "logout": "Logout"
     },
     "settings": {
         "weekDurationDesc": "Set how many weeks are available for planning.",

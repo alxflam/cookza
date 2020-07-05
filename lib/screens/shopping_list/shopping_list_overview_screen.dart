@@ -205,7 +205,7 @@ class ShoppingListOverviewScreen extends StatelessWidget {
                 items: items,
                 decoration: InputDecoration(
                   isDense: true,
-                  labelText: '§Collection',
+                  labelText: translate(Keys.Ui_Groupname),
                 ),
                 onChanged: (MealPlanCollectionEntity value) {
                   model.collection = value;

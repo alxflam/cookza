@@ -118,6 +118,8 @@ class Keys {
 
   static const String Ui_Groupname = 'ui.groupName';
 
+  static const String Ui_Logout = 'ui.logout';
+
   static const String Settings_Weekdurationdesc = 'settings.weekDurationDesc';
 
   static const String Settings_Oneweek = 'settings.oneWeek';
