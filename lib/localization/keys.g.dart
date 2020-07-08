@@ -21,6 +21,8 @@ class Keys {
 
   static const String Functions_Marketplace = 'functions.marketplace';
 
+  static const String Functions_Textrecognition = 'functions.textRecognition';
+
   static const String Recipe_Createrecipe = 'recipe.createRecipe';
 
   static const String Recipe_Editrecipe = 'recipe.editRecipe';

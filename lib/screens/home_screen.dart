@@ -82,6 +82,35 @@ class HomeScreen extends StatelessWidget {
                 ),
                 Expanded(
                   child: ReusableCard(
+                    onPress: () => Navigator.pushNamed(
+                        context, NewRecipeScreen.id,
+                        arguments: RecipeEditModel.create()),
+                    color: tileColor,
+                    cardChild: IconContent(
+                      icon: Icons.add_a_photo,
+                      label: translate(Keys.Functions_Textrecognition),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: ReusableCard(
+                    onPress: () =>
+                        Navigator.pushNamed(context, LeftoversScreen.id),
+                    color: tileColor,
+                    cardChild: IconContent(
+                      icon: kLeftoversIconData,
+                      label: translate(Keys.Functions_Leftovers),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: ReusableCard(
                     onPress: () =>
                         Navigator.pushNamed(context, RecipeListScreen.id),
                     color: tileColor,
@@ -116,23 +145,6 @@ class HomeScreen extends StatelessWidget {
                     cardChild: IconContent(
                       icon: kMealPlannerIconData,
                       label: translate(Keys.Functions_Mealplanner),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            child: Row(
-              children: <Widget>[
-                Expanded(
-                  child: ReusableCard(
-                    onPress: () =>
-                        Navigator.pushNamed(context, LeftoversScreen.id),
-                    color: tileColor,
-                    cardChild: IconContent(
-                      icon: kLeftoversIconData,
-                      label: translate(Keys.Functions_Leftovers),
                     ),
                   ),
                 ),

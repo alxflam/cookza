@@ -8,7 +8,8 @@
         "shoppingList": "Shopping List",
         "mealPlanner": "Meal Planner",
         "leftovers": "Leftover Reuse",
-        "marketplace": "Marketplace"
+        "marketplace": "Marketplace",
+        "textRecognition": "Text Recognition"
     },
     "recipe": {
         "createRecipe": "Create Recipe",
