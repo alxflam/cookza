@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:cookly/components/padded_qr_code.dart';
 import 'package:cookly/localization/keys.dart';
+import 'package:cookly/model/entities/abstract/user_entity.dart';
+import 'package:cookly/model/json/user.dart';
 import 'package:cookly/services/firebase_provider.dart';
 import 'package:cookly/services/service_locator.dart';
 import 'package:cookly/services/shared_preferences_provider.dart';
@@ -44,7 +48,26 @@ class ShareAccountScreen extends StatelessWidget {
                 },
               );
             }),
-            PaddedQRCode(sl.get<FirebaseProvider>().userUid, 400, 400)
+            Builder(builder: (context) {
+              var name = sl.get<SharedPreferencesProvider>().getUserName();
+              var id = sl.get<FirebaseProvider>().userUid;
+
+              if (id == null || name == null) {
+                return Center(
+                  child: Text('§Provide a username'),
+                );
+              }
+
+              var json = JsonUser(
+                      id: sl.get<FirebaseProvider>().userUid,
+                      name: sl.get<SharedPreferencesProvider>().getUserName(),
+                      type: USER_TYPE.USER)
+                  .toJson();
+
+              var data = jsonEncode(json);
+
+              return PaddedQRCode(data, 400, 400);
+            }),
           ],
         ),
       ),
