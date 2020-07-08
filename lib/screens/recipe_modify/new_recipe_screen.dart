@@ -14,9 +14,32 @@ import 'package:flutter_translate/flutter_translate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
-saveModel(BuildContext context, RecipeEditModel model) async {
+Future<void> saveModel(BuildContext context, RecipeEditModel model) async {
   try {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return SimpleDialog(
+          children: [
+            Center(
+              child: Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.all(25),
+                    child: CircularProgressIndicator(),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        );
+      },
+    );
+
     var id = await model.save();
+    Navigator.pop(context);
+
     if (model.isCreate) {
       // create: navigate to recipe view in case save was successful
       var result = await sl.get<RecipeManager>().getRecipeById([id]);
