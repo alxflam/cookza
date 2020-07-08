@@ -91,8 +91,17 @@ class MutableMealPlanDateEntity implements MealPlanDateEntity {
   @override
   List<MutableMealPlanRecipeEntity> get recipes => this._recipes;
 
-  void removeRecipe(String id) {
-    _recipes.removeWhere((e) => e.id == id);
+  void removeRecipe(MealPlanRecipeEntity entity) {
+    if (entity.isNote) {
+      var object = _recipes.firstWhere((e) =>
+          e.name == entity.name &&
+          e.id == entity.id &&
+          e.servings == entity.servings);
+
+      _recipes.remove(object);
+    } else {
+      _recipes.removeWhere((e) => e.id == entity.id);
+    }
   }
 
   void addRecipe(MealPlanRecipeEntity entity) {
@@ -125,4 +134,7 @@ class MutableMealPlanRecipeEntity implements MealPlanRecipeEntity {
   int get servings => this._servings;
 
   set servings(int value) => this._servings = value;
+
+  @override
+  bool get isNote => this._id == null && this._servings == null;
 }

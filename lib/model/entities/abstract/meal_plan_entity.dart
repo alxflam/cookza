@@ -8,6 +8,7 @@ abstract class MealPlanRecipeEntity {
   String get name;
   String get id;
   int get servings;
+  bool get isNote => id == null && servings == null;
 }
 
 abstract class MealPlanEntity {

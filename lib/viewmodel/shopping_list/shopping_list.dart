@@ -45,7 +45,7 @@ class ShoppingListModel extends ChangeNotifier {
     _firstDate = DateTime.now();
     _lastDate = _firstDate.add(Duration(days: _shoppingListDays));
     // TODO: null values due to notes - handle them earlier?
-    _recipeReferences.removeWhere((key, value) => key == null || value == null);
+    // _recipeReferences.removeWhere((key, value) => key == null || value == null);
   }
 
   ShoppingListModel.empty()
@@ -58,7 +58,6 @@ class ShoppingListModel extends ChangeNotifier {
       return this._items;
     }
 
-    // TODO: why does it break up here??
     var mealPlanModel = await sl
         .get<MealPlanManager>()
         .getMealPlanByCollectionID(this._collection.id);
@@ -82,7 +81,6 @@ class ShoppingListModel extends ChangeNotifier {
     }
 
     // next create a set of the required ingredients
-    // TODO: next thing to fix after firestore migration...
     print('get ingredients');
     var ingredients =
         await sl.get<IngredientsCalculator>().getIngredients(_recipeReferences);
@@ -94,11 +92,25 @@ class ShoppingListModel extends ChangeNotifier {
           uomProvider.getUnitOfMeasureById(item.unitOfMeasure),
           item.amount,
           item.ingredient.name,
-          false);
+          false,
+          this);
       _items.add(itemModel);
     }
 
     return _items;
+  }
+
+  void _sortItems() {
+    this._items.sort((a, b) {
+      if (a.isNoLongerNeeded) {
+        return 1;
+      }
+      if (b.isNoLongerNeeded) {
+        return -1;
+      }
+      return a.getName().compareTo(b.getName());
+    });
+    notifyListeners();
   }
 
   ShoppingListModel.of(ShoppingList model) {
@@ -183,8 +195,10 @@ class ShoppingListItemModel extends ChangeNotifier {
   double _amount;
   String _name;
   bool _isNoLongerNeeded;
-  ShoppingListItemModel(
-      this._uom, this._amount, this._name, this._isNoLongerNeeded);
+  ShoppingListModel _parentModel;
+
+  ShoppingListItemModel(this._uom, this._amount, this._name,
+      this._isNoLongerNeeded, this._parentModel);
 
   String get uom {
     // TODO: there should be a null uom!
@@ -207,6 +221,7 @@ class ShoppingListItemModel extends ChangeNotifier {
   void setNoLongerNeeded(value) {
     if (value != this._isNoLongerNeeded) {
       this._isNoLongerNeeded = value;
+      this._parentModel._sortItems();
       notifyListeners();
     }
   }

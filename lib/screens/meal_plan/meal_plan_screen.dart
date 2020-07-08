@@ -4,6 +4,7 @@ import 'package:cookly/constants.dart';
 import 'package:cookly/localization/keys.dart';
 import 'package:cookly/model/entities/abstract/meal_plan_entity.dart';
 import 'package:cookly/model/entities/abstract/recipe_entity.dart';
+import 'package:cookly/screens/shopping_list/shopping_list_dialog.dart';
 import 'package:cookly/screens/shopping_list/shopping_list_overview_screen.dart';
 import 'package:cookly/services/meal_plan_manager.dart';
 import 'package:cookly/services/recipe_manager.dart';
@@ -42,8 +43,7 @@ class MealPlanScreen extends StatelessWidget {
               IconButton(
                 icon: Icon(kShoppingListIconData),
                 onPressed: () {
-                  Navigator.pushReplacementNamed(
-                      context, ShoppingListOverviewScreen.id);
+                  openShoppingListDialog(context);
                 },
               ),
             ],
@@ -196,7 +196,10 @@ class MealPlanScreen extends StatelessWidget {
             builder: (context, recipeModel, _) {
               return ListTile(
                 dense: true,
-                title: Text(recipeModel.name),
+                title: Text(
+                  recipeModel.name,
+                  style: TextStyle(fontSize: 14),
+                ),
                 subtitle: recipeModel.servings != null
                     ? Text(
                         '${recipeModel.servings.toString()} ${translate(Keys.Recipe_Servings)}')
@@ -277,7 +280,7 @@ class MealPlanScreen extends StatelessWidget {
                                             color: Colors.red,
                                             onPressed: () {
                                               model.removeRecipe(
-                                                  recipeModel.id, i);
+                                                  recipeModel.entity, i);
 
                                               Navigator.pop(context);
                                             }),
@@ -350,6 +353,7 @@ class MealPlanScreen extends StatelessWidget {
           foregroundColor: Colors.white,
           child: Text(
             i.toString(),
+            style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
       ),

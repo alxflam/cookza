@@ -62,14 +62,14 @@ class MealPlanViewModel extends ChangeNotifier {
   }
 
   void moveRecipe(MealDragModel data, int target) {
-    _mealPlan.items[data.origin].removeRecipe(data.model.id);
+    _mealPlan.items[data.origin].removeRecipe(data.model.entity);
     _mealPlan.items[target].addRecipe(data.model.entity);
     _save();
     notifyListeners();
   }
 
-  void removeRecipe(String id, int i) {
-    _mealPlan.items[i].removeRecipe(id);
+  void removeRecipe(MutableMealPlanRecipeEntity entity, int i) {
+    _mealPlan.items[i].removeRecipe(entity);
     _save();
     notifyListeners();
   }
@@ -110,6 +110,7 @@ class MealPlanViewModel extends ChangeNotifier {
     this._save();
   }
 
+  /// return the aggregated recipes for a given interval
   Map<String, int> getRecipesForInterval(
       DateTime firstDate, DateTime lastDate) {
     Map<String, int> result = {};
@@ -117,8 +118,11 @@ class MealPlanViewModel extends ChangeNotifier {
       if (item.date.isAfter(firstDate.subtract(Duration(days: 1))) &&
           item.date.isBefore(lastDate.add(Duration(days: 1)))) {
         for (var recipe in item.recipes) {
-          result.update(recipe.id, (value) => value + recipe.servings,
-              ifAbsent: () => recipe.servings);
+          // only add real recipes, not notes
+          if (recipe.id != null) {
+            result.update(recipe.id, (value) => value + recipe.servings,
+                ifAbsent: () => recipe.servings);
+          }
         }
       }
     }

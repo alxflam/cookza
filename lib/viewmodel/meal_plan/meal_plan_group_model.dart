@@ -26,9 +26,8 @@ class MealPlanGroupViewModel with ChangeNotifier {
   }
 
   void addUser(String userID, String name) async {
-    await sl
-        .get<MealPlanManager>()
-        .addUserToCollection(this.entity, userID, 'some User');
+    await sl.get<MealPlanManager>().addUserToCollection(this.entity, userID,
+        name == null || name.isEmpty ? 'unknown user' : name);
 
     notifyListeners();
   }
