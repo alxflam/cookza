@@ -9,7 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mockito/mockito.dart';
 
 class MealPlanEntityMock extends Mock implements MealPlanEntity {
-  var _items = [];
+  List<MealPlanDateEntity> _items = [];
 
   @override
   String get id => 'id';
