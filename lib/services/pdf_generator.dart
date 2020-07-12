@@ -1,6 +1,8 @@
 import 'package:cookly/constants.dart';
 import 'package:cookly/localization/keys.dart';
 import 'package:cookly/services/abstract/pdf_generator.dart';
+import 'package:cookly/services/image_manager.dart';
+import 'package:cookly/services/service_locator.dart';
 import 'package:cookly/viewmodel/recipe_view/recipe_view_model.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 
@@ -37,10 +39,22 @@ class PDFGeneratorImpl implements PDFGenerator {
   }
 
   @override
-  pw.Document generatePDF(List<RecipeViewModel> recipes) {
+  Future<pw.Document> generatePDF(List<RecipeViewModel> recipes) async {
     final doc = pw.Document();
 
-    for (var recipe in recipes) {
+    for (var recipeViewModel in recipes) {
+      var imageFile = await sl
+          .get<ImageManager>()
+          .getRecipeImageFile(recipeViewModel.recipe);
+
+      PdfImage recipeImage;
+      if (imageFile != null) {
+        recipeImage = PdfImage.file(
+          doc.document,
+          bytes: imageFile.readAsBytesSync(),
+        );
+      }
+
       doc.addPage(
         pw.MultiPage(
           pageFormat: PdfPageFormat.letter
@@ -56,7 +70,7 @@ class PDFGeneratorImpl implements PDFGenerator {
                     bottom: true, width: 0.5, color: PdfColors.grey),
               ),
               child: pw.Text(
-                recipe.name,
+                recipeViewModel.name,
                 style: pw.Theme.of(context)
                     .defaultTextStyle
                     .copyWith(color: PdfColors.grey),
@@ -81,11 +95,25 @@ class PDFGeneratorImpl implements PDFGenerator {
               child: pw.Row(
                 mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                 children: <pw.Widget>[
-                  pw.Text(recipe.name, textScaleFactor: 2),
+                  pw.Text(recipeViewModel.name, textScaleFactor: 2),
                 ],
               ),
             ),
-            pw.Paragraph(text: recipe.description),
+            // add recipe image if exists
+            recipeImage != null
+                ? pw.Center(
+                    child: pw.ClipRRect(
+                      horizontalRadius: 10,
+                      verticalRadius: 10,
+                      child: pw.Container(
+                        width: 600,
+                        height: 200,
+                        child: pw.Image(recipeImage),
+                      ),
+                    ),
+                  )
+                : pw.Container(),
+            pw.Paragraph(text: recipeViewModel.description),
             pw.Header(
                 level: 1, text: translatePlural(Keys.Recipe_Ingredient, 2)),
             pw.Table.fromTextArray(
@@ -100,11 +128,11 @@ class PDFGeneratorImpl implements PDFGenerator {
                   verticalInside: false),
               headerAlignment: pw.Alignment.center,
               cellAlignment: pw.Alignment.center,
-              data: _getIngredientList(recipe),
+              data: _getIngredientList(recipeViewModel),
             ),
             pw.Header(level: 1, text: translate(Keys.Recipe_Instructions)),
             pw.Column(
-              children: _getInstructions(recipe),
+              children: _getInstructions(recipeViewModel),
             ),
           ],
         ),

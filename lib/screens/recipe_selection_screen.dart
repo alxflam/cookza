@@ -10,7 +10,7 @@ import 'package:flutter_translate/flutter_translate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
-typedef void OnActionButtonPressed(
+typedef Future<void> OnActionButtonPressed(
     BuildContext context, RecipeSelectionModel model);
 
 class RecipeSelectionScreen extends StatelessWidget {
@@ -125,31 +125,31 @@ class RecipeSelectionScreen extends StatelessWidget {
   OnActionButtonPressed _getOnPressedCallbackForMode(SELECTION_MODE mode) {
     switch (mode) {
       case SELECTION_MODE.EXPORT:
-        return (context, model) {
+        return (context, model) async {
           sl.get<RecipeFileExport>().exportRecipes(model.selectedRecipes);
           Navigator.pop(context);
         };
       case SELECTION_MODE.EXPORT_PDF:
-        return (context, model) {
-          var doc = sl
+        return (context, model) async {
+          var doc = await sl
               .get<PDFGenerator>()
               .generatePDF(model.selectedRecipeViewModels);
           sl.get<PDFExporter>().export(doc);
           Navigator.pop(context);
         };
       case SELECTION_MODE.IMPORT:
-        return (context, model) {
+        return (context, model) async {
           sl.get<RecipeManager>().importRecipes(model.getSelectedRecipes());
           Navigator.pop(context);
         };
       case SELECTION_MODE.REFERENCE_INGREDIENT:
       case SELECTION_MODE.ADD_TO_MEAL_PLAN:
-        return (context, model) {
+        return (context, model) async {
           if (model.selectedRecipes.length > 0) {
             Navigator.pop(context, model.selectedRecipeEntities.first);
           }
         };
     }
-    return (context, model) {};
+    return (context, model) async {};
   }
 }
