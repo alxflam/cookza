@@ -140,6 +140,8 @@ class Keys {
 
   static const String Settings_Copyright = 'settings.copyright';
 
+  static const String Settings_Localimages = 'settings.localImages';
+
   static const String Unitofmeasure_Mmt = 'unitOfMeasure.MMT';
 
   static const String Unitofmeasure_Cmt = 'unitOfMeasure.CMT';

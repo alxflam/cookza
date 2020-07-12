@@ -88,7 +88,8 @@
         "changelog": "Changelog",
         "getStarted": "Get Started",
         "appDescription": "Cookly enables you to store, collect and share your favourite recipes in a data-privacy friendly manner",
-        "copyright": "© 2020 The Great Cookly Foundation"
+        "copyright": "© 2020 The Great Cookly Foundation",
+        "localImages": "Local Images"
     },
     "onboarding": {},
     "unitOfMeasure": {

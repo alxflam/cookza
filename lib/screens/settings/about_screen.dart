@@ -98,7 +98,7 @@ class AboutScreen extends StatelessWidget {
             ),
             AboutScreenDivider(),
             ListTile(
-              title: Text('§Saved Images'),
+              title: Text(translate(Keys.Settings_Localimages)),
               leading: FaIcon(FontAwesomeIcons.image),
               onTap: () {
                 Navigator.pushNamed(context, SavedImagesScreen.id);

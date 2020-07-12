@@ -1,8 +1,12 @@
 import 'dart:io';
 
+import 'package:cookly/constants.dart';
+import 'package:cookly/localization/keys.dart';
+import 'package:cookly/services/image_manager.dart';
 import 'package:cookly/services/local_storage.dart';
 import 'package:cookly/services/service_locator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 
 class SavedImagesScreen extends StatelessWidget {
   static final String id = 'savedImages';
@@ -11,38 +15,50 @@ class SavedImagesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('§Saved Images'),
+        title: Text(translate(Keys.Settings_Localimages)),
       ),
       body: FutureBuilder(
         future: _getImageFiles(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             List<File> files = snapshot.data;
-            return ListView.builder(
+            return ListView.separated(
+              separatorBuilder: (BuildContext context, int index) => Divider(),
               itemCount: files.length,
               itemBuilder: (context, index) {
-                var name = files[index].path.split('/').last;
-                var recipes = [];
+                var file = files[index];
 
-                var recipeName = recipes == null || recipes.isEmpty
-                    ? 'Deleted'
-                    : recipes.first.name;
-                return ListTile(
-                  leading: AspectRatio(
-                    aspectRatio: 2 / 1,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        image: DecorationImage(
-                          fit: BoxFit.fitWidth,
-                          alignment: FractionalOffset.center,
-                          image: FileImage(files[index]),
+                return Padding(
+                  padding: EdgeInsets.symmetric(vertical: 10),
+                  child: ListTile(
+                    leading: AspectRatio(
+                      aspectRatio: 2 / 1,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          image: DecorationImage(
+                            fit: BoxFit.fitWidth,
+                            alignment: FractionalOffset.center,
+                            image: FileImage(files[index]),
+                          ),
                         ),
                       ),
                     ),
+                    title: Text(kDateFormatter.format(file.lastModifiedSync())),
+                    trailing: IconButton(
+                      icon: Icon(Icons.delete),
+                      onPressed: () async {
+                        await sl
+                            .get<ImageManager>()
+                            .deleteLocalImage(file.path.split('/').last);
+                        Scaffold.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('§Image deleted'),
+                          ),
+                        );
+                      },
+                    ),
                   ),
-                  title: Text('Name: $name, Recipe: $recipeName'),
-                  subtitle: Text('Path: ${files[index].path}'),
                 );
               },
             );

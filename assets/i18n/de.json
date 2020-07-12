@@ -88,7 +88,8 @@
         "changelog": "Changelog",
         "getStarted": "Erste Schritte",
         "appDescription": "Cookly ermöglicht es Ihnen, Ihre Lieblingsrezepte datenschutzfreundlich zu speichern, zu sammeln und zu teilen",
-        "copyright": "© 2020 The Great Cookly Foundation"
+        "copyright": "© 2020 The Great Cookly Foundation",
+        "localImages": "Lokale Bilder"
     },
     "onboarding": {},
     "unitOfMeasure": {

@@ -11,6 +11,7 @@ abstract class ImageManager {
   Future<String> getRecipeImageURL(String recipeId);
   String getRecipeImagePath(String recipeId);
   Future<File> getRecipeImageFile(RecipeEntity entity);
+  Future<void> deleteLocalImage(String fileName);
 }
 
 class ImageManagerFirebase implements ImageManager {
@@ -87,5 +88,15 @@ class ImageManagerFirebase implements ImageManager {
     }
 
     return cacheFile;
+  }
+
+  @override
+  Future<void> deleteLocalImage(String fileName) async {
+    var imageDirectory = await sl.get<StorageProvider>().getImageDirectory();
+    var cacheFile = File('$imageDirectory/$fileName');
+
+    if (cacheFile.existsSync()) {
+      cacheFile.deleteSync();
+    }
   }
 }
