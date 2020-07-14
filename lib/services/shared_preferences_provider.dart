@@ -13,6 +13,9 @@ abstract class SharedPreferencesProvider {
   int getMealPlanWeeks();
   String getUserName();
   void setUserName(String value);
+
+  void setCurrentMealPlanCollection(String value);
+  String getCurrentMealPlanCollection();
 }
 
 class SharedPreferencesProviderImpl implements SharedPreferencesProvider {
@@ -20,6 +23,8 @@ class SharedPreferencesProviderImpl implements SharedPreferencesProvider {
 
   static final String mealPlanServingsSizeKey = 'mealPlanServingsSize';
   static final String mealPlanWeeksKey = 'mealPlanWeeks';
+  static final String mealPlanCollection = 'mealPlanCollection';
+
   static final String uomVisibilityKeySuffix = '.vis';
   static final String userName = 'userName';
 
@@ -85,5 +90,15 @@ class SharedPreferencesProviderImpl implements SharedPreferencesProvider {
   void setUserName(String value) {
     assert(value != null && value.isNotEmpty);
     this._prefs.setString(userName, value);
+  }
+
+  @override
+  String getCurrentMealPlanCollection() {
+    return _prefs.getString(mealPlanCollection);
+  }
+
+  @override
+  void setCurrentMealPlanCollection(String value) {
+    this._prefs.setString(mealPlanCollection, value);
   }
 }

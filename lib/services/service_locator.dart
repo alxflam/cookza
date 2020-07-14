@@ -7,6 +7,7 @@ import 'package:cookly/services/abstract/recipe_file_import.dart';
 import 'package:cookly/services/firebase_provider.dart';
 import 'package:cookly/services/id_gen.dart';
 import 'package:cookly/services/image_manager.dart';
+import 'package:cookly/services/image_parser.dart';
 import 'package:cookly/services/ingredients_calculator.dart';
 import 'package:cookly/services/local_storage.dart';
 import 'package:cookly/services/meal_plan_manager.dart';
@@ -57,6 +58,7 @@ void setupServiceLocator() {
   sl.registerSingleton<ImageManager>(ImageManagerFirebase());
   sl.registerSingleton<MealPlanManager>(MealPlanManagerFirebase());
   sl.registerSingleton<NavigatorService>(NavigatorService());
+  sl.registerSingleton<ImageTextExtractor>(ImageTextExtractorImpl());
 
   sl.registerSingletonAsync<SharedPreferencesProvider>(
       () async => SharedPreferencesProviderImpl().init());

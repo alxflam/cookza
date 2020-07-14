@@ -18,6 +18,7 @@ class QRScanner {
   Future<UserEntity> scanUserQRCode() async {
     var content = await _scanQRCode();
     if (content != null && content.isNotEmpty) {
+      // TODO: catch FormatException from jsonDecode??
       var user = JsonUser.fromJson(jsonDecode(content));
       if (user.id == null ||
           user.id.isEmpty ||

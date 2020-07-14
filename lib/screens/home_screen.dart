@@ -3,6 +3,7 @@ import 'package:cookly/constants.dart';
 import 'package:cookly/localization/keys.dart';
 import 'package:cookly/screens/leftovers_screen.dart';
 import 'package:cookly/screens/meal_plan/meal_plan_screen.dart';
+import 'package:cookly/screens/ocr_creation/ocr_stepper.dart';
 import 'package:cookly/screens/recipe_list_screen.dart';
 import 'package:cookly/screens/recipe_modify/new_recipe_screen.dart';
 import 'package:cookly/screens/shopping_list/shopping_list_overview_screen.dart';
@@ -82,9 +83,8 @@ class HomeScreen extends StatelessWidget {
                 ),
                 Expanded(
                   child: ReusableCard(
-                    onPress: () => Navigator.pushNamed(
-                        context, NewRecipeScreen.id,
-                        arguments: RecipeEditModel.create()),
+                    onPress: () =>
+                        Navigator.pushNamed(context, OcrCreationScreen.id),
                     color: tileColor,
                     cardChild: IconContent(
                       icon: Icons.add_a_photo,

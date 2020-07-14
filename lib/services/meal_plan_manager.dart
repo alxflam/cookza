@@ -2,6 +2,7 @@ import 'package:cookly/model/entities/abstract/meal_plan_collection_entity.dart'
 import 'package:cookly/model/entities/abstract/meal_plan_entity.dart';
 import 'package:cookly/services/firebase_provider.dart';
 import 'package:cookly/services/service_locator.dart';
+import 'package:cookly/services/shared_preferences_provider.dart';
 
 abstract class MealPlanManager {
   Future<MealPlanEntity> get mealPlan;
@@ -23,6 +24,8 @@ abstract class MealPlanManager {
   Future<void> leaveGroup(MealPlanCollectionEntity entity);
 
   Future<MealPlanEntity> getMealPlanByCollectionID(String id);
+
+  Future<void> init();
 }
 
 class MealPlanManagerFirebase implements MealPlanManager {
@@ -62,6 +65,7 @@ class MealPlanManagerFirebase implements MealPlanManager {
   @override
   set currentCollection(String value) {
     _currentCollection = value;
+    sl.get<SharedPreferencesProvider>().setCurrentMealPlanCollection(value);
   }
 
   @override
@@ -100,5 +104,19 @@ class MealPlanManagerFirebase implements MealPlanManager {
   @override
   Future<MealPlanEntity> getMealPlanByCollectionID(String id) {
     return sl.get<FirebaseProvider>().getMealPlanByID(id);
+  }
+
+  @override
+  Future<void> init() {
+    this._currentCollection =
+        sl.get<SharedPreferencesProvider>().getCurrentMealPlanCollection();
+    if (this._currentCollection == null) {
+      collections.then((value) {
+        if (value.isNotEmpty) {
+          this.currentCollection = value.first.id;
+        }
+      });
+    }
+    return Future.value(null);
   }
 }

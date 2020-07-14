@@ -5,7 +5,6 @@ import 'package:cookly/localization/keys.dart';
 import 'package:cookly/model/entities/abstract/meal_plan_entity.dart';
 import 'package:cookly/model/entities/abstract/recipe_entity.dart';
 import 'package:cookly/screens/shopping_list/shopping_list_dialog.dart';
-import 'package:cookly/screens/shopping_list/shopping_list_overview_screen.dart';
 import 'package:cookly/services/meal_plan_manager.dart';
 import 'package:cookly/services/recipe_manager.dart';
 import 'package:cookly/viewmodel/meal_plan/recipe_meal_plan_model.dart';

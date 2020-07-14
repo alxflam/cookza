@@ -19,6 +19,7 @@ import 'package:cookly/model/firebase/recipe/firebase_instruction.dart';
 import 'package:cookly/model/firebase/recipe/firebase_recipe.dart';
 import 'package:cookly/screens/web/web_landing_screen.dart';
 import 'package:cookly/services/abstract/platform_info.dart';
+import 'package:cookly/services/meal_plan_manager.dart';
 import 'package:cookly/services/navigator_service.dart';
 import 'package:cookly/services/service_locator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -139,6 +140,9 @@ class FirebaseProvider {
     } else if (coll.isNotEmpty) {
       this._currentRecipeGroup = coll.first.id;
     }
+
+    Future.delayed(
+        Duration(seconds: 1), () => sl.get<MealPlanManager>().init());
 
     return this;
   }

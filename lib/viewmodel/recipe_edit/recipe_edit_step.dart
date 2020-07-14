@@ -12,7 +12,7 @@ import 'package:cookly/services/image_manager.dart';
 import 'package:cookly/services/recipe_manager.dart';
 import 'package:cookly/services/service_locator.dart';
 import 'package:cookly/services/unit_of_measure.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 import 'recipe_ingredient_model.dart';
 

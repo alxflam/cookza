@@ -22,6 +22,23 @@ class RecipeEditModel extends ChangeNotifier {
     }
   }
 
+  RecipeEditModel.fromSteps(
+      RecipeOverviewEditStep overviewStep,
+      RecipeIngredientEditStep ingredientStep,
+      RecipeInstructionEditStep instructionStep) {
+    _mode = MODE.CREATE;
+    _targetRecipe = MutableRecipe.empty();
+    if (overviewStep != null) {
+      _stepModels[0] = overviewStep;
+    }
+    if (ingredientStep != null) {
+      _stepModels[3] = ingredientStep;
+    }
+    if (instructionStep != null) {
+      _stepModels[4] = instructionStep;
+    }
+  }
+
   MutableRecipe _targetRecipe;
   MODE _mode;
   List<RecipeEditStep> _stepModels = [

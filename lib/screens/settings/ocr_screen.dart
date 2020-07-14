@@ -16,12 +16,12 @@ class _OCRTestScreenState extends State<OCRTestScreen> {
   String _text;
 
   Future getImage() async {
-    // TODO: replace deprecated pickImage
-    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
-
-    setState(() {
-      _image = image;
-    });
+    var image = await ImagePicker().getImage(source: ImageSource.gallery);
+    if (image != null) {
+      setState(() {
+        _image = File(image.path);
+      });
+    }
   }
 
   Future analyse() async {
@@ -35,20 +35,6 @@ class _OCRTestScreenState extends State<OCRTestScreen> {
     setState(() {
       _text = text;
     });
-    // for (TextBlock block in visionText.blocks) {
-    //   print(block.text);
-    // final Rect boundingBox = block.boundingBox;
-    // final List<Offset> cornerPoints = block.cornerPoints;
-    // final String text = block.text;
-    // final List<RecognizedLanguage> languages = block.recognizedLanguages;
-
-    // for (TextLine line in block.lines) {
-    //   // Same getters as TextBlock
-    //   for (TextElement element in line.elements) {
-    //     // Same getters as TextBlock
-    //   }
-    // }
-    // }
   }
 
   @override
@@ -86,10 +72,13 @@ class _OCRTestScreenState extends State<OCRTestScreen> {
                   )
                 : null,
           ),
-          Wrap(
-            children: <Widget>[
-              _text != null ? Text(_text) : Container(),
-            ],
+          Padding(
+            padding: EdgeInsets.all(15),
+            child: Wrap(
+              children: <Widget>[
+                _text != null ? Text(_text) : Container(),
+              ],
+            ),
           )
         ],
       ),

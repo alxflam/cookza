@@ -28,7 +28,7 @@ class MutableIngredientNote implements IngredientNoteEntity {
   String get unitOfMeasure => _uom;
 
   set amount(double value) {
-    if (value > 0) {
+    if (value != null && value > 0) {
       _amount = value;
     }
   }

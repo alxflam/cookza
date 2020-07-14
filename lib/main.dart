@@ -1,6 +1,7 @@
 import 'package:cookly/localization/keys.dart';
 import 'package:cookly/screens/collections/share_account_screen.dart';
 import 'package:cookly/screens/meal_plan/meal_plan_group_screen.dart';
+import 'package:cookly/screens/ocr_creation/ocr_stepper.dart';
 import 'package:cookly/screens/settings/about_screen.dart';
 import 'package:cookly/screens/web/web_landing_screen.dart';
 import 'package:cookly/services/navigator_service.dart';
@@ -116,6 +117,7 @@ class CooklyMaterialApp extends StatelessWidget {
         MealPlanGroupScreen.id: (context) => MealPlanGroupScreen(),
         AboutScreen.id: (context) => AboutScreen(),
         WebLandingPage.id: (context) => WebLandingPage(),
+        OcrCreationScreen.id: (context) => OcrCreationScreen(),
       },
     );
   }

@@ -1,14 +1,9 @@
 import 'package:cookly/localization/keys.dart';
-import 'package:cookly/model/entities/abstract/meal_plan_collection_entity.dart';
 import 'package:cookly/screens/shopping_list/shopping_list_detail_screen.dart';
 import 'package:cookly/screens/shopping_list/shopping_list_dialog.dart';
-import 'package:cookly/services/meal_plan_manager.dart';
-import 'package:cookly/services/service_locator.dart';
-import 'package:cookly/viewmodel/meal_plan/recipe_meal_plan_model.dart';
 import 'package:cookly/viewmodel/shopping_list/shopping_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 class ShoppingListOverviewScreen extends StatelessWidget {
