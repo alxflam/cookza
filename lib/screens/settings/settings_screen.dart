@@ -46,7 +46,7 @@ class SettingsScreen extends StatelessWidget {
               ),
               ListTile(
                 title: Text(translate(Keys.Theme_Title)),
-                leading: FaIcon(FontAwesomeIcons.themeco),
+                leading: FaIcon(FontAwesomeIcons.paintBrush),
                 onTap: () {
                   Navigator.pushNamed(context, ThemeSettingsScreen.id);
                 },

@@ -11,6 +11,7 @@ import 'package:cookly/screens/recipe_modify/new_recipe_screen.dart';
 import 'package:cookly/screens/recipe_selection_screen.dart';
 import 'package:cookly/screens/recipe_view/recipe_screen.dart';
 import 'package:cookly/screens/settings/about_screen.dart';
+import 'package:cookly/screens/settings/changelog_screen.dart';
 import 'package:cookly/screens/settings/export_settings_screen.dart';
 import 'package:cookly/screens/settings/meal_plan_settings_screen.dart';
 import 'package:cookly/screens/settings/onboarding_screen.dart';
@@ -51,4 +52,5 @@ Map<String, Widget Function(BuildContext)> kRoutes = {
   AboutScreen.id: (context) => AboutScreen(),
   WebLandingPage.id: (context) => WebLandingPage(),
   OcrCreationScreen.id: (context) => OcrCreationScreen(),
+  ChangelogScreen.id: (context) => ChangelogScreen(),
 };

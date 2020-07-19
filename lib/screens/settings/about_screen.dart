@@ -1,6 +1,6 @@
 import 'package:cookly/constants.dart';
 import 'package:cookly/localization/keys.dart';
-import 'package:cookly/screens/settings/ocr_screen.dart';
+import 'package:cookly/screens/settings/changelog_screen.dart';
 import 'package:cookly/screens/settings/onboarding_screen.dart';
 import 'package:cookly/screens/settings/saved_images_screen.dart';
 import 'package:flutter/foundation.dart';
@@ -86,14 +86,19 @@ class AboutScreen extends StatelessWidget {
             ListTile(
               leading: FaIcon(FontAwesomeIcons.diceD20),
               title: Text(translate(Keys.Settings_Changelog)),
-              onTap: () => kNotImplementedDialog(context),
+              onTap: () => Navigator.pushNamed(context, ChangelogScreen.id),
             ),
             AboutScreenDivider(),
             ListTile(
               leading: FaIcon(FontAwesomeIcons.fileAlt),
               title: Text(MaterialLocalizations.of(context).licensesPageTitle),
               onTap: () {
-                showLicensePage(context: context);
+                showLicensePage(
+                  context: context,
+                  applicationVersion: '2020-08',
+                  applicationIcon: Icon(kAppIconData),
+                  applicationLegalese: '© 2020',
+                );
               },
             ),
             AboutScreenDivider(),
@@ -103,12 +108,6 @@ class AboutScreen extends StatelessWidget {
               onTap: () {
                 Navigator.pushNamed(context, SavedImagesScreen.id);
               },
-            ),
-            AboutScreenDivider(),
-            ListTile(
-              leading: FaIcon(FontAwesomeIcons.camera),
-              title: Text('§Test OCR'),
-              onTap: () => Navigator.pushNamed(context, OCRTestScreen.id),
             ),
           ],
         ),
