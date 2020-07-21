@@ -54,6 +54,7 @@ class FirebaseProvider {
 
   Stream<List<MealPlanCollectionEntity>> get mealPlanGroups {
     return _mealPlanGroupsQuery().snapshots().map((e) => e.documents
+        .where((e) => e.exists)
         .map((e) => MealPlanCollectionEntityFirebase.of(
             FirebaseMealPlanCollection.fromJson(e.data, e.documentID)))
         .toList());
@@ -457,7 +458,7 @@ class FirebaseProvider {
 
     batch.setData(instructionsDocRef, instructionsDoc.toJson());
 
-    batch.commit();
+    await batch.commit();
 
     return recipeDocRef.documentID;
   }

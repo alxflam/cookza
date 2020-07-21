@@ -1,5 +1,6 @@
 import 'package:cookly/model/entities/abstract/meal_plan_collection_entity.dart';
 import 'package:cookly/model/entities/abstract/user_entity.dart';
+import 'package:cookly/screens/meal_plan/meal_plan_screen.dart';
 import 'package:cookly/services/meal_plan_manager.dart';
 import 'package:cookly/services/mobile/qr_scanner.dart';
 import 'package:cookly/services/service_locator.dart';
@@ -249,9 +250,10 @@ class MealPlanGroupScreen extends StatelessWidget {
                 translate(Keys.Ui_Delete),
               ),
               color: Colors.red,
-              onPressed: () {
-                sl.get<MealPlanManager>().deleteCollection(model.entity);
-                Navigator.of(context).pop();
+              onPressed: () async {
+                await sl.get<MealPlanManager>().deleteCollection(model.entity);
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                    MealPlanScreen.id, ModalRoute.withName(MealPlanScreen.id));
               },
             ),
           ],

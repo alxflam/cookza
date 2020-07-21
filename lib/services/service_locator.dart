@@ -4,6 +4,8 @@ import 'package:cookly/services/abstract/platform_info.dart';
 import 'package:cookly/services/abstract/receive_intent_handler.dart';
 import 'package:cookly/services/abstract/recipe_file_export.dart';
 import 'package:cookly/services/abstract/recipe_file_import.dart';
+import 'package:cookly/services/abstract/recipe_text_export.dart';
+import 'package:cookly/services/abstract/shopping_list_text_export.dart';
 import 'package:cookly/services/firebase_provider.dart';
 import 'package:cookly/services/id_gen.dart';
 import 'package:cookly/services/image_manager.dart';
@@ -13,11 +15,15 @@ import 'package:cookly/services/local_storage.dart';
 import 'package:cookly/services/meal_plan_manager.dart';
 import 'package:cookly/services/mobile/qr_scanner.dart';
 import 'package:cookly/services/mobile/receive_intent_handler_app.dart';
+import 'package:cookly/services/mobile/recipe_text_export_app.dart';
+import 'package:cookly/services/mobile/shopping_list_text_export.dart';
 import 'package:cookly/services/navigator_service.dart';
 import 'package:cookly/services/pdf_generator.dart';
 import 'package:cookly/services/recipe_manager.dart';
+import 'package:cookly/services/recipe_text_generator.dart';
 import 'package:cookly/services/share_receive_handler.dart';
 import 'package:cookly/services/shared_preferences_provider.dart';
+import 'package:cookly/services/shopping_list_text_generator.dart';
 import 'package:cookly/services/similarity_service.dart';
 import 'package:cookly/services/unit_of_measure.dart';
 import 'package:get_it/get_it.dart';
@@ -59,6 +65,11 @@ void setupServiceLocator() {
   sl.registerSingleton<MealPlanManager>(MealPlanManagerFirebase());
   sl.registerSingleton<NavigatorService>(NavigatorService());
   sl.registerSingleton<ImageTextExtractor>(ImageTextExtractorImpl());
+  sl.registerSingleton<RecipeTextGenerator>(RecipeTextGeneratorImpl());
+  sl.registerSingleton<RecipeTextExporter>(RecipeTextExporterApp());
+  sl.registerSingleton<ShoppingListTextGenerator>(
+      ShoppingListTextGeneratorImpl());
+  sl.registerSingleton<ShoppingListTextExporter>(ShoppingListTextExporterApp());
 
   sl.registerSingletonAsync<SharedPreferencesProvider>(
       () async => SharedPreferencesProviderImpl().init());

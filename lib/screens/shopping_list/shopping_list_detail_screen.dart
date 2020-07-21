@@ -1,3 +1,6 @@
+import 'package:cookly/services/abstract/shopping_list_text_export.dart';
+import 'package:cookly/services/service_locator.dart';
+import 'package:cookly/services/shopping_list_text_generator.dart';
 import 'package:cookly/viewmodel/shopping_list/shopping_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -21,16 +24,21 @@ class ShoppingListDetailScreen extends StatelessWidget {
                 IconButton(
                     icon: Icon(Icons.share),
                     onPressed: () {
-                      var result = model.toShareString();
-                      if (result.isNotEmpty) {
-                        ShareExtend.share(result, 'text');
-                      }
+                      sl
+                          .get<ShoppingListTextExporter>()
+                          .exportShoppingListAsText(model);
                     })
               ],
             ),
             body: FutureBuilder(
               future: model.getItems(),
               builder: (context, snapshot) {
+                if (snapshot.connectionState != ConnectionState.done) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+
                 if (snapshot.data == null || snapshot.data.isEmpty) {
                   return Container();
                 }

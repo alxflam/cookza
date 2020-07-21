@@ -1,3 +1,4 @@
+import 'package:cookly/constants.dart';
 import 'package:cookly/localization/keys.dart';
 import 'package:cookly/services/recipe_manager.dart';
 import 'package:cookly/viewmodel/recipe_selection_model.dart';
@@ -48,6 +49,13 @@ class ExportSettingsScreen extends StatelessWidget {
               // navigate to the selection screen
               Navigator.pushNamed(context, RecipeSelectionScreen.id,
                   arguments: model);
+            },
+          ),
+          ListTile(
+            title: Text('Backup'),
+            leading: FaIcon(FontAwesomeIcons.fileArchive),
+            onTap: () async {
+              kNotImplementedDialog(context);
             },
           ),
         ],

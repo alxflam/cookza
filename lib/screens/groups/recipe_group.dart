@@ -250,8 +250,8 @@ class RecipeGroupScreen extends StatelessWidget {
                 translate(Keys.Ui_Delete),
               ),
               color: Colors.red,
-              onPressed: () {
-                sl.get<RecipeManager>().deleteCollection(model.entity);
+              onPressed: () async {
+                await sl.get<RecipeManager>().deleteCollection(model.entity);
                 Navigator.of(context).pop();
               },
             ),

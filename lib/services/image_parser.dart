@@ -77,14 +77,35 @@ class ImageTextExtractorImpl implements ImageTextExtractor {
   RecipeInstructionEditStep processInstructionsImageFromText(VisionText text) {
     var model = RecipeInstructionEditStep();
 
-    for (var block in text.blocks) {
-      var height = block.boundingBox.height;
-      var text = block.text;
-      print('height: $height, text: $text');
+    // indicator that the previous instruction may have ended abrupty
+    bool possiblyIncompleteSentence = false;
+    List<String> instructions = [];
+
+    // a block may be only a single line (an incomplete sentence to be continued in the next line)
+    for (var i = 0; i < text.blocks.length; i++) {
+      var block = text.blocks[i];
+      var lines = block.text.split(". ");
+
       // TODO: split block if it's lines is greater than a certain threshold by dot
-      if (text.length > 20) {
-        model.addInstruction(text);
+      // TODO: block.lines corresponds to optical lines - manually check whether the line is a complete sentence and ends with dot
+      for (var j = 0; j < lines.length; j++) {
+        var line = lines[j];
+        line = line.trimLeft();
+        line = line.trimRight();
+        if (possiblyIncompleteSentence) {
+          var previous = instructions.last;
+          instructions[instructions.length - 1] = previous + line;
+        } else if (line.length > 10) {
+          instructions.add(line);
+        }
       }
+
+      possiblyIncompleteSentence =
+          !block.lines.last.text.trimRight().endsWith(".");
+    }
+
+    for (var line in instructions) {
+      model.addInstruction(line);
     }
 
     return model;

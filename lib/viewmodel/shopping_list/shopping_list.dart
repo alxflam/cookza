@@ -174,20 +174,6 @@ class ShoppingListModel extends ChangeNotifier {
   set collection(MealPlanCollectionEntity value) {
     this._collection = value;
   }
-
-  String toShareString() {
-    var buffer = StringBuffer();
-
-    if (_items.isNotEmpty) {
-      buffer.writeln('*cookly Shopping List*');
-    }
-
-    for (var item in this._items) {
-      buffer.writeln('${item.getName()} (${item.getAmount()} ${item.uom})');
-    }
-
-    return buffer.toString();
-  }
 }
 
 class ShoppingListItemModel extends ChangeNotifier {

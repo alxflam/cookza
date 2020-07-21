@@ -12,6 +12,10 @@ class IngredientsCalculatorImpl implements IngredientsCalculator {
   Future<List<IngredientNote>> getIngredients(Map<String, int> ids) async {
     List<IngredientNote> result = [];
 
+    if (ids.isEmpty) {
+      return result;
+    }
+
     var recipes =
         await sl.get<RecipeManager>().getRecipeById(ids.keys.toList());
 

@@ -22,7 +22,7 @@ Step getOCRImageStep(
           Future<void> getImage(ImageSource source) async {
             var picker = ImagePicker();
             var image = await picker.getImage(
-                source: source, imageQuality: 70, maxWidth: 1000);
+                source: source, imageQuality: 100, maxWidth: 1000);
             if (image != null) {
               model.image = File(image.path);
             }

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:html' as html;
+import 'package:cookly/model/entities/abstract/recipe_entity.dart';
 import 'package:cookly/services/abstract/recipe_file_export.dart';
 
 class RecipeFileExportImpl extends RecipeFileExport {
@@ -25,5 +26,10 @@ class RecipeFileExportImpl extends RecipeFileExport {
     // remove DOM element
     html.document.body.children.remove(anchor);
     html.Url.revokeObjectUrl(url);
+  }
+
+  @override
+  void exportRecipesFromEntity(List<RecipeEntity> recipes) {
+    // TODO: implement exportRecipesFromEntity
   }
 }

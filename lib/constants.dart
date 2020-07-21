@@ -32,6 +32,8 @@ const kVegetarianTag = 'vegetarian';
 const kFishTag = 'fish';
 const kMeatTag = 'meat';
 
+const kBulletCharacter = '\u2022';
+
 /// tags
 /// todo: read this mapping on startup from a json, then user can add and refine tags and associate icons
 const kTagMap = {

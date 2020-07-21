@@ -319,8 +319,10 @@ class MealPlanScreen extends StatelessWidget {
                     color: Colors.teal.shade300,
                     child: ListTile(
                       title: Text(entry.name),
-                      subtitle: Text(
-                          '${entry.servings.toString()} ${translate(Keys.Recipe_Servings)}'),
+                      subtitle: entry.isNote
+                          ? null
+                          : Text(
+                              '${entry.servings.toString()} ${translate(Keys.Recipe_Servings)}'),
                     ),
                   ),
                 ),

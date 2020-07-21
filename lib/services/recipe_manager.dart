@@ -19,7 +19,7 @@ abstract class RecipeManager {
 
   Future<void> renameCollection(String name, RecipeCollectionEntity collection);
 
-  void deleteCollection(RecipeCollectionEntity model);
+  Future<void> deleteCollection(RecipeCollectionEntity model);
 
   Future<void> addUserToCollection(
       RecipeCollectionEntity model, String userID, String name);
@@ -92,8 +92,8 @@ class RecipeManagerFirebase implements RecipeManager {
   }
 
   @override
-  void deleteCollection(RecipeCollectionEntity entity) {
-    sl.get<FirebaseProvider>().deleteRecipeCollection(entity.id);
+  Future<void> deleteCollection(RecipeCollectionEntity entity) {
+    return sl.get<FirebaseProvider>().deleteRecipeCollection(entity.id);
   }
 
   @override

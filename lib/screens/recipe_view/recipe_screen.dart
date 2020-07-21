@@ -8,6 +8,10 @@ import 'package:cookly/screens/recipe_view/ingredients_tab.dart';
 import 'package:cookly/screens/recipe_view/instructions_tab.dart';
 import 'package:cookly/screens/recipe_view/overview_tab.dart';
 import 'package:cookly/screens/recipe_view/similar_recipes_tab.dart';
+import 'package:cookly/services/abstract/pdf_export.dart';
+import 'package:cookly/services/abstract/pdf_generator.dart';
+import 'package:cookly/services/abstract/recipe_file_export.dart';
+import 'package:cookly/services/abstract/recipe_text_export.dart';
 import 'package:cookly/services/recipe_manager.dart';
 import 'package:cookly/services/service_locator.dart';
 import 'package:cookly/viewmodel/recipe_edit/recipe_edit_model.dart';
@@ -100,7 +104,7 @@ class RecipeScreen extends StatelessWidget {
                 onSelected: (value) {
                   switch (value) {
                     case PopupMenuButtonChoices.SHARE:
-                      kNotImplementedDialog(context);
+                      _showShareDialog(context, baseModel);
                       break;
                     case PopupMenuButtonChoices.EDIT:
                       Navigator.pushNamed(context, NewRecipeScreen.id,
@@ -193,6 +197,59 @@ class RecipeScreen extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  void _showShareDialog(BuildContext context, RecipeViewModel model) {
+    showDialog(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(translate(Keys.Ui_Delete)),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('§Share as'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text(
+                translate('§PDF'),
+              ),
+              onPressed: () async {
+                var doc = await sl.get<PDFGenerator>().generatePDF([model]);
+                sl.get<PDFExporter>().export(doc);
+                Navigator.pop(context);
+              },
+            ),
+            FlatButton(
+              child: Text(
+                translate('§Json File'),
+              ),
+              onPressed: () {
+                sl
+                    .get<RecipeFileExport>()
+                    .exportRecipesFromEntity([model.recipe]);
+                Navigator.pop(context);
+              },
+            ),
+            FlatButton(
+              child: Text(
+                translate('§Text (e.g. Chat)'),
+              ),
+              onPressed: () {
+                sl
+                    .get<RecipeTextExporter>()
+                    .exportRecipesAsText([model.recipe]);
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

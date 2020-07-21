@@ -100,9 +100,7 @@ class RecipeEditModel extends ChangeNotifier {
     }
 
     // then save the recipe
-    var documentID =
-        await sl.get<RecipeManager>().createOrUpdate(_targetRecipe);
-    return documentID;
+    return await sl.get<RecipeManager>().createOrUpdate(_targetRecipe);
   }
 
   void nextStep() {

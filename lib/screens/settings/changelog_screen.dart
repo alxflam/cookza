@@ -38,8 +38,6 @@ class ChangelogEntry extends StatelessWidget {
   static final kTitleStyle =
       TextStyle(fontWeight: FontWeight.bold, fontStyle: FontStyle.italic);
 
-  static final kBullet = '\u2022';
-
   const ChangelogEntry({this.version, this.date, this.changes});
 
   @override
@@ -79,6 +77,6 @@ class ChangelogEntry extends StatelessWidget {
   }
 
   Widget toChangeBullet(String text) {
-    return Text(kBullet + ' ' + text);
+    return Text(kBulletCharacter + ' ' + text);
   }
 }
