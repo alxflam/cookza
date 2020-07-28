@@ -6,7 +6,7 @@ import 'package:cookly/services/recipe_manager.dart';
 import 'package:cookly/services/service_locator.dart';
 
 abstract class RecipeFileExport {
-  // TODO: check for replacement by from entity method and then rename
+  // use exportRecipesFromEntity if entities are already loaded
   void exportRecipes(List<String> ids);
 
   void exportRecipesFromEntity(List<RecipeEntity> recipes);

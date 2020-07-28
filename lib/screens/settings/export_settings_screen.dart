@@ -1,5 +1,6 @@
 import 'package:cookly/constants.dart';
 import 'package:cookly/localization/keys.dart';
+import 'package:cookly/services/abstract/recipe_file_export.dart';
 import 'package:cookly/services/recipe_manager.dart';
 import 'package:cookly/viewmodel/recipe_selection_model.dart';
 import 'package:cookly/screens/recipe_selection_screen.dart';
@@ -52,10 +53,13 @@ class ExportSettingsScreen extends StatelessWidget {
             },
           ),
           ListTile(
-            title: Text('Backup'),
+            title: Text('§Backup'),
             leading: FaIcon(FontAwesomeIcons.fileArchive),
             onTap: () async {
-              kNotImplementedDialog(context);
+              // fetch all recipes the app currently stores
+              var recipes = await sl.get<RecipeManager>().getAllRecipes();
+              // export all the recipes
+              sl.get<RecipeFileExport>().exportRecipesFromEntity(recipes);
             },
           ),
         ],

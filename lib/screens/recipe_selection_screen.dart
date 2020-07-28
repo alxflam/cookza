@@ -126,7 +126,9 @@ class RecipeSelectionScreen extends StatelessWidget {
     switch (mode) {
       case SELECTION_MODE.EXPORT:
         return (context, model) async {
-          sl.get<RecipeFileExport>().exportRecipes(model.selectedRecipes);
+          sl
+              .get<RecipeFileExport>()
+              .exportRecipesFromEntity(model.selectedRecipeEntities);
           Navigator.pop(context);
         };
       case SELECTION_MODE.EXPORT_PDF:
