@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'dart:typed_data';
 
 import 'package:cookly/constants.dart';
 import 'package:cookly/model/entities/abstract/ingredient_note_entity.dart';
@@ -86,4 +87,10 @@ class RecipeEntityFirebase implements RecipeEntity {
 
   @override
   String get image => this._recipe.image;
+
+  @override
+  bool get hasInMemoryImage => false;
+
+  @override
+  Uint8List get inMemoryImage => throw UnimplementedError();
 }

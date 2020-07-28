@@ -657,13 +657,18 @@ class FirebaseProvider {
     return docRef.documentID;
   }
 
-  Future<void> importRecipes(List<RecipeEntity> recipes) async {
+  Future<List<RecipeEntity>> importRecipes(List<RecipeEntity> recipes) async {
+    List<RecipeEntity> ids = [];
     for (var recipe in recipes) {
       var target = MutableRecipe.of(recipe);
       target.id = null;
       target.recipeCollectionId = this.currentRecipeGroup;
-      await _createRecipe(target);
+      var id = await _createRecipe(target);
+      var mutableRecipe = MutableRecipe.of(recipe);
+      mutableRecipe.id = id;
+      ids.add(mutableRecipe);
     }
+    return ids;
   }
 
   Future<void> leaveMealPlanGroup(String id) async {

@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'dart:typed_data';
 
 import 'package:cookly/model/entities/abstract/ingredient_note_entity.dart';
 import 'package:cookly/model/entities/abstract/instruction_entity.dart';
@@ -11,7 +12,6 @@ abstract class RecipeEntity {
 
   String get name;
   String get description;
-  String get image;
   int get duration;
   int get servings;
   int get rating;
@@ -19,6 +19,10 @@ abstract class RecipeEntity {
   String get modificationDateFormatted;
   DateTime get creationDate;
   DateTime get modificationDate;
+
+  String get image;
+  bool get hasInMemoryImage;
+  Uint8List get inMemoryImage;
 
   DIFFICULTY get difficulty;
 

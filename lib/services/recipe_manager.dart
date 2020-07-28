@@ -1,6 +1,7 @@
 import 'package:cookly/model/entities/abstract/recipe_collection_entity.dart';
 import 'package:cookly/model/entities/abstract/recipe_entity.dart';
 import 'package:cookly/services/firebase_provider.dart';
+import 'package:cookly/services/image_manager.dart';
 import 'package:cookly/services/service_locator.dart';
 
 abstract class RecipeManager {
@@ -128,8 +129,19 @@ class RecipeManagerFirebase implements RecipeManager {
   }
 
   @override
-  Future<void> importRecipes(List<RecipeEntity> recipes) {
-    return sl.get<FirebaseProvider>().importRecipes(recipes);
+  Future<void> importRecipes(List<RecipeEntity> recipes) async {
+    for (var recipe in recipes) {
+      // first create the recipe
+      var ids = await sl.get<FirebaseProvider>().importRecipes([recipe]);
+      if (recipe.hasInMemoryImage) {
+        // then upload the image if there is an in memory image
+        sl
+            .get<ImageManager>()
+            .uploadRecipeImageFromBytes(ids.first.id, recipe.inMemoryImage);
+      }
+    }
+
+    return;
   }
 
   @override

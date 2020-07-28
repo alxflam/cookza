@@ -77,4 +77,15 @@ class RecipeEntityJson implements RecipeEntity {
   Uint8List get imageAsBytes {
     return base64.decode(_recipe.serializedImage);
   }
+
+  @override
+  bool get hasInMemoryImage => _recipe.serializedImage?.isNotEmpty ?? false;
+
+  @override
+  Uint8List get inMemoryImage {
+    if (!hasInMemoryImage) {
+      throw 'Recipe has no in memory image';
+    }
+    return imageAsBytes;
+  }
 }

@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'dart:typed_data';
 
 import 'package:cookly/constants.dart';
 import 'package:cookly/model/entities/abstract/ingredient_note_entity.dart';
@@ -24,6 +25,7 @@ class MutableRecipe implements RecipeEntity {
   int _rating;
   int _servings;
   String _image;
+  Uint8List _inMemoryImage;
 
   MutableRecipe.empty() {
     this._creationDate = DateTime.now();
@@ -44,6 +46,9 @@ class MutableRecipe implements RecipeEntity {
     this._duration = entity.duration;
     this._id = entity.id;
     this._recipeCollectionId = entity.recipeCollectionId;
+    if (entity.hasInMemoryImage) {
+      this._inMemoryImage = entity.inMemoryImage;
+    }
 
     _origIngredients = entity.ingredients;
     _origInstructions = entity.instructions;
@@ -179,5 +184,16 @@ class MutableRecipe implements RecipeEntity {
 
   set image(String value) {
     this._image = value;
+  }
+
+  @override
+  bool get hasInMemoryImage => this._inMemoryImage != null;
+
+  @override
+  Uint8List get inMemoryImage {
+    if (!hasInMemoryImage) {
+      throw "Recipe has no in memory image";
+    }
+    return this._inMemoryImage;
   }
 }

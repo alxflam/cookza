@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:cookly/model/entities/abstract/recipe_entity.dart';
 import 'package:cookly/services/local_storage.dart';
@@ -7,6 +8,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 
 abstract class ImageManager {
   Future<void> uploadRecipeImage(String recipeId, File file);
+  Future<void> uploadRecipeImageFromBytes(String recipeId, Uint8List bytes);
   Future<void> deleteRecipeImage(String recipeId);
   Future<String> getRecipeImageURL(String recipeId);
   String getRecipeImagePath(String recipeId);
@@ -33,24 +35,7 @@ class ImageManagerFirebase implements ImageManager {
 
   @override
   Future<void> uploadRecipeImage(String recipeId, File file) async {
-    StorageReference reference =
-        _storage.ref().child(getRecipeImagePath(recipeId));
-
-    // save local cache
-    var imageDirectory = await sl.get<StorageProvider>().getImageDirectory();
-    var cacheFile = File('$imageDirectory/$recipeId.jpg');
-    cacheFile.writeAsBytesSync(file.readAsBytesSync());
-
-    // upload the file
-    print('start upload');
-    StorageUploadTask uploadTask = reference.putFile(
-        file,
-        StorageMetadata(customMetadata: {
-          'recipe': recipeId,
-        }));
-
-    var result = await uploadTask.onComplete;
-    print('upload completed: ${result.error}');
+    return uploadRecipeImageFromBytes(recipeId, file.readAsBytesSync());
   }
 
   @override
@@ -98,5 +83,29 @@ class ImageManagerFirebase implements ImageManager {
     if (cacheFile.existsSync()) {
       cacheFile.deleteSync();
     }
+  }
+
+  @override
+  Future<void> uploadRecipeImageFromBytes(
+      String recipeId, Uint8List bytes) async {
+    StorageReference reference =
+        _storage.ref().child(getRecipeImagePath(recipeId));
+
+    // save local cache
+    var imageDirectory = await sl.get<StorageProvider>().getImageDirectory();
+    var cacheFile = File('$imageDirectory/$recipeId.jpg');
+
+    cacheFile.writeAsBytesSync(bytes);
+
+    // upload the file
+    print('start upload');
+    StorageUploadTask uploadTask = reference.putFile(
+        cacheFile,
+        StorageMetadata(customMetadata: {
+          'recipe': recipeId,
+        }));
+
+    var result = await uploadTask.onComplete;
+    print('upload completed: ${result.error}');
   }
 }
