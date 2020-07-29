@@ -210,14 +210,14 @@ class RecipeScreen extends StatelessWidget {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text('§Share as'),
+                Text(translate(Keys.Ui_Shareas)),
               ],
             ),
           ),
           actions: <Widget>[
             FlatButton(
               child: Text(
-                translate('§PDF'),
+                translate(Keys.Settings_Pdf),
               ),
               onPressed: () async {
                 var doc = await sl.get<PDFGenerator>().generatePDF([model]);
@@ -227,7 +227,7 @@ class RecipeScreen extends StatelessWidget {
             ),
             FlatButton(
               child: Text(
-                translate('§Json File'),
+                translate(Keys.Settings_Json),
               ),
               onPressed: () {
                 sl
@@ -238,7 +238,7 @@ class RecipeScreen extends StatelessWidget {
             ),
             FlatButton(
               child: Text(
-                translate('§Text (e.g. Chat)'),
+                translate(Keys.Settings_Text),
               ),
               onPressed: () {
                 sl

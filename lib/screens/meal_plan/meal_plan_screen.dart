@@ -59,7 +59,7 @@ class MealPlanScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           RaisedButton(
-                            child: Text('Select or create a meal plan group'),
+                            child: Text(translate(Keys.Ui_Mealplan_Select)),
                             onPressed: () => Scaffold.of(context).openDrawer(),
                           )
                         ],
@@ -377,7 +377,7 @@ class MealPlanScreen extends StatelessWidget {
           // builder is needed to get a new context for the Provider
           builder: (context) {
             return SimpleDialog(
-              title: Text('Choose Mode'),
+              title: Text(translate(Keys.Ui_Mealplan_Choosemode)),
               children: [
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -386,7 +386,7 @@ class MealPlanScreen extends StatelessWidget {
                     Flexible(
                       flex: 1,
                       child: RaisedButton(
-                        child: Text('Add Note'),
+                        child: Text(translate(Keys.Ui_Mealplan_Addnote)),
                         onPressed: () {
                           // close dialog
                           Navigator.pop(context);
@@ -399,7 +399,7 @@ class MealPlanScreen extends StatelessWidget {
                     Flexible(
                       flex: 1,
                       child: RaisedButton(
-                        child: Text('Add Recipe'),
+                        child: Text(translate(Keys.Ui_Mealplan_Addrecipe)),
                         onPressed: () async {
                           // fetch all recipes the app currently stores
                           var recipes =
@@ -444,7 +444,7 @@ class MealPlanScreen extends StatelessWidget {
           // builder is needed to get a new context for the Provider
           builder: (context) {
             return SimpleDialog(
-              title: Text('Add Note'),
+              title: Text(translate(Keys.Ui_Mealplan_Addnote)),
               children: [
                 SingleChildScrollView(
                   child: Column(

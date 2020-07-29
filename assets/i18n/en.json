@@ -58,6 +58,7 @@
         },
         "settings": "Settings",
         "share": "Share",
+        "shareAs": "Share as",
         "edit": "Edit",
         "delete": "Delete",
         "cancel": "Cancel",
@@ -77,7 +78,23 @@
         "editGroup": "Edit Group",
         "singleMember": "You're the only member of this group",
         "groupName": "Group Name",
-        "logout": "Logout"
+        "logout": "Logout",
+        "logoutAllDevices": "Logout from all devices",
+        "noRecipesFound": "No recipes found",
+        "removeRecipe": "Remove recipe",
+        "referToRecipe": "Refer to recipe",
+        "enterUsername": "Enter username",
+        "mealPlan": {
+            "select": "Select or create a meal plan group",
+            "chooseMode": "Choose mode",
+            "addNote": "Add note",
+            "addRecipe": "Add recipe"
+        },
+        "shoppingList": {
+            "from": "From",
+            "until": "Until"
+        },
+        "noSimilarRecipes": "No similar recipes found"
     },
     "settings": {
         "weekDurationDesc": "Set how many weeks are available for planning.",
@@ -89,7 +106,12 @@
         "getStarted": "Get Started",
         "appDescription": "Cookly enables you to store, collect and share your favourite recipes in a data-privacy friendly manner",
         "copyright": "© 2020 The Great Cookly Foundation",
-        "localImages": "Local Images"
+        "localImages": "Local Images",
+        "pdf": "PDF",
+        "json": "JSON",
+        "backup": "Backup",
+        "text": "Text (e.g. Chat)",
+        "imageDeleted": "Image deleted"
     },
     "onboarding": {},
     "unitOfMeasure": {

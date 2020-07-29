@@ -90,7 +90,7 @@ class MainAppDrawer extends StatelessWidget {
   ListTile _getWebAppListTile(BuildContext context) {
     if (kIsWeb) {
       return ListTile(
-          title: Text('${translate(Keys.Ui_Logout)}'),
+          title: Text(translate(Keys.Ui_Logout)),
           leading: Icon(Icons.power_settings_new),
           onTap: () async {
             var util = sl.get<FirebaseProvider>();

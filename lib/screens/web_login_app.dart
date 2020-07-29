@@ -108,7 +108,7 @@ class LogIns extends StatelessWidget {
                 SizedBox(
                   width: 20,
                 ),
-                Text('Log off from all devices'),
+                Text(translate(Keys.Ui_Logoutalldevices),
               ],
             ),
           ),

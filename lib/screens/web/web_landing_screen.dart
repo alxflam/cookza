@@ -132,7 +132,7 @@ class WebLandingPage extends StatelessWidget {
                 RaisedButton(
                   disabledColor: Colors.red.shade400,
                   color: Colors.green,
-                  child: Text('Proceed'),
+                  child: Text('§Proceed'),
                   onPressed: consent
                       ? () => Navigator.pushReplacementNamed(
                           context, WebLoginScreen.id)

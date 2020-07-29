@@ -54,7 +54,7 @@ class ShareAccountScreen extends StatelessWidget {
 
               if (id == null || name == null) {
                 return Center(
-                  child: Text('§Provide a username'),
+                  child: Text(translate(Keys.Ui_Enterusername)),
                 );
               }
 

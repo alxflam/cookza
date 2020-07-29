@@ -79,9 +79,9 @@ class OnBoardingScreen extends StatelessWidget {
       showSkipButton: true,
       skipFlex: 0,
       nextFlex: 0,
-      skip: const Text('Skip'),
-      next: const Icon(Icons.arrow_forward),
-      done: const Text('Done', style: TextStyle(fontWeight: FontWeight.w600)),
+      skip: Text('Skip'),
+      next: Icon(Icons.arrow_forward),
+      done: Text('Done', style: TextStyle(fontWeight: FontWeight.w600)),
       dotsDecorator: const DotsDecorator(
         size: Size(10.0, 10.0),
         color: Color(0xFFBDBDBD),

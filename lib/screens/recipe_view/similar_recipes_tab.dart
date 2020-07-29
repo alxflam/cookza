@@ -1,8 +1,10 @@
 import 'package:cookly/components/recipe_list_tile.dart';
+import 'package:cookly/localization/keys.dart';
 import 'package:cookly/services/service_locator.dart';
 import 'package:cookly/services/similarity_service.dart';
 import 'package:cookly/viewmodel/recipe_view/recipe_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 import 'package:provider/provider.dart';
 
 class SimilarRecipesScreen extends StatelessWidget {
@@ -15,7 +17,7 @@ class SimilarRecipesScreen extends StatelessWidget {
             if (snapshot.hasData) {
               if (snapshot.data.length == 0) {
                 return Center(
-                  child: Text('No similar recipes found'),
+                  child: Text(translate(Keys.Ui_Nosimilarrecipes)),
                 );
               }
 

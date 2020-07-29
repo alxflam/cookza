@@ -82,6 +82,8 @@ class Keys {
 
   static const String Ui_Share = 'ui.share';
 
+  static const String Ui_Shareas = 'ui.shareAs';
+
   static const String Ui_Edit = 'ui.edit';
 
   static const String Ui_Delete = 'ui.delete';
@@ -122,6 +124,30 @@ class Keys {
 
   static const String Ui_Logout = 'ui.logout';
 
+  static const String Ui_Logoutalldevices = 'ui.logoutAllDevices';
+
+  static const String Ui_Norecipesfound = 'ui.noRecipesFound';
+
+  static const String Ui_Removerecipe = 'ui.removeRecipe';
+
+  static const String Ui_Refertorecipe = 'ui.referToRecipe';
+
+  static const String Ui_Enterusername = 'ui.enterUsername';
+
+  static const String Ui_Mealplan_Select = 'ui.mealPlan.select';
+
+  static const String Ui_Mealplan_Choosemode = 'ui.mealPlan.chooseMode';
+
+  static const String Ui_Mealplan_Addnote = 'ui.mealPlan.addNote';
+
+  static const String Ui_Mealplan_Addrecipe = 'ui.mealPlan.addRecipe';
+
+  static const String Ui_Shoppinglist_From = 'ui.shoppingList.from';
+
+  static const String Ui_Shoppinglist_Until = 'ui.shoppingList.until';
+
+  static const String Ui_Nosimilarrecipes = 'ui.noSimilarRecipes';
+
   static const String Settings_Weekdurationdesc = 'settings.weekDurationDesc';
 
   static const String Settings_Oneweek = 'settings.oneWeek';
@@ -141,6 +167,16 @@ class Keys {
   static const String Settings_Copyright = 'settings.copyright';
 
   static const String Settings_Localimages = 'settings.localImages';
+
+  static const String Settings_Pdf = 'settings.pdf';
+
+  static const String Settings_Json = 'settings.json';
+
+  static const String Settings_Backup = 'settings.backup';
+
+  static const String Settings_Text = 'settings.text';
+
+  static const String Settings_Imagedeleted = 'settings.imageDeleted';
 
   static const String Unitofmeasure_Mmt = 'unitOfMeasure.MMT';
 

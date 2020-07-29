@@ -51,7 +51,7 @@ class RecipeFileImportImpl extends RecipeFileImport {
         reader.onError.listen((fileEvent) {
           Scaffold.of(context).showSnackBar(
             SnackBar(
-              content: Text('Error parsing the file'),
+              content: Text('§Error parsing the file'),
             ),
           );
         });

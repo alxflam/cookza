@@ -32,7 +32,7 @@ openShoppingListDialog(BuildContext context) {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
-                          Text('Von: '),
+                          Text('${translate(Keys.Ui_Shoppinglist_From)}:'),
                           Text(model.getDateFrom()),
                           IconButton(
                             icon: FaIcon(FontAwesomeIcons.minus),
@@ -52,7 +52,7 @@ openShoppingListDialog(BuildContext context) {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
-                          Text('Bis: '),
+                          Text('${translate(Keys.Ui_Shoppinglist_Until)}:'),
                           Text(model.getDateEnd()),
                           IconButton(
                             icon: FaIcon(FontAwesomeIcons.minus),

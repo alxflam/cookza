@@ -151,8 +151,8 @@ class NewIngredientScreen extends StatelessWidget {
                         ? Icon(Icons.delete)
                         : Icon(Icons.note_add),
                     label: model.isRecipeReference
-                        ? Text('Remove Reference')
-                        : Text('Refer to Recipe'),
+                        ? Text(translate(Keys.Ui_Removerecipe))
+                        : Text(translate(Keys.Ui_Refertorecipe)),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

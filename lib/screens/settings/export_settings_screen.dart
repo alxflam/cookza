@@ -24,7 +24,7 @@ class ExportSettingsScreen extends StatelessWidget {
       body: ListView(
         children: <Widget>[
           ListTile(
-            title: Text('Share with other cookly users'),
+            title: Text(translate(Keys.Settings_Json)),
             leading: FaIcon(FontAwesomeIcons.fileExport),
             onTap: () async {
               // fetch all recipes the app currently stores
@@ -38,7 +38,7 @@ class ExportSettingsScreen extends StatelessWidget {
             },
           ),
           ListTile(
-            title: Text('PDF'),
+            title: Text(translate(Keys.Settings_Pdf)),
             leading: FaIcon(FontAwesomeIcons.filePdf),
             onTap: () async {
               // fetch all recipes the app currently stores
@@ -53,7 +53,7 @@ class ExportSettingsScreen extends StatelessWidget {
             },
           ),
           ListTile(
-            title: Text('§Backup'),
+            title: Text(translate(Keys.Settings_Backup)),
             leading: FaIcon(FontAwesomeIcons.fileArchive),
             onTap: () async {
               // fetch all recipes the app currently stores

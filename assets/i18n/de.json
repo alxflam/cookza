@@ -58,6 +58,7 @@
         },
         "settings": "Einstellungen",
         "share": "Teilen",
+        "shareAs": "Teilen als",
         "edit": "Bearbeiten",
         "delete": "Löschen",
         "cancel": "Abbrechen",
@@ -77,7 +78,23 @@
         "editGroup": "Gruppe bearbeiten",
         "singleMember": "Sie sind das einzige Mitglied dieser Gruppe",
         "groupName": "Gruppenname",
-        "logout": "Abmelden"
+        "logout": "Abmelden",
+        "logoutAllDevices": "Von allen Geräten abmelden",
+        "noRecipesFound": "Keine Rezepte gefunden",
+        "removeRecipe": "Rezept entfernen",
+        "referToRecipe": "Rezept referenzieren",
+        "enterUsername": "Benutzername eingeben",
+        "mealPlan": {
+            "select": "Gruppe auswählen oder erstellen",
+            "chooseMode": "Art wählen",
+            "addNote": "Notiz hinzufügen",
+            "addRecipe": "Rezept hinzufügen"
+        },
+        "shoppingList": {
+            "from": "Von",
+            "until": "Bis"
+        },
+        "noSimilarRecipes": "Es wurden keine ähnlichen Rezepte gefunden"
     },
     "settings": {
         "weekDurationDesc": "Anzahl der Wochen, die im Essensplaner verfügbar sind.",
@@ -89,7 +106,12 @@
         "getStarted": "Erste Schritte",
         "appDescription": "Cookly ermöglicht es Ihnen, Ihre Lieblingsrezepte datenschutzfreundlich zu speichern, zu sammeln und zu teilen",
         "copyright": "© 2020 The Great Cookly Foundation",
-        "localImages": "Lokale Bilder"
+        "localImages": "Lokale Bilder",
+        "pdf": "PDF",
+        "json": "JSON",
+        "backup": "Backup",
+        "text": "Text (z.B. Chat)",
+        "imageDeleted": "Bild gelöscht"
     },
     "onboarding": {},
     "unitOfMeasure": {
