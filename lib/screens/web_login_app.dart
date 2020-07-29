@@ -108,7 +108,7 @@ class LogIns extends StatelessWidget {
                 SizedBox(
                   width: 20,
                 ),
-                Text(translate(Keys.Ui_Logoutalldevices),
+                Text(translate(Keys.Ui_Logoutalldevices)),
               ],
             ),
           ),

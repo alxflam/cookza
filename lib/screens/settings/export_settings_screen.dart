@@ -1,4 +1,3 @@
-import 'package:cookly/constants.dart';
 import 'package:cookly/localization/keys.dart';
 import 'package:cookly/services/abstract/recipe_file_export.dart';
 import 'package:cookly/services/recipe_manager.dart';

@@ -1,10 +1,8 @@
 import 'dart:io';
 
-import 'package:cookly/localization/keys.dart';
 import 'package:cookly/viewmodel/ocr_creation/recipe_ocr_model.dart';
 import 'package:cookly/viewmodel/ocr_creation/recipe_ocr_step.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 

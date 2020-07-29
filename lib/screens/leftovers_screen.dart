@@ -103,7 +103,7 @@ class _LeftoversBodyState extends State<LeftoversBody> {
                       Icons.warning,
                       color: Colors.orange,
                     ),
-                    title: Text(translate(Keys.Ui_Norecipesfound),
+                    title: Text(translate(Keys.Ui_Norecipesfound)),
                   ),
                 );
               } else {

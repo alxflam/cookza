@@ -1,10 +1,8 @@
 import 'package:cookly/services/abstract/shopping_list_text_export.dart';
 import 'package:cookly/services/service_locator.dart';
-import 'package:cookly/services/shopping_list_text_generator.dart';
 import 'package:cookly/viewmodel/shopping_list/shopping_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:share_extend/share_extend.dart';
 
 class ShoppingListDetailScreen extends StatelessWidget {
   static final String id = 'shoppingListDetail';

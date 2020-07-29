@@ -25,11 +25,6 @@ abstract class RecipeOCRStep<T extends RecipeEditStep> with ChangeNotifier {
 
   bool get isValid;
 
-  void _setPending(bool value) {
-    this._isPending = value;
-    notifyListeners();
-  }
-
   void analyse();
 }
 
