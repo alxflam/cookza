@@ -134,4 +134,23 @@ class RecipeSelectionModel extends ChangeNotifier {
     _countAllRecipes = _filtered.length;
     notifyListeners();
   }
+
+  void selectAll() {
+    _filtered.clear();
+    _countAllRecipes = _recipes.length;
+    _selected.clear();
+    for (var item in _recipes) {
+      _selected.add(item.id);
+    }
+    _countSelected = _selected.length;
+    notifyListeners();
+  }
+
+  void deselectAll() {
+    _filtered.clear();
+    _countAllRecipes = _recipes.length;
+    _selected.clear();
+    _countSelected = 0;
+    notifyListeners();
+  }
 }

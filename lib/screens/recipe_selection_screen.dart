@@ -44,6 +44,16 @@ class RecipeSelectionScreen extends StatelessWidget {
               title: _getTitle(model),
               actions: <Widget>[
                 IconButton(
+                    icon: Icon(Icons.select_all),
+                    onPressed: () {
+                      model.selectAll();
+                    }),
+                IconButton(
+                    icon: Icon(Icons.block),
+                    onPressed: () {
+                      model.deselectAll();
+                    }),
+                IconButton(
                     icon: FaIcon(_icon),
                     onPressed: () {
                       _onPressed(context, model);
