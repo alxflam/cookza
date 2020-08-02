@@ -1,7 +1,9 @@
 import 'package:cookly/localization/keys.dart';
 import 'package:cookly/routes.dart';
+import 'package:cookly/screens/settings/onboarding_screen.dart';
 import 'package:cookly/screens/web/web_landing_screen.dart';
 import 'package:cookly/services/navigator_service.dart';
+import 'package:cookly/services/shared_preferences_provider.dart';
 import 'package:cookly/viewmodel/settings/theme_model.dart';
 import 'package:cookly/screens/home_screen.dart';
 import 'package:cookly/services/service_locator.dart';
@@ -66,8 +68,23 @@ class CooklyMaterialApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: Provider.of<ThemeModel>(context).current,
       navigatorKey: sl.get<NavigatorService>().navigatorKey,
-      initialRoute: kIsWeb ? WebLandingPage.id : HomeScreen.id,
+      initialRoute: getInitialRoute(),
       routes: kRoutes,
     );
+  }
+
+  String getInitialRoute() {
+    if (kIsWeb) {
+      return WebLandingPage.id;
+    }
+
+    var prefs = sl.get<SharedPreferencesProvider>();
+    if (!prefs.introductionShown() ||
+        !prefs.acceptedDataPrivacyStatement() ||
+        !prefs.acceptedTermsOfUse()) {
+      return OnBoardingScreen.id;
+    }
+
+    return HomeScreen.id;
   }
 }

@@ -74,14 +74,14 @@ class WebLandingPage extends StatelessWidget {
               'v2020-07-alpha',
               style: TextStyle(fontStyle: FontStyle.italic),
             ),
-            _getConsenWidget(context),
+            _getConsentWidget(context),
           ],
         ),
       ),
     );
   }
 
-  Widget _getConsenWidget(BuildContext context) {
+  Widget _getConsentWidget(BuildContext context) {
     return Builder(
       builder: (context) {
         var consent = false;

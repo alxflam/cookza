@@ -178,6 +178,14 @@ class Keys {
 
   static const String Settings_Imagedeleted = 'settings.imageDeleted';
 
+  static const String Settings_Privacystatement = 'settings.privacyStatement';
+
+  static const String Settings_Termsofuse = 'settings.termsOfUse';
+
+  static const String Settings_Deletealldata = 'settings.deleteAllData';
+
+  static const String Settings_Support = 'settings.support';
+
   static const String Unitofmeasure_Mmt = 'unitOfMeasure.MMT';
 
   static const String Unitofmeasure_Cmt = 'unitOfMeasure.CMT';

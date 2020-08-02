@@ -111,7 +111,11 @@
         "json": "JSON",
         "backup": "Backup",
         "text": "Text (z.B. Chat)",
-        "imageDeleted": "Bild gelöscht"
+        "imageDeleted": "Bild gelöscht",
+        "privacyStatement": "Datenschutzerklärung",
+        "termsOfUse": "Nutzungsbedingungen",
+        "deleteAllData": "Alle Daten löschen",
+        "support": "Support"
     },
     "onboarding": {},
     "unitOfMeasure": {

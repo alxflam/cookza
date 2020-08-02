@@ -1,27 +1,75 @@
 import 'package:cookly/constants.dart';
+import 'package:cookly/screens/home_screen.dart';
+import 'package:cookly/services/service_locator.dart';
+import 'package:cookly/services/shared_preferences_provider.dart';
+import 'package:cookly/viewmodel/settings/onboarding_model.dart';
+import 'package:cookly/viewmodel/settings/theme_model.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:introduction_screen/introduction_screen.dart';
+import 'package:provider/provider.dart';
 
 class OnBoardingScreen extends StatelessWidget {
   static final String id = 'onBoarding';
 
   void _onIntroEnd(context) {
-    Navigator.pop(context);
+    // proceed to app and don't show onboarding anymore
+    sl.get<SharedPreferencesProvider>().setIntroductionShown(true);
+    if (Navigator.canPop(context)) {
+      Navigator.pop(context);
+    } else {
+      Navigator.pushReplacementNamed(context, HomeScreen.id);
+    }
   }
 
-  Widget _buildImage(IconData icon) {
-    return Align(
-      child: Icon(
-        icon,
-        size: 200,
+  Widget _buildImage(IconData icon, BuildContext context) {
+    return SafeArea(
+      child: Padding(
+        padding: EdgeInsets.all(25),
+        child: CircleAvatar(
+          backgroundColor: Provider.of<ThemeModel>(context).tileAccentColor,
+          child: Align(
+            child: FaIcon(
+              icon,
+              color: Colors.white,
+              size: 150,
+            ),
+            alignment: Alignment.center,
+          ),
+        ),
       ),
-      alignment: Alignment.bottomCenter,
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    bool showDoneButton = hasAcceptedAllTerms();
+    return IntroductionScreen(
+      pages: getPages(context),
+      // in replay mode, show the done button
+      // if user hasn't yet accepted terms, then hide it
+      onDone: showDoneButton ? () => _onIntroEnd(context) : () {},
+      showSkipButton: true,
+      skipFlex: 0,
+      nextFlex: 0,
+      skip: Text('Skip'),
+      next: Icon(Icons.arrow_forward),
+      done: showDoneButton
+          ? Text('Done', style: TextStyle(fontWeight: FontWeight.w600))
+          : Container(),
+      dotsDecorator: const DotsDecorator(
+        size: Size(8.0, 8.0),
+        color: Color(0xFFBDBDBD),
+        activeSize: Size(15.0, 10.0),
+        activeShape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(25.0)),
+        ),
+      ),
+    );
+  }
+
+  List<PageViewModel> getPages(BuildContext context) {
     const bodyStyle = TextStyle(fontSize: 19.0);
     const pageDecoration = PageDecoration(
       titleTextStyle: TextStyle(fontSize: 28.0, fontWeight: FontWeight.w700),
@@ -31,65 +79,155 @@ class OnBoardingScreen extends StatelessWidget {
       imagePadding: EdgeInsets.zero,
     );
 
-    return IntroductionScreen(
-      pages: [
-        PageViewModel(
-          title: "Welcome to Cookly",
-          body:
-              "Cookly let's you manage all your favorite recipes in a single app.",
-          image: _buildImage(kAppIconData),
-          decoration: pageDecoration,
-        ),
-        PageViewModel(
-          title: "Create Recipes",
-          body:
-              "Create recipes manually or let cookly examine a picture or a webpage to retrieve a recipe.",
-          image: _buildImage(kRecipesIconData),
-          decoration: pageDecoration,
-        ),
-        PageViewModel(
-          title: "Meal Planner",
-          body: "Plan the meals for the whole week.",
-          image: _buildImage(kMealPlannerIconData),
-          decoration: pageDecoration,
-        ),
-        PageViewModel(
-          title: "Shopping List",
-          body: "Generate a shopping list for your planned meals",
-          image: _buildImage(kShoppingListIconData),
-          decoration: pageDecoration,
-        ),
-        PageViewModel(
-          title: "Much more",
-          body:
-              "Further functionality include searching for similar recipes, filter recipes and sharing recipes with other cookly users",
-          image: _buildImage(Icons.share),
-          decoration: pageDecoration,
-        ),
-        PageViewModel(
-          title: "Data privacy",
-          body:
-              "We believe apps shouldn't compromise data privacy by enforcing users to create or use social media accounts. You don\'t have to use an online account to be able to use cookly.",
-          image: _buildImage(FontAwesomeIcons.userSecret),
-          decoration: pageDecoration,
-        ),
-      ],
-      onDone: () => _onIntroEnd(context),
-      //onSkip: () => _onIntroEnd(context), // You can override onSkip callback
-      showSkipButton: true,
-      skipFlex: 0,
-      nextFlex: 0,
-      skip: Text('Skip'),
-      next: Icon(Icons.arrow_forward),
-      done: Text('Done', style: TextStyle(fontWeight: FontWeight.w600)),
-      dotsDecorator: const DotsDecorator(
-        size: Size(10.0, 10.0),
-        color: Color(0xFFBDBDBD),
-        activeSize: Size(22.0, 10.0),
-        activeShape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(25.0)),
-        ),
+    var basePages = [
+      PageViewModel(
+        title: "Welcome to Cookly",
+        body:
+            "Cookly let's you manage all your favorite recipes in a single app.",
+        image: _buildImage(kAppIconData, context),
+        decoration: pageDecoration,
       ),
-    );
+      PageViewModel(
+        title: "Organize your recipes",
+        body:
+            "Create recipes manually or let cookly process a picture or a webpage to retrieve a recipe. Organize your recipes in groups and add friends to your recipe groups to share them",
+        image: _buildImage(kRecipesIconData, context),
+        decoration: pageDecoration,
+      ),
+      PageViewModel(
+        title: "Meal Planner",
+        body:
+            "Plan the meals for the whole week and share your meal plan with your household members.",
+        image: _buildImage(kMealPlannerIconData, context),
+        decoration: pageDecoration,
+      ),
+      PageViewModel(
+        title: "Shopping List",
+        body: "Generate a shopping list for your meal plan and share it",
+        image: _buildImage(kShoppingListIconData, context),
+        decoration: pageDecoration,
+      ),
+      PageViewModel(
+        title: "Much more to explore",
+        body:
+            "You can also search for similar recipes, find recipes by ingredients and share recipes with other cookly users - by PDF, Text or by adding them to your recipe groups",
+        image: _buildImage(Icons.share, context),
+        decoration: pageDecoration,
+      ),
+    ];
+
+    if (!hasAcceptedAllTerms()) {
+      sl
+          .get<SharedPreferencesProvider>()
+          .setAcceptedDataPrivacyStatement(false);
+      sl.get<SharedPreferencesProvider>().setAcceptedTermsOfUse(false);
+
+      // TODO: create a viewmodel to encapsulate the calls to setValue only after the button has been pressed...
+      basePages.add(
+        PageViewModel(
+          titleWidget: SafeArea(
+              child: Padding(
+                  padding: EdgeInsets.only(top: 20),
+                  child: Text('Data privacy and Terms of Use'))),
+          bodyWidget: ChangeNotifierProvider<OnboardingModel>.value(
+            value: OnboardingModel(),
+            child: SafeArea(
+              child: Padding(
+                padding: EdgeInsets.all(20),
+                child: Container(
+                  child: Consumer<OnboardingModel>(
+                    builder: (context, model, child) {
+                      return SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            Text(
+                                'Cookly stores your recipes and meal plans on a cloud database provided by Google.'),
+                            Text(
+                                'Users are authenticated anonymously, therefore no Login credentials are required.'),
+                            TextCheckbox(
+                                'Terms of Use',
+                                () => kNotImplementedDialog(context),
+                                () => model.termsOfUse,
+                                (bool value) => model.termsOfUse = value),
+                            TextCheckbox(
+                                'Data privacy statement',
+                                () => kNotImplementedDialog(context),
+                                () => model.privacyStatement,
+                                (bool value) => model.privacyStatement = value),
+                            RaisedButton(
+                              disabledColor: Colors.red.shade400,
+                              color: Colors.green,
+                              child: Text('§Proceed'),
+                              onPressed: model.acceptedAll
+                                  ? () {
+                                      sl
+                                          .get<SharedPreferencesProvider>()
+                                          .setAcceptedTermsOfUse(true);
+                                      sl
+                                          .get<SharedPreferencesProvider>()
+                                          .setAcceptedDataPrivacyStatement(
+                                              true);
+                                      this._onIntroEnd(context);
+                                    }
+                                  : null,
+                            )
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
+    return basePages;
+  }
+
+  bool hasAcceptedAllTerms() {
+    return sl.get<SharedPreferencesProvider>().acceptedDataPrivacyStatement() &&
+        sl.get<SharedPreferencesProvider>().acceptedTermsOfUse();
+  }
+}
+
+class TextCheckbox extends StatelessWidget {
+  final String title;
+  final Function onTap;
+  final Function getValue;
+  final Function setValue;
+
+  const TextCheckbox(this.title, this.onTap, this.getValue, this.setValue);
+
+  @override
+  Widget build(BuildContext context) {
+    return StatefulBuilder(builder: (context, setState) {
+      return CheckboxListTile(
+        activeColor: Colors.green,
+        value: getValue(),
+        onChanged: (value) {
+          setState(() {
+            setValue(value);
+          });
+        },
+        title: RichText(
+          text: TextSpan(
+            children: [
+              TextSpan(
+                  text: 'I have read and accept the ',
+                  style: TextStyle(color: Colors.white)),
+              TextSpan(
+                text: title,
+                style: TextStyle(color: Colors.blueAccent),
+                recognizer: TapGestureRecognizer()..onTap = this.onTap,
+              ),
+            ],
+          ),
+        ),
+        controlAffinity: ListTileControlAffinity.trailing,
+      );
+    });
   }
 }

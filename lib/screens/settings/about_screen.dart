@@ -3,11 +3,14 @@ import 'package:cookly/localization/keys.dart';
 import 'package:cookly/screens/settings/changelog_screen.dart';
 import 'package:cookly/screens/settings/onboarding_screen.dart';
 import 'package:cookly/screens/settings/saved_images_screen.dart';
+import 'package:cookly/services/profile_deleter.dart';
+import 'package:cookly/services/service_locator.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:package_info/package_info.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AboutScreen extends StatelessWidget {
   static final String id = 'about';
@@ -90,6 +93,76 @@ class AboutScreen extends StatelessWidget {
             ),
             AboutScreenDivider(),
             ListTile(
+              title: Text(translate(Keys.Settings_Localimages)),
+              leading: FaIcon(FontAwesomeIcons.image),
+              onTap: () {
+                Navigator.pushNamed(context, SavedImagesScreen.id);
+              },
+            ),
+            AboutScreenDivider(),
+            ListTile(
+              title: Text(translate(Keys.Settings_Support)),
+              subtitle: Text('§Hilfe und Feedback '),
+              leading: FaIcon(FontAwesomeIcons.questionCircle),
+              onTap: () {
+                launch("market://details?id=com.example.cookly");
+              },
+            ),
+            AboutScreenDivider(),
+            ListTile(
+              title: Text(translate(Keys.Settings_Deletealldata)),
+              leading: FaIcon(FontAwesomeIcons.eraser),
+              onTap: () {
+                // open confirmation dialog
+                showDialog(
+                  context: context,
+                  barrierDismissible: false, // user must tap button!
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text(translate(Keys.Settings_Deletealldata)),
+                      content: SingleChildScrollView(
+                        child: ListBody(
+                          children: <Widget>[
+                            Text(
+                              translate(
+                                Keys.Ui_Confirmdelete,
+                                args: {"0": "§all data"},
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      actions: <Widget>[
+                        FlatButton(
+                          child: Text(
+                            translate(Keys.Ui_Cancel),
+                          ),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                        FlatButton(
+                          child: Text(
+                            translate(Keys.Ui_Delete),
+                          ),
+                          color: Colors.red,
+                          onPressed: () async {
+                            // TODO: add progress indicator
+                            // add exeception handler and show error
+                            await sl.get<ProfileDeleter>().delete();
+                            Navigator.pop(context);
+                            Scaffold.of(context).showSnackBar(
+                                SnackBar(content: Text('§All data deleted')));
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
+            ),
+            SettingSectionHeader('§Legal'),
+            ListTile(
               leading: FaIcon(FontAwesomeIcons.fileAlt),
               title: Text(MaterialLocalizations.of(context).licensesPageTitle),
               onTap: () {
@@ -103,10 +176,18 @@ class AboutScreen extends StatelessWidget {
             ),
             AboutScreenDivider(),
             ListTile(
-              title: Text(translate(Keys.Settings_Localimages)),
-              leading: FaIcon(FontAwesomeIcons.image),
+              title: Text(translate(Keys.Settings_Privacystatement)),
+              leading: FaIcon(FontAwesomeIcons.userSecret),
               onTap: () {
-                Navigator.pushNamed(context, SavedImagesScreen.id);
+                kNotImplementedDialog(context);
+              },
+            ),
+            AboutScreenDivider(),
+            ListTile(
+              title: Text(translate(Keys.Settings_Termsofuse)),
+              leading: FaIcon(FontAwesomeIcons.envelopeOpenText),
+              onTap: () {
+                kNotImplementedDialog(context);
               },
             ),
           ],
@@ -117,16 +198,30 @@ class AboutScreen extends StatelessWidget {
 }
 
 class AboutScreenDivider extends StatelessWidget {
-  const AboutScreenDivider({
-    Key key,
-  }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20),
       child: Divider(
         height: 1,
+      ),
+    );
+  }
+}
+
+class SettingSectionHeader extends StatelessWidget {
+  final String _title;
+
+  const SettingSectionHeader(this._title);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: Text(
+        _title,
+        style: TextStyle(
+            color: Theme.of(context).accentColor, fontWeight: FontWeight.bold),
       ),
     );
   }

@@ -16,6 +16,15 @@ abstract class SharedPreferencesProvider {
 
   void setCurrentMealPlanCollection(String value);
   String getCurrentMealPlanCollection();
+
+  bool introductionShown();
+  void setIntroductionShown(bool value);
+
+  bool acceptedDataPrivacyStatement();
+  void setAcceptedDataPrivacyStatement(bool value);
+
+  bool acceptedTermsOfUse();
+  void setAcceptedTermsOfUse(bool value);
 }
 
 class SharedPreferencesProviderImpl implements SharedPreferencesProvider {
@@ -27,6 +36,11 @@ class SharedPreferencesProviderImpl implements SharedPreferencesProvider {
 
   static final String uomVisibilityKeySuffix = '.vis';
   static final String userName = 'userName';
+
+  static final String introductionShownKey = 'introShown';
+  static final String acceptedDataPrivacyStatementKey =
+      'privacyStatementAccepted';
+  static final String acceptedTermsOfUseKey = 'termsOfUseAccepted';
 
   String getUomVisibilityKey(String uom) => '$uom$uomVisibilityKeySuffix';
 
@@ -61,7 +75,7 @@ class SharedPreferencesProviderImpl implements SharedPreferencesProvider {
   @override
   bool isUnitOfMeasureVisible(String uom) {
     bool result = _prefs.getBool(getUomVisibilityKey(uom));
-    return result == null ? true : result;
+    return result ?? true;
   }
 
   @override
@@ -83,7 +97,7 @@ class SharedPreferencesProviderImpl implements SharedPreferencesProvider {
   @override
   String getUserName() {
     var result = _prefs.getString(userName);
-    return result != null ? result : '';
+    return result ?? '';
   }
 
   @override
@@ -100,5 +114,38 @@ class SharedPreferencesProviderImpl implements SharedPreferencesProvider {
   @override
   void setCurrentMealPlanCollection(String value) {
     this._prefs.setString(mealPlanCollection, value);
+  }
+
+  @override
+  bool introductionShown() {
+    var result = _prefs.getBool(introductionShownKey);
+    return result ?? false;
+  }
+
+  @override
+  void setIntroductionShown(bool value) {
+    this._prefs.setBool(introductionShownKey, value);
+  }
+
+  @override
+  bool acceptedDataPrivacyStatement() {
+    var result = _prefs.getBool(acceptedDataPrivacyStatementKey);
+    return result ?? false;
+  }
+
+  @override
+  void setAcceptedDataPrivacyStatement(bool value) {
+    this._prefs.setBool(acceptedDataPrivacyStatementKey, value);
+  }
+
+  @override
+  bool acceptedTermsOfUse() {
+    var result = _prefs.getBool(acceptedTermsOfUseKey);
+    return result ?? false;
+  }
+
+  @override
+  void setAcceptedTermsOfUse(bool value) {
+    this._prefs.setBool(acceptedTermsOfUseKey, value);
   }
 }
