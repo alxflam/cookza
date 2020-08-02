@@ -118,44 +118,53 @@ class AboutScreen extends StatelessWidget {
                   context: context,
                   barrierDismissible: false, // user must tap button!
                   builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: Text(translate(Keys.Settings_Deletealldata)),
-                      content: SingleChildScrollView(
-                        child: ListBody(
-                          children: <Widget>[
-                            Text(
-                              translate(
-                                Keys.Ui_Confirmdelete,
-                                args: {"0": "§all data"},
+                    return StatefulBuilder(
+                      builder: (context, setState) {
+                        return AlertDialog(
+                          title: Text(translate(Keys.Settings_Deletealldata)),
+                          content: SingleChildScrollView(
+                            child: ListBody(
+                              children: <Widget>[
+                                Text(
+                                  translate(
+                                    Keys.Ui_Confirmdelete,
+                                    args: {"0": "§all data"},
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          actions: <Widget>[
+                            FlatButton(
+                              child: Text(
+                                translate(Keys.Ui_Cancel),
                               ),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                            FlatButton(
+                              child: Text(
+                                translate(Keys.Ui_Delete),
+                              ),
+                              color: Colors.red,
+                              onPressed: () async {
+                                // TODO: add progress indicator
+                                try {
+                                  await sl.get<ProfileDeleter>().delete();
+                                  Navigator.pop(context);
+                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                      content: Text('§All data deleted')));
+                                } catch (e) {
+                                  Navigator.pop(context);
+                                  Scaffold.of(context).showSnackBar(
+                                      SnackBar(content: Text(e.toString())));
+                                }
+                              },
                             ),
                           ],
-                        ),
-                      ),
-                      actions: <Widget>[
-                        FlatButton(
-                          child: Text(
-                            translate(Keys.Ui_Cancel),
-                          ),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                        FlatButton(
-                          child: Text(
-                            translate(Keys.Ui_Delete),
-                          ),
-                          color: Colors.red,
-                          onPressed: () async {
-                            // TODO: add progress indicator
-                            // add exeception handler and show error
-                            await sl.get<ProfileDeleter>().delete();
-                            Navigator.pop(context);
-                            Scaffold.of(context).showSnackBar(
-                                SnackBar(content: Text('§All data deleted')));
-                          },
-                        ),
-                      ],
+                        );
+                      },
                     );
                   },
                 );

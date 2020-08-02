@@ -3,6 +3,7 @@ import 'package:cookly/model/entities/abstract/meal_plan_collection_entity.dart'
 import 'package:cookly/model/entities/abstract/meal_plan_entity.dart';
 import 'package:cookly/model/entities/abstract/recipe_collection_entity.dart';
 import 'package:cookly/model/entities/abstract/recipe_entity.dart';
+import 'package:cookly/model/entities/abstract/user_entity.dart';
 import 'package:cookly/model/entities/firebase/ingredient_note_entity.dart';
 import 'package:cookly/model/entities/firebase/instruction_entity.dart';
 import 'package:cookly/model/entities/firebase/meal_plan_collection_entity.dart';
@@ -19,6 +20,7 @@ import 'package:cookly/model/firebase/recipe/firebase_instruction.dart';
 import 'package:cookly/model/firebase/recipe/firebase_recipe.dart';
 import 'package:cookly/screens/web/web_landing_screen.dart';
 import 'package:cookly/services/abstract/platform_info.dart';
+import 'package:cookly/services/image_manager.dart';
 import 'package:cookly/services/meal_plan_manager.dart';
 import 'package:cookly/services/navigator_service.dart';
 import 'package:cookly/services/service_locator.dart';
@@ -515,22 +517,40 @@ class FirebaseProvider {
 
     var collection = _firestore.collection(RECIPE_GROUPS).document(id);
 
-    await _firestore.runTransaction((transaction) {
-      transaction.delete(collection);
+    var recipes = await _firestore
+        .collection(RECIPES)
+        .where('recipeGroupID', isEqualTo: this._currentRecipeGroup)
+        .getDocuments();
 
-      // TODO also delete all recipes and other associated data
+    for (var recipe in recipes.documents) {
+      sl.get<ImageManager>().deleteRecipeImage(recipe.documentID);
+    }
+
+    await _firestore.runTransaction((transaction) {
+      for (var recipe in recipes.documents) {
+        transaction.delete(recipe.reference);
+      }
+
+      transaction.delete(collection);
     });
   }
 
   Future<void> deleteMealPlanCollection(String id) async {
     // TODO: if collection has more than the current user, we should not allow deletion
 
-    var collection = _firestore.collection(MEAL_PLAN_GROUPS).document(id);
+    var reference = _firestore.collection(MEAL_PLAN_GROUPS).document(id);
+
+    var snapshot = await _firestore
+        .collection(MEAL_PLANS)
+        .where('groupID', isEqualTo: id)
+        .limit(1)
+        .getDocuments();
 
     await _firestore.runTransaction((transaction) {
-      transaction.delete(collection);
-
-      // TODO also delete all meal plans and other associated data
+      for (var mealPlanDoc in snapshot.documents) {
+        transaction.delete(mealPlanDoc.reference);
+      }
+      transaction.delete(reference);
     });
   }
 
