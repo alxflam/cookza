@@ -514,16 +514,17 @@ class FirebaseProvider {
 
   Future<void> deleteRecipeCollection(String id) async {
     // TODO: if collection has more than the current user, we should not allow deletion
-
     var collection = _firestore.collection(RECIPE_GROUPS).document(id);
 
     var recipes = await _firestore
         .collection(RECIPES)
-        .where('recipeGroupID', isEqualTo: this._currentRecipeGroup)
+        .where('recipeGroupID', isEqualTo: id)
         .getDocuments();
 
     for (var recipe in recipes.documents) {
-      sl.get<ImageManager>().deleteRecipeImage(recipe.documentID);
+      var entity = RecipeEntityFirebase.of(
+          FirebaseRecipe.fromJson(recipe.data, id: recipe.documentID));
+      sl.get<ImageManager>().deleteRecipeImage(entity);
     }
 
     await _firestore.runTransaction((transaction) {

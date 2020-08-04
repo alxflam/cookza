@@ -10,7 +10,7 @@ import 'package:flutter/services.dart';
 abstract class ImageManager {
   Future<void> uploadRecipeImage(String recipeId, File file);
   Future<void> uploadRecipeImageFromBytes(String recipeId, Uint8List bytes);
-  Future<void> deleteRecipeImage(String recipeId);
+  Future<void> deleteRecipeImage(RecipeEntity entity);
   Future<String> getRecipeImageURL(String recipeId);
   String getRecipeImagePath(String recipeId);
   Future<File> getRecipeImageFile(RecipeEntity entity);
@@ -21,9 +21,13 @@ class ImageManagerFirebase implements ImageManager {
   FirebaseStorage _storage = FirebaseStorage.instance;
 
   @override
-  Future<void> deleteRecipeImage(String recipeId) async {
+  Future<void> deleteRecipeImage(RecipeEntity entity) async {
+    if (entity.image == null || entity.image.isEmpty) {
+      return;
+    }
+
     StorageReference reference =
-        _storage.ref().child(getRecipeImagePath(recipeId));
+        _storage.ref().child(getRecipeImagePath(entity.id));
     try {
       // TODO: only call if really deleted... -> check in the model of the view
       await reference.delete();
