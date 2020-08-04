@@ -95,7 +95,7 @@ class RecipeEditModel extends ChangeNotifier {
             .get<ImageManager>()
             .uploadRecipeImage(_targetRecipe.id, imageStepModel.image);
         // set the image path on the recipe
-        _targetRecipe.image = path;
+        _targetRecipe.image = 'true';
       }
     }
 

@@ -123,10 +123,6 @@ class RecipeSelectionModel extends ChangeNotifier {
       for (var item in _recipes) {
         if (item.name.toLowerCase().contains(value.toLowerCase())) {
           _filtered.add(item);
-        } else {
-          if (_selected.contains(item.id)) {
-            _selected.remove(item.id);
-          }
         }
       }
     }
@@ -136,21 +132,20 @@ class RecipeSelectionModel extends ChangeNotifier {
   }
 
   void selectAll() {
-    _filtered.clear();
-    _countAllRecipes = _recipes.length;
-    _selected.clear();
-    for (var item in _recipes) {
-      _selected.add(item.id);
+    for (var item in _filtered) {
+      if (!_selected.contains(item.id)) {
+        _selected.add(item.id);
+      }
     }
     _countSelected = _selected.length;
     notifyListeners();
   }
 
   void deselectAll() {
-    _filtered.clear();
-    _countAllRecipes = _recipes.length;
-    _selected.clear();
-    _countSelected = 0;
+    for (var item in _filtered) {
+      _selected.remove(item.id);
+    }
+    _countSelected = _selected.length;
     notifyListeners();
   }
 }

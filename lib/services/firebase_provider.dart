@@ -763,4 +763,14 @@ class FirebaseProvider {
     var parsedDoc = FirebaseMealPlanDocument.fromJson(doc.data, doc.documentID);
     return MealPlanEntityFirebase.of(parsedDoc);
   }
+
+  Future<void> updateImageReference(String id, String value) async {
+    var docRef = _firestore.collection(RECIPES).document(id);
+    var doc = await docRef.get();
+
+    var firebaseRecipe = FirebaseRecipe.fromJson(doc.data, id: doc.documentID);
+    firebaseRecipe.image = value;
+
+    docRef.updateData({'image': value});
+  }
 }

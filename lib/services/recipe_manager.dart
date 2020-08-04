@@ -1,5 +1,6 @@
 import 'package:cookly/model/entities/abstract/recipe_collection_entity.dart';
 import 'package:cookly/model/entities/abstract/recipe_entity.dart';
+import 'package:cookly/model/entities/mutable/mutable_recipe.dart';
 import 'package:cookly/services/firebase_provider.dart';
 import 'package:cookly/services/image_manager.dart';
 import 'package:cookly/services/service_locator.dart';
@@ -132,12 +133,20 @@ class RecipeManagerFirebase implements RecipeManager {
   Future<void> importRecipes(List<RecipeEntity> recipes) async {
     for (var recipe in recipes) {
       // first create the recipe
-      var ids = await sl.get<FirebaseProvider>().importRecipes([recipe]);
+      MutableRecipe entity = MutableRecipe.of(recipe);
+      if (entity.hasInMemoryImage) {
+        entity.image = 'true';
+      }
+      var ids = await sl.get<FirebaseProvider>().importRecipes([entity]);
       if (recipe.hasInMemoryImage) {
         // then upload the image if there is an in memory image
         sl
             .get<ImageManager>()
             .uploadRecipeImageFromBytes(ids.first.id, recipe.inMemoryImage);
+        // update image reference field on recipe (to optimize network calls - only try to  fetch image if recipe has an image)
+        sl
+            .get<FirebaseProvider>()
+            .updateImageReference(ids.first.id, ids.first.id);
       }
     }
 

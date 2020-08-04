@@ -21,7 +21,7 @@ abstract class RecipeFileExport {
   }
 
   Future<RecipeList> entitiesToExportModel(List<RecipeEntity> recipes) async {
-    var result = [];
+    List<Recipe> result = [];
     for (var item in recipes) {
       var recipe = await Recipe.applyFrom(item);
       result.add(recipe);

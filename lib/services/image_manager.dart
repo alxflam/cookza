@@ -5,6 +5,7 @@ import 'package:cookly/model/entities/abstract/recipe_entity.dart';
 import 'package:cookly/services/local_storage.dart';
 import 'package:cookly/services/service_locator.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/services.dart';
 
 abstract class ImageManager {
   Future<void> uploadRecipeImage(String recipeId, File file);
@@ -23,8 +24,13 @@ class ImageManagerFirebase implements ImageManager {
   Future<void> deleteRecipeImage(String recipeId) async {
     StorageReference reference =
         _storage.ref().child(getRecipeImagePath(recipeId));
-    // TODO: only call if really deleted... -> check in the model of the view
-    await reference.delete();
+    try {
+      // TODO: only call if really deleted... -> check in the model of the view
+      await reference.delete();
+    } on PlatformException catch (e) {
+      print(e.message);
+      print(e);
+    }
   }
 
   @override
