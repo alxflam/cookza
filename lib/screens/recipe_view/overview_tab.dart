@@ -27,7 +27,7 @@ class OverviewTab extends StatelessWidget {
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         fit: BoxFit.fitWidth,
-                        alignment: FractionalOffset.topCenter,
+                        alignment: FractionalOffset.center,
                         image: FileImage(snapshot.data),
                       ),
                     ),
