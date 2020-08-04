@@ -88,7 +88,7 @@ class RecipeEditModel extends ChangeNotifier {
       var path = sl.get<ImageManager>().getRecipeImagePath(_targetRecipe.id);
       if (imageStepModel.image == null) {
         // delete the image if exists
-        sl.get<ImageManager>().deleteRecipeImage(_targetRecipe.id);
+        sl.get<ImageManager>().deleteRecipeImage(_targetRecipe);
       } else {
         // upload the image
         await sl
