@@ -45,7 +45,10 @@ class SimilarityService {
         }
       }
 
-      if (count > ing.length / 3) {
+      // recipes are similar if more than one third of the similar recipe's ingredients are also contained in the source recipe
+      // and also at least one third of the ingredients of the source recipe are contained in the similar recipe's ingredients
+
+      if (count > ing.length / 3 && count > ingredients.length / 3) {
         result.add(item);
       }
     }
