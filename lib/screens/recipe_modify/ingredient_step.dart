@@ -135,10 +135,8 @@ List<DataRow> _getIngredientRows(
                     as RecipeIngredientModel;
                 if (result != null) {
                   if (!result.isDeleted) {
-                    // todo: create single apply from method
                     model.setAmount(i, result.amount);
-                    // todo mutable ingredient
-                    // model.setIngredient(i, result.ingredient);
+                    model.setIngredient(i, result.ingredient);
                     model.setScale(i, result.unitOfMeasure);
                   } else {
                     model.removeIngredient(i);
