@@ -13,7 +13,7 @@ class MutableInstruction implements InstructionEntity {
 
   MutableInstruction.empty() {
     _step = null;
-    _image = '';
+    _image = null;
     _text = '';
   }
 

@@ -186,12 +186,12 @@ class RecipeScreen extends StatelessWidget {
               OverviewTab(),
               ListView(
                 children: <Widget>[
-                  ListOfIngredients(),
+                  IngredientsTab(),
                 ],
               ),
               ListView(
                 children: <Widget>[
-                  CookingInstructions(),
+                  InstructionsTab(),
                 ],
               ),
               SimilarRecipesScreen(),

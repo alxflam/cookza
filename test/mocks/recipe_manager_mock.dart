@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cookly/model/entities/abstract/recipe_entity.dart';
 import 'package:cookly/model/entities/abstract/recipe_collection_entity.dart';
+import 'package:cookly/model/entities/json/recipe_collection_entity.dart';
+import 'package:cookly/model/json/recipe_collection.dart';
 import 'package:cookly/services/recipe_manager.dart';
 
 class RecipeManagerMock implements RecipeManager {
@@ -38,12 +41,15 @@ class RecipeManagerMock implements RecipeManager {
 
   @override
   Future<RecipeCollectionEntity> createCollection(String name) {
-    throw UnimplementedError();
+    this._collections.add(RecipeCollectionEntityJson.of(RecipeCollection(
+        id: '1221', name: name, creationTimestamp: Timestamp.now())));
   }
 
   @override
   Future<String> createOrUpdate(RecipeEntity recipe) {
     _recipes.add(recipe);
+    // TODO: generate ID for tests if non is present
+    return Future.value(recipe.id);
   }
 
   @override

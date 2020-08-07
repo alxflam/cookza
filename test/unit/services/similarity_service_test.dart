@@ -6,8 +6,8 @@ import 'package:cookly/services/similarity_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 
-import '../mocks/recipe_manager_mock.dart';
-import '../utils/recipe_creator.dart';
+import '../../mocks/recipe_manager_mock.dart';
+import '../../utils/recipe_creator.dart';
 
 void main() {
   var mock = RecipeManagerMock();

@@ -71,9 +71,12 @@ class RecipeEditModel extends ChangeNotifier {
 
   Future<String> save() async {
     _validate();
+    print('validation succeeded');
+
     for (var model in _stepModels) {
       model.applyTo(_targetRecipe);
     }
+    print('model prepared for save');
 
     // retrieve the next document id if a new recipe is being created with an image
     // then we need to know the recipe id in advance to upload the image
@@ -81,6 +84,7 @@ class RecipeEditModel extends ChangeNotifier {
       _targetRecipe.id = sl
           .get<RecipeManager>()
           .getNextRecipeDocumentId(_targetRecipe.recipeCollectionId);
+      print('getNextRecipeDocumentId returned: ' + _targetRecipe.id);
     }
 
     if (imageStepModel.imageChanged) {

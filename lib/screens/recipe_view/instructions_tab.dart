@@ -2,7 +2,7 @@ import 'package:cookly/viewmodel/recipe_view/recipe_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class CookingInstructions extends StatelessWidget {
+class InstructionsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<RecipeViewModel>(
@@ -11,7 +11,7 @@ class CookingInstructions extends StatelessWidget {
           padding: EdgeInsets.symmetric(vertical: 20),
           child: Builder(
             builder: (context) {
-              List<Row> instructions = [];
+              List<Widget> instructions = [];
 
               for (var i = 0; i < model.instructions.length; i++) {
                 instructions.add(_buildStep(
@@ -30,35 +30,68 @@ class CookingInstructions extends StatelessWidget {
   }
 
   Widget _buildStep({int num, String content}) {
+    return InstructionRow(num, content);
+  }
+}
+
+class InstructionRow extends StatelessWidget {
+  const InstructionRow(this.num, this.content);
+
+  final int num;
+  final String content;
+
+  @override
+  Widget build(BuildContext context) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Padding(
-          padding: EdgeInsets.only(left: 10, top: 10),
-          child: Material(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5.0)),
-            color: Colors.grey,
-            child: Container(
-              padding: EdgeInsets.all(5.0),
-              child: Text(num.toString(),
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18.0)),
-            ),
-          ),
-        ),
+        LeadingStepNumber(num),
         SizedBox(
           width: 16.0,
         ),
-        Expanded(
-          child: Padding(
-            padding: EdgeInsets.only(top: 10),
-            child: Text(content),
-          ),
-        )
+        InstructionText(content)
       ],
+    );
+  }
+}
+
+class InstructionText extends StatelessWidget {
+  const InstructionText(this.content);
+
+  final String content;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Padding(
+        padding: EdgeInsets.only(top: 10),
+        child: Text(content),
+      ),
+    );
+  }
+}
+
+class LeadingStepNumber extends StatelessWidget {
+  const LeadingStepNumber(this.num);
+
+  final int num;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(left: 10, top: 10),
+      child: Material(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+        color: Colors.grey,
+        child: Container(
+          padding: EdgeInsets.all(5.0),
+          child: Text(num.toString(),
+              style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18.0)),
+        ),
+      ),
     );
   }
 }

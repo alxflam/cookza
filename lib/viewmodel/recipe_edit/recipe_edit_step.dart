@@ -77,6 +77,9 @@ class RecipeOverviewEditStep extends RecipeEditStep {
     if (difficulty == null) {
       throw 'Assign a Recipe difficulty';
     }
+    if (this.collection == null) {
+      throw 'Assign a Recipe group';
+    }
   }
 }
 

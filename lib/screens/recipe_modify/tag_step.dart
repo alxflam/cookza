@@ -13,7 +13,14 @@ Step getTagStep(BuildContext context) {
     isActive:
         Provider.of<RecipeEditModel>(context, listen: false).currentStep == 2,
     state: StepState.indexed,
-    content: ChangeNotifierProvider.value(
+    content: TagColumn(),
+  );
+}
+
+class TagColumn extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider.value(
       value: Provider.of<RecipeEditModel>(context, listen: false).tagStepModel,
       child: Consumer<RecipeTagEditStep>(
         builder: (context, model, child) {
@@ -60,8 +67,8 @@ Step getTagStep(BuildContext context) {
           );
         },
       ),
-    ),
-  );
+    );
+  }
 }
 
 _buildTagWidget(BuildContext context) {

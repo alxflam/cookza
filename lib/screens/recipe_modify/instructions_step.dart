@@ -11,7 +11,14 @@ Step getInstructionsStep(BuildContext context) {
     isActive:
         Provider.of<RecipeEditModel>(context, listen: false).currentStep == 4,
     state: StepState.indexed,
-    content: ChangeNotifierProvider.value(
+    content: InstructionsStepContent(),
+  );
+}
+
+class InstructionsStepContent extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider.value(
       value: Provider.of<RecipeEditModel>(context, listen: false)
           .instructionStepModel,
       child: Consumer<RecipeInstructionEditStep>(
@@ -30,8 +37,8 @@ Step getInstructionsStep(BuildContext context) {
           );
         },
       ),
-    ),
-  );
+    );
+  }
 }
 
 Column _getInstructionRows(

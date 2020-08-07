@@ -7,7 +7,7 @@ import 'package:flutter_translate/flutter_translate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
-class ListOfIngredients extends StatelessWidget {
+class IngredientsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<RecipeViewModel>(
@@ -40,7 +40,7 @@ class ListOfIngredients extends StatelessWidget {
 
   List<DataRow> _buildIngredientRows(
       BuildContext context, RecipeViewModel model) {
-    return model.ingredients
+    var widgets = model.ingredients
         .map(
           (item) => DataRow(
             cells: [
@@ -57,6 +57,7 @@ class ListOfIngredients extends StatelessWidget {
           ),
         )
         .toList();
+    return widgets;
   }
 }
 

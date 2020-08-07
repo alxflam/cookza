@@ -49,7 +49,7 @@ class RecipeEntityJson implements RecipeEntity {
   int get rating => _recipe.rating;
 
   @override
-  String get recipeCollectionId => '';
+  String get recipeCollectionId => _recipe.recipeCollection;
 
   @override
   int get servings => _recipe.servings;

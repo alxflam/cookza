@@ -218,14 +218,27 @@ class NewIngredientScreen extends StatelessWidget {
       ingredientController
           .addListener(() => model.name = ingredientController.text);
 
-      return Expanded(
-        child: TextFormField(
-          decoration: InputDecoration(
-              labelText: translatePlural(Keys.Recipe_Ingredient, 1)),
-          controller: ingredientController,
-          keyboardType: TextInputType.text,
-        ),
-      );
+      return IngredientNameTextInput(ingredientController: ingredientController);
     }
+  }
+}
+
+class IngredientNameTextInput extends StatelessWidget {
+  const IngredientNameTextInput({
+    @required this.ingredientController,
+  });
+
+  final TextEditingController ingredientController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: TextFormField(
+        decoration: InputDecoration(
+            labelText: translatePlural(Keys.Recipe_Ingredient, 1)),
+        controller: ingredientController,
+        keyboardType: TextInputType.text,
+      ),
+    );
   }
 }

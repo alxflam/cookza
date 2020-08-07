@@ -10,9 +10,12 @@ class RecipeCreator {
     return recipe;
   }
 
-  static MutableIngredientNote createIngredient(String name) {
+  static MutableIngredientNote createIngredient(String name,
+      {double amount, String uom}) {
     var ingredient = MutableIngredientNote.empty();
     ingredient.name = name;
+    ingredient.amount = amount ?? 0;
+    ingredient.unitOfMeasure = uom ?? '';
     return ingredient;
   }
 }

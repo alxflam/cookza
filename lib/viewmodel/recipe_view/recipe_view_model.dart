@@ -71,9 +71,6 @@ class RecipeViewModel extends ChangeNotifier {
   }
 
   List<RecipeIngredientModel> get ingredients {
-    // TODO make it a future
-    // if is null initial, then get original data+
-    // otherwise directly map
     return this._ingredients.map((e) => RecipeIngredientModel.of(e)).toList();
   }
 

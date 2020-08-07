@@ -15,6 +15,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 Future<void> saveModel(BuildContext context, RecipeEditModel model) async {
+  print('show progress indicator before save');
+
   try {
     showDialog(
       context: context,
@@ -37,7 +39,9 @@ Future<void> saveModel(BuildContext context, RecipeEditModel model) async {
       },
     );
 
+    print('calling save on the viewmodel');
     var id = await model.save();
+    print('save returned' + id);
     Navigator.pop(context);
 
     if (model.isCreate) {

@@ -17,7 +17,14 @@ Step getIngredientsStep(BuildContext context) {
     isActive:
         Provider.of<RecipeEditModel>(context, listen: false).currentStep == 3,
     state: StepState.indexed,
-    content: ChangeNotifierProvider.value(
+    content: IngredientStepContent(),
+  );
+}
+
+class IngredientStepContent extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider.value(
       value: Provider.of<RecipeEditModel>(context, listen: false)
           .ingredientStepModel,
       child: Consumer<RecipeIngredientEditStep>(
@@ -47,8 +54,8 @@ Step getIngredientsStep(BuildContext context) {
           );
         },
       ),
-    ),
-  );
+    );
+  }
 }
 
 Widget _getTableHeaderButtons(
