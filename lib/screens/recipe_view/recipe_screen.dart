@@ -33,7 +33,7 @@ class PopupMenuButtonChoices {
   static const EDIT =
       const PopupMenuButtonChoices._internal(Keys.Ui_Edit, Icons.edit);
   static const ADD_MEAL_PLAN = const PopupMenuButtonChoices._internal(
-      Keys.Functions_Mealplanner, Icons.edit);
+      Keys.Functions_Mealplanner, kMealPlannerIconData);
   static const DELETE =
       const PopupMenuButtonChoices._internal(Keys.Ui_Delete, Icons.delete);
 }
@@ -101,14 +101,16 @@ class RecipeScreen extends StatelessWidget {
                     ),
                   ];
                 },
-                onSelected: (value) {
+                onSelected: (value) async {
                   switch (value) {
                     case PopupMenuButtonChoices.SHARE:
                       _showShareDialog(context, baseModel);
                       break;
                     case PopupMenuButtonChoices.EDIT:
-                      Navigator.pushNamed(context, NewRecipeScreen.id,
+                      var result = await Navigator.pushNamed(
+                          context, NewRecipeScreen.id,
                           arguments: RecipeEditModel.modify(baseModel.recipe));
+
                       break;
                     case PopupMenuButtonChoices.ADD_MEAL_PLAN:
                       Navigator.pushNamed(context, MealPlanScreen.id,

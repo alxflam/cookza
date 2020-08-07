@@ -70,27 +70,23 @@ class SimilarityService {
 
   Future<List<RecipeEntity>> getRecipesContaining(
       List<String> targetIngredients) async {
-    final result = Future(() async {
-      var recipes = await sl.get<RecipeManager>().getAllRecipes();
-      List<RecipeEntity> result = [];
+    var recipes = await sl.get<RecipeManager>().getAllRecipes();
+    List<RecipeEntity> result = [];
 
-      for (var recipe in recipes) {
-        var containsAll = true;
-        var ing = await recipe.ingredients;
-        for (var ingredient in targetIngredients) {
-          if (!this.containsIngredient(ing, ingredient)) {
-            containsAll = false;
-            break;
-          }
-        }
-
-        if (containsAll) {
-          result.add(recipe);
+    for (var recipe in recipes) {
+      var containsAll = true;
+      var ing = await recipe.ingredients;
+      for (var ingredient in targetIngredients) {
+        if (!this.containsIngredient(ing, ingredient)) {
+          containsAll = false;
+          break;
         }
       }
 
-      return result;
-    });
+      if (containsAll) {
+        result.add(recipe);
+      }
+    }
 
     return result;
   }

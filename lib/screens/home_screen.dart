@@ -70,7 +70,7 @@ class HomeScreen extends StatelessWidget {
             child: Row(
               children: <Widget>[
                 Expanded(
-                  child: ReusableCard(
+                  child: MainFunctionCard(
                     onPress: () => Navigator.pushNamed(
                         context, NewRecipeScreen.id,
                         arguments: RecipeEditModel.create()),
@@ -82,7 +82,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 Expanded(
-                  child: ReusableCard(
+                  child: MainFunctionCard(
                     onPress: () =>
                         Navigator.pushNamed(context, OcrCreationScreen.id),
                     color: tileColor,
@@ -99,7 +99,7 @@ class HomeScreen extends StatelessWidget {
             child: Row(
               children: <Widget>[
                 Expanded(
-                  child: ReusableCard(
+                  child: MainFunctionCard(
                     onPress: () =>
                         Navigator.pushNamed(context, LeftoversScreen.id),
                     color: tileColor,
@@ -110,7 +110,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 Expanded(
-                  child: ReusableCard(
+                  child: MainFunctionCard(
                     onPress: () =>
                         Navigator.pushNamed(context, RecipeListScreen.id),
                     color: tileColor,
@@ -127,7 +127,7 @@ class HomeScreen extends StatelessWidget {
             child: Row(
               children: <Widget>[
                 Expanded(
-                  child: ReusableCard(
+                  child: MainFunctionCard(
                     onPress: () => Navigator.pushNamed(
                         context, ShoppingListOverviewScreen.id),
                     color: tileColor,
@@ -138,7 +138,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 Expanded(
-                  child: ReusableCard(
+                  child: MainFunctionCard(
                     onPress: () =>
                         Navigator.pushNamed(context, MealPlanScreen.id),
                     color: tileColor,
@@ -157,8 +157,8 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-class ReusableCard extends StatelessWidget {
-  ReusableCard({@required this.color, this.cardChild, this.onPress});
+class MainFunctionCard extends StatelessWidget {
+  MainFunctionCard({@required this.color, this.cardChild, this.onPress});
 
   final Color color;
   final Widget cardChild;
@@ -202,26 +202,6 @@ class IconContent extends StatelessWidget {
           label,
         )
       ],
-    );
-  }
-}
-
-class TopBarIconButton extends StatelessWidget {
-  final IconData icon;
-  final Function onTap;
-
-  TopBarIconButton({this.icon, this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    return FlatButton(
-      padding: EdgeInsets.all(0),
-      onPressed: onTap != null ? onTap : () {},
-      child: Icon(
-        this.icon,
-        color: Colors.white,
-        size: 20.0,
-      ),
     );
   }
 }

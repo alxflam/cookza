@@ -86,8 +86,8 @@ class RecipeManagerMock implements RecipeManager {
   }
 
   @override
-  // TODO: implement recipes
-  Stream<List<RecipeEntity>> get recipes => throw UnimplementedError();
+  Stream<List<RecipeEntity>> get recipes =>
+      Stream.fromIterable(Iterable.castFrom(this._recipes));
 
   @override
   Future<void> renameCollection(
