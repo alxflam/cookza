@@ -74,7 +74,12 @@ class RecipeInstructionOCRStep
 
   @override
   bool get isValid {
-    return this._model.instructions.isNotEmpty;
+    return this
+        ._model
+        .instructions
+        .where((e) => e.text.isNotEmpty)
+        .toList()
+        .isNotEmpty;
   }
 
   @override

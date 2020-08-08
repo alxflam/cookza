@@ -119,8 +119,10 @@ class ImageTextExtractorImpl implements ImageTextExtractor {
         .where((e) => e.text != null && e.text.length > 0)
         .map((e) => e.boundingBox.height)
         .toList();
-    var avgHeight = heights.reduce((a, b) => a + b) / text.blocks.length;
-    var maxHeight = heights.reduce(max);
+    var avgHeight = heights.isNotEmpty
+        ? heights.reduce((a, b) => a + b) / text.blocks.length
+        : 0;
+    var maxHeight = heights.isNotEmpty ? heights.reduce(max) : 0;
 
     for (var block in text.blocks) {
       var height = block.boundingBox.height;
