@@ -86,9 +86,9 @@
         "enterUsername": "Benutzername eingeben",
         "mealPlan": {
             "select": "Gruppe auswählen oder erstellen",
-            "chooseMode": "Art wählen",
-            "addNote": "Notiz hinzufügen",
-            "addRecipe": "Rezept hinzufügen"
+            "chooseMode": "Typ wählen",
+            "addNote": "Notiz",
+            "addRecipe": "Rezept"
         },
         "shoppingList": {
             "from": "Von",

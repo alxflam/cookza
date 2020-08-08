@@ -123,17 +123,20 @@ class MealPlanScreen extends StatelessWidget {
         previousWeek = currentWeek;
       }
 
-      var tile = _createTileForWeekDay(model, i, context);
+      var tile = _createTileForWeekDay(model, i, context, tileColor);
       tiles.add(tile);
     }
     return tiles;
   }
 
   Widget _createTileForWeekDay(
-      MealPlanViewModel model, int i, BuildContext context) {
+      MealPlanViewModel model, int i, BuildContext context, Color accentColor) {
     var body = DragTarget<MealDragModel>(
       builder: (context, accepted, rejected) {
+        // set different color to highlight where a drop would take place
+        var color = accepted.isNotEmpty ? accentColor : null;
         return Card(
+          color: color,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
