@@ -71,13 +71,10 @@ class RecipeIngredientModel extends ChangeNotifier {
   set name(String name) {
     this._note.ingredient.name = name;
     this._note.ingredient.recipeReference = null;
-    // notifyListeners();
   }
 
   set amount(double amount) {
     this._note.amount = amount;
-    // keep following listener deactivated
-    // notifyListeners();
   }
 
   set uom(UnitOfMeasure uom) {
