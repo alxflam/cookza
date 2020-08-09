@@ -4,6 +4,7 @@ import 'package:cookly/constants.dart';
 import 'package:cookly/localization/keys.dart';
 import 'package:cookly/model/entities/abstract/meal_plan_entity.dart';
 import 'package:cookly/model/entities/abstract/recipe_entity.dart';
+import 'package:cookly/screens/recipe_view/recipe_screen.dart';
 import 'package:cookly/screens/shopping_list/shopping_list_dialog.dart';
 import 'package:cookly/services/meal_plan_manager.dart';
 import 'package:cookly/services/recipe_manager.dart';
@@ -199,6 +200,17 @@ class MealPlanScreen extends StatelessWidget {
                   recipeModel.name,
                   style: TextStyle(fontSize: 14),
                 ),
+                onTap: () async {
+                  if (recipeModel.id != null) {
+                    var recipeEntity = await sl
+                        .get<RecipeManager>()
+                        .getRecipeById([recipeModel.id]);
+                    if (recipeEntity.length == 1) {
+                      Navigator.pushNamed(context, RecipeScreen.id,
+                          arguments: recipeEntity.first);
+                    }
+                  }
+                },
                 subtitle: recipeModel.servings != null
                     ? Text(
                         '${recipeModel.servings.toString()} ${translate(Keys.Recipe_Servings)}')
@@ -383,43 +395,49 @@ class MealPlanScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
-                    Flexible(
-                      flex: 1,
-                      child: RaisedButton(
-                        child: Text(translate(Keys.Ui_Mealplan_Addnote)),
-                        onPressed: () {
-                          // close dialog
-                          Navigator.pop(context);
+                    Padding(
+                      padding: EdgeInsets.all(10),
+                      child: Flexible(
+                        flex: 1,
+                        child: RaisedButton(
+                          child: Text(translate(Keys.Ui_Mealplan_Addnote)),
+                          onPressed: () {
+                            // close dialog
+                            Navigator.pop(context);
 
-                          // open note dialog
-                          _showAddNoteDialog(context, model, index);
-                        },
+                            // open note dialog
+                            _showAddNoteDialog(context, model, index);
+                          },
+                        ),
                       ),
                     ),
-                    Flexible(
-                      flex: 1,
-                      child: RaisedButton(
-                        child: Text(translate(Keys.Ui_Mealplan_Addrecipe)),
-                        onPressed: () async {
-                          // fetch all recipes the app currently stores
-                          var recipes =
-                              await sl.get<RecipeManager>().getAllRecipes();
+                    Padding(
+                      padding: EdgeInsets.all(10),
+                      child: Flexible(
+                        flex: 1,
+                        child: RaisedButton(
+                          child: Text(translate(Keys.Ui_Mealplan_Addrecipe)),
+                          onPressed: () async {
+                            // fetch all recipes the app currently stores
+                            var recipes =
+                                await sl.get<RecipeManager>().getAllRecipes();
 
-                          // create the view model with type reference ingredient
-                          var selModel = RecipeSelectionModel.forAddMealPlan(
-                              recipes
-                                  .map((e) => RecipeViewModel.of(e))
-                                  .toList());
-                          // navigate to the selection screen
-                          var result = await Navigator.pushNamed(
-                              context, RecipeSelectionScreen.id,
-                              arguments: selModel) as RecipeEntity;
-                          if (result != null && result.id.isNotEmpty) {
-                            model.addRecipeFromEntity(index, result);
-                          }
+                            // create the view model with type reference ingredient
+                            var selModel = RecipeSelectionModel.forAddMealPlan(
+                                recipes
+                                    .map((e) => RecipeViewModel.of(e))
+                                    .toList());
+                            // navigate to the selection screen
+                            var result = await Navigator.pushNamed(
+                                context, RecipeSelectionScreen.id,
+                                arguments: selModel) as RecipeEntity;
+                            if (result != null && result.id.isNotEmpty) {
+                              model.addRecipeFromEntity(index, result);
+                            }
 
-                          Navigator.pop(context);
-                        },
+                            Navigator.pop(context);
+                          },
+                        ),
                       ),
                     ),
                   ],
