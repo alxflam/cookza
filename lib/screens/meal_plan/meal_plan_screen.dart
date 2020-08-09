@@ -123,17 +123,20 @@ class MealPlanScreen extends StatelessWidget {
         previousWeek = currentWeek;
       }
 
-      var tile = _createTileForWeekDay(model, i, context);
+      var tile = _createTileForWeekDay(model, i, context, tileColor);
       tiles.add(tile);
     }
     return tiles;
   }
 
   Widget _createTileForWeekDay(
-      MealPlanViewModel model, int i, BuildContext context) {
+      MealPlanViewModel model, int i, BuildContext context, Color accentColor) {
     var body = DragTarget<MealDragModel>(
       builder: (context, accepted, rejected) {
+        // set different color to highlight where a drop would take place
+        var color = accepted.isNotEmpty ? accentColor : null;
         return Card(
+          color: color,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
@@ -165,7 +168,7 @@ class MealPlanScreen extends StatelessWidget {
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: _createRecipeTiles(model, i, context),
+                children: _createRecipeTiles(model, i, context, accentColor),
               ),
             ],
           ),
@@ -185,7 +188,7 @@ class MealPlanScreen extends StatelessWidget {
   }
 
   List<Widget> _createRecipeTiles(
-      MealPlanViewModel model, int i, BuildContext context) {
+      MealPlanViewModel model, int i, BuildContext context, Color accentColor) {
     List<Widget> tiles = [];
 
     for (var entry in model.entries[i].recipes) {
@@ -328,7 +331,7 @@ class MealPlanScreen extends StatelessWidget {
                 child: Transform.scale(
                   scale: 0.5,
                   child: Card(
-                    color: Colors.teal.shade300,
+                    color: accentColor,
                     child: ListTile(
                       title: Text(entry.name),
                       subtitle: entry.isNote

@@ -86,9 +86,9 @@
         "enterUsername": "Enter username",
         "mealPlan": {
             "select": "Select or create a meal plan group",
-            "chooseMode": "Choose mode",
-            "addNote": "Add note",
-            "addRecipe": "Add recipe"
+            "chooseMode": "Choose type",
+            "addNote": "Note",
+            "addRecipe": "Recipe"
         },
         "shoppingList": {
             "from": "From",
