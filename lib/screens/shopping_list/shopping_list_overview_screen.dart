@@ -1,3 +1,4 @@
+import 'package:cookly/constants.dart';
 import 'package:cookly/localization/keys.dart';
 import 'package:cookly/screens/shopping_list/shopping_list_detail_screen.dart';
 import 'package:cookly/screens/shopping_list/shopping_list_dialog.dart';
@@ -56,7 +57,8 @@ class ShoppingListOverviewScreen extends StatelessWidget {
         itemBuilder: (context, index) {
           var entry = model.getLists()[index];
           return ListTile(
-            title: Text('${entry.getDateFrom()} - ${entry.getDateEnd()}'),
+            title: Text(
+                '${kDateFormatter.format(entry.dateFrom)} - ${kDateFormatter.format(entry.dateEnd)}'),
             onTap: () {
               Navigator.pushNamed(context, ShoppingListDetailScreen.id,
                   arguments: entry);

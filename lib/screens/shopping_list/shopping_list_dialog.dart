@@ -1,3 +1,4 @@
+import 'package:cookly/constants.dart';
 import 'package:cookly/localization/keys.dart';
 import 'package:cookly/model/entities/abstract/meal_plan_collection_entity.dart';
 import 'package:cookly/screens/shopping_list/shopping_list_detail_screen.dart';
@@ -8,16 +9,64 @@ import 'package:cookly/viewmodel/shopping_list/shopping_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-openShoppingListDialog(BuildContext context) {
-  var _model = ShoppingListModel.empty();
+Future<void> openShoppingListDialog(BuildContext context) async {
+  var model = ShoppingListModel.empty();
+  var collections = await sl.get<MealPlanManager>().collections;
+  DateTimeRange dateRange;
 
-  showDialog(
+  if (collections.isEmpty) {
+    Scaffold.of(context)
+        .showSnackBar(SnackBar(content: Text('No meal plan available')));
+    return;
+  }
+
+  if (collections.length == 1) {
+    dateRange = await showDateRangePicker(
+        context: context,
+        firstDate: model.dateFrom,
+        lastDate: model.lastDate,
+        initialEntryMode: DatePickerEntryMode.calendar,
+        initialDateRange:
+            DateTimeRange(start: model.dateFrom, end: model.dateEnd));
+    if (dateRange == null) {
+      return;
+    }
+    model.dateEnd = dateRange.end;
+    model.dateFrom = dateRange.start;
+    model.collection = collections.first;
+  } else {
+    model = await _showMultipleGroupsDialog(context, collections, model);
+  }
+
+  // model is null if user cancelled multiple groups dialog
+  if (model == null || model.collection == null) {
+    return;
+  }
+
+  var entity = await sl
+      .get<MealPlanManager>()
+      .getMealPlanByCollectionID(model.collection.id);
+  MealPlanViewModel _mealPlan = MealPlanViewModel.of(entity);
+
+  var recipes = _mealPlan.getRecipesForInterval(model.dateFrom, model.dateEnd);
+
+  var newModel = ShoppingListModel.from(
+      model.dateFrom, model.dateEnd, model.collection, recipes);
+
+  Navigator.pushReplacementNamed(context, ShoppingListDetailScreen.id,
+      arguments: newModel);
+}
+
+Future<ShoppingListModel> _showMultipleGroupsDialog(BuildContext context,
+    List<MealPlanCollectionEntity> collections, ShoppingListModel model) async {
+  return await showDialog(
       context: context,
       builder: (context) {
         return ChangeNotifierProvider.value(
-          value: _model,
+          value: model,
           child: Consumer<ShoppingListModel>(builder: (context, model, _) {
             return SimpleDialog(
               children: <Widget>[
@@ -32,38 +81,31 @@ openShoppingListDialog(BuildContext context) {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
-                          Text('${translate(Keys.Ui_Shoppinglist_From)}:'),
-                          Text(model.getDateFrom()),
-                          IconButton(
-                            icon: FaIcon(FontAwesomeIcons.minus),
-                            onPressed: () {
-                              model.decrementDateFrom();
-                              // todo
-                            },
+                          Padding(
+                            padding: EdgeInsets.all(18),
+                            child: Column(
+                              children: [
+                                Text(formatDate(model.dateFrom)),
+                                Text(' - '),
+                                Text(formatDate(model.dateEnd)),
+                              ],
+                            ),
                           ),
                           IconButton(
-                            icon: FaIcon(FontAwesomeIcons.plus),
-                            onPressed: () {
-                              model.incrementDateFrom();
-                            },
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          Text('${translate(Keys.Ui_Shoppinglist_Until)}:'),
-                          Text(model.getDateEnd()),
-                          IconButton(
-                            icon: FaIcon(FontAwesomeIcons.minus),
-                            onPressed: () {
-                              model.decrementDateEnd();
-                            },
-                          ),
-                          IconButton(
-                            icon: FaIcon(FontAwesomeIcons.plus),
-                            onPressed: () {
-                              model.incrementDateEnd();
+                            icon: FaIcon(FontAwesomeIcons.edit),
+                            onPressed: () async {
+                              var dateRange = await showDateRangePicker(
+                                  context: context,
+                                  firstDate: model.dateFrom,
+                                  lastDate: model.lastDate,
+                                  initialEntryMode:
+                                      DatePickerEntryMode.calendar,
+                                  initialDateRange: DateTimeRange(
+                                      start: model.dateFrom,
+                                      end: model.dateEnd));
+
+                              model.dateEnd = dateRange.end;
+                              model.dateFrom = dateRange.start;
                             },
                           ),
                         ],
@@ -77,25 +119,7 @@ openShoppingListDialog(BuildContext context) {
                               child: Icon(Icons.check),
                               color: Colors.green,
                               onPressed: () async {
-                                var entity = await sl
-                                    .get<MealPlanManager>()
-                                    .getMealPlanByCollectionID(
-                                        model.collection.id);
-                                MealPlanViewModel _mealPlan =
-                                    MealPlanViewModel.of(entity);
-
-                                var recipes = _mealPlan.getRecipesForInterval(
-                                    model.dateFrom, model.dateEnd);
-
-                                var newModel = ShoppingListModel.from(
-                                    model.dateFrom,
-                                    model.dateEnd,
-                                    model.collection,
-                                    recipes);
-
-                                Navigator.pushReplacementNamed(
-                                    context, ShoppingListDetailScreen.id,
-                                    arguments: newModel);
+                                Navigator.pop(context, model);
                               },
                             ),
                           ),
@@ -109,6 +133,12 @@ openShoppingListDialog(BuildContext context) {
           }),
         );
       });
+}
+
+String formatDate(DateTime dateFrom) {
+  var day = DateFormat.E('de').format(dateFrom);
+  var date = kDateFormatter.format(dateFrom);
+  return day + ', ' + date;
 }
 
 Widget _getMealPlanGroupDropDown(

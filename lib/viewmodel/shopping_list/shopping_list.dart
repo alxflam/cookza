@@ -9,6 +9,7 @@ import 'package:cookly/services/shared_preferences_provider.dart';
 import 'package:cookly/services/unit_of_measure.dart';
 import 'package:cookly/viewmodel/meal_plan/recipe_meal_plan_model.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class ShoppingListOverviewModel extends ChangeNotifier {
   List<ShoppingListModel> _lists = [];
@@ -44,6 +45,7 @@ class ShoppingListModel extends ChangeNotifier {
       this._dateFrom, this._dateEnd, this._collection, this._recipeReferences) {
     _firstDate = DateTime.now();
     _lastDate = _firstDate.add(Duration(days: _shoppingListDays));
+    _dateEnd = initialEndDate;
     // TODO: null values due to notes - handle them earlier?
     // _recipeReferences.removeWhere((key, value) => key == null || value == null);
   }
@@ -129,45 +131,22 @@ class ShoppingListModel extends ChangeNotifier {
         this._dateEnd.month.toString();
   }
 
-  String getDateFrom() {
-    return kDateFormatter.format(_dateFrom);
-  }
-
-  String getDateEnd() {
-    return kDateFormatter.format(_dateEnd);
-  }
-
   DateTime get dateFrom => _dateFrom;
 
   DateTime get dateEnd => _dateEnd;
 
-  void decrementDateFrom() {
-    if (this._dateFrom.isAfter(DateTime.now())) {
-      this._dateFrom = this._dateFrom.subtract(Duration(days: 1));
-      notifyListeners();
-    }
+  DateTime get lastDate => _lastDate;
+
+  DateTime get initialEndDate {
+    // initial range is always till next sunday
+    int weekday = _dateFrom.weekday;
+    int days = weekday < 7 ? 7 - weekday : 7;
+    return _dateFrom.add(Duration(days: days));
   }
 
-  void incrementDateFrom() {
-    if (this._dateFrom.add(Duration(days: 1)).isBefore(_dateEnd)) {
-      this._dateFrom = this._dateFrom.add(Duration(days: 1));
-      notifyListeners();
-    }
-  }
+  set dateFrom(DateTime value) => _dateFrom = value;
 
-  void incrementDateEnd() {
-    if (this._dateEnd.add(Duration(days: 1)).isBefore(_lastDate)) {
-      this._dateEnd = this._dateEnd.add(Duration(days: 1));
-      notifyListeners();
-    }
-  }
-
-  void decrementDateEnd() {
-    if (this._dateEnd.subtract(Duration(days: 1)).isAfter(this._dateFrom)) {
-      this._dateEnd = this._dateEnd.subtract(Duration(days: 1));
-      notifyListeners();
-    }
-  }
+  set dateEnd(DateTime value) => _dateEnd = value;
 
   MealPlanCollectionEntity get collection => this._collection;
 
