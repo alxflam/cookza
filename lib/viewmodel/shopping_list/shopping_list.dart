@@ -41,6 +41,8 @@ class ShoppingListModel extends ChangeNotifier {
 
   MealPlanCollectionEntity _collection;
 
+  bool _initialized = false;
+
   ShoppingListModel.from(
       this._dateFrom, this._dateEnd, this._collection, this._recipeReferences) {
     _firstDate = DateTime.now();
@@ -99,6 +101,7 @@ class ShoppingListModel extends ChangeNotifier {
       _items.add(itemModel);
     }
 
+    this._initialized = true;
     return _items;
   }
 
@@ -114,6 +117,8 @@ class ShoppingListModel extends ChangeNotifier {
     });
     notifyListeners();
   }
+
+  bool get hasBeenInitialized => this._initialized;
 
   ShoppingListModel.of(ShoppingList model) {
     this._dateFrom = model.dateFrom;
@@ -153,6 +158,15 @@ class ShoppingListModel extends ChangeNotifier {
   set collection(MealPlanCollectionEntity value) {
     this._collection = value;
   }
+
+  void reorder(int newIndex, int oldIndex) {
+    if (newIndex > oldIndex) {
+      newIndex -= 1;
+    }
+    var item = _items.removeAt(oldIndex);
+    _items.insert(newIndex, item);
+    notifyListeners();
+  }
 }
 
 class ShoppingListItemModel extends ChangeNotifier {
@@ -189,5 +203,9 @@ class ShoppingListItemModel extends ChangeNotifier {
       this._parentModel._sortItems();
       notifyListeners();
     }
+  }
+
+  void reordered() {
+    notifyListeners();
   }
 }

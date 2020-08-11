@@ -28,10 +28,11 @@ class ShoppingListDetailScreen extends StatelessWidget {
                     })
               ],
             ),
-            body: FutureBuilder(
+            body: FutureBuilder<List<ShoppingListItemModel>>(
               future: model.getItems(),
               builder: (context, snapshot) {
-                if (snapshot.connectionState != ConnectionState.done) {
+                if (snapshot.connectionState != ConnectionState.done &&
+                    !model.hasBeenInitialized) {
                   return Center(
                     child: CircularProgressIndicator(),
                   );
@@ -41,20 +42,17 @@ class ShoppingListDetailScreen extends StatelessWidget {
                   return Container();
                 }
 
-                return ListView.separated(
-                  separatorBuilder: (BuildContext context, int index) =>
-                      Divider(
-                    height: 1,
-                  ),
-                  itemCount: snapshot.data.length,
-                  itemBuilder: (context, index) {
+                return ReorderableListView(
+                  children: List.generate(snapshot.data.length, (index) {
                     var _item = snapshot.data[index];
 
                     return ChangeNotifierProvider<ShoppingListItemModel>.value(
                       value: _item,
+                      key: ValueKey(_item.hashCode),
                       child: Consumer<ShoppingListItemModel>(
                         builder: (context, itemModel, _) {
                           return CheckboxListTile(
+                            key: ValueKey(itemModel.getName()),
                             value: itemModel.isNoLongerNeeded,
                             controlAffinity: ListTileControlAffinity.leading,
                             onChanged: (value) {
@@ -80,6 +78,9 @@ class ShoppingListDetailScreen extends StatelessWidget {
                         },
                       ),
                     );
+                  }),
+                  onReorder: (oldIndex, newIndex) {
+                    model.reorder(newIndex, oldIndex);
                   },
                 );
               },
