@@ -22,23 +22,6 @@ class RecipeEditModel extends ChangeNotifier {
     }
   }
 
-  RecipeEditModel.fromSteps(
-      RecipeOverviewEditStep overviewStep,
-      RecipeIngredientEditStep ingredientStep,
-      RecipeInstructionEditStep instructionStep) {
-    _mode = MODE.CREATE;
-    _targetRecipe = MutableRecipe.empty();
-    if (overviewStep != null) {
-      _stepModels[0] = overviewStep;
-    }
-    if (ingredientStep != null) {
-      _stepModels[3] = ingredientStep;
-    }
-    if (instructionStep != null) {
-      _stepModels[4] = instructionStep;
-    }
-  }
-
   MutableRecipe _targetRecipe;
   MODE _mode;
   List<RecipeEditStep> _stepModels = [
@@ -123,6 +106,15 @@ class RecipeEditModel extends ChangeNotifier {
     if (step < this.countSteps && step >= 0) {
       _currentStep = step;
     }
+    notifyListeners();
+  }
+
+  bool hasCurrentStepOCR() {
+    return currentStep == 0 || currentStep == 3 || currentStep == 4;
+  }
+
+  void applyCurrentStep(RecipeEditStep value) {
+    _stepModels[this.currentStep] = value;
     notifyListeners();
   }
 }

@@ -1,9 +1,15 @@
 import 'package:cookly/screens/ocr_creation/ocr_base_step.dart';
-import 'package:cookly/viewmodel/ocr_creation/recipe_ocr_model.dart';
+import 'package:cookly/viewmodel/ocr_creation/recipe_ocr_step.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-Step getIngredientsImageStep(BuildContext context) {
-  return getOCRImageStep(context, 1, 'Add Ingredients Image',
-      Provider.of<RecipeOCRModel>(context, listen: false).ingredientStepModel);
+class OCRIngredientsImageScreen extends StatelessWidget {
+  static final String id = 'ingredientsImage';
+
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider<RecipeOCRStep>.value(
+        value: RecipeIngredientOCRStep(),
+        child: OCRImageStep('Ingredients Image'));
+  }
 }

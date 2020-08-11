@@ -1,5 +1,8 @@
 import 'package:cookly/constants.dart';
 import 'package:cookly/localization/keys.dart';
+import 'package:cookly/screens/ocr_creation/ingredients_image_step.dart';
+import 'package:cookly/screens/ocr_creation/instruction_image_step.dart';
+import 'package:cookly/screens/ocr_creation/overview_image_step.dart';
 import 'package:cookly/screens/recipe_modify/image_step.dart';
 import 'package:cookly/screens/recipe_modify/ingredient_step.dart';
 import 'package:cookly/screens/recipe_modify/instructions_step.dart';
@@ -9,6 +12,7 @@ import 'package:cookly/screens/recipe_view/recipe_screen.dart';
 import 'package:cookly/services/recipe_manager.dart';
 import 'package:cookly/services/service_locator.dart';
 import 'package:cookly/viewmodel/recipe_edit/recipe_edit_model.dart';
+import 'package:cookly/viewmodel/recipe_edit/recipe_edit_step.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -141,6 +145,97 @@ class NewRecipeStepper extends StatelessWidget {
     ];
   }
 
+  ControlsWidgetBuilder getControlsBuilder() {
+    return (context, {onStepCancel, onStepContinue}) {
+      final ThemeData themeData = Theme.of(context);
+      final MaterialLocalizations localizations =
+          MaterialLocalizations.of(context);
+      Color cancelColor = Colors.black54;
+
+      var brightness = Theme.of(context).brightness;
+      if (brightness == Brightness.dark) {
+        cancelColor = Colors.white70;
+      }
+
+      var nextButton = FlatButton(
+        onPressed: () {
+          nextButtonPressed(context);
+        },
+        color: Theme.of(context).brightness == Brightness.dark
+            ? themeData.backgroundColor
+            : themeData.primaryColor,
+        textColor: Colors.white,
+        textTheme: ButtonTextTheme.normal,
+        child: Text(localizations.continueButtonLabel),
+      );
+
+      var cancelButton = Container(
+        margin: EdgeInsetsDirectional.only(start: 8.0),
+        child: FlatButton(
+          onPressed: () {
+            cancelButtonPressed(context);
+          },
+          textColor: cancelColor,
+          textTheme: ButtonTextTheme.normal,
+          child: Text(localizations.cancelButtonLabel),
+        ),
+      );
+
+      var ocrButton = Container(
+        margin: EdgeInsetsDirectional.only(start: 8.0),
+        child: FlatButton(
+            onPressed: () async {
+              var model = Provider.of<RecipeEditModel>(context, listen: false);
+
+              // navigate to the OCR screen
+              var targetScreen = '';
+              switch (model.currentStep) {
+                case 0:
+                  targetScreen = OCROverviewImageScreen.id;
+                  break;
+                case 3:
+                  targetScreen = OCRIngredientsImageScreen.id;
+                  break;
+                case 4:
+                  targetScreen = OCRInstructionsImageScreen.id;
+                  break;
+              }
+
+              var result = await Navigator.pushNamed(context, targetScreen);
+              if (result != null && result is RecipeEditStep) {
+                RecipeEditModel model =
+                    Provider.of<RecipeEditModel>(context, listen: false);
+                model.applyCurrentStep(result);
+              }
+            },
+            textColor: cancelColor,
+            textTheme: ButtonTextTheme.normal,
+            child: Icon(Icons.image)),
+      );
+
+      var buttonRow = Row(
+        children: <Widget>[],
+      );
+
+      var model = Provider.of<RecipeEditModel>(context);
+
+      buttonRow.children.add(nextButton);
+      buttonRow.children.add(cancelButton);
+
+      if (model.hasCurrentStepOCR()) {
+        buttonRow.children.add(ocrButton);
+      }
+
+      return Container(
+        margin: EdgeInsets.only(top: 16.0),
+        child: ConstrainedBox(
+          constraints: BoxConstraints.tightFor(height: 48.0),
+          child: buttonRow,
+        ),
+      );
+    };
+  }
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -157,6 +252,7 @@ class NewRecipeStepper extends StatelessWidget {
         onStepCancel: () {
           cancelButtonPressed(context);
         },
+        controlsBuilder: getControlsBuilder(),
       ),
     );
   }

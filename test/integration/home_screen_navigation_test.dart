@@ -1,7 +1,6 @@
 import 'package:cookly/screens/home_screen.dart';
 import 'package:cookly/screens/leftovers_screen.dart';
 import 'package:cookly/screens/meal_plan/meal_plan_screen.dart';
-import 'package:cookly/screens/ocr_creation/ocr_stepper.dart';
 import 'package:cookly/screens/recipe_list_screen.dart';
 import 'package:cookly/screens/recipe_modify/new_recipe_screen.dart';
 import 'package:cookly/services/abstract/receive_intent_handler.dart';
@@ -73,9 +72,5 @@ void main() {
 
   testWidgets('Navigate to leftovers', (WidgetTester tester) async {
     _verifyNavigation(tester, 'functions.leftovers', LeftoversScreen);
-  });
-
-  testWidgets('Navigate to text recognition', (WidgetTester tester) async {
-    _verifyNavigation(tester, 'functions.textRecognition', OcrCreationScreen);
   });
 }

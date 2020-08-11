@@ -5,7 +5,9 @@ import 'package:cookly/screens/leftovers_screen.dart';
 import 'package:cookly/screens/meal_plan/meal_plan_group_screen.dart';
 import 'package:cookly/screens/meal_plan/meal_plan_screen.dart';
 import 'package:cookly/screens/new_ingredient_screen.dart';
-import 'package:cookly/screens/ocr_creation/ocr_stepper.dart';
+import 'package:cookly/screens/ocr_creation/ingredients_image_step.dart';
+import 'package:cookly/screens/ocr_creation/instruction_image_step.dart';
+import 'package:cookly/screens/ocr_creation/overview_image_step.dart';
 import 'package:cookly/screens/recipe_list_screen.dart';
 import 'package:cookly/screens/recipe_modify/new_recipe_screen.dart';
 import 'package:cookly/screens/recipe_selection_screen.dart';
@@ -51,6 +53,8 @@ Map<String, Widget Function(BuildContext)> kRoutes = {
   MealPlanGroupScreen.id: (context) => MealPlanGroupScreen(),
   AboutScreen.id: (context) => AboutScreen(),
   WebLandingPage.id: (context) => WebLandingPage(),
-  OcrCreationScreen.id: (context) => OcrCreationScreen(),
   ChangelogScreen.id: (context) => ChangelogScreen(),
+  OCROverviewImageScreen.id: (context) => OCROverviewImageScreen(),
+  OCRIngredientsImageScreen.id: (context) => OCRIngredientsImageScreen(),
+  OCRInstructionsImageScreen.id: (context) => OCRInstructionsImageScreen()
 };
