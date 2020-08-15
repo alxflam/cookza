@@ -36,9 +36,6 @@ void main() {
     final mealPlanner = find.text('functions.mealPlanner');
     expect(mealPlanner, findsOneWidget);
 
-    final textreg = find.text('functions.textRecognition');
-    expect(textreg, findsOneWidget);
-
     final leftovers = find.text('functions.leftovers');
     expect(leftovers, findsOneWidget);
 

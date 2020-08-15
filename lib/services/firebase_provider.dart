@@ -3,6 +3,7 @@ import 'package:cookly/model/entities/abstract/meal_plan_collection_entity.dart'
 import 'package:cookly/model/entities/abstract/meal_plan_entity.dart';
 import 'package:cookly/model/entities/abstract/recipe_collection_entity.dart';
 import 'package:cookly/model/entities/abstract/recipe_entity.dart';
+import 'package:cookly/model/entities/abstract/shopping_list_entity.dart';
 import 'package:cookly/model/entities/abstract/user_entity.dart';
 import 'package:cookly/model/entities/firebase/ingredient_note_entity.dart';
 import 'package:cookly/model/entities/firebase/instruction_entity.dart';
@@ -10,6 +11,7 @@ import 'package:cookly/model/entities/firebase/meal_plan_collection_entity.dart'
 import 'package:cookly/model/entities/firebase/meal_plan_entity.dart';
 import 'package:cookly/model/entities/firebase/recipe_collection_entity.dart';
 import 'package:cookly/model/entities/firebase/recipe_entity.dart';
+import 'package:cookly/model/entities/firebase/shopping_list_entity.dart';
 import 'package:cookly/model/entities/mutable/mutable_recipe.dart';
 import 'package:cookly/model/firebase/collections/firebase_meal_plan_collection.dart';
 import 'package:cookly/model/firebase/collections/firebase_recipe_collection.dart';
@@ -18,6 +20,7 @@ import 'package:cookly/model/firebase/meal_plan/firebase_meal_plan.dart';
 import 'package:cookly/model/firebase/recipe/firebase_ingredient.dart';
 import 'package:cookly/model/firebase/recipe/firebase_instruction.dart';
 import 'package:cookly/model/firebase/recipe/firebase_recipe.dart';
+import 'package:cookly/model/firebase/shopping_list/firebase_shopping_list.dart';
 import 'package:cookly/screens/web/web_landing_screen.dart';
 import 'package:cookly/services/abstract/platform_info.dart';
 import 'package:cookly/services/image_manager.dart';
@@ -43,6 +46,8 @@ class FirebaseProvider {
   static const MEAL_PLAN_GROUPS = 'mealPlanGroups';
   static const MEAL_PLANS = 'mealPlans';
 
+  static const SHOPPING_LISTS = 'shoppingLists';
+
   String _webSessionHandshake;
 
   FirebaseUser _currentUser;
@@ -62,10 +67,36 @@ class FirebaseProvider {
         .toList());
   }
 
+  Future<List<ShoppingListEntity>> get shoppingListsAsList async {
+    var groups = (await mealPlanGroupsAsList).map((e) => e.id).toList();
+    var docs = await _shoppingListsQuery(groups).getDocuments();
+
+    return docs.documents
+        .map((e) => ShoppingListEntityFirebase.of(
+            FirebaseShoppingListDocument.fromJson(e.data, e.documentID)))
+        .toList();
+  }
+
+  Stream<List<ShoppingListEntity>> get shoppingListsAsStream {
+    // TODO: cache groups until visiting meal plan screen
+    var groups = [];
+
+    return _shoppingListsQuery(groups).snapshots().map((e) => e.documents
+        .map((e) => ShoppingListEntityFirebase.of(
+            FirebaseShoppingListDocument.fromJson(e.data, e.documentID)))
+        .toList());
+  }
+
   Query _mealPlanGroupsQuery() {
     return _firestore
         .collection(MEAL_PLAN_GROUPS)
         .where('users.$userUid', isGreaterThan: '');
+  }
+
+  Query _shoppingListsQuery(List<String> groups) {
+    return _firestore
+        .collection(SHOPPING_LISTS)
+        .where('groupID', whereIn: groups);
   }
 
   Future<List<MealPlanCollectionEntity>> get mealPlanGroupsAsList async {
@@ -773,5 +804,28 @@ class FirebaseProvider {
     firebaseRecipe.image = value;
 
     docRef.updateData({'image': value});
+  }
+
+  Future<ShoppingListEntity> createOrUpdateShoppingList(
+      ShoppingListEntity entity) async {
+    assert(entity.groupID != null && entity.groupID.isNotEmpty);
+    assert(entity.dateFrom != null);
+    assert(entity.dateUntil != null);
+    assert(entity.items != null && entity.items.isNotEmpty);
+
+    var json = FirebaseShoppingListDocument.from(entity).toJson();
+    DocumentReference document;
+
+    if (entity.id != null && entity.id.isNotEmpty) {
+      document = _firestore.collection(SHOPPING_LISTS).document(entity.id);
+      document.setData(json);
+    } else {
+      document = await _firestore.collection(SHOPPING_LISTS).add(json);
+    }
+
+    var model = await document.get();
+
+    return ShoppingListEntityFirebase.of(
+        FirebaseShoppingListDocument.fromJson(model.data, model.documentID));
   }
 }

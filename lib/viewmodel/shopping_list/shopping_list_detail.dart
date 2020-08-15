@@ -9,21 +9,6 @@ import 'package:cookly/services/shared_preferences_provider.dart';
 import 'package:cookly/services/unit_of_measure.dart';
 import 'package:cookly/viewmodel/meal_plan/recipe_meal_plan_model.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-
-class ShoppingListOverviewModel extends ChangeNotifier {
-  List<ShoppingListModel> _lists = [];
-
-  ShoppingListOverviewModel.of(List<ShoppingList> lists) {
-    for (var item in lists) {
-      _lists.add(ShoppingListModel.of(item));
-    }
-  }
-
-  List<ShoppingListModel> getLists() {
-    return _lists;
-  }
-}
 
 class ShoppingListModel extends ChangeNotifier {
   DateTime _dateFrom;
@@ -201,6 +186,7 @@ class ShoppingListItemModel extends ChangeNotifier {
     if (value != this._isNoLongerNeeded) {
       this._isNoLongerNeeded = value;
       this._parentModel._sortItems();
+
       notifyListeners();
     }
   }

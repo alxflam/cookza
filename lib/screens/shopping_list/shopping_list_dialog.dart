@@ -4,8 +4,10 @@ import 'package:cookly/model/entities/abstract/meal_plan_collection_entity.dart'
 import 'package:cookly/screens/shopping_list/shopping_list_detail_screen.dart';
 import 'package:cookly/services/meal_plan_manager.dart';
 import 'package:cookly/services/service_locator.dart';
+import 'package:cookly/services/shopping_list_manager.dart';
+import 'package:cookly/services/util/week_calculation.dart';
 import 'package:cookly/viewmodel/meal_plan/recipe_meal_plan_model.dart';
-import 'package:cookly/viewmodel/shopping_list/shopping_list.dart';
+import 'package:cookly/viewmodel/shopping_list/shopping_list_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -45,6 +47,16 @@ Future<void> openShoppingListDialog(BuildContext context) async {
   if (model == null || model.collection == null) {
     return;
   }
+
+  var existingPlans = await sl.get<ShoppingListManager>().shoppingListsAsList;
+  var matchedPlan = existingPlans.firstWhere(
+      (e) =>
+          e.groupID == model.collection.id &&
+          (e.dateFrom == model.dateFrom ||
+              (e.dateFrom.isBefore(DateTime.now()) &&
+                  isSameDay(model.dateFrom, DateTime.now()))) &&
+          e.dateUntil == model.dateEnd,
+      orElse: null);
 
   var entity = await sl
       .get<MealPlanManager>()

@@ -25,10 +25,16 @@ abstract class SharedPreferencesProvider {
 
   bool acceptedTermsOfUse();
   void setAcceptedTermsOfUse(bool value);
+
+  bool get showShoppingListCategories;
+  set showShoppingListCategories(bool value);
 }
 
 class SharedPreferencesProviderImpl implements SharedPreferencesProvider {
   SharedPreferences _prefs;
+
+  static final String showShoppingListCategoriesKey =
+      'showShoppingListCategories';
 
   static final String mealPlanServingsSizeKey = 'mealPlanServingsSize';
   static final String mealPlanWeeksKey = 'mealPlanWeeks';
@@ -147,5 +153,16 @@ class SharedPreferencesProviderImpl implements SharedPreferencesProvider {
   @override
   void setAcceptedTermsOfUse(bool value) {
     this._prefs.setBool(acceptedTermsOfUseKey, value);
+  }
+
+  @override
+  bool get showShoppingListCategories {
+    var result = _prefs.getBool(showShoppingListCategoriesKey);
+    return result ?? false;
+  }
+
+  @override
+  set showShoppingListCategories(bool value) {
+    this._prefs.setBool(showShoppingListCategoriesKey, value);
   }
 }

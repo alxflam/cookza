@@ -1,6 +1,6 @@
 import 'package:cookly/services/abstract/shopping_list_text_export.dart';
 import 'package:cookly/services/service_locator.dart';
-import 'package:cookly/viewmodel/shopping_list/shopping_list.dart';
+import 'package:cookly/viewmodel/shopping_list/shopping_list_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

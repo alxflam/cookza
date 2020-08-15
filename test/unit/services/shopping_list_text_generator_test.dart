@@ -1,5 +1,5 @@
 import 'package:cookly/services/shopping_list_text_generator.dart';
-import 'package:cookly/viewmodel/shopping_list/shopping_list.dart';
+import 'package:cookly/viewmodel/shopping_list/shopping_list_detail.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:mockito/mockito.dart';

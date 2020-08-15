@@ -3,6 +3,7 @@ import 'package:cookly/localization/keys.dart';
 import 'package:cookly/screens/settings/about_screen.dart';
 import 'package:cookly/screens/settings/export_settings_screen.dart';
 import 'package:cookly/screens/settings/meal_plan_settings_screen.dart';
+import 'package:cookly/screens/settings/shopping_list_settings_screen.dart';
 import 'package:cookly/screens/settings/theme_settings_screen.dart';
 import 'package:cookly/screens/settings/uom_visibility_settings_screen.dart';
 import 'package:cookly/services/abstract/recipe_file_import.dart';
@@ -56,6 +57,13 @@ class SettingsScreen extends StatelessWidget {
                 leading: FaIcon(kMealPlannerIconData),
                 onTap: () {
                   Navigator.pushNamed(context, MealPlanSettingsScreen.id);
+                },
+              ),
+              ListTile(
+                title: Text(translate(Keys.Functions_Shoppinglist)),
+                leading: FaIcon(kShoppingListIconData),
+                onTap: () {
+                  Navigator.pushNamed(context, ShoppingListSettingsScreen.id);
                 },
               ),
               ListTile(
