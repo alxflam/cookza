@@ -70,6 +70,36 @@ void main() {
     expect(recipeName, findsOneWidget);
   });
 
+  testWidgets('search with non existent ingredient',
+      (WidgetTester tester) async {
+    await setupScreen(tester);
+
+    var recipe = RecipeCreator.createRecipe('dummy');
+    var pepper = RecipeCreator.createIngredient('Pepper');
+
+    recipe.ingredientList = [pepper];
+
+    GetIt.I.get<RecipeManager>().createOrUpdate(recipe);
+
+    expect(find.byType(TextField), findsOneWidget);
+    await tester.enterText(find.byType(TextField), 'garlic');
+    await tester.testTextInput.receiveAction(TextInputAction.done);
+    await tester.pumpAndSettle();
+
+    var chipFinder = find.byType(InputChip);
+    expect(chipFinder, findsOneWidget);
+    expect(find.text('garlic'), findsOneWidget);
+
+    final recipeFinder = find.byType(RecipeListTile);
+    expect(recipeFinder, findsNothing);
+
+    final cardFinder = find.byType(Card);
+    expect(cardFinder, findsOneWidget);
+
+    final errorMessage = find.text('ui.noRecipesFound');
+    expect(errorMessage, findsOneWidget);
+  });
+
   testWidgets('search with multiple ingredients', (WidgetTester tester) async {
     await setupScreen(tester);
 

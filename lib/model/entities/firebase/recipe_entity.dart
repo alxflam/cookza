@@ -92,5 +92,5 @@ class RecipeEntityFirebase implements RecipeEntity {
   bool get hasInMemoryImage => false;
 
   @override
-  Uint8List get inMemoryImage => throw UnimplementedError();
+  Uint8List get inMemoryImage => null;
 }
