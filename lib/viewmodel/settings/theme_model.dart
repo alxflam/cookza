@@ -44,7 +44,7 @@ class ThemeModel with ChangeNotifier {
 
   String getCurrentThemeKey() {
     var theme = kAllThemes.entries
-        .firstWhere((e) => e.value == _currentTheme, orElse: () => null);
+        .firstWhere((e) => e.key == _currentTheme.id, orElse: () => null);
     if (theme != null) {
       return theme.key;
     }
