@@ -4,7 +4,6 @@ import 'package:cookly/model/entities/abstract/meal_plan_entity.dart';
 import 'package:cookly/model/entities/abstract/recipe_collection_entity.dart';
 import 'package:cookly/model/entities/abstract/recipe_entity.dart';
 import 'package:cookly/model/entities/abstract/shopping_list_entity.dart';
-import 'package:cookly/model/entities/abstract/user_entity.dart';
 import 'package:cookly/model/entities/firebase/ingredient_note_entity.dart';
 import 'package:cookly/model/entities/firebase/instruction_entity.dart';
 import 'package:cookly/model/entities/firebase/meal_plan_collection_entity.dart';
@@ -35,7 +34,7 @@ typedef OnAcceptWebLogin = void Function(BuildContext context);
 
 class FirebaseProvider {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final Firestore _firestore = Firestore.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   static const HANDSHAKES = 'handshakes';
   static const RECIPE_GROUPS = 'recipeGroups';
@@ -50,7 +49,7 @@ class FirebaseProvider {
 
   String _webSessionHandshake;
 
-  FirebaseUser _currentUser;
+  User _currentUser;
   String _ownerUserID;
 
   String _currentRecipeGroup;
@@ -60,20 +59,20 @@ class FirebaseProvider {
   String get currentRecipeGroup => _currentRecipeGroup;
 
   Stream<List<MealPlanCollectionEntity>> get mealPlanGroups {
-    return _mealPlanGroupsQuery().snapshots().map((e) => e.documents
+    return _mealPlanGroupsQuery().snapshots().map((e) => e.docs
         .where((e) => e.exists)
         .map((e) => MealPlanCollectionEntityFirebase.of(
-            FirebaseMealPlanCollection.fromJson(e.data, e.documentID)))
+            FirebaseMealPlanCollection.fromJson(e.data(), e.id)))
         .toList());
   }
 
   Future<List<ShoppingListEntity>> get shoppingListsAsList async {
     var groups = (await mealPlanGroupsAsList).map((e) => e.id).toList();
-    var docs = await _shoppingListsQuery(groups).getDocuments();
+    var docs = await _shoppingListsQuery(groups).get();
 
-    return docs.documents
+    return docs.docs
         .map((e) => ShoppingListEntityFirebase.of(
-            FirebaseShoppingListDocument.fromJson(e.data, e.documentID)))
+            FirebaseShoppingListDocument.fromJson(e.data(), e.id)))
         .toList();
   }
 
@@ -81,9 +80,9 @@ class FirebaseProvider {
     // TODO: cache groups until visiting meal plan screen
     var groups = [];
 
-    return _shoppingListsQuery(groups).snapshots().map((e) => e.documents
+    return _shoppingListsQuery(groups).snapshots().map((e) => e.docs
         .map((e) => ShoppingListEntityFirebase.of(
-            FirebaseShoppingListDocument.fromJson(e.data, e.documentID)))
+            FirebaseShoppingListDocument.fromJson(e.data(), e.id)))
         .toList());
   }
 
@@ -100,11 +99,11 @@ class FirebaseProvider {
   }
 
   Future<List<MealPlanCollectionEntity>> get mealPlanGroupsAsList async {
-    var docs = await _mealPlanGroupsQuery().getDocuments();
+    var docs = await _mealPlanGroupsQuery().get();
 
-    return docs.documents
+    return docs.docs
         .map((e) => MealPlanCollectionEntityFirebase.of(
-            FirebaseMealPlanCollection.fromJson(e.data, e.documentID)))
+            FirebaseMealPlanCollection.fromJson(e.data(), e.id)))
         .toList();
   }
 
@@ -119,18 +118,18 @@ class FirebaseProvider {
           ).toJson(),
         );
     var model = await document.get();
-    print('created meal plan collection ${document.documentID}');
+    print('created meal plan collection ${document.id}');
 
     return MealPlanCollectionEntityFirebase.of(
-        FirebaseMealPlanCollection.fromJson(model.data, model.documentID));
+        FirebaseMealPlanCollection.fromJson(model.data(), model.id));
   }
 
   Future<void> renameMealPlanCollection(
       String name, MealPlanCollectionEntity entity) async {
     return _firestore
         .collection(MEAL_PLAN_GROUPS)
-        .document(entity.id)
-        .setData({'name': name}, merge: true);
+        .doc(entity.id)
+        .set({'name': name}, SetOptions(merge: true));
   }
 
   /// retrieve all recipe collections the user can access
@@ -138,11 +137,11 @@ class FirebaseProvider {
     var docs = await _firestore
         .collection(MEAL_PLAN_GROUPS)
         .where('users.$userUid', isGreaterThan: '')
-        .getDocuments();
+        .get();
 
-    return docs.documents
+    return docs.docs
         .map((e) => MealPlanCollectionEntityFirebase.of(
-            FirebaseMealPlanCollection.fromJson(e.data, e.documentID)))
+            FirebaseMealPlanCollection.fromJson(e.data(), e.id)))
         .toList();
   }
 
@@ -150,13 +149,13 @@ class FirebaseProvider {
   Future<FirebaseProvider> init() async {
     if (kIsWeb) {
       // don't reuse cached sessions on web
-      var user = await _auth.currentUser();
+      var user = _auth.currentUser;
       if (user != null) {
         await _auth.signOut();
       }
     }
 
-    var user = await _auth.currentUser();
+    var user = _auth.currentUser;
     _currentUser = user;
     if (user == null) {
       await _signInAnonymously();
@@ -213,11 +212,7 @@ class FirebaseProvider {
     var document =
         await _firestore.collection(HANDSHAKES).add(newHandshakeEntry.toJson());
 
-    _firestore
-        .collection(HANDSHAKES)
-        .document(document.documentID)
-        .snapshots()
-        .listen(
+    _firestore.collection(HANDSHAKES).doc(document.id).snapshots().listen(
       (event) {
         if (!event.exists) {
           return _handleWebReceivedLogOff(context);
@@ -226,17 +221,16 @@ class FirebaseProvider {
       },
     );
 
-    _webSessionHandshake = document.documentID;
+    _webSessionHandshake = document.id;
     return _webSessionHandshake;
   }
 
   ///  signals the web app that access has been granted
   void enableWebLoginFor(String documentID) async {
     var document =
-        await _firestore.collection(HANDSHAKES).document(documentID).get();
+        await _firestore.collection(HANDSHAKES).doc(documentID).get();
 
-    var handshake =
-        FirebaseHandshake.fromJson(document.data, document.documentID);
+    var handshake = FirebaseHandshake.fromJson(document.data(), document.id);
 
     if (handshake.requestor == null || handshake.requestor.isEmpty) {
       print('no webclient ID');
@@ -248,25 +242,25 @@ class FirebaseProvider {
     var recipeGroupSnapshot = await _firestore
         .collection(RECIPE_GROUPS)
         .where('users.$userUid', isGreaterThan: '')
-        .getDocuments();
+        .get();
 
     var mealPlanGroupSnapshot = await _firestore
         .collection(MEAL_PLAN_GROUPS)
         .where('users.$userUid', isGreaterThan: '')
-        .getDocuments();
+        .get();
 
-    var handshakeRef = _firestore.collection(HANDSHAKES).document(documentID);
+    var handshakeRef = _firestore.collection(HANDSHAKES).doc(documentID);
 
     await _firestore.runTransaction((transaction) {
       // for each group we have access to, grant access to the given user
-      for (var item in recipeGroupSnapshot.documents) {
+      for (var item in recipeGroupSnapshot.docs) {
         transaction.update(
           item.reference,
           {'users.${handshake.requestor}': 'Web Session'},
         );
       }
 
-      for (var item in mealPlanGroupSnapshot.documents) {
+      for (var item in mealPlanGroupSnapshot.docs) {
         transaction.update(
           item.reference,
           {'users.${handshake.requestor}': 'Web Session'},
@@ -283,8 +277,8 @@ class FirebaseProvider {
         .collection(HANDSHAKES)
         .where('owner', isEqualTo: userUid)
         .snapshots()
-        .map((e) => e.documents
-            .map((e) => FirebaseHandshake.fromJson(e.data, e.documentID))
+        .map((e) => e.docs
+            .map((e) => FirebaseHandshake.fromJson(e.data(), e.id))
             .toList());
     return res;
   }
@@ -297,21 +291,21 @@ class FirebaseProvider {
         .where('requestor', isEqualTo: requestor)
         .where('owner', isEqualTo: _ownerUserID)
         .limit(1)
-        .getDocuments();
+        .get();
 
     var recipeGroupSnapshot = await _firestore
         .collection(RECIPE_GROUPS)
         .where('users.$userUid', isGreaterThan: '')
-        .getDocuments();
+        .get();
 
     var mealPlanGroupSnapshot = await _firestore
         .collection(MEAL_PLAN_GROUPS)
         .where('users.$userUid', isGreaterThan: '')
-        .getDocuments();
+        .get();
 
     await _firestore.runTransaction((transaction) {
       // for each group we have access to, grant access to the given user
-      for (var item in recipeGroupSnapshot.documents) {
+      for (var item in recipeGroupSnapshot.docs) {
         // setting the map value to null will remove the entry
         transaction.update(
           item.reference,
@@ -319,7 +313,7 @@ class FirebaseProvider {
         );
       }
 
-      for (var item in mealPlanGroupSnapshot.documents) {
+      for (var item in mealPlanGroupSnapshot.docs) {
         // setting the map value to null will remove the entry
         transaction.update(
           item.reference,
@@ -327,7 +321,7 @@ class FirebaseProvider {
         );
       }
 
-      transaction.delete(docs.documents.first.reference);
+      transaction.delete(docs.docs.first.reference);
     });
 
     var handshakes = await _firestore
@@ -335,9 +329,9 @@ class FirebaseProvider {
         .where('requestor', isEqualTo: requestor)
         .where('owner', isEqualTo: userUid)
         .limit(1)
-        .getDocuments();
+        .get();
 
-    handshakes.documents.forEach(
+    handshakes.docs.forEach(
       (element) {
         element.reference.delete();
       },
@@ -351,18 +345,18 @@ class FirebaseProvider {
     var recipeGroupSnapshot = await _firestore
         .collection(RECIPE_GROUPS)
         .where('users.$userUid', isGreaterThan: '')
-        .getDocuments();
+        .get();
 
     var mealPlanGroupSnapshot = await _firestore
         .collection(MEAL_PLAN_GROUPS)
         .where('users.$userUid', isGreaterThan: '')
-        .getDocuments();
+        .get();
 
     return await _firestore.runTransaction((transaction) {
-      for (var item in handshakeSnapshots.documents) {
-        var requestor = item.data['requestor'];
+      for (var item in handshakeSnapshots.docs) {
+        var requestor = item.data()['requestor'];
 
-        for (var item in recipeGroupSnapshot.documents) {
+        for (var item in recipeGroupSnapshot.docs) {
           // setting the map value to null will remove the entry
           transaction.update(
             item.reference,
@@ -370,7 +364,7 @@ class FirebaseProvider {
           );
         }
 
-        for (var item in mealPlanGroupSnapshot.documents) {
+        for (var item in mealPlanGroupSnapshot.docs) {
           // setting the map value to null will remove the entry
           transaction.update(
             item.reference,
@@ -388,7 +382,7 @@ class FirebaseProvider {
     var handshakeSnapshots = await _firestore
         .collection(HANDSHAKES)
         .where('owner', isEqualTo: userUid)
-        .getDocuments();
+        .get();
     return handshakeSnapshots;
   }
 
@@ -402,18 +396,18 @@ class FirebaseProvider {
           ).toJson(),
         );
     var model = await document.get();
-    print('created recipe collection ${document.documentID}');
+    print('created recipe collection ${document.id}');
 
     return RecipeCollectionEntityFirebase.of(
-        FirebaseRecipeCollection.fromJson(model.data, model.documentID));
+        FirebaseRecipeCollection.fromJson(model.data(), model.id));
   }
 
   Future<void> renameRecipeCollection(
       String name, RecipeCollectionEntity entity) async {
     return _firestore
         .collection(RECIPE_GROUPS)
-        .document(entity.id)
-        .setData({'name': name}, merge: true);
+        .doc(entity.id)
+        .set({'name': name}, SetOptions(merge: true));
   }
 
   /// retrieve all recipe collections the user can access
@@ -421,11 +415,11 @@ class FirebaseProvider {
     var docs = await _firestore
         .collection(RECIPE_GROUPS)
         .where('users.$userUid', isGreaterThan: '')
-        .getDocuments();
+        .get();
 
-    return docs.documents
+    return docs.docs
         .map((e) => RecipeCollectionEntityFirebase.of(
-            FirebaseRecipeCollection.fromJson(e.data, e.documentID)))
+            FirebaseRecipeCollection.fromJson(e.data(), e.id)))
         .toList();
   }
 
@@ -434,9 +428,9 @@ class FirebaseProvider {
         .collection(RECIPE_GROUPS)
         .where('users.$userUid', isGreaterThan: '')
         .snapshots()
-        .map((e) => e.documents
+        .map((e) => e.docs
             .map((e) => RecipeCollectionEntityFirebase.of(
-                FirebaseRecipeCollection.fromJson(e.data, e.documentID)))
+                FirebaseRecipeCollection.fromJson(e.data(), e.id)))
             .toList());
   }
 
@@ -447,9 +441,9 @@ class FirebaseProvider {
         .where('recipeGroupID', isEqualTo: this._currentRecipeGroup)
         .orderBy('name')
         .snapshots()
-        .map((e) => e.documents
+        .map((e) => e.docs
             .map((e) => RecipeEntityFirebase.of(
-                FirebaseRecipe.fromJson(e.data, id: e.documentID)))
+                FirebaseRecipe.fromJson(e.data(), id: e.id)))
             .toList());
   }
 
@@ -466,34 +460,34 @@ class FirebaseProvider {
     var instructions = await FirebaseInstruction.from(recipe);
 
     // using batch instead of transaction as it should be possible to create recipes in offline mode
-    var recipeDocRef = _firestore.collection(RECIPES).document();
+    var recipeDocRef = _firestore.collection(RECIPES).doc();
 
     var ingredientsDocRef =
-        _firestore.collection(INGREDIENTS).document(recipeDocRef.documentID);
+        _firestore.collection(INGREDIENTS).doc(recipeDocRef.id);
 
     var instructionsDocRef =
-        _firestore.collection(INSTRUCTIONS).document(recipeDocRef.documentID);
+        _firestore.collection(INSTRUCTIONS).doc(recipeDocRef.id);
 
-    baseRecipe.documentID = recipeDocRef.documentID;
-    baseRecipe.ingredientsID = ingredientsDocRef.documentID;
-    baseRecipe.instructionsID = instructionsDocRef.documentID;
+    baseRecipe.documentID = recipeDocRef.id;
+    baseRecipe.ingredientsID = ingredientsDocRef.id;
+    baseRecipe.instructionsID = instructionsDocRef.id;
 
     var batch = _firestore.batch();
-    batch.setData(recipeDocRef, baseRecipe.toJson());
+    batch.set(recipeDocRef, baseRecipe.toJson());
 
     var ingredientsDoc =
-        FirebaseIngredientDocument.from(ingredients, recipeDocRef.documentID);
+        FirebaseIngredientDocument.from(ingredients, recipeDocRef.id);
 
-    batch.setData(ingredientsDocRef, ingredientsDoc.toJson());
+    batch.set(ingredientsDocRef, ingredientsDoc.toJson());
 
     var instructionsDoc =
-        FirebaseInstructionDocument.from(instructions, recipeDocRef.documentID);
+        FirebaseInstructionDocument.from(instructions, recipeDocRef.id);
 
-    batch.setData(instructionsDocRef, instructionsDoc.toJson());
+    batch.set(instructionsDocRef, instructionsDoc.toJson());
 
     await batch.commit();
 
-    return recipeDocRef.documentID;
+    return recipeDocRef.id;
   }
 
   Future<String> _updateRecipe(RecipeEntity recipe) async {
@@ -501,24 +495,24 @@ class FirebaseProvider {
     var ingredients = await FirebaseIngredient.from(recipe);
     var instructions = await FirebaseInstruction.from(recipe);
 
-    var recipeDocRef = _firestore.collection(RECIPES).document(recipe.id);
+    var recipeDocRef = _firestore.collection(RECIPES).doc(recipe.id);
 
     var batch = _firestore.batch();
-    batch.setData(recipeDocRef, baseRecipe.toJson());
+    batch.set(recipeDocRef, baseRecipe.toJson());
 
     var ingredientsDoc =
-        FirebaseIngredientDocument.from(ingredients, recipeDocRef.documentID);
+        FirebaseIngredientDocument.from(ingredients, recipeDocRef.id);
 
     var ingredientsDocRef =
-        _firestore.collection(INGREDIENTS).document(recipeDocRef.documentID);
-    batch.setData(ingredientsDocRef, ingredientsDoc.toJson());
+        _firestore.collection(INGREDIENTS).doc(recipeDocRef.id);
+    batch.set(ingredientsDocRef, ingredientsDoc.toJson());
 
     var instructionsDoc =
-        FirebaseInstructionDocument.from(instructions, recipeDocRef.documentID);
+        FirebaseInstructionDocument.from(instructions, recipeDocRef.id);
 
     var instructionsDocRef =
-        _firestore.collection(INSTRUCTIONS).document(recipeDocRef.documentID);
-    batch.setData(instructionsDocRef, instructionsDoc.toJson());
+        _firestore.collection(INSTRUCTIONS).doc(recipeDocRef.id);
+    batch.set(instructionsDocRef, instructionsDoc.toJson());
 
     batch.commit();
 
@@ -528,7 +522,7 @@ class FirebaseProvider {
   }
 
   Future<void> deleteRecipe(RecipeEntity recipe) async {
-    await _firestore.collection(RECIPES).document(recipe.id).delete();
+    await _firestore.collection(RECIPES).doc(recipe.id).delete();
     print('deleted recipe ${recipe.id}');
   }
 
@@ -537,29 +531,29 @@ class FirebaseProvider {
   }
 
   Future<RecipeCollectionEntity> recipeCollectionByID(String id) async {
-    var doc = await _firestore.collection(RECIPE_GROUPS).document(id).get();
+    var doc = await _firestore.collection(RECIPE_GROUPS).doc(id).get();
 
     return RecipeCollectionEntityFirebase.of(
-        FirebaseRecipeCollection.fromJson(doc.data, doc.documentID));
+        FirebaseRecipeCollection.fromJson(doc.data(), doc.id));
   }
 
   Future<void> deleteRecipeCollection(String id) async {
     // TODO: if collection has more than the current user, we should not allow deletion
-    var collection = _firestore.collection(RECIPE_GROUPS).document(id);
+    var collection = _firestore.collection(RECIPE_GROUPS).doc(id);
 
     var recipes = await _firestore
         .collection(RECIPES)
         .where('recipeGroupID', isEqualTo: id)
-        .getDocuments();
+        .get();
 
-    for (var recipe in recipes.documents) {
+    for (var recipe in recipes.docs) {
       var entity = RecipeEntityFirebase.of(
-          FirebaseRecipe.fromJson(recipe.data, id: recipe.documentID));
+          FirebaseRecipe.fromJson(recipe.data(), id: recipe.id));
       sl.get<ImageManager>().deleteRecipeImage(entity);
     }
 
     await _firestore.runTransaction((transaction) {
-      for (var recipe in recipes.documents) {
+      for (var recipe in recipes.docs) {
         transaction.delete(recipe.reference);
       }
 
@@ -570,16 +564,16 @@ class FirebaseProvider {
   Future<void> deleteMealPlanCollection(String id) async {
     // TODO: if collection has more than the current user, we should not allow deletion
 
-    var reference = _firestore.collection(MEAL_PLAN_GROUPS).document(id);
+    var reference = _firestore.collection(MEAL_PLAN_GROUPS).doc(id);
 
     var snapshot = await _firestore
         .collection(MEAL_PLANS)
         .where('groupID', isEqualTo: id)
         .limit(1)
-        .getDocuments();
+        .get();
 
     await _firestore.runTransaction((transaction) {
-      for (var mealPlanDoc in snapshot.documents) {
+      for (var mealPlanDoc in snapshot.docs) {
         transaction.delete(mealPlanDoc.reference);
       }
       transaction.delete(reference);
@@ -588,29 +582,29 @@ class FirebaseProvider {
 
   Future<void> addUserToCollection(
       RecipeCollectionEntity model, String newUserID, String name) async {
-    var docRef = _firestore.collection(RECIPE_GROUPS).document(model.id);
+    var docRef = _firestore.collection(RECIPE_GROUPS).doc(model.id);
 
-    return await docRef.updateData({'users.$newUserID': name});
+    return await docRef.update({'users.$newUserID': name});
   }
 
   Future<void> addUserToMealPlanCollection(
       MealPlanCollectionEntity model, String newUserID, String name) async {
-    var docRef = _firestore.collection(MEAL_PLAN_GROUPS).document(model.id);
+    var docRef = _firestore.collection(MEAL_PLAN_GROUPS).doc(model.id);
 
-    return await docRef.updateData({'users.$newUserID': name});
+    return await docRef.update({'users.$newUserID': name});
   }
 
   String getNextRecipeDocumentId(String recipeGroup) {
-    var recipeDocRef = _firestore.collection(RECIPES).document();
+    var recipeDocRef = _firestore.collection(RECIPES).doc();
 
-    return recipeDocRef.documentID;
+    return recipeDocRef.id;
   }
 
   Future<List<IngredientNoteEntityFirebase>> recipeIngredients(
       String recipeGroup, String recipeID) async {
-    var doc = await _firestore.collection(INGREDIENTS).document(recipeID).get();
+    var doc = await _firestore.collection(INGREDIENTS).doc(recipeID).get();
 
-    var docData = FirebaseIngredientDocument.fromJson(doc.data, doc.documentID);
+    var docData = FirebaseIngredientDocument.fromJson(doc.data(), doc.id);
 
     return docData.ingredients
         .map((e) => IngredientNoteEntityFirebase.of(e))
@@ -623,13 +617,13 @@ class FirebaseProvider {
     var docs = await _firestore
         .collection(RECIPES)
         .where('recipeGroupID', whereIn: collections.map((e) => e.id).toList())
-        .getDocuments();
+        .get();
 
-    print('all documents retrieved ${docs.documents.length} results');
+    print('all documents retrieved ${docs.docs.length} results');
 
-    return docs.documents
+    return docs.docs
         .map((e) => RecipeEntityFirebase.of(
-            FirebaseRecipe.fromJson(e.data, id: e.documentID)))
+            FirebaseRecipe.fromJson(e.data(), id: e.id)))
         .toList();
   }
 
@@ -637,20 +631,19 @@ class FirebaseProvider {
     var docs = await _firestore
         .collection(RECIPES)
         .where(FieldPath.documentId, whereIn: ids)
-        .getDocuments();
+        .get();
 
-    return docs.documents
+    return docs.docs
         .map((e) => RecipeEntityFirebase.of(
-            FirebaseRecipe.fromJson(e.data, id: e.documentID)))
+            FirebaseRecipe.fromJson(e.data(), id: e.id)))
         .toList();
   }
 
   Future<List<InstructionEntityFirebase>> recipeInstructions(
       String recipeGroup, String recipeID) async {
-    var doc =
-        await _firestore.collection(INSTRUCTIONS).document(recipeID).get();
+    var doc = await _firestore.collection(INSTRUCTIONS).doc(recipeID).get();
 
-    var data = FirebaseInstructionDocument.fromJson(doc.data, doc.documentID);
+    var data = FirebaseInstructionDocument.fromJson(doc.data(), doc.id);
 
     print('instructions received: ${data.instructions.length}');
 
@@ -666,9 +659,9 @@ class FirebaseProvider {
   }
 
   Future<void> updateRating(RecipeEntity recipe, int rating) {
-    var recipeDocRef = _firestore.collection(RECIPES).document(recipe.id);
+    var recipeDocRef = _firestore.collection(RECIPES).doc(recipe.id);
 
-    return recipeDocRef.setData({'rating': rating}, merge: true);
+    return recipeDocRef.set({'rating': rating}, SetOptions(merge: true));
   }
 
   Future<MealPlanEntity> mealPlan(String groupID) async {
@@ -676,16 +669,16 @@ class FirebaseProvider {
         .collection(MEAL_PLANS)
         .where('groupID', isEqualTo: groupID)
         .limit(1)
-        .getDocuments();
+        .get();
 
     var parsedDoc;
 
-    if (snapshot.documents.isEmpty) {
+    if (snapshot.docs.isEmpty) {
       parsedDoc = FirebaseMealPlanDocument.empty(this.userUid, groupID);
     } else {
-      var document = snapshot.documents.first;
+      var document = snapshot.docs.first;
       parsedDoc =
-          FirebaseMealPlanDocument.fromJson(document.data, document.documentID);
+          FirebaseMealPlanDocument.fromJson(document.data(), document.id);
     }
 
     var model = MealPlanEntityFirebase.of(parsedDoc);
@@ -693,20 +686,21 @@ class FirebaseProvider {
   }
 
   Future<String> saveMealPlan(MealPlanEntity entity) async {
+    assert(entity.groupID != null && entity.groupID.isNotEmpty);
     DocumentReference docRef;
     // TODO: somehow the ID is always null even if saved...return the documentID!!!
     if (entity.id != null && entity.id.isNotEmpty) {
-      docRef = _firestore.collection(MEAL_PLANS).document(entity.id);
+      docRef = _firestore.collection(MEAL_PLANS).doc(entity.id);
     } else {
       // creation with same id as the corresponding group
-      docRef = _firestore.collection(MEAL_PLANS).document(entity.groupID);
+      docRef = _firestore.collection(MEAL_PLANS).doc(entity.groupID);
     }
 
     var data = FirebaseMealPlanDocument.from(entity);
 
-    await docRef.setData(data.toJson());
+    await docRef.set(data.toJson());
 
-    return docRef.documentID;
+    return docRef.id;
   }
 
   Future<List<RecipeEntity>> importRecipes(List<RecipeEntity> recipes) async {
@@ -724,7 +718,7 @@ class FirebaseProvider {
   }
 
   Future<void> leaveMealPlanGroup(String id) async {
-    var docRef = _firestore.collection(MEAL_PLAN_GROUPS).document(id);
+    var docRef = _firestore.collection(MEAL_PLAN_GROUPS).doc(id);
 
     return _firestore.runTransaction((transaction) {
       transaction.update(docRef, {'users.$userUid': null});
@@ -732,7 +726,7 @@ class FirebaseProvider {
   }
 
   Future<void> leaveRecipeGroup(String id) async {
-    var docRef = _firestore.collection(RECIPE_GROUPS).document(id);
+    var docRef = _firestore.collection(RECIPE_GROUPS).doc(id);
 
     return _firestore.runTransaction((transaction) {
       transaction.update(docRef, {'users.$userUid': null});
@@ -740,15 +734,15 @@ class FirebaseProvider {
   }
 
   Future<MealPlanCollectionEntity> getMealPlanGroupByID(String id) async {
-    var doc = await _firestore.collection(MEAL_PLAN_GROUPS).document(id).get();
+    var doc = await _firestore.collection(MEAL_PLAN_GROUPS).doc(id).get();
 
     return MealPlanCollectionEntityFirebase.of(
-        FirebaseMealPlanCollection.fromJson(doc.data, doc.documentID));
+        FirebaseMealPlanCollection.fromJson(doc.data(), doc.id));
   }
 
   void _handleWebReceivedLogIn(
       BuildContext context, DocumentSnapshot event, OnAcceptWebLogin callback) {
-    var target = FirebaseHandshake.fromJson(event.data, event.documentID);
+    var target = FirebaseHandshake.fromJson(event.data(), event.id);
     // wait until somebody accepts the offer
     if (target.owner != null) {
       // update owners uid
@@ -773,8 +767,8 @@ class FirebaseProvider {
     if (kIsWeb) {
       var handshakes = await _getAllExistingWebHandshakes();
 
-      for (var item in handshakes.documents) {
-        var model = FirebaseHandshake.fromJson(item.data, item.documentID);
+      for (var item in handshakes.docs) {
+        var model = FirebaseHandshake.fromJson(item.data(), item.id);
         result.putIfAbsent(model.requestor, () => 'Web Session');
       }
     }
@@ -791,19 +785,19 @@ class FirebaseProvider {
 
   Future<MealPlanEntity> getMealPlanByID(String id) async {
     // TODO: change query to where if ever doc id of meal plan is different from meal plan group
-    var doc = await _firestore.collection(MEAL_PLANS).document(id).get();
-    var parsedDoc = FirebaseMealPlanDocument.fromJson(doc.data, doc.documentID);
+    var doc = await _firestore.collection(MEAL_PLANS).doc(id).get();
+    var parsedDoc = FirebaseMealPlanDocument.fromJson(doc.data(), doc.id);
     return MealPlanEntityFirebase.of(parsedDoc);
   }
 
   Future<void> updateImageReference(String id, String value) async {
-    var docRef = _firestore.collection(RECIPES).document(id);
+    var docRef = _firestore.collection(RECIPES).doc(id);
     var doc = await docRef.get();
 
-    var firebaseRecipe = FirebaseRecipe.fromJson(doc.data, id: doc.documentID);
+    var firebaseRecipe = FirebaseRecipe.fromJson(doc.data(), id: doc.id);
     firebaseRecipe.image = value;
 
-    docRef.updateData({'image': value});
+    docRef.update({'image': value});
   }
 
   Future<ShoppingListEntity> createOrUpdateShoppingList(
@@ -820,8 +814,8 @@ class FirebaseProvider {
     DocumentReference document;
 
     if (entity.id != null && entity.id.isNotEmpty) {
-      document = _firestore.collection(SHOPPING_LISTS).document(entity.id);
-      document.setData(json);
+      document = _firestore.collection(SHOPPING_LISTS).doc(entity.id);
+      document.set(json);
     } else {
       document = await _firestore.collection(SHOPPING_LISTS).add(json);
     }
@@ -829,6 +823,6 @@ class FirebaseProvider {
     var model = await document.get();
 
     return ShoppingListEntityFirebase.of(
-        FirebaseShoppingListDocument.fromJson(model.data, model.documentID));
+        FirebaseShoppingListDocument.fromJson(model.data(), model.id));
   }
 }

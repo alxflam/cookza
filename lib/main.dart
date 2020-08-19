@@ -14,6 +14,7 @@ import 'package:flutter_translate/localization_delegate.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
   var delegate = await LocalizationDelegate.create(
@@ -21,6 +22,7 @@ void main() async {
     supportedLocales: ['en', 'de'],
   );
 
+  Firebase.app();
   setupServiceLocator();
   await GetIt.I.allReady();
 
