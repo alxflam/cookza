@@ -1,16 +1,19 @@
+import 'package:cookly/model/entities/abstract/ingredient_note_entity.dart';
+import 'package:cookly/model/entities/mutable/mutable_ingredient_note.dart';
 import 'package:cookly/model/json/ingredient_note.dart';
 import 'package:cookly/services/recipe_manager.dart';
 import 'package:cookly/services/service_locator.dart';
 import 'package:cookly/services/unit_of_measure.dart';
 
 abstract class IngredientsCalculator {
-  Future<List<IngredientNote>> getIngredients(Map<String, int> ids);
+  Future<List<IngredientNoteEntity>> getIngredients(Map<String, int> ids);
 }
 
 class IngredientsCalculatorImpl implements IngredientsCalculator {
   @override
-  Future<List<IngredientNote>> getIngredients(Map<String, int> ids) async {
-    List<IngredientNote> result = [];
+  Future<List<IngredientNoteEntity>> getIngredients(
+      Map<String, int> ids) async {
+    List<MutableIngredientNote> result = [];
 
     if (ids.isEmpty) {
       return result;
@@ -29,17 +32,16 @@ class IngredientsCalculatorImpl implements IngredientsCalculator {
         var ratio = entry.value / baseServings;
 
         // TODO: don't work on the original instance == will be reused!!!
-
         var sameIngredient = result
             .where((e) => e.ingredient.name == note.ingredient.name)
             .toList();
 
-        // if it does not, directly add it
+        // if it does not exist yet, directly add it
         if (sameIngredient.isEmpty) {
+          var targetNote = MutableIngredientNote.of(note);
           var amount = note.amount * ratio;
-          var newNote = IngredientNote.fromEntity(note);
-          newNote.amount = amount;
-          result.add(newNote);
+          targetNote.amount = amount;
+          result.add(targetNote);
           continue;
         }
 
@@ -74,19 +76,11 @@ class IngredientsCalculatorImpl implements IngredientsCalculator {
                 AmountedUnitOfMeasure(sourceUoM, note.amount * ratio);
 
             var calcResult = amountedUoM.add(sourceAmountedUoM);
-            result.remove(sameIngredientDiffUoM);
-            result.add(
-              IngredientNote(
-                  amount: calcResult.amount,
-                  unitOfMeasure: calcResult.uom.id,
-                  ingredient: sameIngredientDiffUoM.ingredient),
-            );
+            sameIngredientDiffUoM.amount = calcResult.amount;
+            sameIngredientDiffUoM.unitOfMeasure = calcResult.uom.id;
             break;
           }
         }
-
-        // else add as new entry
-
       }
     }
 

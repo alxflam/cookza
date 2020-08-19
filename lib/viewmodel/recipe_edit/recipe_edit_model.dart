@@ -34,6 +34,7 @@ class RecipeEditModel extends ChangeNotifier {
 
   int _currentStep = 0;
 
+  RecipeEntity get targetEntity => _targetRecipe;
   String get recipeId => _targetRecipe.id;
   int get countSteps => _stepModels.length;
   bool get isEdit => _mode == MODE.MODIFY;

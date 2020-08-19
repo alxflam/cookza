@@ -1,8 +1,25 @@
+import 'package:cookly/localization/keys.dart';
+import 'package:cookly/screens/new_ingredient_screen.dart';
 import 'package:cookly/services/abstract/shopping_list_text_export.dart';
 import 'package:cookly/services/service_locator.dart';
+import 'package:cookly/viewmodel/recipe_edit/recipe_ingredient_model.dart';
 import 'package:cookly/viewmodel/shopping_list/shopping_list_detail.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 import 'package:provider/provider.dart';
+
+class PopupMenuButtonChoices {
+  final _key;
+  final _icon;
+  const PopupMenuButtonChoices._internal(this._key, this._icon);
+  toString() => translate(_key);
+  IconData get icon => this._icon;
+
+  static const SHARE =
+      const PopupMenuButtonChoices._internal(Keys.Ui_Share, Icons.share);
+  static const ADD_ITEM = const PopupMenuButtonChoices._internal(
+      Keys.Ui_Mealplan_Addrecipe, Icons.add);
+}
 
 class ShoppingListDetailScreen extends StatelessWidget {
   static final String id = 'shoppingListDetail';
@@ -19,13 +36,53 @@ class ShoppingListDetailScreen extends StatelessWidget {
             appBar: AppBar(
               title: Text(model.shortTitle),
               actions: [
-                IconButton(
-                    icon: Icon(Icons.share),
-                    onPressed: () {
-                      sl
-                          .get<ShoppingListTextExporter>()
-                          .exportShoppingListAsText(model);
-                    })
+                PopupMenuButton(
+                  itemBuilder: (context) {
+                    return [
+                      PopupMenuItem(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Icon(PopupMenuButtonChoices.SHARE.icon),
+                            Text(PopupMenuButtonChoices.SHARE.toString())
+                          ],
+                        ),
+                        value: PopupMenuButtonChoices.SHARE,
+                      ),
+                      PopupMenuItem(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Icon(PopupMenuButtonChoices.ADD_ITEM.icon),
+                            Text(PopupMenuButtonChoices.ADD_ITEM.toString())
+                          ],
+                        ),
+                        value: PopupMenuButtonChoices.ADD_ITEM,
+                      ),
+                    ];
+                  },
+                  onSelected: (value) async {
+                    switch (value) {
+                      case PopupMenuButtonChoices.SHARE:
+                        sl
+                            .get<ShoppingListTextExporter>()
+                            .exportShoppingListAsText(model);
+                        break;
+                      case PopupMenuButtonChoices.ADD_ITEM:
+                        // open ingredient screen
+                        var result = await Navigator.pushNamed(
+                            context, NewIngredientScreen.id,
+                            arguments: RecipeIngredientModel.empty(false));
+
+                        if (result != null && result is RecipeIngredientModel) {
+                          model.addCustomItem(result.toIngredientNote());
+                        }
+                        break;
+                      default:
+                        break;
+                    }
+                  },
+                ),
               ],
             ),
             body: FutureBuilder<List<ShoppingListItemModel>>(
@@ -52,28 +109,48 @@ class ShoppingListDetailScreen extends StatelessWidget {
                       child: Consumer<ShoppingListItemModel>(
                         builder: (context, itemModel, _) {
                           return CheckboxListTile(
-                            key: ValueKey(itemModel.getName()),
+                            key: ValueKey(itemModel.name),
                             value: itemModel.isNoLongerNeeded,
                             controlAffinity: ListTileControlAffinity.leading,
                             onChanged: (value) {
-                              itemModel.setNoLongerNeeded(value);
+                              itemModel.noLongerNeeded = value;
                             },
                             dense: true,
                             activeColor: Colors.grey,
                             title: Text(
-                              itemModel.getName(),
+                              itemModel.name,
                               style: TextStyle(
                                   decoration: itemModel.isNoLongerNeeded
                                       ? TextDecoration.lineThrough
                                       : TextDecoration.none),
                             ),
                             subtitle: Text(
-                              '${itemModel.getAmount()} ${itemModel.uom}',
+                              '${itemModel.amount} ${itemModel.uom}',
                               style: TextStyle(
                                   decoration: itemModel.isNoLongerNeeded
                                       ? TextDecoration.lineThrough
                                       : TextDecoration.none),
                             ),
+                            secondary: itemModel.isCustomItem
+                                ? IconButton(
+                                    icon: Icon(Icons.edit),
+                                    onPressed: () async {
+                                      // edit the custom item
+                                      var result = await Navigator.pushNamed(
+                                          context, NewIngredientScreen.id,
+                                          arguments: RecipeIngredientModel
+                                              .noteOnlyModelOf(itemModel
+                                                  .toIngredientNoteEntity()));
+                                      if (result != null &&
+                                          result is RecipeIngredientModel) {
+                                        if (result.isDeleted) {
+                                          model.removeItem(index, itemModel);
+                                        } else {
+                                          itemModel.updateFrom(result);
+                                        }
+                                      }
+                                    })
+                                : null,
                           );
                         },
                       ),

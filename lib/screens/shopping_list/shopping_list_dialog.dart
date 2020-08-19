@@ -1,12 +1,12 @@
 import 'package:cookly/constants.dart';
 import 'package:cookly/localization/keys.dart';
 import 'package:cookly/model/entities/abstract/meal_plan_collection_entity.dart';
+import 'package:cookly/model/entities/mutable/mutable_shopping_list.dart';
 import 'package:cookly/screens/shopping_list/shopping_list_detail_screen.dart';
 import 'package:cookly/services/meal_plan_manager.dart';
 import 'package:cookly/services/service_locator.dart';
 import 'package:cookly/services/shopping_list_manager.dart';
 import 'package:cookly/services/util/week_calculation.dart';
-import 'package:cookly/viewmodel/meal_plan/recipe_meal_plan_model.dart';
 import 'package:cookly/viewmodel/shopping_list/shopping_list_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
@@ -15,7 +15,8 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 Future<void> openShoppingListDialog(BuildContext context) async {
-  var model = ShoppingListModel.empty();
+  ShoppingListModel model;
+
   var collections = await sl.get<MealPlanManager>().collections;
   DateTimeRange dateRange;
 
@@ -26,6 +27,7 @@ Future<void> openShoppingListDialog(BuildContext context) async {
   }
 
   if (collections.length == 1) {
+    model = ShoppingListModel.empty(collections.first.id);
     dateRange = await showDateRangePicker(
         context: context,
         firstDate: model.dateFrom,
@@ -38,35 +40,34 @@ Future<void> openShoppingListDialog(BuildContext context) async {
     }
     model.dateEnd = dateRange.end;
     model.dateFrom = dateRange.start;
-    model.collection = collections.first;
+    model.groupID = collections.first.id;
   } else {
     model = await _showMultipleGroupsDialog(context, collections, model);
   }
 
   // model is null if user cancelled multiple groups dialog
-  if (model == null || model.collection == null) {
+  if (model == null || model.groupID == null) {
     return;
   }
 
   var existingPlans = await sl.get<ShoppingListManager>().shoppingListsAsList;
-  var matchedPlan = existingPlans.firstWhere(
-      (e) =>
-          e.groupID == model.collection.id &&
-          (e.dateFrom == model.dateFrom ||
-              (e.dateFrom.isBefore(DateTime.now()) &&
-                  isSameDay(model.dateFrom, DateTime.now()))) &&
-          e.dateUntil == model.dateEnd,
-      orElse: null);
+  var matchedList = existingPlans.isEmpty
+      ? null
+      : existingPlans.firstWhere(
+          (e) =>
+              e.groupID == model.groupID &&
+              (e.dateFrom == model.dateFrom ||
+                  (e.dateFrom.isBefore(DateTime.now()) &&
+                      isSameDay(model.dateFrom, DateTime.now()))) &&
+              e.dateUntil == model.dateEnd,
+          orElse: null);
 
-  var entity = await sl
-      .get<MealPlanManager>()
-      .getMealPlanByCollectionID(model.collection.id);
-  MealPlanViewModel _mealPlan = MealPlanViewModel.of(entity);
+  var listEntity = matchedList != null
+      ? matchedList
+      : MutableShoppingList.ofValues(
+          model.dateFrom, model.dateEnd, model.groupID, []);
 
-  var recipes = _mealPlan.getRecipesForInterval(model.dateFrom, model.dateEnd);
-
-  var newModel = ShoppingListModel.from(
-      model.dateFrom, model.dateEnd, model.collection, recipes);
+  var newModel = ShoppingListModel.from(listEntity);
 
   Navigator.pushReplacementNamed(context, ShoppingListDetailScreen.id,
       arguments: newModel);
@@ -168,7 +169,7 @@ Widget _getMealPlanGroupDropDown(
                     child: Text(item.name), value: item))
                 .toList();
 
-            model.collection = collections.first;
+            model.groupID = collections.first.id;
 
             return DropdownButtonFormField<MealPlanCollectionEntity>(
               value: collections.first,
@@ -178,7 +179,7 @@ Widget _getMealPlanGroupDropDown(
                 labelText: translate(Keys.Functions_Mealplanner),
               ),
               onChanged: (MealPlanCollectionEntity value) {
-                model.collection = value;
+                model.groupID = value.id;
               },
             );
           }

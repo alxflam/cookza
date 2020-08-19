@@ -113,6 +113,7 @@ class NewIngredientScreen extends StatelessWidget {
                       ),
                     ],
                   ),
+                  // TODO: from here on column shown only if model supports recipe reference...
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.end,
@@ -123,37 +124,7 @@ class NewIngredientScreen extends StatelessWidget {
                   SizedBox(
                     height: 8,
                   ),
-                  RaisedButton.icon(
-                    onPressed: () async {
-                      if (model.isRecipeReference) {
-                        // remove reference
-
-                        model.removeRecipeReference();
-                      } else {
-                        // fetch all recipes the app currently stores
-                        var recipes =
-                            await sl.get<RecipeManager>().getAllRecipes();
-                        // create the view model with type reference ingredient
-                        var selModel =
-                            RecipeSelectionModel.forReferenceIngredient(recipes
-                                .map((e) => RecipeViewModel.of(e))
-                                .toList());
-                        // navigate to the selection screen
-                        var result = await Navigator.pushNamed(
-                            context, RecipeSelectionScreen.id,
-                            arguments: selModel) as String;
-                        if (result != null && result.isNotEmpty) {
-                          model.setRecipeReference(result);
-                        }
-                      }
-                    },
-                    icon: model.isRecipeReference
-                        ? Icon(Icons.delete)
-                        : Icon(Icons.note_add),
-                    label: model.isRecipeReference
-                        ? Text(translate(Keys.Ui_Removerecipe))
-                        : Text(translate(Keys.Ui_Refertorecipe)),
-                  ),
+                  _getRecipeRefButton(context, model),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
@@ -218,8 +189,42 @@ class NewIngredientScreen extends StatelessWidget {
       ingredientController
           .addListener(() => model.name = ingredientController.text);
 
-      return IngredientNameTextInput(ingredientController: ingredientController);
+      return IngredientNameTextInput(
+          ingredientController: ingredientController);
     }
+  }
+
+  Widget _getRecipeRefButton(
+      BuildContext context, RecipeIngredientModel model) {
+    if (model.supportsRecipeReference) {
+      return RaisedButton.icon(
+        onPressed: () async {
+          if (model.isRecipeReference) {
+            // remove reference
+            model.removeRecipeReference();
+          } else {
+            // fetch all recipes the app currently stores
+            var recipes = await sl.get<RecipeManager>().getAllRecipes();
+            // create the view model with type reference ingredient
+            var selModel = RecipeSelectionModel.forReferenceIngredient(
+                recipes.map((e) => RecipeViewModel.of(e)).toList());
+            // navigate to the selection screen
+            var result = await Navigator.pushNamed(
+                    context, RecipeSelectionScreen.id, arguments: selModel)
+                as String;
+            if (result != null && result.isNotEmpty) {
+              model.setRecipeReference(result);
+            }
+          }
+        },
+        icon:
+            model.isRecipeReference ? Icon(Icons.delete) : Icon(Icons.note_add),
+        label: model.isRecipeReference
+            ? Text(translate(Keys.Ui_Removerecipe))
+            : Text(translate(Keys.Ui_Refertorecipe)),
+      );
+    }
+    return Container();
   }
 }
 

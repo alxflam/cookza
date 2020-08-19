@@ -1,147 +1,127 @@
 import 'package:cookly/constants.dart';
-import 'package:cookly/model/entities/abstract/meal_plan_collection_entity.dart';
+import 'package:cookly/model/entities/abstract/ingredient_note_entity.dart';
+import 'package:cookly/model/entities/abstract/shopping_list_entity.dart';
+import 'package:cookly/model/entities/mutable/mutable_ingredient.dart';
+import 'package:cookly/model/entities/mutable/mutable_ingredient_note.dart';
+import 'package:cookly/model/entities/mutable/mutable_shopping_list.dart';
+import 'package:cookly/model/entities/mutable/mutable_shopping_list_item.dart';
 import 'package:cookly/model/json/ingredient_note.dart';
-import 'package:cookly/model/json/shopping_list.dart';
 import 'package:cookly/services/ingredients_calculator.dart';
 import 'package:cookly/services/meal_plan_manager.dart';
 import 'package:cookly/services/service_locator.dart';
 import 'package:cookly/services/shared_preferences_provider.dart';
+import 'package:cookly/services/shopping_list_items_generator.dart';
+import 'package:cookly/services/shopping_list_manager.dart';
 import 'package:cookly/services/unit_of_measure.dart';
 import 'package:cookly/viewmodel/meal_plan/recipe_meal_plan_model.dart';
+import 'package:cookly/viewmodel/recipe_edit/recipe_ingredient_model.dart';
 import 'package:flutter/material.dart';
 
 class ShoppingListModel extends ChangeNotifier {
-  DateTime _dateFrom;
-  DateTime _dateEnd;
+  MutableShoppingList _listEntity;
 
   static int _shoppingListDays =
       sl.get<SharedPreferencesProvider>().getMealPlanWeeks() * 7;
+
   DateTime _lastDate;
   DateTime _firstDate;
 
   List<IngredientNote> _requiredIngredients = [];
   List<IngredientNote> _availableIngredients = [];
   Map<String, int> _recipeReferences = {};
-  List<ShoppingListItemModel> _items = [];
-
-  MealPlanCollectionEntity _collection;
+  List<MutableShoppingListItem> _items = [];
 
   bool _initialized = false;
 
-  ShoppingListModel.from(
-      this._dateFrom, this._dateEnd, this._collection, this._recipeReferences) {
+  ShoppingListModel.from(ShoppingListEntity listEntity) {
+    this._listEntity = MutableShoppingList.of(listEntity);
     _firstDate = DateTime.now();
     _lastDate = _firstDate.add(Duration(days: _shoppingListDays));
-    _dateEnd = initialEndDate;
-    // TODO: null values due to notes - handle them earlier?
-    // _recipeReferences.removeWhere((key, value) => key == null || value == null);
   }
 
-  ShoppingListModel.empty()
-      : this.from(DateTime.now(),
-            DateTime.now().add(Duration(days: _shoppingListDays)), null, {});
+  ShoppingListModel.empty(String groupID)
+      : this._firstDate = DateTime.now(),
+        this._lastDate = DateTime.now().add(Duration(days: _shoppingListDays)) {
+    _listEntity =
+        MutableShoppingList.newList(groupID, DateTime.now(), initialEndDate);
+  }
 
   Future<List<ShoppingListItemModel>> getItems() async {
     // lazy initialize on first get call
-    if (_items.isNotEmpty && _recipeReferences.isNotEmpty) {
-      return this._items;
+    if (_items.isNotEmpty && _initialized) {
+      return this
+          ._items
+          .map((e) => ShoppingListItemModel.ofEntity(e, this))
+          .toList();
     }
 
-    var mealPlanModel = await sl
-        .get<MealPlanManager>()
-        .getMealPlanByCollectionID(this._collection.id);
-    print('model received');
-    MealPlanViewModel mealPlanViewModel = MealPlanViewModel.of(mealPlanModel);
-    print('view model created');
-
-    // collect all recipes planned for the given duration
-    for (var item in mealPlanViewModel.entries) {
-      print('check item $item whether its in the date range');
-      if (item.recipes.isNotEmpty &&
-          item.date.isBefore(this._dateEnd.add(Duration(days: 1))) &&
-          item.date.isAfter(this._dateFrom.subtract(Duration(days: 1)))) {
-        for (var recipe in item.recipes) {
-          if (!recipe.isNote) {
-            _recipeReferences.update(recipe.id, (value) => value,
-                ifAbsent: () => recipe.servings);
-          }
-        }
-      }
+    // add custom items
+    for (var item in this._listEntity.items) {
+      this._items.add(MutableShoppingListItem.ofEntity(item));
     }
 
-    // next create a set of the required ingredients
-    print('get ingredients');
-    var ingredients =
-        await sl.get<IngredientsCalculator>().getIngredients(_recipeReferences);
-    print('ingredients received ${ingredients.length}');
-    // at last create the view model representation of the list of ingredients
-    var uomProvider = sl.get<UnitOfMeasureProvider>();
-    for (var item in ingredients) {
-      var itemModel = ShoppingListItemModel(
-          uomProvider.getUnitOfMeasureById(item.unitOfMeasure),
-          item.amount,
-          item.ingredient.name,
-          false,
-          this);
-      _items.add(itemModel);
-    }
+    var generatedItems = await sl
+        .get<ShoppingListItemsGenerator>()
+        .generateItems(this._listEntity);
+
+    this._items.addAll(generatedItems);
+
+    var result = this
+        ._items
+        .map((e) => ShoppingListItemModel.ofEntity(e, this))
+        .toList();
 
     this._initialized = true;
-    return _items;
+    return result;
   }
 
   void _sortItems() {
-    this._items.sort((a, b) {
-      if (a.isNoLongerNeeded) {
-        return 1;
-      }
-      if (b.isNoLongerNeeded) {
-        return -1;
-      }
-      return a.getName().compareTo(b.getName());
-    });
+    // this._items.sort((a, b) {
+    //   if (a.isNoLongerNeeded) {
+    //     return 1;
+    //   }
+    //   if (b.isNoLongerNeeded) {
+    //     return -1;
+    //   }
+    //   return a.name.compareTo(b.name);
+    // });
     notifyListeners();
   }
 
   bool get hasBeenInitialized => this._initialized;
 
-  ShoppingListModel.of(ShoppingList model) {
-    this._dateFrom = model.dateFrom;
-    this._dateEnd = model.dateEnd;
-    this._recipeReferences.addAll(model.recipeReferences);
-  }
-
   String get shortTitle {
-    return this._dateFrom.day.toString() +
+    return this._listEntity.dateFrom.day.toString() +
         '.' +
-        this._dateFrom.month.toString() +
+        this._listEntity.dateFrom.month.toString() +
         ' - ' +
-        this._dateEnd.day.toString() +
+        this._listEntity.dateUntil.day.toString() +
         '.' +
-        this._dateEnd.month.toString();
+        this._listEntity.dateUntil.month.toString();
   }
 
-  DateTime get dateFrom => _dateFrom;
+  DateTime get dateFrom => _listEntity.dateFrom;
 
-  DateTime get dateEnd => _dateEnd;
+  DateTime get dateEnd => _listEntity.dateUntil;
 
   DateTime get lastDate => _lastDate;
 
   DateTime get initialEndDate {
     // initial range is always till next sunday
-    int weekday = _dateFrom.weekday;
+    var startDate = DateTime.now();
+    int weekday = startDate.weekday;
     int days = weekday < 7 ? 7 - weekday : 7;
-    return _dateFrom.add(Duration(days: days));
+    return startDate.add(Duration(days: days));
   }
 
-  set dateFrom(DateTime value) => _dateFrom = value;
+  set dateFrom(DateTime value) => _listEntity.dateFrom = value;
 
-  set dateEnd(DateTime value) => _dateEnd = value;
+  set dateEnd(DateTime value) => _listEntity.dateUntil = value;
 
-  MealPlanCollectionEntity get collection => this._collection;
+  String get groupID => this._listEntity.groupID;
 
-  set collection(MealPlanCollectionEntity value) {
-    this._collection = value;
+  set groupID(String value) {
+    this._listEntity.groupID = value;
   }
 
   void reorder(int newIndex, int oldIndex) {
@@ -152,46 +132,142 @@ class ShoppingListModel extends ChangeNotifier {
     _items.insert(newIndex, item);
     notifyListeners();
   }
+
+  void addCustomItem(IngredientNoteEntity ingredientNote) {
+    // create list entity
+    var entity =
+        MutableShoppingListItem.ofIngredientNote(ingredientNote, false, true);
+    // add to entity
+    this._listEntity.addItem(entity);
+    // add to transient items list
+    this._items.add(entity);
+    // save changes
+    this._save();
+    // update the view
+    notifyListeners();
+  }
+
+  void _save() {
+    // only save custom items
+    var customItems =
+        this._items.where((a) => a.isCustom && !a.isBought).toList();
+    // remove all entities
+    this._listEntity.clearItems();
+
+    // add valid items
+    for (var item in customItems) {
+      // add to entity
+      this._listEntity.addItem(item);
+    }
+
+    // remove no longer needed items
+    this._items.removeWhere((e) => e.isBought);
+
+    // then save the changes - creates the list if it does not yet exist
+    sl.get<ShoppingListManager>().createOrUpdate(this._listEntity);
+  }
+
+  void itemGotEdited() {
+    this._save();
+    notifyListeners();
+  }
+
+  bool _dateIsMatching(MealPlanDateEntry item) {
+    return item.date
+            .isBefore(this._listEntity.dateUntil.add(Duration(days: 1))) &&
+        item.date
+            .isAfter(this._listEntity.dateFrom.subtract(Duration(days: 1)));
+  }
+
+  void removeItem(int index, ShoppingListItemModel itemModel) {
+    // remove the item from the view list
+    this._items.removeAt(index);
+    // set to deleted
+    itemModel.noLongerNeeded = true;
+    // then remove the no longer needed items
+    this._listEntity.removeBought();
+    // then save changes
+    this._save();
+  }
 }
 
 class ShoppingListItemModel extends ChangeNotifier {
   UnitOfMeasure _uom;
-  double _amount;
-  String _name;
-  bool _isNoLongerNeeded;
+  MutableShoppingListItem _entity;
   ShoppingListModel _parentModel;
 
-  ShoppingListItemModel(this._uom, this._amount, this._name,
-      this._isNoLongerNeeded, this._parentModel);
+  ShoppingListItemModel.ofEntity(
+      ShoppingListItemEntity entity, this._parentModel) {
+    this._entity = entity;
+    var uomProvider = sl.get<UnitOfMeasureProvider>();
+    var uom =
+        uomProvider.getUnitOfMeasureById(entity.ingredientNote.unitOfMeasure);
+    this._uom = uom;
+  }
+
+  ShoppingListItemModel.customItemOfIngredient(IngredientNoteEntity entity) {
+    var uomProvider = sl.get<UnitOfMeasureProvider>();
+    var uom = uomProvider.getUnitOfMeasureById(entity.unitOfMeasure);
+    this._uom = uom;
+  }
+
+  ShoppingListItemModel.customItemOfEntity(ShoppingListItemEntity entity) {
+    var uomProvider = sl.get<UnitOfMeasureProvider>();
+    var uom =
+        uomProvider.getUnitOfMeasureById(entity.ingredientNote.unitOfMeasure);
+    this._uom = uom;
+  }
 
   String get uom {
     // TODO: there should be a null uom!
     if (_uom == null) {
       return '';
     }
-    return _uom.getDisplayName(this._amount.toInt());
+    return _uom.getDisplayName(this._entity.ingredientNote.amount.toInt());
   }
 
-  String getAmount() {
-    return kFormatAmount(this._amount);
+  bool get isCustomItem => this._entity.isCustom;
+
+  String get amount {
+    return kFormatAmount(this._entity.ingredientNote.amount);
   }
 
-  String getName() {
-    return this._name;
+  String get name {
+    return this._entity.ingredientNote.ingredient.name;
   }
 
-  bool get isNoLongerNeeded => _isNoLongerNeeded;
+  bool get isNoLongerNeeded => this._entity.isBought;
 
-  void setNoLongerNeeded(value) {
-    if (value != this._isNoLongerNeeded) {
-      this._isNoLongerNeeded = value;
-      this._parentModel._sortItems();
-
+  set noLongerNeeded(value) {
+    if (value != this._entity.isBought) {
+      this._entity.isBought = value;
+      // this._parentModel._sortItems();
+      this._parentModel.itemGotEdited();
       notifyListeners();
     }
   }
 
   void reordered() {
+    notifyListeners();
+  }
+
+  IngredientNoteEntity toIngredientNoteEntity() {
+    // var entity = MutableIngredientNote.empty();
+    // var ingredient = MutableIngredient.empty();
+    // ingredient.name = this._entity;
+    // entity.amount = _amount;
+    // entity.unitOfMeasure = this._uom != null ? this._uom.id : '';
+    // entity.ingredient = ingredient;
+    return this._entity.ingredientNote;
+  }
+
+  void updateFrom(RecipeIngredientModel entity) {
+    var uomProvider = sl.get<UnitOfMeasureProvider>();
+    var uom = uomProvider.getUnitOfMeasureById(entity.unitOfMeasure);
+    this._uom = uom;
+    this._entity.ingredientNote.amount = entity.amount;
+    this._entity.ingredientNote.ingredient.name = entity.ingredient.name;
+    this._parentModel.itemGotEdited();
     notifyListeners();
   }
 }

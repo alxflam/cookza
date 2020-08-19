@@ -61,7 +61,7 @@ Future<void> saveModel(BuildContext context, RecipeEditModel model) async {
       }
     } else {
       // update: just pop the screen off, user returns to recipe view
-      Navigator.pop(context);
+      Navigator.pop(context, model.targetEntity);
     }
   } catch (e) {
     kErrorDialog(context, 'Error occured while saving', e.toString());

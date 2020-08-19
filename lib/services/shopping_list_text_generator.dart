@@ -24,12 +24,12 @@ class ShoppingListTextGeneratorImpl implements ShoppingListTextGenerator {
 
       buffer.write(kBulletCharacter);
       buffer.write(' ');
-      buffer.write(item.getName());
+      buffer.write(item.name);
       buffer.write(' ');
 
-      if (item.getAmount() != null && item.getAmount().isNotEmpty) {
+      if (item.amount != null && item.amount.isNotEmpty) {
         buffer.write('(');
-        buffer.write(item.getAmount());
+        buffer.write(item.amount);
 
         if (item.uom != null && item.uom.isNotEmpty) {
           buffer.write(' '); // space between amount and unit

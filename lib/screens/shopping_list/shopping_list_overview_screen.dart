@@ -2,6 +2,7 @@ import 'package:cookly/constants.dart';
 import 'package:cookly/localization/keys.dart';
 import 'package:cookly/screens/shopping_list/shopping_list_detail_screen.dart';
 import 'package:cookly/screens/shopping_list/shopping_list_dialog.dart';
+import 'package:cookly/viewmodel/shopping_list/shopping_list_detail.dart';
 import 'package:cookly/viewmodel/shopping_list/shopping_list_overview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
@@ -50,10 +51,12 @@ class ShoppingListOverviewScreen extends StatelessWidget {
               var entry = snapshot.data[index];
               return ListTile(
                 title: Text(
-                    '${kDateFormatter.format(entry.dateFrom)} - ${kDateFormatter.format(entry.dateEnd)}'),
-                onTap: () {
+                    '${kDateFormatter.format(entry.dateFrom)} - ${kDateFormatter.format(entry.dateUntil)}'),
+                onTap: () async {
+                  var detailsViewModel = ShoppingListModel.from(entry);
                   Navigator.pushNamed(context, ShoppingListDetailScreen.id,
-                      arguments: entry);
+                          arguments: detailsViewModel)
+                      .then((value) => model.navigatedBack());
                 },
               );
             },

@@ -17,8 +17,14 @@ class RecipeViewModel extends ChangeNotifier {
   List<InstructionEntity> _instructions = [];
 
   // TODO: make it capable of in memory images like import json
-
   RecipeViewModel.of(this._recipe) {
+    _copyValues();
+  }
+
+  void _copyValues() {
+    this._ingredients.clear();
+    this._instructions.clear();
+
     this._servings = this._recipe.servings;
     this._rating = _recipe.rating;
 
@@ -33,10 +39,12 @@ class RecipeViewModel extends ChangeNotifier {
         this._instructions.add(instruction);
       }
     });
+  }
 
-    // for (var note in this._recipe.ingredients) {
-    //   this._ingredients.add(MutableIngredientNote.of(note));
-    // }
+  void refreshFrom(RecipeEntity entity) {
+    this._recipe = entity;
+    _copyValues();
+    notifyListeners();
   }
 
   int get servings => _servings;

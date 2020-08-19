@@ -10,12 +10,10 @@ Profile _$ProfileFromJson(Map<String, dynamic> json) {
   return Profile(
     recipeList: _recipeListFromJson(json['recipeList'] as Map<String, dynamic>),
     mealPlan: _mealPlanFromJson(json['mealPlan'] as Map<String, dynamic>),
-  )..shoppingLists =
-      _shoppingListsFromJson(json['shoppingLists'] as Map<String, dynamic>);
+  );
 }
 
 Map<String, dynamic> _$ProfileToJson(Profile instance) => <String, dynamic>{
       'recipeList': _recipeListToJson(instance.recipeList),
       'mealPlan': _mealPlanToJson(instance.mealPlan),
-      'shoppingLists': _shoppingListsToJson(instance.shoppingLists),
     };

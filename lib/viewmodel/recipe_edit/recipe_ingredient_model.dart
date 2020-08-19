@@ -12,10 +12,22 @@ class RecipeIngredientModel extends ChangeNotifier {
   MutableIngredientNote _note;
   bool _deleted = false;
   RecipeViewModel _recipe;
+  bool _supportsRecipeReference = true;
+
+  RecipeIngredientModel.empty(this._supportsRecipeReference) {
+    this._note = MutableIngredientNote.empty();
+  }
 
   RecipeIngredientModel.of(IngredientNoteEntity note) {
     this._note = MutableIngredientNote.of(note);
   }
+
+  RecipeIngredientModel.noteOnlyModelOf(IngredientNoteEntity note) {
+    this._note = MutableIngredientNote.of(note);
+    this._supportsRecipeReference = false;
+  }
+
+  bool get supportsRecipeReference => _supportsRecipeReference;
 
   String get name => _note.ingredient.name;
 

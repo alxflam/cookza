@@ -23,6 +23,7 @@ import 'package:cookly/services/recipe_manager.dart';
 import 'package:cookly/services/recipe_text_generator.dart';
 import 'package:cookly/services/share_receive_handler.dart';
 import 'package:cookly/services/shared_preferences_provider.dart';
+import 'package:cookly/services/shopping_list_items_generator.dart';
 import 'package:cookly/services/shopping_list_manager.dart';
 import 'package:cookly/services/shopping_list_text_generator.dart';
 import 'package:cookly/services/similarity_service.dart';
@@ -72,6 +73,8 @@ void setupServiceLocator() {
       ShoppingListTextGeneratorImpl());
   sl.registerSingleton<ShoppingListTextExporter>(ShoppingListTextExporterApp());
   sl.registerSingleton<ShoppingListManager>(ShoppingListManagerImpl());
+  sl.registerSingleton<ShoppingListItemsGenerator>(
+      ShoppingListItemsGeneratorImpl());
 
   sl.registerSingletonAsync<SharedPreferencesProvider>(
       () async => SharedPreferencesProviderImpl().init());

@@ -52,151 +52,161 @@ class RecipeScreen extends StatelessWidget {
       },
       child: DefaultTabController(
         length: 4,
-        child: Scaffold(
-          appBar: AppBar(
-            title: Text(baseModel.name != null ? baseModel.name : ''),
-            actions: <Widget>[
-              PopupMenuButton(
-                itemBuilder: (context) {
-                  return [
-                    PopupMenuItem(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Icon(PopupMenuButtonChoices.SHARE.icon),
-                          Text(PopupMenuButtonChoices.SHARE.toString())
-                        ],
-                      ),
-                      value: PopupMenuButtonChoices.SHARE,
-                    ),
-                    PopupMenuItem(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Icon(PopupMenuButtonChoices.EDIT.icon),
-                          Text(PopupMenuButtonChoices.EDIT.toString())
-                        ],
-                      ),
-                      value: PopupMenuButtonChoices.EDIT,
-                    ),
-                    PopupMenuItem(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Icon(PopupMenuButtonChoices.ADD_MEAL_PLAN.icon),
-                          Text(PopupMenuButtonChoices.ADD_MEAL_PLAN.toString())
-                        ],
-                      ),
-                      value: PopupMenuButtonChoices.ADD_MEAL_PLAN,
-                    ),
-                    PopupMenuItem(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Icon(PopupMenuButtonChoices.DELETE.icon),
-                          Text(PopupMenuButtonChoices.DELETE.toString())
-                        ],
-                      ),
-                      value: PopupMenuButtonChoices.DELETE,
-                    ),
-                  ];
-                },
-                onSelected: (value) async {
-                  switch (value) {
-                    case PopupMenuButtonChoices.SHARE:
-                      _showShareDialog(context, baseModel);
-                      break;
-                    case PopupMenuButtonChoices.EDIT:
-                      var result = await Navigator.pushNamed(
-                          context, NewRecipeScreen.id,
-                          arguments: RecipeEditModel.modify(baseModel.recipe));
-
-                      break;
-                    case PopupMenuButtonChoices.ADD_MEAL_PLAN:
-                      Navigator.pushNamed(context, MealPlanScreen.id,
-                          arguments: baseModel.recipe);
-                      break;
-                    case PopupMenuButtonChoices.DELETE:
-                      showDialog(
-                        context: context,
-                        barrierDismissible: false, // user must tap button!
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: Text(translate(Keys.Ui_Delete)),
-                            content: SingleChildScrollView(
-                              child: ListBody(
-                                children: <Widget>[
-                                  Text(translate(Keys.Ui_Confirmdelete,
-                                      args: {"0": baseModel.name})),
-                                ],
-                              ),
-                            ),
-                            actions: <Widget>[
-                              FlatButton(
-                                child: Text(
-                                  translate(Keys.Ui_Cancel),
-                                ),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                              ),
-                              FlatButton(
-                                child: Text(
-                                  translate(Keys.Ui_Delete),
-                                ),
-                                color: Colors.red,
-                                onPressed: () {
-                                  sl
-                                      .get<RecipeManager>()
-                                      .deleteRecipe(baseModel.recipe);
-
-                                  Navigator.pushNamed(context, HomeScreen.id);
-                                },
-                              ),
+        child: Consumer<RecipeViewModel>(
+          builder: (context, model, child) {
+            return Scaffold(
+              appBar: AppBar(
+                title: Text(model.name != null ? model.name : ''),
+                actions: <Widget>[
+                  PopupMenuButton(
+                    itemBuilder: (context) {
+                      return [
+                        PopupMenuItem(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Icon(PopupMenuButtonChoices.SHARE.icon),
+                              Text(PopupMenuButtonChoices.SHARE.toString())
                             ],
-                          );
-                        },
-                      );
+                          ),
+                          value: PopupMenuButtonChoices.SHARE,
+                        ),
+                        PopupMenuItem(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Icon(PopupMenuButtonChoices.EDIT.icon),
+                              Text(PopupMenuButtonChoices.EDIT.toString())
+                            ],
+                          ),
+                          value: PopupMenuButtonChoices.EDIT,
+                        ),
+                        PopupMenuItem(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Icon(PopupMenuButtonChoices.ADD_MEAL_PLAN.icon),
+                              Text(PopupMenuButtonChoices.ADD_MEAL_PLAN
+                                  .toString())
+                            ],
+                          ),
+                          value: PopupMenuButtonChoices.ADD_MEAL_PLAN,
+                        ),
+                        PopupMenuItem(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Icon(PopupMenuButtonChoices.DELETE.icon),
+                              Text(PopupMenuButtonChoices.DELETE.toString())
+                            ],
+                          ),
+                          value: PopupMenuButtonChoices.DELETE,
+                        ),
+                      ];
+                    },
+                    onSelected: (value) async {
+                      switch (value) {
+                        case PopupMenuButtonChoices.SHARE:
+                          _showShareDialog(context, baseModel);
+                          break;
+                        case PopupMenuButtonChoices.EDIT:
+                          var result = await Navigator.pushNamed(
+                              context, NewRecipeScreen.id,
+                              arguments: RecipeEditModel.modify(model.recipe));
+                          // refresh the current model as it now show stale data that got updated by editing the recipe
+                          if (result != null && result is RecipeEntity) {
+                            model.refreshFrom(result);
+                          }
 
-                      break;
-                    default:
-                  }
-                },
+                          break;
+                        case PopupMenuButtonChoices.ADD_MEAL_PLAN:
+                          Navigator.pushNamed(context, MealPlanScreen.id,
+                              arguments: model.recipe);
+                          break;
+                        case PopupMenuButtonChoices.DELETE:
+                          showDialog(
+                            context: context,
+                            barrierDismissible: false, // user must tap button!
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text(translate(Keys.Ui_Delete)),
+                                content: SingleChildScrollView(
+                                  child: ListBody(
+                                    children: <Widget>[
+                                      Text(translate(Keys.Ui_Confirmdelete,
+                                          args: {"0": model.name})),
+                                    ],
+                                  ),
+                                ),
+                                actions: <Widget>[
+                                  FlatButton(
+                                    child: Text(
+                                      translate(Keys.Ui_Cancel),
+                                    ),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                  FlatButton(
+                                    child: Text(
+                                      translate(Keys.Ui_Delete),
+                                    ),
+                                    color: Colors.red,
+                                    onPressed: () {
+                                      sl
+                                          .get<RecipeManager>()
+                                          .deleteRecipe(model.recipe);
+
+                                      Navigator.pushNamed(
+                                          context, HomeScreen.id);
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+
+                          break;
+                        default:
+                      }
+                    },
+                  ),
+                ],
+                bottom: TabBar(
+                  tabs: [
+                    Tab(
+                      icon: FaIcon(kInfoIconData),
+                    ),
+                    Tab(
+                      icon: FaIcon(kIngredientsIconData),
+                    ),
+                    Tab(
+                      icon: FaIcon(kRecipesIconData),
+                    ),
+                    Tab(
+                      icon: FaIcon(kSimilarRecipesIconData),
+                    ),
+                  ],
+                ),
               ),
-            ],
-            bottom: TabBar(
-              tabs: [
-                Tab(
-                  icon: FaIcon(kInfoIconData),
-                ),
-                Tab(
-                  icon: FaIcon(kIngredientsIconData),
-                ),
-                Tab(
-                  icon: FaIcon(kRecipesIconData),
-                ),
-                Tab(
-                  icon: FaIcon(kSimilarRecipesIconData),
-                ),
-              ],
-            ),
-          ),
-          body: TabBarView(
-            children: <Widget>[
-              OverviewTab(),
-              ListView(
+              body: TabBarView(
                 children: <Widget>[
-                  IngredientsTab(),
+                  OverviewTab(),
+                  ListView(
+                    children: <Widget>[
+                      IngredientsTab(),
+                    ],
+                  ),
+                  ListView(
+                    children: <Widget>[
+                      InstructionsTab(),
+                    ],
+                  ),
+                  SimilarRecipesScreen(),
                 ],
               ),
-              ListView(
-                children: <Widget>[
-                  InstructionsTab(),
-                ],
-              ),
-              SimilarRecipesScreen(),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );

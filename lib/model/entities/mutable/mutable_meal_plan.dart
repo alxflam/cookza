@@ -1,4 +1,6 @@
 import 'package:cookly/model/entities/abstract/meal_plan_entity.dart';
+import 'package:cookly/services/service_locator.dart';
+import 'package:cookly/services/shared_preferences_provider.dart';
 import 'package:cookly/services/util/week_calculation.dart';
 
 class MutableMealPlan implements MealPlanEntity {
@@ -9,8 +11,15 @@ class MutableMealPlan implements MealPlanEntity {
   String _groupID;
 
   MutableMealPlan.of(MealPlanEntity entity, int weeks) {
-    this._id = id;
+    this._id = entity.id;
     this._groupID = entity.groupID;
+    init(entity, weeks);
+  }
+
+  MutableMealPlan.withPreferenceWeeks(MealPlanEntity entity) {
+    this._id = entity.id;
+    this._groupID = entity.groupID;
+    var weeks = sl.get<SharedPreferencesProvider>().getMealPlanWeeks();
     init(entity, weeks);
   }
 

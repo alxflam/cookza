@@ -811,7 +811,10 @@ class FirebaseProvider {
     assert(entity.groupID != null && entity.groupID.isNotEmpty);
     assert(entity.dateFrom != null);
     assert(entity.dateUntil != null);
-    assert(entity.items != null && entity.items.isNotEmpty);
+    assert(entity.items != null);
+    if (entity.id == null || entity.id.isEmpty) {
+      assert(entity.items.isNotEmpty);
+    }
 
     var json = FirebaseShoppingListDocument.from(entity).toJson();
     DocumentReference document;
