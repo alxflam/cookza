@@ -22,7 +22,7 @@ void main() async {
     supportedLocales: ['en', 'de'],
   );
 
-  Firebase.app();
+  await Firebase.initializeApp();
   setupServiceLocator();
   await GetIt.I.allReady();
 
