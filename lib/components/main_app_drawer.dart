@@ -65,7 +65,7 @@ class MainAppDrawer extends StatelessWidget {
             title: Text(translate(Keys.Functions_Shoppinglist)),
             leading: FaIcon(kShoppingListIconData),
             onTap: () {
-              Navigator.pushNamed(context, ShoppingListOverviewScreen.id);s
+              Navigator.pushNamed(context, ShoppingListOverviewScreen.id);
             },
           ),
           ListTile(
