@@ -89,7 +89,7 @@ class ShoppingListDetailScreen extends StatelessWidget {
               future: model.getItems(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState != ConnectionState.done &&
-                    !model.hasBeenInitialized) {
+                    !model.initialized) {
                   return Center(
                     child: CircularProgressIndicator(),
                   );

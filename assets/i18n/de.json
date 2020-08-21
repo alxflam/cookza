@@ -86,7 +86,6 @@
         "enterUsername": "Benutzername eingeben",
         "mealPlan": {
             "select": "Gruppe auswählen oder erstellen",
-            "chooseMode": "Typ wählen",
             "addNote": "Notiz",
             "addRecipe": "Rezept"
         },

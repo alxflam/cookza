@@ -86,7 +86,6 @@
         "enterUsername": "Enter username",
         "mealPlan": {
             "select": "Select or create a meal plan group",
-            "chooseMode": "Choose type",
             "addNote": "Note",
             "addRecipe": "Recipe"
         },

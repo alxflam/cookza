@@ -136,8 +136,6 @@ class Keys {
 
   static const String Ui_Mealplan_Select = 'ui.mealPlan.select';
 
-  static const String Ui_Mealplan_Choosemode = 'ui.mealPlan.chooseMode';
-
   static const String Ui_Mealplan_Addnote = 'ui.mealPlan.addNote';
 
   static const String Ui_Mealplan_Addrecipe = 'ui.mealPlan.addRecipe';

@@ -67,4 +67,8 @@ class MutableShoppingList implements ShoppingListEntity {
   void removeBought() {
     this._items.removeWhere((e) => e.isBought);
   }
+
+  void removeItem(ShoppingListItemEntity entity) {
+    this._items.remove(entity);
+  }
 }

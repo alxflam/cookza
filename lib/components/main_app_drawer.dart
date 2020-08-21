@@ -4,6 +4,7 @@ import 'package:cookly/screens/meal_plan/meal_plan_screen.dart';
 import 'package:cookly/screens/recipe_list_screen.dart';
 import 'package:cookly/screens/recipe_modify/new_recipe_screen.dart';
 import 'package:cookly/screens/settings/settings_screen.dart';
+import 'package:cookly/screens/shopping_list/shopping_list_overview_screen.dart';
 import 'package:cookly/screens/web_login_app.dart';
 import 'package:cookly/services/firebase_provider.dart';
 import 'package:cookly/services/service_locator.dart';
@@ -63,7 +64,9 @@ class MainAppDrawer extends StatelessWidget {
           ListTile(
             title: Text(translate(Keys.Functions_Shoppinglist)),
             leading: FaIcon(kShoppingListIconData),
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(context, ShoppingListOverviewScreen.id);s
+            },
           ),
           ListTile(
             title: Text(translate(Keys.Functions_Addrecipe)),

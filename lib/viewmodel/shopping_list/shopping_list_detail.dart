@@ -30,8 +30,7 @@ class ShoppingListModel extends ChangeNotifier {
   List<IngredientNote> _availableIngredients = [];
   Map<String, int> _recipeReferences = {};
   List<MutableShoppingListItem> _items = [];
-
-  bool _initialized = false;
+  bool _initalized = false;
 
   ShoppingListModel.from(ShoppingListEntity listEntity) {
     this._listEntity = MutableShoppingList.of(listEntity);
@@ -46,17 +45,23 @@ class ShoppingListModel extends ChangeNotifier {
         MutableShoppingList.newList(groupID, DateTime.now(), initialEndDate);
   }
 
+  bool get initialized => this._initalized;
+
   Future<List<ShoppingListItemModel>> getItems() async {
     // lazy initialize on first get call
-    if (_items.isNotEmpty && _initialized) {
-      return this
-          ._items
-          .map((e) => ShoppingListItemModel.ofEntity(e, this))
-          .toList();
+    if (_items.isNotEmpty) {
+      // create the viewmodels
+      var viewModels =
+          this._items.map((e) => ShoppingListItemModel.ofEntity(e)).toList();
+
+      _registerListeners(viewModels);
+
+      // then return them
+      return viewModels;
     }
 
     // add custom items
-    for (var item in this._listEntity.items) {
+    for (var item in this._listEntity.items.where((e) => e.isCustom)) {
       this._items.add(MutableShoppingListItem.ofEntity(item));
     }
 
@@ -64,31 +69,51 @@ class ShoppingListModel extends ChangeNotifier {
         .get<ShoppingListItemsGenerator>()
         .generateItems(this._listEntity);
 
+    // processed generated already bought items
+    for (var item
+        in this._listEntity.items.where((e) => !e.isCustom && e.isBought)) {
+      var generatedItem = generatedItems.firstWhere(
+          (e) =>
+              e.ingredientNote.amount == item.ingredientNote.amount &&
+              e.ingredientNote.ingredient.name ==
+                  item.ingredientNote.ingredient.name &&
+              e.ingredientNote.unitOfMeasure ==
+                  item.ingredientNote.unitOfMeasure,
+          orElse: () => null);
+      if (generatedItem != null) {
+        generatedItems.remove(generatedItem);
+        this._items.add(MutableShoppingListItem.ofEntity(item));
+      } else {
+        this._listEntity.removeItem(item);
+      }
+    }
+
     this._items.addAll(generatedItems);
 
-    var result = this
-        ._items
-        .map((e) => ShoppingListItemModel.ofEntity(e, this))
-        .toList();
+    this._sortItems();
 
-    this._initialized = true;
+    var result =
+        this._items.map((e) => ShoppingListItemModel.ofEntity(e)).toList();
+
+    _registerListeners(result);
+
+    this._initalized = true;
+
     return result;
   }
 
   void _sortItems() {
-    // this._items.sort((a, b) {
-    //   if (a.isNoLongerNeeded) {
-    //     return 1;
-    //   }
-    //   if (b.isNoLongerNeeded) {
-    //     return -1;
-    //   }
-    //   return a.name.compareTo(b.name);
-    // });
+    this._items.sort((a, b) {
+      if (a.isBought && !b.isBought) {
+        return 1;
+      }
+      if (b.isBought && !a.isBought) {
+        return -1;
+      }
+      return 0;
+    });
     notifyListeners();
   }
-
-  bool get hasBeenInitialized => this._initialized;
 
   String get shortTitle {
     return this._listEntity.dateFrom.day.toString() +
@@ -150,7 +175,7 @@ class ShoppingListModel extends ChangeNotifier {
   void _save() {
     // only save custom items
     var customItems =
-        this._items.where((a) => a.isCustom && !a.isBought).toList();
+        this._items.where((a) => a.isCustom || a.isBought).toList();
     // remove all entities
     this._listEntity.clearItems();
 
@@ -160,15 +185,13 @@ class ShoppingListModel extends ChangeNotifier {
       this._listEntity.addItem(item);
     }
 
-    // remove no longer needed items
-    this._items.removeWhere((e) => e.isBought);
-
     // then save the changes - creates the list if it does not yet exist
     sl.get<ShoppingListManager>().createOrUpdate(this._listEntity);
   }
 
-  void itemGotEdited() {
+  void itemGotEdited(ShoppingListItemModel changedEntity) {
     this._save();
+    this._sortItems();
     notifyListeners();
   }
 
@@ -189,15 +212,22 @@ class ShoppingListModel extends ChangeNotifier {
     // then save changes
     this._save();
   }
+
+  void _registerListeners(List<ShoppingListItemModel> viewModels) {
+    // register a listener to each of the viewmodels
+    viewModels.forEach((e) {
+      e.addListener(() {
+        this.itemGotEdited(e);
+      });
+    });
+  }
 }
 
 class ShoppingListItemModel extends ChangeNotifier {
   UnitOfMeasure _uom;
   MutableShoppingListItem _entity;
-  ShoppingListModel _parentModel;
 
-  ShoppingListItemModel.ofEntity(
-      ShoppingListItemEntity entity, this._parentModel) {
+  ShoppingListItemModel.ofEntity(ShoppingListItemEntity entity) {
     this._entity = entity;
     var uomProvider = sl.get<UnitOfMeasureProvider>();
     var uom =
@@ -241,8 +271,6 @@ class ShoppingListItemModel extends ChangeNotifier {
   set noLongerNeeded(value) {
     if (value != this._entity.isBought) {
       this._entity.isBought = value;
-      // this._parentModel._sortItems();
-      this._parentModel.itemGotEdited();
       notifyListeners();
     }
   }
@@ -267,7 +295,7 @@ class ShoppingListItemModel extends ChangeNotifier {
     this._uom = uom;
     this._entity.ingredientNote.amount = entity.amount;
     this._entity.ingredientNote.ingredient.name = entity.ingredient.name;
-    this._parentModel.itemGotEdited();
+    // this._parentModel.itemGotEdited();
     notifyListeners();
   }
 }

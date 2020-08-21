@@ -392,7 +392,6 @@ class MealPlanScreen extends StatelessWidget {
           // builder is needed to get a new context for the Provider
           builder: (context) {
             return SimpleDialog(
-              title: Text(translate(Keys.Ui_Mealplan_Choosemode)),
               children: [
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -400,47 +399,41 @@ class MealPlanScreen extends StatelessWidget {
                   children: <Widget>[
                     Padding(
                       padding: EdgeInsets.all(10),
-                      child: Flexible(
-                        flex: 1,
-                        child: RaisedButton(
-                          child: Text(translate(Keys.Ui_Mealplan_Addnote)),
-                          onPressed: () {
-                            // close dialog
-                            Navigator.pop(context);
+                      child: RaisedButton(
+                        child: Text(translate(Keys.Ui_Mealplan_Addnote)),
+                        onPressed: () {
+                          // close dialog
+                          Navigator.pop(context);
 
-                            // open note dialog
-                            _showAddNoteDialog(context, model, index);
-                          },
-                        ),
+                          // open note dialog
+                          _showAddNoteDialog(context, model, index);
+                        },
                       ),
                     ),
                     Padding(
                       padding: EdgeInsets.all(10),
-                      child: Flexible(
-                        flex: 1,
-                        child: RaisedButton(
-                          child: Text(translate(Keys.Ui_Mealplan_Addrecipe)),
-                          onPressed: () async {
-                            // fetch all recipes the app currently stores
-                            var recipes =
-                                await sl.get<RecipeManager>().getAllRecipes();
+                      child: RaisedButton(
+                        child: Text(translate(Keys.Ui_Mealplan_Addrecipe)),
+                        onPressed: () async {
+                          // fetch all recipes the app currently stores
+                          var recipes =
+                              await sl.get<RecipeManager>().getAllRecipes();
 
-                            // create the view model with type reference ingredient
-                            var selModel = RecipeSelectionModel.forAddMealPlan(
-                                recipes
-                                    .map((e) => RecipeViewModel.of(e))
-                                    .toList());
-                            // navigate to the selection screen
-                            var result = await Navigator.pushNamed(
-                                context, RecipeSelectionScreen.id,
-                                arguments: selModel) as RecipeEntity;
-                            if (result != null && result.id.isNotEmpty) {
-                              model.addRecipeFromEntity(index, result);
-                            }
+                          // create the view model with type reference ingredient
+                          var selModel = RecipeSelectionModel.forAddMealPlan(
+                              recipes
+                                  .map((e) => RecipeViewModel.of(e))
+                                  .toList());
+                          // navigate to the selection screen
+                          var result = await Navigator.pushNamed(
+                              context, RecipeSelectionScreen.id,
+                              arguments: selModel) as RecipeEntity;
+                          if (result != null && result.id.isNotEmpty) {
+                            model.addRecipeFromEntity(index, result);
+                          }
 
-                            Navigator.pop(context);
-                          },
-                        ),
+                          Navigator.pop(context);
+                        },
                       ),
                     ),
                   ],
