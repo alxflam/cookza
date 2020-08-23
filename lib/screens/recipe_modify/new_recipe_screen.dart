@@ -21,50 +21,55 @@ import 'package:provider/provider.dart';
 Future<void> saveModel(BuildContext context, RecipeEditModel model) async {
   print('show progress indicator before save');
 
-  try {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return SimpleDialog(
-          children: [
-            Center(
-              child: Column(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.all(25),
-                    child: CircularProgressIndicator(),
-                  ),
-                ],
-              ),
+  showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext context) {
+      return SimpleDialog(
+        children: [
+          Center(
+            child: Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.all(25),
+                  child: CircularProgressIndicator(),
+                ),
+              ],
             ),
-          ],
-        );
-      },
-    );
+          ),
+        ],
+      );
+    },
+  );
 
-    print('calling save on the viewmodel');
-    var id = await model.save();
-    print('save returned' + id);
-    Navigator.pop(context);
-
-    if (model.isCreate) {
-      // create: navigate to recipe view in case save was successful
-      var result = await sl.get<RecipeManager>().getRecipeById([id]);
-      if (result.length == 1) {
-        Navigator.pushReplacementNamed(context, RecipeScreen.id,
-            arguments: result.first);
-      } else {
-        kErrorDialog(context, 'Could not find created recipe',
-            'Manually navigate to the recipe');
-        Navigator.pop(context);
-      }
-    } else {
-      // update: just pop the screen off, user returns to recipe view
-      Navigator.pop(context, model.targetEntity);
-    }
+  String id;
+  try {
+    id = await model.save();
   } catch (e) {
+    // close progress dialog
+    Navigator.pop(context);
+    // show errors and exit
     kErrorDialog(context, 'Error occured while saving', e.toString());
+    return;
+  }
+
+  // close progress dialog
+  Navigator.pop(context);
+
+  if (model.isCreate) {
+    // create: navigate to recipe view in case save was successful
+    var result = await sl.get<RecipeManager>().getRecipeById([id]);
+    if (result.length == 1) {
+      Navigator.pushReplacementNamed(context, RecipeScreen.id,
+          arguments: result.first);
+    } else {
+      kErrorDialog(context, 'Could not find created recipe',
+          'Manually navigate to the recipe');
+      Navigator.pop(context);
+    }
+  } else {
+    // update: just pop the screen off, user returns to recipe view and can update the view based on the returned model
+    Navigator.pop(context, model.targetEntity);
   }
 }
 
