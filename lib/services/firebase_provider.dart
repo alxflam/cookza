@@ -309,7 +309,7 @@ class FirebaseProvider {
         // setting the map value to null will remove the entry
         transaction.update(
           item.reference,
-          {'users.$requestor': null},
+          {'users.$requestor': FieldValue.delete()},
         );
       }
 
@@ -317,7 +317,7 @@ class FirebaseProvider {
         // setting the map value to null will remove the entry
         transaction.update(
           item.reference,
-          {'users.$requestor': null},
+          {'users.$requestor': FieldValue.delete()},
         );
       }
 
@@ -360,7 +360,7 @@ class FirebaseProvider {
           // setting the map value to null will remove the entry
           transaction.update(
             item.reference,
-            {'users.$requestor': null},
+            {'users.$requestor': FieldValue.delete()},
           );
         }
 
@@ -368,7 +368,7 @@ class FirebaseProvider {
           // setting the map value to null will remove the entry
           transaction.update(
             item.reference,
-            {'users.$requestor': null},
+            {'users.$requestor': FieldValue.delete()},
           );
         }
 
@@ -721,7 +721,7 @@ class FirebaseProvider {
     var docRef = _firestore.collection(MEAL_PLAN_GROUPS).doc(id);
 
     return _firestore.runTransaction((transaction) {
-      transaction.update(docRef, {'users.$userUid': null});
+      transaction.update(docRef, {'users.$userUid': FieldValue.delete()});
     });
   }
 
@@ -729,7 +729,7 @@ class FirebaseProvider {
     var docRef = _firestore.collection(RECIPE_GROUPS).doc(id);
 
     return _firestore.runTransaction((transaction) {
-      transaction.update(docRef, {'users.$userUid': null});
+      transaction.update(docRef, {'users.$userUid': FieldValue.delete()});
     });
   }
 
