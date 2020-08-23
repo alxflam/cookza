@@ -718,6 +718,7 @@ class FirebaseProvider {
   }
 
   Future<void> leaveMealPlanGroup(String id) async {
+    // TODO: if user is the only memeber of group, delete the group and all associated docs...
     var docRef = _firestore.collection(MEAL_PLAN_GROUPS).doc(id);
 
     return _firestore.runTransaction((transaction) {
@@ -726,6 +727,7 @@ class FirebaseProvider {
   }
 
   Future<void> leaveRecipeGroup(String id) async {
+    // TODO: if user is the only memeber of group, delete the group
     var docRef = _firestore.collection(RECIPE_GROUPS).doc(id);
 
     return _firestore.runTransaction((transaction) {

@@ -1,6 +1,6 @@
 import 'package:cookly/localization/keys.dart';
 import 'package:cookly/model/entities/abstract/meal_plan_collection_entity.dart';
-import 'package:cookly/screens/meal_plan/meal_plan_group_screen.dart';
+import 'package:cookly/screens/groups/meal_plan_group.dart';
 import 'package:cookly/screens/meal_plan/meal_plan_screen.dart';
 import 'package:cookly/services/meal_plan_manager.dart';
 import 'package:cookly/services/service_locator.dart';

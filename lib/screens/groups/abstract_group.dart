@@ -1,10 +1,7 @@
-import 'package:cookly/model/entities/abstract/meal_plan_collection_entity.dart';
 import 'package:cookly/model/entities/abstract/user_entity.dart';
-import 'package:cookly/screens/meal_plan/meal_plan_screen.dart';
-import 'package:cookly/services/meal_plan_manager.dart';
 import 'package:cookly/services/mobile/qr_scanner.dart';
 import 'package:cookly/services/service_locator.dart';
-import 'package:cookly/viewmodel/meal_plan/meal_plan_group_model.dart';
+import 'package:cookly/viewmodel/groups/abstract_group_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -28,19 +25,15 @@ class PopupMenuButtonChoices {
       Keys.Ui_Leavegroup, Icons.exit_to_app);
 }
 
-class MealPlanGroupScreen extends StatelessWidget {
-  static final String id = 'mealPlanGroup';
-
+abstract class AbstractGroupScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final MealPlanCollectionEntity _model =
-        ModalRoute.of(context).settings.arguments;
+    final GroupViewModel _viewModel =
+        buildGroupViewModel(ModalRoute.of(context).settings.arguments);
 
-    var viewModel = MealPlanGroupViewModel.of(_model);
-
-    return ChangeNotifierProvider<MealPlanGroupViewModel>.value(
-      value: viewModel,
-      child: Consumer<MealPlanGroupViewModel>(
+    return ChangeNotifierProvider<GroupViewModel>.value(
+      value: _viewModel,
+      child: Consumer<GroupViewModel>(
         builder: (context, model, _) {
           return Scaffold(
             appBar: AppBar(
@@ -94,7 +87,7 @@ class MealPlanGroupScreen extends StatelessWidget {
                   onSelected: (value) {
                     switch (value) {
                       case PopupMenuButtonChoices.EDIT:
-                        _editCollection(context, model);
+                        _renameCollection(context, model);
                         break;
                       case PopupMenuButtonChoices.DELETE:
                         _deleteCollection(context, model);
@@ -112,22 +105,30 @@ class MealPlanGroupScreen extends StatelessWidget {
                 ),
               ],
             ),
-            body: Consumer<MealPlanGroupViewModel>(
+            body: Consumer<GroupViewModel>(
               builder: (context, model, _) {
-                return Builder(
-                  builder: (context) {
-                    if (model.entity.users.length < 2) {
+                return FutureBuilder(
+                  future: model.members,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState != ConnectionState.done) {
+                      return Container();
+                    }
+
+                    if (snapshot.data.length < 2) {
                       return Center(
                         child: Text(translate(Keys.Ui_Singlemember)),
                       );
                     }
 
                     return ListView.builder(
-                      itemCount: model.entity.users.length,
+                      itemCount: snapshot.data.length,
                       itemBuilder: (context, index) {
+                        var user = snapshot.data[index];
+
                         return ListTile(
-                          leading: _getLeadingUserIcon(_model.users[index]),
-                          title: Text(_model.users[index].name),
+                          leading: _getLeadingUserIcon(user.users[index]),
+                          title:
+                              Text(user.name == null ? 'unknown' : user.name),
                         );
                       },
                     );
@@ -152,7 +153,7 @@ class MealPlanGroupScreen extends StatelessWidget {
     );
   }
 
-  void _editCollection(BuildContext _context, MealPlanGroupViewModel model) {
+  void _renameCollection(BuildContext _context, GroupViewModel model) {
     // show a dialog to rename the collection
     showDialog(
       context: _context,
@@ -181,8 +182,7 @@ class MealPlanGroupScreen extends StatelessWidget {
                                 maxLines: 1,
                                 autofocus: true,
                                 decoration: InputDecoration(
-                                  hintText: translate(Keys.Ui_Groupname),
-                                ),
+                                    hintText: translate(Keys.Ui_Groupname)),
                               ),
                             )
                           ],
@@ -217,8 +217,8 @@ class MealPlanGroupScreen extends StatelessWidget {
     );
   }
 
-  void _deleteCollection(BuildContext context, MealPlanGroupViewModel model) {
-    showDialog(
+  void _deleteCollection(BuildContext context, GroupViewModel model) async {
+    var result = await showDialog(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
@@ -242,7 +242,7 @@ class MealPlanGroupScreen extends StatelessWidget {
                 translate(Keys.Ui_Cancel),
               ),
               onPressed: () {
-                Navigator.of(context).pop();
+                Navigator.pop(context, false);
               },
             ),
             FlatButton(
@@ -251,18 +251,20 @@ class MealPlanGroupScreen extends StatelessWidget {
               ),
               color: Colors.red,
               onPressed: () async {
-                await sl.get<MealPlanManager>().deleteCollection(model.entity);
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                    MealPlanScreen.id, ModalRoute.withName(MealPlanScreen.id));
+                await model.delete();
+                Navigator.pop(context, true);
               },
             ),
           ],
         );
       },
     );
+    if (result) {
+      Navigator.pop(context);
+    }
   }
 
-  void _addUser(BuildContext context, MealPlanGroupViewModel model) async {
+  void _addUser(BuildContext context, GroupViewModel model) async {
     // scan a qr code
     var scanResult = await sl.get<QRScanner>().scanUserQRCode();
     if (scanResult != null) {
@@ -271,8 +273,8 @@ class MealPlanGroupScreen extends StatelessWidget {
     }
   }
 
-  void _leaveGroup(BuildContext context, MealPlanGroupViewModel model) async {
-    showDialog(
+  void _leaveGroup(BuildContext context, GroupViewModel model) async {
+    var result = await showDialog(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
@@ -296,7 +298,7 @@ class MealPlanGroupScreen extends StatelessWidget {
                 translate(Keys.Ui_Cancel),
               ),
               onPressed: () {
-                Navigator.of(context).pop();
+                Navigator.pop(context, false);
               },
             ),
             FlatButton(
@@ -306,12 +308,17 @@ class MealPlanGroupScreen extends StatelessWidget {
               color: Colors.red,
               onPressed: () async {
                 await model.leaveGroup();
-                Navigator.pop(context);
+                Navigator.pop(context, true);
               },
             ),
           ],
         );
       },
     );
+    if (result) {
+      Navigator.pop(context);
+    }
   }
+
+  GroupViewModel buildGroupViewModel(Object arguments);
 }

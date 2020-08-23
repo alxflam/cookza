@@ -1,9 +1,9 @@
 import 'package:cookly/model/entities/abstract/recipe_collection_entity.dart';
 import 'package:cookly/services/recipe_manager.dart';
 import 'package:cookly/services/service_locator.dart';
-import 'package:flutter/material.dart';
+import 'package:cookly/viewmodel/groups/abstract_group_model.dart';
 
-class RecipeGroupViewModel with ChangeNotifier {
+class RecipeGroupViewModel extends GroupViewModel {
   RecipeCollectionEntity _entity;
 
   String _name;
@@ -15,17 +15,20 @@ class RecipeGroupViewModel with ChangeNotifier {
 
   RecipeCollectionEntity get entity => this._entity;
 
+  @override
   Future<void> rename(String value) async {
     await sl.get<RecipeManager>().renameCollection(value, this._entity);
     this._name = value;
     notifyListeners();
   }
 
+  @override
   String get name {
     return _name;
   }
 
-  void addUser(String userID, String name) async {
+  @override
+  Future<void> addUser(String userID, String name) async {
     await sl
         .get<RecipeManager>()
         .addUserToCollection(this.entity, userID, name);
@@ -33,7 +36,13 @@ class RecipeGroupViewModel with ChangeNotifier {
     notifyListeners();
   }
 
+  @override
   Future<void> leaveGroup() async {
     return sl.get<RecipeManager>().leaveRecipeGroup(this.entity);
+  }
+
+  @override
+  Future<void> delete() {
+    return sl.get<RecipeManager>().deleteCollection(this.entity);
   }
 }

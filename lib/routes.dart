@@ -2,7 +2,7 @@ import 'package:cookly/screens/collections/share_account_screen.dart';
 import 'package:cookly/screens/groups/recipe_group.dart';
 import 'package:cookly/screens/home_screen.dart';
 import 'package:cookly/screens/leftovers_screen.dart';
-import 'package:cookly/screens/meal_plan/meal_plan_group_screen.dart';
+import 'package:cookly/screens/groups/meal_plan_group.dart';
 import 'package:cookly/screens/meal_plan/meal_plan_screen.dart';
 import 'package:cookly/screens/new_ingredient_screen.dart';
 import 'package:cookly/screens/ocr_creation/ingredients_image_step.dart';
