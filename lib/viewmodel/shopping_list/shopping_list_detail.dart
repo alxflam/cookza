@@ -8,6 +8,7 @@ import 'package:cookly/model/entities/mutable/mutable_shopping_list_item.dart';
 import 'package:cookly/model/json/ingredient_note.dart';
 import 'package:cookly/services/ingredients_calculator.dart';
 import 'package:cookly/services/meal_plan_manager.dart';
+import 'package:cookly/services/navigator_service.dart';
 import 'package:cookly/services/service_locator.dart';
 import 'package:cookly/services/shared_preferences_provider.dart';
 import 'package:cookly/services/shopping_list_items_generator.dart';
@@ -16,6 +17,7 @@ import 'package:cookly/services/unit_of_measure.dart';
 import 'package:cookly/viewmodel/meal_plan/recipe_meal_plan_model.dart';
 import 'package:cookly/viewmodel/recipe_edit/recipe_ingredient_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class ShoppingListModel extends ChangeNotifier {
   MutableShoppingList _listEntity;
@@ -65,9 +67,17 @@ class ShoppingListModel extends ChangeNotifier {
       this._items.add(MutableShoppingListItem.ofEntity(item));
     }
 
-    var generatedItems = await sl
-        .get<ShoppingListItemsGenerator>()
-        .generateItems(this._listEntity);
+    List<MutableShoppingListItem> generatedItems = [];
+    try {
+      generatedItems = await sl
+          .get<ShoppingListItemsGenerator>()
+          .generateItems(this._listEntity);
+    } on PlatformException catch (e) {
+      // may happen if the shopping list contains a recipe from a group the current user  does not have read access to
+      var context = sl.get<NavigatorService>().currentContext;
+      Scaffold.of(context).showSnackBar(SnackBar(
+          content: Text('§No access to a recipe from the shopping list')));
+    }
 
     // processed generated already bought items
     for (var item

@@ -1,8 +1,10 @@
+import 'package:cookly/model/entities/abstract/ingredient_note_entity.dart';
 import 'package:cookly/model/entities/abstract/meal_plan_entity.dart';
 import 'package:cookly/model/entities/abstract/shopping_list_entity.dart';
 import 'package:cookly/model/entities/mutable/mutable_shopping_list_item.dart';
 import 'package:cookly/services/ingredients_calculator.dart';
 import 'package:cookly/services/meal_plan_manager.dart';
+import 'package:cookly/services/navigator_service.dart';
 import 'package:cookly/services/service_locator.dart';
 
 abstract class ShoppingListItemsGenerator {

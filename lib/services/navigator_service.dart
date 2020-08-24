@@ -20,4 +20,6 @@ class NavigatorService {
   void goBack() {
     return navigatorKey.currentState.pop();
   }
+
+  BuildContext get currentContext => navigatorKey.currentContext;
 }
