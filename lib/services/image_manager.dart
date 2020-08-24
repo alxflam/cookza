@@ -22,10 +22,19 @@ class ImageManagerFirebase implements ImageManager {
 
   @override
   Future<void> deleteRecipeImage(RecipeEntity entity) async {
+    // delete local image file
+    var imageDirectory = await sl.get<StorageProvider>().getImageDirectory();
+    var cacheFile = File('$imageDirectory/${entity.id}.jpg');
+    if (cacheFile.existsSync()) {
+      cacheFile.deleteSync();
+    }
+
+    // return if the image does not have an image at all
     if (entity.image == null || entity.image.isEmpty) {
       return;
     }
 
+    // delete the cloud image
     StorageReference reference =
         _storage.ref().child(getRecipeImagePath(entity.id));
     try {

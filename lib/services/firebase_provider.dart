@@ -538,7 +538,6 @@ class FirebaseProvider {
   }
 
   Future<void> deleteRecipeCollection(String id) async {
-    // TODO: if collection has more than the current user, we should not allow deletion
     var collection = _firestore.collection(RECIPE_GROUPS).doc(id);
 
     var recipes = await _firestore
@@ -562,8 +561,6 @@ class FirebaseProvider {
   }
 
   Future<void> deleteMealPlanCollection(String id) async {
-    // TODO: if collection has more than the current user, we should not allow deletion
-
     var reference = _firestore.collection(MEAL_PLAN_GROUPS).doc(id);
 
     var snapshot = await _firestore
@@ -718,21 +715,39 @@ class FirebaseProvider {
   }
 
   Future<void> leaveMealPlanGroup(String id) async {
-    // TODO: if user is the only memeber of group, delete the group and all associated docs...
     var docRef = _firestore.collection(MEAL_PLAN_GROUPS).doc(id);
 
-    return _firestore.runTransaction((transaction) {
-      transaction.update(docRef, {'users.$userUid': FieldValue.delete()});
-    });
+    var doc = await docRef.get(GetOptions(source: Source.server));
+    var mealPlan = FirebaseMealPlanCollection.fromJson(doc.data(), doc.id);
+    var deleteMealPlan = mealPlan.users.entries
+        .where((a) => a.key != this._ownerUserID)
+        .isNotEmpty;
+
+    if (deleteMealPlan) {
+      return deleteMealPlanCollection(id);
+    } else {
+      return _firestore.runTransaction((transaction) {
+        transaction.update(docRef, {'users.$userUid': FieldValue.delete()});
+      });
+    }
   }
 
   Future<void> leaveRecipeGroup(String id) async {
-    // TODO: if user is the only memeber of group, delete the group
     var docRef = _firestore.collection(RECIPE_GROUPS).doc(id);
 
-    return _firestore.runTransaction((transaction) {
-      transaction.update(docRef, {'users.$userUid': FieldValue.delete()});
-    });
+    var doc = await docRef.get(GetOptions(source: Source.server));
+    var recipeGroup = FirebaseRecipeCollection.fromJson(doc.data(), doc.id);
+    var deleteGroup = recipeGroup.users.entries
+        .where((a) => a.key != this._ownerUserID)
+        .isNotEmpty;
+
+    if (deleteGroup) {
+      return deleteRecipeCollection(id);
+    } else {
+      return _firestore.runTransaction((transaction) {
+        transaction.update(docRef, {'users.$userUid': FieldValue.delete()});
+      });
+    }
   }
 
   Future<MealPlanCollectionEntity> getMealPlanGroupByID(String id) async {

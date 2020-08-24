@@ -82,8 +82,13 @@ class MealPlanManagerFirebase implements MealPlanManager {
   }
 
   @override
-  Future<void> deleteCollection(MealPlanCollectionEntity entity) {
-    return sl.get<FirebaseProvider>().deleteMealPlanCollection(entity.id);
+  Future<void> deleteCollection(MealPlanCollectionEntity entity) async {
+    var firebase = sl.get<FirebaseProvider>();
+    var group = await getCollectionByID(entity.id);
+    if (group.users.where((e) => e.id != firebase.userUid).isNotEmpty) {
+      throw 'Can\'t delete group with members';
+    }
+    return firebase.deleteMealPlanCollection(entity.id);
   }
 
   @override

@@ -94,8 +94,13 @@ class RecipeManagerFirebase implements RecipeManager {
   }
 
   @override
-  Future<void> deleteCollection(RecipeCollectionEntity entity) {
-    return sl.get<FirebaseProvider>().deleteRecipeCollection(entity.id);
+  Future<void> deleteCollection(RecipeCollectionEntity entity) async {
+    var firebase = sl.get<FirebaseProvider>();
+    var collection = await firebase.recipeCollectionByID(entity.id);
+    if (collection.users.where((e) => e.id != firebase.userUid).isNotEmpty) {
+      throw '§Can\'t delete a group with members';
+    }
+    return firebase.deleteRecipeCollection(entity.id);
   }
 
   @override
