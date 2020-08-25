@@ -1,4 +1,5 @@
 import 'package:cookly/components/recipe_list_tile.dart';
+import 'package:cookly/routes.dart';
 import 'package:cookly/screens/home_screen.dart';
 import 'package:cookly/screens/leftovers_screen.dart';
 import 'package:cookly/screens/new_ingredient_screen.dart';
@@ -7,7 +8,9 @@ import 'package:cookly/screens/recipe_modify/ingredient_step.dart';
 import 'package:cookly/screens/recipe_modify/instructions_step.dart';
 import 'package:cookly/screens/recipe_modify/new_recipe_screen.dart';
 import 'package:cookly/screens/recipe_modify/tag_step.dart';
+import 'package:cookly/screens/recipe_view/overview_tab.dart';
 import 'package:cookly/services/abstract/receive_intent_handler.dart';
+import 'package:cookly/services/image_manager.dart';
 import 'package:cookly/services/recipe_manager.dart';
 import 'package:cookly/services/shared_preferences_provider.dart';
 import 'package:cookly/services/similarity_service.dart';
@@ -22,6 +25,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../mocks/application_mock.dart';
+import '../mocks/image_manager_mock.dart';
 import '../mocks/navigator_observer_mock.dart';
 import '../mocks/receive_intent_handler_mock.dart';
 import '../mocks/recipe_manager_mock.dart';
@@ -29,7 +33,9 @@ import '../mocks/uom_mock.dart';
 
 void main() {
   var mock = RecipeManagerMock();
+  var imageMock = ImageManagerMock();
   GetIt.I.registerSingleton<RecipeManager>(mock);
+  GetIt.I.registerSingleton<ImageManager>(imageMock);
   GetIt.I.registerSingleton<SimilarityService>(SimilarityService());
 
   setUp(() {
@@ -144,7 +150,6 @@ void main() {
     /// then verify it got added
     expect(find.text('10'), findsOneWidget);
     expect(find.text('Onions'), findsOneWidget);
-    //expect(find.byType(DataRow), findsOneWidget);
 
     /// then edit it
     var editButton = find.byIcon(Icons.edit);
@@ -189,30 +194,29 @@ void main() {
 
     /// then proceed
     await _proceedStep(tester);
-    await tester.runAsync(() async {
-      tester.binding.addTime(Duration(seconds: 5));
+    await tester.pumpAndSettle();
 
-      await tester.pump();
+    /// now the recipe should have been created and we should have navigated to the recipe screen
+    expect(find.byType(OverviewTab), findsOneWidget);
 
-      /// then make sure the recipe got created
-      var recipes = await GetIt.I.get<RecipeManager>().getAllRecipes();
-      expect(recipes.length, 1);
+    /// then make sure the recipe got created
+    var recipes = await GetIt.I.get<RecipeManager>().getAllRecipes();
+    expect(recipes.length, 1);
 
-      /// verify general properties
-      expect(recipes.first.name, 'My simple recipe');
-      expect(recipes.first.description, 'My Desc');
-      expect(recipes.first.tags.length, 1);
-      expect(recipes.first.tags.contains('vegetarian'), true);
+    /// verify general properties
+    expect(recipes.first.name, 'My simple recipe');
+    expect(recipes.first.description, 'My Desc');
+    expect(recipes.first.tags.length, 1);
+    expect(recipes.first.tags.contains('vegetarian'), true);
 
-      /// verify ingredients and instructions
-      var ingredients = await recipes.first.ingredients;
-      var instructions = await recipes.first.instructions;
-      expect(instructions.length, 1);
-      expect(instructions.first.text, 'Do the first step');
-      expect(ingredients.length, 1);
-      expect(ingredients.first.ingredient.name, 'Mushrooms');
-      expect(ingredients.first.amount, 12);
-    });
+    /// verify ingredients and instructions
+    var ingredients = await recipes.first.ingredients;
+    var instructions = await recipes.first.instructions;
+    expect(instructions.length, 1);
+    expect(instructions.first.text, 'Do the first step');
+    expect(ingredients.length, 1);
+    expect(ingredients.first.ingredient.name, 'Mushrooms');
+    expect(ingredients.first.amount, 12);
   });
 }
 
@@ -245,6 +249,7 @@ _inputFormField(WidgetTester tester, Finder finder, String value) async {
 
 Future setupApplication(WidgetTester tester) async {
   await tester.pumpWidget(MaterialApp(
+    routes: kRoutes,
     home: ChangeNotifierProvider<ThemeModel>(
       create: (context) => ThemeModel(),
       child: HomeScreen(),

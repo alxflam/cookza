@@ -86,7 +86,7 @@ class CustomizedRatingBar extends StatelessWidget {
     }
 
     return RatingBar(
-      initialRating: _model.rating.toDouble(),
+      initialRating: _model.rating == null ? 0 : _model.rating.toDouble(),
       itemSize: 20,
       maxRating: 5,
       itemCount: 5,

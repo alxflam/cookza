@@ -51,23 +51,7 @@ class MealPlanScreen extends StatelessWidget {
           body: Builder(
             builder: (context) {
               if (snapshot.data == null) {
-                return Container(
-                  child: Center(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          RaisedButton(
-                            child: Text(translate(Keys.Ui_Mealplan_Select)),
-                            onPressed: () => Scaffold.of(context).openDrawer(),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                );
+                return NoMealPlanSelected();
               }
 
               return FutureBuilder(
@@ -231,77 +215,74 @@ class MealPlanScreen extends StatelessWidget {
                         return StatefulBuilder(builder: (context, setState) {
                           return SimpleDialog(
                             children: <Widget>[
-                              SingleChildScrollView(
-                                child: Column(
-                                  children: <Widget>[
-                                    Text(
-                                      recipeModel.name,
-                                      style: TextStyle(fontSize: 20),
-                                    ),
-                                    Builder(
-                                      builder: (context) {
-                                        // if it's only a note, don't show the servings
-                                        if (_count == null) {
-                                          return Container();
-                                        }
+                              Column(
+                                children: <Widget>[
+                                  Text(
+                                    recipeModel.name,
+                                    style: TextStyle(fontSize: 20),
+                                  ),
+                                  Builder(
+                                    builder: (context) {
+                                      // if it's only a note, don't show the servings
+                                      if (_count == null) {
+                                        return Container();
+                                      }
 
-                                        return Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                          children: <Widget>[
-                                            Text(translate(
-                                                Keys.Recipe_Servings)),
-                                            RoundIconButton(
-                                              icon: FontAwesomeIcons.minus,
-                                              onPress: () {
-                                                if (_count > 1) {
-                                                  setState(() {
-                                                    _count--;
-                                                  });
-                                                }
-                                              },
-                                            ),
-                                            Text(_count.toString()),
-                                            RoundIconButton(
-                                              icon: FontAwesomeIcons.plus,
-                                              onPress: () {
+                                      return Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: <Widget>[
+                                          Text(translate(Keys.Recipe_Servings)),
+                                          RoundIconButton(
+                                            icon: FontAwesomeIcons.minus,
+                                            onPress: () {
+                                              if (_count > 1) {
                                                 setState(() {
-                                                  _count++;
+                                                  _count--;
                                                 });
-                                              },
-                                            ),
-                                          ],
-                                        );
-                                      },
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      children: <Widget>[
-                                        RaisedButton(
-                                            child: Icon(Icons.check),
-                                            color: Colors.green,
-                                            onPressed: () {
-                                              recipeModel.setServings(
-                                                  context, _count);
-                                              mealPlanViewModel
-                                                  .recipeModelChanged(
-                                                      recipeModel);
-                                              Navigator.pop(context);
-                                            }),
-                                        RaisedButton(
-                                            child: Icon(Icons.delete),
-                                            color: Colors.red,
-                                            onPressed: () {
-                                              model.removeRecipe(
-                                                  recipeModel.entity, i);
+                                              }
+                                            },
+                                          ),
+                                          Text(_count.toString()),
+                                          RoundIconButton(
+                                            icon: FontAwesomeIcons.plus,
+                                            onPress: () {
+                                              setState(() {
+                                                _count++;
+                                              });
+                                            },
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: <Widget>[
+                                      RaisedButton(
+                                          child: Icon(Icons.check),
+                                          color: Colors.green,
+                                          onPressed: () {
+                                            recipeModel.setServings(
+                                                context, _count);
+                                            mealPlanViewModel
+                                                .recipeModelChanged(
+                                                    recipeModel);
+                                            Navigator.pop(context);
+                                          }),
+                                      RaisedButton(
+                                          child: Icon(Icons.delete),
+                                          color: Colors.red,
+                                          onPressed: () {
+                                            model.removeRecipe(
+                                                recipeModel.entity, i);
 
-                                              Navigator.pop(context);
-                                            }),
-                                      ],
-                                    )
-                                  ],
-                                ),
+                                            Navigator.pop(context);
+                                          }),
+                                    ],
+                                  )
+                                ],
                               )
                             ],
                           );
@@ -362,18 +343,7 @@ class MealPlanScreen extends StatelessWidget {
   }
 
   _createWeekTile(int i, Color backgroundColor) {
-    return ListTile(
-      title: Center(
-        child: CircleAvatar(
-          backgroundColor: backgroundColor,
-          foregroundColor: Colors.white,
-          child: Text(
-            i.toString(),
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-        ),
-      ),
-    );
+    return WeekNumber(i, backgroundColor);
   }
 
   String _getWeekDayHeaderText(BuildContext context, MealPlanDateEntry entry) {
@@ -506,6 +476,51 @@ class MealPlanScreen extends StatelessWidget {
           },
         );
       },
+    );
+  }
+}
+
+class NoMealPlanSelected extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Center(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              RaisedButton(
+                child: Text(translate(Keys.Ui_Mealplan_Select)),
+                onPressed: () => Scaffold.of(context).openDrawer(),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class WeekNumber extends StatelessWidget {
+  final int week;
+  final Color backgroundColor;
+  const WeekNumber(this.week, this.backgroundColor);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      title: Center(
+        child: CircleAvatar(
+          backgroundColor: backgroundColor,
+          foregroundColor: Colors.white,
+          child: Text(
+            week.toString(),
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
+      ),
     );
   }
 }

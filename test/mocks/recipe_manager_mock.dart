@@ -75,8 +75,7 @@ class RecipeManagerMock implements RecipeManager {
 
   @override
   Future<List<RecipeEntity>> getRecipeById(List<String> ids) {
-    // TODO: implement getRecipeById
-    throw UnimplementedError();
+    return Future.value(_recipes.where((a) => ids.contains(a.id)).toList());
   }
 
   @override
