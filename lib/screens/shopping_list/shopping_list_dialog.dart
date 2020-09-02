@@ -27,7 +27,7 @@ Future<void> openShoppingListDialog(BuildContext context) async {
   }
 
   if (collections.length == 1) {
-    model = ShoppingListModel.empty(collections.first.id);
+    model = ShoppingListModel.empty(groupID: collections.first.id);
     dateRange = await showDateRangePicker(
         context: context,
         firstDate: model.dateFrom,
@@ -42,6 +42,7 @@ Future<void> openShoppingListDialog(BuildContext context) async {
     model.dateFrom = dateRange.start;
     model.groupID = collections.first.id;
   } else {
+    model = ShoppingListModel.empty();
     model = await _showMultipleGroupsDialog(context, collections, model);
   }
 
@@ -98,9 +99,9 @@ Future<ShoppingListModel> _showMultipleGroupsDialog(BuildContext context,
                             padding: EdgeInsets.all(18),
                             child: Column(
                               children: [
-                                Text(formatDate(model.dateFrom)),
+                                Text(formatDate(model.dateFrom, context)),
                                 Text(' - '),
-                                Text(formatDate(model.dateEnd)),
+                                Text(formatDate(model.dateEnd, context)),
                               ],
                             ),
                           ),
@@ -148,8 +149,9 @@ Future<ShoppingListModel> _showMultipleGroupsDialog(BuildContext context,
       });
 }
 
-String formatDate(DateTime dateFrom) {
-  var day = DateFormat.E('de').format(dateFrom);
+String formatDate(DateTime dateFrom, BuildContext context) {
+  var locale = Localizations.localeOf(context);
+  var day = DateFormat.E(locale.toLanguageTag()).format(dateFrom);
   var date = kDateFormatter.format(dateFrom);
   return day + ', ' + date;
 }

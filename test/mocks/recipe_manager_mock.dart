@@ -3,6 +3,7 @@ import 'package:cookly/model/entities/abstract/recipe_entity.dart';
 import 'package:cookly/model/entities/abstract/recipe_collection_entity.dart';
 import 'package:cookly/model/entities/json/recipe_collection_entity.dart';
 import 'package:cookly/model/json/recipe_collection.dart';
+import 'package:cookly/services/id_gen.dart';
 import 'package:cookly/services/recipe_manager.dart';
 
 class RecipeManagerMock implements RecipeManager {
@@ -36,13 +37,18 @@ class RecipeManagerMock implements RecipeManager {
       Future.value(this._collections);
 
   @override
-  Stream<List<RecipeCollectionEntity>> get collectionsAsStream =>
-      throw UnimplementedError();
+  Stream<List<RecipeCollectionEntity>> get collectionsAsStream {
+    Stream.fromFuture(Future.value(this._collections));
+  }
 
   @override
   Future<RecipeCollectionEntity> createCollection(String name) {
-    this._collections.add(RecipeCollectionEntityJson.of(RecipeCollection(
-        id: '1221', name: name, creationTimestamp: Timestamp.now())));
+    var result = RecipeCollectionEntityJson.of(RecipeCollection(
+        id: UniqueKeyIdGenerator().id,
+        name: name,
+        creationTimestamp: Timestamp.now()));
+    this._collections.add(result);
+    return Future.value(result);
   }
 
   @override
@@ -92,7 +98,7 @@ class RecipeManagerMock implements RecipeManager {
 
   @override
   Stream<List<RecipeEntity>> get recipes =>
-      Stream.fromIterable(Iterable.castFrom(this._recipes));
+      Stream.fromFuture(Future.value(this._recipes));
 
   @override
   Future<void> renameCollection(

@@ -45,11 +45,12 @@ class MealPlanViewModel extends ChangeNotifier {
   int _standardServings =
       sl.get<SharedPreferencesProvider>().getMealPlanStandardServingsSize();
 
-  MealPlanViewModel.of(MealPlanEntity plan) {
+  MealPlanViewModel.of(MealPlanEntity plan, {DateTime startDate}) {
     // first retrieve how many weeks should be shown
     var targetWeeks = sl.get<SharedPreferencesProvider>().getMealPlanWeeks();
     // create a mutable meal plan model
-    _mealPlan = MutableMealPlan.of(plan, targetWeeks);
+    _mealPlan = MutableMealPlan.of(plan, targetWeeks,
+        startDate: startDate ?? DateTime.now());
   }
 
   // getters for UI wrap the mutable entity in change notifiers

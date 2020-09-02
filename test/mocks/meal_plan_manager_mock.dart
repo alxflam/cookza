@@ -27,8 +27,9 @@ class MealPlanManagerMock extends Mock implements MealPlanManager {
 
   @override
   Future<void> createCollection(String name) {
-    var entity = MealPlanCollectionEntityFirebase.of(
-        FirebaseMealPlanCollection(name: name, users: {'this': 'owner'}));
+    var doc = FirebaseMealPlanCollection(name: name, users: {'this': 'owner'});
+    doc.documentID = name;
+    var entity = MealPlanCollectionEntityFirebase.of(doc);
     this._collections.putIfAbsent(name, () => entity);
     return Future.value();
   }
@@ -59,5 +60,11 @@ class MealPlanManagerMock extends Mock implements MealPlanManager {
     } else {
       this._mealPlans.putIfAbsent(entity.groupID, () => entity);
     }
+  }
+
+  void reset() {
+    _mealPlans.clear();
+    _collections.clear();
+    _currentCollection = null;
   }
 }

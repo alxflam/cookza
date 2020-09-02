@@ -1,22 +1,16 @@
 import 'package:cookly/components/meal_plan_groups_drawer.dart';
 import 'package:cookly/components/round_icon_button.dart';
-import 'package:cookly/model/entities/abstract/meal_plan_entity.dart';
-import 'package:cookly/model/entities/abstract/recipe_entity.dart';
 import 'package:cookly/model/entities/mutable/mutable_meal_plan.dart';
 import 'package:cookly/routes.dart';
 import 'package:cookly/screens/meal_plan/meal_plan_screen.dart';
 import 'package:cookly/services/id_gen.dart';
-import 'package:cookly/services/image_manager.dart';
 import 'package:cookly/services/meal_plan_manager.dart';
 import 'package:cookly/services/recipe_manager.dart';
 import 'package:cookly/services/shared_preferences_provider.dart';
-import 'package:cookly/services/util/week_calculation.dart';
-import 'package:cookly/viewmodel/recipe_view/recipe_view_model.dart';
 import 'package:cookly/viewmodel/settings/theme_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_translate/localization.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
@@ -26,7 +20,6 @@ import '../mocks/meal_plan_manager_mock.dart';
 import '../mocks/navigator_observer_mock.dart';
 import '../mocks/recipe_manager_mock.dart';
 import '../utils/meal_plan_creator.dart';
-import '../utils/recipe_creator.dart';
 
 void main() {
   var recipeManager = RecipeManagerMock();
@@ -356,6 +349,7 @@ void main() {
 
   testWidgets('Add recipe by navigation', (WidgetTester tester) async {
     await _initApp(tester, mockObserver);
+    // TODO: implement test
   });
 }
 

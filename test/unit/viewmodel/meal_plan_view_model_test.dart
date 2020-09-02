@@ -24,26 +24,41 @@ class MealPlanEntityMock extends Mock implements MealPlanEntity {
 }
 
 void main() {
+  final int weeks = 2;
   TestWidgetsFlutterBinding.ensureInitialized();
-  SharedPreferences.setMockInitialValues({"mealPlanWeeks": 2});
+  SharedPreferences.setMockInitialValues({"mealPlanWeeks": weeks});
 
   sl.registerSingletonAsync<SharedPreferencesProvider>(
       () async => SharedPreferencesProviderImpl().init());
 
   test(
-    'Compute timeline if no persistent data is present',
+    'Compute timeline if no persistent data is present on a monday',
     () async {
-      var model = MealPlanViewModel.of(MealPlanEntityMock());
+      var today = DateTime(2020, 8, 31);
 
-      var today = DateTime.now();
-      var offset = 0;
-      if (DateTime.monday != today.weekday) {
-        offset = 7 - today.weekday;
-      }
+      var model = MealPlanViewModel.of(MealPlanEntityMock(), startDate: today);
+
       var startDate = DateTime(today.year, today.month, today.day);
-      var endDate = startDate.add(Duration(days: 14 + offset));
+      var endDate = DateTime(2020, 9, 13);
 
-      expect(model.entries.length, 14 + offset + 1);
+      expect(model.entries.length, 14);
+      expect(model.entries.first.date.isAtSameMomentAs(startDate), true);
+      expect(model.entries.last.date.isAtSameMomentAs(endDate), true);
+      expect(model.entries.last.date.weekday, DateTime.sunday);
+    },
+  );
+
+  test(
+    'Compute timeline if no persistent data is present on a wednesday',
+    () async {
+      var today = DateTime(2020, 9, 2);
+
+      var model = MealPlanViewModel.of(MealPlanEntityMock(), startDate: today);
+
+      var startDate = DateTime(today.year, today.month, today.day);
+      var endDate = DateTime(2020, 9, 20);
+
+      expect(model.entries.length, 19);
       expect(model.entries.first.date.isAtSameMomentAs(startDate), true);
       expect(model.entries.last.date.isAtSameMomentAs(endDate), true);
       expect(model.entries.last.date.weekday, DateTime.sunday);

@@ -40,7 +40,7 @@ class ShoppingListModel extends ChangeNotifier {
     _lastDate = _firstDate.add(Duration(days: _shoppingListDays));
   }
 
-  ShoppingListModel.empty(String groupID)
+  ShoppingListModel.empty({String groupID})
       : this._firstDate = DateTime.now(),
         this._lastDate = DateTime.now().add(Duration(days: _shoppingListDays)) {
     _listEntity =

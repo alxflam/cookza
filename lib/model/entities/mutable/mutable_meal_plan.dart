@@ -10,17 +10,18 @@ class MutableMealPlan implements MealPlanEntity {
 
   String _groupID;
 
-  MutableMealPlan.of(MealPlanEntity entity, int weeks) {
+  MutableMealPlan.of(MealPlanEntity entity, int weeks, {DateTime startDate}) {
     this._id = entity.id;
     this._groupID = entity.groupID;
-    init(entity, weeks);
+    init(entity, weeks, startDate ?? DateTime.now());
   }
 
-  MutableMealPlan.withPreferenceWeeks(MealPlanEntity entity) {
+  MutableMealPlan.withPreferenceWeeks(MealPlanEntity entity,
+      {DateTime startDate}) {
     this._id = entity.id;
     this._groupID = entity.groupID;
     var weeks = sl.get<SharedPreferencesProvider>().getMealPlanWeeks();
-    init(entity, weeks);
+    init(entity, weeks, startDate ?? DateTime.now());
   }
 
   @override
@@ -29,14 +30,14 @@ class MutableMealPlan implements MealPlanEntity {
   @override
   List<MutableMealPlanDateEntity> get items => this._items;
 
-  void init(MealPlanEntity entity, int weeks) {
+  void init(MealPlanEntity entity, int weeks, DateTime startDate) {
     // identify the start date
-    var now = DateTime.now();
-    var today = DateTime(now.year, now.month, now.day);
+    var firstDateToBeShown =
+        DateTime(startDate.year, startDate.month, startDate.day);
 
     // for each persisted item, use it if it is not in the past and contains any persisted state (recipes have been added)
     for (var item in entity.items) {
-      bool skip = item.date.isBefore(today);
+      bool skip = item.date.isBefore(firstDateToBeShown);
       if (!skip && item.recipes != null && item.recipes.isNotEmpty) {
         this._items.add(MutableMealPlanDateEntity.of(item));
       }
@@ -45,22 +46,25 @@ class MutableMealPlan implements MealPlanEntity {
     // then identify the end date of the persisted state (if none is there - yesterdays date)
     var lastDate = items.isNotEmpty
         ? items.last.date
-        : today.add(Duration(days: weeks * 7));
+        : firstDateToBeShown.add(Duration(days: weeks * 7 - 1));
 
     // check if we start the period on a monday: we always want to show full weeks for the targetWeeks,
     // therefore if we open the meal plan on a wednesday and targetWeeks is two, we will have the rest of the week (5 days) + two weeks shown
-    var offset = DateTime.monday == today.weekday ? -1 : 7 - today.weekday;
-    var minLastDate =
-        today.add(Duration(days: offset)).add(Duration(days: weeks * 7));
+    var offset = DateTime.monday == firstDateToBeShown.weekday
+        ? -1
+        : 7 - firstDateToBeShown.weekday;
+    var minLastDate = firstDateToBeShown
+        .add(Duration(days: offset))
+        .add(Duration(days: weeks * 7));
     if (minLastDate.isAfter(lastDate)) {
       lastDate = minLastDate;
     }
 
     // next fill up dates currently not occupied (there has not been any persisted state for these)
-    var days = lastDate.difference(today).inDays;
+    var days = lastDate.difference(firstDateToBeShown).inDays;
     this._sort();
     for (var i = 0; i <= days; i++) {
-      var day = today.add(Duration(days: i));
+      var day = firstDateToBeShown.add(Duration(days: i));
 
       if (items.length <= i || !isSameDay(items[i].date, day)) {
         _items.add(MutableMealPlanDateEntity.empty(day));

@@ -74,7 +74,7 @@ class SharedPreferencesProviderImpl implements SharedPreferencesProvider {
     if (result == null || result == 0) {
       result = 2;
     }
-    assert(result > 0 && result < 3);
+    assert(result > 0 && result < 11);
     return result;
   }
 
@@ -91,7 +91,7 @@ class SharedPreferencesProviderImpl implements SharedPreferencesProvider {
 
   @override
   void setMealPlanWeeks(int weeks) {
-    assert(weeks > 0 && weeks < 3);
+    assert(weeks > 0 && weeks < 11);
     this._prefs.setInt(mealPlanWeeksKey, weeks);
   }
 
