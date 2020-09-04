@@ -65,9 +65,6 @@ class RecipeTextGeneratorImpl implements RecipeTextGenerator {
         buffer.writeln();
         counter++;
       }
-
-      buffer.writeln();
-      buffer.writeln();
     }
 
     return buffer.toString();

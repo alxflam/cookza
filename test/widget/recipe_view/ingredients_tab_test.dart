@@ -1,7 +1,5 @@
 import 'package:cookly/components/round_icon_button.dart';
-import 'package:cookly/model/entities/abstract/recipe_entity.dart';
 import 'package:cookly/screens/recipe_view/ingredients_tab.dart';
-import 'package:cookly/screens/recipe_view/overview_tab.dart';
 import 'package:cookly/services/image_manager.dart';
 import 'package:cookly/services/shared_preferences_provider.dart';
 import 'package:cookly/services/unit_of_measure.dart';
@@ -14,7 +12,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../mocks/image_manager_mock.dart';
-import '../../mocks/uom_mock.dart';
+import '../../mocks/uom_provider_mock.dart';
 import '../../utils/recipe_creator.dart';
 
 void main() {

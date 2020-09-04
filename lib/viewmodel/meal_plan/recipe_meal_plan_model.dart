@@ -49,7 +49,8 @@ class MealPlanViewModel extends ChangeNotifier {
     // first retrieve how many weeks should be shown
     var targetWeeks = sl.get<SharedPreferencesProvider>().getMealPlanWeeks();
     // create a mutable meal plan model
-    _mealPlan = MutableMealPlan.of(plan, targetWeeks,
+    _mealPlan = MutableMealPlan.of(
+        plan.id, plan.groupID, plan.items, targetWeeks,
         startDate: startDate ?? DateTime.now());
   }
 

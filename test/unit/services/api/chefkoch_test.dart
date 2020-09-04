@@ -4,7 +4,7 @@ import 'package:cookly/services/unit_of_measure.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 
-import '../../../mocks/uom_mock.dart';
+import '../../../mocks/uom_provider_mock.dart';
 
 void main() {
   test(

@@ -10,18 +10,21 @@ class MutableMealPlan implements MealPlanEntity {
 
   String _groupID;
 
-  MutableMealPlan.of(MealPlanEntity entity, int weeks, {DateTime startDate}) {
-    this._id = entity.id;
-    this._groupID = entity.groupID;
-    init(entity, weeks, startDate ?? DateTime.now());
+  MutableMealPlan.of(
+      String id, String groupID, List<MealPlanDateEntity> items, int weeks,
+      {DateTime startDate}) {
+    this._id = id;
+    this._groupID = groupID;
+    init(items, weeks, startDate ?? DateTime.now());
   }
 
-  MutableMealPlan.withPreferenceWeeks(MealPlanEntity entity,
+  MutableMealPlan.withPreferenceWeeks(
+      String id, String groupID, List<MealPlanDateEntity> items,
       {DateTime startDate}) {
-    this._id = entity.id;
-    this._groupID = entity.groupID;
+    this._id = id;
+    this._groupID = groupID;
     var weeks = sl.get<SharedPreferencesProvider>().getMealPlanWeeks();
-    init(entity, weeks, startDate ?? DateTime.now());
+    init(items, weeks, startDate ?? DateTime.now());
   }
 
   @override
@@ -30,13 +33,14 @@ class MutableMealPlan implements MealPlanEntity {
   @override
   List<MutableMealPlanDateEntity> get items => this._items;
 
-  void init(MealPlanEntity entity, int weeks, DateTime startDate) {
+  void init(
+      List<MealPlanDateEntity> entityItems, int weeks, DateTime startDate) {
     // identify the start date
     var firstDateToBeShown =
         DateTime(startDate.year, startDate.month, startDate.day);
 
     // for each persisted item, use it if it is not in the past and contains any persisted state (recipes have been added)
-    for (var item in entity.items) {
+    for (var item in entityItems) {
       bool skip = item.date.isBefore(firstDateToBeShown);
       if (!skip && item.recipes != null && item.recipes.isNotEmpty) {
         this._items.add(MutableMealPlanDateEntity.of(item));

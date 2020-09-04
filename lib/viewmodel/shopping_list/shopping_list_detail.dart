@@ -6,8 +6,6 @@ import 'package:cookly/model/entities/mutable/mutable_ingredient_note.dart';
 import 'package:cookly/model/entities/mutable/mutable_shopping_list.dart';
 import 'package:cookly/model/entities/mutable/mutable_shopping_list_item.dart';
 import 'package:cookly/model/json/ingredient_note.dart';
-import 'package:cookly/services/ingredients_calculator.dart';
-import 'package:cookly/services/meal_plan_manager.dart';
 import 'package:cookly/services/navigator_service.dart';
 import 'package:cookly/services/service_locator.dart';
 import 'package:cookly/services/shared_preferences_provider.dart';
@@ -28,9 +26,9 @@ class ShoppingListModel extends ChangeNotifier {
   DateTime _lastDate;
   DateTime _firstDate;
 
-  List<IngredientNote> _requiredIngredients = [];
-  List<IngredientNote> _availableIngredients = [];
-  Map<String, int> _recipeReferences = {};
+  // List<IngredientNote> _requiredIngredients = [];
+  // List<IngredientNote> _availableIngredients = [];
+  // Map<String, int> _recipeReferences = {};
   List<MutableShoppingListItem> _items = [];
   bool _initalized = false;
 
@@ -245,18 +243,18 @@ class ShoppingListItemModel extends ChangeNotifier {
     this._uom = uom;
   }
 
-  ShoppingListItemModel.customItemOfIngredient(IngredientNoteEntity entity) {
-    var uomProvider = sl.get<UnitOfMeasureProvider>();
-    var uom = uomProvider.getUnitOfMeasureById(entity.unitOfMeasure);
-    this._uom = uom;
-  }
+  // ShoppingListItemModel.customItemOfIngredient(IngredientNoteEntity entity) {
+  //   var uomProvider = sl.get<UnitOfMeasureProvider>();
+  //   var uom = uomProvider.getUnitOfMeasureById(entity.unitOfMeasure);
+  //   this._uom = uom;
+  // }
 
-  ShoppingListItemModel.customItemOfEntity(ShoppingListItemEntity entity) {
-    var uomProvider = sl.get<UnitOfMeasureProvider>();
-    var uom =
-        uomProvider.getUnitOfMeasureById(entity.ingredientNote.unitOfMeasure);
-    this._uom = uom;
-  }
+  // ShoppingListItemModel.customItemOfEntity(ShoppingListItemEntity entity) {
+  //   var uomProvider = sl.get<UnitOfMeasureProvider>();
+  //   var uom =
+  //       uomProvider.getUnitOfMeasureById(entity.ingredientNote.unitOfMeasure);
+  //   this._uom = uom;
+  // }
 
   String get uom {
     // TODO: there should be a null uom!

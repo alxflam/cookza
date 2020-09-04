@@ -29,7 +29,7 @@ import '../mocks/image_manager_mock.dart';
 import '../mocks/navigator_observer_mock.dart';
 import '../mocks/receive_intent_handler_mock.dart';
 import '../mocks/recipe_manager_mock.dart';
-import '../mocks/uom_mock.dart';
+import '../mocks/uom_provider_mock.dart';
 
 void main() {
   var mock = RecipeManagerMock();
