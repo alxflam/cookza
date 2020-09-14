@@ -251,7 +251,12 @@ abstract class AbstractGroupScreen extends StatelessWidget {
               ),
               color: Colors.red,
               onPressed: () async {
-                await model.delete();
+                try {
+                  await model.delete();
+                } catch (e) {
+                  // TODO: exception may occur if group has mor members!!
+                  // TODO: anyways group vanished after other member left group...why?
+                }
                 Navigator.pop(context, true);
               },
             ),

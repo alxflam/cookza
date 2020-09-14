@@ -61,7 +61,7 @@ Future<void> openShoppingListDialog(BuildContext context) async {
                   (e.dateFrom.isBefore(DateTime.now()) &&
                       isSameDay(model.dateFrom, DateTime.now()))) &&
               e.dateUntil == model.dateEnd,
-          orElse: null);
+          orElse: () => null);
 
   var listEntity = matchedList != null
       ? matchedList
