@@ -59,6 +59,7 @@
         "settings": "Settings",
         "share": "Share",
         "shareAs": "Share as",
+        "copy": "Copy",
         "edit": "Edit",
         "delete": "Delete",
         "cancel": "Cancel",
@@ -114,7 +115,8 @@
         "privacyStatement": "Data Privacy Statement",
         "termsOfUse": "Terms of Use",
         "deleteAllData": "Delete all data",
-        "support": "Support"
+        "support": "Support",
+        "errorLog": "Error Log"
     },
     "onboarding": {},
     "unitOfMeasure": {

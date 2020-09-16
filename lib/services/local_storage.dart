@@ -7,10 +7,14 @@ abstract class StorageProvider {
 
   Future<String> getTempDirectory();
   Future<String> getImageDirectory();
+  Future<File> getExeptionLogFile();
+  Future<void> updateExeptionLogFile(String content);
+  Future<void> clearExceptionLogFile();
 }
 
 class LocalStorageProvider implements StorageProvider {
   static final String imageSubdirectory = "images";
+  static final String exceptionLogFileName = "exceptions.log";
 
   Future<String> get _localPath async {
     final directory = await getApplicationDocumentsDirectory();
@@ -38,5 +42,28 @@ class LocalStorageProvider implements StorageProvider {
   Future<String> getTempDirectory() async {
     var directory = await getTemporaryDirectory();
     return directory.path;
+  }
+
+  @override
+  Future<File> getExeptionLogFile() async {
+    String path = await _localPath;
+    var logFilePath = '$path/$exceptionLogFileName';
+    var logFile = File(logFilePath);
+    if (!logFile.existsSync()) {
+      logFile.createSync();
+    }
+    return logFile;
+  }
+
+  @override
+  Future<void> updateExeptionLogFile(String content) async {
+    String path = await _localPath;
+    var logFilePath = '$path/$exceptionLogFileName';
+    var logFile = File(logFilePath);
+    return logFile.writeAsString(content);
+  }
+
+  Future<void> clearExceptionLogFile() {
+    return updateExeptionLogFile('');
   }
 }

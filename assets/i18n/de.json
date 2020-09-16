@@ -59,6 +59,7 @@
         "settings": "Einstellungen",
         "share": "Teilen",
         "shareAs": "Teilen als",
+        "copy": "Kopieren",
         "edit": "Bearbeiten",
         "delete": "Löschen",
         "cancel": "Abbrechen",
@@ -114,7 +115,8 @@
         "privacyStatement": "Datenschutzerklärung",
         "termsOfUse": "Nutzungsbedingungen",
         "deleteAllData": "Alle Daten löschen",
-        "support": "Support"
+        "support": "Support",
+        "errorLog": "Fehlerlog"
     },
     "onboarding": {},
     "unitOfMeasure": {

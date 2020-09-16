@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:cookly/localization/keys.dart';
 import 'package:cookly/routes.dart';
 import 'package:cookly/screens/settings/onboarding_screen.dart';
 import 'package:cookly/screens/web/web_landing_screen.dart';
+import 'package:cookly/services/exception_handler.dart';
 import 'package:cookly/services/navigator_service.dart';
 import 'package:cookly/services/shared_preferences_provider.dart';
 import 'package:cookly/viewmodel/settings/theme_model.dart';
@@ -26,12 +29,35 @@ void main() async {
   setupServiceLocator();
   await GetIt.I.allReady();
 
-  runApp(
-    LocalizedApp(
-      delegate,
-      ProviderChainApp(),
-    ),
-  );
+  /// delegating flutter exceptions (usually widget errors) is disbled for debug mode
+  /// as the flutter exception handler adds more verbose output for troubleshooting
+  if (kReleaseMode) {
+    setupFlutterErrorHandling();
+  }
+
+  /// use a custom guarded zone to run the app
+  /// this enables custom handling of uncatched exceptions
+  runZonedGuarded(
+      () => runApp(
+            LocalizedApp(
+              delegate,
+              ProviderChainApp(),
+            ),
+          ),
+      (Object error, StackTrace stackTrace) => {
+            // delegate exception to service
+            GetIt.I
+                .get<ExceptionHandler>()
+                .reportException(error, stackTrace, DateTime.now())
+          });
+}
+
+/// forward all uncatched exceptions to the custom exception handler
+void setupFlutterErrorHandling() {
+  FlutterError.onError = (FlutterErrorDetails details) {
+    FlutterError.dumpErrorToConsole(details);
+    Zone.current.handleUncaughtError(details.exception, details.stack);
+  };
 }
 
 class ProviderChainApp extends StatelessWidget {

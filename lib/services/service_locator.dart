@@ -6,6 +6,7 @@ import 'package:cookly/services/abstract/recipe_file_export.dart';
 import 'package:cookly/services/abstract/recipe_file_import.dart';
 import 'package:cookly/services/abstract/recipe_text_export.dart';
 import 'package:cookly/services/abstract/shopping_list_text_export.dart';
+import 'package:cookly/services/exception_handler.dart';
 import 'package:cookly/services/firebase_provider.dart';
 import 'package:cookly/services/id_gen.dart';
 import 'package:cookly/services/image_manager.dart';
@@ -75,6 +76,7 @@ void setupServiceLocator() {
   sl.registerSingleton<ShoppingListManager>(ShoppingListManagerImpl());
   sl.registerSingleton<ShoppingListItemsGenerator>(
       ShoppingListItemsGeneratorImpl());
+  sl.registerSingleton<ExceptionHandler>(ExceptionHandlerImpl());
 
   sl.registerSingletonAsync<SharedPreferencesProvider>(
       () async => SharedPreferencesProviderImpl().init());

@@ -184,6 +184,8 @@ class Keys {
 
   static const String Settings_Support = 'settings.support';
 
+  static const String Settings_Errorlog = 'settings.errorLog';
+
   static const String Unitofmeasure_Mmt = 'unitOfMeasure.MMT';
 
   static const String Unitofmeasure_Cmt = 'unitOfMeasure.CMT';

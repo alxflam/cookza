@@ -1,6 +1,7 @@
 import 'package:cookly/constants.dart';
 import 'package:cookly/localization/keys.dart';
 import 'package:cookly/screens/settings/changelog_screen.dart';
+import 'package:cookly/screens/settings/error_log_screen.dart';
 import 'package:cookly/screens/settings/onboarding_screen.dart';
 import 'package:cookly/screens/settings/saved_images_screen.dart';
 import 'package:cookly/services/profile_deleter.dart';
@@ -121,6 +122,14 @@ class AboutScreen extends StatelessWidget {
                     return DeleteAllDataDialog();
                   },
                 );
+              },
+            ),
+            AboutScreenDivider(),
+            ListTile(
+              title: Text(translate(Keys.Settings_Errorlog)),
+              leading: FaIcon(FontAwesomeIcons.bug),
+              onTap: () {
+                Navigator.pushNamed(context, ErrorLogScreen.id);
               },
             ),
             SettingSectionHeader('§Legal'),
