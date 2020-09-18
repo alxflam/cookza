@@ -10,6 +10,7 @@
 .svn/
 
 # code coverage
+/coverage/
 lcov.info
 
 # IntelliJ related

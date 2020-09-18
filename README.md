@@ -1,7 +1,23 @@
-# cookly
+# Cookza
 
+## Links
 - [Bitbucket Repository](https://bitbucket.org/alex0711/cookly/src/master/)
 - [Bitrise CI Pipeline](https://app.bitrise.io/app/918ad19024d15f9e#/builds)
+
+## Building the app
+
+Run the following command to built an apk for ARM64
+* flutter build apk --target-platform android-arm64 --split-per-abi
+
+## Run test coverage
+
+* flutter test --coverage
+* genhtml coverage/lcov.info --output-directory coverage
+
+## Generating models
+
+The following command generates models (annoted with @JsonSerializable) and internationalization (see lib/localization) constants.
+* flutter pub run build_runner build --delete-conflicting-outputs
 
 ## Cloud Firestore Scheme
 

@@ -11,7 +11,7 @@ class ExceptionItem {
   @JsonKey(nullable: false)
   String stackTrace;
 
-  @JsonKey(toJson: kDateToJson, fromJson: kDateFromJson)
+  @JsonKey(fromJson: kDateFromJson, toJson: kDateToJson)
   DateTime date;
 
   Map<String, dynamic> toJson() => _$ExceptionItemToJson(this);

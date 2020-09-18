@@ -1,8 +1,12 @@
 import 'package:cookly/model/entities/mutable/mutable_ingredient.dart';
+import 'package:cookly/model/entities/mutable/mutable_shopping_list.dart';
+import 'package:cookly/model/entities/mutable/mutable_shopping_list_item.dart';
 import 'package:cookly/model/firebase/recipe/firebase_ingredient.dart';
 import 'package:cookly/model/firebase/shopping_list/firebase_shopping_list.dart';
 import 'package:cookly/model/json/ingredient.dart';
 import 'package:flutter_test/flutter_test.dart';
+
+import '../../../utils/recipe_creator.dart';
 
 void main() {
   test(
@@ -53,6 +57,37 @@ void main() {
       var generatedJson = cut.toJson();
 
       expect(generatedJson, json);
+    },
+  );
+
+  test(
+    'Shopping list document static factory method',
+    () async {
+      var startDate = DateTime.now();
+      var endDate = startDate.add(Duration(days: 7));
+      var entity = MutableShoppingList.ofValues(startDate, endDate, 'id', []);
+
+      var onion =
+          RecipeCreator.createIngredient('Onion', amount: 2, uom: 'PCS');
+
+      var item = MutableShoppingListItem.ofIngredientNote(onion, false, false);
+
+      entity.addItem(item);
+      var cut = FirebaseShoppingListDocument.from(entity);
+
+      expect(cut.dateFrom, startDate);
+      expect(cut.items.length, 1);
+      expect(cut.items.first.ingredient.ingredient.name, 'Onion');
+    },
+  );
+
+  test(
+    'Shopping list document empty factory method',
+    () async {
+      var cut = FirebaseShoppingListDocument.empty('1234');
+
+      expect(cut.groupID, '1234');
+      expect(cut.documentID, null);
     },
   );
 }

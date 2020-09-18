@@ -19,18 +19,6 @@ class IngredientNote {
 
   IngredientNote({this.ingredient, this.unitOfMeasure, this.amount});
 
-  IngredientNote.create() {
-    this.ingredient = Ingredient(name: '');
-    this.amount = 0;
-    this.unitOfMeasure = '';
-  }
-
-  IngredientNote.from(IngredientNote note) {
-    this.ingredient = Ingredient.from(note.ingredient);
-    this.amount = note.amount;
-    this.unitOfMeasure = note.unitOfMeasure;
-  }
-
   IngredientNote.fromEntity(IngredientNoteEntity note) {
     this.ingredient = Ingredient.fromEntity(note.ingredient);
     this.amount = note.amount;

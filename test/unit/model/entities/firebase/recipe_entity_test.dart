@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cookly/constants.dart';
+import 'package:cookly/model/entities/abstract/recipe_entity.dart';
 import 'package:cookly/model/entities/firebase/ingredient_note_entity.dart';
 import 'package:cookly/model/entities/firebase/instruction_entity.dart';
 import 'package:cookly/model/entities/firebase/recipe_entity.dart';
@@ -106,6 +107,38 @@ void main() {
 
       expect(cut.creationDateFormatted, kDateFormatter.format(creationDate));
       expect(cut.modificationDateFormatted, kDateFormatter.format(modDate));
+    },
+  );
+
+  test(
+    'basic getters',
+    () async {
+      var recipe = FirebaseRecipe(name: 'name');
+      recipe.rating = 3;
+      recipe.servings = 4;
+      recipe.recipeGroupID = '1234';
+      recipe.tags = ['someTag'];
+      recipe.image = '/some/img.jpg';
+      recipe.documentID = '4567';
+      recipe.instructionsID = '77';
+      recipe.ingredientsID = '99';
+      recipe.description = 'Desc';
+      recipe.duration = 55;
+      recipe.difficulty = DIFFICULTY.HARD;
+      var cut = RecipeEntityFirebase.of(recipe);
+
+      expect(cut.description, 'Desc');
+      expect(cut.instructionsID, '77');
+      expect(cut.ingredientsID, '99');
+      expect(cut.duration, 55);
+      expect(cut.rating, 3);
+      expect(cut.servings, 4);
+      expect(cut.recipeCollectionId, '1234');
+      expect(cut.tags.length, 1);
+      expect(cut.tags.first, 'someTag');
+      expect(cut.image, '/some/img.jpg');
+      expect(cut.id, '4567');
+      expect(cut.difficulty, DIFFICULTY.HARD);
     },
   );
 }

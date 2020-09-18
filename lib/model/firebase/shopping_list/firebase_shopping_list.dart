@@ -82,7 +82,7 @@ class FirebaseShoppingListDocument {
 
   Map<String, dynamic> toJson() => _$FirebaseShoppingListDocumentToJson(this);
 
-  static from(ShoppingListEntity entity) {
+  static FirebaseShoppingListDocument from(ShoppingListEntity entity) {
     var items =
         entity.items.map((e) => FirebaseShoppingListItem.from(e)).toList();
     return FirebaseShoppingListDocument(
@@ -92,7 +92,7 @@ class FirebaseShoppingListDocument {
         dateUntil: entity.dateUntil);
   }
 
-  static empty(String groupID) {
+  static FirebaseShoppingListDocument empty(String groupID) {
     return FirebaseShoppingListDocument(groupID: groupID, items: []);
   }
 }

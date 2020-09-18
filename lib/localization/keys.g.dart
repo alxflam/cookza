@@ -84,6 +84,8 @@ class Keys {
 
   static const String Ui_Shareas = 'ui.shareAs';
 
+  static const String Ui_Copy = 'ui.copy';
+
   static const String Ui_Edit = 'ui.edit';
 
   static const String Ui_Delete = 'ui.delete';

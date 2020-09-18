@@ -30,7 +30,7 @@ class FirebaseRecipeCollection {
     this.users,
   }) {
     if (this.creationTimestamp == null) {
-      this.creationTimestamp = Timestamp.now();
+      throw 'a creation timestamp is needed';
     }
     if (this.users.isEmpty) {
       throw 'a recipe collection without users can not be created';

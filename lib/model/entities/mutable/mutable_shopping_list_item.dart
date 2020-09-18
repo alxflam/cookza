@@ -24,13 +24,6 @@ class MutableShoppingListItem implements ShoppingListItemEntity {
     this._isCustom = isCustom;
   }
 
-  MutableShoppingListItem.of(ShoppingListItemModel model) {
-    this._ingredientNote =
-        MutableIngredientNote.of(model.toIngredientNoteEntity());
-    this._isBought = model.isNoLongerNeeded;
-    this._isCustom = model.isCustomItem;
-  }
-
   @override
   int get index => this._index;
 

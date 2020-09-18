@@ -23,8 +23,6 @@ class ChangelogScreen extends StatelessWidget {
                 version: '0.0.1-alpha1',
                 date: kDateFormatter.parse('19.07.2020'),
                 changes: ['alpha1 Test']),
-            ChangelogEntry(
-                version: '0.0.1-alpha1', date: null, changes: ['alpha1 Test']),
           ],
         ),
       ),

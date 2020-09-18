@@ -18,15 +18,6 @@ class MutableMealPlan implements MealPlanEntity {
     init(items, weeks, startDate ?? DateTime.now());
   }
 
-  MutableMealPlan.withPreferenceWeeks(
-      String id, String groupID, List<MealPlanDateEntity> items,
-      {DateTime startDate}) {
-    this._id = id;
-    this._groupID = groupID;
-    var weeks = sl.get<SharedPreferencesProvider>().getMealPlanWeeks();
-    init(items, weeks, startDate ?? DateTime.now());
-  }
-
   @override
   String get id => this._id;
 

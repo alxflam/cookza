@@ -1,4 +1,5 @@
 import 'package:cookly/model/entities/firebase/meal_plan_entity.dart';
+import 'package:cookly/model/entities/mutable/mutable_meal_plan.dart';
 import 'package:cookly/model/firebase/meal_plan/firebase_meal_plan.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -49,6 +50,29 @@ void main() {
       expect(cut.recipes.first.name, 'dummy');
       expect(cut.recipes.first.servings, 2);
       expect(cut.recipes.first.id, '1234');
+    },
+  );
+
+  test(
+    'MealPlanEntityFirebase from document',
+    () async {
+      var date = DateTime(2020, 01, 01);
+      var entity = MutableMealPlanDateEntity.empty(date);
+      entity.addRecipe(
+          MutableMealPlanRecipeEntity.fromValues('1234', 'Recipe', 4));
+
+      var json = {
+        'groupID': '4567',
+        'items': [FirebaseMealPlanDate.from(entity).toJson()]
+      };
+
+      var doc = FirebaseMealPlanDocument.fromJson(json, '1234');
+
+      var cut = MealPlanEntityFirebase.of(doc);
+
+      expect(cut.groupID, '4567');
+      expect(cut.id, '1234');
+      expect(cut.items.length, 1);
     },
   );
 }

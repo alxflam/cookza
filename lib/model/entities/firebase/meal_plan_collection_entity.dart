@@ -21,9 +21,6 @@ class MealPlanCollectionEntityFirebase implements MealPlanCollectionEntity {
   String get id => _collection.documentID;
 
   @override
-  MealPlanEntity get mealPlan => throw UnimplementedError();
-
-  @override
   String get name => _collection.name;
 
   @override

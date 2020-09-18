@@ -12,10 +12,12 @@ void main() {
           name: 'name',
           creationTimestamp: createdAt,
           users: {'1234': 'Someone'});
+      collection.documentID = '1234';
 
       var cut = RecipeCollectionEntityFirebase.of(collection);
 
       expect(cut.name, 'name');
+      expect(cut.id, '1234');
       expect(cut.creationTimestamp, createdAt.toDate());
       expect(cut.users.length, 1);
       expect(cut.users.first.name, 'Someone');

@@ -24,7 +24,7 @@ class RecipeEntityFirebase implements RecipeEntity {
 
   String get instructionsID => _recipe.instructionsID;
 
-  String get ingredientsID => _recipe.instructionsID;
+  String get ingredientsID => _recipe.ingredientsID;
 
   @override
   String get description => this._recipe.description;

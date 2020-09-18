@@ -1,3 +1,4 @@
+import 'package:cookly/constants.dart';
 import 'package:cookly/model/entities/abstract/recipe_entity.dart';
 import 'package:cookly/model/entities/json/recipe_entity.dart';
 import 'package:cookly/model/entities/mutable/mutable_ingredient_note.dart';
@@ -69,6 +70,7 @@ void main() {
         tags: ['delicious'],
       )));
 
+      expect(cut.hasInMemoryImage, false);
       expect(cut.name, 'My name');
       expect(cut.description, 'My desc');
       expect(cut.id, 'ID');
@@ -135,4 +137,29 @@ void main() {
       expect(cut.tags.first, 'tag2');
     },
   );
+
+  test('Recipe with in memory image', () async {
+    var onion = MutableIngredientNote.empty();
+    onion.name = 'Onion';
+
+    var cut = MutableRecipe.of(
+        RecipeEntityJson.of(Recipe(serializedImage: '1010', id: '1234')));
+
+    expect(cut.hasInMemoryImage, true);
+    expect(cut.inMemoryImage.length, 3);
+  });
+
+  test('Dates are formatted', () async {
+    var now = DateTime.now();
+    var cut = MutableRecipe.of(RecipeEntityJson.of(Recipe(
+      creationDate: now,
+      modificationDate: now,
+      id: '1234',
+    )));
+
+    expect(cut.creationDate, now);
+    expect(cut.modificationDate, now);
+    expect(cut.creationDateFormatted, kDateFormatter.format(now));
+    expect(cut.modificationDateFormatted, kDateFormatter.format(now));
+  });
 }
