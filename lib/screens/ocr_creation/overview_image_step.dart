@@ -9,6 +9,6 @@ class OCROverviewImageScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<RecipeOCRStep>.value(
-        value: RecipeImageOCRStep(), child: OCRImageStep('Overview Image'));
+        value: RecipeOverviewOCRStep(), child: OCRImageStep('Overview Image'));
   }
 }

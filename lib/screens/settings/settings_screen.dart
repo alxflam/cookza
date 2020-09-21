@@ -8,11 +8,9 @@ import 'package:cookly/screens/settings/theme_settings_screen.dart';
 import 'package:cookly/screens/settings/uom_visibility_settings_screen.dart';
 import 'package:cookly/services/abstract/recipe_file_import.dart';
 import 'package:cookly/services/service_locator.dart';
-import 'package:cookly/viewmodel/settings/theme_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
 
 class SettingsScreen extends StatelessWidget {
   static final String id = 'settings';

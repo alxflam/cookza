@@ -108,7 +108,7 @@ abstract class AbstractGroupScreen extends StatelessWidget {
             body: Consumer<GroupViewModel>(
               builder: (context, model, _) {
                 return FutureBuilder(
-                  future: model.members,
+                  future: model.members(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState != ConnectionState.done) {
                       return Container();

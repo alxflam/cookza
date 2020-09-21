@@ -11,7 +11,6 @@ import 'package:cookly/model/entities/mutable/mutable_recipe.dart';
 import 'package:cookly/services/image_manager.dart';
 import 'package:cookly/services/recipe_manager.dart';
 import 'package:cookly/services/service_locator.dart';
-import 'package:cookly/services/unit_of_measure.dart';
 import 'package:flutter/material.dart';
 
 import 'recipe_ingredient_model.dart';
@@ -20,6 +19,7 @@ abstract class RecipeEditStep extends ChangeNotifier {
   validate();
   void applyTo(MutableRecipe recipe);
   void applyFrom(RecipeEntity recipe);
+  bool get hasOCR => false;
 }
 
 class RecipeOverviewEditStep extends RecipeEditStep {
@@ -81,6 +81,9 @@ class RecipeOverviewEditStep extends RecipeEditStep {
       throw 'Assign a Recipe group';
     }
   }
+
+  @override
+  bool get hasOCR => true;
 }
 
 class RecipeImageEditStep extends RecipeEditStep {
@@ -124,13 +127,13 @@ class RecipeImageEditStep extends RecipeEditStep {
 }
 
 class RecipeTagEditStep extends RecipeEditStep {
-  List<String> _tags = [];
+  Set<String> _tags = {};
 
   get isVegan => tags.contains('vegan');
   get isVegetarian => tags.contains('vegetarian');
   get containsMeat => tags.contains('meat');
   get containsFish => tags.contains('fish');
-  List<String> get tags => _tags;
+  Set<String> get tags => _tags;
 
   void setVegan(bool isSet) {
     if (isSet) {
@@ -149,6 +152,7 @@ class RecipeTagEditStep extends RecipeEditStep {
       tags.add('vegetarian');
       tags.remove('meat');
       tags.remove('fish');
+      tags.remove('vegan');
     } else {
       tags.remove('vegetarian');
     }
@@ -179,12 +183,12 @@ class RecipeTagEditStep extends RecipeEditStep {
 
   @override
   void applyFrom(RecipeEntity recipe) {
-    this._tags = recipe.tags;
+    this._tags = Set.of(recipe.tags);
   }
 
   @override
   void applyTo(MutableRecipe recipe) {
-    recipe.tags = this._tags;
+    recipe.tags = this._tags.toList();
   }
 
   @override
@@ -207,29 +211,6 @@ class RecipeIngredientEditStep extends RecipeEditStep {
   void addNewIngredient(RecipeIngredientModel item) {
     this._ingredients.add(MutableIngredientNote.of(item.toIngredientNote()));
     notifyListeners();
-  }
-
-  void addEmptyIngredient() {
-    _addEmptyIngredient();
-    notifyListeners();
-  }
-
-  void _addEmptyIngredient() {
-    this._ingredients.add(MutableIngredientNote.empty());
-  }
-
-  UnitOfMeasure getScaleAt(int index) {
-    return sl
-        .get<UnitOfMeasureProvider>()
-        .getUnitOfMeasureById(_ingredients[index].unitOfMeasure);
-  }
-
-  double getAmountAt(int index) {
-    return this._ingredients[index].amount;
-  }
-
-  String getIngredientAt(int index) {
-    return this._ingredients[index].ingredient.name;
   }
 
   void setAmount(int index, double amount) {
@@ -284,6 +265,9 @@ class RecipeIngredientEditStep extends RecipeEditStep {
       throw 'Assign a valid servings size';
     }
   }
+
+  @override
+  bool get hasOCR => true;
 }
 
 class RecipeInstructionEditStep extends RecipeEditStep {
@@ -325,10 +309,6 @@ class RecipeInstructionEditStep extends RecipeEditStep {
     notifyListeners();
   }
 
-  void clearInstructions() {
-    this._instructions.clear();
-  }
-
   @override
   void applyFrom(RecipeEntity recipe) {
     recipe.instructions.then((value) {
@@ -356,4 +336,7 @@ class RecipeInstructionEditStep extends RecipeEditStep {
       throw 'There are empty instructions assigned';
     }
   }
+
+  @override
+  bool get hasOCR => true;
 }

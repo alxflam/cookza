@@ -1,7 +1,5 @@
-import 'package:cookly/components/recipe_list_tile.dart';
 import 'package:cookly/routes.dart';
 import 'package:cookly/screens/home_screen.dart';
-import 'package:cookly/screens/leftovers_screen.dart';
 import 'package:cookly/screens/new_ingredient_screen.dart';
 import 'package:cookly/screens/recipe_modify/image_step.dart';
 import 'package:cookly/screens/recipe_modify/ingredient_step.dart';
@@ -32,7 +30,7 @@ import '../mocks/recipe_manager_mock.dart';
 import '../mocks/uom_provider_mock.dart';
 
 void main() {
-  var mock = RecipeManagerMock();
+  var mock = RecipeManagerStub();
   var imageMock = ImageManagerMock();
   GetIt.I.registerSingleton<RecipeManager>(mock);
   GetIt.I.registerSingleton<ImageManager>(imageMock);

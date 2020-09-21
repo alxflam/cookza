@@ -8,7 +8,7 @@ void main() {
       var json = {
         'name': 'John Doe',
         'id': '7777',
-      } as Map<String, dynamic>;
+      };
 
       var cut = FirebaseRecipeUser.fromJson(json, id: '1234');
 
@@ -24,7 +24,7 @@ void main() {
       var json = {
         'name': 'John Doe',
         'id': '7777',
-      } as Map<String, dynamic>;
+      };
 
       var cut = FirebaseRecipeUser.fromJson(json, id: '1234');
       var actual = cut.toJson();

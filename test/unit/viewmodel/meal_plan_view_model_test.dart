@@ -1,12 +1,16 @@
 import 'package:cookly/model/entities/abstract/meal_plan_entity.dart';
 import 'package:cookly/model/entities/mutable/mutable_meal_plan.dart';
-import 'package:cookly/services/service_locator.dart';
+import 'package:cookly/services/meal_plan_manager.dart';
 import 'package:cookly/services/shared_preferences_provider.dart';
 import 'package:cookly/services/util/week_calculation.dart';
 import 'package:cookly/viewmodel/meal_plan/recipe_meal_plan_model.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mockito/mockito.dart';
+
+import '../../mocks/meal_plan_manager_mock.dart';
+import '../../utils/recipe_creator.dart';
 
 class MealPlanEntityMock extends Mock implements MealPlanEntity {
   List<MealPlanDateEntity> _items = [];
@@ -28,8 +32,9 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   SharedPreferences.setMockInitialValues({"mealPlanWeeks": weeks});
 
-  sl.registerSingletonAsync<SharedPreferencesProvider>(
+  GetIt.I.registerSingletonAsync<SharedPreferencesProvider>(
       () async => SharedPreferencesProviderImpl().init());
+  GetIt.I.registerSingleton<MealPlanManager>(MealPlanManagerMock());
 
   test(
     'Compute timeline if no persistent data is present on a monday',
@@ -161,6 +166,75 @@ void main() {
 
       expect(model.entries[3].recipes.length, 1);
       expect(model.entries[6].recipes.length, 1);
+    },
+  );
+
+  test(
+    'Add recipe by navigation',
+    () async {
+      var mock = MealPlanEntityMock();
+      var model = MealPlanViewModel.of(mock);
+
+      var recipe = RecipeCreator.createRecipe('TestRecipe');
+      model.setRecipeForAddition(recipe);
+      model.addByNavigation(1);
+
+      expect(model.entries[1].recipes.length, 1);
+      expect(model.entries[1].recipes.first.name, 'TestRecipe');
+
+      /// add by navigation only works once
+      model.addByNavigation(0);
+      expect(model.entries[0].recipes.length, 0);
+    },
+  );
+
+  test(
+    'Move recipe',
+    () async {
+      var today = DateTime.now();
+
+      var mock = MealPlanEntityMock();
+      var item = MutableMealPlanDateEntity.empty(today.add(Duration(days: 3)));
+      item.addRecipe(
+          MutableMealPlanRecipeEntity.fromValues('', 'TestRecipe', 2));
+      mock.items = [item];
+
+      var model = MealPlanViewModel.of(mock);
+      expect(model.entries[3].recipes.length, 1);
+      expect(model.entries[3].recipes.first.name, 'TestRecipe');
+
+      var dragModel = MealDragModel(model.entries[3].recipes.first, 3);
+      expect(dragModel.model.name, 'TestRecipe');
+
+      model.moveRecipe(dragModel, 0);
+      expect(model.entries[0].recipes.length, 1);
+      expect(model.entries[0].recipes.first.name, 'TestRecipe');
+      expect(model.entries[3].recipes.length, 0);
+    },
+  );
+
+  test(
+    'Add and remove recipe',
+    () async {
+      var today = DateTime.now();
+
+      var mock = MealPlanEntityMock();
+      var item = MutableMealPlanDateEntity.empty(today.add(Duration(days: 3)));
+      item.addRecipe(
+          MutableMealPlanRecipeEntity.fromValues('A', 'TestRecipe', 2));
+      mock.items = [item];
+
+      var model = MealPlanViewModel.of(mock);
+      var recipeModel = model.entries[3].recipes.first;
+
+      expect(model.entries[3].recipes.length, 1);
+      expect(model.entries[3].recipes.first.name, 'TestRecipe');
+      model.entries[3].removeRecipe('A');
+      expect(model.entries[3].recipes.length, 0);
+
+      model.entries[3].addRecipe(recipeModel);
+      expect(model.entries[3].recipes.length, 1);
+      expect(model.entries[3].recipes.first.name, 'TestRecipe');
     },
   );
 }

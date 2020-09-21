@@ -1,5 +1,5 @@
 import 'package:cookly/model/entities/abstract/user_entity.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 abstract class GroupViewModel with ChangeNotifier {
   /// the name of the group
@@ -18,5 +18,5 @@ abstract class GroupViewModel with ChangeNotifier {
   Future<void> leaveGroup();
 
   /// the list of members of this group
-  Future<List<UserEntity>> members;
+  Future<List<UserEntity>> members();
 }

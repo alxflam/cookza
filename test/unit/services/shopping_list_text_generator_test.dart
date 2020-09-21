@@ -1,4 +1,3 @@
-import 'package:cookly/model/entities/mutable/mutable_ingredient.dart';
 import 'package:cookly/model/entities/mutable/mutable_ingredient_note.dart';
 import 'package:cookly/model/entities/mutable/mutable_shopping_list_item.dart';
 import 'package:cookly/services/shopping_list_text_generator.dart';

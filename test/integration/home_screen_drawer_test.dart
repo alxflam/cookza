@@ -1,9 +1,5 @@
 import 'package:cookly/components/main_app_drawer.dart';
 import 'package:cookly/screens/home_screen.dart';
-import 'package:cookly/screens/leftovers_screen.dart';
-import 'package:cookly/screens/meal_plan/meal_plan_screen.dart';
-import 'package:cookly/screens/recipe_list_screen.dart';
-import 'package:cookly/screens/recipe_modify/new_recipe_screen.dart';
 import 'package:cookly/services/abstract/receive_intent_handler.dart';
 import 'package:cookly/services/meal_plan_manager.dart';
 import 'package:cookly/services/navigator_service.dart';
@@ -13,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_translate/localization.dart';
 import 'package:get_it/get_it.dart';
-import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../mocks/application_mock.dart';
@@ -41,7 +36,7 @@ void main() {
         () async => SharedPreferencesProviderImpl().init());
     GetIt.I.registerSingleton<ReceiveIntentHandler>(ReceiveIntentHandlerMock());
     GetIt.I.registerSingleton<NavigatorService>(NavigatorService());
-    GetIt.I.registerSingleton<RecipeManager>(RecipeManagerMock());
+    GetIt.I.registerSingleton<RecipeManager>(RecipeManagerStub());
     GetIt.I.registerSingleton<MealPlanManager>(MealPlanManagerMock());
   });
 

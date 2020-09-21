@@ -12,7 +12,7 @@ void main() {
         'name': 'Test',
         'creationTimestamp': now,
         'users': users,
-      } as Map<String, dynamic>;
+      };
 
       var cut = FirebaseMealPlanCollection.fromJson(json, '1234');
 
@@ -32,7 +32,7 @@ void main() {
         'name': 'Test',
         'creationTimestamp': now,
         'users': users,
-      } as Map<String, dynamic>;
+      };
 
       var cut = FirebaseMealPlanCollection.fromJson(json, '1234');
       var actual = cut.toJson();

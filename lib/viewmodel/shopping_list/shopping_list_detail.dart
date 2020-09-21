@@ -1,18 +1,14 @@
 import 'package:cookly/constants.dart';
 import 'package:cookly/model/entities/abstract/ingredient_note_entity.dart';
 import 'package:cookly/model/entities/abstract/shopping_list_entity.dart';
-import 'package:cookly/model/entities/mutable/mutable_ingredient.dart';
-import 'package:cookly/model/entities/mutable/mutable_ingredient_note.dart';
 import 'package:cookly/model/entities/mutable/mutable_shopping_list.dart';
 import 'package:cookly/model/entities/mutable/mutable_shopping_list_item.dart';
-import 'package:cookly/model/json/ingredient_note.dart';
 import 'package:cookly/services/navigator_service.dart';
 import 'package:cookly/services/service_locator.dart';
 import 'package:cookly/services/shared_preferences_provider.dart';
 import 'package:cookly/services/shopping_list_items_generator.dart';
 import 'package:cookly/services/shopping_list_manager.dart';
 import 'package:cookly/services/unit_of_measure.dart';
-import 'package:cookly/viewmodel/meal_plan/recipe_meal_plan_model.dart';
 import 'package:cookly/viewmodel/recipe_edit/recipe_ingredient_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -26,9 +22,6 @@ class ShoppingListModel extends ChangeNotifier {
   DateTime _lastDate;
   DateTime _firstDate;
 
-  // List<IngredientNote> _requiredIngredients = [];
-  // List<IngredientNote> _availableIngredients = [];
-  // Map<String, int> _recipeReferences = {};
   List<MutableShoppingListItem> _items = [];
   bool _initalized = false;
 
@@ -74,7 +67,7 @@ class ShoppingListModel extends ChangeNotifier {
       // may happen if the shopping list contains a recipe from a group the current user  does not have read access to
       var context = sl.get<NavigatorService>().currentContext;
       Scaffold.of(context).showSnackBar(SnackBar(
-          content: Text('§No access to a recipe from the shopping list')));
+          content: Text('§No access to a recipe from the shopping list: $e')));
     }
 
     // processed generated already bought items
@@ -158,9 +151,11 @@ class ShoppingListModel extends ChangeNotifier {
   }
 
   void reorder(int newIndex, int oldIndex) {
-    if (newIndex > oldIndex) {
-      newIndex -= 1;
-    }
+    // if (newIndex > oldIndex) {
+    //   newIndex -= 1;
+    //   newIndex =
+    //       newIndex == 0 && _items.length > 1 ? _items.length - 1 : newIndex;
+    // }
     var item = _items.removeAt(oldIndex);
     _items.insert(newIndex, item);
     notifyListeners();
@@ -203,13 +198,6 @@ class ShoppingListModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool _dateIsMatching(MealPlanDateEntry item) {
-    return item.date
-            .isBefore(this._listEntity.dateUntil.add(Duration(days: 1))) &&
-        item.date
-            .isAfter(this._listEntity.dateFrom.subtract(Duration(days: 1)));
-  }
-
   void removeItem(int index, ShoppingListItemModel itemModel) {
     // remove the item from the view list
     this._items.removeAt(index);
@@ -243,19 +231,6 @@ class ShoppingListItemModel extends ChangeNotifier {
     this._uom = uom;
   }
 
-  // ShoppingListItemModel.customItemOfIngredient(IngredientNoteEntity entity) {
-  //   var uomProvider = sl.get<UnitOfMeasureProvider>();
-  //   var uom = uomProvider.getUnitOfMeasureById(entity.unitOfMeasure);
-  //   this._uom = uom;
-  // }
-
-  // ShoppingListItemModel.customItemOfEntity(ShoppingListItemEntity entity) {
-  //   var uomProvider = sl.get<UnitOfMeasureProvider>();
-  //   var uom =
-  //       uomProvider.getUnitOfMeasureById(entity.ingredientNote.unitOfMeasure);
-  //   this._uom = uom;
-  // }
-
   String get uom {
     // TODO: there should be a null uom!
     if (_uom == null) {
@@ -283,17 +258,7 @@ class ShoppingListItemModel extends ChangeNotifier {
     }
   }
 
-  void reordered() {
-    notifyListeners();
-  }
-
   IngredientNoteEntity toIngredientNoteEntity() {
-    // var entity = MutableIngredientNote.empty();
-    // var ingredient = MutableIngredient.empty();
-    // ingredient.name = this._entity;
-    // entity.amount = _amount;
-    // entity.unitOfMeasure = this._uom != null ? this._uom.id : '';
-    // entity.ingredient = ingredient;
     return this._entity.ingredientNote;
   }
 
@@ -303,7 +268,6 @@ class ShoppingListItemModel extends ChangeNotifier {
     this._uom = uom;
     this._entity.ingredientNote.amount = entity.amount;
     this._entity.ingredientNote.ingredient.name = entity.ingredient.name;
-    // this._parentModel.itemGotEdited();
     notifyListeners();
   }
 }

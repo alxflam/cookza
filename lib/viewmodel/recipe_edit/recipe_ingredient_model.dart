@@ -52,12 +52,7 @@ class RecipeIngredientModel extends ChangeNotifier {
 
   Future<RecipeViewModel> get recipe async {
     assert(this.isRecipeReference);
-    if (this._recipe == null) {
-      var recipe = await sl
-          .get<RecipeManager>()
-          .getRecipeById([_note.ingredient.recipeReference]);
-      this._recipe = RecipeViewModel.of(recipe.first);
-    }
+    assert(this._recipe != null);
     return this._recipe;
   }
 
@@ -71,7 +66,8 @@ class RecipeIngredientModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setRecipeReference(String id) async {
+  Future<void> setRecipeReference(String id) async {
+    assert(this.supportsRecipeReference);
     var recipe = await sl.get<RecipeManager>().getRecipeById([id]);
     this._recipe = RecipeViewModel.of(recipe.first);
     this.name = this._recipe.name;

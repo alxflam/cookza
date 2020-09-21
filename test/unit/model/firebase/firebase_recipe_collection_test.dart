@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cookly/model/firebase/collections/firebase_meal_plan_collection.dart';
 import 'package:cookly/model/firebase/collections/firebase_recipe_collection.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -13,7 +12,7 @@ void main() {
         'name': 'Test',
         'creationTimestamp': now,
         'users': users,
-      } as Map<String, dynamic>;
+      };
 
       var cut = FirebaseRecipeCollection.fromJson(json, '1234');
 
@@ -33,7 +32,7 @@ void main() {
         'name': 'Test',
         'creationTimestamp': now,
         'users': users,
-      } as Map<String, dynamic>;
+      };
 
       var cut = FirebaseRecipeCollection.fromJson(json, '1234');
       var actual = cut.toJson();

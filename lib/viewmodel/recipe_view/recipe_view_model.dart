@@ -2,7 +2,6 @@ import 'dart:collection';
 
 import 'package:cookly/model/entities/abstract/instruction_entity.dart';
 import 'package:cookly/model/entities/abstract/recipe_entity.dart';
-import 'package:cookly/model/entities/json/instruction_entity.dart';
 import 'package:cookly/model/entities/mutable/mutable_ingredient_note.dart';
 import 'package:cookly/services/recipe_manager.dart';
 import 'package:cookly/services/service_locator.dart';
@@ -63,42 +62,18 @@ class RecipeViewModel extends ChangeNotifier {
     return this._recipe.difficulty;
   }
 
-  get isVegan => _recipe.tags.contains('vegan');
-  get isVegetarian => _recipe.tags.contains('vegetarian');
-  get containsMeat => _recipe.tags.contains('meat');
-  get containsFish => _recipe.tags.contains('fish');
   List<String> get tags => _recipe.tags;
 
-  void setRating(int rating) async {
+  Future<void> setRating(int rating) async {
     if (rating < 6 && rating > -1) {
-      sl.get<RecipeManager>().updateRating(this._recipe, rating).then((value) {
-        this._rating = rating;
-        notifyListeners();
-      });
+      await sl.get<RecipeManager>().updateRating(this._recipe, rating);
+      this._rating = rating;
+      notifyListeners();
     }
   }
 
   List<RecipeIngredientModel> get ingredients {
     return this._ingredients.map((e) => RecipeIngredientModel.of(e)).toList();
-  }
-
-  String getScaleAt(int index) {
-    return this._ingredients[index].unitOfMeasure;
-  }
-
-  double getAmountAt(int index) {
-    return this._ingredients[index].amount;
-  }
-
-  String getIngredientAt(int index) {
-    return this._ingredients[index].ingredient.name;
-  }
-
-  InstructionEntity getInstruction(int index) {
-    if (index > this._instructions.length) {
-      return InstructionEntityJson.of('');
-    }
-    return this._instructions[index];
   }
 
   void decreaseServings() {

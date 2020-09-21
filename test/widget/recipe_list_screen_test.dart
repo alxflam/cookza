@@ -1,22 +1,12 @@
-import 'package:cookly/components/main_app_drawer.dart';
 import 'package:cookly/components/recipe_groups_drawer.dart';
 import 'package:cookly/components/recipe_list_tile.dart';
 import 'package:cookly/routes.dart';
-import 'package:cookly/screens/collections/share_account_screen.dart';
-import 'package:cookly/screens/home_screen.dart';
-import 'package:cookly/screens/leftovers_screen.dart';
-import 'package:cookly/screens/meal_plan/meal_plan_screen.dart';
 import 'package:cookly/screens/recipe_list_screen.dart';
-import 'package:cookly/screens/recipe_modify/new_recipe_screen.dart';
 import 'package:cookly/screens/recipe_view/recipe_screen.dart';
-import 'package:cookly/screens/settings/settings_screen.dart';
-import 'package:cookly/screens/shopping_list/shopping_list_overview_screen.dart';
-import 'package:cookly/screens/web_login_app.dart';
 import 'package:cookly/services/abstract/platform_info.dart';
 import 'package:cookly/services/abstract/receive_intent_handler.dart';
 import 'package:cookly/services/firebase_provider.dart';
 import 'package:cookly/services/image_manager.dart';
-import 'package:cookly/services/meal_plan_manager.dart';
 import 'package:cookly/services/mobile/platform_info_app.dart';
 import 'package:cookly/services/navigator_service.dart';
 import 'package:cookly/services/recipe_manager.dart';
@@ -27,7 +17,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_translate/localization.dart';
 import 'package:get_it/get_it.dart';
-import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -40,7 +29,7 @@ import '../mocks/shopping_list_manager_mock.dart';
 import '../utils/recipe_creator.dart';
 
 void main() {
-  var recipeManager = RecipeManagerMock();
+  var recipeManager = RecipeManagerStub();
 
   setUpAll(() {
     Map<String, dynamic> translations = {};

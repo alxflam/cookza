@@ -13,7 +13,7 @@ void main() {
         'creationTimestamp': now,
         'operatingSystem': 'Linux',
         'browser': 'Mozilla',
-      } as Map<String, dynamic>;
+      };
 
       var cut = FirebaseHandshake.fromJson(json, '1234');
 
@@ -35,7 +35,7 @@ void main() {
         'creationTimestamp': now,
         'operatingSystem': 'Linux',
         'browser': 'Mozilla',
-      } as Map<String, dynamic>;
+      };
 
       var cut = FirebaseHandshake.fromJson(json, '1234');
       var actual = cut.toJson();

@@ -1,4 +1,3 @@
-import 'package:cookly/services/api/chefkoch.dart';
 import 'package:cookly/services/api/hello_fresh.dart';
 import 'package:cookly/services/id_gen.dart';
 import 'package:cookly/services/unit_of_measure.dart';
@@ -16,9 +15,10 @@ void main() {
       sl.registerSingleton<IdGenerator>(UniqueKeyIdGenerator());
       sl.registerSingleton<UnitOfMeasureProvider>(UoMMock());
 
-      var id = '5f2ac031226ba26eee2f9574';
+      // var id = '5f2ac031226ba26eee2f9574';
 
       var cut = HelloFresh();
+      expect(cut, isNotNull);
 
       // var result = await cut.getRecipe(id);
 

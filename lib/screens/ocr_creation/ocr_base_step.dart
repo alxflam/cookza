@@ -24,7 +24,7 @@ class OCRImageStep extends StatelessWidget {
               var image = await picker.getImage(
                   source: source, imageQuality: 100, maxWidth: 1000);
               if (image != null) {
-                model.image = File(image.path);
+                model.setImage(File(image.path));
               }
             }
 
@@ -32,7 +32,7 @@ class OCRImageStep extends StatelessWidget {
               child: model.image == null
                   ? SelectImageWidget(onSelect: getImage)
                   : ImageSelectedWidget(
-                      image: model.image, onDelete: () => model.image = null),
+                      image: model.image, onDelete: () => model.setImage(null)),
             );
           },
         ),

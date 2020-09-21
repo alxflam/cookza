@@ -2,7 +2,6 @@ import 'package:cookly/model/entities/abstract/meal_plan_entity.dart';
 import 'package:cookly/model/entities/abstract/recipe_entity.dart';
 import 'package:cookly/model/entities/mutable/mutable_meal_plan.dart';
 import 'package:cookly/services/meal_plan_manager.dart';
-import 'package:cookly/services/recipe_manager.dart';
 import 'package:cookly/services/service_locator.dart';
 import 'package:cookly/services/shared_preferences_provider.dart';
 import 'package:cookly/services/util/week_calculation.dart';
@@ -76,16 +75,6 @@ class MealPlanViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addRecipe(int index, String id) async {
-    var recipe = await sl.get<RecipeManager>().getRecipeById([id]);
-    var name = recipe != null ? recipe.first.name : 'unknown recipe';
-
-    _mealPlan.items[index].addRecipe(
-        MutableMealPlanRecipeEntity.fromValues(id, name, _standardServings));
-    _save();
-    notifyListeners();
-  }
-
   void addRecipeFromEntity(int index, RecipeEntity entity) {
     _mealPlan.items[index].addRecipe(MutableMealPlanRecipeEntity.fromValues(
         entity.id, entity.name, _standardServings));
@@ -98,6 +87,9 @@ class MealPlanViewModel extends ChangeNotifier {
   }
 
   void addByNavigation(int index) {
+    if (_recipeForAddition == null) {
+      return;
+    }
     addRecipeFromEntity(index, _recipeForAddition);
     _recipeForAddition = null;
     notifyListeners();
@@ -110,25 +102,6 @@ class MealPlanViewModel extends ChangeNotifier {
 
   void recipeModelChanged(MealPlanRecipeModel mealPlanRecipeModel) {
     this._save();
-  }
-
-  /// return the aggregated recipes for a given interval
-  Map<String, int> getRecipesForInterval(
-      DateTime firstDate, DateTime lastDate) {
-    Map<String, int> result = {};
-    for (var item in _mealPlan.items) {
-      if (item.date.isAfter(firstDate.subtract(Duration(days: 1))) &&
-          item.date.isBefore(lastDate.add(Duration(days: 1)))) {
-        for (var recipe in item.recipes) {
-          // only add real recipes, not notes
-          if (recipe.id != null) {
-            result.update(recipe.id, (value) => value + recipe.servings,
-                ifAbsent: () => recipe.servings);
-          }
-        }
-      }
-    }
-    return result;
   }
 
   void addNote(int index, String text) {
@@ -146,10 +119,6 @@ class MealPlanDateEntry with ChangeNotifier {
     this._entity = entity;
   }
 
-  factory MealPlanDateEntry.empty(DateTime date) {
-    return MealPlanDateEntry.of(MutableMealPlanDateEntity.empty(date));
-  }
-
   void addRecipe(MealPlanRecipeModel entry) {
     _entity.recipes.add(MutableMealPlanRecipeEntity.of(entry.entity));
   }
@@ -164,10 +133,4 @@ class MealPlanDateEntry with ChangeNotifier {
 
   List<MealPlanRecipeModel> get recipes =>
       _entity.recipes.map((e) => MealPlanRecipeModel.of(e)).toList();
-
-  // MealPlanItem toMealPlanItem() {
-  //   Map<String, int> recipeReferences = Map.fromIterable(this._recipes.values,
-  //       key: (e) => e.id, value: (e) => e.servings);
-  //   return MealPlanDateEntry(date: this._date, recipeReferences: recipeReferences);
-  // }
 }

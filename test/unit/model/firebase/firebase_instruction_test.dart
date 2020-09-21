@@ -11,7 +11,7 @@ void main() {
         'text': 'Some Instruction',
         'step': 2,
         'imagePath': '/some/path',
-      } as Map<String, dynamic>;
+      };
 
       var cut = FirebaseInstruction.fromJson(json);
 
@@ -54,7 +54,7 @@ void main() {
         'text': 'Some Instruction',
         'step': 2,
         'imagePath': '/some/path',
-      } as Map<String, dynamic>;
+      };
 
       var cut = FirebaseInstruction.fromJson(json);
       var generatedJson = cut.toJson();
@@ -72,7 +72,7 @@ void main() {
           {'text': 'Some Instruction 1', 'step': null},
           {'text': 'Some Instruction 2', 'step': null}
         ]
-      } as Map<String, dynamic>;
+      };
 
       var cut = FirebaseInstructionDocument.fromJson(json, '4567');
       var generatedJson = cut.toJson();

@@ -35,7 +35,6 @@ class RecipeEditModel extends ChangeNotifier {
   int _currentStep = 0;
 
   RecipeEntity get targetEntity => _targetRecipe;
-  String get recipeId => _targetRecipe.id;
   int get countSteps => _stepModels.length;
   bool get isEdit => _mode == MODE.MODIFY;
   bool get isCreate => _mode == MODE.CREATE;
@@ -73,7 +72,6 @@ class RecipeEditModel extends ChangeNotifier {
 
     if (imageStepModel.imageChanged) {
       // upload the image for the given recipe
-      var path = sl.get<ImageManager>().getRecipeImagePath(_targetRecipe.id);
       if (imageStepModel.image == null) {
         // delete the image if exists
         sl.get<ImageManager>().deleteRecipeImage(_targetRecipe);
@@ -111,7 +109,7 @@ class RecipeEditModel extends ChangeNotifier {
   }
 
   bool hasCurrentStepOCR() {
-    return currentStep == 0 || currentStep == 3 || currentStep == 4;
+    return _stepModels[currentStep].hasOCR;
   }
 
   void applyCurrentStep(RecipeEditStep value) {

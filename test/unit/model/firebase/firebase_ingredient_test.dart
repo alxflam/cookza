@@ -12,7 +12,7 @@ void main() {
         'unitOfMeasure': 'KGM',
         'amount': 3,
         'ingredient': Ingredient(name: 'Pepper').toJson()
-      } as Map<String, dynamic>;
+      };
       var cut = FirebaseIngredient.fromJson(json);
 
       expect(cut.amount, 3);
@@ -29,7 +29,7 @@ void main() {
         'unitOfMeasure': 'KGM',
         'amount': 3,
         'ingredient': Ingredient(name: 'Pepper').toJson()
-      } as Map<String, dynamic>;
+      };
 
       var cut = FirebaseIngredient.fromJson(json);
       var generatedJson = cut.toJson();
@@ -46,7 +46,7 @@ void main() {
         'amount': 3,
         'ingredient':
             Ingredient(name: 'Pasta', recipeReference: '1234').toJson()
-      } as Map<String, dynamic>;
+      };
       var cut = FirebaseIngredient.fromJson(json);
 
       expect(cut.amount, 3);
@@ -106,7 +106,7 @@ void main() {
             'ingredient': Ingredient(name: 'Pepper').toJson()
           }
         ]
-      } as Map<String, dynamic>;
+      };
 
       var cut = FirebaseIngredientDocument.fromJson(json, '4567');
 
@@ -136,7 +136,7 @@ void main() {
             'ingredient': Ingredient(name: 'Pepper').toJson()
           }
         ]
-      } as Map<String, dynamic>;
+      };
 
       var cut = FirebaseIngredientDocument.fromJson(sourceJson, '4567');
       var generatedJson = cut.toJson();

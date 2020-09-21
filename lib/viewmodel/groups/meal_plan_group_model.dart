@@ -1,9 +1,11 @@
 import 'package:cookly/model/entities/abstract/meal_plan_collection_entity.dart';
+import 'package:cookly/model/entities/abstract/user_entity.dart';
 import 'package:cookly/services/meal_plan_manager.dart';
 import 'package:cookly/services/service_locator.dart';
 import 'package:cookly/viewmodel/groups/abstract_group_model.dart';
+import 'package:flutter/material.dart';
 
-class MealPlanGroupViewModel extends GroupViewModel {
+class MealPlanGroupViewModel with ChangeNotifier implements GroupViewModel {
   MealPlanCollectionEntity _entity;
 
   String _name;
@@ -43,5 +45,10 @@ class MealPlanGroupViewModel extends GroupViewModel {
   @override
   Future<void> delete() {
     return sl.get<MealPlanManager>().deleteCollection(this.entity);
+  }
+
+  @override
+  Future<List<UserEntity>> members() {
+    return Future.value(entity.users);
   }
 }

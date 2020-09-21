@@ -1,6 +1,5 @@
 import 'package:cookly/model/entities/abstract/ingredient_note_entity.dart';
 import 'package:cookly/model/entities/mutable/mutable_ingredient_note.dart';
-import 'package:cookly/model/json/ingredient_note.dart';
 import 'package:cookly/services/recipe_manager.dart';
 import 'package:cookly/services/service_locator.dart';
 import 'package:cookly/services/unit_of_measure.dart';

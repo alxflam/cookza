@@ -1,6 +1,3 @@
-import 'dart:io';
-
-import 'package:cookly/constants.dart';
 import 'package:cookly/localization/keys.dart';
 import 'package:cookly/model/json/exception_log.dart';
 import 'package:cookly/viewmodel/settings/error_screen_model.dart';

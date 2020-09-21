@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cookly/constants.dart';
 import 'package:cookly/model/json/exception_log.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -19,6 +21,7 @@ void main() {
         item.toJson(),
       ]
     };
+
     var cut = ExceptionLog.fromJson(json);
 
     expect(cut.errors.length, 1);

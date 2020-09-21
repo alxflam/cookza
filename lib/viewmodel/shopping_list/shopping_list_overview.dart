@@ -10,7 +10,11 @@ class ShoppingListOverviewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<List<ShoppingListEntity>> getLists() {
-    return sl.get<ShoppingListManager>().shoppingListsAsList;
+  Future<List<ShoppingListEntity>> getLists() async {
+    var lists = await sl.get<ShoppingListManager>().shoppingListsAsList;
+    return lists
+        .where(
+            (e) => e.dateUntil.isAfter(DateTime.now().add(Duration(days: 1))))
+        .toList();
   }
 }

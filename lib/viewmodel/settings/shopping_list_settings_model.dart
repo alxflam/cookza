@@ -10,9 +10,10 @@ class ShoppingListSettingsModel with ChangeNotifier {
   bool get showCategories => this._prefs.showShoppingListCategories;
 
   set showCategories(bool value) {
-    this._prefs.showShoppingListCategories = value;
-    notifyListeners();
+    // this._prefs.showShoppingListCategories = value;
+    // notifyListeners();
   }
 
-  List<String> get categories => ['MoPro', 'Obst&Gemüse', 'Fisch&Fleisch'];
+  List<String> get categories => [];
+  // ['MoPro', 'Obst&Gemüse', 'Fisch&Fleisch'];
 }

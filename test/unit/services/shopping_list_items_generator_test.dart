@@ -16,7 +16,7 @@ import '../../utils/recipe_creator.dart';
 
 void main() {
   var mealPlanManager = MealPlanManagerMock();
-  var recipeManager = RecipeManagerMock();
+  var recipeManager = RecipeManagerStub();
 
   var cut = ShoppingListItemsGeneratorImpl();
 

@@ -1,6 +1,5 @@
 import 'package:cookly/model/entities/abstract/ingredient_note_entity.dart';
 import 'package:cookly/model/entities/mutable/mutable_ingredient.dart';
-import 'package:cookly/model/json/ingredient_note.dart';
 
 class MutableIngredientNote implements IngredientNoteEntity {
   double _amount;

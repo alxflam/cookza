@@ -63,10 +63,6 @@ class RecipeSelectionModel extends ChangeNotifier {
   get isMultiSelection => _allowMultiSelection;
   get countSelected => _countSelected;
   get countAll => _countAllRecipes;
-  set selected(String id) {
-    _selected.add(id);
-    notifyListeners();
-  }
 
   List<String> get selectedRecipes => _selected;
 

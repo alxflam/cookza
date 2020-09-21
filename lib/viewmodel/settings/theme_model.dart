@@ -22,13 +22,16 @@ class ThemeModel with ChangeNotifier {
     if (theme != null && kAllThemes.containsKey(theme)) {
       _currentTheme = kAllThemes[theme];
     } else {
-      _currentTheme = DarkTheme.create();
+      _currentTheme = kAllThemes['dark'];
     }
   }
 
   int get countThemes => kAllThemes.entries.length;
 
-  bool isActive(String key) => _currentTheme == kAllThemes[key];
+  bool isActive(String key) {
+    var theme = kAllThemes[key];
+    return _currentTheme == theme;
+  }
 
   List<ThemeModelData> getAvailableThemes() {
     return kAllThemes.entries

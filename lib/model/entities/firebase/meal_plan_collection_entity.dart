@@ -1,6 +1,5 @@
 import 'dart:collection';
 
-import 'package:cookly/model/entities/abstract/meal_plan_entity.dart';
 import 'package:cookly/model/entities/abstract/user_entity.dart';
 import 'package:cookly/model/entities/firebase/user_entity.dart';
 import 'package:cookly/model/firebase/collections/firebase_meal_plan_collection.dart';

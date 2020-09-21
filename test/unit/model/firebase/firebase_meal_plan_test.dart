@@ -13,7 +13,7 @@ void main() {
         'name': 'Some Recipe',
         'id': '1234',
         'servings': 4,
-      } as Map<String, dynamic>;
+      };
 
       var cut = FirebaseMealPlanRecipe.fromJson(json);
       var generatedJson = cut.toJson();

@@ -1,4 +1,3 @@
-import 'package:cookly/model/entities/firebase/meal_plan_entity.dart';
 import 'package:cookly/model/entities/mutable/mutable_meal_plan.dart';
 import 'package:cookly/services/id_gen.dart';
 import 'package:cookly/services/service_locator.dart';

@@ -1,9 +1,6 @@
 import 'package:cookly/model/entities/abstract/ingredient_note_entity.dart';
 import 'package:cookly/model/entities/abstract/shopping_list_entity.dart';
-import 'package:cookly/model/entities/mutable/mutable_ingredient.dart';
 import 'package:cookly/model/entities/mutable/mutable_ingredient_note.dart';
-import 'package:cookly/model/json/ingredient_note.dart';
-import 'package:cookly/viewmodel/shopping_list/shopping_list_detail.dart';
 
 class MutableShoppingListItem implements ShoppingListItemEntity {
   MutableIngredientNote _ingredientNote;

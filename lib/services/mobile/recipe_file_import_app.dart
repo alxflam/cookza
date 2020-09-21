@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:cookly/model/entities/json/recipe_entity.dart';
 import 'package:cookly/model/json/recipe.dart';
@@ -16,10 +17,16 @@ class RecipeFileImportImpl extends RecipeFileImport {
   @override
   void parseAndImport(BuildContext context,
       {bool selectionDialog = true}) async {
-    var file = await FilePicker.getFile(
-      type: FileType.custom,
-      allowedExtensions: ['json'],
-    );
+    var filePickerResult = await FilePicker.platform.pickFiles(
+        allowMultiple: false,
+        allowedExtensions: ['json'],
+        type: FileType.custom,
+        allowCompression: true);
+    if (filePickerResult == null || filePickerResult.paths.length != 1) {
+      return;
+    }
+    File file = File(filePickerResult.paths.first);
+
     List<Recipe> result = [];
     if (file == null) {
       Scaffold.of(context).showSnackBar(

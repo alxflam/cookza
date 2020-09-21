@@ -17,7 +17,7 @@ import '../mocks/recipe_manager_mock.dart';
 import '../utils/recipe_creator.dart';
 
 void main() {
-  var mock = RecipeManagerMock();
+  var mock = RecipeManagerStub();
   GetIt.I.registerSingleton<RecipeManager>(mock);
   GetIt.I.registerSingleton<SimilarityService>(SimilarityService());
 

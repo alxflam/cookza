@@ -39,7 +39,7 @@ void main() {
         () async => SharedPreferencesProviderImpl().init());
     GetIt.I.registerSingleton<ReceiveIntentHandler>(ReceiveIntentHandlerMock());
     GetIt.I.registerSingleton<NavigatorService>(NavigatorService());
-    GetIt.I.registerSingleton<RecipeManager>(RecipeManagerMock());
+    GetIt.I.registerSingleton<RecipeManager>(RecipeManagerStub());
     GetIt.I.registerSingleton<MealPlanManager>(MealPlanManagerMock());
   });
 

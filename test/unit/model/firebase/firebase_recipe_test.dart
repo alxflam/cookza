@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cookly/model/entities/abstract/recipe_entity.dart';
 import 'package:cookly/model/entities/mutable/mutable_recipe.dart';
 import 'package:cookly/model/firebase/recipe/firebase_recipe.dart';
 import 'package:flutter_test/flutter_test.dart';

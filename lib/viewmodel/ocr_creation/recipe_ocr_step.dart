@@ -12,10 +12,10 @@ abstract class RecipeOCRStep<T extends RecipeEditStep> with ChangeNotifier {
 
   T get model;
 
-  set image(File image) {
+  Future<void> setImage(File image) async {
     this._image = image;
     this._isPending = true;
-    this.analyse();
+    await this.analyse();
     notifyListeners();
   }
 
@@ -25,10 +25,10 @@ abstract class RecipeOCRStep<T extends RecipeEditStep> with ChangeNotifier {
 
   bool get isValid;
 
-  void analyse();
+  Future<void> analyse();
 }
 
-class RecipeImageOCRStep extends RecipeOCRStep<RecipeOverviewEditStep> {
+class RecipeOverviewOCRStep extends RecipeOCRStep<RecipeOverviewEditStep> {
   RecipeOverviewEditStep _model = RecipeOverviewEditStep();
 
   @override
@@ -37,7 +37,7 @@ class RecipeImageOCRStep extends RecipeOCRStep<RecipeOverviewEditStep> {
   }
 
   @override
-  void analyse() async {
+  Future<void> analyse() async {
     this._model =
         await sl.get<ImageTextExtractor>().processOverviewImage(this._image);
     this._isPending = false;
@@ -57,7 +57,7 @@ class RecipeIngredientOCRStep extends RecipeOCRStep<RecipeIngredientEditStep> {
   }
 
   @override
-  void analyse() async {
+  Future<void> analyse() async {
     this._model =
         await sl.get<ImageTextExtractor>().processIngredientsImage(this._image);
     this._isPending = false;
@@ -83,7 +83,7 @@ class RecipeInstructionOCRStep
   }
 
   @override
-  void analyse() async {
+  Future<void> analyse() async {
     this._model = await sl
         .get<ImageTextExtractor>()
         .processInstructionsImage(this._image);

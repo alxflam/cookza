@@ -21,7 +21,7 @@ import '../mocks/recipe_manager_mock.dart';
 import '../mocks/shopping_list_manager_mock.dart';
 
 void main() {
-  var recipeManager = RecipeManagerMock();
+  var recipeManager = RecipeManagerStub();
   var mealPlanManager = MealPlanManagerMock();
   var observer = MockNavigatorObserver();
   var shoppingListManager = ShoppingListManagerMock();
