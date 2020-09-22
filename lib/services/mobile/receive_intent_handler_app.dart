@@ -1,5 +1,5 @@
 import 'package:cookly/services/abstract/receive_intent_handler.dart';
-import 'package:cookly/services/service_locator.dart';
+import 'package:cookly/services/flutter/service_locator.dart';
 import 'package:cookly/services/share_receive_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

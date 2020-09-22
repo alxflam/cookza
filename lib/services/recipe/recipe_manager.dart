@@ -2,8 +2,8 @@ import 'package:cookly/model/entities/abstract/recipe_collection_entity.dart';
 import 'package:cookly/model/entities/abstract/recipe_entity.dart';
 import 'package:cookly/model/entities/mutable/mutable_recipe.dart';
 import 'package:cookly/services/firebase_provider.dart';
-import 'package:cookly/services/image_manager.dart';
-import 'package:cookly/services/service_locator.dart';
+import 'package:cookly/services/recipe/image_manager.dart';
+import 'package:cookly/services/flutter/service_locator.dart';
 
 abstract class RecipeManager {
   Future<List<RecipeCollectionEntity>> get collections;

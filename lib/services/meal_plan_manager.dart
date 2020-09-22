@@ -1,7 +1,7 @@
 import 'package:cookly/model/entities/abstract/meal_plan_collection_entity.dart';
 import 'package:cookly/model/entities/abstract/meal_plan_entity.dart';
 import 'package:cookly/services/firebase_provider.dart';
-import 'package:cookly/services/service_locator.dart';
+import 'package:cookly/services/flutter/service_locator.dart';
 import 'package:cookly/services/shared_preferences_provider.dart';
 
 abstract class MealPlanManager {

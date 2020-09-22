@@ -1,6 +1,6 @@
 import 'package:cookly/model/entities/mutable/mutable_ingredient_note.dart';
 import 'package:cookly/model/entities/mutable/mutable_shopping_list_item.dart';
-import 'package:cookly/services/shopping_list_text_generator.dart';
+import 'package:cookly/services/shopping_list/shopping_list_text_generator.dart';
 import 'package:cookly/services/unit_of_measure.dart';
 import 'package:cookly/viewmodel/shopping_list/shopping_list_detail.dart';
 import 'package:flutter_test/flutter_test.dart';

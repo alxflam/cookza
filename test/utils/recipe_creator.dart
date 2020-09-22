@@ -1,6 +1,6 @@
 import 'package:cookly/model/entities/mutable/mutable_ingredient_note.dart';
 import 'package:cookly/model/entities/mutable/mutable_recipe.dart';
-import 'package:cookly/services/id_gen.dart';
+import 'package:cookly/services/util/id_gen.dart';
 
 class RecipeCreator {
   static MutableRecipe createRecipe(String name) {

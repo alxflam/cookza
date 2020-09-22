@@ -6,7 +6,7 @@ import 'package:cookly/model/entities/abstract/user_entity.dart';
 import 'package:cookly/model/json/user.dart';
 import 'package:cookly/screens/home_screen.dart';
 import 'package:cookly/services/firebase_provider.dart';
-import 'package:cookly/services/service_locator.dart';
+import 'package:cookly/services/flutter/service_locator.dart';
 import 'package:cookly/viewmodel/settings/theme_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

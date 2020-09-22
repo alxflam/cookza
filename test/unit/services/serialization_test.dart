@@ -3,7 +3,7 @@ import 'package:cookly/model/json/ingredient.dart';
 import 'package:cookly/model/json/ingredient_note.dart';
 import 'package:cookly/model/json/recipe.dart';
 import 'package:cookly/model/json/recipe_list.dart';
-import 'package:cookly/services/id_gen.dart';
+import 'package:cookly/services/util/id_gen.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 

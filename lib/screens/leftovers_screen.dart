@@ -1,8 +1,8 @@
 import 'package:cookly/components/recipe_list_tile.dart';
 import 'package:cookly/localization/keys.dart';
 import 'package:cookly/model/entities/abstract/recipe_entity.dart';
-import 'package:cookly/services/service_locator.dart';
-import 'package:cookly/services/similarity_service.dart';
+import 'package:cookly/services/flutter/service_locator.dart';
+import 'package:cookly/services/recipe/similarity_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 

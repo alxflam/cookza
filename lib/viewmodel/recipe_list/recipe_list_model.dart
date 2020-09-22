@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:cookly/model/entities/abstract/recipe_entity.dart';
-import 'package:cookly/services/recipe_manager.dart';
-import 'package:cookly/services/service_locator.dart';
+import 'package:cookly/services/recipe/recipe_manager.dart';
+import 'package:cookly/services/flutter/service_locator.dart';
 import 'package:flutter/material.dart';
 
 class RecipeListViewModel with ChangeNotifier {

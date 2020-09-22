@@ -1,10 +1,10 @@
 import 'package:cookly/localization/keys.dart';
-import 'package:cookly/services/recipe_manager.dart';
+import 'package:cookly/services/recipe/recipe_manager.dart';
 import 'package:cookly/viewmodel/recipe_selection_model.dart';
 import 'package:cookly/services/abstract/pdf_export.dart';
 import 'package:cookly/services/abstract/pdf_generator.dart';
 import 'package:cookly/services/abstract/recipe_file_export.dart';
-import 'package:cookly/services/service_locator.dart';
+import 'package:cookly/services/flutter/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

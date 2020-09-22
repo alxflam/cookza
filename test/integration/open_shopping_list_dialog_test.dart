@@ -1,11 +1,11 @@
 import 'package:cookly/routes.dart';
 import 'package:cookly/screens/shopping_list/shopping_list_detail_screen.dart';
 import 'package:cookly/screens/shopping_list/shopping_list_dialog.dart';
-import 'package:cookly/services/id_gen.dart';
+import 'package:cookly/services/util/id_gen.dart';
 import 'package:cookly/services/meal_plan_manager.dart';
-import 'package:cookly/services/recipe_manager.dart';
+import 'package:cookly/services/recipe/recipe_manager.dart';
 import 'package:cookly/services/shared_preferences_provider.dart';
-import 'package:cookly/services/shopping_list_manager.dart';
+import 'package:cookly/services/shopping_list/shopping_list_manager.dart';
 import 'package:cookly/viewmodel/settings/theme_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';

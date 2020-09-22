@@ -3,8 +3,8 @@ import 'package:cookly/model/entities/abstract/recipe_entity.dart';
 import 'package:cookly/model/entities/abstract/recipe_collection_entity.dart';
 import 'package:cookly/model/entities/json/recipe_collection_entity.dart';
 import 'package:cookly/model/json/recipe_collection.dart';
-import 'package:cookly/services/id_gen.dart';
-import 'package:cookly/services/recipe_manager.dart';
+import 'package:cookly/services/util/id_gen.dart';
+import 'package:cookly/services/recipe/recipe_manager.dart';
 import 'package:mockito/mockito.dart';
 
 class RecipeManagerMock extends Mock implements RecipeManager {}

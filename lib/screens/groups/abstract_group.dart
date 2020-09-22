@@ -1,6 +1,6 @@
 import 'package:cookly/model/entities/abstract/user_entity.dart';
 import 'package:cookly/services/mobile/qr_scanner.dart';
-import 'package:cookly/services/service_locator.dart';
+import 'package:cookly/services/flutter/service_locator.dart';
 import 'package:cookly/viewmodel/groups/abstract_group_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';

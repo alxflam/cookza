@@ -1,8 +1,8 @@
 import 'package:cookly/model/entities/abstract/recipe_collection_entity.dart';
 import 'package:cookly/screens/groups/recipe_group.dart';
 import 'package:cookly/screens/recipe_list_screen.dart';
-import 'package:cookly/services/recipe_manager.dart';
-import 'package:cookly/services/service_locator.dart';
+import 'package:cookly/services/recipe/recipe_manager.dart';
+import 'package:cookly/services/flutter/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:provider/provider.dart';

@@ -3,8 +3,8 @@ import 'dart:collection';
 import 'package:cookly/model/entities/abstract/instruction_entity.dart';
 import 'package:cookly/model/entities/abstract/recipe_entity.dart';
 import 'package:cookly/model/entities/mutable/mutable_ingredient_note.dart';
-import 'package:cookly/services/recipe_manager.dart';
-import 'package:cookly/services/service_locator.dart';
+import 'package:cookly/services/recipe/recipe_manager.dart';
+import 'package:cookly/services/flutter/service_locator.dart';
 import 'package:cookly/viewmodel/recipe_edit/recipe_ingredient_model.dart';
 import 'package:flutter/material.dart';
 

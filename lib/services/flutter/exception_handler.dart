@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:cookly/model/json/exception_log.dart';
 import 'package:cookly/services/local_storage.dart';
-import 'package:cookly/services/service_locator.dart';
+import 'package:cookly/services/flutter/service_locator.dart';
 
 abstract class ExceptionHandler {
   Future<void> reportException(

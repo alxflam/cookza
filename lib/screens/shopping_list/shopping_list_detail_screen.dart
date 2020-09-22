@@ -1,7 +1,7 @@
 import 'package:cookly/localization/keys.dart';
 import 'package:cookly/screens/new_ingredient_screen.dart';
 import 'package:cookly/services/abstract/shopping_list_text_export.dart';
-import 'package:cookly/services/service_locator.dart';
+import 'package:cookly/services/flutter/service_locator.dart';
 import 'package:cookly/viewmodel/recipe_edit/recipe_ingredient_model.dart';
 import 'package:cookly/viewmodel/shopping_list/shopping_list_detail.dart';
 import 'package:flutter/material.dart';

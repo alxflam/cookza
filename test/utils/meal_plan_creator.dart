@@ -1,6 +1,6 @@
 import 'package:cookly/model/entities/mutable/mutable_meal_plan.dart';
-import 'package:cookly/services/id_gen.dart';
-import 'package:cookly/services/service_locator.dart';
+import 'package:cookly/services/util/id_gen.dart';
+import 'package:cookly/services/flutter/service_locator.dart';
 
 class MealPlanCreator {
   static MutableMealPlan createMealPlan(String name, int weeks) {

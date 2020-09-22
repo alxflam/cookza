@@ -1,8 +1,8 @@
 import 'dart:collection';
 
 import 'package:cookly/model/entities/mutable/mutable_recipe.dart';
-import 'package:cookly/services/recipe_manager.dart';
-import 'package:cookly/services/similarity_service.dart';
+import 'package:cookly/services/recipe/recipe_manager.dart';
+import 'package:cookly/services/recipe/similarity_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 

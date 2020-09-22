@@ -9,7 +9,7 @@ import 'package:cookly/model/entities/firebase/ingredient_note_entity.dart';
 import 'package:cookly/model/entities/firebase/instruction_entity.dart';
 import 'package:cookly/model/firebase/recipe/firebase_recipe.dart';
 import 'package:cookly/services/firebase_provider.dart';
-import 'package:cookly/services/service_locator.dart';
+import 'package:cookly/services/flutter/service_locator.dart';
 
 class RecipeEntityFirebase implements RecipeEntity {
   FirebaseRecipe _recipe;

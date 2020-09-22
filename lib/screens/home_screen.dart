@@ -7,7 +7,7 @@ import 'package:cookly/screens/recipe_list_screen.dart';
 import 'package:cookly/screens/recipe_modify/new_recipe_screen.dart';
 import 'package:cookly/screens/shopping_list/shopping_list_overview_screen.dart';
 import 'package:cookly/services/abstract/receive_intent_handler.dart';
-import 'package:cookly/services/service_locator.dart';
+import 'package:cookly/services/flutter/service_locator.dart';
 import 'package:cookly/viewmodel/recipe_edit/recipe_edit_model.dart';
 import 'package:cookly/viewmodel/settings/theme_model.dart';
 import 'package:flutter/foundation.dart';

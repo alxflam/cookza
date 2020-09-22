@@ -5,7 +5,7 @@ import 'package:cookly/model/entities/json/recipe_entity.dart';
 import 'package:cookly/model/json/ingredient.dart';
 import 'package:cookly/model/json/ingredient_note.dart';
 import 'package:cookly/model/json/recipe.dart';
-import 'package:cookly/services/service_locator.dart';
+import 'package:cookly/services/flutter/service_locator.dart';
 import 'package:cookly/services/unit_of_measure.dart';
 import 'package:http/http.dart' as http;
 

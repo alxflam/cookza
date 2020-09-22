@@ -1,7 +1,7 @@
 import 'package:cookly/model/entities/abstract/recipe_collection_entity.dart';
 import 'package:cookly/model/entities/abstract/user_entity.dart';
-import 'package:cookly/services/recipe_manager.dart';
-import 'package:cookly/services/service_locator.dart';
+import 'package:cookly/services/recipe/recipe_manager.dart';
+import 'package:cookly/services/flutter/service_locator.dart';
 import 'package:cookly/viewmodel/groups/abstract_group_model.dart';
 import 'package:flutter/material.dart';
 

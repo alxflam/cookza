@@ -4,8 +4,8 @@ import 'package:cookly/model/entities/abstract/meal_plan_collection_entity.dart'
 import 'package:cookly/model/entities/mutable/mutable_shopping_list.dart';
 import 'package:cookly/screens/shopping_list/shopping_list_detail_screen.dart';
 import 'package:cookly/services/meal_plan_manager.dart';
-import 'package:cookly/services/service_locator.dart';
-import 'package:cookly/services/shopping_list_manager.dart';
+import 'package:cookly/services/flutter/service_locator.dart';
+import 'package:cookly/services/shopping_list/shopping_list_manager.dart';
 import 'package:cookly/services/util/week_calculation.dart';
 import 'package:cookly/viewmodel/shopping_list/shopping_list_detail.dart';
 import 'package:flutter/material.dart';

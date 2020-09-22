@@ -1,6 +1,6 @@
 import 'package:cookly/model/entities/abstract/shopping_list_entity.dart';
 import 'package:cookly/services/firebase_provider.dart';
-import 'package:cookly/services/service_locator.dart';
+import 'package:cookly/services/flutter/service_locator.dart';
 
 abstract class ShoppingListManager {
   Future<List<ShoppingListEntity>> get shoppingListsAsList;
@@ -12,16 +12,16 @@ abstract class ShoppingListManager {
 class ShoppingListManagerImpl implements ShoppingListManager {
   @override
   Future<void> createOrUpdate(ShoppingListEntity entity) {
-   return sl.get<FirebaseProvider>().createOrUpdateShoppingList(entity);
+    return sl.get<FirebaseProvider>().createOrUpdateShoppingList(entity);
   }
 
   @override
   Future<List<ShoppingListEntity>> get shoppingListsAsList {
-   return sl.get<FirebaseProvider>().shoppingListsAsList;
+    return sl.get<FirebaseProvider>().shoppingListsAsList;
   }
 
   @override
   Stream<List<ShoppingListEntity>> get shoppingLists {
-   return sl.get<FirebaseProvider>().shoppingListsAsStream;
+    return sl.get<FirebaseProvider>().shoppingListsAsStream;
   }
 }

@@ -3,7 +3,7 @@ import 'package:cookly/model/entities/abstract/meal_plan_collection_entity.dart'
 import 'package:cookly/screens/groups/meal_plan_group.dart';
 import 'package:cookly/screens/meal_plan/meal_plan_screen.dart';
 import 'package:cookly/services/meal_plan_manager.dart';
-import 'package:cookly/services/service_locator.dart';
+import 'package:cookly/services/flutter/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:provider/provider.dart';

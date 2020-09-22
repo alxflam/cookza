@@ -1,6 +1,6 @@
 import 'package:cookly/constants.dart';
 import 'package:cookly/screens/home_screen.dart';
-import 'package:cookly/services/service_locator.dart';
+import 'package:cookly/services/flutter/service_locator.dart';
 import 'package:cookly/services/shared_preferences_provider.dart';
 import 'package:cookly/viewmodel/settings/onboarding_model.dart';
 import 'package:cookly/viewmodel/settings/theme_model.dart';

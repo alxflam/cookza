@@ -8,9 +8,9 @@ import 'package:cookly/model/entities/mutable/mutable_ingredient.dart';
 import 'package:cookly/model/entities/mutable/mutable_ingredient_note.dart';
 import 'package:cookly/model/entities/mutable/mutable_instruction.dart';
 import 'package:cookly/model/entities/mutable/mutable_recipe.dart';
-import 'package:cookly/services/image_manager.dart';
-import 'package:cookly/services/recipe_manager.dart';
-import 'package:cookly/services/service_locator.dart';
+import 'package:cookly/services/recipe/image_manager.dart';
+import 'package:cookly/services/recipe/recipe_manager.dart';
+import 'package:cookly/services/flutter/service_locator.dart';
 import 'package:flutter/material.dart';
 
 import 'recipe_ingredient_model.dart';

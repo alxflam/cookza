@@ -5,7 +5,7 @@ import 'package:cookly/screens/settings/error_log_screen.dart';
 import 'package:cookly/screens/settings/onboarding_screen.dart';
 import 'package:cookly/screens/settings/saved_images_screen.dart';
 import 'package:cookly/services/profile_deleter.dart';
-import 'package:cookly/services/service_locator.dart';
+import 'package:cookly/services/flutter/service_locator.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';

@@ -7,7 +7,7 @@ import 'package:cookly/screens/settings/settings_screen.dart';
 import 'package:cookly/screens/shopping_list/shopping_list_overview_screen.dart';
 import 'package:cookly/screens/web_login_app.dart';
 import 'package:cookly/services/firebase_provider.dart';
-import 'package:cookly/services/service_locator.dart';
+import 'package:cookly/services/flutter/service_locator.dart';
 import 'package:cookly/viewmodel/recipe_edit/recipe_edit_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

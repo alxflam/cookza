@@ -4,7 +4,7 @@ import 'package:cookly/model/firebase/general/firebase_handshake.dart';
 import 'package:cookly/services/abstract/platform_info.dart';
 import 'package:cookly/services/firebase_provider.dart';
 import 'package:cookly/services/mobile/qr_scanner.dart';
-import 'package:cookly/services/service_locator.dart';
+import 'package:cookly/services/flutter/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

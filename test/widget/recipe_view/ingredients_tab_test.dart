@@ -1,6 +1,6 @@
 import 'package:cookly/components/round_icon_button.dart';
 import 'package:cookly/screens/recipe_view/ingredients_tab.dart';
-import 'package:cookly/services/image_manager.dart';
+import 'package:cookly/services/recipe/image_manager.dart';
 import 'package:cookly/services/shared_preferences_provider.dart';
 import 'package:cookly/services/unit_of_measure.dart';
 import 'package:cookly/viewmodel/recipe_view/recipe_view_model.dart';

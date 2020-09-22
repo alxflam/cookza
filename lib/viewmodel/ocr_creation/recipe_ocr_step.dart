@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:cookly/services/image_parser.dart';
-import 'package:cookly/services/service_locator.dart';
+import 'package:cookly/services/flutter/service_locator.dart';
 import 'package:cookly/viewmodel/recipe_edit/recipe_edit_step.dart';
 import 'package:flutter/material.dart';
 

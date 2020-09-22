@@ -5,7 +5,7 @@ import 'package:cookly/model/entities/abstract/recipe_entity.dart';
 import 'package:cookly/model/json/recipe_list.dart';
 import 'package:cookly/services/abstract/recipe_file_export.dart';
 import 'package:cookly/services/local_storage.dart';
-import 'package:cookly/services/service_locator.dart';
+import 'package:cookly/services/flutter/service_locator.dart';
 import 'package:share_extend/share_extend.dart';
 
 class RecipeFileExportImpl extends RecipeFileExport {

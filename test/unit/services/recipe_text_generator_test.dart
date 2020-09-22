@@ -1,7 +1,7 @@
 import 'package:cookly/model/entities/mutable/mutable_ingredient_note.dart';
 import 'package:cookly/model/entities/mutable/mutable_instruction.dart';
 import 'package:cookly/model/entities/mutable/mutable_recipe.dart';
-import 'package:cookly/services/recipe_text_generator.dart';
+import 'package:cookly/services/recipe/recipe_text_generator.dart';
 import 'package:cookly/services/unit_of_measure.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_translate/localization.dart';

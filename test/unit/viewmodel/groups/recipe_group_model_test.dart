@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cookly/model/entities/firebase/recipe_collection_entity.dart';
 import 'package:cookly/model/firebase/collections/firebase_recipe_collection.dart';
-import 'package:cookly/services/recipe_manager.dart';
+import 'package:cookly/services/recipe/recipe_manager.dart';
 import 'package:cookly/viewmodel/groups/recipe_group_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';

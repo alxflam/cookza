@@ -1,4 +1,4 @@
-import 'package:cookly/services/service_locator.dart';
+import 'package:cookly/services/flutter/service_locator.dart';
 import 'package:cookly/services/shared_preferences_provider.dart';
 import 'package:cookly/services/unit_of_measure.dart';
 import 'package:flutter/material.dart';

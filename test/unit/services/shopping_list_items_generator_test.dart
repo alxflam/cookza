@@ -1,10 +1,10 @@
 import 'package:cookly/model/entities/mutable/mutable_meal_plan.dart';
 import 'package:cookly/model/entities/mutable/mutable_shopping_list.dart';
-import 'package:cookly/services/ingredients_calculator.dart';
+import 'package:cookly/services/recipe/ingredients_calculator.dart';
 import 'package:cookly/services/meal_plan_manager.dart';
-import 'package:cookly/services/recipe_manager.dart';
+import 'package:cookly/services/recipe/recipe_manager.dart';
 import 'package:cookly/services/shared_preferences_provider.dart';
-import 'package:cookly/services/shopping_list_items_generator.dart';
+import 'package:cookly/services/shopping_list/shopping_list_items_generator.dart';
 import 'package:cookly/services/unit_of_measure.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
