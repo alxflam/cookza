@@ -54,8 +54,6 @@ class FirebaseProvider {
 
   String _currentRecipeGroup;
 
-  FirebaseProvider();
-
   String get currentRecipeGroup => _currentRecipeGroup;
 
   Stream<List<MealPlanCollectionEntity>> get mealPlanGroups {

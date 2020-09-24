@@ -15,8 +15,7 @@ import 'package:cookly/localization/keys.dart';
 
 class RecipeFileImportImpl extends RecipeFileImport {
   @override
-  void parseAndImport(BuildContext context,
-      {bool selectionDialog = true}) async {
+  void parseAndImport(BuildContext context) async {
     var filePickerResult = await FilePicker.platform.pickFiles(
         allowMultiple: false,
         allowedExtensions: ['json'],

@@ -192,6 +192,7 @@ class AmountedUnitOfMeasure {
       // convert to biggest uom
       while (uom.conversionFactor != 1) {
         target = target.nextBiggerUoM();
+        uom = target.uom;
       }
 
       // convert also to biggest uom

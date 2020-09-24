@@ -12,7 +12,7 @@ import 'dart:html' as html;
 
 class RecipeFileImportImpl extends RecipeFileImport {
   @override
-  void parseAndImport(BuildContext context, {bool selectionDialog = true}) {
+  void parseAndImport(BuildContext context) {
     // configure file selection dialog
     html.InputElement uploadInput = html.FileUploadInputElement();
     uploadInput.multiple = false;

@@ -23,11 +23,15 @@ class IngredientsCalculatorImpl implements IngredientsCalculator {
 
     for (var entry in ids.entries) {
       var recipe = recipes.firstWhere((element) => element.id == entry.key,
-          orElse: null);
+          orElse: () => null);
+      if (recipe == null) {
+        continue;
+      }
+      var baseServings = recipe.servings;
+
       for (var note in await recipe.ingredients) {
         // check if ingredient already exists
 
-        var baseServings = recipe.servings;
         var ratio = entry.value / baseServings;
 
         // TODO: don't work on the original instance == will be reused!!!
@@ -53,36 +57,52 @@ class IngredientsCalculatorImpl implements IngredientsCalculator {
           continue;
         }
 
-        var uomProvider = sl.get<UnitOfMeasureProvider>();
         // if it has a different uom
-        for (var sameIngredientDiffUoM in sameIngredient) {
-          // TODO handle differently
-          if (sameIngredientDiffUoM.unitOfMeasure.isEmpty) {
-            continue;
-          }
-          var targetUoM = uomProvider
-              .getUnitOfMeasureById(sameIngredientDiffUoM.unitOfMeasure);
-
-          var sourceUoM = uomProvider.getUnitOfMeasureById(note.unitOfMeasure);
-
-          var convertable = sourceUoM.canBeConvertedTo(targetUoM);
-
-          // if it can be converted, convert it
-          if (convertable) {
-            AmountedUnitOfMeasure amountedUoM =
-                AmountedUnitOfMeasure(targetUoM, sameIngredientDiffUoM.amount);
-            AmountedUnitOfMeasure sourceAmountedUoM =
-                AmountedUnitOfMeasure(sourceUoM, note.amount * ratio);
-
-            var calcResult = amountedUoM.add(sourceAmountedUoM);
-            sameIngredientDiffUoM.amount = calcResult.amount;
-            sameIngredientDiffUoM.unitOfMeasure = calcResult.uom.id;
-            break;
-          }
+        var uomProvider = sl.get<UnitOfMeasureProvider>();
+        bool updated = _convertUnit(sameIngredient, uomProvider, note, ratio);
+        if (!updated) {
+          // if the unit could not be coonverted, add the ingredient
+          var targetNote = MutableIngredientNote.of(note);
+          var amount = note.amount * ratio;
+          targetNote.amount = amount;
+          result.add(targetNote);
         }
       }
     }
 
     return result;
+  }
+
+  bool _convertUnit(
+      List<MutableIngredientNote> sameIngredient,
+      UnitOfMeasureProvider uomProvider,
+      IngredientNoteEntity note,
+      double ratio) {
+    for (var sameIngredientDiffUoM in sameIngredient) {
+      if (sameIngredientDiffUoM.unitOfMeasure.isEmpty) {
+        continue;
+      }
+      var targetUoM =
+          uomProvider.getUnitOfMeasureById(sameIngredientDiffUoM.unitOfMeasure);
+
+      var sourceUoM = uomProvider.getUnitOfMeasureById(note.unitOfMeasure);
+
+      var convertable = sourceUoM.canBeConvertedTo(targetUoM);
+      print('convertible: $convertable');
+
+      // if it can be converted, convert it
+      if (convertable) {
+        AmountedUnitOfMeasure amountedUoM =
+            AmountedUnitOfMeasure(targetUoM, sameIngredientDiffUoM.amount);
+        AmountedUnitOfMeasure sourceAmountedUoM =
+            AmountedUnitOfMeasure(sourceUoM, note.amount * ratio);
+
+        var calcResult = amountedUoM.add(sourceAmountedUoM);
+        sameIngredientDiffUoM.amount = calcResult.amount;
+        sameIngredientDiffUoM.unitOfMeasure = calcResult.uom.id;
+        return true;
+      }
+    }
+    return false;
   }
 }

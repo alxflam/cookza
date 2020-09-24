@@ -1,6 +1,7 @@
 import 'package:cookly/routes.dart';
 import 'package:cookly/screens/settings/about_screen.dart';
 import 'package:cookly/screens/settings/changelog_screen.dart';
+import 'package:cookly/screens/settings/error_log_screen.dart';
 import 'package:cookly/screens/settings/onboarding_screen.dart';
 import 'package:cookly/screens/settings/saved_images_screen.dart';
 import 'package:cookly/services/shared_preferences_provider.dart';
@@ -124,6 +125,19 @@ void main() {
 
     var tile = find.text('settings.termsOfUse');
     expect(tile, findsOneWidget);
+  });
+
+  testWidgets('Exception tile exists', (WidgetTester tester) async {
+    // open fake app
+    await _initApp(tester, observer);
+
+    var tile = find.text('settings.errorLog');
+    expect(tile, findsOneWidget);
+
+    await tester.tap(tile);
+    await tester.pumpAndSettle();
+
+    expect(find.byType(ErrorLogScreen), findsOneWidget);
   });
 }
 
