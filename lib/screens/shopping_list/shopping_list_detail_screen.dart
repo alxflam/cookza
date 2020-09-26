@@ -1,3 +1,4 @@
+import 'package:cookly/constants.dart';
 import 'package:cookly/localization/keys.dart';
 import 'package:cookly/screens/new_ingredient_screen.dart';
 import 'package:cookly/services/abstract/shopping_list_text_export.dart';
@@ -6,6 +7,7 @@ import 'package:cookly/viewmodel/recipe_edit/recipe_ingredient_model.dart';
 import 'package:cookly/viewmodel/shopping_list/shopping_list_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 class PopupMenuButtonChoices {
@@ -18,7 +20,7 @@ class PopupMenuButtonChoices {
   static const SHARE =
       const PopupMenuButtonChoices._internal(Keys.Ui_Share, Icons.share);
   static const ADD_ITEM = const PopupMenuButtonChoices._internal(
-      Keys.Ui_Mealplan_Addrecipe, Icons.add);
+      Keys.Ui_Shoppinglist_Additem, Icons.add);
 }
 
 class ShoppingListDetailScreen extends StatelessWidget {
@@ -96,7 +98,25 @@ class ShoppingListDetailScreen extends StatelessWidget {
                 }
 
                 if (snapshot.data == null || snapshot.data.isEmpty) {
-                  return Container();
+                  return Container(
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Center(
+                            child: Padding(
+                              padding: EdgeInsets.all(20),
+                              child: FaIcon(
+                                kShoppingListIconData,
+                                size: 70,
+                              ),
+                            ),
+                          ),
+                          Center(
+                              child:
+                                  Text(translate(Keys.Ui_Shoppinglist_Noitems)))
+                        ]),
+                  );
                 }
 
                 return ReorderableListView(

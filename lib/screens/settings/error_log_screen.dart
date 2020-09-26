@@ -89,7 +89,7 @@ class ErrorLogScreen extends StatelessWidget {
                 } else {
                   return Container(
                     child: Center(
-                      child: Text('Hooray! No errors have been logged'),
+                      child: Text(translate(Keys.Settings_Noerrorlogentry)),
                     ),
                   );
                 }

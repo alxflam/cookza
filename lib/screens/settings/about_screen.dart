@@ -103,7 +103,7 @@ class AboutScreen extends StatelessWidget {
             AboutScreenDivider(),
             ListTile(
               title: Text(translate(Keys.Settings_Support)),
-              subtitle: Text('§Hilfe und Feedback '),
+              subtitle: Text(translate(Keys.Settings_Supportsubtitle)),
               leading: FaIcon(FontAwesomeIcons.questionCircle),
               onTap: () {
                 launch("market://details?id=com.example.cookly");
@@ -206,8 +206,9 @@ class DeleteAllDataDialog extends StatelessWidget {
                 try {
                   await sl.get<ProfileDeleter>().delete();
                   Navigator.pop(context);
-                  Scaffold.of(context).showSnackBar(
-                      SnackBar(content: Text('§All data deleted')));
+                  Scaffold.of(context).showSnackBar(SnackBar(
+                      content:
+                          Text(translate(Keys.Settings_Deletealldatasuccess))));
                 } catch (e) {
                   Navigator.pop(context);
                   Scaffold.of(context)

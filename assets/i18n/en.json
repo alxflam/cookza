@@ -92,7 +92,11 @@
         },
         "shoppingList": {
             "from": "From",
-            "until": "Until"
+            "until": "Until",
+            "addItem": "Add Item",
+            "noItems": "There are no items in your shopping list.",
+            "noMealPlan": "You haven't created a meal plan yet",
+            "missingRecipeAccess": "The meal plan contains recipes from groups you're not a member of. Therefore the shopping list can't be generated."
         },
         "noSimilarRecipes": "No similar recipes found"
     },
@@ -115,8 +119,11 @@
         "privacyStatement": "Data Privacy Statement",
         "termsOfUse": "Terms of Use",
         "deleteAllData": "Delete all data",
+        "deleteAllDataSuccess": "All data deleted",
         "support": "Support",
-        "errorLog": "Error Log"
+        "supportSubtitle": "Help and Feedback",
+        "errorLog": "Error Log",
+        "noErrorLogEntry": "The error log is empty"
     },
     "onboarding": {},
     "unitOfMeasure": {

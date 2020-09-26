@@ -68,7 +68,7 @@
         "import": "Import",
         "selectRecipes": "Rezepte auswählen",
         "web": "Web",
-        "addUser": "Add User",
+        "addUser": "User hinzufügen",
         "leaveGroup": "Gruppe verlassen",
         "confirmLeave": "{0} wirklich verlassen?",
         "shareAccount": "Account teilen",
@@ -92,7 +92,11 @@
         },
         "shoppingList": {
             "from": "Von",
-            "until": "Bis"
+            "until": "Bis",
+            "addItem": "Neuer Eintrag",
+            "noItems": "Die Einkaufsliste enthält keine Einträge.",
+            "noMealPlan": "Erstelle zuerst einen Essensplan",
+            "missingRecipeAccess": "Der Essensplan enthält Rezepte aus Gruppen denen du nicht angehörst. Die Einkaufsliste kann daher nicht erstellt werden."
         },
         "noSimilarRecipes": "Es wurden keine ähnlichen Rezepte gefunden"
     },
@@ -115,8 +119,11 @@
         "privacyStatement": "Datenschutzerklärung",
         "termsOfUse": "Nutzungsbedingungen",
         "deleteAllData": "Alle Daten löschen",
+        "deleteAllDataSuccess": "Alle Daten wurden gelöscht",
         "support": "Support",
-        "errorLog": "Fehlerlog"
+        "supportSubtitle": "Hilfe und Feedback",
+        "errorLog": "Fehlerlog",
+        "noErrorLogEntry": "Das Fehlerlog enthält keine Einträge"
     },
     "onboarding": {},
     "unitOfMeasure": {

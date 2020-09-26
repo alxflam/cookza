@@ -21,8 +21,8 @@ Future<void> openShoppingListDialog(BuildContext context) async {
   DateTimeRange dateRange;
 
   if (collections.isEmpty) {
-    Scaffold.of(context)
-        .showSnackBar(SnackBar(content: Text('No meal plan available')));
+    Scaffold.of(context).showSnackBar(
+        SnackBar(content: Text(translate(Keys.Ui_Shoppinglist_Nomealplan))));
     return;
   }
 

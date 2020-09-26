@@ -1,4 +1,5 @@
 import 'package:cookly/constants.dart';
+import 'package:cookly/localization/keys.dart';
 import 'package:cookly/model/entities/abstract/ingredient_note_entity.dart';
 import 'package:cookly/model/entities/abstract/shopping_list_entity.dart';
 import 'package:cookly/model/entities/mutable/mutable_shopping_list.dart';
@@ -12,6 +13,7 @@ import 'package:cookly/services/unit_of_measure.dart';
 import 'package:cookly/viewmodel/recipe_edit/recipe_ingredient_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 
 class ShoppingListModel extends ChangeNotifier {
   MutableShoppingList _listEntity;
@@ -64,10 +66,10 @@ class ShoppingListModel extends ChangeNotifier {
           .get<ShoppingListItemsGenerator>()
           .generateItems(this._listEntity);
     } on PlatformException catch (e) {
-      // may happen if the shopping list contains a recipe from a group the current user  does not have read access to
+      // may happen if the shopping list contains a recipe from a group the current user does not have read access to
       var context = sl.get<NavigatorService>().currentContext;
       Scaffold.of(context).showSnackBar(SnackBar(
-          content: Text('§No access to a recipe from the shopping list: $e')));
+          content: Text(translate(Keys.Ui_Shoppinglist_Missingrecipeaccess))));
     }
 
     // processed generated already bought items

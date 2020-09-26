@@ -146,6 +146,15 @@ class Keys {
 
   static const String Ui_Shoppinglist_Until = 'ui.shoppingList.until';
 
+  static const String Ui_Shoppinglist_Additem = 'ui.shoppingList.addItem';
+
+  static const String Ui_Shoppinglist_Noitems = 'ui.shoppingList.noItems';
+
+  static const String Ui_Shoppinglist_Nomealplan = 'ui.shoppingList.noMealPlan';
+
+  static const String Ui_Shoppinglist_Missingrecipeaccess =
+      'ui.shoppingList.missingRecipeAccess';
+
   static const String Ui_Nosimilarrecipes = 'ui.noSimilarRecipes';
 
   static const String Settings_Weekdurationdesc = 'settings.weekDurationDesc';
@@ -184,9 +193,16 @@ class Keys {
 
   static const String Settings_Deletealldata = 'settings.deleteAllData';
 
+  static const String Settings_Deletealldatasuccess =
+      'settings.deleteAllDataSuccess';
+
   static const String Settings_Support = 'settings.support';
 
+  static const String Settings_Supportsubtitle = 'settings.supportSubtitle';
+
   static const String Settings_Errorlog = 'settings.errorLog';
+
+  static const String Settings_Noerrorlogentry = 'settings.noErrorLogEntry';
 
   static const String Unitofmeasure_Mmt = 'unitOfMeasure.MMT';
 

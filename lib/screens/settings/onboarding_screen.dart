@@ -53,10 +53,11 @@ class OnBoardingScreen extends StatelessWidget {
       showSkipButton: true,
       skipFlex: 0,
       nextFlex: 0,
-      skip: Text('Skip'),
+      skip: Text(MaterialLocalizations.of(context).continueButtonLabel),
       next: Icon(Icons.arrow_forward),
       done: showDoneButton
-          ? Text('Done', style: TextStyle(fontWeight: FontWeight.w600))
+          ? Text(MaterialLocalizations.of(context).closeButtonLabel,
+              style: TextStyle(fontWeight: FontWeight.w600))
           : Container(),
       dotsDecorator: const DotsDecorator(
         size: Size(8.0, 8.0),
@@ -157,7 +158,8 @@ class OnBoardingScreen extends StatelessWidget {
                             RaisedButton(
                               disabledColor: Colors.red.shade400,
                               color: Colors.green,
-                              child: Text('§Proceed'),
+                              child: Text(MaterialLocalizations.of(context)
+                                  .saveButtonLabel),
                               onPressed: model.acceptedAll
                                   ? () {
                                       sl
