@@ -1,5 +1,6 @@
 import 'package:cookly/model/entities/abstract/meal_plan_collection_entity.dart';
 import 'package:cookly/model/entities/abstract/meal_plan_entity.dart';
+import 'package:cookly/model/entities/abstract/user_entity.dart';
 import 'package:cookly/services/firebase_provider.dart';
 import 'package:cookly/services/flutter/service_locator.dart';
 import 'package:cookly/services/shared_preferences_provider.dart';
@@ -26,6 +27,8 @@ abstract class MealPlanManager {
   Future<MealPlanEntity> getMealPlanByCollectionID(String id);
 
   Future<void> init();
+
+  Future<void> removeMember(UserEntity user, String mealPlan);
 }
 
 class MealPlanManagerFirebase implements MealPlanManager {
@@ -123,5 +126,10 @@ class MealPlanManagerFirebase implements MealPlanManager {
       });
     }
     return Future.value(null);
+  }
+
+  @override
+  Future<void> removeMember(UserEntity user, String mealPlan) {
+    return sl.get<FirebaseProvider>().removeFromMealPlan(user, mealPlan);
   }
 }

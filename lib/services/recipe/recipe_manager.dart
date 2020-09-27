@@ -1,5 +1,6 @@
 import 'package:cookly/model/entities/abstract/recipe_collection_entity.dart';
 import 'package:cookly/model/entities/abstract/recipe_entity.dart';
+import 'package:cookly/model/entities/abstract/user_entity.dart';
 import 'package:cookly/model/entities/mutable/mutable_recipe.dart';
 import 'package:cookly/services/firebase_provider.dart';
 import 'package:cookly/services/recipe/image_manager.dart';
@@ -39,6 +40,8 @@ abstract class RecipeManager {
   Future<void> importRecipes(List<RecipeEntity> recipes);
 
   Future<void> leaveRecipeGroup(RecipeCollectionEntity entity);
+
+  Future<void> removeMember(UserEntity user, String group);
 }
 
 // todo: extract an interface for the FirebaseProvider and use it also for local storage provider if that is needed
@@ -161,5 +164,10 @@ class RecipeManagerFirebase implements RecipeManager {
   @override
   Future<void> leaveRecipeGroup(RecipeCollectionEntity entity) {
     return sl.get<FirebaseProvider>().leaveRecipeGroup(entity.id);
+  }
+
+  @override
+  Future<void> removeMember(UserEntity user, String group) {
+    return sl.get<FirebaseProvider>().removeFromRecipeGroup(user, group);
   }
 }

@@ -4,6 +4,7 @@ import 'package:cookly/model/entities/abstract/meal_plan_entity.dart';
 import 'package:cookly/model/entities/abstract/recipe_collection_entity.dart';
 import 'package:cookly/model/entities/abstract/recipe_entity.dart';
 import 'package:cookly/model/entities/abstract/shopping_list_entity.dart';
+import 'package:cookly/model/entities/abstract/user_entity.dart';
 import 'package:cookly/model/entities/firebase/ingredient_note_entity.dart';
 import 'package:cookly/model/entities/firebase/instruction_entity.dart';
 import 'package:cookly/model/entities/firebase/meal_plan_collection_entity.dart';
@@ -732,7 +733,11 @@ class FirebaseProvider {
   }
 
   Future<void> leaveMealPlanGroup(String id) async {
-    var docRef = _firestore.collection(MEAL_PLAN_GROUPS).doc(id);
+    return await _removeMemberFromMealPlanGroup(id, this.userUid);
+  }
+
+  _removeMemberFromMealPlanGroup(String mealPlanID, String userID) async {
+    var docRef = _firestore.collection(MEAL_PLAN_GROUPS).doc(mealPlanID);
 
     var doc = await docRef.get(GetOptions(source: Source.server));
     var mealPlan = FirebaseMealPlanCollection.fromJson(doc.data(), doc.id);
@@ -741,17 +746,21 @@ class FirebaseProvider {
         .isNotEmpty;
 
     if (deleteMealPlan) {
-      return deleteMealPlanCollection(id);
+      return deleteMealPlanCollection(mealPlanID);
     } else {
       return _firestore.runTransaction<int>((transaction) {
-        transaction.update(docRef, {'users.$userUid': FieldValue.delete()});
+        transaction.update(docRef, {'users.$userID': FieldValue.delete()});
         return Future.value(1);
       });
     }
   }
 
   Future<void> leaveRecipeGroup(String id) async {
-    var docRef = _firestore.collection(RECIPE_GROUPS).doc(id);
+    return await _removeMemberFromRecipeGroup(id, this.userUid);
+  }
+
+  _removeMemberFromRecipeGroup(String groupID, userID) async {
+    var docRef = _firestore.collection(RECIPE_GROUPS).doc(groupID);
 
     var doc = await docRef.get(GetOptions(source: Source.server));
     var recipeGroup = FirebaseRecipeCollection.fromJson(doc.data(), doc.id);
@@ -760,10 +769,10 @@ class FirebaseProvider {
         .isNotEmpty;
 
     if (deleteGroup) {
-      return deleteRecipeCollection(id);
+      return deleteRecipeCollection(groupID);
     } else {
       return _firestore.runTransaction<int>((transaction) {
-        transaction.update(docRef, {'users.$userUid': FieldValue.delete()});
+        transaction.update(docRef, {'users.$userID': FieldValue.delete()});
         return Future.value(1);
       });
     }
@@ -860,5 +869,13 @@ class FirebaseProvider {
 
     return ShoppingListEntityFirebase.of(
         FirebaseShoppingListDocument.fromJson(model.data(), model.id));
+  }
+
+  Future<void> removeFromMealPlan(UserEntity user, String mealPlan) {
+    return _removeMemberFromMealPlanGroup(mealPlan, user.id);
+  }
+
+  Future<void> removeFromRecipeGroup(UserEntity user, String group) {
+    return _removeMemberFromRecipeGroup(group, user.id);
   }
 }

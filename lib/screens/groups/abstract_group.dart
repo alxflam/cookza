@@ -1,4 +1,5 @@
 import 'package:cookly/model/entities/abstract/user_entity.dart';
+import 'package:cookly/services/firebase_provider.dart';
 import 'package:cookly/services/mobile/qr_scanner.dart';
 import 'package:cookly/services/flutter/service_locator.dart';
 import 'package:cookly/viewmodel/groups/abstract_group_model.dart';
@@ -107,28 +108,40 @@ abstract class AbstractGroupScreen extends StatelessWidget {
             ),
             body: Consumer<GroupViewModel>(
               builder: (context, model, _) {
-                return FutureBuilder(
+                return FutureBuilder<List<UserEntity>>(
                   future: model.members(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState != ConnectionState.done) {
                       return Container();
                     }
 
-                    if (snapshot.data.length < 2) {
+                    if (snapshot.data.length == 1) {
                       return Center(
                         child: Text(translate(Keys.Ui_Singlemember)),
                       );
                     }
 
+                    var fb = sl.get<FirebaseProvider>();
+
                     return ListView.builder(
                       itemCount: snapshot.data.length,
                       itemBuilder: (context, index) {
                         var user = snapshot.data[index];
+                        var isCurrentUser = fb.userUid == user.id;
 
+                        // TODO: add delete icon button for other users
                         return ListTile(
-                          leading: _getLeadingUserIcon(user.users[index]),
+                          leading: _getLeadingUserIcon(user, isCurrentUser),
                           title:
                               Text(user.name == null ? 'unknown' : user.name),
+                          subtitle:
+                              isCurrentUser ? Text('That\'s me') : Text(''),
+                          trailing: !isCurrentUser
+                              ? IconButton(
+                                  icon: Icon(Icons.delete),
+                                  onPressed: () async =>
+                                      await model.removeMember(user))
+                              : null,
                         );
                       },
                     );
@@ -142,15 +155,14 @@ abstract class AbstractGroupScreen extends StatelessWidget {
     );
   }
 
-  Widget _getLeadingUserIcon(UserEntity user) {
+  Widget _getLeadingUserIcon(UserEntity user, bool isCurrentUser) {
     if (user.type == USER_TYPE.WEB_SESSION) {
-      return CircleAvatar(
-        child: FaIcon(FontAwesomeIcons.desktop),
-      );
+      return FaIcon(FontAwesomeIcons.desktop);
     }
-    return CircleAvatar(
-      child: FaIcon(FontAwesomeIcons.user),
-    );
+    if (isCurrentUser) {
+      return FaIcon(FontAwesomeIcons.userCheck);
+    }
+    return FaIcon(FontAwesomeIcons.user);
   }
 
   void _renameCollection(BuildContext _context, GroupViewModel model) {

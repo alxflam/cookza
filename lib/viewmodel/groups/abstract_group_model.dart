@@ -19,4 +19,7 @@ abstract class GroupViewModel with ChangeNotifier {
 
   /// the list of members of this group
   Future<List<UserEntity>> members();
+
+  /// remove member
+  Future<void> removeMember(UserEntity user);
 }

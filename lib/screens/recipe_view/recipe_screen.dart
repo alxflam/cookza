@@ -86,11 +86,8 @@ class RecipeScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Icon(PopupMenuButtonChoices.ADD_MEAL_PLAN.icon),
-                              Expanded(
-                                child: Text(
-                                  PopupMenuButtonChoices.ADD_MEAL_PLAN
-                                      .toString(),
-                                ),
+                              Text(
+                                PopupMenuButtonChoices.ADD_MEAL_PLAN.toString(),
                               )
                             ],
                           ),

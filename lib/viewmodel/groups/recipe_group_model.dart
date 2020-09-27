@@ -52,4 +52,10 @@ class RecipeGroupViewModel with ChangeNotifier implements GroupViewModel {
   Future<List<UserEntity>> members() {
     return Future.value(entity.users);
   }
+
+  @override
+  Future<void> removeMember(UserEntity user) async {
+    await sl.get<RecipeManager>().removeMember(user, this.entity.id);
+    notifyListeners();
+  }
 }
