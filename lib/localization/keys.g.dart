@@ -98,6 +98,8 @@ class Keys {
 
   static const String Ui_Import = 'ui.import';
 
+  static const String Ui_Parseerrorrecipe = 'ui.parseErrorRecipe';
+
   static const String Ui_Selectrecipes = 'ui.selectRecipes';
 
   static const String Ui_Web = 'ui.web';

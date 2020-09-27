@@ -41,7 +41,7 @@ class RecipeManagerStub implements RecipeManager {
 
   @override
   Stream<List<RecipeCollectionEntity>> get collectionsAsStream {
-    Stream.fromFuture(Future.value(this._collections));
+    return Stream.fromFuture(Future.value(this._collections));
   }
 
   @override
@@ -56,8 +56,11 @@ class RecipeManagerStub implements RecipeManager {
 
   @override
   Future<String> createOrUpdate(RecipeEntity recipe) {
+    /// if it's an update, remove the old entity
+    _recipes.removeWhere((e) => e.id == recipe.id);
+
+    /// then add the entity
     _recipes.add(recipe);
-    // TODO: generate ID for tests if non is present
     return Future.value(recipe.id);
   }
 

@@ -66,6 +66,7 @@
         "confirmDelete": "Do you really want to delete {0}?",
         "export": "Export",
         "import": "Import",
+        "parseErrorRecipe": "Can not parse the file",
         "selectRecipes": "Select Recipes",
         "web": "Web",
         "addUser": "Add User",

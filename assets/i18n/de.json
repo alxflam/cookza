@@ -66,6 +66,7 @@
         "confirmDelete": "Soll {0} wirklich gelöscht werden?",
         "export": "Export",
         "import": "Import",
+        "parseErrorRecipe": "Datei kann nicht importiert werden",
         "selectRecipes": "Rezepte auswählen",
         "web": "Web",
         "addUser": "User hinzufügen",

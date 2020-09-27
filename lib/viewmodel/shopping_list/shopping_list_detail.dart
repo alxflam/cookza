@@ -4,6 +4,7 @@ import 'package:cookly/model/entities/abstract/ingredient_note_entity.dart';
 import 'package:cookly/model/entities/abstract/shopping_list_entity.dart';
 import 'package:cookly/model/entities/mutable/mutable_shopping_list.dart';
 import 'package:cookly/model/entities/mutable/mutable_shopping_list_item.dart';
+import 'package:cookly/services/flutter/exception_handler.dart';
 import 'package:cookly/services/flutter/navigator_service.dart';
 import 'package:cookly/services/flutter/service_locator.dart';
 import 'package:cookly/services/shared_preferences_provider.dart';
@@ -66,6 +67,11 @@ class ShoppingListModel extends ChangeNotifier {
           .get<ShoppingListItemsGenerator>()
           .generateItems(this._listEntity);
     } on PlatformException catch (e) {
+      // make sure that case is logged
+      sl.get<ExceptionHandler>().reportException(
+          '${translate(Keys.Ui_Shoppinglist_Missingrecipeaccess)}: ${e.toString()}',
+          StackTrace.current,
+          DateTime.now());
       // may happen if the shopping list contains a recipe from a group the current user does not have read access to
       var context = sl.get<NavigatorService>().currentContext;
       Scaffold.of(context).showSnackBar(SnackBar(

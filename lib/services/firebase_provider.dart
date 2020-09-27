@@ -249,7 +249,10 @@ class FirebaseProvider {
 
     var handshakeRef = _firestore.collection(HANDSHAKES).doc(documentID);
 
-    await _firestore.runTransaction((transaction) {
+    await _firestore.runTransaction<int>((transaction) {
+      int updates =
+          recipeGroupSnapshot.docs.length + mealPlanGroupSnapshot.docs.length;
+
       // for each group we have access to, grant access to the given user
       for (var item in recipeGroupSnapshot.docs) {
         transaction.update(
@@ -266,6 +269,7 @@ class FirebaseProvider {
       }
 
       transaction.update(handshakeRef, handshake.toJson());
+      return Future.value(updates);
     });
   }
 
@@ -301,7 +305,9 @@ class FirebaseProvider {
         .where('users.$userUid', isGreaterThan: '')
         .get();
 
-    await _firestore.runTransaction((transaction) {
+    await _firestore.runTransaction<int>((transaction) {
+      int updates =
+          recipeGroupSnapshot.docs.length + mealPlanGroupSnapshot.docs.length;
       // for each group we have access to, grant access to the given user
       for (var item in recipeGroupSnapshot.docs) {
         // setting the map value to null will remove the entry
@@ -320,6 +326,8 @@ class FirebaseProvider {
       }
 
       transaction.delete(docs.docs.first.reference);
+
+      return Future.value(updates);
     });
 
     var handshakes = await _firestore
@@ -350,7 +358,11 @@ class FirebaseProvider {
         .where('users.$userUid', isGreaterThan: '')
         .get();
 
-    return await _firestore.runTransaction((transaction) {
+    return await _firestore.runTransaction<int>((transaction) {
+      int updates = handshakeSnapshots.docs.length +
+          recipeGroupSnapshot.docs.length +
+          mealPlanGroupSnapshot.docs.length;
+
       for (var item in handshakeSnapshots.docs) {
         var requestor = item.data()['requestor'];
 
@@ -372,6 +384,8 @@ class FirebaseProvider {
 
         // delete the handshake
         transaction.delete(item.reference);
+
+        return Future.value(updates);
       }
     });
   }
@@ -549,12 +563,15 @@ class FirebaseProvider {
       sl.get<ImageManager>().deleteRecipeImage(entity);
     }
 
-    await _firestore.runTransaction((transaction) {
+    await _firestore.runTransaction<int>((transaction) {
+      int updates = recipes.docs.length + 1;
       for (var recipe in recipes.docs) {
         transaction.delete(recipe.reference);
       }
 
       transaction.delete(collection);
+
+      return Future.value(updates);
     });
   }
 
@@ -568,10 +585,12 @@ class FirebaseProvider {
         .get();
 
     await _firestore.runTransaction((transaction) {
+      int updates = snapshot.docs.length + 1;
       for (var mealPlanDoc in snapshot.docs) {
         transaction.delete(mealPlanDoc.reference);
       }
       transaction.delete(reference);
+      return Future.value(updates);
     });
   }
 
@@ -724,8 +743,9 @@ class FirebaseProvider {
     if (deleteMealPlan) {
       return deleteMealPlanCollection(id);
     } else {
-      return _firestore.runTransaction((transaction) {
+      return _firestore.runTransaction<int>((transaction) {
         transaction.update(docRef, {'users.$userUid': FieldValue.delete()});
+        return Future.value(1);
       });
     }
   }
@@ -742,8 +762,9 @@ class FirebaseProvider {
     if (deleteGroup) {
       return deleteRecipeCollection(id);
     } else {
-      return _firestore.runTransaction((transaction) {
+      return _firestore.runTransaction<int>((transaction) {
         transaction.update(docRef, {'users.$userUid': FieldValue.delete()});
+        return Future.value(1);
       });
     }
   }

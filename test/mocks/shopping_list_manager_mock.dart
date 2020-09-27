@@ -16,7 +16,7 @@ class ShoppingListManagerMock extends Mock implements ShoppingListManager {
 
   @override
   Stream<List<ShoppingListEntity>> get shoppingLists {
-    Stream.fromFuture(Future.value(this._entities.values.toList()));
+    return Stream.fromFuture(Future.value(this._entities.values.toList()));
   }
 
   @override

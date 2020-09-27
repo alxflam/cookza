@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cookly/localization/keys.dart';
 import 'package:cookly/model/entities/json/recipe_entity.dart';
 import 'package:cookly/model/json/recipe.dart';
 import 'package:cookly/model/json/recipe_list.dart';
@@ -9,6 +10,8 @@ import 'package:cookly/services/abstract/recipe_file_import.dart';
 import 'package:cookly/viewmodel/recipe_view/recipe_view_model.dart';
 import 'package:flutter/material.dart';
 import 'dart:html' as html;
+
+import 'package:flutter_translate/global.dart';
 
 class RecipeFileImportImpl extends RecipeFileImport {
   @override
@@ -51,7 +54,7 @@ class RecipeFileImportImpl extends RecipeFileImport {
         reader.onError.listen((fileEvent) {
           Scaffold.of(context).showSnackBar(
             SnackBar(
-              content: Text('§Error parsing the file'),
+              content: Text(translate(Keys.Ui_Parseerrorrecipe)),
             ),
           );
         });
