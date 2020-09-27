@@ -32,7 +32,8 @@ class RecipeManagerStub implements RecipeManager {
 
   @override
   Future<RecipeCollectionEntity> collectionByID(String id) {
-    throw UnimplementedError();
+    return Future.value(
+        _collections.firstWhere((e) => e.id == id, orElse: () => null));
   }
 
   @override
