@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cookly/localization/keys.dart';
 import 'package:cookly/model/entities/abstract/ingredient_entity.dart';
 import 'package:cookly/model/entities/abstract/instruction_entity.dart';
 import 'package:cookly/model/entities/abstract/recipe_collection_entity.dart';
@@ -12,6 +13,7 @@ import 'package:cookly/services/recipe/image_manager.dart';
 import 'package:cookly/services/recipe/recipe_manager.dart';
 import 'package:cookly/services/flutter/service_locator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 
 import 'recipe_ingredient_model.dart';
 
@@ -69,16 +71,16 @@ class RecipeOverviewEditStep extends RecipeEditStep {
   @override
   validate() {
     if (name.isEmpty) {
-      throw 'Assign a Recipe name';
+      throw translate(Keys.Ui_Assignrecipename);
     }
     if (duration <= 0) {
-      throw 'Assign a Recipe duration';
+      throw translate(Keys.Ui_Assignrecipeduration);
     }
     if (difficulty == null) {
-      throw 'Assign a Recipe difficulty';
+      throw translate(Keys.Ui_Assignrecipedifficulty);
     }
     if (this.collection == null) {
-      throw 'Assign a Recipe group';
+      throw translate(Keys.Ui_Assignrecipegroup);
     }
   }
 
@@ -258,11 +260,11 @@ class RecipeIngredientEditStep extends RecipeEditStep {
   @override
   validate() {
     if (_ingredients.isEmpty) {
-      throw 'There are no ingredients assigned to the recipe';
+      throw translate(Keys.Ui_Assigningredients);
     }
 
     if (_servings <= 0) {
-      throw 'Assign a valid servings size';
+      throw translate(Keys.Ui_Assignservings);
     }
   }
 
@@ -329,11 +331,11 @@ class RecipeInstructionEditStep extends RecipeEditStep {
   validate() {
     // there are instructions and there's no empty instruction
     if (_instructions.isEmpty) {
-      throw 'There are no instructions assigned to the recipe';
+      throw translate(Keys.Ui_Assigninstructions);
     }
     if (_instructions.where((f) => f.text == null || f.text.isEmpty).length >
         0) {
-      throw 'There are empty instructions assigned';
+      throw translate(Keys.Ui_Assignemptyinstructions);
     }
   }
 

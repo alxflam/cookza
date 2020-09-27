@@ -49,7 +49,8 @@ Future<void> saveModel(BuildContext context, RecipeEditModel model) async {
     // close progress dialog
     Navigator.pop(context);
     // show errors and exit
-    kErrorDialog(context, 'Error occured while saving', e.toString());
+    kErrorDialog(
+        context, translate(Keys.Ui_Saverecipevalidation), e.toString());
     return;
   }
 

@@ -100,6 +100,24 @@ class Keys {
 
   static const String Ui_Parseerrorrecipe = 'ui.parseErrorRecipe';
 
+  static const String Ui_Saverecipevalidation = 'ui.saveRecipeValidation';
+
+  static const String Ui_Assignrecipename = 'ui.assignRecipeName';
+
+  static const String Ui_Assignrecipeduration = 'ui.assignRecipeDuration';
+
+  static const String Ui_Assignrecipedifficulty = 'ui.assignRecipeDifficulty';
+
+  static const String Ui_Assignrecipegroup = 'ui.assignRecipeGroup';
+
+  static const String Ui_Assigningredients = 'ui.assignIngredients';
+
+  static const String Ui_Assignservings = 'ui.assignServings';
+
+  static const String Ui_Assigninstructions = 'ui.assignInstructions';
+
+  static const String Ui_Assignemptyinstructions = 'ui.assignEmptyInstructions';
+
   static const String Ui_Selectrecipes = 'ui.selectRecipes';
 
   static const String Ui_Web = 'ui.web';
