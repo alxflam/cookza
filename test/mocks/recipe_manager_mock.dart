@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cookly/model/entities/abstract/recipe_entity.dart';
 import 'package:cookly/model/entities/abstract/recipe_collection_entity.dart';
+import 'package:cookly/model/entities/abstract/user_entity.dart';
 import 'package:cookly/model/entities/json/recipe_collection_entity.dart';
 import 'package:cookly/model/json/recipe_collection.dart';
 import 'package:cookly/services/util/id_gen.dart';
@@ -117,6 +118,12 @@ class RecipeManagerStub implements RecipeManager {
   @override
   Future<void> updateRating(RecipeEntity recipe, int rating) {
     // TODO: implement updateRating
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> removeMember(UserEntity user, String group) {
+    // TODO: implement removeMember
     throw UnimplementedError();
   }
 }
