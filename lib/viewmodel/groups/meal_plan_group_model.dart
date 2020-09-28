@@ -55,6 +55,7 @@ class MealPlanGroupViewModel with ChangeNotifier implements GroupViewModel {
   @override
   Future<void> removeMember(UserEntity user) async {
     await sl.get<MealPlanManager>().removeMember(user, entity.id);
+    this._entity = await sl.get<MealPlanManager>().getCollectionByID(entity.id);
     notifyListeners();
   }
 }

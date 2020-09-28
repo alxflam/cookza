@@ -129,7 +129,6 @@ abstract class AbstractGroupScreen extends StatelessWidget {
                         var user = snapshot.data[index];
                         var isCurrentUser = fb.userUid == user.id;
 
-                        // TODO: add delete icon button for other users
                         return ListTile(
                           leading: _getLeadingUserIcon(user, isCurrentUser),
                           title:

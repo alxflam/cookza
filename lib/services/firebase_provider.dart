@@ -736,14 +736,14 @@ class FirebaseProvider {
     return await _removeMemberFromMealPlanGroup(id, this.userUid);
   }
 
-  _removeMemberFromMealPlanGroup(String mealPlanID, String userID) async {
+  Future<void> _removeMemberFromMealPlanGroup(
+      String mealPlanID, String userID) async {
     var docRef = _firestore.collection(MEAL_PLAN_GROUPS).doc(mealPlanID);
 
     var doc = await docRef.get(GetOptions(source: Source.server));
     var mealPlan = FirebaseMealPlanCollection.fromJson(doc.data(), doc.id);
-    var deleteMealPlan = mealPlan.users.entries
-        .where((a) => a.key != this._ownerUserID)
-        .isNotEmpty;
+    var deleteMealPlan =
+        mealPlan.users.entries.where((a) => a.key != userID).isEmpty;
 
     if (deleteMealPlan) {
       return deleteMealPlanCollection(mealPlanID);
@@ -759,14 +759,13 @@ class FirebaseProvider {
     return await _removeMemberFromRecipeGroup(id, this.userUid);
   }
 
-  _removeMemberFromRecipeGroup(String groupID, userID) async {
+  Future<void> _removeMemberFromRecipeGroup(String groupID, userID) async {
     var docRef = _firestore.collection(RECIPE_GROUPS).doc(groupID);
 
     var doc = await docRef.get(GetOptions(source: Source.server));
     var recipeGroup = FirebaseRecipeCollection.fromJson(doc.data(), doc.id);
-    var deleteGroup = recipeGroup.users.entries
-        .where((a) => a.key != this._ownerUserID)
-        .isNotEmpty;
+    var deleteGroup =
+        recipeGroup.users.entries.where((a) => a.key != userID).isEmpty;
 
     if (deleteGroup) {
       return deleteRecipeCollection(groupID);

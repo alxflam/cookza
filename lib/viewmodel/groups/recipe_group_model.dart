@@ -56,6 +56,8 @@ class RecipeGroupViewModel with ChangeNotifier implements GroupViewModel {
   @override
   Future<void> removeMember(UserEntity user) async {
     await sl.get<RecipeManager>().removeMember(user, this.entity.id);
+    this._entity =
+        await sl.get<RecipeManager>().collectionByID(this._entity.id);
     notifyListeners();
   }
 }
