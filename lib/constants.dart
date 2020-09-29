@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 
 /// App name
 const kAppName = 'Cookza';
+const kAppVersion = '2020-09-alpha';
 
 /// Icons
 const kAppIconData = Icons.local_dining;

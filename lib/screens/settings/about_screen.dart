@@ -43,7 +43,7 @@ class AboutScreen extends StatelessWidget {
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
             ),
             Text(
-              'v2020-07-alpha',
+              kAppVersion,
               style: TextStyle(fontStyle: FontStyle.italic),
             ),
             Builder(builder: (context) {
@@ -139,7 +139,7 @@ class AboutScreen extends StatelessWidget {
               onTap: () {
                 showLicensePage(
                   context: context,
-                  applicationVersion: '2020-08',
+                  applicationVersion: kAppVersion,
                   applicationIcon: Icon(kAppIconData),
                   applicationLegalese: '© 2020',
                 );

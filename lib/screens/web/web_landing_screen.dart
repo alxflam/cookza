@@ -71,7 +71,7 @@ class WebLandingPage extends StatelessWidget {
               ),
             ),
             Text(
-              'v2020-09-alpha',
+              kAppVersion,
               style: TextStyle(fontStyle: FontStyle.italic),
             ),
             _getConsentWidget(context),
