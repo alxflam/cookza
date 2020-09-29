@@ -1,4 +1,4 @@
-import 'package:cookly/model/entities/abstract/user_entity.dart';
+import 'package:cookza/model/entities/abstract/user_entity.dart';
 import 'package:flutter/cupertino.dart';
 
 abstract class GroupViewModel with ChangeNotifier {

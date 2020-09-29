@@ -1,5 +1,5 @@
-import 'package:cookly/model/entities/mutable/mutable_meal_plan.dart';
-import 'package:cookly/services/util/week_calculation.dart';
+import 'package:cookza/model/entities/mutable/mutable_meal_plan.dart';
+import 'package:cookza/services/util/week_calculation.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

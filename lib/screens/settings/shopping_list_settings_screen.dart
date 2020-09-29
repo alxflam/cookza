@@ -1,5 +1,5 @@
-import 'package:cookly/localization/keys.dart';
-import 'package:cookly/viewmodel/settings/shopping_list_settings_model.dart';
+import 'package:cookza/localization/keys.dart';
+import 'package:cookza/viewmodel/settings/shopping_list_settings_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:provider/provider.dart';

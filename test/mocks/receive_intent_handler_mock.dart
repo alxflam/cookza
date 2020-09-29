@@ -1,4 +1,4 @@
-import 'package:cookly/services/abstract/receive_intent_handler.dart';
+import 'package:cookza/services/abstract/receive_intent_handler.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:mockito/mockito.dart';
 

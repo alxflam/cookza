@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cookly/constants.dart';
-import 'package:cookly/model/entities/abstract/recipe_entity.dart';
-import 'package:cookly/model/entities/firebase/recipe_entity.dart';
+import 'package:cookza/constants.dart';
+import 'package:cookza/model/entities/abstract/recipe_entity.dart';
+import 'package:cookza/model/entities/firebase/recipe_entity.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'firebase_recipe.g.dart';

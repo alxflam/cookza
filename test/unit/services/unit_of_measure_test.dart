@@ -1,4 +1,4 @@
-import 'package:cookly/services/unit_of_measure.dart';
+import 'package:cookza/services/unit_of_measure.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

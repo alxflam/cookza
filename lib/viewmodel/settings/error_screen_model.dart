@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:cookly/model/json/exception_log.dart';
-import 'package:cookly/services/local_storage.dart';
-import 'package:cookly/services/flutter/service_locator.dart';
+import 'package:cookza/model/json/exception_log.dart';
+import 'package:cookza/services/local_storage.dart';
+import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:flutter/material.dart';
 
 class ErrorScreenModel with ChangeNotifier {

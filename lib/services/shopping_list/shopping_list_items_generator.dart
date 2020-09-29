@@ -1,9 +1,9 @@
-import 'package:cookly/model/entities/abstract/meal_plan_entity.dart';
-import 'package:cookly/model/entities/abstract/shopping_list_entity.dart';
-import 'package:cookly/model/entities/mutable/mutable_shopping_list_item.dart';
-import 'package:cookly/services/recipe/ingredients_calculator.dart';
-import 'package:cookly/services/meal_plan_manager.dart';
-import 'package:cookly/services/flutter/service_locator.dart';
+import 'package:cookza/model/entities/abstract/meal_plan_entity.dart';
+import 'package:cookza/model/entities/abstract/shopping_list_entity.dart';
+import 'package:cookza/model/entities/mutable/mutable_shopping_list_item.dart';
+import 'package:cookza/services/recipe/ingredients_calculator.dart';
+import 'package:cookza/services/meal_plan_manager.dart';
+import 'package:cookza/services/flutter/service_locator.dart';
 
 abstract class ShoppingListItemsGenerator {
   /// generate the transient items of the shopping list based on the planned recipes

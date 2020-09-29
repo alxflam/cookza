@@ -1,4 +1,4 @@
-import 'package:cookly/model/firebase/general/firebase_user.dart';
+import 'package:cookza/model/firebase/general/firebase_user.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

@@ -1,7 +1,7 @@
-import 'package:cookly/model/entities/abstract/ingredient_note_entity.dart';
-import 'package:cookly/model/entities/abstract/shopping_list_entity.dart';
-import 'package:cookly/model/entities/firebase/ingredient_note_entity.dart';
-import 'package:cookly/model/firebase/shopping_list/firebase_shopping_list.dart';
+import 'package:cookza/model/entities/abstract/ingredient_note_entity.dart';
+import 'package:cookza/model/entities/abstract/shopping_list_entity.dart';
+import 'package:cookza/model/entities/firebase/ingredient_note_entity.dart';
+import 'package:cookza/model/firebase/shopping_list/firebase_shopping_list.dart';
 
 class ShoppingListItemEntityFirebase implements ShoppingListItemEntity {
   bool _isCustom;

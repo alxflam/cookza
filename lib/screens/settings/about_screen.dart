@@ -1,11 +1,11 @@
-import 'package:cookly/constants.dart';
-import 'package:cookly/localization/keys.dart';
-import 'package:cookly/screens/settings/changelog_screen.dart';
-import 'package:cookly/screens/settings/error_log_screen.dart';
-import 'package:cookly/screens/settings/onboarding_screen.dart';
-import 'package:cookly/screens/settings/saved_images_screen.dart';
-import 'package:cookly/services/profile_deleter.dart';
-import 'package:cookly/services/flutter/service_locator.dart';
+import 'package:cookza/constants.dart';
+import 'package:cookza/localization/keys.dart';
+import 'package:cookza/screens/settings/changelog_screen.dart';
+import 'package:cookza/screens/settings/error_log_screen.dart';
+import 'package:cookza/screens/settings/onboarding_screen.dart';
+import 'package:cookza/screens/settings/saved_images_screen.dart';
+import 'package:cookza/services/profile_deleter.dart';
+import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
@@ -106,7 +106,7 @@ class AboutScreen extends StatelessWidget {
               subtitle: Text(translate(Keys.Settings_Supportsubtitle)),
               leading: FaIcon(FontAwesomeIcons.questionCircle),
               onTap: () {
-                launch("market://details?id=com.example.cookly");
+                launch("market://details?id=com.flammer.cookza");
               },
             ),
             AboutScreenDivider(),

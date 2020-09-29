@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:cookly/model/json/exception_log.dart';
-import 'package:cookly/services/local_storage.dart';
-import 'package:cookly/services/flutter/service_locator.dart';
+import 'package:cookza/model/json/exception_log.dart';
+import 'package:cookza/services/local_storage.dart';
+import 'package:cookza/services/flutter/service_locator.dart';
 
 abstract class ExceptionHandler {
   Future<void> reportException(

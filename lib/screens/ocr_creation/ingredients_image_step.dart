@@ -1,5 +1,5 @@
-import 'package:cookly/screens/ocr_creation/ocr_base_step.dart';
-import 'package:cookly/viewmodel/ocr_creation/recipe_ocr_step.dart';
+import 'package:cookza/screens/ocr_creation/ocr_base_step.dart';
+import 'package:cookza/viewmodel/ocr_creation/recipe_ocr_step.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

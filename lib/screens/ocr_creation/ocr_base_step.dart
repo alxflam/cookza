@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:cookly/viewmodel/ocr_creation/recipe_ocr_step.dart';
+import 'package:cookza/viewmodel/ocr_creation/recipe_ocr_step.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:image_picker/image_picker.dart';

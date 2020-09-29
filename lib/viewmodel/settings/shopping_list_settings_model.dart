@@ -1,5 +1,5 @@
-import 'package:cookly/services/flutter/service_locator.dart';
-import 'package:cookly/services/shared_preferences_provider.dart';
+import 'package:cookza/services/flutter/service_locator.dart';
+import 'package:cookza/services/shared_preferences_provider.dart';
 import 'package:flutter/material.dart';
 
 class ShoppingListSettingsModel with ChangeNotifier {

@@ -1,4 +1,4 @@
-import 'package:cookly/model/entities/abstract/user_entity.dart';
+import 'package:cookza/model/entities/abstract/user_entity.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'user.g.dart';

@@ -1,5 +1,5 @@
-import 'package:cookly/model/entities/abstract/instruction_entity.dart';
-import 'package:cookly/model/firebase/recipe/firebase_instruction.dart';
+import 'package:cookza/model/entities/abstract/instruction_entity.dart';
+import 'package:cookza/model/firebase/recipe/firebase_instruction.dart';
 
 class InstructionEntityFirebase implements InstructionEntity {
   FirebaseInstruction _instruction;

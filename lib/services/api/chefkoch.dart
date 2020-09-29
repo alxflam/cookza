@@ -1,12 +1,12 @@
 import 'dart:convert';
 
-import 'package:cookly/model/entities/abstract/recipe_entity.dart';
-import 'package:cookly/model/entities/json/recipe_entity.dart';
-import 'package:cookly/model/json/ingredient.dart';
-import 'package:cookly/model/json/ingredient_note.dart';
-import 'package:cookly/model/json/recipe.dart';
-import 'package:cookly/services/flutter/service_locator.dart';
-import 'package:cookly/services/unit_of_measure.dart';
+import 'package:cookza/model/entities/abstract/recipe_entity.dart';
+import 'package:cookza/model/entities/json/recipe_entity.dart';
+import 'package:cookza/model/json/ingredient.dart';
+import 'package:cookza/model/json/ingredient_note.dart';
+import 'package:cookza/model/json/recipe.dart';
+import 'package:cookza/services/flutter/service_locator.dart';
+import 'package:cookza/services/unit_of_measure.dart';
 import 'package:http/http.dart' as http;
 
 class Chefkoch {

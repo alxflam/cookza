@@ -1,5 +1,5 @@
-import 'package:cookly/model/entities/json/ingredient_entity.dart';
-import 'package:cookly/model/json/ingredient.dart';
+import 'package:cookza/model/entities/json/ingredient_entity.dart';
+import 'package:cookza/model/json/ingredient.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

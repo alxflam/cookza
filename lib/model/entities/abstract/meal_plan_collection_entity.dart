@@ -1,6 +1,6 @@
 import 'dart:collection';
 
-import 'package:cookly/model/entities/abstract/user_entity.dart';
+import 'package:cookza/model/entities/abstract/user_entity.dart';
 
 abstract class MealPlanCollectionEntity {
   String get id;

@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cookly/model/entities/firebase/meal_plan_collection_entity.dart';
-import 'package:cookly/model/firebase/collections/firebase_meal_plan_collection.dart';
-import 'package:cookly/services/meal_plan_manager.dart';
-import 'package:cookly/viewmodel/groups/meal_plan_group_model.dart';
+import 'package:cookza/model/entities/firebase/meal_plan_collection_entity.dart';
+import 'package:cookza/model/firebase/collections/firebase_meal_plan_collection.dart';
+import 'package:cookza/services/meal_plan_manager.dart';
+import 'package:cookza/viewmodel/groups/meal_plan_group_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mockito/mockito.dart';

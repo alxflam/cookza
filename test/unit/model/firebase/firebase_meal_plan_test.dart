@@ -1,6 +1,6 @@
-import 'package:cookly/model/entities/mutable/mutable_meal_plan.dart';
-import 'package:cookly/model/firebase/meal_plan/firebase_meal_plan.dart';
-import 'package:cookly/services/util/week_calculation.dart';
+import 'package:cookza/model/entities/mutable/mutable_meal_plan.dart';
+import 'package:cookza/model/firebase/meal_plan/firebase_meal_plan.dart';
+import 'package:cookza/services/util/week_calculation.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../../utils/recipe_creator.dart';

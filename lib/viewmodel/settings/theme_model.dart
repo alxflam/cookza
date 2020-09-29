@@ -1,6 +1,6 @@
-import 'package:cookly/services/flutter/service_locator.dart';
-import 'package:cookly/services/shared_preferences_provider.dart';
-import 'package:cookly/themes.dart';
+import 'package:cookza/services/flutter/service_locator.dart';
+import 'package:cookza/services/shared_preferences_provider.dart';
+import 'package:cookza/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 

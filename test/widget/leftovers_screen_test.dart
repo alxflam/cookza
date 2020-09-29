@@ -1,10 +1,10 @@
-import 'package:cookly/components/recipe_list_tile.dart';
-import 'package:cookly/screens/leftovers_screen.dart';
-import 'package:cookly/services/abstract/receive_intent_handler.dart';
-import 'package:cookly/services/recipe/recipe_manager.dart';
-import 'package:cookly/services/shared_preferences_provider.dart';
-import 'package:cookly/services/recipe/similarity_service.dart';
-import 'package:cookly/viewmodel/settings/theme_model.dart';
+import 'package:cookza/components/recipe_list_tile.dart';
+import 'package:cookza/screens/leftovers_screen.dart';
+import 'package:cookza/services/abstract/receive_intent_handler.dart';
+import 'package:cookza/services/recipe/recipe_manager.dart';
+import 'package:cookza/services/shared_preferences_provider.dart';
+import 'package:cookza/services/recipe/similarity_service.dart';
+import 'package:cookza/viewmodel/settings/theme_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_translate/localization.dart';

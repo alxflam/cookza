@@ -1,13 +1,13 @@
 // import 'dart:convert';
 // import 'dart:io';
 
-// import 'package:cookly/model/entities/abstract/recipe_entity.dart';
-// import 'package:cookly/model/json/recipe_list.dart';
-// import 'package:cookly/services/abstract/data_store.dart';
-// import 'package:cookly/services/app_profile.dart';
-// import 'package:cookly/model/json/recipe.dart';
-// import 'package:cookly/model/json/profile.dart';
-// import 'package:cookly/model/json/image_map.dart';
+// import 'package:cookza/model/entities/abstract/recipe_entity.dart';
+// import 'package:cookza/model/json/recipe_list.dart';
+// import 'package:cookza/services/abstract/data_store.dart';
+// import 'package:cookza/services/app_profile.dart';
+// import 'package:cookza/model/json/recipe.dart';
+// import 'package:cookza/model/json/profile.dart';
+// import 'package:cookza/model/json/image_map.dart';
 // import 'dart:html' as html;
 
 // import 'package:shared_preferences/shared_preferences.dart';

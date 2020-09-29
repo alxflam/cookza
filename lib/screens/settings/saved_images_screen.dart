@@ -1,10 +1,10 @@
 import 'dart:io';
 
-import 'package:cookly/constants.dart';
-import 'package:cookly/localization/keys.dart';
-import 'package:cookly/services/recipe/image_manager.dart';
-import 'package:cookly/services/local_storage.dart';
-import 'package:cookly/services/flutter/service_locator.dart';
+import 'package:cookza/constants.dart';
+import 'package:cookza/localization/keys.dart';
+import 'package:cookza/services/recipe/image_manager.dart';
+import 'package:cookza/services/local_storage.dart';
+import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 

@@ -1,9 +1,9 @@
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:cookly/model/entities/abstract/recipe_entity.dart';
-import 'package:cookly/services/local_storage.dart';
-import 'package:cookly/services/flutter/service_locator.dart';
+import 'package:cookza/model/entities/abstract/recipe_entity.dart';
+import 'package:cookza/services/local_storage.dart';
+import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/services.dart';
 

@@ -1,6 +1,6 @@
-import 'package:cookly/routes.dart';
-import 'package:cookly/screens/home_screen.dart';
-import 'package:cookly/viewmodel/settings/theme_model.dart';
+import 'package:cookza/routes.dart';
+import 'package:cookza/screens/home_screen.dart';
+import 'package:cookza/viewmodel/settings/theme_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

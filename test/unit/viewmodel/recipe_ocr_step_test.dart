@@ -1,10 +1,10 @@
 import 'dart:io';
 
-import 'package:cookly/model/entities/mutable/mutable_ingredient_note.dart';
-import 'package:cookly/services/image_parser.dart';
-import 'package:cookly/viewmodel/ocr_creation/recipe_ocr_step.dart';
-import 'package:cookly/viewmodel/recipe_edit/recipe_edit_step.dart';
-import 'package:cookly/viewmodel/recipe_edit/recipe_ingredient_model.dart';
+import 'package:cookza/model/entities/mutable/mutable_ingredient_note.dart';
+import 'package:cookza/services/image_parser.dart';
+import 'package:cookza/viewmodel/ocr_creation/recipe_ocr_step.dart';
+import 'package:cookza/viewmodel/recipe_edit/recipe_edit_step.dart';
+import 'package:cookza/viewmodel/recipe_edit/recipe_ingredient_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mockito/mockito.dart';

@@ -1,6 +1,6 @@
-import 'package:cookly/model/entities/abstract/recipe_entity.dart';
-import 'package:cookly/viewmodel/recipe_selection_model.dart';
-import 'package:cookly/viewmodel/recipe_view/recipe_view_model.dart';
+import 'package:cookza/model/entities/abstract/recipe_entity.dart';
+import 'package:cookza/viewmodel/recipe_selection_model.dart';
+import 'package:cookza/viewmodel/recipe_view/recipe_view_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../utils/recipe_creator.dart';

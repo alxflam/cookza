@@ -1,5 +1,5 @@
-import 'package:cookly/model/entities/abstract/ingredient_entity.dart';
-import 'package:cookly/model/json/ingredient.dart';
+import 'package:cookza/model/entities/abstract/ingredient_entity.dart';
+import 'package:cookza/model/json/ingredient.dart';
 
 class IngredientEntityJson implements IngredientEntity {
   Ingredient _ingredient;

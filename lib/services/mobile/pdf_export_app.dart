@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:cookly/services/abstract/pdf_export.dart';
-import 'package:cookly/services/local_storage.dart';
-import 'package:cookly/services/flutter/service_locator.dart';
+import 'package:cookza/services/abstract/pdf_export.dart';
+import 'package:cookza/services/local_storage.dart';
+import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:pdf/widgets.dart';
 import 'package:share_extend/share_extend.dart';
 

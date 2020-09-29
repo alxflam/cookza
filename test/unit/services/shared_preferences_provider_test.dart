@@ -1,4 +1,4 @@
-import 'package:cookly/services/shared_preferences_provider.dart';
+import 'package:cookza/services/shared_preferences_provider.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

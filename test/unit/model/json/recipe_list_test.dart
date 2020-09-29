@@ -1,4 +1,4 @@
-import 'package:cookly/model/json/recipe_list.dart';
+import 'package:cookza/model/json/recipe_list.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

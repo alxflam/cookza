@@ -1,8 +1,8 @@
-import 'package:cookly/model/entities/abstract/ingredient_entity.dart';
-import 'package:cookly/model/entities/abstract/ingredient_note_entity.dart';
-import 'package:cookly/model/entities/ingredient_entity.dart';
-import 'package:cookly/model/firebase/recipe/firebase_ingredient.dart';
-import 'package:cookly/model/json/ingredient.dart';
+import 'package:cookza/model/entities/abstract/ingredient_entity.dart';
+import 'package:cookza/model/entities/abstract/ingredient_note_entity.dart';
+import 'package:cookza/model/entities/ingredient_entity.dart';
+import 'package:cookza/model/firebase/recipe/firebase_ingredient.dart';
+import 'package:cookza/model/json/ingredient.dart';
 
 class IngredientNoteEntityFirebase implements IngredientNoteEntity {
   FirebaseIngredient _ingredient;

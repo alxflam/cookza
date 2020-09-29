@@ -1,17 +1,17 @@
 import 'dart:io';
 
-import 'package:cookly/localization/keys.dart';
-import 'package:cookly/model/entities/abstract/ingredient_entity.dart';
-import 'package:cookly/model/entities/abstract/instruction_entity.dart';
-import 'package:cookly/model/entities/abstract/recipe_collection_entity.dart';
-import 'package:cookly/model/entities/abstract/recipe_entity.dart';
-import 'package:cookly/model/entities/mutable/mutable_ingredient.dart';
-import 'package:cookly/model/entities/mutable/mutable_ingredient_note.dart';
-import 'package:cookly/model/entities/mutable/mutable_instruction.dart';
-import 'package:cookly/model/entities/mutable/mutable_recipe.dart';
-import 'package:cookly/services/recipe/image_manager.dart';
-import 'package:cookly/services/recipe/recipe_manager.dart';
-import 'package:cookly/services/flutter/service_locator.dart';
+import 'package:cookza/localization/keys.dart';
+import 'package:cookza/model/entities/abstract/ingredient_entity.dart';
+import 'package:cookza/model/entities/abstract/instruction_entity.dart';
+import 'package:cookza/model/entities/abstract/recipe_collection_entity.dart';
+import 'package:cookza/model/entities/abstract/recipe_entity.dart';
+import 'package:cookza/model/entities/mutable/mutable_ingredient.dart';
+import 'package:cookza/model/entities/mutable/mutable_ingredient_note.dart';
+import 'package:cookza/model/entities/mutable/mutable_instruction.dart';
+import 'package:cookza/model/entities/mutable/mutable_recipe.dart';
+import 'package:cookza/services/recipe/image_manager.dart';
+import 'package:cookza/services/recipe/recipe_manager.dart';
+import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 

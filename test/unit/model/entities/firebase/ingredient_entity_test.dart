@@ -1,5 +1,5 @@
-import 'package:cookly/model/entities/firebase/ingredient_entity.dart';
-import 'package:cookly/model/json/ingredient.dart';
+import 'package:cookza/model/entities/firebase/ingredient_entity.dart';
+import 'package:cookza/model/json/ingredient.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 const name = 'A Test';

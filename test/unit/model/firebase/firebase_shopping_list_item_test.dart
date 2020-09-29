@@ -1,6 +1,6 @@
-import 'package:cookly/model/entities/mutable/mutable_ingredient_note.dart';
-import 'package:cookly/model/entities/mutable/mutable_shopping_list_item.dart';
-import 'package:cookly/model/firebase/shopping_list/firebase_shopping_list.dart';
+import 'package:cookza/model/entities/mutable/mutable_ingredient_note.dart';
+import 'package:cookza/model/entities/mutable/mutable_shopping_list_item.dart';
+import 'package:cookza/model/firebase/shopping_list/firebase_shopping_list.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

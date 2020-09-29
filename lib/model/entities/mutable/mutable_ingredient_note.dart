@@ -1,5 +1,5 @@
-import 'package:cookly/model/entities/abstract/ingredient_note_entity.dart';
-import 'package:cookly/model/entities/mutable/mutable_ingredient.dart';
+import 'package:cookza/model/entities/abstract/ingredient_note_entity.dart';
+import 'package:cookza/model/entities/mutable/mutable_ingredient.dart';
 
 class MutableIngredientNote implements IngredientNoteEntity {
   double _amount;

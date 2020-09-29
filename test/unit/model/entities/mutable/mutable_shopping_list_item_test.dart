@@ -1,4 +1,4 @@
-import 'package:cookly/model/entities/mutable/mutable_shopping_list_item.dart';
+import 'package:cookza/model/entities/mutable/mutable_shopping_list_item.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../../../utils/recipe_creator.dart';

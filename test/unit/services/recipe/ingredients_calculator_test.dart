@@ -1,6 +1,6 @@
-import 'package:cookly/services/recipe/ingredients_calculator.dart';
-import 'package:cookly/services/recipe/recipe_manager.dart';
-import 'package:cookly/services/unit_of_measure.dart';
+import 'package:cookza/services/recipe/ingredients_calculator.dart';
+import 'package:cookza/services/recipe/recipe_manager.dart';
+import 'package:cookza/services/unit_of_measure.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 

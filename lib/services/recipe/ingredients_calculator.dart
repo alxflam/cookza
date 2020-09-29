@@ -1,8 +1,8 @@
-import 'package:cookly/model/entities/abstract/ingredient_note_entity.dart';
-import 'package:cookly/model/entities/mutable/mutable_ingredient_note.dart';
-import 'package:cookly/services/recipe/recipe_manager.dart';
-import 'package:cookly/services/flutter/service_locator.dart';
-import 'package:cookly/services/unit_of_measure.dart';
+import 'package:cookza/model/entities/abstract/ingredient_note_entity.dart';
+import 'package:cookza/model/entities/mutable/mutable_ingredient_note.dart';
+import 'package:cookza/services/recipe/recipe_manager.dart';
+import 'package:cookza/services/flutter/service_locator.dart';
+import 'package:cookza/services/unit_of_measure.dart';
 
 abstract class IngredientsCalculator {
   Future<List<IngredientNoteEntity>> getIngredients(Map<String, int> ids);

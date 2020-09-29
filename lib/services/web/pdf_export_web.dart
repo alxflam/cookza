@@ -1,6 +1,6 @@
 import 'dart:html' as html;
 
-import 'package:cookly/services/abstract/pdf_export.dart';
+import 'package:cookza/services/abstract/pdf_export.dart';
 import 'package:pdf/widgets.dart';
 
 class PDFExporterImpl extends PDFExporter {

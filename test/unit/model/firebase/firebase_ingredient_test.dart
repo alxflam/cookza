@@ -1,7 +1,7 @@
-import 'package:cookly/model/entities/mutable/mutable_ingredient_note.dart';
-import 'package:cookly/model/entities/mutable/mutable_recipe.dart';
-import 'package:cookly/model/firebase/recipe/firebase_ingredient.dart';
-import 'package:cookly/model/json/ingredient.dart';
+import 'package:cookza/model/entities/mutable/mutable_ingredient_note.dart';
+import 'package:cookza/model/entities/mutable/mutable_recipe.dart';
+import 'package:cookza/model/firebase/recipe/firebase_ingredient.dart';
+import 'package:cookza/model/json/ingredient.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

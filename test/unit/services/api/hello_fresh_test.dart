@@ -1,6 +1,6 @@
-import 'package:cookly/services/api/hello_fresh.dart';
-import 'package:cookly/services/util/id_gen.dart';
-import 'package:cookly/services/unit_of_measure.dart';
+import 'package:cookza/services/api/hello_fresh.dart';
+import 'package:cookza/services/util/id_gen.dart';
+import 'package:cookza/services/unit_of_measure.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 

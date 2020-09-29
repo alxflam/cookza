@@ -1,5 +1,5 @@
-import 'package:cookly/services/recipe/recipe_manager.dart';
-import 'package:cookly/viewmodel/recipe_edit/recipe_ingredient_model.dart';
+import 'package:cookza/services/recipe/recipe_manager.dart';
+import 'package:cookza/viewmodel/recipe_edit/recipe_ingredient_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mockito/mockito.dart';

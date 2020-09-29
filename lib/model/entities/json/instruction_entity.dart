@@ -1,4 +1,4 @@
-import 'package:cookly/model/entities/abstract/instruction_entity.dart';
+import 'package:cookza/model/entities/abstract/instruction_entity.dart';
 
 class InstructionEntityJson implements InstructionEntity {
   String _instruction;

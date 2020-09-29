@@ -1,5 +1,5 @@
-import 'package:cookly/services/shared_preferences_provider.dart';
-import 'package:cookly/viewmodel/settings/theme_model.dart';
+import 'package:cookza/services/shared_preferences_provider.dart';
+import 'package:cookza/viewmodel/settings/theme_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';

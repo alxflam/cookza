@@ -1,10 +1,10 @@
 import 'dart:io';
 import 'dart:math';
-import 'package:cookly/model/entities/mutable/mutable_ingredient_note.dart';
-import 'package:cookly/services/flutter/service_locator.dart';
-import 'package:cookly/services/unit_of_measure.dart';
-import 'package:cookly/viewmodel/recipe_edit/recipe_edit_step.dart';
-import 'package:cookly/viewmodel/recipe_edit/recipe_ingredient_model.dart';
+import 'package:cookza/model/entities/mutable/mutable_ingredient_note.dart';
+import 'package:cookza/services/flutter/service_locator.dart';
+import 'package:cookza/services/unit_of_measure.dart';
+import 'package:cookza/viewmodel/recipe_edit/recipe_edit_step.dart';
+import 'package:cookza/viewmodel/recipe_edit/recipe_ingredient_model.dart';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 
 abstract class ImageTextExtractor {

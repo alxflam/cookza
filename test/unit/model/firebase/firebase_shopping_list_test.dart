@@ -1,9 +1,9 @@
-import 'package:cookly/model/entities/mutable/mutable_ingredient.dart';
-import 'package:cookly/model/entities/mutable/mutable_shopping_list.dart';
-import 'package:cookly/model/entities/mutable/mutable_shopping_list_item.dart';
-import 'package:cookly/model/firebase/recipe/firebase_ingredient.dart';
-import 'package:cookly/model/firebase/shopping_list/firebase_shopping_list.dart';
-import 'package:cookly/model/json/ingredient.dart';
+import 'package:cookza/model/entities/mutable/mutable_ingredient.dart';
+import 'package:cookza/model/entities/mutable/mutable_shopping_list.dart';
+import 'package:cookza/model/entities/mutable/mutable_shopping_list_item.dart';
+import 'package:cookza/model/firebase/recipe/firebase_ingredient.dart';
+import 'package:cookza/model/firebase/shopping_list/firebase_shopping_list.dart';
+import 'package:cookza/model/json/ingredient.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../../utils/recipe_creator.dart';

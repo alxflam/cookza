@@ -1,10 +1,10 @@
 import 'dart:collection';
 
-import 'package:cookly/model/entities/abstract/ingredient_note_entity.dart';
-import 'package:cookly/model/entities/abstract/recipe_entity.dart';
-import 'package:cookly/services/util/levenshtein.dart';
-import 'package:cookly/services/recipe/recipe_manager.dart';
-import 'package:cookly/services/flutter/service_locator.dart';
+import 'package:cookza/model/entities/abstract/ingredient_note_entity.dart';
+import 'package:cookza/model/entities/abstract/recipe_entity.dart';
+import 'package:cookza/services/util/levenshtein.dart';
+import 'package:cookza/services/recipe/recipe_manager.dart';
+import 'package:cookza/services/flutter/service_locator.dart';
 
 class SimilarityService {
   Future<List<RecipeEntity>> getSimilarRecipes(

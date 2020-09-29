@@ -1,4 +1,4 @@
-import 'package:cookly/constants.dart';
+import 'package:cookza/constants.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'exception_log.g.dart';

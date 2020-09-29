@@ -1,8 +1,8 @@
-import 'package:cookly/model/entities/abstract/ingredient_entity.dart';
-import 'package:cookly/model/entities/abstract/ingredient_note_entity.dart';
-import 'package:cookly/model/entities/json/ingredient_entity.dart';
-import 'package:cookly/model/json/ingredient.dart';
-import 'package:cookly/model/json/ingredient_note.dart';
+import 'package:cookza/model/entities/abstract/ingredient_entity.dart';
+import 'package:cookza/model/entities/abstract/ingredient_note_entity.dart';
+import 'package:cookza/model/entities/json/ingredient_entity.dart';
+import 'package:cookza/model/json/ingredient.dart';
+import 'package:cookza/model/json/ingredient_note.dart';
 
 class IngredientNoteEntityJson implements IngredientNoteEntity {
   IngredientNote _ingredient;

@@ -1,6 +1,6 @@
-import 'package:cookly/constants.dart';
-import 'package:cookly/screens/web/web_login.dart';
-import 'package:cookly/viewmodel/settings/theme_model.dart';
+import 'package:cookza/constants.dart';
+import 'package:cookza/screens/web/web_login.dart';
+import 'package:cookza/viewmodel/settings/theme_model.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -64,14 +64,14 @@ class WebLandingPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              'Welcome to Cookly',
+              'Welcome to Cookza',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 60,
               ),
             ),
             Text(
-              'v2020-07-alpha',
+              'v2020-09-alpha',
               style: TextStyle(fontStyle: FontStyle.italic),
             ),
             _getConsentWidget(context),

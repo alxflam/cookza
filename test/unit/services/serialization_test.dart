@@ -1,9 +1,9 @@
-import 'package:cookly/model/entities/abstract/recipe_entity.dart';
-import 'package:cookly/model/json/ingredient.dart';
-import 'package:cookly/model/json/ingredient_note.dart';
-import 'package:cookly/model/json/recipe.dart';
-import 'package:cookly/model/json/recipe_list.dart';
-import 'package:cookly/services/util/id_gen.dart';
+import 'package:cookza/model/entities/abstract/recipe_entity.dart';
+import 'package:cookza/model/json/ingredient.dart';
+import 'package:cookza/model/json/ingredient_note.dart';
+import 'package:cookza/model/json/recipe.dart';
+import 'package:cookza/model/json/recipe_list.dart';
+import 'package:cookza/services/util/id_gen.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 

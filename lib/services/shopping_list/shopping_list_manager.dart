@@ -1,6 +1,6 @@
-import 'package:cookly/model/entities/abstract/shopping_list_entity.dart';
-import 'package:cookly/services/firebase_provider.dart';
-import 'package:cookly/services/flutter/service_locator.dart';
+import 'package:cookza/model/entities/abstract/shopping_list_entity.dart';
+import 'package:cookza/services/firebase_provider.dart';
+import 'package:cookza/services/flutter/service_locator.dart';
 
 abstract class ShoppingListManager {
   Future<List<ShoppingListEntity>> get shoppingListsAsList;

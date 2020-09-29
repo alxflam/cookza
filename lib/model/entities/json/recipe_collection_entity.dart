@@ -1,8 +1,8 @@
 import 'dart:collection';
 
-import 'package:cookly/model/entities/abstract/recipe_collection_entity.dart';
-import 'package:cookly/model/entities/abstract/user_entity.dart';
-import 'package:cookly/model/json/recipe_collection.dart';
+import 'package:cookza/model/entities/abstract/recipe_collection_entity.dart';
+import 'package:cookza/model/entities/abstract/user_entity.dart';
+import 'package:cookza/model/json/recipe_collection.dart';
 
 class RecipeCollectionEntityJson implements RecipeCollectionEntity {
   RecipeCollection _collection;

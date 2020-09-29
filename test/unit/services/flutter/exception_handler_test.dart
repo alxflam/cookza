@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:cookly/constants.dart';
-import 'package:cookly/services/flutter/exception_handler.dart';
-import 'package:cookly/services/local_storage.dart';
+import 'package:cookza/constants.dart';
+import 'package:cookza/services/flutter/exception_handler.dart';
+import 'package:cookza/services/local_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mockito/mockito.dart';

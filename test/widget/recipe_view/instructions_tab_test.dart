@@ -1,7 +1,7 @@
-import 'package:cookly/model/entities/mutable/mutable_instruction.dart';
-import 'package:cookly/screens/recipe_view/instructions_tab.dart';
-import 'package:cookly/services/shared_preferences_provider.dart';
-import 'package:cookly/viewmodel/recipe_view/recipe_view_model.dart';
+import 'package:cookza/model/entities/mutable/mutable_instruction.dart';
+import 'package:cookza/screens/recipe_view/instructions_tab.dart';
+import 'package:cookza/services/shared_preferences_provider.dart';
+import 'package:cookza/viewmodel/recipe_view/recipe_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_translate/localization.dart';

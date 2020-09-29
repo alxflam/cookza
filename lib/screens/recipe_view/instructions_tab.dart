@@ -1,4 +1,4 @@
-import 'package:cookly/viewmodel/recipe_view/recipe_view_model.dart';
+import 'package:cookza/viewmodel/recipe_view/recipe_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

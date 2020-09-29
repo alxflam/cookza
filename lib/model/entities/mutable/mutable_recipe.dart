@@ -1,12 +1,12 @@
 import 'dart:collection';
 import 'dart:typed_data';
 
-import 'package:cookly/constants.dart';
-import 'package:cookly/model/entities/abstract/ingredient_note_entity.dart';
-import 'package:cookly/model/entities/abstract/instruction_entity.dart';
-import 'package:cookly/model/entities/abstract/recipe_entity.dart';
-import 'package:cookly/model/entities/mutable/mutable_ingredient_note.dart';
-import 'package:cookly/model/entities/mutable/mutable_instruction.dart';
+import 'package:cookza/constants.dart';
+import 'package:cookza/model/entities/abstract/ingredient_note_entity.dart';
+import 'package:cookza/model/entities/abstract/instruction_entity.dart';
+import 'package:cookza/model/entities/abstract/recipe_entity.dart';
+import 'package:cookza/model/entities/mutable/mutable_ingredient_note.dart';
+import 'package:cookza/model/entities/mutable/mutable_instruction.dart';
 
 class MutableRecipe implements RecipeEntity {
   DateTime _creationDate;

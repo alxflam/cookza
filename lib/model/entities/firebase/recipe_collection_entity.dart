@@ -1,10 +1,10 @@
 import 'dart:collection';
 
-import 'package:cookly/model/entities/abstract/recipe_collection_entity.dart';
-import 'package:cookly/model/entities/abstract/user_entity.dart';
-import 'package:cookly/model/entities/firebase/user_entity.dart';
-import 'package:cookly/model/firebase/collections/firebase_recipe_collection.dart';
-import 'package:cookly/model/firebase/general/firebase_user.dart';
+import 'package:cookza/model/entities/abstract/recipe_collection_entity.dart';
+import 'package:cookza/model/entities/abstract/user_entity.dart';
+import 'package:cookza/model/entities/firebase/user_entity.dart';
+import 'package:cookza/model/firebase/collections/firebase_recipe_collection.dart';
+import 'package:cookza/model/firebase/general/firebase_user.dart';
 
 class RecipeCollectionEntityFirebase implements RecipeCollectionEntity {
   FirebaseRecipeCollection _collection;

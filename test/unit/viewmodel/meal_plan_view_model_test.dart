@@ -1,9 +1,9 @@
-import 'package:cookly/model/entities/abstract/meal_plan_entity.dart';
-import 'package:cookly/model/entities/mutable/mutable_meal_plan.dart';
-import 'package:cookly/services/meal_plan_manager.dart';
-import 'package:cookly/services/shared_preferences_provider.dart';
-import 'package:cookly/services/util/week_calculation.dart';
-import 'package:cookly/viewmodel/meal_plan/recipe_meal_plan_model.dart';
+import 'package:cookza/model/entities/abstract/meal_plan_entity.dart';
+import 'package:cookza/model/entities/mutable/mutable_meal_plan.dart';
+import 'package:cookza/services/meal_plan_manager.dart';
+import 'package:cookza/services/shared_preferences_provider.dart';
+import 'package:cookza/services/util/week_calculation.dart';
+import 'package:cookza/viewmodel/meal_plan/recipe_meal_plan_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';

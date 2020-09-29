@@ -1,5 +1,5 @@
-import 'package:cookly/constants.dart';
-import 'package:cookly/localization/keys.dart';
+import 'package:cookza/constants.dart';
+import 'package:cookza/localization/keys.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 

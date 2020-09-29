@@ -1,5 +1,5 @@
-import 'package:cookly/model/entities/abstract/meal_plan_entity.dart';
-import 'package:cookly/model/firebase/meal_plan/firebase_meal_plan.dart';
+import 'package:cookza/model/entities/abstract/meal_plan_entity.dart';
+import 'package:cookza/model/firebase/meal_plan/firebase_meal_plan.dart';
 
 class MealPlanDateEntityFirebase implements MealPlanDateEntity {
   DateTime _date;

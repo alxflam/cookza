@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cookly/model/firebase/collections/firebase_recipe_collection.dart';
+import 'package:cookza/model/firebase/collections/firebase_recipe_collection.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

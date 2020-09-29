@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:html' as html;
-import 'package:cookly/model/entities/abstract/recipe_entity.dart';
-import 'package:cookly/services/abstract/recipe_file_export.dart';
+import 'package:cookza/model/entities/abstract/recipe_entity.dart';
+import 'package:cookza/services/abstract/recipe_file_export.dart';
 
 class RecipeFileExportImpl extends RecipeFileExport {
   @override

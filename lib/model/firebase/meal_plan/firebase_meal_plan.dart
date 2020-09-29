@@ -1,5 +1,5 @@
-import 'package:cookly/constants.dart';
-import 'package:cookly/model/entities/abstract/meal_plan_entity.dart';
+import 'package:cookza/constants.dart';
+import 'package:cookza/model/entities/abstract/meal_plan_entity.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'firebase_meal_plan.g.dart';

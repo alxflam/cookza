@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cookly/model/entities/firebase/meal_plan_collection_entity.dart';
-import 'package:cookly/model/firebase/collections/firebase_meal_plan_collection.dart';
+import 'package:cookza/model/entities/firebase/meal_plan_collection_entity.dart';
+import 'package:cookza/model/firebase/collections/firebase_meal_plan_collection.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

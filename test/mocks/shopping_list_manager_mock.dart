@@ -1,5 +1,5 @@
-import 'package:cookly/model/entities/abstract/shopping_list_entity.dart';
-import 'package:cookly/services/shopping_list/shopping_list_manager.dart';
+import 'package:cookza/model/entities/abstract/shopping_list_entity.dart';
+import 'package:cookza/services/shopping_list/shopping_list_manager.dart';
 import 'package:mockito/mockito.dart';
 
 class ShoppingListManagerMock extends Mock implements ShoppingListManager {

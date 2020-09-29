@@ -1,15 +1,15 @@
 import 'dart:async';
 
-import 'package:cookly/localization/keys.dart';
-import 'package:cookly/routes.dart';
-import 'package:cookly/screens/settings/onboarding_screen.dart';
-import 'package:cookly/screens/web/web_landing_screen.dart';
-import 'package:cookly/services/flutter/exception_handler.dart';
-import 'package:cookly/services/flutter/navigator_service.dart';
-import 'package:cookly/services/shared_preferences_provider.dart';
-import 'package:cookly/viewmodel/settings/theme_model.dart';
-import 'package:cookly/screens/home_screen.dart';
-import 'package:cookly/services/flutter/service_locator.dart';
+import 'package:cookza/localization/keys.dart';
+import 'package:cookza/routes.dart';
+import 'package:cookza/screens/settings/onboarding_screen.dart';
+import 'package:cookza/screens/web/web_landing_screen.dart';
+import 'package:cookza/services/flutter/exception_handler.dart';
+import 'package:cookza/services/flutter/navigator_service.dart';
+import 'package:cookza/services/shared_preferences_provider.dart';
+import 'package:cookza/viewmodel/settings/theme_model.dart';
+import 'package:cookza/screens/home_screen.dart';
+import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
@@ -69,14 +69,14 @@ class ProviderChainApp extends StatelessWidget {
       state: LocalizationProvider.of(context).state,
       child: ChangeNotifierProvider<ThemeModel>(
         create: (context) => ThemeModel(),
-        child: CooklyMaterialApp(localizationDelegate: localizationDelegate),
+        child: CookzaMaterialApp(localizationDelegate: localizationDelegate),
       ),
     );
   }
 }
 
-class CooklyMaterialApp extends StatelessWidget {
-  const CooklyMaterialApp({
+class CookzaMaterialApp extends StatelessWidget {
+  const CookzaMaterialApp({
     @required this.localizationDelegate,
   });
 

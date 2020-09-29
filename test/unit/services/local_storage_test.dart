@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:cookly/services/local_storage.dart';
+import 'package:cookza/services/local_storage.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 

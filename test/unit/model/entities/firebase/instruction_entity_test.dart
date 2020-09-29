@@ -1,6 +1,6 @@
-import 'package:cookly/model/entities/firebase/instruction_entity.dart';
-import 'package:cookly/model/entities/mutable/mutable_instruction.dart';
-import 'package:cookly/model/firebase/recipe/firebase_instruction.dart';
+import 'package:cookza/model/entities/firebase/instruction_entity.dart';
+import 'package:cookza/model/entities/mutable/mutable_instruction.dart';
+import 'package:cookza/model/firebase/recipe/firebase_instruction.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

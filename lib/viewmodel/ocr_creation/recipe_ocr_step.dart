@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:cookly/services/image_parser.dart';
-import 'package:cookly/services/flutter/service_locator.dart';
-import 'package:cookly/viewmodel/recipe_edit/recipe_edit_step.dart';
+import 'package:cookza/services/image_parser.dart';
+import 'package:cookza/services/flutter/service_locator.dart';
+import 'package:cookza/viewmodel/recipe_edit/recipe_edit_step.dart';
 import 'package:flutter/material.dart';
 
 abstract class RecipeOCRStep<T extends RecipeEditStep> with ChangeNotifier {

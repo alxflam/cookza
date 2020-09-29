@@ -1,6 +1,6 @@
 import 'dart:collection';
 
-import 'package:cookly/model/entities/abstract/shopping_list_entity.dart';
+import 'package:cookza/model/entities/abstract/shopping_list_entity.dart';
 
 class MutableShoppingList implements ShoppingListEntity {
   DateTime _from;

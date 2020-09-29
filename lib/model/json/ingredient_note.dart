@@ -1,5 +1,5 @@
-import 'package:cookly/model/entities/abstract/ingredient_note_entity.dart';
-import 'package:cookly/model/json/ingredient.dart';
+import 'package:cookza/model/entities/abstract/ingredient_note_entity.dart';
+import 'package:cookza/model/json/ingredient.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'ingredient_note.g.dart';

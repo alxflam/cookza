@@ -1,9 +1,9 @@
-import 'package:cookly/constants.dart';
-import 'package:cookly/screens/home_screen.dart';
-import 'package:cookly/services/flutter/service_locator.dart';
-import 'package:cookly/services/shared_preferences_provider.dart';
-import 'package:cookly/viewmodel/settings/onboarding_model.dart';
-import 'package:cookly/viewmodel/settings/theme_model.dart';
+import 'package:cookza/constants.dart';
+import 'package:cookza/screens/home_screen.dart';
+import 'package:cookza/services/flutter/service_locator.dart';
+import 'package:cookza/services/shared_preferences_provider.dart';
+import 'package:cookza/viewmodel/settings/onboarding_model.dart';
+import 'package:cookza/viewmodel/settings/theme_model.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -82,16 +82,16 @@ class OnBoardingScreen extends StatelessWidget {
 
     var basePages = [
       PageViewModel(
-        title: "Welcome to Cookly",
+        title: "Welcome to Cookza",
         body:
-            "Cookly let's you manage all your favorite recipes in a single app.",
+            "Cookza let's you manage all your favorite recipes in a single app.",
         image: _buildImage(kAppIconData, context),
         decoration: pageDecoration,
       ),
       PageViewModel(
         title: "Organize your recipes",
         body:
-            "Create recipes manually or let cookly process a picture or a webpage to retrieve a recipe. Organize your recipes in groups and add friends to your recipe groups to share them",
+            "Create recipes manually or let Cookza process a picture or a webpage to retrieve a recipe. Organize your recipes in groups and add friends to your recipe groups to share them",
         image: _buildImage(kRecipesIconData, context),
         decoration: pageDecoration,
       ),

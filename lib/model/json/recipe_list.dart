@@ -1,5 +1,5 @@
-import 'package:cookly/constants.dart';
-import 'package:cookly/model/json/recipe.dart';
+import 'package:cookza/constants.dart';
+import 'package:cookza/model/json/recipe.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'recipe_list.g.dart';

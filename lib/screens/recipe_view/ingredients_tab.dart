@@ -1,7 +1,7 @@
-import 'package:cookly/components/round_icon_button.dart';
-import 'package:cookly/constants.dart';
-import 'package:cookly/localization/keys.dart';
-import 'package:cookly/viewmodel/recipe_view/recipe_view_model.dart';
+import 'package:cookza/components/round_icon_button.dart';
+import 'package:cookza/constants.dart';
+import 'package:cookza/localization/keys.dart';
+import 'package:cookza/viewmodel/recipe_view/recipe_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

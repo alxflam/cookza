@@ -1,6 +1,6 @@
-import 'package:cookly/services/shared_preferences_provider.dart';
-import 'package:cookly/services/unit_of_measure.dart';
-import 'package:cookly/viewmodel/settings/uom_visibility_settings_model.dart';
+import 'package:cookza/services/shared_preferences_provider.dart';
+import 'package:cookza/services/unit_of_measure.dart';
+import 'package:cookza/viewmodel/settings/uom_visibility_settings_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';

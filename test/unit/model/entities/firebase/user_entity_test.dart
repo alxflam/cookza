@@ -1,6 +1,6 @@
-import 'package:cookly/model/entities/abstract/user_entity.dart';
-import 'package:cookly/model/entities/firebase/user_entity.dart';
-import 'package:cookly/model/firebase/general/firebase_user.dart';
+import 'package:cookza/model/entities/abstract/user_entity.dart';
+import 'package:cookza/model/entities/firebase/user_entity.dart';
+import 'package:cookza/model/firebase/general/firebase_user.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

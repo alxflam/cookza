@@ -1,11 +1,11 @@
 import 'dart:convert';
 
-import 'package:cookly/constants.dart';
-import 'package:cookly/model/entities/abstract/recipe_entity.dart';
-import 'package:cookly/model/json/ingredient_note.dart';
-import 'package:cookly/services/util/id_gen.dart';
-import 'package:cookly/services/recipe/image_manager.dart';
-import 'package:cookly/services/flutter/service_locator.dart';
+import 'package:cookza/constants.dart';
+import 'package:cookza/model/entities/abstract/recipe_entity.dart';
+import 'package:cookza/model/json/ingredient_note.dart';
+import 'package:cookza/services/util/id_gen.dart';
+import 'package:cookza/services/recipe/image_manager.dart';
+import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'recipe.g.dart';

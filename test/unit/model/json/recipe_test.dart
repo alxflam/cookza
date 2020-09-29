@@ -1,12 +1,12 @@
 import 'dart:typed_data';
 
-import 'package:cookly/model/entities/abstract/recipe_entity.dart';
-import 'package:cookly/model/entities/mutable/mutable_ingredient_note.dart';
-import 'package:cookly/model/entities/mutable/mutable_instruction.dart';
-import 'package:cookly/model/entities/mutable/mutable_recipe.dart';
-import 'package:cookly/model/json/recipe.dart';
-import 'package:cookly/services/util/id_gen.dart';
-import 'package:cookly/services/recipe/image_manager.dart';
+import 'package:cookza/model/entities/abstract/recipe_entity.dart';
+import 'package:cookza/model/entities/mutable/mutable_ingredient_note.dart';
+import 'package:cookza/model/entities/mutable/mutable_instruction.dart';
+import 'package:cookza/model/entities/mutable/mutable_recipe.dart';
+import 'package:cookza/model/json/recipe.dart';
+import 'package:cookza/services/util/id_gen.dart';
+import 'package:cookza/services/recipe/image_manager.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mockito/mockito.dart';

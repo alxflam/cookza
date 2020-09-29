@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:cookly/services/local_storage.dart';
-import 'package:cookly/viewmodel/settings/error_screen_model.dart';
+import 'package:cookza/services/local_storage.dart';
+import 'package:cookza/viewmodel/settings/error_screen_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mockito/mockito.dart';

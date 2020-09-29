@@ -1,8 +1,8 @@
 import 'dart:collection';
 import 'dart:typed_data';
 
-import 'package:cookly/model/entities/abstract/ingredient_note_entity.dart';
-import 'package:cookly/model/entities/abstract/instruction_entity.dart';
+import 'package:cookza/model/entities/abstract/ingredient_note_entity.dart';
+import 'package:cookza/model/entities/abstract/instruction_entity.dart';
 
 enum DIFFICULTY { EASY, MEDIUM, HARD }
 

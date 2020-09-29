@@ -1,15 +1,15 @@
 import 'dart:collection';
 import 'dart:typed_data';
 
-import 'package:cookly/constants.dart';
-import 'package:cookly/model/entities/abstract/ingredient_note_entity.dart';
-import 'package:cookly/model/entities/abstract/instruction_entity.dart';
-import 'package:cookly/model/entities/abstract/recipe_entity.dart';
-import 'package:cookly/model/entities/firebase/ingredient_note_entity.dart';
-import 'package:cookly/model/entities/firebase/instruction_entity.dart';
-import 'package:cookly/model/firebase/recipe/firebase_recipe.dart';
-import 'package:cookly/services/firebase_provider.dart';
-import 'package:cookly/services/flutter/service_locator.dart';
+import 'package:cookza/constants.dart';
+import 'package:cookza/model/entities/abstract/ingredient_note_entity.dart';
+import 'package:cookza/model/entities/abstract/instruction_entity.dart';
+import 'package:cookza/model/entities/abstract/recipe_entity.dart';
+import 'package:cookza/model/entities/firebase/ingredient_note_entity.dart';
+import 'package:cookza/model/entities/firebase/instruction_entity.dart';
+import 'package:cookza/model/firebase/recipe/firebase_recipe.dart';
+import 'package:cookza/services/firebase_provider.dart';
+import 'package:cookza/services/flutter/service_locator.dart';
 
 class RecipeEntityFirebase implements RecipeEntity {
   FirebaseRecipe _recipe;

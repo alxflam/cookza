@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cookly/model/firebase/general/firebase_handshake.dart';
+import 'package:cookza/model/firebase/general/firebase_handshake.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

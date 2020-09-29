@@ -1,8 +1,8 @@
-import 'package:cookly/components/recipe_groups_drawer.dart';
-import 'package:cookly/components/recipe_list_tile.dart';
-import 'package:cookly/localization/keys.dart';
-import 'package:cookly/model/entities/abstract/recipe_entity.dart';
-import 'package:cookly/viewmodel/recipe_list/recipe_list_model.dart';
+import 'package:cookza/components/recipe_groups_drawer.dart';
+import 'package:cookza/components/recipe_list_tile.dart';
+import 'package:cookza/localization/keys.dart';
+import 'package:cookza/model/entities/abstract/recipe_entity.dart';
+import 'package:cookza/viewmodel/recipe_list/recipe_list_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:provider/provider.dart';

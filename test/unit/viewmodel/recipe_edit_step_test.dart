@@ -1,4 +1,4 @@
-import 'package:cookly/viewmodel/recipe_edit/recipe_edit_step.dart';
+import 'package:cookza/viewmodel/recipe_edit/recipe_edit_step.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

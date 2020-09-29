@@ -1,7 +1,7 @@
-import 'package:cookly/constants.dart';
-import 'package:cookly/services/recipe/image_manager.dart';
-import 'package:cookly/services/flutter/service_locator.dart';
-import 'package:cookly/viewmodel/recipe_view/recipe_view_model.dart';
+import 'package:cookza/constants.dart';
+import 'package:cookza/services/recipe/image_manager.dart';
+import 'package:cookza/services/flutter/service_locator.dart';
+import 'package:cookza/viewmodel/recipe_view/recipe_view_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';

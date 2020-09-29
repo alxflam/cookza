@@ -1,5 +1,5 @@
-import 'package:cookly/constants.dart';
-import 'package:cookly/model/json/exception_log.dart';
+import 'package:cookza/constants.dart';
+import 'package:cookza/model/json/exception_log.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

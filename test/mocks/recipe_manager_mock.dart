@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cookly/model/entities/abstract/recipe_entity.dart';
-import 'package:cookly/model/entities/abstract/recipe_collection_entity.dart';
-import 'package:cookly/model/entities/abstract/user_entity.dart';
-import 'package:cookly/model/entities/json/recipe_collection_entity.dart';
-import 'package:cookly/model/json/recipe_collection.dart';
-import 'package:cookly/services/util/id_gen.dart';
-import 'package:cookly/services/recipe/recipe_manager.dart';
+import 'package:cookza/model/entities/abstract/recipe_entity.dart';
+import 'package:cookza/model/entities/abstract/recipe_collection_entity.dart';
+import 'package:cookza/model/entities/abstract/user_entity.dart';
+import 'package:cookza/model/entities/json/recipe_collection_entity.dart';
+import 'package:cookza/model/json/recipe_collection.dart';
+import 'package:cookza/services/util/id_gen.dart';
+import 'package:cookza/services/recipe/recipe_manager.dart';
 import 'package:mockito/mockito.dart';
 
 class RecipeManagerMock extends Mock implements RecipeManager {}

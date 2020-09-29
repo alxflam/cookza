@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:barcode_scan/barcode_scan.dart';
-import 'package:cookly/model/entities/abstract/user_entity.dart';
-import 'package:cookly/model/entities/json/user_entity.dart';
-import 'package:cookly/model/json/user.dart';
+import 'package:cookza/model/entities/abstract/user_entity.dart';
+import 'package:cookza/model/entities/json/user_entity.dart';
+import 'package:cookza/model/json/user.dart';
 
 class QRScanner {
   Future<String> _scanQRCode() async {

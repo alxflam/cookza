@@ -1,8 +1,8 @@
-import 'package:cookly/model/entities/abstract/meal_plan_collection_entity.dart';
-import 'package:cookly/model/entities/abstract/meal_plan_entity.dart';
-import 'package:cookly/model/entities/firebase/meal_plan_collection_entity.dart';
-import 'package:cookly/model/firebase/collections/firebase_meal_plan_collection.dart';
-import 'package:cookly/services/meal_plan_manager.dart';
+import 'package:cookza/model/entities/abstract/meal_plan_collection_entity.dart';
+import 'package:cookza/model/entities/abstract/meal_plan_entity.dart';
+import 'package:cookza/model/entities/firebase/meal_plan_collection_entity.dart';
+import 'package:cookza/model/firebase/collections/firebase_meal_plan_collection.dart';
+import 'package:cookza/services/meal_plan_manager.dart';
 import 'package:mockito/mockito.dart';
 
 class MealPlanManagerMock extends Mock implements MealPlanManager {

@@ -1,14 +1,14 @@
 import 'dart:convert';
 
-import 'package:cookly/constants.dart';
-import 'package:cookly/model/entities/json/recipe_entity.dart';
-import 'package:cookly/model/json/recipe_list.dart';
-import 'package:cookly/viewmodel/recipe_edit/recipe_edit_model.dart';
-import 'package:cookly/viewmodel/recipe_selection_model.dart';
-import 'package:cookly/screens/recipe_modify/new_recipe_screen.dart';
-import 'package:cookly/screens/recipe_selection_screen.dart';
-import 'package:cookly/services/api/chefkoch.dart';
-import 'package:cookly/viewmodel/recipe_view/recipe_view_model.dart';
+import 'package:cookza/constants.dart';
+import 'package:cookza/model/entities/json/recipe_entity.dart';
+import 'package:cookza/model/json/recipe_list.dart';
+import 'package:cookza/viewmodel/recipe_edit/recipe_edit_model.dart';
+import 'package:cookza/viewmodel/recipe_selection_model.dart';
+import 'package:cookza/screens/recipe_modify/new_recipe_screen.dart';
+import 'package:cookza/screens/recipe_selection_screen.dart';
+import 'package:cookza/services/api/chefkoch.dart';
+import 'package:cookza/viewmodel/recipe_view/recipe_view_model.dart';
 import 'package:flutter/cupertino.dart';
 
 class ShareReceiveHandler {
@@ -24,7 +24,7 @@ class ShareReceiveHandler {
 
     if (matches.isEmpty) {
       kErrorDialog(context, 'Could not import text',
-          'The text that got shared to cookly could not be imported. There\'s no registered handler for the given text: $text.');
+          'The text that got shared to Cookza could not be imported. There\'s no registered handler for the given text: $text.');
     }
 
     matches.forEach(

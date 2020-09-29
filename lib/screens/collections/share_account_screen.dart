@@ -1,12 +1,12 @@
 import 'dart:convert';
 
-import 'package:cookly/components/padded_qr_code.dart';
-import 'package:cookly/localization/keys.dart';
-import 'package:cookly/model/entities/abstract/user_entity.dart';
-import 'package:cookly/model/json/user.dart';
-import 'package:cookly/services/firebase_provider.dart';
-import 'package:cookly/services/flutter/service_locator.dart';
-import 'package:cookly/services/shared_preferences_provider.dart';
+import 'package:cookza/components/padded_qr_code.dart';
+import 'package:cookza/localization/keys.dart';
+import 'package:cookza/model/entities/abstract/user_entity.dart';
+import 'package:cookza/model/json/user.dart';
+import 'package:cookza/services/firebase_provider.dart';
+import 'package:cookza/services/flutter/service_locator.dart';
+import 'package:cookza/services/shared_preferences_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 

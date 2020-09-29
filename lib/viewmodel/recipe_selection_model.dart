@@ -1,5 +1,5 @@
-import 'package:cookly/model/entities/abstract/recipe_entity.dart';
-import 'package:cookly/viewmodel/recipe_view/recipe_view_model.dart';
+import 'package:cookza/model/entities/abstract/recipe_entity.dart';
+import 'package:cookza/viewmodel/recipe_view/recipe_view_model.dart';
 import 'package:flutter/cupertino.dart';
 
 enum SELECTION_MODE {

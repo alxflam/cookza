@@ -1,5 +1,5 @@
-import 'package:cookly/model/entities/abstract/meal_plan_entity.dart';
-import 'package:cookly/services/util/week_calculation.dart';
+import 'package:cookza/model/entities/abstract/meal_plan_entity.dart';
+import 'package:cookza/services/util/week_calculation.dart';
 
 class MutableMealPlan implements MealPlanEntity {
   String _id;

@@ -2,13 +2,13 @@ import 'dart:collection';
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:cookly/constants.dart';
-import 'package:cookly/model/entities/abstract/ingredient_note_entity.dart';
-import 'package:cookly/model/entities/abstract/instruction_entity.dart';
-import 'package:cookly/model/entities/abstract/recipe_entity.dart';
-import 'package:cookly/model/entities/json/ingredient_note_entity.dart';
-import 'package:cookly/model/entities/json/instruction_entity.dart';
-import 'package:cookly/model/json/recipe.dart';
+import 'package:cookza/constants.dart';
+import 'package:cookza/model/entities/abstract/ingredient_note_entity.dart';
+import 'package:cookza/model/entities/abstract/instruction_entity.dart';
+import 'package:cookza/model/entities/abstract/recipe_entity.dart';
+import 'package:cookza/model/entities/json/ingredient_note_entity.dart';
+import 'package:cookza/model/entities/json/instruction_entity.dart';
+import 'package:cookza/model/json/recipe.dart';
 
 class RecipeEntityJson implements RecipeEntity {
   Recipe _recipe;

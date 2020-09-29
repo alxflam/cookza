@@ -1,4 +1,4 @@
-package com.example.cookly
+package com.flammer.cookza
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity

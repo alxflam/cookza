@@ -1,14 +1,14 @@
-import 'package:cookly/localization/keys.dart';
-import 'package:cookly/screens/collections/share_account_screen.dart';
-import 'package:cookly/screens/meal_plan/meal_plan_screen.dart';
-import 'package:cookly/screens/recipe_list_screen.dart';
-import 'package:cookly/screens/recipe_modify/new_recipe_screen.dart';
-import 'package:cookly/screens/settings/settings_screen.dart';
-import 'package:cookly/screens/shopping_list/shopping_list_overview_screen.dart';
-import 'package:cookly/screens/web_login_app.dart';
-import 'package:cookly/services/firebase_provider.dart';
-import 'package:cookly/services/flutter/service_locator.dart';
-import 'package:cookly/viewmodel/recipe_edit/recipe_edit_model.dart';
+import 'package:cookza/localization/keys.dart';
+import 'package:cookza/screens/collections/share_account_screen.dart';
+import 'package:cookza/screens/meal_plan/meal_plan_screen.dart';
+import 'package:cookza/screens/recipe_list_screen.dart';
+import 'package:cookza/screens/recipe_modify/new_recipe_screen.dart';
+import 'package:cookza/screens/settings/settings_screen.dart';
+import 'package:cookza/screens/shopping_list/shopping_list_overview_screen.dart';
+import 'package:cookza/screens/web_login_app.dart';
+import 'package:cookza/services/firebase_provider.dart';
+import 'package:cookza/services/flutter/service_locator.dart';
+import 'package:cookza/viewmodel/recipe_edit/recipe_edit_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
@@ -35,7 +35,7 @@ class MainAppDrawer extends StatelessWidget {
                       width: 20,
                     ),
                     Text(
-                      'Cookly',
+                      kAppName,
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
                     ),

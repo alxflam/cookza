@@ -1,17 +1,17 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:cookly/model/entities/json/recipe_entity.dart';
-import 'package:cookly/model/json/recipe.dart';
-import 'package:cookly/model/json/recipe_list.dart';
-import 'package:cookly/viewmodel/recipe_selection_model.dart';
-import 'package:cookly/screens/recipe_selection_screen.dart';
-import 'package:cookly/services/abstract/recipe_file_import.dart';
-import 'package:cookly/viewmodel/recipe_view/recipe_view_model.dart';
+import 'package:cookza/model/entities/json/recipe_entity.dart';
+import 'package:cookza/model/json/recipe.dart';
+import 'package:cookza/model/json/recipe_list.dart';
+import 'package:cookza/viewmodel/recipe_selection_model.dart';
+import 'package:cookza/screens/recipe_selection_screen.dart';
+import 'package:cookza/services/abstract/recipe_file_import.dart';
+import 'package:cookza/viewmodel/recipe_view/recipe_view_model.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
-import 'package:cookly/localization/keys.dart';
+import 'package:cookza/localization/keys.dart';
 
 class RecipeFileImportImpl extends RecipeFileImport {
   @override

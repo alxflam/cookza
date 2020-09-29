@@ -1,6 +1,6 @@
-import 'package:cookly/model/entities/firebase/meal_plan_entity.dart';
-import 'package:cookly/model/entities/mutable/mutable_meal_plan.dart';
-import 'package:cookly/model/firebase/meal_plan/firebase_meal_plan.dart';
+import 'package:cookza/model/entities/firebase/meal_plan_entity.dart';
+import 'package:cookza/model/entities/mutable/mutable_meal_plan.dart';
+import 'package:cookza/model/firebase/meal_plan/firebase_meal_plan.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

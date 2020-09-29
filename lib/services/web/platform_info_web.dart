@@ -1,6 +1,6 @@
 import 'dart:html' as html;
 
-import 'package:cookly/services/abstract/platform_info.dart';
+import 'package:cookza/services/abstract/platform_info.dart';
 
 class PlatformInfoImpl extends BasePlatformInfo {
   @override

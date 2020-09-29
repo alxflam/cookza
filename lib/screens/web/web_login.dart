@@ -1,13 +1,13 @@
 import 'dart:convert';
 
-import 'package:cookly/components/padded_qr_code.dart';
-import 'package:cookly/constants.dart';
-import 'package:cookly/model/entities/abstract/user_entity.dart';
-import 'package:cookly/model/json/user.dart';
-import 'package:cookly/screens/home_screen.dart';
-import 'package:cookly/services/firebase_provider.dart';
-import 'package:cookly/services/flutter/service_locator.dart';
-import 'package:cookly/viewmodel/settings/theme_model.dart';
+import 'package:cookza/components/padded_qr_code.dart';
+import 'package:cookza/constants.dart';
+import 'package:cookza/model/entities/abstract/user_entity.dart';
+import 'package:cookza/model/json/user.dart';
+import 'package:cookza/screens/home_screen.dart';
+import 'package:cookza/services/firebase_provider.dart';
+import 'package:cookza/services/flutter/service_locator.dart';
+import 'package:cookza/viewmodel/settings/theme_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -113,7 +113,7 @@ class WebLoginScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '1. Open cookly on your mobile device',
+                    '1. Open Cookza on your mobile device',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                   ),
                   Text(

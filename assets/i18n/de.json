@@ -1,6 +1,6 @@
 {
     "app": {
-        "title": "Cookly"
+        "title": "Cookza"
     },
     "functions": {
         "addRecipe": "Neues Rezept",
@@ -118,8 +118,8 @@
         "stdServings": "Standard Portionsgröße",
         "changelog": "Changelog",
         "getStarted": "Erste Schritte",
-        "appDescription": "Cookly ermöglicht es Ihnen, Ihre Lieblingsrezepte datenschutzfreundlich zu speichern, zu sammeln und zu teilen",
-        "copyright": "© 2020 The Great Cookly Foundation",
+        "appDescription": "Cookza ermöglicht es Ihnen, Ihre Lieblingsrezepte datenschutzfreundlich zu speichern, zu sammeln und zu teilen",
+        "copyright": "© 2020 The Great Cookza Foundation",
         "localImages": "Lokale Bilder",
         "pdf": "PDF",
         "json": "JSON",

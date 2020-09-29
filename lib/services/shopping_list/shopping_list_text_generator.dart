@@ -1,6 +1,6 @@
-import 'package:cookly/constants.dart';
-import 'package:cookly/localization/keys.dart';
-import 'package:cookly/viewmodel/shopping_list/shopping_list_detail.dart';
+import 'package:cookza/constants.dart';
+import 'package:cookza/localization/keys.dart';
+import 'package:cookza/viewmodel/shopping_list/shopping_list_detail.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 
 abstract class ShoppingListTextGenerator {

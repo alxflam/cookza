@@ -1,7 +1,7 @@
-import 'package:cookly/screens/home_screen.dart';
-import 'package:cookly/services/abstract/receive_intent_handler.dart';
-import 'package:cookly/services/shared_preferences_provider.dart';
-import 'package:cookly/viewmodel/settings/theme_model.dart';
+import 'package:cookza/screens/home_screen.dart';
+import 'package:cookza/services/abstract/receive_intent_handler.dart';
+import 'package:cookza/services/shared_preferences_provider.dart';
+import 'package:cookza/viewmodel/settings/theme_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_translate/localization.dart';
