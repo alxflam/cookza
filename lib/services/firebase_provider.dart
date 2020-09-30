@@ -154,28 +154,13 @@ class FirebaseProvider {
       }
     }
 
-    var user = _auth.currentUser;
-    _currentUser = user;
-    if (user == null) {
+    _currentUser = _auth.currentUser;
+    if (_currentUser == null) {
       await _signInAnonymously();
     }
     _ownerUserID = _currentUser.uid;
 
     print('logged in anonymously using token ${_currentUser.uid}');
-
-    var coll = await this.recipeCollectionsAsList();
-    print('coll is $coll');
-    print('collection size is: ${coll.length}');
-    if (coll.isEmpty && !kIsWeb) {
-      var collection = await this.createRecipeCollection('default');
-      this._currentRecipeGroup = collection.id;
-    } else if (coll.isNotEmpty) {
-      this._currentRecipeGroup = coll.first.id;
-    }
-
-    Future.delayed(
-        Duration(seconds: 1), () => sl.get<MealPlanManager>().init());
-
     return this;
   }
 

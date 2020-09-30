@@ -29,7 +29,7 @@ void main() async {
   setupServiceLocator();
   await GetIt.I.allReady();
 
-  /// delegating flutter exceptions (usually widget errors) is disbled for debug mode
+  /// delegating flutter exceptions (usually widget errors) is disabled for debug mode
   /// as the flutter exception handler adds more verbose output for troubleshooting
   if (kReleaseMode) {
     setupFlutterErrorHandling();
