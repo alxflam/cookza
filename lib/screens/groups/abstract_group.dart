@@ -21,7 +21,7 @@ class PopupMenuButtonChoices {
   static const EDIT =
       const PopupMenuButtonChoices._internal(Keys.Ui_Edit, Icons.edit);
   static const ADD_USER =
-      const PopupMenuButtonChoices._internal(Keys.Ui_Adduser, Icons.add);
+      const PopupMenuButtonChoices._internal(Keys.Ui_Adduser, Icons.person_add);
   static const LEAVE = const PopupMenuButtonChoices._internal(
       Keys.Ui_Leavegroup, Icons.exit_to_app);
 }

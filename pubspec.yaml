@@ -4,7 +4,7 @@ description: Organize and share your favorite recipes.
 version: 0.0.1+5
 
 environment:
-  sdk: ">=2.8.0 <3.0.0"
+  sdk: ">=2.10.0 <3.0.0"
 
 dependencies:
   flutter:
