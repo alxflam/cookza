@@ -22,7 +22,7 @@ class ShoppingListOverviewScreen extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.add),
+            icon: Icon(kShoppingListIconData),
             onPressed: () async {
               openShoppingListDialog(context);
             },

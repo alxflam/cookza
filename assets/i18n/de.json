@@ -64,6 +64,7 @@
         "delete": "Löschen",
         "cancel": "Abbrechen",
         "confirmDelete": "Soll {0} wirklich gelöscht werden?",
+        "confirmDeleteAll": "Sollen wirklich alle Cookza Daten gelöscht werden?",
         "export": "Export",
         "import": "Import",
         "parseErrorRecipe": "Datei kann nicht importiert werden",

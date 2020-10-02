@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class ShoppingListOverviewModel extends ChangeNotifier {
   void navigatedBack() {
     // update view just in case some data changed
-    // TODO: let the details view return a flage whether something changed and only then update the view
+    // TODO: let the details view return a flag whether something changed and only then update the view
     notifyListeners();
   }
 

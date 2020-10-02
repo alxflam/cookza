@@ -64,6 +64,7 @@
         "delete": "Delete",
         "cancel": "Cancel",
         "confirmDelete": "Do you really want to delete {0}?",
+        "confirmDeleteAll": "Do you really want to delete all your Cookza data?",
         "export": "Export",
         "import": "Import",
         "parseErrorRecipe": "Can not parse the file",

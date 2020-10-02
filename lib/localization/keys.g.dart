@@ -94,6 +94,8 @@ class Keys {
 
   static const String Ui_Confirmdelete = 'ui.confirmDelete';
 
+  static const String Ui_Confirmdeleteall = 'ui.confirmDeleteAll';
+
   static const String Ui_Export = 'ui.export';
 
   static const String Ui_Import = 'ui.import';

@@ -106,7 +106,7 @@ class AboutScreen extends StatelessWidget {
               subtitle: Text(translate(Keys.Settings_Supportsubtitle)),
               leading: FaIcon(FontAwesomeIcons.questionCircle),
               onTap: () {
-                launch("market://details?id=com.flammer.cookza");
+                launch(kPlayStoreLink);
               },
             ),
             AboutScreenDivider(),
@@ -179,10 +179,7 @@ class DeleteAllDataDialog extends StatelessWidget {
             child: ListBody(
               children: <Widget>[
                 Text(
-                  translate(
-                    Keys.Ui_Confirmdelete,
-                    args: {"0": "§all data"},
-                  ),
+                  translate(Keys.Ui_Confirmdeleteall),
                 ),
               ],
             ),
