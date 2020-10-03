@@ -12,6 +12,10 @@ enum SELECTION_MODE {
 
 class RecipeSelectionModel extends ChangeNotifier {
   List<String> _selected = [];
+
+  /// excluded, non-selectable recipes - e.g. for reference ingredients:
+  /// no self reference should be possible
+  List<String> _excludes = [];
   List<RecipeViewModel> _recipes;
   List<RecipeViewModel> _filtered = [];
 
@@ -27,7 +31,7 @@ class RecipeSelectionModel extends ChangeNotifier {
     _init();
   }
 
-  RecipeSelectionModel.forReferenceIngredient(this._recipes)
+  RecipeSelectionModel.forReferenceIngredient(this._recipes, this._excludes)
       : this._mode = SELECTION_MODE.REFERENCE_INGREDIENT,
         this._allowMultiSelection = false {
     _init();
@@ -55,6 +59,8 @@ class RecipeSelectionModel extends ChangeNotifier {
   }
 
   void _init() {
+    /// remove excluded recipes
+    this._recipes.removeWhere((e) => this._excludes.contains(e.id));
     _filtered.addAll(_recipes);
     _countAllRecipes = _recipes.length;
     _countSelected = _selected.length;

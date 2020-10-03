@@ -54,11 +54,20 @@ void main() {
   });
 
   test('Model for Reference Ingredient', () async {
-    var cut = RecipeSelectionModel.forReferenceIngredient(createRecipes());
+    var cut = RecipeSelectionModel.forReferenceIngredient(createRecipes(), []);
     expect(cut.mode, SELECTION_MODE.REFERENCE_INGREDIENT);
     expect(cut.isMultiSelection, false);
     expect(cut.countSelected, 0);
     expect(cut.countAll, 2);
+  });
+
+  test('Model for Reference Ingredient - exclude recipe', () async {
+    var cut =
+        RecipeSelectionModel.forReferenceIngredient(createRecipes(), ['A']);
+    expect(cut.mode, SELECTION_MODE.REFERENCE_INGREDIENT);
+    expect(cut.isMultiSelection, false);
+    expect(cut.countSelected, 0);
+    expect(cut.countAll, 1);
   });
 
   test('Model for add MealPlan', () async {
@@ -166,7 +175,7 @@ void main() {
   });
 
   test('Switch selection single select', () async {
-    var cut = RecipeSelectionModel.forReferenceIngredient(createRecipes());
+    var cut = RecipeSelectionModel.forReferenceIngredient(createRecipes(), []);
 
     /// select a recipe
     cut.switchSelection(0);

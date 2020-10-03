@@ -50,7 +50,7 @@ class RecipeIngredientModel extends ChangeNotifier {
     }
   }
 
-  Future<RecipeViewModel> get recipe async {
+  RecipeViewModel get recipe {
     assert(this.isRecipeReference);
     assert(this._recipe != null);
     return this._recipe;
