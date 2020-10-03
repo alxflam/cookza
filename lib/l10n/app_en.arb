@@ -246,6 +246,8 @@
 	"@text": {},
 	"imageDeleted": "Image deleted",
 	"@imageDeleted": {},
+	"legal": "Legal",
+	"@legal": {},
 	"privacyStatement": "Data Privacy Statement",
 	"@privacyStatement": {},
 	"termsOfUse": "Terms of Use",

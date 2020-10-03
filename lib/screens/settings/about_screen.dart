@@ -130,7 +130,7 @@ class AboutScreen extends StatelessWidget {
                 Navigator.pushNamed(context, ErrorLogScreen.id);
               },
             ),
-            SettingSectionHeader('§Legal'),
+            SettingSectionHeader(AppLocalizations.of(context).legal),
             ListTile(
               leading: FaIcon(FontAwesomeIcons.fileAlt),
               title: Text(MaterialLocalizations.of(context).licensesPageTitle),

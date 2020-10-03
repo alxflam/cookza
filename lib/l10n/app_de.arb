@@ -100,6 +100,7 @@
 	"backup": "Backup",
 	"text": "Text (z.B. Chat)",
 	"imageDeleted": "Bild gelöscht",
+	"legal": "Rechtliches",
 	"privacyStatement": "Datenschutzerklärung",
 	"termsOfUse": "Nutzungsbedingungen",
 	"deleteAllData": "Alle Daten löschen",
