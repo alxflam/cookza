@@ -9,11 +9,11 @@ import 'package:cookza/services/shopping_list/shopping_list_manager.dart';
 import 'package:cookza/viewmodel/settings/theme_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../mocks/meal_plan_manager_mock.dart';
 import '../mocks/navigator_observer_mock.dart';
@@ -27,8 +27,6 @@ void main() {
   var shoppingListManager = ShoppingListManagerMock();
 
   setUpAll(() {
-    Map<String, dynamic> translations = {};
-    Localization.load(translations);
     SharedPreferences.setMockInitialValues({});
     GetIt.I.registerSingleton<RecipeManager>(recipeManager);
     GetIt.I.registerSingleton<MealPlanManager>(mealPlanManager);
@@ -82,7 +80,8 @@ void main() {
     expect(find.text('SAVE'), findsOneWidget);
     expect(find.byType(Semantics), findsWidgets);
     // then press confirm
-    await tester.tap(find.byType(FlatButton).first);
+
+    await tester.tap(find.byType(TextButton).first);
     await tester.pumpAndSettle();
     verify(observer.didPush(any, any));
 
@@ -105,6 +104,9 @@ Future<void> _initApp(WidgetTester tester, NavigatorObserver observer) async {
     MaterialApp(
       routes: kRoutes,
       navigatorObservers: [observer],
+      localizationsDelegates: [
+        AppLocalizations.delegate,
+      ],
       home: ChangeNotifierProvider<ThemeModel>(
         create: (context) => ThemeModel(),
         child: Builder(builder: (context) {

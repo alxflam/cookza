@@ -9,9 +9,8 @@ import 'package:cookza/screens/recipe_selection_screen.dart';
 import 'package:cookza/services/abstract/recipe_file_import.dart';
 import 'package:cookza/viewmodel/recipe_view/recipe_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'dart:html' as html;
-
-import 'package:flutter_translate/global.dart';
 
 class RecipeFileImportImpl extends RecipeFileImport {
   @override
@@ -54,7 +53,7 @@ class RecipeFileImportImpl extends RecipeFileImport {
         reader.onError.listen((fileEvent) {
           Scaffold.of(context).showSnackBar(
             SnackBar(
-              content: Text(translate(Keys.Ui_Parseerrorrecipe)),
+              content: Text(AppLocalizations.of(context).parseErrorRecipe),
             ),
           );
         });

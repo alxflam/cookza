@@ -1,12 +1,11 @@
 import 'dart:io';
 
 import 'package:cookza/constants.dart';
-import 'package:cookza/localization/keys.dart';
 import 'package:cookza/services/recipe/image_manager.dart';
 import 'package:cookza/services/local_storage.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/flutter_translate.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SavedImagesScreen extends StatelessWidget {
   static final String id = 'savedImages';
@@ -15,7 +14,7 @@ class SavedImagesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(translate(Keys.Settings_Localimages)),
+        title: Text(AppLocalizations.of(context).localImages),
       ),
       body: FutureBuilder(
         future: _getImageFiles(),
@@ -54,7 +53,7 @@ class SavedImagesScreen extends StatelessWidget {
                         Scaffold.of(context).showSnackBar(
                           SnackBar(
                             content:
-                                Text(translate(Keys.Settings_Imagedeleted)),
+                                Text(AppLocalizations.of(context).imageDeleted),
                           ),
                         );
                       },

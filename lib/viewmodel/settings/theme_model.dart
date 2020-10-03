@@ -2,15 +2,14 @@ import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:cookza/services/shared_preferences_provider.dart';
 import 'package:cookza/themes.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 
 class ThemeModelData {
-  final String _key;
+  final CustomTheme _theme;
 
-  ThemeModelData(this._key);
+  ThemeModelData(this._theme);
 
-  String get displayName => translate('theme.$_key');
-  String get key => _key;
+  String get displayName => _theme.displayName;
+  String get key => this._theme.id;
 }
 
 class ThemeModel with ChangeNotifier {
@@ -34,9 +33,7 @@ class ThemeModel with ChangeNotifier {
   }
 
   List<ThemeModelData> getAvailableThemes() {
-    return kAllThemes.entries
-        .map((e) => ThemeModelData(e.key.toString()))
-        .toList();
+    return kAllThemes.entries.map((e) => ThemeModelData(e.value)).toList();
   }
 
   ThemeData get current => _currentTheme.themeData;

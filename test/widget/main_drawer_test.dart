@@ -19,10 +19,10 @@ import 'package:cookza/services/shopping_list/shopping_list_manager.dart';
 import 'package:cookza/viewmodel/settings/theme_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_translate/localization.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../mocks/firebase_provider_mock.dart';
 import '../mocks/meal_plan_manager_mock.dart';
@@ -33,18 +33,6 @@ import '../mocks/shopping_list_manager_mock.dart';
 
 void main() {
   setUpAll(() {
-    Map<String, dynamic> translations = {};
-    translations.putIfAbsent(
-        'ui',
-        () => {
-              'recipe': {'else': 'ui.recipe'}
-            });
-    translations.putIfAbsent(
-        'recipe',
-        () => {
-              'ingredient': {'else': 'recipe.ingredient'}
-            });
-    Localization.load(translations);
     SharedPreferences.setMockInitialValues({});
     GetIt.I.registerSingletonAsync<SharedPreferencesProvider>(
         () async => SharedPreferencesProviderImpl().init());
@@ -59,31 +47,30 @@ void main() {
   });
 
   testWidgets('Recipe list tile exists', (WidgetTester tester) async {
-    await testTile(tester, 'ui.recipe', RecipeListScreen);
+    await testTile(tester, 'List Recipes', RecipeListScreen);
   });
 
   testWidgets('Meal planner tile exists', (WidgetTester tester) async {
-    await testTile(tester, 'functions.mealPlanner', MealPlanScreen);
+    await testTile(tester, 'Meal Planner', MealPlanScreen);
   });
 
   testWidgets('Shopping List tile exists', (WidgetTester tester) async {
-    await testTile(
-        tester, 'functions.shoppingList', ShoppingListOverviewScreen);
+    await testTile(tester, 'Shopping List', ShoppingListOverviewScreen);
   });
   testWidgets('Create Recipe tile exists', (WidgetTester tester) async {
-    await testTile(tester, 'functions.addRecipe', NewRecipeScreen);
+    await testTile(tester, 'New Recipe', NewRecipeScreen);
   });
 
   testWidgets('Share Account tile exists', (WidgetTester tester) async {
-    await testTile(tester, 'ui.shareAccount', ShareAccountScreen);
+    await testTile(tester, 'Share Account', ShareAccountScreen);
   });
 
   testWidgets('Settings tile exists', (WidgetTester tester) async {
-    await testTile(tester, 'ui.settings', SettingsScreen);
+    await testTile(tester, 'Settings', SettingsScreen);
   });
 
   testWidgets('Web Login tile exists', (WidgetTester tester) async {
-    await testTile(tester, 'app.title ui.web', WebLoginOnAppScreen);
+    await testTile(tester, 'Cookza Web', WebLoginOnAppScreen);
   });
 }
 
@@ -112,6 +99,9 @@ class MockApplication extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       navigatorObservers: [mockObserver],
+      localizationsDelegates: [
+        AppLocalizations.delegate,
+      ],
       routes: kRoutes,
       home: ChangeNotifierProvider<ThemeModel>(
         create: (context) => ThemeModel(),

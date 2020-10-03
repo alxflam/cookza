@@ -1,22 +1,17 @@
-import 'package:cookza/localization/keys.dart';
 import 'package:cookza/model/json/exception_log.dart';
 import 'package:cookza/viewmodel/settings/error_screen_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/flutter_translate.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:share_extend/share_extend.dart';
 
 class PopupMenuButtonChoices {
-  final _key;
   final _icon;
-  const PopupMenuButtonChoices._internal(this._key, this._icon);
-  toString() => translate(_key);
+  const PopupMenuButtonChoices._internal(this._icon);
   IconData get icon => this._icon;
 
-  static const SHARE =
-      const PopupMenuButtonChoices._internal(Keys.Ui_Share, Icons.share);
-  static const DELETE =
-      const PopupMenuButtonChoices._internal(Keys.Ui_Delete, Icons.delete);
+  static const SHARE = const PopupMenuButtonChoices._internal(Icons.share);
+  static const DELETE = const PopupMenuButtonChoices._internal(Icons.delete);
 }
 
 class ErrorLogScreen extends StatelessWidget {
@@ -30,7 +25,7 @@ class ErrorLogScreen extends StatelessWidget {
       value: _model,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(translate(Keys.Settings_Errorlog)),
+          title: Text(AppLocalizations.of(context).errorLog),
           actions: [
             PopupMenuButton(itemBuilder: (context) {
               return [
@@ -39,7 +34,7 @@ class ErrorLogScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Icon(PopupMenuButtonChoices.SHARE.icon),
-                      Text(PopupMenuButtonChoices.SHARE.toString())
+                      Text(AppLocalizations.of(context).share),
                     ],
                   ),
                   value: PopupMenuButtonChoices.SHARE,
@@ -49,7 +44,7 @@ class ErrorLogScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Icon(PopupMenuButtonChoices.DELETE.icon),
-                      Text(PopupMenuButtonChoices.DELETE.toString())
+                      Text(AppLocalizations.of(context).delete)
                     ],
                   ),
                   value: PopupMenuButtonChoices.DELETE,
@@ -89,7 +84,7 @@ class ErrorLogScreen extends StatelessWidget {
                 } else {
                   return Container(
                     child: Center(
-                      child: Text(translate(Keys.Settings_Noerrorlogentry)),
+                      child: Text(AppLocalizations.of(context).noErrorLogEntry),
                     ),
                   );
                 }

@@ -1,4 +1,3 @@
-import 'package:cookza/localization/keys.dart';
 import 'package:cookza/screens/collections/share_account_screen.dart';
 import 'package:cookza/screens/meal_plan/meal_plan_screen.dart';
 import 'package:cookza/screens/recipe_list_screen.dart';
@@ -11,7 +10,7 @@ import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:cookza/viewmodel/recipe_edit/recipe_edit_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/flutter_translate.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../constants.dart';
@@ -48,40 +47,40 @@ class MainAppDrawer extends StatelessWidget {
             ),
           ),
           ListTile(
-            title: Text(translatePlural(Keys.Ui_Recipe, 2)),
+            title: Text(AppLocalizations.of(context).functionsListRecipes),
             leading: FaIcon(kRecipesIconData),
             onTap: () {
               Navigator.pushNamed(context, RecipeListScreen.id);
             },
           ),
           ListTile(
-            title: Text(translate(Keys.Functions_Mealplanner)),
+            title: Text(AppLocalizations.of(context).functionsMealPlanner),
             leading: FaIcon(kMealPlannerIconData),
             onTap: () {
               Navigator.pushNamed(context, MealPlanScreen.id);
             },
           ),
           ListTile(
-            title: Text(translate(Keys.Functions_Shoppinglist)),
+            title: Text(AppLocalizations.of(context).functionsShoppingList),
             leading: FaIcon(kShoppingListIconData),
             onTap: () {
               Navigator.pushNamed(context, ShoppingListOverviewScreen.id);
             },
           ),
           ListTile(
-            title: Text(translate(Keys.Functions_Addrecipe)),
+            title: Text(AppLocalizations.of(context).functionsAddRecipe),
             leading: FaIcon(FontAwesomeIcons.plus),
             onTap: () => Navigator.pushNamed(context, NewRecipeScreen.id,
                 arguments: RecipeEditModel.create()),
           ),
           _getWebAppListTile(context),
           ListTile(
-            title: Text(translate(Keys.Ui_Shareaccount)),
+            title: Text(AppLocalizations.of(context).shareAccount),
             leading: FaIcon(FontAwesomeIcons.handshake),
             onTap: () => Navigator.pushNamed(context, ShareAccountScreen.id),
           ),
           ListTile(
-            title: Text(translate(Keys.Ui_Settings)),
+            title: Text(AppLocalizations.of(context).settings),
             leading: FaIcon(FontAwesomeIcons.cog),
             onTap: () => Navigator.pushNamed(context, SettingsScreen.id),
           ),
@@ -93,7 +92,7 @@ class MainAppDrawer extends StatelessWidget {
   ListTile _getWebAppListTile(BuildContext context) {
     if (kIsWeb) {
       return ListTile(
-          title: Text(translate(Keys.Ui_Logout)),
+          title: Text(AppLocalizations.of(context).logout),
           leading: Icon(Icons.power_settings_new),
           onTap: () async {
             var util = sl.get<FirebaseProvider>();
@@ -101,7 +100,7 @@ class MainAppDrawer extends StatelessWidget {
           });
     }
     return ListTile(
-      title: Text('${translate(Keys.App_Title)} ${translate(Keys.Ui_Web)}'),
+      title: Text('$kAppName ${AppLocalizations.of(context).web}'),
       leading: FaIcon(kWebAppData),
       onTap: () => Navigator.pushNamed(context, WebLoginOnAppScreen.id),
     );

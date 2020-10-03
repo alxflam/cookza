@@ -4,26 +4,21 @@ import 'package:cookza/services/mobile/qr_scanner.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:cookza/viewmodel/groups/abstract_group_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:cookza/localization/keys.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PopupMenuButtonChoices {
-  final _key;
   final _icon;
-  const PopupMenuButtonChoices._internal(this._key, this._icon);
-  toString() => translate(_key);
+  const PopupMenuButtonChoices._internal(this._icon);
   IconData get icon => this._icon;
 
-  static const DELETE =
-      const PopupMenuButtonChoices._internal(Keys.Ui_Delete, Icons.delete);
-  static const EDIT =
-      const PopupMenuButtonChoices._internal(Keys.Ui_Edit, Icons.edit);
+  static const DELETE = const PopupMenuButtonChoices._internal(Icons.delete);
+  static const EDIT = const PopupMenuButtonChoices._internal(Icons.edit);
   static const ADD_USER =
-      const PopupMenuButtonChoices._internal(Keys.Ui_Adduser, Icons.person_add);
-  static const LEAVE = const PopupMenuButtonChoices._internal(
-      Keys.Ui_Leavegroup, Icons.exit_to_app);
+      const PopupMenuButtonChoices._internal(Icons.person_add);
+  static const LEAVE =
+      const PopupMenuButtonChoices._internal(Icons.exit_to_app);
 }
 
 abstract class AbstractGroupScreen extends StatelessWidget {
@@ -48,7 +43,7 @@ abstract class AbstractGroupScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Icon(PopupMenuButtonChoices.EDIT.icon),
-                            Text(PopupMenuButtonChoices.EDIT.toString())
+                            Text(AppLocalizations.of(context).rename)
                           ],
                         ),
                         value: PopupMenuButtonChoices.EDIT,
@@ -58,7 +53,7 @@ abstract class AbstractGroupScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Icon(PopupMenuButtonChoices.ADD_USER.icon),
-                            Text(PopupMenuButtonChoices.ADD_USER.toString())
+                            Text(AppLocalizations.of(context).addUser)
                           ],
                         ),
                         value: PopupMenuButtonChoices.ADD_USER,
@@ -68,7 +63,7 @@ abstract class AbstractGroupScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Icon(PopupMenuButtonChoices.DELETE.icon),
-                            Text(PopupMenuButtonChoices.DELETE.toString())
+                            Text(AppLocalizations.of(context).delete)
                           ],
                         ),
                         value: PopupMenuButtonChoices.DELETE,
@@ -78,7 +73,7 @@ abstract class AbstractGroupScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Icon(PopupMenuButtonChoices.LEAVE.icon),
-                            Text(PopupMenuButtonChoices.LEAVE.toString())
+                            Text(AppLocalizations.of(context).leaveGroup)
                           ],
                         ),
                         value: PopupMenuButtonChoices.LEAVE,
@@ -117,7 +112,7 @@ abstract class AbstractGroupScreen extends StatelessWidget {
 
                     if (snapshot.data.length == 1) {
                       return Center(
-                        child: Text(translate(Keys.Ui_Singlemember)),
+                        child: Text(AppLocalizations.of(context).singleMember),
                       );
                     }
 
@@ -176,7 +171,7 @@ abstract class AbstractGroupScreen extends StatelessWidget {
           // builder is needed to get a new context for the Provider
           builder: (context) {
             return SimpleDialog(
-              title: Text(translate(Keys.Ui_Editgroup)),
+              title: Text(AppLocalizations.of(context).editGroup),
               children: [
                 SingleChildScrollView(
                   child: Column(
@@ -193,7 +188,8 @@ abstract class AbstractGroupScreen extends StatelessWidget {
                                 maxLines: 1,
                                 autofocus: true,
                                 decoration: InputDecoration(
-                                    hintText: translate(Keys.Ui_Groupname)),
+                                    hintText:
+                                        AppLocalizations.of(context).groupName),
                               ),
                             )
                           ],
@@ -234,15 +230,12 @@ abstract class AbstractGroupScreen extends StatelessWidget {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(translate(Keys.Ui_Delete)),
+          title: Text(AppLocalizations.of(context).delete),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
                 Text(
-                  translate(
-                    Keys.Ui_Confirmdelete,
-                    args: {"0": model.name},
-                  ),
+                  AppLocalizations.of(context).confirmDelete(model.name),
                 ),
               ],
             ),
@@ -250,7 +243,7 @@ abstract class AbstractGroupScreen extends StatelessWidget {
           actions: <Widget>[
             FlatButton(
               child: Text(
-                translate(Keys.Ui_Cancel),
+                AppLocalizations.of(context).cancel,
               ),
               onPressed: () {
                 Navigator.pop(context, false);
@@ -258,7 +251,7 @@ abstract class AbstractGroupScreen extends StatelessWidget {
             ),
             FlatButton(
               child: Text(
-                translate(Keys.Ui_Delete),
+                AppLocalizations.of(context).delete,
               ),
               color: Colors.red,
               onPressed: () async {
@@ -295,15 +288,12 @@ abstract class AbstractGroupScreen extends StatelessWidget {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(translate(Keys.Ui_Delete)),
+          title: Text(AppLocalizations.of(context).delete),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
                 Text(
-                  translate(
-                    Keys.Ui_Confirmleave,
-                    args: {"0": model.name},
-                  ),
+                  AppLocalizations.of(context).confirmLeave(model.name),
                 ),
               ],
             ),
@@ -311,7 +301,7 @@ abstract class AbstractGroupScreen extends StatelessWidget {
           actions: <Widget>[
             FlatButton(
               child: Text(
-                translate(Keys.Ui_Cancel),
+                AppLocalizations.of(context).cancel,
               ),
               onPressed: () {
                 Navigator.pop(context, false);
@@ -319,7 +309,7 @@ abstract class AbstractGroupScreen extends StatelessWidget {
             ),
             FlatButton(
               child: Text(
-                translate(Keys.Ui_Leavegroup),
+                AppLocalizations.of(context).leaveGroup,
               ),
               color: Colors.red,
               onPressed: () async {

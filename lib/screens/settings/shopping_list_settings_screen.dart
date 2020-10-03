@@ -1,7 +1,6 @@
-import 'package:cookza/localization/keys.dart';
 import 'package:cookza/viewmodel/settings/shopping_list_settings_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/flutter_translate.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 class ShoppingListSettingsScreen extends StatelessWidget {
@@ -12,7 +11,7 @@ class ShoppingListSettingsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          translate(Keys.Functions_Shoppinglist),
+          AppLocalizations.of(context).functionsShoppingList,
         ),
       ),
       body: ChangeNotifierProvider<ShoppingListSettingsModel>.value(

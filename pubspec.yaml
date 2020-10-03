@@ -12,6 +12,8 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 
+  flutter_translate: ^1.6.0
+  flutter_translate_annotations: ^1.0.1
   provider: ^4.0.5
   font_awesome_flutter: ^8.8.1
   intl: ^0.16.1
@@ -27,8 +29,6 @@ dependencies:
   introduction_screen: ^1.0.8
   dots_indicator: ^1.1.0
   get_it: ^5.0.0
-  flutter_translate: ^1.6.0
-  flutter_translate_annotations: ^1.0.1
   file_picker: ^2.0.0
   share_extend: ^1.1.5
   pdf: ^1.7.1
@@ -50,9 +50,8 @@ dev_dependencies:
   mockito: ^4.1.1
 
 flutter:
-
+  generate: true
   uses-material-design: true
 
   assets:
     - assets/i18n/
-

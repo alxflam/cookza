@@ -4,9 +4,8 @@ import 'package:cookza/screens/recipe_list_screen.dart';
 import 'package:cookza/services/recipe/recipe_manager.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:provider/provider.dart';
-import 'package:cookza/localization/keys.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class RecipeGroupsDrawer extends StatelessWidget {
   @override
@@ -34,7 +33,7 @@ class RecipeGroupsTiles extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               RaisedButton(
-                  child: Text(translate(Keys.Ui_Creategroup)),
+                  child: Text(AppLocalizations.of(context).createGroup),
                   onPressed: () async {
                     this._createRecipeGroup(context);
                   })
@@ -84,7 +83,7 @@ class RecipeGroupsTiles extends StatelessWidget {
           // builder is needed to get a new context for the Provider
           builder: (context) {
             return SimpleDialog(
-              title: Text(translate(Keys.Ui_Creategroup)),
+              title: Text(AppLocalizations.of(context).createGroup),
               children: [
                 SingleChildScrollView(
                   child: Column(
@@ -101,7 +100,8 @@ class RecipeGroupsTiles extends StatelessWidget {
                                 maxLines: 1,
                                 autofocus: true,
                                 decoration: InputDecoration(
-                                    hintText: translate(Keys.Ui_Groupname)),
+                                    hintText:
+                                        AppLocalizations.of(context).groupName),
                               ),
                             )
                           ],

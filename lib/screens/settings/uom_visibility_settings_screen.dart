@@ -1,8 +1,7 @@
-import 'package:cookza/localization/keys.dart';
 import 'package:cookza/viewmodel/settings/uom_visibility_settings_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class UoMVisibilityScreen extends StatelessWidget {
   static final String id = 'uomVisibility';
@@ -14,7 +13,7 @@ class UoMVisibilityScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          translate(Keys.Recipe_Unitlongplural),
+          AppLocalizations.of(context).unitLongPlural,
         ),
       ),
       body: ChangeNotifierProvider<UoMVisibilitySettingsModel>.value(

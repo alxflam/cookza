@@ -1,7 +1,6 @@
 import 'package:cookza/components/meal_plan_groups_drawer.dart';
 import 'package:cookza/components/round_icon_button.dart';
 import 'package:cookza/constants.dart';
-import 'package:cookza/localization/keys.dart';
 import 'package:cookza/model/entities/abstract/meal_plan_entity.dart';
 import 'package:cookza/model/entities/abstract/recipe_entity.dart';
 import 'package:cookza/screens/recipe_view/recipe_screen.dart';
@@ -15,10 +14,10 @@ import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:cookza/viewmodel/recipe_view/recipe_view_model.dart';
 import 'package:cookza/viewmodel/settings/theme_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MealPlanScreen extends StatelessWidget {
   static final String id = 'mealPlan';
@@ -37,7 +36,7 @@ class MealPlanScreen extends StatelessWidget {
           drawer: MealPlanGroupsDrawer(),
           appBar: AppBar(
             title: snapshot.data == null
-                ? Text(translate(Keys.Functions_Mealplanner))
+                ? Text(AppLocalizations.of(context).functionsMealPlanner)
                 : Text(snapshot.data.name),
             actions: [
               IconButton(
@@ -200,7 +199,7 @@ class MealPlanScreen extends StatelessWidget {
                 },
                 subtitle: recipeModel.servings != null
                     ? Text(
-                        '${recipeModel.servings.toString()} ${translate(Keys.Recipe_Servings)}')
+                        '${recipeModel.servings.toString()} ${AppLocalizations.of(context).servings}')
                     : null,
                 trailing: IconButton(
                   icon: Icon(Icons.edit),
@@ -232,7 +231,8 @@ class MealPlanScreen extends StatelessWidget {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceEvenly,
                                         children: <Widget>[
-                                          Text(translate(Keys.Recipe_Servings)),
+                                          Text(AppLocalizations.of(context)
+                                              .servings),
                                           RoundIconButton(
                                             icon: FontAwesomeIcons.minus,
                                             onPress: () {
@@ -318,7 +318,7 @@ class MealPlanScreen extends StatelessWidget {
                       subtitle: entry.isNote
                           ? null
                           : Text(
-                              '${entry.servings.toString()} ${translate(Keys.Recipe_Servings)}'),
+                              '${entry.servings.toString()} ${AppLocalizations.of(context).servings}'),
                     ),
                   ),
                 ),
@@ -370,7 +370,8 @@ class MealPlanScreen extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.all(10),
                       child: RaisedButton(
-                        child: Text(translate(Keys.Ui_Mealplan_Addnote)),
+                        child:
+                            Text(AppLocalizations.of(context).mealPlanAddNote),
                         onPressed: () {
                           // close dialog
                           Navigator.pop(context);
@@ -383,7 +384,8 @@ class MealPlanScreen extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.all(10),
                       child: RaisedButton(
-                        child: Text(translate(Keys.Ui_Mealplan_Addrecipe)),
+                        child: Text(
+                            AppLocalizations.of(context).mealPlanAddRecipe),
                         onPressed: () async {
                           // fetch all recipes the app currently stores
                           var recipes =
@@ -428,7 +430,7 @@ class MealPlanScreen extends StatelessWidget {
           // builder is needed to get a new context for the Provider
           builder: (context) {
             return SimpleDialog(
-              title: Text(translate(Keys.Ui_Mealplan_Addnote)),
+              title: Text(AppLocalizations.of(context).mealPlanAddNote),
               children: [
                 SingleChildScrollView(
                   child: Column(
@@ -492,7 +494,7 @@ class NoMealPlanSelected extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               RaisedButton(
-                child: Text(translate(Keys.Ui_Mealplan_Select)),
+                child: Text(AppLocalizations.of(context).mealPlanSelect),
                 onPressed: () => Scaffold.of(context).openDrawer(),
               )
             ],

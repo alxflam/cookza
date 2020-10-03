@@ -7,7 +7,6 @@ import 'package:cookza/services/recipe/recipe_manager.dart';
 import 'package:cookza/services/shared_preferences_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_translate/localization.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -19,18 +18,6 @@ import '../mocks/recipe_manager_mock.dart';
 
 void main() {
   setUpAll(() {
-    Map<String, dynamic> translations = {};
-    translations.putIfAbsent(
-        'ui',
-        () => {
-              'recipe': {'else': 'ui.recipe'}
-            });
-    translations.putIfAbsent(
-        'recipe',
-        () => {
-              'ingredient': {'else': 'recipe.ingredient'}
-            });
-    Localization.load(translations);
     SharedPreferences.setMockInitialValues({});
     GetIt.I.registerSingletonAsync<SharedPreferencesProvider>(
         () async => SharedPreferencesProviderImpl().init());

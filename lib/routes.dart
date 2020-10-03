@@ -60,5 +60,5 @@ Map<String, Widget Function(BuildContext)> kRoutes = {
   OCRIngredientsImageScreen.id: (context) => OCRIngredientsImageScreen(),
   OCRInstructionsImageScreen.id: (context) => OCRInstructionsImageScreen(),
   ShoppingListSettingsScreen.id: (context) => ShoppingListSettingsScreen(),
-  ErrorLogScreen.id: (context) => ErrorLogScreen()
+  ErrorLogScreen.id: (context) => ErrorLogScreen(),
 };

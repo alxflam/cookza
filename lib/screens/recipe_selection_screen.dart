@@ -1,4 +1,3 @@
-import 'package:cookza/localization/keys.dart';
 import 'package:cookza/services/recipe/recipe_manager.dart';
 import 'package:cookza/viewmodel/recipe_selection_model.dart';
 import 'package:cookza/services/abstract/pdf_export.dart';
@@ -6,7 +5,7 @@ import 'package:cookza/services/abstract/pdf_generator.dart';
 import 'package:cookza/services/abstract/recipe_file_export.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/flutter_translate.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
@@ -16,13 +15,13 @@ typedef Future<void> OnActionButtonPressed(
 class RecipeSelectionScreen extends StatelessWidget {
   static final String id = 'selection';
 
-  _getTitle(RecipeSelectionModel model) {
+  _getTitle(RecipeSelectionModel model, BuildContext context) {
     return model.countSelected == 0
         ? Text(
-            translate(Keys.Ui_Selectrecipes),
+            AppLocalizations.of(context).selectRecipes,
           )
         : Text(
-            '${model.countSelected} ${translatePlural(Keys.Ui_Recipe, model.countSelected)}',
+            '${model.countSelected} ${AppLocalizations.of(context).recipe(model.countSelected)}',
           );
   }
 
@@ -41,7 +40,7 @@ class RecipeSelectionScreen extends StatelessWidget {
         builder: (context, model, child) {
           return Scaffold(
             appBar: AppBar(
-              title: _getTitle(model),
+              title: _getTitle(model, context),
               actions: <Widget>[
                 IconButton(
                     icon: Icon(Icons.select_all),

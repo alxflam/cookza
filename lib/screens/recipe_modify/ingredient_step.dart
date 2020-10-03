@@ -1,15 +1,14 @@
 import 'package:cookza/components/round_icon_button.dart';
 import 'package:cookza/constants.dart';
-import 'package:cookza/localization/keys.dart';
 import 'package:cookza/model/entities/mutable/mutable_ingredient_note.dart';
 import 'package:cookza/screens/new_ingredient_screen.dart';
 import 'package:cookza/viewmodel/recipe_edit/recipe_edit_model.dart';
 import 'package:cookza/viewmodel/recipe_edit/recipe_edit_step.dart';
 import 'package:cookza/viewmodel/recipe_edit/recipe_ingredient_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 Step getIngredientsStep(BuildContext context) {
   return Step(
@@ -38,13 +37,13 @@ class IngredientStepContent extends StatelessWidget {
                 horizontalMargin: 0,
                 columns: [
                   DataColumn(
-                    label: Text(translate(Keys.Recipe_Amount)),
+                    label: Text(AppLocalizations.of(context).amount),
                   ),
                   DataColumn(
-                    label: Text(translate(Keys.Recipe_Unit)),
+                    label: Text(AppLocalizations.of(context).unit),
                   ),
                   DataColumn(
-                    label: Text(translatePlural(Keys.Recipe_Ingredient, 0)),
+                    label: Text(AppLocalizations.of(context).ingredient(1)),
                   ),
                   DataColumn(label: Text('')),
                 ],
@@ -64,7 +63,7 @@ Widget _getTableHeaderButtons(
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        _getServingsRow(model),
+        _getServingsRow(model, context),
         _getAddRowButton(context, model),
       ],
     );
@@ -72,14 +71,14 @@ Widget _getTableHeaderButtons(
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        _getServingsRow(model),
+        _getServingsRow(model, context),
         _getAddRowButton(context, model),
       ],
     );
   }
 }
 
-Widget _getServingsRow(RecipeIngredientEditStep model) {
+Widget _getServingsRow(RecipeIngredientEditStep model, BuildContext context) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
     children: <Widget>[
@@ -89,7 +88,7 @@ Widget _getServingsRow(RecipeIngredientEditStep model) {
             ? model.servings = model.servings - 1
             : model.servings,
       ),
-      Text('${model.servings} ${translate(Keys.Recipe_Servings)}'),
+      Text('${model.servings} ${AppLocalizations.of(context).servings}'),
       RoundIconButton(
         icon: FontAwesomeIcons.plus,
         onPress: () => model.servings = model.servings + 1,
@@ -112,7 +111,7 @@ Widget _getAddRowButton(BuildContext context, RecipeIngredientEditStep model) {
       }
     },
     icon: Icon(Icons.add),
-    label: Text(translate(Keys.Ui_Addrow)),
+    label: Text(AppLocalizations.of(context).addRow),
   );
 }
 

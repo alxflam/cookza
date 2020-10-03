@@ -1,9 +1,8 @@
 import 'package:cookza/constants.dart';
-import 'package:cookza/localization/keys.dart';
 import 'package:cookza/viewmodel/recipe_edit/recipe_edit_model.dart';
 import 'package:cookza/viewmodel/recipe_edit/recipe_edit_step.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/flutter_translate.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
@@ -28,7 +27,7 @@ class TagColumn extends StatelessWidget {
             children: <Widget>[
               SwitchListTile(
                 secondary: FaIcon(kVeganIcon),
-                title: Text(translate(Keys.Recipe_Tags_Vegan)),
+                title: Text(AppLocalizations.of(context).tagsVegan),
                 value: model.isVegan,
                 onChanged: (value) {
                   model.setVegan(value);
@@ -36,7 +35,7 @@ class TagColumn extends StatelessWidget {
               ),
               SwitchListTile(
                 secondary: FaIcon(kVegetarianIcon),
-                title: Text(translate(Keys.Recipe_Tags_Vegetarian)),
+                title: Text(AppLocalizations.of(context).tagsVegetarian),
                 value: model.isVegetarian,
                 onChanged: (value) {
                   model.setVegetarian(value);
@@ -44,7 +43,7 @@ class TagColumn extends StatelessWidget {
               ),
               SwitchListTile(
                 secondary: FaIcon(kMeatIcon),
-                title: Text(translate(Keys.Recipe_Tags_Meat)),
+                title: Text(AppLocalizations.of(context).tagsMeat),
                 value: model.containsMeat,
                 onChanged: (value) {
                   model.setContainsMeat(value);
@@ -52,7 +51,7 @@ class TagColumn extends StatelessWidget {
               ),
               SwitchListTile(
                 secondary: FaIcon(kFishIcon),
-                title: Text(translate(Keys.Recipe_Tags_Fish)),
+                title: Text(AppLocalizations.of(context).tagsFish),
                 value: model.containsFish,
                 onChanged: (value) {
                   model.setContainsFish(value);

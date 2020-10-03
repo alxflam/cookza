@@ -1,11 +1,10 @@
 import 'package:cookza/constants.dart';
-import 'package:cookza/localization/keys.dart';
 import 'package:cookza/screens/shopping_list/shopping_list_detail_screen.dart';
 import 'package:cookza/screens/shopping_list/shopping_list_dialog.dart';
 import 'package:cookza/viewmodel/shopping_list/shopping_list_detail.dart';
 import 'package:cookza/viewmodel/shopping_list/shopping_list_overview.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/flutter_translate.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 class ShoppingListOverviewScreen extends StatelessWidget {
@@ -18,7 +17,7 @@ class ShoppingListOverviewScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          translate(Keys.Functions_Shoppinglist),
+          AppLocalizations.of(context).functionsShoppingList,
         ),
         actions: [
           IconButton(

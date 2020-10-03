@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:cookza/localization/keys.dart';
 import 'package:cookza/model/entities/abstract/ingredient_entity.dart';
 import 'package:cookza/model/entities/abstract/instruction_entity.dart';
 import 'package:cookza/model/entities/abstract/recipe_collection_entity.dart';
@@ -9,11 +8,12 @@ import 'package:cookza/model/entities/mutable/mutable_ingredient.dart';
 import 'package:cookza/model/entities/mutable/mutable_ingredient_note.dart';
 import 'package:cookza/model/entities/mutable/mutable_instruction.dart';
 import 'package:cookza/model/entities/mutable/mutable_recipe.dart';
+import 'package:cookza/services/flutter/navigator_service.dart';
 import 'package:cookza/services/recipe/image_manager.dart';
 import 'package:cookza/services/recipe/recipe_manager.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/flutter_translate.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'recipe_ingredient_model.dart';
 
@@ -70,17 +70,19 @@ class RecipeOverviewEditStep extends RecipeEditStep {
 
   @override
   validate() {
+    var context = sl.get<NavigatorService>().currentContext;
+
     if (name.isEmpty) {
-      throw translate(Keys.Ui_Assignrecipename);
+      throw AppLocalizations.of(context).assignRecipeName;
     }
     if (duration <= 0) {
-      throw translate(Keys.Ui_Assignrecipeduration);
+      throw AppLocalizations.of(context).assignRecipeDuration;
     }
     if (difficulty == null) {
-      throw translate(Keys.Ui_Assignrecipedifficulty);
+      throw AppLocalizations.of(context).assignRecipeDifficulty;
     }
     if (this.collection == null) {
-      throw translate(Keys.Ui_Assignrecipegroup);
+      throw AppLocalizations.of(context).assignRecipeGroup;
     }
   }
 
@@ -259,12 +261,14 @@ class RecipeIngredientEditStep extends RecipeEditStep {
 
   @override
   validate() {
+    var context = sl.get<NavigatorService>().currentContext;
+
     if (_ingredients.isEmpty) {
-      throw translate(Keys.Ui_Assigningredients);
+      throw AppLocalizations.of(context).assignIngredients;
     }
 
     if (_servings <= 0) {
-      throw translate(Keys.Ui_Assignservings);
+      throw AppLocalizations.of(context).assignServings;
     }
   }
 
@@ -329,13 +333,15 @@ class RecipeInstructionEditStep extends RecipeEditStep {
 
   @override
   validate() {
+    var context = sl.get<NavigatorService>().currentContext;
+
     // there are instructions and there's no empty instruction
     if (_instructions.isEmpty) {
-      throw translate(Keys.Ui_Assigninstructions);
+      throw AppLocalizations.of(context).assignInstructions;
     }
     if (_instructions.where((f) => f.text == null || f.text.isEmpty).length >
         0) {
-      throw translate(Keys.Ui_Assignemptyinstructions);
+      throw AppLocalizations.of(context).assignEmptyInstructions;
     }
   }
 

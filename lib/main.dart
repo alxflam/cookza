@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:cookza/localization/keys.dart';
+import 'package:cookza/constants.dart';
 import 'package:cookza/routes.dart';
 import 'package:cookza/screens/settings/onboarding_screen.dart';
 import 'package:cookza/screens/web/web_landing_screen.dart';
@@ -18,8 +18,13 @@ import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() async {
+  /// the flutter_localizations plugn is only needed for translations of Unit of Measures
+  /// as their translation is called dynamically and the flutter translation
+  /// mechanism only allows static translation retrieval with generated methods.
+  /// flutter_localizations instead also allows to retrieve the translation by a dynamic string key
   var delegate = await LocalizationDelegate.create(
     fallbackLocale: 'en',
     supportedLocales: ['en', 'de'],
@@ -86,13 +91,14 @@ class CookzaMaterialApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: translate(Keys.App_Title),
+      title: kAppName,
       localizationsDelegates: [
+        AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         localizationDelegate
       ],
-      supportedLocales: localizationDelegate.supportedLocales,
+      supportedLocales: AppLocalizations.supportedLocales,
       locale: localizationDelegate.currentLocale,
       debugShowCheckedModeBanner: false,
       theme: Provider.of<ThemeModel>(context).current,

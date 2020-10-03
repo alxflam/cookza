@@ -6,16 +6,17 @@ import 'package:cookza/screens/settings/settings_screen.dart';
 import 'package:cookza/screens/settings/shopping_list_settings_screen.dart';
 import 'package:cookza/screens/settings/theme_settings_screen.dart';
 import 'package:cookza/screens/settings/uom_visibility_settings_screen.dart';
+import 'package:cookza/services/flutter/navigator_service.dart';
 import 'package:cookza/services/shared_preferences_provider.dart';
 import 'package:cookza/services/unit_of_measure.dart';
 import 'package:cookza/viewmodel/settings/theme_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_translate/localization.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../mocks/navigator_observer_mock.dart';
 import '../mocks/unit_of_measure_provider_mock.dart';
@@ -24,9 +25,8 @@ void main() {
   var observer = MockNavigatorObserver();
 
   setUpAll(() {
-    Map<String, dynamic> translations = {};
-    Localization.load(translations);
     SharedPreferences.setMockInitialValues({});
+    GetIt.I.registerSingleton<NavigatorService>(NavigatorService());
     GetIt.I
         .registerSingleton<UnitOfMeasureProvider>(UnitOfMeasureProviderMock());
     GetIt.I.registerSingletonAsync<SharedPreferencesProvider>(
@@ -41,7 +41,7 @@ void main() {
     // open fake app
     await _initApp(tester, observer);
 
-    var tile = find.text('ui.import');
+    var tile = find.text('Import');
     expect(tile, findsOneWidget);
   });
 
@@ -49,7 +49,7 @@ void main() {
     // open fake app
     await _initApp(tester, observer);
 
-    var tile = find.text('ui.export');
+    var tile = find.text('Export');
     expect(tile, findsOneWidget);
 
     await tester.tap(tile);
@@ -64,7 +64,7 @@ void main() {
     // open fake app
     await _initApp(tester, observer);
 
-    var tile = find.text('recipe.unitLongPlural');
+    var tile = find.text('Units of Measure');
     expect(tile, findsOneWidget);
 
     await tester.tap(tile);
@@ -79,7 +79,7 @@ void main() {
     // open fake app
     await _initApp(tester, observer);
 
-    var tile = find.text('theme.title');
+    var tile = find.text('Themes');
     expect(tile, findsOneWidget);
 
     await tester.tap(tile);
@@ -94,7 +94,7 @@ void main() {
     // open fake app
     await _initApp(tester, observer);
 
-    var tile = find.text('functions.mealPlanner');
+    var tile = find.text('Meal Planner');
     expect(tile, findsOneWidget);
 
     await tester.tap(tile);
@@ -109,7 +109,7 @@ void main() {
     // open fake app
     await _initApp(tester, observer);
 
-    var tile = find.text('functions.shoppingList');
+    var tile = find.text('Shopping List');
     expect(tile, findsOneWidget);
 
     await tester.tap(tile);
@@ -124,7 +124,7 @@ void main() {
     // open fake app
     await _initApp(tester, observer);
 
-    var aboutTile = find.text('About app.title');
+    var aboutTile = find.text('About Cookza');
     expect(aboutTile, findsOneWidget);
 
     await tester.tap(aboutTile);
@@ -143,6 +143,10 @@ Future<void> _initApp(WidgetTester tester, NavigatorObserver observer) async {
       builder: (context, child) {
         return MaterialApp(
             routes: kRoutes,
+            navigatorKey: GetIt.I.get<NavigatorService>().navigatorKey,
+            localizationsDelegates: [
+              AppLocalizations.delegate,
+            ],
             navigatorObservers: [observer],
             home: SettingsScreen());
       },

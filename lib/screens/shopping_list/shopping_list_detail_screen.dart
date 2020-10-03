@@ -1,26 +1,21 @@
 import 'package:cookza/constants.dart';
-import 'package:cookza/localization/keys.dart';
 import 'package:cookza/screens/new_ingredient_screen.dart';
 import 'package:cookza/services/abstract/shopping_list_text_export.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:cookza/viewmodel/recipe_edit/recipe_ingredient_model.dart';
 import 'package:cookza/viewmodel/shopping_list/shopping_list_detail.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/flutter_translate.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 class PopupMenuButtonChoices {
-  final _key;
   final _icon;
-  const PopupMenuButtonChoices._internal(this._key, this._icon);
-  toString() => translate(_key);
+  const PopupMenuButtonChoices._internal(this._icon);
   IconData get icon => this._icon;
 
-  static const SHARE =
-      const PopupMenuButtonChoices._internal(Keys.Ui_Share, Icons.share);
-  static const ADD_ITEM = const PopupMenuButtonChoices._internal(
-      Keys.Ui_Shoppinglist_Additem, Icons.add);
+  static const SHARE = const PopupMenuButtonChoices._internal(Icons.share);
+  static const ADD_ITEM = const PopupMenuButtonChoices._internal(Icons.add);
 }
 
 class ShoppingListDetailScreen extends StatelessWidget {
@@ -46,7 +41,7 @@ class ShoppingListDetailScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Icon(PopupMenuButtonChoices.SHARE.icon),
-                            Text(PopupMenuButtonChoices.SHARE.toString())
+                            Text(AppLocalizations.of(context).share)
                           ],
                         ),
                         value: PopupMenuButtonChoices.SHARE,
@@ -56,7 +51,7 @@ class ShoppingListDetailScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Icon(PopupMenuButtonChoices.ADD_ITEM.icon),
-                            Text(PopupMenuButtonChoices.ADD_ITEM.toString())
+                            Text(AppLocalizations.of(context).addItem)
                           ],
                         ),
                         value: PopupMenuButtonChoices.ADD_ITEM,
@@ -113,8 +108,7 @@ class ShoppingListDetailScreen extends StatelessWidget {
                             ),
                           ),
                           Center(
-                              child:
-                                  Text(translate(Keys.Ui_Shoppinglist_Noitems)))
+                              child: Text(AppLocalizations.of(context).noItems))
                         ]),
                   );
                 }

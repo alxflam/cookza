@@ -1,19 +1,20 @@
 import 'package:cookza/constants.dart';
-import 'package:cookza/localization/keys.dart';
 import 'package:cookza/model/entities/abstract/recipe_entity.dart';
+import 'package:cookza/services/flutter/navigator_service.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:cookza/services/unit_of_measure.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 
 abstract class RecipeTextGenerator {
-  Future<String> generateRecipeText(List<RecipeEntity> entities);
+  Future<String> generateRecipeText(List<RecipeEntity> entities,
+      String ingredientsTitle, String instructionsTitle);
 }
 
 class RecipeTextGeneratorImpl implements RecipeTextGenerator {
   var uomProvider = sl.get<UnitOfMeasureProvider>();
 
   @override
-  Future<String> generateRecipeText(List<RecipeEntity> entities) async {
+  Future<String> generateRecipeText(List<RecipeEntity> entities,
+      String ingredientsTitle, String instructionsTitle) async {
     var buffer = new StringBuffer();
 
     for (var entity in entities) {
@@ -27,7 +28,7 @@ class RecipeTextGeneratorImpl implements RecipeTextGenerator {
 
       buffer.writeln();
       buffer.write('*');
-      buffer.write(translatePlural(Keys.Recipe_Ingredient, 2));
+      buffer.write(ingredientsTitle);
       buffer.write('*');
       buffer.writeln();
       for (var ingredient in await entity.ingredients) {
@@ -54,7 +55,7 @@ class RecipeTextGeneratorImpl implements RecipeTextGenerator {
 
       buffer.writeln();
       buffer.write('*');
-      buffer.write(translate(Keys.Recipe_Instructions));
+      buffer.write(instructionsTitle);
       buffer.write('*');
       buffer.writeln();
       var counter = 1;

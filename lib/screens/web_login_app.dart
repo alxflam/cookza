@@ -1,12 +1,11 @@
 import 'package:cookza/constants.dart';
-import 'package:cookza/localization/keys.dart';
 import 'package:cookza/model/firebase/general/firebase_handshake.dart';
 import 'package:cookza/services/abstract/platform_info.dart';
 import 'package:cookza/services/firebase_provider.dart';
 import 'package:cookza/services/mobile/qr_scanner.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/flutter_translate.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
@@ -17,7 +16,7 @@ class WebLoginOnAppScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('${translate(Keys.App_Title)} ${translate(Keys.Ui_Web)}'),
+        title: Text('$kAppName ${AppLocalizations.of(context).web}'),
         actions: [
           IconButton(
             icon: Icon(Icons.add),
@@ -108,7 +107,7 @@ class LogIns extends StatelessWidget {
                 SizedBox(
                   width: 20,
                 ),
-                Text(translate(Keys.Ui_Logoutalldevices)),
+                Text(AppLocalizations.of(context).logoutAllDevices),
               ],
             ),
           ),

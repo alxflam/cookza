@@ -8,6 +8,7 @@ import 'package:cookza/screens/recipe_modify/new_recipe_screen.dart';
 import 'package:cookza/screens/recipe_modify/tag_step.dart';
 import 'package:cookza/screens/recipe_view/overview_tab.dart';
 import 'package:cookza/services/abstract/receive_intent_handler.dart';
+import 'package:cookza/services/flutter/navigator_service.dart';
 import 'package:cookza/services/recipe/image_manager.dart';
 import 'package:cookza/services/recipe/recipe_manager.dart';
 import 'package:cookza/services/shared_preferences_provider.dart';
@@ -16,11 +17,11 @@ import 'package:cookza/services/unit_of_measure.dart';
 import 'package:cookza/viewmodel/settings/theme_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_translate/localization.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../mocks/application_mock.dart';
 import '../mocks/image_manager_mock.dart';
@@ -32,6 +33,7 @@ import '../mocks/uom_provider_mock.dart';
 void main() {
   var mock = RecipeManagerStub();
   var imageMock = ImageManagerMock();
+  GetIt.I.registerSingleton<NavigatorService>(NavigatorService());
   GetIt.I.registerSingleton<RecipeManager>(mock);
   GetIt.I.registerSingleton<ImageManager>(imageMock);
   GetIt.I.registerSingleton<SimilarityService>(SimilarityService());
@@ -42,18 +44,6 @@ void main() {
   });
 
   setUpAll(() {
-    Map<String, dynamic> translations = {};
-    translations.putIfAbsent(
-        'ui',
-        () => {
-              'recipe': {'else': 'ui.recipe'}
-            });
-    translations.putIfAbsent(
-        'recipe',
-        () => {
-              'ingredient': {'else': 'recipe.ingredient'}
-            });
-    Localization.load(translations);
     SharedPreferences.setMockInitialValues({});
     GetIt.I.registerSingletonAsync<SharedPreferencesProvider>(
         () async => SharedPreferencesProviderImpl().init());
@@ -65,13 +55,13 @@ void main() {
     await setupApplication(tester);
     await _navigateToNewRecipeScreen(tester);
 
-    expect(find.text('recipe.recipeName'), findsOneWidget);
-    expect(find.text('recipe.recipeDesc'), findsOneWidget);
-    expect(find.text('recipe.duration:'), findsOneWidget);
+    expect(find.text('Recipe Name'), findsOneWidget);
+    expect(find.text('Recipe Description'), findsOneWidget);
+    expect(find.text('Duration:'), findsOneWidget);
 
-    expect(find.text('recipe.difficulty.easy'), findsOneWidget);
-    expect(find.text('recipe.difficulty.medium'), findsOneWidget);
-    expect(find.text('recipe.difficulty.hard'), findsOneWidget);
+    expect(find.text('easy'), findsOneWidget);
+    expect(find.text('medium'), findsOneWidget);
+    expect(find.text('hard'), findsOneWidget);
   });
 
   testWidgets('test create a recipe', (WidgetTester tester) async {
@@ -80,13 +70,12 @@ void main() {
 
     /// add name
     var nameInput = find.ancestor(
-        of: find.text('recipe.recipeName'),
-        matching: find.byType(TextFormField));
+        of: find.text('Recipe Name'), matching: find.byType(TextFormField));
     await _inputFormField(tester, nameInput, 'My simple recipe');
 
     /// add desc
     var descInput = find.ancestor(
-        of: find.text('recipe.recipeDesc'),
+        of: find.text('Recipe Description'),
         matching: find.byType(TextFormField));
     await _inputFormField(tester, descInput, 'My Desc');
 
@@ -106,7 +95,7 @@ void main() {
     expect(find.byType(SwitchListTile), findsNWidgets(4));
 
     // make the recipe vegetarian
-    var veggie = find.text('recipe.tags.vegetarian');
+    var veggie = find.text('Vegetarian');
     await tester.tap(veggie);
     await tester.pumpAndSettle();
 
@@ -126,7 +115,7 @@ void main() {
 
     /// set amount
     var amountInput = find.ancestor(
-        of: find.text('recipe.amount'), matching: find.byType(TextFormField));
+        of: find.text('Amount'), matching: find.byType(TextFormField));
     await _inputFormField(tester, amountInput, '10');
     expect(find.text('10'), findsOneWidget);
 
@@ -228,7 +217,7 @@ _navigateToNewRecipeScreen(WidgetTester tester) async {
   await tester.pumpWidget(MockApplication(mockObserver: mockObserver));
 
   expect(find.byType(MainFunctionCard), findsWidgets);
-  await tester.tap(find.text('functions.addRecipe'));
+  await tester.tap(find.text('New Recipe'));
   await tester.pumpAndSettle();
 
   /// Verify that a push event happened
@@ -248,6 +237,9 @@ _inputFormField(WidgetTester tester, Finder finder, String value) async {
 Future setupApplication(WidgetTester tester) async {
   await tester.pumpWidget(MaterialApp(
     routes: kRoutes,
+    localizationsDelegates: [
+      AppLocalizations.delegate,
+    ],
     home: ChangeNotifierProvider<ThemeModel>(
       create: (context) => ThemeModel(),
       child: HomeScreen(),

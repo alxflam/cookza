@@ -15,10 +15,10 @@ import 'package:cookza/services/shopping_list/shopping_list_manager.dart';
 import 'package:cookza/viewmodel/settings/theme_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_translate/localization.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../mocks/firebase_provider_mock.dart';
 import '../mocks/image_manager_mock.dart';
@@ -32,18 +32,6 @@ void main() {
   var recipeManager = RecipeManagerStub();
 
   setUpAll(() {
-    Map<String, dynamic> translations = {};
-    translations.putIfAbsent(
-        'ui',
-        () => {
-              'recipe': {'else': 'ui.recipe'}
-            });
-    translations.putIfAbsent(
-        'recipe',
-        () => {
-              'ingredient': {'else': 'recipe.ingredient'}
-            });
-    Localization.load(translations);
     SharedPreferences.setMockInitialValues({});
     GetIt.I.registerSingletonAsync<SharedPreferencesProvider>(
         () async => SharedPreferencesProviderImpl().init());
@@ -172,6 +160,9 @@ class MockApplication extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       navigatorObservers: [mockObserver],
+      localizationsDelegates: [
+        AppLocalizations.delegate,
+      ],
       routes: kRoutes,
       home: ChangeNotifierProvider<ThemeModel>(
         create: (context) => ThemeModel(),

@@ -19,6 +19,11 @@ Run the following command to built an apk for ARM64
 The following command generates models (annoted with @JsonSerializable) and internationalization (see lib/localization) constants.
 * flutter pub run build_runner build --delete-conflicting-outputs
 
+## Generating translations
+
+Needed to generate for first run after checkout as the generated classes are not checked in.
+* flutter gen-l10n
+
 ## Cloud Firestore Scheme
 
 * don't directly use the DataProvider

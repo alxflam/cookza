@@ -1,7 +1,6 @@
-import 'package:cookza/localization/keys.dart';
 import 'package:cookza/viewmodel/settings/meal_plan_settings_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/flutter_translate.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 class MealPlanSettingsScreen extends StatelessWidget {
@@ -14,7 +13,7 @@ class MealPlanSettingsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          translate(Keys.Functions_Mealplanner),
+          AppLocalizations.of(context).functionsMealPlanner,
         ),
       ),
       body: ChangeNotifierProvider<MealPlanSettingsModel>.value(
@@ -25,10 +24,10 @@ class MealPlanSettingsScreen extends StatelessWidget {
             return ListView(
               children: <Widget>[
                 ListTile(
-                  title: Text(translate(Keys.Settings_Weekdurationdesc)),
+                  title: Text(AppLocalizations.of(context).weekDurationDesc),
                 ),
                 RadioListTile(
-                  title: Text(translate(Keys.Settings_Oneweek)),
+                  title: Text(AppLocalizations.of(context).oneWeek),
                   value: 1,
                   groupValue: model.weeks,
                   onChanged: (isActive) async {
@@ -36,7 +35,7 @@ class MealPlanSettingsScreen extends StatelessWidget {
                   },
                 ),
                 RadioListTile(
-                  title: Text(translate(Keys.Settings_Twoweeks)),
+                  title: Text(AppLocalizations.of(context).twoWeeks),
                   value: 2,
                   groupValue: model.weeks,
                   onChanged: (isActive) async {
@@ -45,12 +44,12 @@ class MealPlanSettingsScreen extends StatelessWidget {
                 ),
                 Divider(),
                 ListTile(
-                  title: Text(translate(Keys.Settings_Stdservingsdesc)),
+                  title: Text(AppLocalizations.of(context).stdServingsDesc),
                 ),
                 ListTile(
-                  title: Text(translate(Keys.Settings_Stdservings)),
+                  title: Text(AppLocalizations.of(context).stdServings),
                   subtitle: Text(
-                      '${model.standardServingsSize} ${translate(Keys.Recipe_Servings)}'),
+                      '${model.standardServingsSize} ${AppLocalizations.of(context).servings}'),
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20),
@@ -58,7 +57,7 @@ class MealPlanSettingsScreen extends StatelessWidget {
                     value: model.standardServingsSize.toDouble(),
                     max: 10,
                     min: 1,
-                    label: translate(Keys.Recipe_Servings),
+                    label: AppLocalizations.of(context).servings,
                     onChanged: (value) {
                       model.setStandardServingsSize(value.toInt());
                     },

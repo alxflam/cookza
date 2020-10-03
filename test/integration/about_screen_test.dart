@@ -1,18 +1,17 @@
 import 'package:cookza/routes.dart';
 import 'package:cookza/screens/settings/about_screen.dart';
 import 'package:cookza/screens/settings/changelog_screen.dart';
-import 'package:cookza/screens/settings/error_log_screen.dart';
 import 'package:cookza/screens/settings/onboarding_screen.dart';
 import 'package:cookza/screens/settings/saved_images_screen.dart';
 import 'package:cookza/services/shared_preferences_provider.dart';
 import 'package:cookza/viewmodel/settings/theme_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_translate/localization.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../mocks/navigator_observer_mock.dart';
 
@@ -20,22 +19,16 @@ void main() {
   var observer = MockNavigatorObserver();
 
   setUpAll(() {
-    Map<String, dynamic> translations = {};
-    Localization.load(translations);
     SharedPreferences.setMockInitialValues({});
     GetIt.I.registerSingletonAsync<SharedPreferencesProvider>(
         () async => SharedPreferencesProviderImpl().init());
-  });
-
-  setUp(() {
-    //
   });
 
   testWidgets('Onboarding tile exists', (WidgetTester tester) async {
     // open fake app
     await _initApp(tester, observer);
 
-    var tile = find.text('settings.getStarted');
+    var tile = find.text('Get Started');
     expect(tile, findsOneWidget);
 
     await tester.tap(tile);
@@ -49,7 +42,7 @@ void main() {
     // open fake app
     await _initApp(tester, observer);
 
-    var tile = find.text('settings.copyright');
+    var tile = find.text('© 2020 The Great Cookza Foundation');
     expect(tile, findsOneWidget);
   });
 
@@ -57,7 +50,7 @@ void main() {
     // open fake app
     await _initApp(tester, observer);
 
-    var tile = find.text('settings.changelog');
+    var tile = find.text('Changelog');
     expect(tile, findsOneWidget);
 
     await tester.tap(tile);
@@ -71,7 +64,7 @@ void main() {
     // open fake app
     await _initApp(tester, observer);
 
-    var tile = find.text('settings.localImages');
+    var tile = find.text('Local Images');
     expect(tile, findsOneWidget);
 
     await tester.tap(tile);
@@ -85,7 +78,7 @@ void main() {
     // open fake app
     await _initApp(tester, observer);
 
-    var tile = find.text('settings.support');
+    var tile = find.text('Support');
     expect(tile, findsOneWidget);
   });
 
@@ -93,7 +86,7 @@ void main() {
     // open fake app
     await _initApp(tester, observer);
 
-    var tile = find.text('settings.deleteAllData');
+    var tile = find.text('Delete all data');
     expect(tile, findsOneWidget);
 
     await tester.tap(tile);
@@ -115,7 +108,7 @@ void main() {
     // open fake app
     await _initApp(tester, observer);
 
-    var tile = find.text('settings.privacyStatement');
+    var tile = find.text('Data Privacy Statement');
     expect(tile, findsOneWidget);
   });
 
@@ -123,7 +116,7 @@ void main() {
     // open fake app
     await _initApp(tester, observer);
 
-    var tile = find.text('settings.termsOfUse');
+    var tile = find.text('Terms of Use');
     expect(tile, findsOneWidget);
   });
 
@@ -131,13 +124,11 @@ void main() {
     // open fake app
     await _initApp(tester, observer);
 
-    var tile = find.text('settings.errorLog');
+    var tile = find.text('Error Log');
     expect(tile, findsOneWidget);
 
     await tester.tap(tile);
-    await tester.pumpAndSettle();
-
-    expect(find.byType(ErrorLogScreen), findsOneWidget);
+    verify(observer.didPush(any, any));
   });
 }
 
@@ -149,6 +140,9 @@ Future<void> _initApp(WidgetTester tester, NavigatorObserver observer) async {
         return MaterialApp(
             routes: kRoutes,
             navigatorObservers: [observer],
+            localizationsDelegates: [
+              AppLocalizations.delegate,
+            ],
             home: AboutScreen());
       },
     ),

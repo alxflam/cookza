@@ -1,14 +1,13 @@
 import 'dart:convert';
 
 import 'package:cookza/components/padded_qr_code.dart';
-import 'package:cookza/localization/keys.dart';
 import 'package:cookza/model/entities/abstract/user_entity.dart';
 import 'package:cookza/model/json/user.dart';
 import 'package:cookza/services/firebase_provider.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:cookza/services/shared_preferences_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/flutter_translate.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ShareAccountScreen extends StatelessWidget {
   static final String id = 'shareAccount';
@@ -17,7 +16,7 @@ class ShareAccountScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(translate(Keys.Ui_Shareaccount)),
+        title: Text(AppLocalizations.of(context).shareAccount),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -54,7 +53,7 @@ class ShareAccountScreen extends StatelessWidget {
 
               if (id == null || name == null) {
                 return Center(
-                  child: Text(translate(Keys.Ui_Enterusername)),
+                  child: Text(AppLocalizations.of(context).enterUsername),
                 );
               }
 

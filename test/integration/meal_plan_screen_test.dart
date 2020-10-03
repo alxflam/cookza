@@ -10,11 +10,11 @@ import 'package:cookza/services/shared_preferences_provider.dart';
 import 'package:cookza/viewmodel/settings/theme_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_translate/localization.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../mocks/meal_plan_manager_mock.dart';
 import '../mocks/navigator_observer_mock.dart';
@@ -27,8 +27,6 @@ void main() {
   var mockObserver = MockNavigatorObserver();
 
   setUpAll(() {
-    Map<String, dynamic> translations = {};
-    Localization.load(translations);
     SharedPreferences.setMockInitialValues({});
     GetIt.I.registerSingleton<RecipeManager>(recipeManager);
     GetIt.I.registerSingleton<MealPlanManager>(mealPlanManager);
@@ -281,8 +279,7 @@ void main() {
     verify(mockObserver.didPush(any, any));
 
     var noteFinder = find.descendant(
-        of: find.byType(RaisedButton),
-        matching: find.text('ui.mealPlan.addNote'));
+        of: find.byType(RaisedButton), matching: find.text('Note'));
     await tester.tap(noteFinder);
     await tester.pumpAndSettle();
 
@@ -357,6 +354,9 @@ Future<void> _initApp(WidgetTester tester, NavigatorObserver observer) async {
   await tester.pumpWidget(MaterialApp(
     routes: kRoutes,
     navigatorObservers: [observer],
+    localizationsDelegates: [
+      AppLocalizations.delegate,
+    ],
     home: ChangeNotifierProvider<ThemeModel>(
       create: (context) => ThemeModel(),
       child: MealPlanScreen(),

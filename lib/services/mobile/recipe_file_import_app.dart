@@ -10,8 +10,7 @@ import 'package:cookza/services/abstract/recipe_file_import.dart';
 import 'package:cookza/viewmodel/recipe_view/recipe_view_model.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/flutter_translate.dart';
-import 'package:cookza/localization/keys.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class RecipeFileImportImpl extends RecipeFileImport {
   @override
@@ -29,13 +28,13 @@ class RecipeFileImportImpl extends RecipeFileImport {
     List<Recipe> result = [];
     if (file == null) {
       Scaffold.of(context).showSnackBar(
-          SnackBar(content: Text(translate(Keys.Ui_Nofileselected))));
+          SnackBar(content: Text(AppLocalizations.of(context).noFileSelected)));
 
       return; // no file selected
     }
     if (!file.existsSync()) {
       Scaffold.of(context).showSnackBar(
-          SnackBar(content: Text(translate(Keys.Ui_Filenotfound))));
+          SnackBar(content: Text(AppLocalizations.of(context).fileNotFound)));
       return;
     }
 

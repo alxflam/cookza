@@ -1,4 +1,7 @@
+import 'package:cookza/services/flutter/navigator_service.dart';
+import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 final kAllThemes = {
   'dark': DarkTheme.create(),
@@ -13,6 +16,8 @@ abstract class CustomTheme {
   Color get appIconColor;
 
   String get id;
+
+  String get displayName;
 }
 
 final kDarkTheme = ThemeData.dark().copyWith(
@@ -39,6 +44,12 @@ class DarkTheme extends CustomTheme {
 
   @override
   String get id => 'dark';
+
+  @override
+  String get displayName {
+    var context = sl.get<NavigatorService>().currentContext;
+    return AppLocalizations.of(context).themeDark;
+  }
 }
 
 final kLightTheme = ThemeData.light().copyWith();
@@ -60,4 +71,10 @@ class LightTheme extends CustomTheme {
 
   @override
   String get id => 'light';
+
+  @override
+  String get displayName {
+    var context = sl.get<NavigatorService>().currentContext;
+    return AppLocalizations.of(context).themeLight;
+  }
 }

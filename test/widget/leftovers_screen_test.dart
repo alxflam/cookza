@@ -7,13 +7,13 @@ import 'package:cookza/services/recipe/similarity_service.dart';
 import 'package:cookza/viewmodel/settings/theme_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_translate/localization.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../mocks/receive_intent_handler_mock.dart';
 import '../mocks/recipe_manager_mock.dart';
+import '../utils/localization_parent.dart';
 import '../utils/recipe_creator.dart';
 
 void main() {
@@ -26,18 +26,6 @@ void main() {
   });
 
   setUpAll(() {
-    Map<String, dynamic> translations = {};
-    translations.putIfAbsent(
-        'ui',
-        () => {
-              'recipe': {'else': 'ui.recipe'}
-            });
-    translations.putIfAbsent(
-        'recipe',
-        () => {
-              'ingredient': {'else': 'recipe.ingredient'}
-            });
-    Localization.load(translations);
     SharedPreferences.setMockInitialValues({});
     GetIt.I.registerSingletonAsync<SharedPreferencesProvider>(
         () async => SharedPreferencesProviderImpl().init());
@@ -96,7 +84,7 @@ void main() {
     final cardFinder = find.byType(Card);
     expect(cardFinder, findsOneWidget);
 
-    final errorMessage = find.text('ui.noRecipesFound');
+    final errorMessage = find.text('No recipes found');
     expect(errorMessage, findsOneWidget);
   });
 
@@ -174,7 +162,7 @@ Future setupScreen(WidgetTester tester) async {
   await tester.pumpWidget(MaterialApp(
     home: ChangeNotifierProvider<ThemeModel>(
       create: (context) => ThemeModel(),
-      child: LeftoversScreen(),
+      child: LocalizationParent(LeftoversScreen()),
     ),
   ));
 }

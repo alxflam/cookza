@@ -1,10 +1,10 @@
 import 'package:cookza/constants.dart';
-import 'package:cookza/localization/keys.dart';
 import 'package:cookza/services/abstract/pdf_generator.dart';
+import 'package:cookza/services/flutter/navigator_service.dart';
 import 'package:cookza/services/recipe/image_manager.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:cookza/viewmodel/recipe_view/recipe_view_model.dart';
-import 'package:flutter_translate/flutter_translate.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -12,11 +12,12 @@ import 'package:pdf/widgets.dart' as pw;
 class PDFGeneratorImpl implements PDFGenerator {
   List<List<String>> _getIngredientList(RecipeViewModel recipe) {
     List<List<String>> result = [];
+    var context = sl.get<NavigatorService>().currentContext;
 
     result.add([
-      translate(Keys.Recipe_Amount),
-      translate(Keys.Recipe_Unit),
-      translatePlural(Keys.Recipe_Ingredient, 1)
+      AppLocalizations.of(context).amount,
+      AppLocalizations.of(context).unit,
+      AppLocalizations.of(context).ingredient(1)
     ]);
 
     for (var ingredient in recipe.ingredients) {
@@ -41,6 +42,7 @@ class PDFGeneratorImpl implements PDFGenerator {
   @override
   Future<pw.Document> generatePDF(List<RecipeViewModel> recipes) async {
     final doc = pw.Document();
+    var buildContext = sl.get<NavigatorService>().currentContext;
 
     for (var recipeViewModel in recipes) {
       var imageFile = await sl
@@ -115,7 +117,8 @@ class PDFGeneratorImpl implements PDFGenerator {
                 : pw.Container(),
             pw.Paragraph(text: recipeViewModel.description),
             pw.Header(
-                level: 1, text: translatePlural(Keys.Recipe_Ingredient, 2)),
+                level: 1,
+                text: AppLocalizations.of(buildContext).ingredient(2)),
             pw.Table.fromTextArray(
               context: context,
               border: pw.TableBorder(
@@ -130,7 +133,8 @@ class PDFGeneratorImpl implements PDFGenerator {
               cellAlignment: pw.Alignment.center,
               data: _getIngredientList(recipeViewModel),
             ),
-            pw.Header(level: 1, text: translate(Keys.Recipe_Instructions)),
+            pw.Header(
+                level: 1, text: AppLocalizations.of(buildContext).instructions),
             pw.Column(
               children: _getInstructions(recipeViewModel),
             ),

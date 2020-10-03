@@ -4,18 +4,15 @@ import 'package:cookza/services/shared_preferences_provider.dart';
 import 'package:cookza/viewmodel/recipe_view/recipe_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_translate/localization.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../utils/localization_parent.dart';
 import '../../utils/recipe_creator.dart';
 
 void main() {
   setUpAll(() {
-    Map<String, dynamic> translations = {};
-
-    Localization.load(translations);
     SharedPreferences.setMockInitialValues({});
 
     GetIt.I.registerSingletonAsync<SharedPreferencesProvider>(
@@ -42,7 +39,7 @@ Future _startWidget(WidgetTester tester, RecipeViewModel viewModel) async {
     home: Material(
       child: ChangeNotifierProvider<RecipeViewModel>.value(
         value: viewModel,
-        child: InstructionsTab(),
+        child: LocalizationParent(InstructionsTab()),
       ),
     ),
   ));

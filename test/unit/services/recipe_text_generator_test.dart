@@ -4,19 +4,11 @@ import 'package:cookza/model/entities/mutable/mutable_recipe.dart';
 import 'package:cookza/services/recipe/recipe_text_generator.dart';
 import 'package:cookza/services/unit_of_measure.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_translate/localization.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../mocks/uom_provider_mock.dart';
 
 void main() {
-  Map<String, dynamic> translations = {};
-  translations.putIfAbsent(
-      'recipe',
-      () => {
-            'ingredient': {'else': 'ingredient'}
-          });
-  Localization.load(translations);
   GetIt.I.registerSingleton<UnitOfMeasureProvider>(UoMMock());
 
   var cut = RecipeTextGeneratorImpl();
@@ -44,15 +36,18 @@ void main() {
 
     recipe.ingredientList = [pepper, onion];
 
-    var result = await cut.generateRecipeText([recipe]);
+    var ingTitle = 'Ingredients';
+    var insTitle = 'Instructions';
+
+    var result = await cut.generateRecipeText([recipe], ingTitle, insTitle);
     var expectedResult = '''*A recipe name*
 A description
 
-*ingredient*
+*$ingTitle*
 • Pepper (4 GRM)
 • Onion (2 PCS)
 
-*recipe.instructions*
+*$insTitle*
 1. First step
 2. Second step
 ''';

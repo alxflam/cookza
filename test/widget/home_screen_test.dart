@@ -4,17 +4,15 @@ import 'package:cookza/services/shared_preferences_provider.dart';
 import 'package:cookza/viewmodel/settings/theme_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_translate/localization.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../mocks/receive_intent_handler_mock.dart';
+import '../utils/localization_parent.dart';
 
 void main() {
   setUpAll(() {
-    Map<String, dynamic> translations = {};
-    Localization.load(translations);
     SharedPreferences.setMockInitialValues({});
     GetIt.I.registerSingletonAsync<SharedPreferencesProvider>(
         () async => SharedPreferencesProviderImpl().init());
@@ -26,23 +24,23 @@ void main() {
     await tester.pumpWidget(MaterialApp(
       home: ChangeNotifierProvider<ThemeModel>(
         create: (context) => ThemeModel(),
-        child: HomeScreen(),
+        child: LocalizationParent(HomeScreen()),
       ),
     ));
 
-    final addRecipe = find.text('functions.addRecipe');
+    final addRecipe = find.text('New Recipe');
     expect(addRecipe, findsOneWidget);
 
-    final mealPlanner = find.text('functions.mealPlanner');
+    final mealPlanner = find.text('Meal Planner');
     expect(mealPlanner, findsOneWidget);
 
-    final leftovers = find.text('functions.leftovers');
+    final leftovers = find.text('Leftover Reuse');
     expect(leftovers, findsOneWidget);
 
-    final shoppingList = find.text('functions.shoppingList');
+    final shoppingList = find.text('Shopping List');
     expect(shoppingList, findsOneWidget);
 
-    final listRecipes = find.text('functions.listRecipes');
+    final listRecipes = find.text('List Recipes');
     expect(listRecipes, findsOneWidget);
   });
 }

@@ -1,5 +1,4 @@
 import 'package:cookza/constants.dart';
-import 'package:cookza/localization/keys.dart';
 import 'package:cookza/screens/ocr_creation/ingredients_image_step.dart';
 import 'package:cookza/screens/ocr_creation/instruction_image_step.dart';
 import 'package:cookza/screens/ocr_creation/overview_image_step.dart';
@@ -14,7 +13,7 @@ import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:cookza/viewmodel/recipe_edit/recipe_edit_model.dart';
 import 'package:cookza/viewmodel/recipe_edit/recipe_edit_step.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/flutter_translate.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
@@ -49,13 +48,10 @@ Future<void> saveModel(BuildContext context, RecipeEditModel model) async {
     // close progress dialog
     Navigator.pop(context);
     // show errors and exit
-    kErrorDialog(
-        context, translate(Keys.Ui_Saverecipevalidation), e.toString());
+    kErrorDialog(context, AppLocalizations.of(context).saveRecipeValidation,
+        e.toString());
     return;
   }
-
-  // close progress dialog
-  Navigator.pop(context);
 
   if (model.isCreate) {
     // create: navigate to recipe view in case save was successful
@@ -70,6 +66,8 @@ Future<void> saveModel(BuildContext context, RecipeEditModel model) async {
     }
   } else {
     // update: just pop the screen off, user returns to recipe view and can update the view based on the returned model
+    // needs to pop off two screens: progress dialog and wizard
+    Navigator.pop(context);
     Navigator.pop(context, model.targetEntity);
   }
 }
@@ -84,8 +82,8 @@ class NewRecipeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: model.isCreate
-            ? Text(translate(Keys.Recipe_Createrecipe))
-            : Text(translate(Keys.Recipe_Editrecipe)),
+            ? Text(AppLocalizations.of(context).createRecipe)
+            : Text(AppLocalizations.of(context).editRecipe),
         actions: <Widget>[
           IconButton(
             icon: FaIcon(FontAwesomeIcons.save),

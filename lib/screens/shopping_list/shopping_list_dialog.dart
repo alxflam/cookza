@@ -1,5 +1,4 @@
 import 'package:cookza/constants.dart';
-import 'package:cookza/localization/keys.dart';
 import 'package:cookza/model/entities/abstract/meal_plan_collection_entity.dart';
 import 'package:cookza/model/entities/mutable/mutable_shopping_list.dart';
 import 'package:cookza/screens/shopping_list/shopping_list_detail_screen.dart';
@@ -9,7 +8,7 @@ import 'package:cookza/services/shopping_list/shopping_list_manager.dart';
 import 'package:cookza/services/util/week_calculation.dart';
 import 'package:cookza/viewmodel/shopping_list/shopping_list_detail.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/flutter_translate.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -22,7 +21,7 @@ Future<void> openShoppingListDialog(BuildContext context) async {
 
   if (collections.isEmpty) {
     Scaffold.of(context).showSnackBar(
-        SnackBar(content: Text(translate(Keys.Ui_Shoppinglist_Nomealplan))));
+        SnackBar(content: Text(AppLocalizations.of(context).noMealPlan)));
     return;
   }
 
@@ -178,7 +177,7 @@ Widget _getMealPlanGroupDropDown(
               items: items,
               decoration: InputDecoration(
                 isDense: true,
-                labelText: translate(Keys.Functions_Mealplanner),
+                labelText: AppLocalizations.of(context).functionsMealPlanner,
               ),
               onChanged: (MealPlanCollectionEntity value) {
                 model.groupID = value.id;

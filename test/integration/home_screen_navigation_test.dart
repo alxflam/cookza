@@ -9,7 +9,6 @@ import 'package:cookza/services/flutter/navigator_service.dart';
 import 'package:cookza/services/recipe/recipe_manager.dart';
 import 'package:cookza/services/shared_preferences_provider.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_translate/localization.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -22,18 +21,6 @@ import '../mocks/recipe_manager_mock.dart';
 
 void main() {
   setUpAll(() {
-    Map<String, dynamic> translations = {};
-    translations.putIfAbsent(
-        'ui',
-        () => {
-              'recipe': {'else': 'ui.recipe'}
-            });
-    translations.putIfAbsent(
-        'recipe',
-        () => {
-              'ingredient': {'else': 'recipe.ingredient'}
-            });
-    Localization.load(translations);
     SharedPreferences.setMockInitialValues({});
     GetIt.I.registerSingletonAsync<SharedPreferencesProvider>(
         () async => SharedPreferencesProviderImpl().init());
@@ -59,18 +46,18 @@ void main() {
   }
 
   testWidgets('Navigate to add new recipe', (WidgetTester tester) async {
-    _verifyNavigation(tester, 'functions.addRecipe', NewRecipeScreen);
+    _verifyNavigation(tester, 'New Recipe', NewRecipeScreen);
   });
 
   testWidgets('Navigate to recipe list', (WidgetTester tester) async {
-    _verifyNavigation(tester, 'functions.listRecipes', RecipeListScreen);
+    _verifyNavigation(tester, 'List Recipes', RecipeListScreen);
   });
 
   testWidgets('Navigate to meal plan', (WidgetTester tester) async {
-    _verifyNavigation(tester, 'functions.mealPlanner', MealPlanScreen);
+    _verifyNavigation(tester, 'Meal Planner', MealPlanScreen);
   });
 
   testWidgets('Navigate to leftovers', (WidgetTester tester) async {
-    _verifyNavigation(tester, 'functions.leftovers', LeftoversScreen);
+    _verifyNavigation(tester, 'Leftover Reuse', LeftoversScreen);
   });
 }

@@ -1,6 +1,5 @@
 import 'package:cookza/components/main_app_drawer.dart';
 import 'package:cookza/constants.dart';
-import 'package:cookza/localization/keys.dart';
 import 'package:cookza/screens/leftovers_screen.dart';
 import 'package:cookza/screens/meal_plan/meal_plan_screen.dart';
 import 'package:cookza/screens/recipe_list_screen.dart';
@@ -13,9 +12,9 @@ import 'package:cookza/viewmodel/settings/theme_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomeScreen extends StatelessWidget {
   static final id = 'home';
@@ -50,7 +49,7 @@ class HomeScreen extends StatelessWidget {
       drawer: MainAppDrawer(),
       appBar: AppBar(
         title: Text(
-          translate(Keys.App_Title),
+          kAppName,
           style: TextStyle(),
         ),
         leading: Builder(
@@ -76,7 +75,7 @@ class HomeScreen extends StatelessWidget {
                     color: tileColor,
                     cardChild: IconContent(
                       icon: Icons.star,
-                      label: translate(Keys.Functions_Addrecipe),
+                      label: AppLocalizations.of(context).functionsAddRecipe,
                     ),
                   ),
                 ),
@@ -93,7 +92,7 @@ class HomeScreen extends StatelessWidget {
                     color: tileColor,
                     cardChild: IconContent(
                       icon: kLeftoversIconData,
-                      label: translate(Keys.Functions_Leftovers),
+                      label: AppLocalizations.of(context).functionsLeftovers,
                     ),
                   ),
                 ),
@@ -104,7 +103,7 @@ class HomeScreen extends StatelessWidget {
                     color: tileColor,
                     cardChild: IconContent(
                       icon: kRecipesIconData,
-                      label: translate(Keys.Functions_Listrecipes),
+                      label: AppLocalizations.of(context).functionsListRecipes,
                     ),
                   ),
                 ),
@@ -121,7 +120,7 @@ class HomeScreen extends StatelessWidget {
                     color: tileColor,
                     cardChild: IconContent(
                       icon: kShoppingListIconData,
-                      label: translate(Keys.Functions_Shoppinglist),
+                      label: AppLocalizations.of(context).functionsShoppingList,
                     ),
                   ),
                 ),
@@ -132,7 +131,7 @@ class HomeScreen extends StatelessWidget {
                     color: tileColor,
                     cardChild: IconContent(
                       icon: kMealPlannerIconData,
-                      label: translate(Keys.Functions_Mealplanner),
+                      label: AppLocalizations.of(context).functionsMealPlanner,
                     ),
                   ),
                 ),

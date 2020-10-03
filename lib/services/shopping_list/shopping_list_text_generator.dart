@@ -1,18 +1,18 @@
 import 'package:cookza/constants.dart';
-import 'package:cookza/localization/keys.dart';
 import 'package:cookza/viewmodel/shopping_list/shopping_list_detail.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 
 abstract class ShoppingListTextGenerator {
-  Future<String> generateText(ShoppingListModel model);
+  Future<String> generateText(ShoppingListModel model, String title);
 }
 
 class ShoppingListTextGeneratorImpl implements ShoppingListTextGenerator {
   @override
-  Future<String> generateText(ShoppingListModel model) async {
+  Future<String> generateText(ShoppingListModel model, String title) async {
+    assert(title != null && title.isNotEmpty);
     var buffer = StringBuffer();
+
     buffer.write('*');
-    buffer.write(translate(Keys.Functions_Shoppinglist));
+    buffer.write(title);
     buffer.write('*');
     buffer.writeln();
 

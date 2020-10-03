@@ -1,4 +1,3 @@
-import 'package:cookza/localization/keys.dart';
 import 'package:cookza/model/entities/abstract/recipe_collection_entity.dart';
 import 'package:cookza/model/entities/abstract/recipe_entity.dart';
 import 'package:cookza/services/recipe/recipe_manager.dart';
@@ -6,7 +5,7 @@ import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:cookza/viewmodel/recipe_edit/recipe_edit_model.dart';
 import 'package:cookza/viewmodel/recipe_edit/recipe_edit_step.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/flutter_translate.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 Step getOverviewStep(BuildContext context) {
@@ -39,19 +38,19 @@ Step getOverviewStep(BuildContext context) {
             children: <Widget>[
               TextFormField(
                 decoration: InputDecoration(
-                    labelText: translate(Keys.Recipe_Recipename)),
+                    labelText: AppLocalizations.of(context).recipeName),
                 controller: nameController,
               ),
               TextFormField(
                 decoration: InputDecoration(
-                    labelText: translate(Keys.Recipe_Recipedesc)),
+                    labelText: AppLocalizations.of(context).recipeDesc),
                 controller: descController,
               ),
               _getCollectionDropDown(context, model),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Text('${translate(Keys.Recipe_Duration)}:'),
+                  Text('${AppLocalizations.of(context).duration}:'),
                   Flexible(
                     flex: 1,
                     child: Slider(
@@ -75,7 +74,7 @@ Step getOverviewStep(BuildContext context) {
                 spacing: 5,
                 children: <Widget>[
                   FilterChip(
-                    label: Text(translate(Keys.Recipe_Difficulty_Easy)),
+                    label: Text(AppLocalizations.of(context).difficultyEasy),
                     onSelected: (value) {
                       model.difficulty = DIFFICULTY.EASY;
                     },
@@ -85,7 +84,7 @@ Step getOverviewStep(BuildContext context) {
                     ),
                   ),
                   FilterChip(
-                    label: Text(translate(Keys.Recipe_Difficulty_Medium)),
+                    label: Text(AppLocalizations.of(context).difficultyMedium),
                     onSelected: (value) {
                       model.difficulty = DIFFICULTY.MEDIUM;
                     },
@@ -95,7 +94,7 @@ Step getOverviewStep(BuildContext context) {
                     ),
                   ),
                   FilterChip(
-                    label: Text(translate(Keys.Recipe_Difficulty_Hard)),
+                    label: Text(AppLocalizations.of(context).difficultyHard),
                     onSelected: (value) {
                       model.difficulty = DIFFICULTY.HARD;
                     },
@@ -140,7 +139,7 @@ Widget _getCollectionDropDown(
           items: items,
           decoration: InputDecoration(
             isDense: true,
-            labelText: translate(Keys.Ui_Recipegroup),
+            labelText: AppLocalizations.of(context).recipeGroup,
           ),
           onChanged: (RecipeCollectionEntity value) {
             model.collection = value;

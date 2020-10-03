@@ -1,6 +1,5 @@
 import 'package:cookza/components/recipe_list_tile.dart';
 import 'package:cookza/constants.dart';
-import 'package:cookza/localization/keys.dart';
 import 'package:cookza/services/recipe/recipe_manager.dart';
 import 'package:cookza/viewmodel/recipe_edit/recipe_ingredient_model.dart';
 import 'package:cookza/viewmodel/recipe_selection_model.dart';
@@ -9,7 +8,7 @@ import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:cookza/services/unit_of_measure.dart';
 import 'package:cookza/viewmodel/recipe_view/recipe_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/flutter_translate.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 class NewIngredientScreen extends StatelessWidget {
@@ -49,12 +48,13 @@ class NewIngredientScreen extends StatelessWidget {
                         child: TextFormField(
                           decoration: InputDecoration(
                               isDense: true,
-                              labelText: translate(Keys.Recipe_Amount)),
+                              labelText: AppLocalizations.of(context).amount),
                           controller: amountController,
                           keyboardType: TextInputType.number,
                           validator: (value) {
                             var numValue = double.tryParse(value);
                             if (value.isEmpty || numValue == 0) {
+                              // TODO: replace with localized string
                               return 'Please provide a number';
                             }
                             return '';
@@ -71,7 +71,8 @@ class NewIngredientScreen extends StatelessWidget {
                               child: TextFormField(
                                 decoration: InputDecoration(
                                     isDense: true,
-                                    labelText: translate(Keys.Recipe_Unit)),
+                                    labelText:
+                                        AppLocalizations.of(context).unit),
                                 keyboardType: TextInputType.number,
                                 initialValue: model.uomDisplayText,
                                 enabled: false,
@@ -102,7 +103,8 @@ class NewIngredientScreen extends StatelessWidget {
                                   items: items,
                                   decoration: InputDecoration(
                                     isDense: true,
-                                    labelText: translate(Keys.Recipe_Unit),
+                                    labelText:
+                                        AppLocalizations.of(context).unit,
                                   ),
                                   onChanged: (UnitOfMeasure value) {
                                     model.uom = value;
@@ -220,8 +222,8 @@ class NewIngredientScreen extends StatelessWidget {
         icon:
             model.isRecipeReference ? Icon(Icons.delete) : Icon(Icons.note_add),
         label: model.isRecipeReference
-            ? Text(translate(Keys.Ui_Removerecipe))
-            : Text(translate(Keys.Ui_Refertorecipe)),
+            ? Text(AppLocalizations.of(context).removeRecipe)
+            : Text(AppLocalizations.of(context).referToRecipe),
       );
     }
     return Container();
@@ -240,7 +242,7 @@ class IngredientNameTextInput extends StatelessWidget {
     return Expanded(
       child: TextFormField(
         decoration: InputDecoration(
-            labelText: translatePlural(Keys.Recipe_Ingredient, 1)),
+            labelText: AppLocalizations.of(context).ingredient(1)),
         controller: ingredientController,
         keyboardType: TextInputType.text,
       ),

@@ -168,7 +168,7 @@ packages:
       name: cloud_firestore
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.14.1+1"
+    version: "0.14.1+2"
   cloud_firestore_platform_interface:
     dependency: transitive
     description:
@@ -182,7 +182,7 @@ packages:
       name: cloud_firestore_web
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.0+2"
+    version: "0.2.0+3"
   code_builder:
     dependency: transitive
     description:

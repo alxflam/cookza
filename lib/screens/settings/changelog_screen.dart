@@ -1,7 +1,6 @@
 import 'package:cookza/constants.dart';
-import 'package:cookza/localization/keys.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/flutter_translate.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ChangelogScreen extends StatelessWidget {
   static final String id = 'changelog';
@@ -10,7 +9,7 @@ class ChangelogScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(translate(Keys.Settings_Changelog)),
+        title: Text(AppLocalizations.of(context).changelog),
       ),
       body: SingleChildScrollView(
         child: Column(

@@ -1,5 +1,4 @@
 import 'package:cookza/constants.dart';
-import 'package:cookza/localization/keys.dart';
 import 'package:cookza/model/entities/abstract/recipe_entity.dart';
 import 'package:cookza/screens/home_screen.dart';
 import 'package:cookza/screens/meal_plan/meal_plan_screen.dart';
@@ -17,25 +16,20 @@ import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:cookza/viewmodel/recipe_edit/recipe_edit_model.dart';
 import 'package:cookza/viewmodel/recipe_view/recipe_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/flutter_translate.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 class PopupMenuButtonChoices {
-  final _key;
   final _icon;
-  const PopupMenuButtonChoices._internal(this._key, this._icon);
-  toString() => translate(_key);
+  const PopupMenuButtonChoices._internal(this._icon);
   IconData get icon => this._icon;
 
-  static const SHARE =
-      const PopupMenuButtonChoices._internal(Keys.Ui_Share, Icons.share);
-  static const EDIT =
-      const PopupMenuButtonChoices._internal(Keys.Ui_Edit, Icons.edit);
-  static const ADD_MEAL_PLAN = const PopupMenuButtonChoices._internal(
-      Keys.Functions_Mealplanner, kMealPlannerIconData);
-  static const DELETE =
-      const PopupMenuButtonChoices._internal(Keys.Ui_Delete, Icons.delete);
+  static const SHARE = const PopupMenuButtonChoices._internal(Icons.share);
+  static const EDIT = const PopupMenuButtonChoices._internal(Icons.edit);
+  static const ADD_MEAL_PLAN =
+      const PopupMenuButtonChoices._internal(kMealPlannerIconData);
+  static const DELETE = const PopupMenuButtonChoices._internal(Icons.delete);
 }
 
 class RecipeScreen extends StatelessWidget {
@@ -66,7 +60,7 @@ class RecipeScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Icon(PopupMenuButtonChoices.SHARE.icon),
-                              Text(PopupMenuButtonChoices.SHARE.toString())
+                              Text(AppLocalizations.of(context).share)
                             ],
                           ),
                           value: PopupMenuButtonChoices.SHARE,
@@ -76,7 +70,7 @@ class RecipeScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Icon(PopupMenuButtonChoices.EDIT.icon),
-                              Text(PopupMenuButtonChoices.EDIT.toString())
+                              Text(AppLocalizations.of(context).edit)
                             ],
                           ),
                           value: PopupMenuButtonChoices.EDIT,
@@ -86,9 +80,8 @@ class RecipeScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Icon(PopupMenuButtonChoices.ADD_MEAL_PLAN.icon),
-                              Text(
-                                PopupMenuButtonChoices.ADD_MEAL_PLAN.toString(),
-                              )
+                              Text(AppLocalizations.of(context)
+                                  .functionsMealPlanner)
                             ],
                           ),
                           value: PopupMenuButtonChoices.ADD_MEAL_PLAN,
@@ -98,7 +91,7 @@ class RecipeScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Icon(PopupMenuButtonChoices.DELETE.icon),
-                              Text(PopupMenuButtonChoices.DELETE.toString())
+                              Text(AppLocalizations.of(context).delete)
                             ],
                           ),
                           value: PopupMenuButtonChoices.DELETE,
@@ -130,19 +123,20 @@ class RecipeScreen extends StatelessWidget {
                             barrierDismissible: false, // user must tap button!
                             builder: (BuildContext context) {
                               return AlertDialog(
-                                title: Text(translate(Keys.Ui_Delete)),
+                                title:
+                                    Text(AppLocalizations.of(context).delete),
                                 content: SingleChildScrollView(
                                   child: ListBody(
                                     children: <Widget>[
-                                      Text(translate(Keys.Ui_Confirmdelete,
-                                          args: {"0": model.name})),
+                                      Text(AppLocalizations.of(context)
+                                          .confirmDelete(model.name)),
                                     ],
                                   ),
                                 ),
                                 actions: <Widget>[
                                   FlatButton(
                                     child: Text(
-                                      translate(Keys.Ui_Cancel),
+                                      AppLocalizations.of(context).cancel,
                                     ),
                                     onPressed: () {
                                       Navigator.of(context).pop();
@@ -150,7 +144,7 @@ class RecipeScreen extends StatelessWidget {
                                   ),
                                   FlatButton(
                                     child: Text(
-                                      translate(Keys.Ui_Delete),
+                                      AppLocalizations.of(context).delete,
                                     ),
                                     color: Colors.red,
                                     onPressed: () {
@@ -219,18 +213,18 @@ class RecipeScreen extends StatelessWidget {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(translate(Keys.Ui_Delete)),
+          title: Text(AppLocalizations.of(context).delete),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text(translate(Keys.Ui_Shareas)),
+                Text(AppLocalizations.of(context).shareAs),
               ],
             ),
           ),
           actions: <Widget>[
             FlatButton(
               child: Text(
-                translate(Keys.Settings_Pdf),
+                AppLocalizations.of(context).pdf,
               ),
               onPressed: () async {
                 var doc = await sl.get<PDFGenerator>().generatePDF([model]);
@@ -239,9 +233,7 @@ class RecipeScreen extends StatelessWidget {
               },
             ),
             FlatButton(
-              child: Text(
-                translate(Keys.Settings_Json),
-              ),
+              child: Text(AppLocalizations.of(context).json),
               onPressed: () {
                 sl
                     .get<RecipeFileExport>()
@@ -251,7 +243,7 @@ class RecipeScreen extends StatelessWidget {
             ),
             FlatButton(
               child: Text(
-                translate(Keys.Settings_Text),
+                AppLocalizations.of(context).text,
               ),
               onPressed: () {
                 sl

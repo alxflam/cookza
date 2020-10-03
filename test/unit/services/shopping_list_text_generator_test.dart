@@ -4,7 +4,6 @@ import 'package:cookza/services/shopping_list/shopping_list_text_generator.dart'
 import 'package:cookza/services/unit_of_measure.dart';
 import 'package:cookza/viewmodel/shopping_list/shopping_list_detail.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mockito/mockito.dart';
 
@@ -22,11 +21,6 @@ class ShoppingListModelMock extends Mock implements ShoppingListModel {
 }
 
 void main() {
-  Map<String, dynamic> translations = {};
-  translations.putIfAbsent(
-      'functions', () => {'shoppingList': 'functions.shoppingList'});
-  Localization.load(translations);
-
   var cut = ShoppingListTextGeneratorImpl();
   GetIt.I.registerSingleton<UnitOfMeasureProvider>(UoMMock());
 
@@ -54,9 +48,10 @@ void main() {
           MutableShoppingListItem.ofIngredientNote(customSalt, false, true))
     ];
 
-    var result = await cut.generateText(model);
+    const title = 'Shopping List';
+    var result = await cut.generateText(model, title);
 
-    var expectedResult = '''*functions.shoppingList*
+    var expectedResult = '''*$title*
 • Pepper (400 GRM)
 • Salt 
 ''';
