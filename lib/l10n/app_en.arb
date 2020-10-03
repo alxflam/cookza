@@ -108,6 +108,8 @@
 	"@copy": {},
 	"edit": "Edit",
 	"@edit": {},
+	"search": "Search",
+	"@search": {},
 	"rename": "Rename",
 	"@rename": {},
 	"delete": "Delete",

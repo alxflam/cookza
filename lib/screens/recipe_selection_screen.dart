@@ -70,7 +70,7 @@ class RecipeSelectionScreen extends StatelessWidget {
                       model.filter(value);
                     },
                     decoration: InputDecoration(
-                      labelText: "Search",
+                      labelText: AppLocalizations.of(context).search,
                       prefixIcon: Icon(Icons.search),
                     ),
                   ),
