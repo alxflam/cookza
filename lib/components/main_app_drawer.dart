@@ -69,19 +69,19 @@ class MainAppDrawer extends StatelessWidget {
           ),
           ListTile(
             title: Text(AppLocalizations.of(context).functionsAddRecipe),
-            leading: FaIcon(FontAwesomeIcons.plus),
+            leading: FaIcon(kNewRecipe),
             onTap: () => Navigator.pushNamed(context, NewRecipeScreen.id,
                 arguments: RecipeEditModel.create()),
           ),
           _getWebAppListTile(context),
           ListTile(
             title: Text(AppLocalizations.of(context).shareAccount),
-            leading: FaIcon(FontAwesomeIcons.handshake),
+            leading: FaIcon(kShareAccountIcon),
             onTap: () => Navigator.pushNamed(context, ShareAccountScreen.id),
           ),
           ListTile(
             title: Text(AppLocalizations.of(context).settings),
-            leading: FaIcon(FontAwesomeIcons.cog),
+            leading: FaIcon(kSettingsIcon),
             onTap: () => Navigator.pushNamed(context, SettingsScreen.id),
           ),
         ],

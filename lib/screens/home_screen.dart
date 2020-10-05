@@ -74,7 +74,7 @@ class HomeScreen extends StatelessWidget {
                         arguments: RecipeEditModel.create()),
                     color: tileColor,
                     cardChild: IconContent(
-                      icon: Icons.star,
+                      icon: kNewRecipe,
                       label: AppLocalizations.of(context).functionsAddRecipe,
                     ),
                   ),
