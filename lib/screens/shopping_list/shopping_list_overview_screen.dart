@@ -40,6 +40,12 @@ class ShoppingListOverviewScreen extends StatelessWidget {
       return FutureBuilder(
         future: model.getLists(),
         builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
           if (snapshot.data == null || snapshot.data.isEmpty) {
             return Container();
           }
