@@ -11,7 +11,7 @@ const kPlayStoreLink = 'market://details?id=com.flammer.cookza';
 /// Icons
 const kAppIconData = Icons.local_dining;
 const kWebAppData = FontAwesomeIcons.desktop;
-const kNewRecipe = FontAwesomeIcons.plusSquare;
+const kNewRecipe = FontAwesomeIcons.plusCircle;
 const kSettingsIcon = FontAwesomeIcons.cog;
 const kShareAccountIcon = FontAwesomeIcons.handshake;
 const kRecipesIconData = FontAwesomeIcons.bookOpen;
