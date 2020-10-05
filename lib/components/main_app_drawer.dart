@@ -1,4 +1,5 @@
 import 'package:cookza/screens/collections/share_account_screen.dart';
+import 'package:cookza/screens/leftovers_screen.dart';
 import 'package:cookza/screens/meal_plan/meal_plan_screen.dart';
 import 'package:cookza/screens/recipe_list_screen.dart';
 import 'package:cookza/screens/recipe_modify/new_recipe_screen.dart';
@@ -54,6 +55,12 @@ class MainAppDrawer extends StatelessWidget {
             },
           ),
           ListTile(
+            title: Text(AppLocalizations.of(context).functionsAddRecipe),
+            leading: FaIcon(kNewRecipe),
+            onTap: () => Navigator.pushNamed(context, NewRecipeScreen.id,
+                arguments: RecipeEditModel.create()),
+          ),
+          ListTile(
             title: Text(AppLocalizations.of(context).functionsMealPlanner),
             leading: FaIcon(kMealPlannerIconData),
             onTap: () {
@@ -68,10 +75,9 @@ class MainAppDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            title: Text(AppLocalizations.of(context).functionsAddRecipe),
-            leading: FaIcon(kNewRecipe),
-            onTap: () => Navigator.pushNamed(context, NewRecipeScreen.id,
-                arguments: RecipeEditModel.create()),
+            title: Text(AppLocalizations.of(context).functionsLeftovers),
+            leading: FaIcon(kLeftoversIconData),
+            onTap: () => Navigator.pushNamed(context, LeftoversScreen.id),
           ),
           _getWebAppListTile(context),
           ListTile(
