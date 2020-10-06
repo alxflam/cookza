@@ -630,6 +630,7 @@ class FirebaseProvider {
     var docs = await _firestore
         .collection(RECIPES)
         .where('recipeGroupID', whereIn: collections.map((e) => e.id).toList())
+        .orderBy('name')
         .get();
 
     print('all documents retrieved ${docs.docs.length} results');
