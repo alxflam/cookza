@@ -28,6 +28,9 @@ abstract class SharedPreferencesProvider {
 
   bool get showShoppingListCategories;
   set showShoppingListCategories(bool value);
+
+  String get leastRecentlyUsedRecipeGroup;
+  set leastRecentlyUsedRecipeGroup(String value);
 }
 
 class SharedPreferencesProviderImpl implements SharedPreferencesProvider {
@@ -47,6 +50,8 @@ class SharedPreferencesProviderImpl implements SharedPreferencesProvider {
   static final String acceptedDataPrivacyStatementKey =
       'privacyStatementAccepted';
   static final String acceptedTermsOfUseKey = 'termsOfUseAccepted';
+
+  static final String leastRecentlyUsedRecipeGroupKey = 'lruGroup';
 
   String getUomVisibilityKey(String uom) => '$uom$uomVisibilityKeySuffix';
 
@@ -164,5 +169,15 @@ class SharedPreferencesProviderImpl implements SharedPreferencesProvider {
   @override
   set showShoppingListCategories(bool value) {
     this._prefs.setBool(showShoppingListCategoriesKey, value);
+  }
+
+  @override
+  String get leastRecentlyUsedRecipeGroup {
+    return _prefs.getString(leastRecentlyUsedRecipeGroupKey);
+  }
+
+  @override
+  set leastRecentlyUsedRecipeGroup(String value) {
+    this._prefs.setString(leastRecentlyUsedRecipeGroupKey, value);
   }
 }

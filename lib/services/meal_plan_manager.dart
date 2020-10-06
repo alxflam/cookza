@@ -118,7 +118,7 @@ class MealPlanManagerFirebase implements MealPlanManager {
   Future<void> init() {
     this._currentCollection =
         sl.get<SharedPreferencesProvider>().getCurrentMealPlanCollection();
-    return Future.value(null);
+    return Future.value(this._currentCollection);
   }
 
   @override

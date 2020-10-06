@@ -5,6 +5,7 @@ import 'package:cookza/model/entities/mutable/mutable_recipe.dart';
 import 'package:cookza/services/firebase_provider.dart';
 import 'package:cookza/services/recipe/image_manager.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
+import 'package:cookza/services/shared_preferences_provider.dart';
 
 abstract class RecipeManager {
   Future<List<RecipeCollectionEntity>> get collections;
@@ -42,10 +43,16 @@ abstract class RecipeManager {
   Future<void> leaveRecipeGroup(RecipeCollectionEntity entity);
 
   Future<void> removeMember(UserEntity user, String group);
+
+  Future<void> init();
 }
 
-// todo: extract an interface for the FirebaseProvider and use it also for local storage provider if that is needed
 class RecipeManagerFirebase implements RecipeManager {
+  /// the currently selected collection
+  /// stored as a shared preference to reuse the LRU collection upon
+  /// restart of the app
+  String _currentCollection;
+
   @override
   Future<List<RecipeCollectionEntity>> get collections async {
     return await sl.get<FirebaseProvider>().recipeCollectionsAsList();
@@ -68,11 +75,13 @@ class RecipeManagerFirebase implements RecipeManager {
 
   @override
   String get currentCollection {
-    return sl.get<FirebaseProvider>().currentRecipeGroup;
+    return this._currentCollection;
   }
 
   @override
   set currentCollection(String id) {
+    this._currentCollection = id;
+    sl.get<SharedPreferencesProvider>().leastRecentlyUsedRecipeGroup = id;
     return sl.get<FirebaseProvider>().setCurrentRecipeGroup(id);
   }
 
@@ -102,6 +111,9 @@ class RecipeManagerFirebase implements RecipeManager {
     var collection = await firebase.recipeCollectionByID(entity.id);
     if (collection.users.where((e) => e.id != firebase.userUid).isNotEmpty) {
       throw '§Can\'t delete a group with members';
+    }
+    if (this._currentCollection == entity.id) {
+      this._currentCollection = null;
     }
     return firebase.deleteRecipeCollection(entity.id);
   }
@@ -163,11 +175,21 @@ class RecipeManagerFirebase implements RecipeManager {
 
   @override
   Future<void> leaveRecipeGroup(RecipeCollectionEntity entity) {
+    if (this._currentCollection == entity.id) {
+      this._currentCollection = null;
+    }
     return sl.get<FirebaseProvider>().leaveRecipeGroup(entity.id);
   }
 
   @override
   Future<void> removeMember(UserEntity user, String group) {
     return sl.get<FirebaseProvider>().removeFromRecipeGroup(user, group);
+  }
+
+  @override
+  Future<void> init() {
+    this._currentCollection =
+        sl.get<SharedPreferencesProvider>().leastRecentlyUsedRecipeGroup;
+    return Future.value(this._currentCollection);
   }
 }

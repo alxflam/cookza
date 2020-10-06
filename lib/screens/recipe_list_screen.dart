@@ -1,6 +1,9 @@
+import 'package:cookza/components/open_drawer_button.dart';
 import 'package:cookza/components/recipe_groups_drawer.dart';
 import 'package:cookza/components/recipe_list_tile.dart';
 import 'package:cookza/model/entities/abstract/recipe_entity.dart';
+import 'package:cookza/services/flutter/service_locator.dart';
+import 'package:cookza/services/recipe/recipe_manager.dart';
 import 'package:cookza/viewmodel/recipe_list/recipe_list_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -21,6 +24,14 @@ class RecipeListScreen extends StatelessWidget {
               appBar: _buildAppBar(context),
               body: Builder(
                 builder: (context) {
+                  /// check if a recipe group is already selected
+                  var collection = sl.get<RecipeManager>().currentCollection;
+                  if (collection == null || collection.isEmpty) {
+                    return OpenDrawerButton(
+                        AppLocalizations.of(context).noRecipeGroupSelected);
+                  }
+
+                  /// read recipes for selected recipe
                   return StreamProvider<List<RecipeEntity>>.value(
                     value:
                         Provider.of<RecipeListViewModel>(context, listen: false)
@@ -30,6 +41,7 @@ class RecipeListScreen extends StatelessWidget {
                         var recipes = Provider.of<List<RecipeEntity>>(context);
 
                         if (recipes == null || recipes.isEmpty) {
+                          /// TODO: show an icon / message
                           return Container();
                         }
 

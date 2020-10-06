@@ -82,5 +82,6 @@ void setupServiceLocator() {
       () async => SharedPreferencesProviderImpl().init());
 
   sl.registerSingletonAsync<FirebaseProvider>(
-      () async => FirebaseProvider().init());
+      () async => FirebaseProvider().init(),
+      dependsOn: [SharedPreferencesProvider]);
 }

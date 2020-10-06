@@ -27,6 +27,7 @@ import 'package:cookza/services/recipe/image_manager.dart';
 import 'package:cookza/services/meal_plan_manager.dart';
 import 'package:cookza/services/flutter/navigator_service.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
+import 'package:cookza/services/recipe/recipe_manager.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -161,6 +162,18 @@ class FirebaseProvider {
     _ownerUserID = _currentUser.uid;
 
     print('logged in anonymously using token ${_currentUser.uid}');
+
+    /// notify dependent services that firebase is ready to use now
+    Future.microtask(() {
+      // TODO: await finish of shared preferences? or how to sync?
+      // maybe make firebase provider dependent of shared preferences
+      /// initialize recipe manager
+      sl.get<RecipeManager>().init();
+
+      /// initialize meal plan manager
+      return sl.get<MealPlanManager>().init();
+    });
+
     return this;
   }
 

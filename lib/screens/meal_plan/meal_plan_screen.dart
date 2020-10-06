@@ -1,4 +1,5 @@
 import 'package:cookza/components/meal_plan_groups_drawer.dart';
+import 'package:cookza/components/open_drawer_button.dart';
 import 'package:cookza/components/round_icon_button.dart';
 import 'package:cookza/constants.dart';
 import 'package:cookza/model/entities/abstract/meal_plan_entity.dart';
@@ -50,7 +51,8 @@ class MealPlanScreen extends StatelessWidget {
           body: Builder(
             builder: (context) {
               if (snapshot.data == null) {
-                return NoMealPlanSelected();
+                return OpenDrawerButton(
+                    AppLocalizations.of(context).mealPlanSelect);
               }
 
               return FutureBuilder(
@@ -478,29 +480,6 @@ class MealPlanScreen extends StatelessWidget {
           },
         );
       },
-    );
-  }
-}
-
-class NoMealPlanSelected extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Center(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              RaisedButton(
-                child: Text(AppLocalizations.of(context).mealPlanSelect),
-                onPressed: () => Scaffold.of(context).openDrawer(),
-              )
-            ],
-          ),
-        ),
-      ),
     );
   }
 }

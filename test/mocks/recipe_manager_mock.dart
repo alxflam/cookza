@@ -126,4 +126,9 @@ class RecipeManagerStub implements RecipeManager {
     // TODO: implement removeMember
     throw UnimplementedError();
   }
+
+  @override
+  Future<void> init() {
+    throw UnimplementedError();
+  }
 }

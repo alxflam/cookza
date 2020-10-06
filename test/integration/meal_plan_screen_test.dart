@@ -1,4 +1,5 @@
 import 'package:cookza/components/meal_plan_groups_drawer.dart';
+import 'package:cookza/components/open_drawer_button.dart';
 import 'package:cookza/components/round_icon_button.dart';
 import 'package:cookza/model/entities/mutable/mutable_meal_plan.dart';
 import 'package:cookza/routes.dart';
@@ -58,13 +59,13 @@ void main() {
     await _initApp(tester, mockObserver);
 
     expect(find.byType(WeekNumber), findsNothing);
-    expect(find.byType(NoMealPlanSelected), findsOneWidget);
+    expect(find.byType(OpenDrawerButton), findsOneWidget);
   });
 
   testWidgets('Open drawer with one group', (WidgetTester tester) async {
     await _initApp(tester, mockObserver);
 
-    expect(find.byType(NoMealPlanSelected), findsOneWidget);
+    expect(find.byType(OpenDrawerButton), findsOneWidget);
 
     await tester.tap(find.byType(RaisedButton));
 
@@ -95,7 +96,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // a meal plan is selected
-    expect(find.byType(NoMealPlanSelected), findsNothing);
+    expect(find.byType(OpenDrawerButton), findsNothing);
 
     find.descendant(of: find.byType(Card), matching: find.text('Spätzle'));
     find.descendant(of: find.byType(Card), matching: find.text('2'));
@@ -119,7 +120,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // a meal plan is selected
-    expect(find.byType(NoMealPlanSelected), findsNothing);
+    expect(find.byType(OpenDrawerButton), findsNothing);
 
     var recipeFinder =
         find.descendant(of: find.byType(Card), matching: find.text('Spätzle'));
@@ -148,7 +149,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // a meal plan is selected
-    expect(find.byType(NoMealPlanSelected), findsNothing);
+    expect(find.byType(OpenDrawerButton), findsNothing);
 
     find.descendant(of: find.byType(Card), matching: find.text('Spätzle'));
     find.descendant(of: find.byType(Card), matching: find.text('2'));
@@ -187,7 +188,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // a meal plan is selected
-    expect(find.byType(NoMealPlanSelected), findsNothing);
+    expect(find.byType(OpenDrawerButton), findsNothing);
 
     find.descendant(of: find.byType(Card), matching: find.text('Spätzle'));
     find.descendant(of: find.byType(Card), matching: find.text('2'));
@@ -231,7 +232,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // a meal plan is selected
-    expect(find.byType(NoMealPlanSelected), findsNothing);
+    expect(find.byType(OpenDrawerButton), findsNothing);
 
     find.descendant(of: find.byType(Card), matching: find.text('Spätzle'));
     find.descendant(of: find.byType(Card), matching: find.text('2'));
@@ -265,7 +266,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // a meal plan is selected
-    expect(find.byType(NoMealPlanSelected), findsNothing);
+    expect(find.byType(OpenDrawerButton), findsNothing);
 
     find.descendant(of: find.byType(Card), matching: find.text('Spätzle'));
     find.descendant(of: find.byType(Card), matching: find.text('2'));
@@ -319,7 +320,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // a meal plan is selected
-    expect(find.byType(NoMealPlanSelected), findsNothing);
+    expect(find.byType(OpenDrawerButton), findsNothing);
 
     find.descendant(
         of: find.byType(Card), matching: find.text('Some special note'));
