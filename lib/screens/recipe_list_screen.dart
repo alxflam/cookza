@@ -86,22 +86,26 @@ class RecipeListScreen extends StatelessWidget {
             prefixIcon: Icon(Icons.search),
           ),
         ),
-        leading: IconButton(
-            icon: Icon(Icons.cancel),
-            onPressed: () {
-              Provider.of<RecipeListViewModel>(context, listen: false)
-                  .isSearchEnabled = false;
-            }),
+        actions: [
+          IconButton(
+              icon: Icon(Icons.cancel),
+              onPressed: () {
+                Provider.of<RecipeListViewModel>(context, listen: false)
+                    .isSearchEnabled = false;
+              }),
+        ],
       );
     }
     return AppBar(
       title: Text('${AppLocalizations.of(context).recipe(2)}'),
-      leading: IconButton(
-          icon: Icon(Icons.search),
-          onPressed: () {
-            Provider.of<RecipeListViewModel>(context, listen: false)
-                .isSearchEnabled = true;
-          }),
+      actions: [
+        IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {
+              Provider.of<RecipeListViewModel>(context, listen: false)
+                  .isSearchEnabled = true;
+            }),
+      ],
     );
   }
 }
