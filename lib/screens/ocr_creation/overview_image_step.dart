@@ -2,6 +2,7 @@ import 'package:cookza/screens/ocr_creation/ocr_base_step.dart';
 import 'package:cookza/viewmodel/ocr_creation/recipe_ocr_step.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OCROverviewImageScreen extends StatelessWidget {
   static final String id = 'overviewImage';
@@ -9,6 +10,8 @@ class OCROverviewImageScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<RecipeOCRStep>.value(
-        value: RecipeOverviewOCRStep(), child: OCRImageStep('Overview Image'));
+        value: RecipeOverviewOCRStep(),
+        child: OCRImageStep(
+            AppLocalizations.of(context).functionsTextRecognition));
   }
 }

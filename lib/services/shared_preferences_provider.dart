@@ -51,7 +51,7 @@ class SharedPreferencesProviderImpl implements SharedPreferencesProvider {
       'privacyStatementAccepted';
   static final String acceptedTermsOfUseKey = 'termsOfUseAccepted';
 
-  static final String leastRecentlyUsedRecipeGroupKey = 'lruGroup';
+  static final String leastRecentlyUsedRecipeGroupKey = 'lruRecipeGroup';
 
   String getUomVisibilityKey(String uom) => '$uom$uomVisibilityKeySuffix';
 
