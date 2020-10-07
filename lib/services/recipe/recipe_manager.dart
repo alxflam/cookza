@@ -82,7 +82,6 @@ class RecipeManagerFirebase implements RecipeManager {
   set currentCollection(String id) {
     this._currentCollection = id;
     sl.get<SharedPreferencesProvider>().leastRecentlyUsedRecipeGroup = id;
-    return sl.get<FirebaseProvider>().setCurrentRecipeGroup(id);
   }
 
   @override
@@ -96,7 +95,7 @@ class RecipeManagerFirebase implements RecipeManager {
       return Stream.empty();
     }
 
-    return sl.get<FirebaseProvider>().recipes();
+    return sl.get<FirebaseProvider>().recipes(this.currentCollection);
   }
 
   @override
@@ -157,7 +156,9 @@ class RecipeManagerFirebase implements RecipeManager {
       if (entity.hasInMemoryImage) {
         entity.image = 'true';
       }
-      var ids = await sl.get<FirebaseProvider>().importRecipes([entity]);
+      var ids = await sl
+          .get<FirebaseProvider>()
+          .importRecipes([entity], this.currentCollection);
       if (recipe.hasInMemoryImage) {
         // then upload the image if there is an in memory image
         sl
@@ -188,8 +189,11 @@ class RecipeManagerFirebase implements RecipeManager {
 
   @override
   Future<void> init() {
-    this._currentCollection =
+    var collection =
         sl.get<SharedPreferencesProvider>().leastRecentlyUsedRecipeGroup;
+    if (collection != null && collection.isNotEmpty) {
+      this.currentCollection = collection;
+    }
     return Future.value(this._currentCollection);
   }
 }

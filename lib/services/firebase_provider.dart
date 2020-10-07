@@ -54,10 +54,6 @@ class FirebaseProvider {
   User _currentUser;
   String _ownerUserID;
 
-  String _currentRecipeGroup;
-
-  String get currentRecipeGroup => _currentRecipeGroup;
-
   Stream<List<MealPlanCollectionEntity>> get mealPlanGroups {
     return _mealPlanGroupsQuery().snapshots().map((e) => e.docs
         .where((e) => e.exists)
@@ -446,10 +442,10 @@ class FirebaseProvider {
   }
 
   /// todo: option to get all or only from a specific recipe group
-  Stream<List<RecipeEntity>> recipes() {
+  Stream<List<RecipeEntity>> recipes(String groupId) {
     return _firestore
         .collection(RECIPES)
-        .where('recipeGroupID', isEqualTo: this._currentRecipeGroup)
+        .where('recipeGroupID', isEqualTo: groupId)
         .orderBy('name')
         .snapshots()
         .map((e) => e.docs
@@ -535,10 +531,6 @@ class FirebaseProvider {
   Future<void> deleteRecipe(RecipeEntity recipe) async {
     await _firestore.collection(RECIPES).doc(recipe.id).delete();
     print('deleted recipe ${recipe.id}');
-  }
-
-  setCurrentRecipeGroup(String documentID) {
-    this._currentRecipeGroup = documentID;
   }
 
   Future<RecipeCollectionEntity> recipeCollectionByID(String id) async {
@@ -717,12 +709,13 @@ class FirebaseProvider {
     return docRef.id;
   }
 
-  Future<List<RecipeEntity>> importRecipes(List<RecipeEntity> recipes) async {
+  Future<List<RecipeEntity>> importRecipes(
+      List<RecipeEntity> recipes, String groupId) async {
     List<RecipeEntity> ids = [];
     for (var recipe in recipes) {
       var target = MutableRecipe.of(recipe);
       target.id = null;
-      target.recipeCollectionId = this.currentRecipeGroup;
+      target.recipeCollectionId = groupId;
       var id = await _createRecipe(target);
       var mutableRecipe = MutableRecipe.of(recipe);
       mutableRecipe.id = id;
