@@ -159,6 +159,7 @@ class RecipeTagEditStep extends RecipeEditStep {
       tags.remove('vegan');
     } else {
       tags.remove('vegetarian');
+      tags.remove('vegan');
     }
     notifyListeners();
   }
