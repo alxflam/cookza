@@ -50,20 +50,25 @@ class MealPlanScreen extends StatelessWidget {
           ),
           body: Builder(
             builder: (context) {
-              if (snapshot.data == null) {
+              if (snapshot.data == null &&
+                  snapshot.connectionState == ConnectionState.done) {
                 return OpenDrawerButton(
                     AppLocalizations.of(context).mealPlanSelect);
+              }
+
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
               }
 
               return FutureBuilder(
                 future: sl.get<MealPlanManager>().mealPlan,
                 builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(child: CircularProgressIndicator());
+                  }
                   if (snapshot.hasData) {
-                    MealPlanEntity data = snapshot.data;
-                    if (data.id == null || data.id.isEmpty) {
-                      //
-                    } else {}
-
                     MealPlanViewModel _model =
                         MealPlanViewModel.of(snapshot.data);
 
