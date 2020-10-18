@@ -6,9 +6,9 @@ import 'package:cookza/services/meal_plan_manager.dart';
 import 'package:mockito/mockito.dart';
 
 class MealPlanManagerMock extends Mock implements MealPlanManager {
-  Map<String, MealPlanCollectionEntity> _collections = {};
+  final Map<String, MealPlanCollectionEntity> _collections = {};
   String _currentCollection;
-  Map<String, MealPlanEntity> _mealPlans = {};
+  final Map<String, MealPlanEntity> _mealPlans = {};
 
   @override
   String get currentCollection => this._currentCollection;
@@ -60,6 +60,7 @@ class MealPlanManagerMock extends Mock implements MealPlanManager {
     } else {
       this._mealPlans.putIfAbsent(entity.groupID, () => entity);
     }
+    return Future.value();
   }
 
   void reset() {

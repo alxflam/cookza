@@ -14,8 +14,8 @@ class PopupMenuButtonChoices {
   const PopupMenuButtonChoices._internal(this._icon);
   IconData get icon => this._icon;
 
-  static const SHARE = const PopupMenuButtonChoices._internal(Icons.share);
-  static const ADD_ITEM = const PopupMenuButtonChoices._internal(Icons.add);
+  static const SHARE = PopupMenuButtonChoices._internal(Icons.share);
+  static const ADD_ITEM = PopupMenuButtonChoices._internal(Icons.add);
 }
 
 class ShoppingListDetailScreen extends StatelessWidget {
@@ -61,7 +61,7 @@ class ShoppingListDetailScreen extends StatelessWidget {
                   onSelected: (value) async {
                     switch (value) {
                       case PopupMenuButtonChoices.SHARE:
-                        sl
+                        await sl
                             .get<ShoppingListTextExporter>()
                             .exportShoppingListAsText(model);
                         break;

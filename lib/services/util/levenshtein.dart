@@ -6,13 +6,15 @@ int levenshtein(String s, String t) {
   t = t.toLowerCase();
 
   if (s == t) return 0;
-  if (s.length == 0) return t.length;
-  if (t.length == 0) return s.length;
+  if (s.isEmpty) return t.length;
+  if (t.isEmpty) return s.length;
 
-  List<int> v0 = new List<int>.filled(t.length + 1, 0);
-  List<int> v1 = new List<int>.filled(t.length + 1, 0);
+  List<int> v0 = List<int>.filled(t.length + 1, 0);
+  List<int> v1 = List<int>.filled(t.length + 1, 0);
 
-  for (int i = 0; i < t.length + 1; i < i++) v0[i] = i;
+  for (int i = 0; i < t.length + 1; i < i++) {
+    v0[i] = i;
+  }
 
   for (int i = 0; i < s.length; i++) {
     v1[0] = i + 1;

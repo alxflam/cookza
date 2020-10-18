@@ -35,7 +35,7 @@ class MealPlanGroupsTiles extends StatelessWidget {
               RaisedButton(
                   child: Text(AppLocalizations.of(context).createGroup),
                   onPressed: () async {
-                    this._createMealPlanGroup(context);
+                    await this._createMealPlanGroup(context);
                   })
             ],
           ),
@@ -72,7 +72,7 @@ class MealPlanGroupsTiles extends StatelessWidget {
   }
 
   Future<void> _createMealPlanGroup(BuildContext context) async {
-    showDialog(
+    await showDialog(
       context: context,
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
@@ -113,7 +113,7 @@ class MealPlanGroupsTiles extends StatelessWidget {
                               child: Icon(Icons.save),
                               color: Colors.green,
                               onPressed: () async {
-                                sl
+                                await sl
                                     .get<MealPlanManager>()
                                     .createCollection(controller.text);
                                 Navigator.pop(context);

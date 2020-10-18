@@ -9,13 +9,13 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
-typedef Future<void> OnActionButtonPressed(
+typedef OnActionButtonPressed = void Function(
     BuildContext context, RecipeSelectionModel model);
 
 class RecipeSelectionScreen extends StatelessWidget {
   static final String id = 'selection';
 
-  _getTitle(RecipeSelectionModel model, BuildContext context) {
+  Text _getTitle(RecipeSelectionModel model, BuildContext context) {
     return model.countSelected == 0
         ? Text(
             AppLocalizations.of(context).selectRecipes,
@@ -99,7 +99,7 @@ class RecipeSelectionScreen extends StatelessWidget {
     );
   }
 
-  _getLeadingIcon(RecipeSelectionModel model, int index) {
+  Widget _getLeadingIcon(RecipeSelectionModel model, int index) {
     if (model.isMultiSelection) {
       return model.isSelected(index)
           ? Icon(
@@ -150,13 +150,15 @@ class RecipeSelectionScreen extends StatelessWidget {
         };
       case SELECTION_MODE.IMPORT:
         return (context, model) async {
-          sl.get<RecipeManager>().importRecipes(model.getSelectedRecipes());
+          await sl
+              .get<RecipeManager>()
+              .importRecipes(model.getSelectedRecipes());
           Navigator.pop(context);
         };
       case SELECTION_MODE.REFERENCE_INGREDIENT:
       case SELECTION_MODE.ADD_TO_MEAL_PLAN:
         return (context, model) async {
-          if (model.selectedRecipes.length > 0) {
+          if (model.selectedRecipes.isNotEmpty) {
             Navigator.pop(context, model.selectedRecipeEntities.first);
           }
         };

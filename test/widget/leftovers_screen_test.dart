@@ -40,7 +40,7 @@ void main() {
 
     recipe.ingredientList = [pepper];
 
-    GetIt.I.get<RecipeManager>().createOrUpdate(recipe);
+    await GetIt.I.get<RecipeManager>().createOrUpdate(recipe);
 
     expect(find.byType(TextField), findsOneWidget);
     await tester.enterText(find.byType(TextField), 'pepper');
@@ -67,7 +67,7 @@ void main() {
 
     recipe.ingredientList = [pepper];
 
-    GetIt.I.get<RecipeManager>().createOrUpdate(recipe);
+    await GetIt.I.get<RecipeManager>().createOrUpdate(recipe);
 
     expect(find.byType(TextField), findsOneWidget);
     await tester.enterText(find.byType(TextField), 'garlic');
@@ -97,7 +97,7 @@ void main() {
 
     recipe.ingredientList = [pepper, onion];
 
-    GetIt.I.get<RecipeManager>().createOrUpdate(recipe);
+    await GetIt.I.get<RecipeManager>().createOrUpdate(recipe);
 
     expect(find.byType(TextField), findsOneWidget);
     await tester.enterText(find.byType(TextField), 'pepper');
@@ -127,7 +127,7 @@ void main() {
 
     recipe.ingredientList = [pepper, onion];
 
-    GetIt.I.get<RecipeManager>().createOrUpdate(recipe);
+    await GetIt.I.get<RecipeManager>().createOrUpdate(recipe);
 
     // enter pepper
     expect(find.byType(TextField), findsOneWidget);

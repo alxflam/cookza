@@ -12,8 +12,8 @@ class RecipeViewModel extends ChangeNotifier {
   RecipeEntity _recipe;
   int _servings;
   int _rating;
-  List<MutableIngredientNote> _ingredients = [];
-  List<InstructionEntity> _instructions = [];
+  final List<MutableIngredientNote> _ingredients = [];
+  final List<InstructionEntity> _instructions = [];
 
   // TODO: make it capable of in memory images like import json
   RecipeViewModel.of(this._recipe) {

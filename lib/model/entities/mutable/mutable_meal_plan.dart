@@ -4,7 +4,7 @@ import 'package:cookza/services/util/week_calculation.dart';
 class MutableMealPlan implements MealPlanEntity {
   String _id;
 
-  List<MutableMealPlanDateEntity> _items = [];
+  final List<MutableMealPlanDateEntity> _items = [];
 
   String _groupID;
 

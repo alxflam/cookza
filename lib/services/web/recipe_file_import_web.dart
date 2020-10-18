@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:cookza/localization/keys.dart';
 import 'package:cookza/model/entities/json/recipe_entity.dart';
 import 'package:cookza/model/json/recipe.dart';
 import 'package:cookza/model/json/recipe_list.dart';

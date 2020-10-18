@@ -15,7 +15,7 @@ class RecipeManagerStub implements RecipeManager {
   String currentCollection;
 
   List<RecipeCollectionEntity> _collections = [];
-  List<RecipeEntity> _recipes = [];
+  final List<RecipeEntity> _recipes = [];
 
   void reset() {
     this._recipes.clear();

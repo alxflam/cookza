@@ -18,7 +18,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'recipe_ingredient_model.dart';
 
 abstract class RecipeEditStep extends ChangeNotifier {
-  validate();
+  void validate();
   void applyTo(MutableRecipe recipe);
   void applyFrom(RecipeEntity recipe);
   bool get hasOCR => false;
@@ -69,7 +69,7 @@ class RecipeOverviewEditStep extends RecipeEditStep {
   }
 
   @override
-  validate() {
+  void validate() {
     var context = sl.get<NavigatorService>().currentContext;
 
     if (name.isEmpty) {
@@ -125,7 +125,7 @@ class RecipeImageEditStep extends RecipeEditStep {
   }
 
   @override
-  validate() {
+  void validate() {
     // nothing to validate - it's fine if the user chose no image
   }
 }
@@ -133,10 +133,10 @@ class RecipeImageEditStep extends RecipeEditStep {
 class RecipeTagEditStep extends RecipeEditStep {
   Set<String> _tags = {};
 
-  get isVegan => tags.contains('vegan');
-  get isVegetarian => tags.contains('vegetarian');
-  get containsMeat => tags.contains('meat');
-  get containsFish => tags.contains('fish');
+  bool get isVegan => tags.contains('vegan');
+  bool get isVegetarian => tags.contains('vegetarian');
+  bool get containsMeat => tags.contains('meat');
+  bool get containsFish => tags.contains('fish');
   Set<String> get tags => _tags;
 
   void setVegan(bool isSet) {
@@ -197,7 +197,7 @@ class RecipeTagEditStep extends RecipeEditStep {
   }
 
   @override
-  validate() {
+  void validate() {
     // allow adding no tags at all
   }
 }
@@ -261,7 +261,7 @@ class RecipeIngredientEditStep extends RecipeEditStep {
   }
 
   @override
-  validate() {
+  void validate() {
     var context = sl.get<NavigatorService>().currentContext;
 
     if (_ingredients.isEmpty) {
@@ -333,15 +333,16 @@ class RecipeInstructionEditStep extends RecipeEditStep {
   }
 
   @override
-  validate() {
+  void validate() {
     var context = sl.get<NavigatorService>().currentContext;
 
     // there are instructions and there's no empty instruction
     if (_instructions.isEmpty) {
       throw AppLocalizations.of(context).assignInstructions;
     }
-    if (_instructions.where((f) => f.text == null || f.text.isEmpty).length >
-        0) {
+    if (_instructions
+        .where((f) => f.text == null || f.text.isEmpty)
+        .isNotEmpty) {
       throw AppLocalizations.of(context).assignEmptyInstructions;
     }
   }

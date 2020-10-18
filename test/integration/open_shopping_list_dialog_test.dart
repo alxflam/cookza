@@ -56,8 +56,8 @@ void main() {
     // open fake app
     await _initApp(tester, observer);
     //  create collections
-    mealPlanManager.createCollection('dummy1');
-    mealPlanManager.createCollection('dummy2');
+    await mealPlanManager.createCollection('dummy1');
+    await mealPlanManager.createCollection('dummy2');
     // open dialog
     await tester.tap(find.byType(RaisedButton));
     await tester.pumpAndSettle();
@@ -71,7 +71,7 @@ void main() {
     // open fake app
     await _initApp(tester, observer);
     // create single collection
-    mealPlanManager.createCollection('dummy1');
+    await mealPlanManager.createCollection('dummy1');
     // open dialog
     await tester.tap(find.byType(RaisedButton));
     await tester.pumpAndSettle();

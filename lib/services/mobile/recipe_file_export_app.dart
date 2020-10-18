@@ -24,7 +24,7 @@ class RecipeFileExportImpl extends RecipeFileExport {
     await file.writeAsString(jsonEncode(json));
     print('profile saved at ${file.path}');
 
-    ShareExtend.share(file.path, 'file');
+    await ShareExtend.share(file.path, 'file');
   }
 
   @override

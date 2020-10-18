@@ -24,7 +24,7 @@ class ImageTextExtractorImpl implements ImageTextExtractor {
     var visionImage = FirebaseVisionImage.fromFile(image);
     var textRecognizer = FirebaseVision.instance.textRecognizer();
     var visionText = await textRecognizer.processImage(visionImage);
-    textRecognizer.close();
+    await textRecognizer.close();
 
     return visionText;
   }
@@ -60,9 +60,8 @@ class ImageTextExtractorImpl implements ImageTextExtractor {
 
     for (var i = startIndex; i < text.blocks.length; i++) {
       var block = text.blocks[i];
-      var textItems = block.text.split(",");
+      var textItems = block.text.split(',');
       for (var textItem in textItems) {
-        // TODO: last ingredient is always set to 1 EL EL instead of oil...
         var ingredient = parseIngredient(textItem);
         if (ingredient != null) {
           model.addNewIngredient(ingredient);
@@ -84,7 +83,7 @@ class ImageTextExtractorImpl implements ImageTextExtractor {
     // a block may be only a single line (an incomplete sentence to be continued in the next line)
     for (var i = 0; i < text.blocks.length; i++) {
       var block = text.blocks[i];
-      var lines = block.text.split(". ");
+      var lines = block.text.split('. ');
 
       // TODO: split block if it's lines is greater than a certain threshold by dot
       // TODO: block.lines corresponds to optical lines - manually check whether the line is a complete sentence and ends with dot
@@ -101,7 +100,7 @@ class ImageTextExtractorImpl implements ImageTextExtractor {
       }
 
       possiblyIncompleteSentence =
-          !block.lines.last.text.trimRight().endsWith(".");
+          !block.lines.last.text.trimRight().endsWith('.');
     }
 
     for (var line in instructions) {
@@ -116,7 +115,7 @@ class ImageTextExtractorImpl implements ImageTextExtractor {
     var model = RecipeOverviewEditStep();
 
     var heights = text.blocks
-        .where((e) => e.text != null && e.text.length > 0)
+        .where((e) => e.text != null && e.text.isNotEmpty)
         .map((e) => e.boundingBox.height)
         .toList();
 
@@ -159,14 +158,14 @@ class ImageTextExtractorImpl implements ImageTextExtractor {
     return model;
   }
 
-  isIngredientHeader(TextBlock e) {
+  bool isIngredientHeader(TextBlock e) {
     return e.text.trim().toLowerCase() == 'ingredients' ||
         e.text.trim().toLowerCase() == 'zutaten';
   }
 
   RecipeIngredientModel parseIngredient(String textItem) {
     // expect amount, unit and ingredient
-    var words = textItem.split(" ");
+    var words = textItem.split(' ');
     words.removeWhere((e) => e.isEmpty);
 
     var unit = '';

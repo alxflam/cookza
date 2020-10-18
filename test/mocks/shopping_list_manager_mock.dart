@@ -3,7 +3,7 @@ import 'package:cookza/services/shopping_list/shopping_list_manager.dart';
 import 'package:mockito/mockito.dart';
 
 class ShoppingListManagerMock extends Mock implements ShoppingListManager {
-  Map<String, ShoppingListEntity> _entities = {};
+  final Map<String, ShoppingListEntity> _entities = {};
 
   void reset() {
     this._entities.clear();
@@ -26,5 +26,6 @@ class ShoppingListManagerMock extends Mock implements ShoppingListManager {
     } else {
       this._entities.putIfAbsent(entity.id, () => entity);
     }
+    return Future.value();
   }
 }

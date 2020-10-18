@@ -56,7 +56,7 @@ void main() {
     recipe.ingredientList = [pepper];
     recipe.recipeCollectionId = group.id;
 
-    recipeManager.createOrUpdate(recipe);
+    await recipeManager.createOrUpdate(recipe);
 
     recipeManager.currentCollection = group.id;
 
@@ -90,7 +90,7 @@ void main() {
     recipe.ingredientList = [pepper];
     recipe.recipeCollectionId = group.id;
 
-    recipeManager.createOrUpdate(recipe);
+    await recipeManager.createOrUpdate(recipe);
 
     recipeManager.currentCollection = group.id;
 
@@ -115,7 +115,7 @@ void main() {
     recipe.ingredientList = [pepper];
     recipe.recipeCollectionId = group.id;
 
-    recipeManager.createOrUpdate(recipe);
+    await recipeManager.createOrUpdate(recipe);
     recipeManager.currentCollection = group.id;
 
     final mockObserver = MockNavigatorObserver();
@@ -142,7 +142,7 @@ void main() {
   });
 }
 
-_inputFormField(WidgetTester tester, Finder finder, String value) async {
+void _inputFormField(WidgetTester tester, Finder finder, String value) async {
   await tester.enterText(finder, value);
   await tester.testTextInput.receiveAction(TextInputAction.search);
   await tester.pumpAndSettle();

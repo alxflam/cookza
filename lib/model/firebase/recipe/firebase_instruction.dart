@@ -61,7 +61,8 @@ class FirebaseInstructionDocument {
 
   Map<String, dynamic> toJson() => _$FirebaseInstructionDocumentToJson(this);
 
-  static from(List<FirebaseInstruction> instructions, String recipeID) {
+  static FirebaseInstructionDocument from(
+      List<FirebaseInstruction> instructions, String recipeID) {
     return FirebaseInstructionDocument(
         instructions: instructions, recipeID: recipeID);
   }

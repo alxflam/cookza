@@ -3,7 +3,7 @@ import 'package:cookza/services/shared_preferences_provider.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 
 /// metric unit of measures supporting conversion
-var metricUoM = [
+var metricUoM = <MetricUnitOfMeasure>{
   // codes standardized by UNECE/CEFACT Trade Facilitation Recommendation No.20
   MetricUnitOfMeasure('MMT', 'MTR', 10e-4), // millimetre
   MetricUnitOfMeasure('CMT', 'MTR', 10e-3), // centimetre
@@ -14,10 +14,10 @@ var metricUoM = [
   MetricUnitOfMeasure('CLT', 'LTR', 10e-3), // centilitre
   MetricUnitOfMeasure('DLT', 'LTR', 10e-2), // decilitre
   MetricUnitOfMeasure('LTR', 'LTR', 1), // litre
-].toSet();
+};
 
 /// non metric unit of measures
-Set<String> nonMetricUoMIds = [
+Set<String> nonMetricUoMIds = <String>{
   // codes standardized by UNECE/CEFACT Trade Facilitation Recommendation No.20
   'H87', // piece
   'G21', // cup
@@ -49,7 +49,7 @@ Set<String> nonMetricUoMIds = [
   'CLO', // clove
   'ROT', // root
   'TWG', // twig
-].toSet();
+};
 
 Set<UnitOfMeasure> nonMetricUoM =
     nonMetricUoMIds.map((e) => UnitOfMeasure(e)).toSet();
@@ -61,7 +61,7 @@ abstract class UnitOfMeasureProvider {
 }
 
 class UnitOfMeasure {
-  String _id;
+  final String _id;
 
   UnitOfMeasure(this._id);
 
@@ -86,8 +86,8 @@ class UnitOfMeasure {
 }
 
 class MetricUnitOfMeasure extends UnitOfMeasure {
-  String _baseUnit;
-  double _conversionFactor;
+  final String _baseUnit;
+  final double _conversionFactor;
 
   MetricUnitOfMeasure(String id, this._baseUnit, this._conversionFactor)
       : super(id);
@@ -106,8 +106,8 @@ class MetricUnitOfMeasure extends UnitOfMeasure {
 }
 
 class AmountedUnitOfMeasure {
-  UnitOfMeasure _uom;
-  double _amount;
+  final UnitOfMeasure _uom;
+  final double _amount;
 
   double get amount => _amount;
   UnitOfMeasure get uom => _uom;

@@ -33,7 +33,7 @@ class MutableRecipe implements RecipeEntity {
     this._difficulty = DIFFICULTY.EASY;
     this._ingredients = [];
     this._instructions = [];
-    this._tags = Set.of([]);
+    this._tags = <String>{};
     this._servings = 2;
   }
 
@@ -104,8 +104,7 @@ class MutableRecipe implements RecipeEntity {
   @override
   Future<UnmodifiableListView<IngredientNoteEntity>> get ingredients async {
     var original = await this._origIngredients;
-    return Future.value(UnmodifiableListView(
-        this._ingredients == null ? original : this._ingredients));
+    return Future.value(UnmodifiableListView(this._ingredients ?? original));
   }
 
   set ingredientList(List<IngredientNoteEntity> value) {
@@ -115,8 +114,7 @@ class MutableRecipe implements RecipeEntity {
   @override
   Future<UnmodifiableListView<InstructionEntity>> get instructions async {
     var original = await this._origInstructions;
-    return Future.value(UnmodifiableListView(
-        this._instructions == null ? original : this._instructions));
+    return Future.value(UnmodifiableListView(this._instructions ?? original));
   }
 
   set instructionList(List<InstructionEntity> value) {
@@ -192,7 +190,7 @@ class MutableRecipe implements RecipeEntity {
   @override
   Uint8List get inMemoryImage {
     if (!hasInMemoryImage) {
-      throw "Recipe has no in memory image";
+      throw 'Recipe has no in memory image';
     }
     return this._inMemoryImage;
   }

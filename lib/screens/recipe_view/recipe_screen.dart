@@ -25,11 +25,11 @@ class PopupMenuButtonChoices {
   const PopupMenuButtonChoices._internal(this._icon);
   IconData get icon => this._icon;
 
-  static const SHARE = const PopupMenuButtonChoices._internal(Icons.share);
-  static const EDIT = const PopupMenuButtonChoices._internal(Icons.edit);
+  static const SHARE = PopupMenuButtonChoices._internal(Icons.share);
+  static const EDIT = PopupMenuButtonChoices._internal(Icons.edit);
   static const ADD_MEAL_PLAN =
-      const PopupMenuButtonChoices._internal(kMealPlannerIconData);
-  static const DELETE = const PopupMenuButtonChoices._internal(Icons.delete);
+      PopupMenuButtonChoices._internal(kMealPlannerIconData);
+  static const DELETE = PopupMenuButtonChoices._internal(Icons.delete);
 }
 
 class RecipeScreen extends StatelessWidget {
@@ -50,7 +50,7 @@ class RecipeScreen extends StatelessWidget {
           builder: (context, model, child) {
             return Scaffold(
               appBar: AppBar(
-                title: Text(model.name != null ? model.name : ''),
+                title: Text(model.name ?? ''),
                 actions: <Widget>[
                   PopupMenuButton(
                     itemBuilder: (context) {
@@ -114,11 +114,11 @@ class RecipeScreen extends StatelessWidget {
 
                           break;
                         case PopupMenuButtonChoices.ADD_MEAL_PLAN:
-                          Navigator.pushNamed(context, MealPlanScreen.id,
+                          await Navigator.pushNamed(context, MealPlanScreen.id,
                               arguments: model.recipe);
                           break;
                         case PopupMenuButtonChoices.DELETE:
-                          showDialog(
+                          await showDialog(
                             context: context,
                             barrierDismissible: false, // user must tap button!
                             builder: (BuildContext context) {

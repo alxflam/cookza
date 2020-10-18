@@ -24,7 +24,7 @@ class WebLoginScreen extends StatelessWidget {
             : _getDesktopLayoutContent(context));
   }
 
-  _barcode(BuildContext context) {
+  Widget _barcode(BuildContext context) {
     return FutureBuilder(
       future: sl.get<FirebaseProvider>().initializeWebLogin(
         (BuildContext context) {
@@ -59,7 +59,7 @@ class WebLoginScreen extends StatelessWidget {
     );
   }
 
-  _getDesktopLayoutContent(BuildContext context) {
+  Widget _getDesktopLayoutContent(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -81,7 +81,7 @@ class WebLoginScreen extends StatelessWidget {
     );
   }
 
-  _barcodeExplanation(BuildContext context) {
+  Widget _barcodeExplanation(BuildContext context) {
     var tileColor = Provider.of<ThemeModel>(context).tileAccentColor;
 
     return Expanded(

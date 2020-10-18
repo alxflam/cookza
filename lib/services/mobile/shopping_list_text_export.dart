@@ -15,6 +15,6 @@ class ShoppingListTextExporterApp implements ShoppingListTextExporter {
     var text =
         await sl.get<ShoppingListTextGenerator>().generateText(model, title);
 
-    ShareExtend.share(text, 'text');
+    await ShareExtend.share(text, 'text');
   }
 }

@@ -52,7 +52,7 @@ void main() {
           RecipeCreator.createIngredient('Pepper', amount: 100, uom: 'GRM');
       recipe.ingredientList = [onion, pepper];
 
-      recipeManager.createOrUpdate(recipe);
+      await recipeManager.createOrUpdate(recipe);
 
       var firstDateItem = MutableMealPlanDateEntity.empty(startDate);
       firstDateItem.addRecipe(
@@ -98,7 +98,7 @@ void main() {
           RecipeCreator.createIngredient('Pepper', amount: 100, uom: 'GRM');
       recipe.ingredientList = [onion, pepper];
 
-      recipeManager.createOrUpdate(recipe);
+      await recipeManager.createOrUpdate(recipe);
 
       var firstDate = MutableMealPlanDateEntity.empty(
           startDate.subtract(Duration(days: 1)));
@@ -130,7 +130,7 @@ void main() {
           RecipeCreator.createIngredient('Pepper', amount: 100, uom: 'GRM');
       recipe.ingredientList = [onion, pepper];
 
-      recipeManager.createOrUpdate(recipe);
+      await recipeManager.createOrUpdate(recipe);
 
       var firstDate =
           MutableMealPlanDateEntity.empty(endDate.add(Duration(days: 1)));

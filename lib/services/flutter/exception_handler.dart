@@ -37,7 +37,7 @@ class ExceptionHandlerImpl implements ExceptionHandler {
     } on FormatException {
       /// create a new empty exception log if some weird string got persisted that can't be deserialized
       /// this should only happen whilst development is ongoing...
-      logModel = new ExceptionLog();
+      logModel = ExceptionLog();
     }
 
     /// then add the model to the persisted log

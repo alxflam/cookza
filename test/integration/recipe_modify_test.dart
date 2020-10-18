@@ -71,7 +71,7 @@ void main() {
       MutableInstruction.withValues(text: 'First step'),
       MutableInstruction.withValues(text: 'Second step')
     ];
-    mock.createOrUpdate(recipe);
+    await mock.createOrUpdate(recipe);
 
     /// navigate to the recipe
     await _navigateToRecipeScreen(tester);
@@ -248,7 +248,7 @@ Future _proceedStep(WidgetTester tester) async {
   await tester.pump();
 }
 
-_navigateToRecipeScreen(WidgetTester tester) async {
+void _navigateToRecipeScreen(WidgetTester tester) async {
   final mockObserver = MockNavigatorObserver();
   await tester.pumpWidget(MockApplication(mockObserver: mockObserver));
 
@@ -270,7 +270,7 @@ _navigateToRecipeScreen(WidgetTester tester) async {
   await tester.pumpAndSettle();
 }
 
-_inputFormField(WidgetTester tester, Finder finder, String value) async {
+void _inputFormField(WidgetTester tester, Finder finder, String value) async {
   await tester.enterText(finder, value);
   await tester.testTextInput.receiveAction(TextInputAction.done);
   await tester.pumpAndSettle();

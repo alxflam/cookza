@@ -113,7 +113,7 @@ class SharedPreferencesProviderImpl implements SharedPreferencesProvider {
 
   @override
   void setUserName(String value) {
-    assert(value != null && value.isNotEmpty);
+    assert(value != null);
     this._prefs.setString(userName, value);
   }
 

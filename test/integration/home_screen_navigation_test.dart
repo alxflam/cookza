@@ -30,7 +30,7 @@ void main() {
     GetIt.I.registerSingleton<MealPlanManager>(MealPlanManagerMock());
   });
 
-  _verifyNavigation(WidgetTester tester, String button, Type type) async {
+  void _verifyNavigation(WidgetTester tester, String button, Type type) async {
     final mockObserver = MockNavigatorObserver();
     await tester.pumpWidget(MockApplication(mockObserver: mockObserver));
 

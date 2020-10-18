@@ -15,7 +15,7 @@ class Chefkoch {
   Future<RecipeEntity> getRecipe(String id) async {
     var result = await http.get('$url$id');
     if (result.statusCode != 200) {
-      throw "Error contacting Chefkoch.de - pleasy try again later";
+      throw 'Error contacting Chefkoch.de - pleasy try again later';
     }
 
     var uoms = sl.get<UnitOfMeasureProvider>().getAll();
@@ -30,7 +30,9 @@ class Chefkoch {
     int difficulty = json['difficulty'];
     recipe.diff = (difficulty == 1
         ? DIFFICULTY.EASY
-        : difficulty > 2 ? DIFFICULTY.HARD : DIFFICULTY.MEDIUM);
+        : difficulty > 2
+            ? DIFFICULTY.HARD
+            : DIFFICULTY.MEDIUM);
     recipe.servings = (json['servings']);
     recipe.duration = (json['totalTime']);
 

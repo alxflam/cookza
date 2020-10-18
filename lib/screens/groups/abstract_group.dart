@@ -13,12 +13,10 @@ class PopupMenuButtonChoices {
   const PopupMenuButtonChoices._internal(this._icon);
   IconData get icon => this._icon;
 
-  static const DELETE = const PopupMenuButtonChoices._internal(Icons.delete);
-  static const EDIT = const PopupMenuButtonChoices._internal(Icons.edit);
-  static const ADD_USER =
-      const PopupMenuButtonChoices._internal(Icons.person_add);
-  static const LEAVE =
-      const PopupMenuButtonChoices._internal(Icons.exit_to_app);
+  static const DELETE = PopupMenuButtonChoices._internal(Icons.delete);
+  static const EDIT = PopupMenuButtonChoices._internal(Icons.edit);
+  static const ADD_USER = PopupMenuButtonChoices._internal(Icons.person_add);
+  static const LEAVE = PopupMenuButtonChoices._internal(Icons.exit_to_app);
 }
 
 abstract class AbstractGroupScreen extends StatelessWidget {
@@ -126,8 +124,7 @@ abstract class AbstractGroupScreen extends StatelessWidget {
 
                         return ListTile(
                           leading: _getLeadingUserIcon(user, isCurrentUser),
-                          title:
-                              Text(user.name == null ? 'unknown' : user.name),
+                          title: Text(user.name ?? 'unknown'),
                           subtitle:
                               isCurrentUser ? Text('That\'s me') : Text(''),
                           trailing: !isCurrentUser
@@ -278,7 +275,7 @@ abstract class AbstractGroupScreen extends StatelessWidget {
     var scanResult = await sl.get<QRScanner>().scanUserQRCode();
     if (scanResult != null) {
       // then add the user
-      model.addUser(scanResult.id, scanResult.name);
+      await model.addUser(scanResult.id, scanResult.name);
     }
   }
 

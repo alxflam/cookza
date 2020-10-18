@@ -13,6 +13,6 @@ class PDFExporterImpl extends PDFExporter {
     var file = File('$directory/${this.getExportFileName()}.pdf');
     await file.writeAsBytes(doc.save());
 
-    ShareExtend.share(file.path, 'file');
+    await ShareExtend.share(file.path, 'file');
   }
 }

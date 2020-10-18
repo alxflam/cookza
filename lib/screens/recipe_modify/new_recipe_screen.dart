@@ -20,7 +20,7 @@ import 'package:provider/provider.dart';
 Future<void> saveModel(BuildContext context, RecipeEditModel model) async {
   print('show progress indicator before save');
 
-  showDialog(
+  await showDialog(
     context: context,
     barrierDismissible: false,
     builder: (BuildContext context) {
@@ -57,7 +57,7 @@ Future<void> saveModel(BuildContext context, RecipeEditModel model) async {
     // create: navigate to recipe view in case save was successful
     var result = await sl.get<RecipeManager>().getRecipeById([id]);
     if (result.length == 1) {
-      Navigator.pushReplacementNamed(context, RecipeScreen.id,
+      await Navigator.pushReplacementNamed(context, RecipeScreen.id,
           arguments: result.first);
     } else {
       kErrorDialog(context, 'Could not find created recipe',
@@ -88,7 +88,7 @@ class NewRecipeScreen extends StatelessWidget {
           IconButton(
             icon: FaIcon(FontAwesomeIcons.save),
             onPressed: () async {
-              saveModel(context, model);
+              await saveModel(context, model);
             },
           ),
         ],
@@ -106,17 +106,17 @@ class NewRecipeScreen extends StatelessWidget {
 }
 
 class NewRecipeStepper extends StatelessWidget {
-  nextButtonPressed(BuildContext context) async {
+  void nextButtonPressed(BuildContext context) async {
     RecipeEditModel model =
         Provider.of<RecipeEditModel>(context, listen: false);
     if (model.currentStep + 1 < model.countSteps) {
       nextStep(context);
     } else {
-      saveModel(context, model);
+      await saveModel(context, model);
     }
   }
 
-  cancelButtonPressed(BuildContext context) {
+  void cancelButtonPressed(BuildContext context) {
     RecipeEditModel model =
         Provider.of<RecipeEditModel>(context, listen: false);
     int modelStep = model.currentStep;
@@ -127,11 +127,11 @@ class NewRecipeStepper extends StatelessWidget {
     }
   }
 
-  nextStep(BuildContext context) {
+  void nextStep(BuildContext context) {
     Provider.of<RecipeEditModel>(context, listen: false).nextStep();
   }
 
-  previousStep(BuildContext context) {
+  void previousStep(BuildContext context) {
     Provider.of<RecipeEditModel>(context, listen: false).previousStep();
   }
 

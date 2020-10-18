@@ -35,7 +35,7 @@ class RecipeGroupsTiles extends StatelessWidget {
               RaisedButton(
                   child: Text(AppLocalizations.of(context).createGroup),
                   onPressed: () async {
-                    this._createRecipeGroup(context);
+                    await this._createRecipeGroup(context);
                   })
             ],
           ),
@@ -73,7 +73,7 @@ class RecipeGroupsTiles extends StatelessWidget {
   }
 
   Future<void> _createRecipeGroup(BuildContext context) async {
-    showDialog(
+    await showDialog(
       context: context,
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
@@ -114,7 +114,7 @@ class RecipeGroupsTiles extends StatelessWidget {
                               child: Icon(Icons.save),
                               color: Colors.green,
                               onPressed: () async {
-                                sl
+                                await sl
                                     .get<RecipeManager>()
                                     .createCollection(controller.text);
                                 Navigator.pop(context);

@@ -25,7 +25,7 @@ class LeftoversBody extends StatefulWidget {
 }
 
 class _LeftoversBodyState extends State<LeftoversBody> {
-  List<String> _ingredients = [];
+  final List<String> _ingredients = [];
 
   void _addIngredient(String ingredient) {
     if (ingredient != null &&
@@ -130,7 +130,7 @@ class _LeftoversBodyState extends State<LeftoversBody> {
     return result;
   }
 
-  _removeIngredient(String ingredient) {
+  void _removeIngredient(String ingredient) {
     setState(() {
       this._ingredients.remove(ingredient);
     });

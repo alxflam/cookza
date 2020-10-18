@@ -161,11 +161,11 @@ class RecipeManagerFirebase implements RecipeManager {
           .importRecipes([entity], this.currentCollection);
       if (recipe.hasInMemoryImage) {
         // then upload the image if there is an in memory image
-        sl
+        await sl
             .get<ImageManager>()
             .uploadRecipeImageFromBytes(ids.first.id, recipe.inMemoryImage);
         // update image reference field on recipe (to optimize network calls - only try to  fetch image if recipe has an image)
-        sl
+        await sl
             .get<FirebaseProvider>()
             .updateImageReference(ids.first.id, ids.first.id);
       }

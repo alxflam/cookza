@@ -62,14 +62,13 @@ Future<void> openShoppingListDialog(BuildContext context) async {
               e.dateUntil == model.dateEnd,
           orElse: () => null);
 
-  var listEntity = matchedList != null
-      ? matchedList
-      : MutableShoppingList.ofValues(
+  var listEntity = matchedList ??
+      MutableShoppingList.ofValues(
           model.dateFrom, model.dateEnd, model.groupID, []);
 
   var newModel = ShoppingListModel.from(listEntity);
 
-  Navigator.pushReplacementNamed(context, ShoppingListDetailScreen.id,
+  await Navigator.pushReplacementNamed(context, ShoppingListDetailScreen.id,
       arguments: newModel);
 }
 

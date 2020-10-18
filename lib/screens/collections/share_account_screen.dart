@@ -1,81 +1,77 @@
 import 'dart:convert';
 
 import 'package:cookza/components/padded_qr_code.dart';
-import 'package:cookza/model/entities/abstract/user_entity.dart';
-import 'package:cookza/model/json/user.dart';
-import 'package:cookza/services/firebase_provider.dart';
-import 'package:cookza/services/flutter/service_locator.dart';
-import 'package:cookza/services/shared_preferences_provider.dart';
+import 'package:cookza/viewmodel/collections/share_account_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
 
 class ShareAccountScreen extends StatelessWidget {
   static final String id = 'shareAccount';
 
   @override
   Widget build(BuildContext context) {
+    var _model = ShareAccountScreenModel();
+    // TODO move to drawer header as avatar with gesture detection to navigate to this screen
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context).shareAccount),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Builder(builder: (context) {
-              var editMode = false;
+      body: ChangeNotifierProvider.value(
+        value: _model,
+        builder: (context, child) {
+          return Consumer<ShareAccountScreenModel>(
+            builder: (context, model, _) {
+              return SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Builder(builder: (context) {
+                      return Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              _getUserNameField(model),
+                              IconButton(
+                                icon: model.isEditMode
+                                    ? Icon(Icons.check)
+                                    : Icon(Icons.edit),
+                                onPressed: () {
+                                  model.isEditMode = !model.isEditMode;
+                                },
+                              )
+                            ]),
+                      );
+                    }),
+                    Builder(builder: (context) {
+                      if (!model.hasName) {
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(AppLocalizations.of(context).enterUsername)
+                          ],
+                        );
+                      }
 
-              return StatefulBuilder(
-                builder: (context, setState) {
-                  return Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          _getUserNameField(editMode),
-                          IconButton(
-                            icon:
-                                editMode ? Icon(Icons.check) : Icon(Icons.edit),
-                            onPressed: () {
-                              setState(() {
-                                editMode = !editMode;
-                              });
-                            },
-                          )
-                        ]),
-                  );
-                },
+                      var json = model.jsonUser.toJson();
+                      var data = jsonEncode(json);
+                      return PaddedQRCode(data, 400, 400);
+                    }),
+                  ],
+                ),
               );
-            }),
-            Builder(builder: (context) {
-              var name = sl.get<SharedPreferencesProvider>().getUserName();
-              var id = sl.get<FirebaseProvider>().userUid;
-
-              if (id == null || name == null) {
-                return Center(
-                  child: Text(AppLocalizations.of(context).enterUsername),
-                );
-              }
-
-              var json = JsonUser(
-                      id: sl.get<FirebaseProvider>().userUid,
-                      name: sl.get<SharedPreferencesProvider>().getUserName(),
-                      type: USER_TYPE.USER)
-                  .toJson();
-
-              var data = jsonEncode(json);
-
-              return PaddedQRCode(data, 400, 400);
-            }),
-          ],
-        ),
+            },
+          );
+        },
       ),
     );
   }
 
-  Widget _getUserNameField(bool editMode) {
-    var userName = sl.get<SharedPreferencesProvider>().getUserName();
-    if (editMode) {
+  Widget _getUserNameField(ShareAccountScreenModel model) {
+    var userName = model.userName;
+    if (model.isEditMode) {
       var controller = TextEditingController(text: userName);
 
       return Expanded(
@@ -85,11 +81,10 @@ class ShareAccountScreen extends StatelessWidget {
           maxLength: 20,
           autofocus: true,
           onChanged: (value) {
-            if (value.length > 1) {
-              sl.get<SharedPreferencesProvider>().setUserName(value);
-            }
+            model.userName = value;
           },
-          decoration: InputDecoration(hintText: 'Your external user name'),
+          // TODO: localized text
+          decoration: InputDecoration(hintText: '§Your external user name'),
         ),
       );
     }

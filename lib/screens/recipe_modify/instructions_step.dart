@@ -43,7 +43,7 @@ class InstructionsStepContent extends StatelessWidget {
 Column _getInstructionRows(
     BuildContext context, RecipeInstructionEditStep model) {
   List<Widget> rows = [];
-  if (model.instructions.length == 0) {
+  if (model.instructions.isEmpty) {
     return Column();
   }
 

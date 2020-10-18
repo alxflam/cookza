@@ -19,7 +19,7 @@ class ShareReceiveHandler {
     print('received in handler: $text');
 
     // todo: make it more flexible: register multiple handlers, with methods canHandle() to identify which one can handle the shared text...
-    var exp = new RegExp(r'rezepte\/([0-9]*)\/');
+    var exp = RegExp(r'rezepte\/([0-9]*)\/');
     var matches = exp.allMatches(text);
 
     if (matches.isEmpty) {

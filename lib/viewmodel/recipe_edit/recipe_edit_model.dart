@@ -24,7 +24,7 @@ class RecipeEditModel extends ChangeNotifier {
 
   MutableRecipe _targetRecipe;
   MODE _mode;
-  List<RecipeEditStep> _stepModels = [
+  final List<RecipeEditStep> _stepModels = [
     RecipeOverviewEditStep(),
     RecipeImageEditStep(),
     RecipeTagEditStep(),
@@ -74,7 +74,7 @@ class RecipeEditModel extends ChangeNotifier {
       // upload the image for the given recipe
       if (imageStepModel.image == null) {
         // delete the image if exists
-        sl.get<ImageManager>().deleteRecipeImage(_targetRecipe);
+        await sl.get<ImageManager>().deleteRecipeImage(_targetRecipe);
       } else {
         // upload the image
         await sl

@@ -23,7 +23,7 @@ class ShoppingListOverviewScreen extends StatelessWidget {
           IconButton(
             icon: Icon(kShoppingListIconData),
             onPressed: () async {
-              openShoppingListDialog(context);
+              await openShoppingListDialog(context);
             },
           ),
         ],
@@ -59,7 +59,8 @@ class ShoppingListOverviewScreen extends StatelessWidget {
                     '${kDateFormatter.format(entry.dateFrom)} - ${kDateFormatter.format(entry.dateUntil)}'),
                 onTap: () async {
                   var detailsViewModel = ShoppingListModel.from(entry);
-                  Navigator.pushNamed(context, ShoppingListDetailScreen.id,
+                  await Navigator.pushNamed(
+                          context, ShoppingListDetailScreen.id,
                           arguments: detailsViewModel)
                       .then((value) => model.navigatedBack());
                 },

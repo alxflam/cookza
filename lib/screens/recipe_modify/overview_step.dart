@@ -66,7 +66,7 @@ Step getOverviewStep(BuildContext context) {
                   Container(
                     width: 50,
                     alignment: Alignment.center,
-                    child: Text("${model.duration} min"),
+                    child: Text('${model.duration} min'),
                   ),
                 ],
               ),
@@ -125,9 +125,7 @@ Widget _getCollectionDropDown(
                 child: Text(item.name), value: item))
             .toList();
 
-        if (model.collection == null) {
-          model.collection = collections.first;
-        }
+        model.collection ??= collections.first;
 
         var selectedCollection =
             collections.firstWhere((e) => e.id == model.collection.id);

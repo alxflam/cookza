@@ -82,36 +82,36 @@ class OnBoardingScreen extends StatelessWidget {
 
     var basePages = [
       PageViewModel(
-        title: "Welcome to Cookza",
+        title: 'Welcome to Cookza',
         body:
-            "Cookza let's you manage all your favorite recipes in a single app.",
+            'Cookza let\'s you manage all your favorite recipes in a single app.',
         image: _buildImage(kAppIconData, context),
         decoration: pageDecoration,
       ),
       PageViewModel(
-        title: "Organize your recipes",
+        title: 'Organize your recipes',
         body:
-            "Create recipes manually or let Cookza process a picture or a webpage to retrieve a recipe. Organize your recipes in groups and add friends to your recipe groups to share them",
+            'Create recipes manually or let Cookza process a picture or a webpage to retrieve a recipe. Organize your recipes in groups and add friends to your recipe groups to share them',
         image: _buildImage(kRecipesIconData, context),
         decoration: pageDecoration,
       ),
       PageViewModel(
-        title: "Meal Planner",
+        title: 'Meal Planner',
         body:
-            "Plan the meals for the whole week and share your meal plan with your household members.",
+            'Plan the meals for the whole week and share your meal plan with your household members.',
         image: _buildImage(kMealPlannerIconData, context),
         decoration: pageDecoration,
       ),
       PageViewModel(
-        title: "Shopping List",
-        body: "Generate a shopping list for your meal plan and share it",
+        title: 'Shopping List',
+        body: 'Generate a shopping list for your meal plan and share it',
         image: _buildImage(kShoppingListIconData, context),
         decoration: pageDecoration,
       ),
       PageViewModel(
-        title: "Much more to explore",
+        title: 'Much more to explore',
         body:
-            "You can also search for similar recipes, find recipes by ingredients and share recipes with other cookly users - by PDF, Text or by adding them to your recipe groups",
+            'You can also search for similar recipes, find recipes by ingredients and share recipes with other cookly users - by PDF, Text or by adding them to your recipe groups',
         image: _buildImage(Icons.share, context),
         decoration: pageDecoration,
       ),

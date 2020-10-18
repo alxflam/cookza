@@ -31,7 +31,7 @@ class ExportSettingsScreen extends StatelessWidget {
               var model = RecipeSelectionModel.forExport(
                   recipes.map((e) => RecipeViewModel.of(e)).toList());
               // navigate to the selection screen
-              Navigator.pushNamed(context, RecipeSelectionScreen.id,
+              await Navigator.pushNamed(context, RecipeSelectionScreen.id,
                   arguments: model);
             },
           ),
@@ -46,7 +46,7 @@ class ExportSettingsScreen extends StatelessWidget {
               var model = RecipeSelectionModel.forExportPDF(
                   recipes.map((e) => RecipeViewModel.of(e)).toList());
               // navigate to the selection screen
-              Navigator.pushNamed(context, RecipeSelectionScreen.id,
+              await Navigator.pushNamed(context, RecipeSelectionScreen.id,
                   arguments: model);
             },
           ),

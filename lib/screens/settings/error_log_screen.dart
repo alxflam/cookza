@@ -10,8 +10,8 @@ class PopupMenuButtonChoices {
   const PopupMenuButtonChoices._internal(this._icon);
   IconData get icon => this._icon;
 
-  static const SHARE = const PopupMenuButtonChoices._internal(Icons.share);
-  static const DELETE = const PopupMenuButtonChoices._internal(Icons.delete);
+  static const SHARE = PopupMenuButtonChoices._internal(Icons.share);
+  static const DELETE = PopupMenuButtonChoices._internal(Icons.delete);
 }
 
 class ErrorLogScreen extends StatelessWidget {
@@ -54,7 +54,7 @@ class ErrorLogScreen extends StatelessWidget {
               switch (value) {
                 case PopupMenuButtonChoices.SHARE:
                   var content = await _model.errorsAsText;
-                  ShareExtend.share(content, 'text');
+                  await ShareExtend.share(content, 'text');
                   break;
                 case PopupMenuButtonChoices.DELETE:
                   _model.clearLog();

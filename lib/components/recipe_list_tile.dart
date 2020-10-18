@@ -78,11 +78,13 @@ class RecipeListTile extends StatelessWidget {
           ? FaIcon(FontAwesomeIcons.questionCircle)
           : Icon(item.rating < 2
               ? Icons.star_border
-              : item.rating < 4 ? Icons.star_half : Icons.star),
+              : item.rating < 4
+                  ? Icons.star_half
+                  : Icons.star),
     );
   }
 
-  _buildTileIcons(RecipeEntity item) {
+  Widget _buildTileIcons(RecipeEntity item) {
     // todo make a static map in the constants file for the static tags and their icon mapping
     List<IconData> icons = [];
     var isVegan = item.tags.contains(kVeganTag);

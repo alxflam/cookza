@@ -1,6 +1,5 @@
 import 'package:cookza/constants.dart';
 import 'package:cookza/model/entities/abstract/recipe_entity.dart';
-import 'package:cookza/services/flutter/navigator_service.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:cookza/services/unit_of_measure.dart';
 
@@ -15,7 +14,7 @@ class RecipeTextGeneratorImpl implements RecipeTextGenerator {
   @override
   Future<String> generateRecipeText(List<RecipeEntity> entities,
       String ingredientsTitle, String instructionsTitle) async {
-    var buffer = new StringBuffer();
+    var buffer = StringBuffer();
 
     for (var entity in entities) {
       buffer.write('*');

@@ -24,7 +24,7 @@ void main() {
 
     recipe.ingredientList = [pepper];
 
-    GetIt.I.get<RecipeManager>().createOrUpdate(recipe);
+    await GetIt.I.get<RecipeManager>().createOrUpdate(recipe);
 
     var result = await cut.getRecipesContaining(['pEppER']);
 
@@ -39,7 +39,7 @@ void main() {
 
     recipe.ingredientList = [pepper, onion, tomato];
 
-    GetIt.I.get<RecipeManager>().createOrUpdate(recipe);
+    await GetIt.I.get<RecipeManager>().createOrUpdate(recipe);
 
     var result = await cut.getRecipesContaining(['pEppER', 'tomato', 'ONION']);
 
@@ -78,7 +78,7 @@ void main() {
 
     recipe.ingredientList = [pepper, onion, tomato];
 
-    GetIt.I.get<RecipeManager>().createOrUpdate(recipe);
+    await GetIt.I.get<RecipeManager>().createOrUpdate(recipe);
 
     var result = await cut.getSimilarRecipes(recipe);
 
@@ -93,12 +93,12 @@ void main() {
     var salad = RecipeCreator.createIngredient('Salad');
     recipe.ingredientList = [pepper, onion, tomato, salad];
 
-    GetIt.I.get<RecipeManager>().createOrUpdate(recipe);
+    await GetIt.I.get<RecipeManager>().createOrUpdate(recipe);
 
     var secondRecipe = RecipeCreator.createRecipe('dummy 2');
     secondRecipe.ingredientList = [pepper];
 
-    GetIt.I.get<RecipeManager>().createOrUpdate(secondRecipe);
+    await GetIt.I.get<RecipeManager>().createOrUpdate(secondRecipe);
 
     var result = await cut.getSimilarRecipes(recipe);
 
@@ -113,13 +113,13 @@ void main() {
     var salad = RecipeCreator.createIngredient('Salad');
     recipe.ingredientList = [pepper, onion, tomato, salad];
 
-    GetIt.I.get<RecipeManager>().createOrUpdate(recipe);
+    await GetIt.I.get<RecipeManager>().createOrUpdate(recipe);
     var goatCheese = RecipeCreator.createIngredient('Goat Cheese');
     var secondRecipe = RecipeCreator.createRecipe('dummy 2');
 
     secondRecipe.ingredientList = [pepper, salad, goatCheese];
 
-    GetIt.I.get<RecipeManager>().createOrUpdate(secondRecipe);
+    await GetIt.I.get<RecipeManager>().createOrUpdate(secondRecipe);
 
     var result = await cut.getSimilarRecipes(recipe);
 

@@ -17,6 +17,6 @@ class RecipeTextExporterApp implements RecipeTextExporter {
         .get<RecipeTextGenerator>()
         .generateRecipeText(entities, ingTitle, insTitle);
 
-    ShareExtend.share(text, 'text');
+    await ShareExtend.share(text, 'text');
   }
 }

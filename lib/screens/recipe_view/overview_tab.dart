@@ -131,7 +131,7 @@ class SubImageRow extends StatelessWidget {
             Wrap(
               children: [
                 Text(
-                  model.description == null ? model.name : model.description,
+                  model.description ?? model.name,
                   textAlign: TextAlign.center,
                 ),
               ],
@@ -172,7 +172,7 @@ class SubImageRow extends StatelessWidget {
     );
   }
 
-  _buildTagWidget(RecipeViewModel model) {
+  Widget _buildTagWidget(RecipeViewModel model) {
     List<Widget> chips = model.tags
         .map(
           (tag) => Chip(

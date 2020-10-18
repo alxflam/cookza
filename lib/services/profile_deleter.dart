@@ -51,7 +51,7 @@ class ProfileDeleterImpl implements ProfileDeleter {
         await firebase.leaveRecipeGroup(recipeGroup.id);
       } else {
         // delete group and all associated recipes including their images
-        firebase.deleteRecipeCollection(recipeGroup.id);
+        await firebase.deleteRecipeCollection(recipeGroup.id);
       }
     }
   }

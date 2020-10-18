@@ -19,8 +19,8 @@ class MutableInstruction implements InstructionEntity {
 
   MutableInstruction.withValues({String text, int step, String image}) {
     _step = step;
-    _image = image == null ? '' : image;
-    _text = text == null ? '' : text;
+    _image = image ?? '';
+    _text = text ?? '';
   }
 
   @override

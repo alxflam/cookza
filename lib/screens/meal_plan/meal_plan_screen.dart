@@ -2,7 +2,6 @@ import 'package:cookza/components/meal_plan_groups_drawer.dart';
 import 'package:cookza/components/open_drawer_button.dart';
 import 'package:cookza/components/round_icon_button.dart';
 import 'package:cookza/constants.dart';
-import 'package:cookza/model/entities/abstract/meal_plan_entity.dart';
 import 'package:cookza/model/entities/abstract/recipe_entity.dart';
 import 'package:cookza/screens/recipe_view/recipe_screen.dart';
 import 'package:cookza/screens/shopping_list/shopping_list_dialog.dart';
@@ -199,7 +198,7 @@ class MealPlanScreen extends StatelessWidget {
                         .get<RecipeManager>()
                         .getRecipeById([recipeModel.id]);
                     if (recipeEntity.length == 1) {
-                      Navigator.pushNamed(context, RecipeScreen.id,
+                      await Navigator.pushNamed(context, RecipeScreen.id,
                           arguments: recipeEntity.first);
                     }
                   }
@@ -349,7 +348,7 @@ class MealPlanScreen extends StatelessWidget {
     return tiles;
   }
 
-  _createWeekTile(int i, Color backgroundColor) {
+  Widget _createWeekTile(int i, Color backgroundColor) {
     return WeekNumber(i, backgroundColor);
   }
 

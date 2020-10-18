@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cookza/constants.dart';
 import 'package:cookza/model/entities/abstract/ingredient_note_entity.dart';
 import 'package:cookza/model/entities/abstract/shopping_list_entity.dart';
@@ -12,19 +13,18 @@ import 'package:cookza/services/shopping_list/shopping_list_manager.dart';
 import 'package:cookza/services/unit_of_measure.dart';
 import 'package:cookza/viewmodel/recipe_edit/recipe_ingredient_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ShoppingListModel extends ChangeNotifier {
   MutableShoppingList _listEntity;
 
-  static int _shoppingListDays =
+  static final int _shoppingListDays =
       sl.get<SharedPreferencesProvider>().getMealPlanWeeks() * 7;
 
   DateTime _lastDate;
   DateTime _firstDate;
 
-  List<MutableShoppingListItem> _items = [];
+  final List<MutableShoppingListItem> _items = [];
   bool _initalized = false;
 
   ShoppingListModel.from(ShoppingListEntity listEntity) {
@@ -65,10 +65,10 @@ class ShoppingListModel extends ChangeNotifier {
       generatedItems = await sl
           .get<ShoppingListItemsGenerator>()
           .generateItems(this._listEntity);
-    } on PlatformException catch (e) {
+    } on FirebaseException catch (e) {
       var context = sl.get<NavigatorService>().currentContext;
       // make sure that case is logged
-      sl.get<ExceptionHandler>().reportException(
+      await sl.get<ExceptionHandler>().reportException(
           '${AppLocalizations.of(context).missingRecipeAccess}: ${e.toString()}',
           StackTrace.current,
           DateTime.now());

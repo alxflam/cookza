@@ -8,8 +8,8 @@ import 'package:cookza/services/util/week_calculation.dart';
 import 'package:flutter/material.dart';
 
 class MealDragModel {
-  int _origin;
-  MealPlanRecipeModel _recipe;
+  final int _origin;
+  final MealPlanRecipeModel _recipe;
 
   MealPlanRecipeModel get model => _recipe;
   int get origin => _origin;
@@ -41,7 +41,7 @@ class MealPlanViewModel extends ChangeNotifier {
   RecipeEntity _recipeForAddition;
   MutableMealPlan _mealPlan;
 
-  int _standardServings =
+  final int _standardServings =
       sl.get<SharedPreferencesProvider>().getMealPlanStandardServingsSize();
 
   MealPlanViewModel.of(MealPlanEntity plan, {DateTime startDate}) {

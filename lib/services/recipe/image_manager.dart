@@ -18,7 +18,7 @@ abstract class ImageManager {
 }
 
 class ImageManagerFirebase implements ImageManager {
-  FirebaseStorage _storage = FirebaseStorage.instance;
+  final FirebaseStorage _storage = FirebaseStorage.instance;
 
   @override
   Future<void> deleteRecipeImage(RecipeEntity entity) async {

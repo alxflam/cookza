@@ -11,13 +11,13 @@ enum SELECTION_MODE {
 }
 
 class RecipeSelectionModel extends ChangeNotifier {
-  List<String> _selected = [];
+  final List<String> _selected = [];
 
   /// excluded, non-selectable recipes - e.g. for reference ingredients:
   /// no self reference should be possible
   List<String> _excludes = [];
-  List<RecipeViewModel> _recipes;
-  List<RecipeViewModel> _filtered = [];
+  final List<RecipeViewModel> _recipes;
+  final List<RecipeViewModel> _filtered = [];
 
   int _countAllRecipes = 0;
   int _countSelected = 0;
@@ -66,9 +66,9 @@ class RecipeSelectionModel extends ChangeNotifier {
     _countSelected = _selected.length;
   }
 
-  get isMultiSelection => _allowMultiSelection;
-  get countSelected => _countSelected;
-  get countAll => _countAllRecipes;
+  bool get isMultiSelection => _allowMultiSelection;
+  int get countSelected => _countSelected;
+  int get countAll => _countAllRecipes;
 
   List<String> get selectedRecipes => _selected;
 

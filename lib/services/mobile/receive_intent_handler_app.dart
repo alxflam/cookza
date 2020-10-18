@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class ReceiveIntentHandlerImpl implements ReceiveIntentHandler {
-  static const platform = const MethodChannel('app.channel.shared.data');
+  static const platform = MethodChannel('app.channel.shared.data');
 
   final handler = sl.get<ShareReceiveHandler>();
 

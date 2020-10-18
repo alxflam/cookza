@@ -85,9 +85,9 @@ void main() {
     item.addRecipe(
         MutableMealPlanRecipeEntity.fromValues('whatever', 'Spätzle', 2));
     mealPlan.items.add(item);
-    mealPlanManager.saveMealPlan(mealPlan);
+    await mealPlanManager.saveMealPlan(mealPlan);
 
-    mealPlanManager.createCollection(mealPlan.groupID);
+    await mealPlanManager.createCollection(mealPlan.groupID);
     mealPlanManager.currentCollection = mealPlan.groupID;
     mealPlanManager.addMealPlan(mealPlan.groupID, mealPlan);
 
@@ -109,9 +109,9 @@ void main() {
     item.addRecipe(
         MutableMealPlanRecipeEntity.fromValues('whatever', 'Spätzle', 2));
     mealPlan.items.add(item);
-    mealPlanManager.saveMealPlan(mealPlan);
+    await mealPlanManager.saveMealPlan(mealPlan);
 
-    mealPlanManager.createCollection(mealPlan.groupID);
+    await mealPlanManager.createCollection(mealPlan.groupID);
     mealPlanManager.currentCollection = mealPlan.groupID;
     mealPlanManager.addMealPlan(mealPlan.groupID, mealPlan);
 
@@ -126,7 +126,7 @@ void main() {
         find.descendant(of: find.byType(Card), matching: find.text('Spätzle'));
     find.descendant(of: find.byType(Card), matching: find.text('2'));
 
-    tester.tap(recipeFinder);
+    await tester.tap(recipeFinder);
 
     /// Verify that a push event happened
     verify(mockObserver.didPush(any, any));
@@ -139,9 +139,9 @@ void main() {
     item.addRecipe(
         MutableMealPlanRecipeEntity.fromValues('whatever', 'Spätzle', 2));
     mealPlan.items.add(item);
-    mealPlanManager.saveMealPlan(mealPlan);
+    await mealPlanManager.saveMealPlan(mealPlan);
 
-    mealPlanManager.createCollection(mealPlan.groupID);
+    await mealPlanManager.createCollection(mealPlan.groupID);
     mealPlanManager.currentCollection = mealPlan.groupID;
     mealPlanManager.addMealPlan(mealPlan.groupID, mealPlan);
 
@@ -177,9 +177,9 @@ void main() {
     item.addRecipe(
         MutableMealPlanRecipeEntity.fromValues('whatever', 'Spätzle', 2));
     mealPlan.items.add(item);
-    mealPlanManager.saveMealPlan(mealPlan);
+    await mealPlanManager.saveMealPlan(mealPlan);
 
-    mealPlanManager.createCollection(mealPlan.groupID);
+    await mealPlanManager.createCollection(mealPlan.groupID);
     mealPlanManager.currentCollection = mealPlan.groupID;
     mealPlanManager.addMealPlan(mealPlan.groupID, mealPlan);
 
@@ -221,9 +221,9 @@ void main() {
     item.addRecipe(
         MutableMealPlanRecipeEntity.fromValues('whatever', 'Spätzle', 2));
     mealPlan.items.add(item);
-    mealPlanManager.saveMealPlan(mealPlan);
+    await mealPlanManager.saveMealPlan(mealPlan);
 
-    mealPlanManager.createCollection(mealPlan.groupID);
+    await mealPlanManager.createCollection(mealPlan.groupID);
     mealPlanManager.currentCollection = mealPlan.groupID;
     mealPlanManager.addMealPlan(mealPlan.groupID, mealPlan);
 
@@ -255,9 +255,9 @@ void main() {
     item.addRecipe(
         MutableMealPlanRecipeEntity.fromValues('whatever', 'Spätzle', 2));
     mealPlan.items.add(item);
-    mealPlanManager.saveMealPlan(mealPlan);
+    await mealPlanManager.saveMealPlan(mealPlan);
 
-    mealPlanManager.createCollection(mealPlan.groupID);
+    await mealPlanManager.createCollection(mealPlan.groupID);
     mealPlanManager.currentCollection = mealPlan.groupID;
     mealPlanManager.addMealPlan(mealPlan.groupID, mealPlan);
 
@@ -310,9 +310,9 @@ void main() {
     item.addRecipe(MutableMealPlanRecipeEntity.fromValues(
         null, 'Some special note', null));
     mealPlan.items.add(item);
-    mealPlanManager.saveMealPlan(mealPlan);
+    await mealPlanManager.saveMealPlan(mealPlan);
 
-    mealPlanManager.createCollection(mealPlan.groupID);
+    await mealPlanManager.createCollection(mealPlan.groupID);
     mealPlanManager.currentCollection = mealPlan.groupID;
     mealPlanManager.addMealPlan(mealPlan.groupID, mealPlan);
 
@@ -365,7 +365,7 @@ Future<void> _initApp(WidgetTester tester, NavigatorObserver observer) async {
   ));
 }
 
-_inputFormField(WidgetTester tester, Finder finder, String value) async {
+void _inputFormField(WidgetTester tester, Finder finder, String value) async {
   await tester.enterText(finder, value);
   await tester.testTextInput.receiveAction(TextInputAction.done);
   await tester.pumpAndSettle();

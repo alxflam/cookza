@@ -13,8 +13,8 @@ abstract class StorageProvider {
 }
 
 class LocalStorageProvider implements StorageProvider {
-  static final String imageSubdirectory = "images";
-  static final String exceptionLogFileName = "exceptions.log";
+  static final String imageSubdirectory = 'images';
+  static final String exceptionLogFileName = 'exceptions.log';
 
   Future<String> get _localPath async {
     final directory = await getApplicationDocumentsDirectory();
@@ -63,6 +63,7 @@ class LocalStorageProvider implements StorageProvider {
     return logFile.writeAsString(content);
   }
 
+  @override
   Future<void> clearExceptionLogFile() {
     return updateExeptionLogFile('');
   }

@@ -160,6 +160,7 @@ class FirebaseProvider {
     print('logged in anonymously using token ${_currentUser.uid}');
 
     /// notify dependent services that firebase is ready to use now
+    /// TODO refactor: use GetIt dependencies instead of manually triggering the init...
     Future.microtask(() {
       // TODO: await finish of shared preferences? or how to sync?
       // maybe make firebase provider dependent of shared preferences
@@ -379,9 +380,8 @@ class FirebaseProvider {
 
         // delete the handshake
         transaction.delete(item.reference);
-
-        return Future.value(updates);
       }
+      return Future.value(updates);
     });
   }
 
@@ -521,7 +521,7 @@ class FirebaseProvider {
         _firestore.collection(INSTRUCTIONS).doc(recipeDocRef.id);
     batch.set(instructionsDocRef, instructionsDoc.toJson());
 
-    batch.commit();
+    await batch.commit();
 
     print('updated recipe ${recipe.id}');
 
@@ -551,7 +551,7 @@ class FirebaseProvider {
     for (var recipe in recipes.docs) {
       var entity = RecipeEntityFirebase.of(
           FirebaseRecipe.fromJson(recipe.data(), id: recipe.id));
-      sl.get<ImageManager>().deleteRecipeImage(entity);
+      await sl.get<ImageManager>().deleteRecipeImage(entity);
     }
 
     await _firestore.runTransaction<int>((transaction) {
@@ -659,7 +659,7 @@ class FirebaseProvider {
       if (a.step == null || b.step == null) {
         return 0;
       }
-      return a.step.compareTo(b.step == null ? 0 : b.step);
+      return a.step.compareTo(b.step ?? 0);
     });
     return result;
   }
@@ -794,7 +794,9 @@ class FirebaseProvider {
     this._webSessionHandshake = null;
     await this._auth.signOut();
 
-    sl.get<NavigatorService>().navigateToNewInitialRoute(WebLandingPage.id);
+    await sl
+        .get<NavigatorService>()
+        .navigateToNewInitialRoute(WebLandingPage.id);
   }
 
   Future<Map<String, String>> _getCreationUsersMap() async {
@@ -833,7 +835,7 @@ class FirebaseProvider {
     var firebaseRecipe = FirebaseRecipe.fromJson(doc.data(), id: doc.id);
     firebaseRecipe.image = value;
 
-    docRef.update({'image': value});
+    await docRef.update({'image': value});
   }
 
   Future<ShoppingListEntity> createOrUpdateShoppingList(
@@ -851,7 +853,7 @@ class FirebaseProvider {
 
     if (entity.id != null && entity.id.isNotEmpty) {
       document = _firestore.collection(SHOPPING_LISTS).doc(entity.id);
-      document.set(json);
+      await document.set(json);
     } else {
       document = await _firestore.collection(SHOPPING_LISTS).add(json);
     }

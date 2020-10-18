@@ -27,7 +27,7 @@ class NewIngredientScreen extends StatelessWidget {
             TextEditingController(text: kFormatAmount(model.amount));
         amountController.addListener(() {
           var parsedAmount = double.tryParse(amountController.text);
-          model.amount = parsedAmount != null ? parsedAmount : 0;
+          model.amount = parsedAmount ?? 0;
         });
 
         return Scaffold(
@@ -208,7 +208,7 @@ class NewIngredientScreen extends StatelessWidget {
                     context, RecipeSelectionScreen.id, arguments: selModel)
                 as String;
             if (result != null && result.isNotEmpty) {
-              model.setRecipeReference(result);
+              await model.setRecipeReference(result);
             }
           }
         },

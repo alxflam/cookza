@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:cookza/viewmodel/ocr_creation/recipe_ocr_step.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
@@ -25,7 +24,7 @@ class OCRImageStep extends StatelessWidget {
               var image = await picker.getImage(
                   source: source, imageQuality: 100, maxWidth: 1000);
               if (image != null) {
-                model.setImage(File(image.path));
+                await model.setImage(File(image.path));
               }
             }
 

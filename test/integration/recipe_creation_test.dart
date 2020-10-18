@@ -212,7 +212,7 @@ Future _proceedStep(WidgetTester tester) async {
   await tester.pump();
 }
 
-_navigateToNewRecipeScreen(WidgetTester tester) async {
+void _navigateToNewRecipeScreen(WidgetTester tester) async {
   final mockObserver = MockNavigatorObserver();
   await tester.pumpWidget(MockApplication(mockObserver: mockObserver));
 
@@ -227,7 +227,7 @@ _navigateToNewRecipeScreen(WidgetTester tester) async {
   expect(find.byType(NewRecipeScreen), findsOneWidget);
 }
 
-_inputFormField(WidgetTester tester, Finder finder, String value) async {
+void _inputFormField(WidgetTester tester, Finder finder, String value) async {
   await tester.enterText(finder, value);
   await tester.testTextInput.receiveAction(TextInputAction.done);
   await tester.pumpAndSettle();

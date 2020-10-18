@@ -24,7 +24,7 @@ void main() {
         RecipeCreator.createIngredient('Flour', amount: 750, uom: 'GRM');
     recipe.ingredientList = [flour, pepper];
 
-    rm.createOrUpdate(recipe);
+    await rm.createOrUpdate(recipe);
 
     var recipe2 = RecipeCreator.createRecipe('Second Recipe');
     recipe2.servings = 1;
@@ -35,7 +35,7 @@ void main() {
         RecipeCreator.createIngredient('Pepper', amount: 300, uom: 'PCS');
 
     recipe2.ingredientList = [flour2, pepper2, onion];
-    rm.createOrUpdate(recipe2);
+    await rm.createOrUpdate(recipe2);
 
     var cut = IngredientsCalculatorImpl();
 
@@ -55,14 +55,14 @@ void main() {
         RecipeCreator.createIngredient('Flour', amount: 750, uom: 'GRM');
     recipe.ingredientList = [flour];
 
-    rm.createOrUpdate(recipe);
+    await rm.createOrUpdate(recipe);
 
     var recipe2 = RecipeCreator.createRecipe('Second Recipe');
     recipe2.servings = 1;
     var flour2 =
         RecipeCreator.createIngredient('Flour', amount: 1.2, uom: 'KGM');
     recipe2.ingredientList = [flour2];
-    rm.createOrUpdate(recipe2);
+    await rm.createOrUpdate(recipe2);
 
     var cut = IngredientsCalculatorImpl();
 
@@ -81,14 +81,14 @@ void main() {
         RecipeCreator.createIngredient('Flour', amount: 750, uom: 'PCS');
     recipe.ingredientList = [flour];
 
-    rm.createOrUpdate(recipe);
+    await rm.createOrUpdate(recipe);
 
     var recipe2 = RecipeCreator.createRecipe('Second Recipe');
     recipe2.servings = 1;
     var flour2 =
         RecipeCreator.createIngredient('Flour', amount: 1.2, uom: 'KGM');
     recipe2.ingredientList = [flour2];
-    rm.createOrUpdate(recipe2);
+    await rm.createOrUpdate(recipe2);
 
     var cut = IngredientsCalculatorImpl();
 
