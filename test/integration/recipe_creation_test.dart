@@ -181,7 +181,6 @@ void main() {
 
     /// then proceed
     await _proceedStep(tester);
-    await tester.pumpAndSettle();
 
     /// now the recipe should have been created and we should have navigated to the recipe screen
     expect(find.byType(OverviewTab), findsOneWidget);
@@ -209,7 +208,7 @@ void main() {
 
 Future _proceedStep(WidgetTester tester) async {
   await tester.tap(find.text('CONTINUE'));
-  await tester.pump();
+  await tester.pumpAndSettle();
 }
 
 void _navigateToNewRecipeScreen(WidgetTester tester) async {

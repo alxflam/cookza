@@ -21,7 +21,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() async {
-  /// the flutter_localizations plugn is only needed for translations of Unit of Measures
+  /// the flutter_localizations plugin is only needed for translations of Unit of Measures
   /// as their translation is called dynamically and the flutter translation
   /// mechanism only allows static translation retrieval with generated methods.
   /// flutter_localizations instead also allows to retrieve the translation by a dynamic string key

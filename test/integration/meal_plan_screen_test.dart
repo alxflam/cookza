@@ -39,6 +39,7 @@ void main() {
 
   setUp(() {
     recipeManager.reset();
+    mealPlanManager.reset();
     recipeManager.createCollection('dummy');
     mealPlanManager.createCollection('dummy');
   });
@@ -57,13 +58,14 @@ void main() {
 
   testWidgets('Current meal plan is not set', (WidgetTester tester) async {
     await _initApp(tester, mockObserver);
-
+    await tester.pumpAndSettle();
     expect(find.byType(WeekNumber), findsNothing);
     expect(find.byType(OpenDrawerButton), findsOneWidget);
   });
 
   testWidgets('Open drawer with one group', (WidgetTester tester) async {
     await _initApp(tester, mockObserver);
+    await tester.pumpAndSettle();
 
     expect(find.byType(OpenDrawerButton), findsOneWidget);
 

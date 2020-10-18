@@ -71,6 +71,7 @@ void main() {
       MutableInstruction.withValues(text: 'First step'),
       MutableInstruction.withValues(text: 'Second step')
     ];
+    mock.currentCollection = recipe.recipeCollectionId;
     await mock.createOrUpdate(recipe);
 
     /// navigate to the recipe
@@ -213,7 +214,6 @@ void main() {
 
     /// then proceed
     await _proceedStep(tester);
-    await tester.pumpAndSettle();
 
     /// now the recipe should have been created and we should have navigated to the recipe screen
     expect(find.byType(OverviewTab), findsOneWidget);
