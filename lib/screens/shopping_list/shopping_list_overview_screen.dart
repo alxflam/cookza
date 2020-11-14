@@ -1,9 +1,6 @@
 import 'package:cookza/constants.dart';
-import 'package:cookza/model/entities/abstract/shopping_list_entity.dart';
 import 'package:cookza/screens/shopping_list/shopping_list_detail_screen.dart';
 import 'package:cookza/screens/shopping_list/shopping_list_dialog.dart';
-import 'package:cookza/services/flutter/service_locator.dart';
-import 'package:cookza/services/meal_plan_manager.dart';
 import 'package:cookza/viewmodel/shopping_list/shopping_list_detail.dart';
 import 'package:cookza/viewmodel/shopping_list/shopping_list_overview.dart';
 import 'package:flutter/material.dart';
@@ -56,8 +53,7 @@ class ShoppingListOverviewScreen extends StatelessWidget {
           return ListView.builder(
             itemCount: snapshot.data.length,
             itemBuilder: (context, index) {
-              var entry = snapshot.data[index] as ShoppingListEntity;
-              // var mealPlan = await sl.get<MealPlanManager>().getCollectionByID(entry.id);
+              var entry = snapshot.data[index];
               return ListTile(
                 title: Text(
                     '${kDateFormatter.format(entry.dateFrom)} - ${kDateFormatter.format(entry.dateUntil)}'),

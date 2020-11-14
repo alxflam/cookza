@@ -1,9 +1,8 @@
 {
   "@@locale": "de",
   "addImageLong": "Bild hinzufügen",
-
   "addItem": "Neuer Eintrag",
-  "addRow": "Zeile hinzufügen",  
+  "addRow": "Zeile hinzufügen",
   "addUser": "User hinzufügen",
   "amount": "Menge",
   "appDescription": "Cookza ermöglicht es Ihnen, Ihre Lieblingsrezepte datenschutzfreundlich zu speichern, zu sammeln und zu teilen",

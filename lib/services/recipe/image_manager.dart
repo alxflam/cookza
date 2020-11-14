@@ -35,7 +35,8 @@ class ImageManagerFirebase implements ImageManager {
     }
 
     // delete the cloud image
-    Reference reference = _storage.ref().child(getRecipeImagePath(entity.id));
+    StorageReference reference =
+        _storage.ref().child(getRecipeImagePath(entity.id));
     try {
       // TODO: only call if really deleted... -> check in the model of the view
       await reference.delete();
@@ -47,7 +48,7 @@ class ImageManagerFirebase implements ImageManager {
 
   @override
   Future<String> getRecipeImageURL(String path) async {
-    Reference reference = _storage.ref().child(path);
+    StorageReference reference = _storage.ref().child(path);
     return await reference.getDownloadURL();
   }
 
@@ -78,10 +79,9 @@ class ImageManagerFirebase implements ImageManager {
 
     if (entity.image != null && entity.image.isNotEmpty) {
       try {
-        Reference reference = _storage.ref().child(entity.image);
+        StorageReference reference = _storage.ref().child(entity.image);
         var task = reference.writeToFile(cacheFile);
-        // TODO future...
-        var bytes = (await task).bytesTransferred;
+        var bytes = (await task.future).totalByteCount;
         print('$bytes downloaded');
       } catch (StorageException) {
         // the image for the given recipe does not exist
@@ -107,7 +107,8 @@ class ImageManagerFirebase implements ImageManager {
   @override
   Future<void> uploadRecipeImageFromBytes(
       String recipeId, Uint8List bytes) async {
-    Reference reference = _storage.ref().child(getRecipeImagePath(recipeId));
+    StorageReference reference =
+        _storage.ref().child(getRecipeImagePath(recipeId));
 
     // save local cache
     var imageDirectory = await sl.get<StorageProvider>().getImageDirectory();
@@ -117,14 +118,13 @@ class ImageManagerFirebase implements ImageManager {
 
     // upload the file
     print('start upload');
-    UploadTask uploadTask = reference.putFile(
+    StorageUploadTask uploadTask = reference.putFile(
         cacheFile,
-        SettableMetadata(customMetadata: {
+        StorageMetadata(customMetadata: {
           'recipe': recipeId,
         }));
 
-    var result = await uploadTask;
-    print(
-        'upload completed: ${result.state}, bytes: ${result.bytesTransferred}');
+    var result = await uploadTask.onComplete;
+    print('upload completed: ${result.error}');
   }
 }

@@ -1,7 +1,7 @@
 name: cookza
 description: Organize and share your favorite recipes.
 
-version: 0.0.1+7
+version: 0.0.1+6
 
 environment:
   sdk: ">=2.10.0 <3.0.0"
@@ -36,7 +36,7 @@ dependencies:
   barcode_scan: ^3.0.1
   firebase_auth: ^0.18.0
   cloud_firestore: ^0.14.0
-  firebase_storage: ^5.0.1
+  firebase_storage: ^4.0.0
   cached_network_image: ^2.2.0+1
   package_info: '>=0.4.1 <2.0.0'
   url_launcher: ^5.5.0
