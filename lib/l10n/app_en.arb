@@ -1,5 +1,6 @@
 {
 	"@@locale": "en",
+
 	"functionsAddRecipe": "New Recipe",
 	"@functionsAddRecipe": {},
 	"functionsListRecipes": "List Recipes",
