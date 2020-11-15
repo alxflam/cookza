@@ -1,7 +1,7 @@
 name: cookza
 description: Organize and share your favorite recipes.
 
-version: 0.0.1+6
+version: 0.0.1+7
 
 environment:
   sdk: ">=2.10.0 <3.0.0"
@@ -21,7 +21,7 @@ dependencies:
   flutter_rating_bar: ^3.0.1+1
   image_picker: ^0.6.5
   share: ^0.6.4
-  firebase_ml_vision: ^0.9.3+8
+  firebase_ml_vision: ^0.9.9
   http: ^0.12.0+4
   path: ^1.7.0
   path_provider: ^1.6.7
@@ -29,14 +29,13 @@ dependencies:
   introduction_screen: ^1.0.8
   dots_indicator: ^1.1.0
   get_it: ^5.0.0
-  file_picker: ^2.0.0
+  file_picker: ^2.0.13
   share_extend: ^1.1.5
   pdf: ^1.7.1
   barcode_widget: ^1.2.3
-  barcode_scan: ^3.0.1
   firebase_auth: ^0.18.0
   cloud_firestore: ^0.14.0
-  firebase_storage: ^4.0.0
+  firebase_storage: ^5.0.0
   cached_network_image: ^2.2.0+1
   package_info: '>=0.4.1 <2.0.0'
   url_launcher: ^5.5.0

@@ -69,9 +69,11 @@ class MainActivity: FlutterActivity() {
     val uri = intent.getParcelableExtra<Parcelable>(Intent.EXTRA_STREAM) as Uri
     // open an input stream for the given URI
     val inputStream = getContentResolver().openInputStream(uri)
-    // read the complete content as a string from the input stream
-    val content = inputStream.bufferedReader().use(BufferedReader::readText)
-    sharedJson = content
+    if (inputStream != null) {
+      // read the complete content as a string from the input stream
+      val content = inputStream.bufferedReader().use(BufferedReader::readText)
+      sharedJson = content
+    }
   }
 
   override fun onNewIntent(intent:Intent) {

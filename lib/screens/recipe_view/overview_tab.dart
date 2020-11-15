@@ -85,23 +85,24 @@ class CustomizedRatingBar extends StatelessWidget {
       return Container();
     }
 
-    return RatingBar(
+    return RatingBar.builder(
       initialRating: _model.rating == null ? 0 : _model.rating.toDouble(),
-      itemSize: 20,
+      minRating: 0,
       maxRating: 5,
-      itemCount: 5,
-      itemPadding: EdgeInsets.symmetric(horizontal: 5),
-      itemBuilder: (context, index) {
-        return Icon(
-          Icons.star,
-          color: Colors.amberAccent,
-        );
-      },
       direction: Axis.horizontal,
-      allowHalfRating: false,
+      allowHalfRating: true,
+      unratedColor: Colors.amber.withAlpha(50),
+      itemCount: 5,
+      itemSize: 20.0,
+      itemPadding: EdgeInsets.symmetric(horizontal: 5.0),
+      itemBuilder: (context, _) => Icon(
+        Icons.star,
+        color: Colors.amberAccent,
+      ),
       onRatingUpdate: (rating) {
         _model.setRating(rating.toInt());
       },
+      updateOnDrag: true,
     );
   }
 }

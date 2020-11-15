@@ -1,18 +1,18 @@
 import 'dart:convert';
 
-import 'package:barcode_scan/barcode_scan.dart';
+import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:cookza/model/entities/abstract/user_entity.dart';
 import 'package:cookza/model/entities/json/user_entity.dart';
 import 'package:cookza/model/json/user.dart';
 
 class QRScanner {
   Future<String> _scanQRCode() async {
-    var options = ScanOptions(
-      restrictFormat: [BarcodeFormat.qr],
-    );
+    BarcodeDetectorOptions options =
+        BarcodeDetectorOptions(barcodeFormats: BarcodeFormat.qrCode);
 
-    var scanResult = await BarcodeScanner.scan(options: options);
-    return scanResult.rawContent;
+    // var scanResult = await BarcodeScanner.scan(options: options);
+    // return scanResult.rawContent;
+    return '';
   }
 
   Future<UserEntity> scanUserQRCode() async {
