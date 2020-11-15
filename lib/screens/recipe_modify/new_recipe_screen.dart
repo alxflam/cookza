@@ -1,4 +1,5 @@
 import 'package:cookza/constants.dart';
+import 'package:cookza/screens/home_screen.dart';
 import 'package:cookza/screens/ocr_creation/ingredients_image_step.dart';
 import 'package:cookza/screens/ocr_creation/instruction_image_step.dart';
 import 'package:cookza/screens/ocr_creation/overview_image_step.dart';
@@ -58,7 +59,8 @@ Future<void> saveModel(BuildContext context, RecipeEditModel model) async {
     // create: navigate to recipe view in case save was successful
     var result = await sl.get<RecipeManager>().getRecipeById([id]);
     if (result.length == 1) {
-      await Navigator.pushReplacementNamed(context, RecipeScreen.id,
+      await Navigator.pushNamedAndRemoveUntil(
+          context, RecipeScreen.id, ModalRoute.withName(HomeScreen.id),
           arguments: result.first);
     } else {
       kErrorDialog(context, 'Could not find created recipe',
