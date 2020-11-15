@@ -601,7 +601,6 @@ class FirebaseProvider {
 
   String getNextRecipeDocumentId(String recipeGroup) {
     var recipeDocRef = _firestore.collection(RECIPES).doc();
-
     return recipeDocRef.id;
   }
 
@@ -618,6 +617,9 @@ class FirebaseProvider {
 
   Future<List<RecipeEntity>> getAllRecipes() async {
     var collections = await recipeCollectionsAsList();
+    if (collections.isEmpty) {
+      return Future.value([]);
+    }
 
     var docs = await _firestore
         .collection(RECIPES)
