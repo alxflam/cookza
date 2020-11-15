@@ -7,6 +7,7 @@ import 'package:cookza/model/json/user.dart';
 
 class QRScanner {
   Future<String> _scanQRCode() async {
+    // TODO: needs to be implemented now with the ML Vision api as the old scan plugin got deprecated
     BarcodeDetectorOptions options =
         BarcodeDetectorOptions(barcodeFormats: BarcodeFormat.qrCode);
 
