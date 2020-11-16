@@ -31,8 +31,13 @@ class MealPlanRecipeModel with ChangeNotifier {
   int get servings => _entity.servings;
   MealPlanRecipeEntity get entity => _entity;
 
-  void setServings(BuildContext context, int value) {
+  set servings(int value) {
     _entity.servings = value;
+    notifyListeners();
+  }
+
+  set name(String value) {
+    this._entity.name = value;
     notifyListeners();
   }
 }

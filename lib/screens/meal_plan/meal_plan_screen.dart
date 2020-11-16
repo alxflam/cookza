@@ -3,10 +3,12 @@ import 'package:cookza/components/open_drawer_button.dart';
 import 'package:cookza/components/round_icon_button.dart';
 import 'package:cookza/constants.dart';
 import 'package:cookza/model/entities/abstract/recipe_entity.dart';
+import 'package:cookza/screens/meal_plan/item_dialog.dart';
 import 'package:cookza/screens/recipe_view/recipe_screen.dart';
 import 'package:cookza/screens/shopping_list/shopping_list_dialog.dart';
 import 'package:cookza/services/meal_plan_manager.dart';
 import 'package:cookza/services/recipe/recipe_manager.dart';
+import 'package:cookza/viewmodel/meal_plan/meal_plan_item_dialog_model.dart';
 import 'package:cookza/viewmodel/meal_plan/recipe_meal_plan_model.dart';
 import 'package:cookza/viewmodel/recipe_selection_model.dart';
 import 'package:cookza/screens/recipe_selection_screen.dart';
@@ -209,92 +211,25 @@ class MealPlanScreen extends StatelessWidget {
                     : null,
                 trailing: IconButton(
                   icon: Icon(Icons.edit),
-                  onPressed: () {
+                  onPressed: () async {
                     var mealPlanViewModel =
                         Provider.of<MealPlanViewModel>(context, listen: false);
 
-                    showDialog(
+                    var dialogResult = await showDialog(
                       context: context,
                       builder: (context) {
-                        var _count = recipeModel.servings;
-                        return StatefulBuilder(builder: (context, setState) {
-                          return SimpleDialog(
-                            children: <Widget>[
-                              Column(
-                                children: <Widget>[
-                                  Text(
-                                    recipeModel.name,
-                                    style: TextStyle(fontSize: 20),
-                                  ),
-                                  Builder(
-                                    builder: (context) {
-                                      // if it's only a note, don't show the servings
-                                      if (_count == null) {
-                                        return Container();
-                                      }
-
-                                      return Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        children: <Widget>[
-                                          Text(AppLocalizations.of(context)
-                                              .servings),
-                                          RoundIconButton(
-                                            icon: FontAwesomeIcons.minus,
-                                            onPress: () {
-                                              if (_count > 1) {
-                                                setState(() {
-                                                  _count--;
-                                                });
-                                              }
-                                            },
-                                          ),
-                                          Text(_count.toString()),
-                                          RoundIconButton(
-                                            icon: FontAwesomeIcons.plus,
-                                            onPress: () {
-                                              setState(() {
-                                                _count++;
-                                              });
-                                            },
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: <Widget>[
-                                      RaisedButton(
-                                          child: Icon(Icons.check),
-                                          color: Colors.green,
-                                          onPressed: () {
-                                            recipeModel.setServings(
-                                                context, _count);
-                                            mealPlanViewModel
-                                                .recipeModelChanged(
-                                                    recipeModel);
-                                            Navigator.pop(context);
-                                          }),
-                                      RaisedButton(
-                                          child: Icon(Icons.delete),
-                                          color: Colors.red,
-                                          onPressed: () {
-                                            model.removeRecipe(
-                                                recipeModel.entity, i);
-
-                                            Navigator.pop(context);
-                                          }),
-                                    ],
-                                  )
-                                ],
-                              )
-                            ],
-                          );
-                        });
+                        return MealPlanItemDialog(
+                            MealPlanItemDialogModel.forItem(recipeModel));
                       },
-                    );
+                    ) as MealPlanItemDialogModel;
+
+                    if (dialogResult != null) {
+                      if (dialogResult.isDeleted) {
+                        model.removeRecipe(recipeModel.entity, i);
+                      } else if (dialogResult.hasChanged) {
+                        mealPlanViewModel.recipeModelChanged(recipeModel);
+                      }
+                    }
                   },
                 ),
               );
@@ -425,66 +360,17 @@ class MealPlanScreen extends StatelessWidget {
   }
 
   void _showAddNoteDialog(
-      BuildContext context, MealPlanViewModel model, int index) {
-    showDialog(
+      BuildContext context, MealPlanViewModel model, int index) async {
+    var dialogResult = await showDialog(
       context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        var controller = TextEditingController(text: '');
-
-        return Builder(
-          // builder is needed to get a new context for the Provider
-          builder: (context) {
-            return SimpleDialog(
-              title: Text(AppLocalizations.of(context).mealPlanAddNote),
-              children: [
-                SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.all(10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Expanded(
-                              child: TextFormField(
-                                controller: controller,
-                                maxLines: 1,
-                                autofocus: true,
-                                decoration: InputDecoration(hintText: 'Note'),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: <Widget>[
-                          RaisedButton(
-                              child: Icon(Icons.save),
-                              color: Colors.green,
-                              onPressed: () async {
-                                model.addNote(index, controller.text);
-                                Navigator.pop(context);
-                              }),
-                          RaisedButton(
-                              child: Icon(Icons.cancel),
-                              color: Colors.red,
-                              onPressed: () {
-                                Navigator.pop(context);
-                              }),
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-              ],
-            );
-          },
-        );
+      builder: (context) {
+        return MealPlanItemDialog(MealPlanItemDialogModel.createNote());
       },
-    );
+    ) as MealPlanItemDialogModel;
+
+    if (dialogResult != null && !dialogResult.isDeleted) {
+      model.addNote(index, dialogResult.name);
+    }
   }
 }
 

@@ -141,6 +141,11 @@ class MutableMealPlanRecipeEntity implements MealPlanRecipeEntity {
 
   set servings(int value) => this._servings = value;
 
+  set name(String value) {
+    assert(isNote);
+    this._name = value;
+  }
+
   @override
   bool get isNote => this._id == null && this._servings == null;
 }
