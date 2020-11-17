@@ -10,7 +10,7 @@ abstract class MealPlanManager {
 
   String get currentCollection;
   set currentCollection(String value);
-  Future<void> createCollection(String name);
+  Future<MealPlanCollectionEntity> createCollection(String name);
   Future<void> renameCollection(String name, MealPlanCollectionEntity entity);
   Future<MealPlanCollectionEntity> getCollectionByID(String id);
 
@@ -61,7 +61,7 @@ class MealPlanManagerFirebase implements MealPlanManager {
   }
 
   @override
-  Future<void> createCollection(String name) {
+  Future<MealPlanCollectionEntity> createCollection(String name) {
     return sl.get<FirebaseProvider>().createMealPlanGroup(name);
   }
 

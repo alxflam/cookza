@@ -35,7 +35,16 @@ class RecipeGroupsTiles extends StatelessWidget {
               RaisedButton(
                   child: Text(AppLocalizations.of(context).createGroup),
                   onPressed: () async {
-                    await this._createRecipeGroup(context);
+                    // await the creation or cancellation
+                    var result = await this._createRecipeGroup(context);
+                    // if a new group got created
+                    if (result != null) {
+                      // then set the created group as the currently selected one
+                      recipeManager.currentCollection = result.id;
+                      // and make sure that the underlying view is updated
+                      await Navigator.pushReplacementNamed(
+                          context, RecipeListScreen.id);
+                    }
                   })
             ],
           ),
@@ -72,8 +81,9 @@ class RecipeGroupsTiles extends StatelessWidget {
     );
   }
 
-  Future<void> _createRecipeGroup(BuildContext context) async {
-    await showDialog(
+  Future<RecipeCollectionEntity> _createRecipeGroup(
+      BuildContext context) async {
+    return await showDialog(
       context: context,
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
@@ -114,10 +124,10 @@ class RecipeGroupsTiles extends StatelessWidget {
                               child: Icon(Icons.save),
                               color: Colors.green,
                               onPressed: () async {
-                                await sl
+                                var entity = await sl
                                     .get<RecipeManager>()
                                     .createCollection(controller.text);
-                                Navigator.pop(context);
+                                Navigator.pop(context, entity);
                               }),
                           RaisedButton(
                               child: Icon(Icons.cancel),

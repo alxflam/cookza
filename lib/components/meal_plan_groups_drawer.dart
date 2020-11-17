@@ -35,7 +35,17 @@ class MealPlanGroupsTiles extends StatelessWidget {
               RaisedButton(
                   child: Text(AppLocalizations.of(context).createGroup),
                   onPressed: () async {
-                    await this._createMealPlanGroup(context);
+                    // await the creation or cancellation
+                    var result = await this._createMealPlanGroup(context)
+                        as MealPlanCollectionEntity;
+                    // if a new group got created
+                    if (result != null) {
+                      // then set the created group as the currently selected one
+                      mealPlanManager.currentCollection = result.id;
+                      // and make sure that the underlying view is updated
+                      await Navigator.pushReplacementNamed(
+                          context, MealPlanScreen.id);
+                    }
                   })
             ],
           ),
@@ -71,8 +81,9 @@ class MealPlanGroupsTiles extends StatelessWidget {
     );
   }
 
-  Future<void> _createMealPlanGroup(BuildContext context) async {
-    await showDialog(
+  Future<MealPlanCollectionEntity> _createMealPlanGroup(
+      BuildContext context) async {
+    return await showDialog(
       context: context,
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
@@ -113,10 +124,10 @@ class MealPlanGroupsTiles extends StatelessWidget {
                               child: Icon(Icons.save),
                               color: Colors.green,
                               onPressed: () async {
-                                await sl
+                                var entity = await sl
                                     .get<MealPlanManager>()
                                     .createCollection(controller.text);
-                                Navigator.pop(context);
+                                Navigator.pop(context, entity);
                               }),
                           RaisedButton(
                               child: Icon(Icons.cancel),
