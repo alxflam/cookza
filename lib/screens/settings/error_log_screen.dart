@@ -2,6 +2,7 @@ import 'package:cookza/model/json/exception_log.dart';
 import 'package:cookza/viewmodel/settings/error_screen_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:share_extend/share_extend.dart';
 
@@ -107,28 +108,31 @@ class ExceptionEntry extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Padding(
-        padding: EdgeInsets.all(20),
-        child: Column(
-          children: [
-            Text(
-              exception.date.toIso8601String(),
-              style: kTitleStyle,
-            ),
-            Text(
-              exception.error,
-              style: kTitleStyle,
-            ),
-            Builder(builder: (context) {
-              return Padding(
-                padding: EdgeInsets.only(top: 10),
-                child: Text(exception.stackTrace),
-              );
-            })
-          ],
-        ),
+    return ListTile(
+      title: Text(
+        exception.date.toIso8601String(),
+        style: kTitleStyle,
       ),
+      subtitle: Text(
+        exception.error,
+      ),
+      onTap: () {
+        /// show the stacktrace only if requested in a dialog
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text(AppLocalizations.of(context).errorLog),
+              content: Padding(
+                padding: EdgeInsets.only(top: 10),
+                child: SingleChildScrollView(
+                  child: Text(exception.stackTrace),
+                ),
+              ),
+            );
+          },
+        );
+      },
     );
   }
 }
