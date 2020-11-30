@@ -6,7 +6,9 @@ import 'package:cookza/services/shared_preferences_provider.dart';
 import 'package:flutter/material.dart';
 
 class ShareAccountScreenModel with ChangeNotifier {
-  bool _isEditMode = false;
+  void refresh() {
+    notifyListeners();
+  }
 
   set userName(String value) {
     sl.get<SharedPreferencesProvider>().setUserName(value);
@@ -17,13 +19,6 @@ class ShareAccountScreenModel with ChangeNotifier {
   bool get hasName {
     var name = userName;
     return name != null && name.isNotEmpty;
-  }
-
-  bool get isEditMode => this._isEditMode;
-
-  set isEditMode(bool value) {
-    this._isEditMode = value;
-    notifyListeners();
   }
 
   JsonUser get jsonUser {
