@@ -19,93 +19,123 @@ Step getOverviewStep(BuildContext context) {
           .overviewStepModel,
       child: Consumer<RecipeOverviewEditStep>(
         builder: (context, model, child) {
-          final nameController = TextEditingController(text: model.name);
-          final descController = TextEditingController(text: model.description);
+          return FutureBuilder<List<RecipeCollectionEntity>>(
+            future: sl.get<RecipeManager>().collections,
+            builder: (context, snapshot) {
+              /// if there are no collections, render a error card
+              if (snapshot.connectionState == ConnectionState.done &&
+                  snapshot.data.isEmpty) {
+                return Card(
+                  child: ListTile(
+                    leading: Icon(
+                      Icons.error,
+                      color: Colors.red,
+                    ),
+                    title: Text(AppLocalizations.of(context)
+                        .mandatoryRecipeGroupNotAvailable),
+                    subtitle: Text(AppLocalizations.of(context)
+                        .createMandatoryRecipeGroup),
+                  ),
+                );
+              }
+              if (snapshot.connectionState == ConnectionState.done) {
+                final nameController = TextEditingController(text: model.name);
+                final descController =
+                    TextEditingController(text: model.description);
 
-          nameController.addListener(
-            () {
-              model.name = nameController.text;
+                nameController.addListener(
+                  () {
+                    model.name = nameController.text;
+                  },
+                );
+
+                descController.addListener(
+                  () {
+                    model.description = descController.text;
+                  },
+                );
+
+                return Column(
+                  children: <Widget>[
+                    TextFormField(
+                      decoration: InputDecoration(
+                          labelText: AppLocalizations.of(context).recipeName),
+                      controller: nameController,
+                    ),
+                    TextFormField(
+                      decoration: InputDecoration(
+                          labelText: AppLocalizations.of(context).recipeDesc),
+                      controller: descController,
+                    ),
+                    _getCollectionDropDown(context, model, snapshot.data),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text('${AppLocalizations.of(context).duration}:'),
+                        Flexible(
+                          flex: 1,
+                          child: Slider(
+                            min: 1,
+                            max: 120,
+                            divisions: 24,
+                            onChanged: (double value) {
+                              model.duration = value?.toInt();
+                            },
+                            value: model.duration?.toDouble(),
+                          ),
+                        ),
+                        Container(
+                          width: 50,
+                          alignment: Alignment.center,
+                          child: Text('${model.duration} min'),
+                        ),
+                      ],
+                    ),
+                    Wrap(
+                      spacing: 5,
+                      children: <Widget>[
+                        FilterChip(
+                          label:
+                              Text(AppLocalizations.of(context).difficultyEasy),
+                          onSelected: (value) {
+                            model.difficulty = DIFFICULTY.EASY;
+                          },
+                          selected: model.difficulty == DIFFICULTY.EASY,
+                          avatar: CircleAvatar(
+                            backgroundColor: Colors.white,
+                          ),
+                        ),
+                        FilterChip(
+                          label: Text(
+                              AppLocalizations.of(context).difficultyMedium),
+                          onSelected: (value) {
+                            model.difficulty = DIFFICULTY.MEDIUM;
+                          },
+                          selected: model.difficulty == DIFFICULTY.MEDIUM,
+                          avatar: CircleAvatar(
+                            backgroundColor: Colors.white,
+                          ),
+                        ),
+                        FilterChip(
+                          label:
+                              Text(AppLocalizations.of(context).difficultyHard),
+                          onSelected: (value) {
+                            model.difficulty = DIFFICULTY.HARD;
+                          },
+                          selected: model.difficulty == DIFFICULTY.HARD,
+                          avatar: CircleAvatar(
+                            backgroundColor: Colors.white,
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                );
+              }
+
+              // return a plain container until the future has finished
+              return Container();
             },
-          );
-
-          descController.addListener(
-            () {
-              model.description = descController.text;
-            },
-          );
-
-          return Column(
-            children: <Widget>[
-              TextFormField(
-                decoration: InputDecoration(
-                    labelText: AppLocalizations.of(context).recipeName),
-                controller: nameController,
-              ),
-              TextFormField(
-                decoration: InputDecoration(
-                    labelText: AppLocalizations.of(context).recipeDesc),
-                controller: descController,
-              ),
-              _getCollectionDropDown(context, model),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text('${AppLocalizations.of(context).duration}:'),
-                  Flexible(
-                    flex: 1,
-                    child: Slider(
-                      min: 1,
-                      max: 120,
-                      divisions: 24,
-                      onChanged: (double value) {
-                        model.duration = value?.toInt();
-                      },
-                      value: model.duration?.toDouble(),
-                    ),
-                  ),
-                  Container(
-                    width: 50,
-                    alignment: Alignment.center,
-                    child: Text('${model.duration} min'),
-                  ),
-                ],
-              ),
-              Wrap(
-                spacing: 5,
-                children: <Widget>[
-                  FilterChip(
-                    label: Text(AppLocalizations.of(context).difficultyEasy),
-                    onSelected: (value) {
-                      model.difficulty = DIFFICULTY.EASY;
-                    },
-                    selected: model.difficulty == DIFFICULTY.EASY,
-                    avatar: CircleAvatar(
-                      backgroundColor: Colors.white,
-                    ),
-                  ),
-                  FilterChip(
-                    label: Text(AppLocalizations.of(context).difficultyMedium),
-                    onSelected: (value) {
-                      model.difficulty = DIFFICULTY.MEDIUM;
-                    },
-                    selected: model.difficulty == DIFFICULTY.MEDIUM,
-                    avatar: CircleAvatar(
-                      backgroundColor: Colors.white,
-                    ),
-                  ),
-                  FilterChip(
-                    label: Text(AppLocalizations.of(context).difficultyHard),
-                    onSelected: (value) {
-                      model.difficulty = DIFFICULTY.HARD;
-                    },
-                    selected: model.difficulty == DIFFICULTY.HARD,
-                    avatar: CircleAvatar(
-                      backgroundColor: Colors.white,
-                    ),
-                  ),
-                ],
-              )
-            ],
           );
         },
       ),
@@ -113,39 +143,31 @@ Step getOverviewStep(BuildContext context) {
   );
 }
 
-Widget _getCollectionDropDown(
-    BuildContext context, RecipeOverviewEditStep model) {
-  return FutureBuilder(
-    future: sl.get<RecipeManager>().collections,
-    builder: (context, snapshot) {
-      if (snapshot.hasData && snapshot.data.isNotEmpty) {
-        var collections = snapshot.data as List<RecipeCollectionEntity>;
-        List<DropdownMenuItem<RecipeCollectionEntity>> items = collections
-            .map((item) => DropdownMenuItem<RecipeCollectionEntity>(
-                child: Text(item.name), value: item))
-            .toList();
+Widget _getCollectionDropDown(BuildContext context,
+    RecipeOverviewEditStep model, List<RecipeCollectionEntity> collections) {
+  if (collections == null || collections.isEmpty) {
+    return Container();
+  }
 
-        model.collection ??= collections.first;
+  List<DropdownMenuItem<RecipeCollectionEntity>> items = collections
+      .map((item) => DropdownMenuItem<RecipeCollectionEntity>(
+          child: Text(item.name), value: item))
+      .toList();
 
-        var selectedCollection =
-            collections.firstWhere((e) => e.id == model.collection.id);
+  model.collection ??= collections.first;
 
-        print('selected coll: $selectedCollection');
+  var selectedCollection =
+      collections.firstWhere((e) => e.id == model.collection.id);
 
-        return DropdownButtonFormField<RecipeCollectionEntity>(
-          value: selectedCollection,
-          items: items,
-          decoration: InputDecoration(
-            isDense: true,
-            labelText: AppLocalizations.of(context).recipeGroup,
-          ),
-          onChanged: (RecipeCollectionEntity value) {
-            model.collection = value;
-          },
-        );
-      }
-
-      return Container();
+  return DropdownButtonFormField<RecipeCollectionEntity>(
+    value: selectedCollection,
+    items: items,
+    decoration: InputDecoration(
+      isDense: true,
+      labelText: AppLocalizations.of(context).recipeGroup,
+    ),
+    onChanged: (RecipeCollectionEntity value) {
+      model.collection = value;
     },
   );
 }

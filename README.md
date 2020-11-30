@@ -9,7 +9,7 @@
 Run the following command to built an apk for ARM64
 * flutter build apk --target-platform android-arm64 --split-per-abi
 
-* Applied itermin patch due to ML Vision dependency issue: https://github.com/google/play-services-plugins/issues/153
+* Applied iterim patch due to ML Vision dependency issue: https://github.com/google/play-services-plugins/issues/153
 Remove this once the dependency issue got fixed by the Firebase team.
 
 ## Run test coverage

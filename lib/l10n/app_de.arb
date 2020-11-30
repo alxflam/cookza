@@ -67,6 +67,8 @@
   "noFileSelected": "Keine Datei ausgewählt",
   "noItems": "Die Einkaufsliste enthält keine Einträge.",
   "noMealPlan": "Erstelle zuerst einen Essensplan",
+  "mandatoryRecipeGroupNotAvailable": "Keine Rezeptgruppe vefügbar",
+	"createMandatoryRecipeGroup": "Jedes Rezept muss einer Gruppe zugeordnet werden. Erstelle daher zuerst eine Rezeptgruppe.",
   "noRecipeGroupSelected": "Wähle eine Rezeptgruppe aus",
   "noRecipesFound": "Keine Rezepte gefunden",
   "noSimilarRecipes": "Es wurden keine ähnlichen Rezepte gefunden",
