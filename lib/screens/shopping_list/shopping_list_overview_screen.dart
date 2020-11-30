@@ -1,4 +1,5 @@
 import 'package:cookza/constants.dart';
+import 'package:cookza/model/entities/abstract/shopping_list_entity.dart';
 import 'package:cookza/screens/shopping_list/shopping_list_detail_screen.dart';
 import 'package:cookza/screens/shopping_list/shopping_list_dialog.dart';
 import 'package:cookza/viewmodel/shopping_list/shopping_list_detail.dart';
@@ -37,7 +38,7 @@ class ShoppingListOverviewScreen extends StatelessWidget {
 
   Widget _getBody() {
     return Consumer<ShoppingListOverviewModel>(builder: (context, model, _) {
-      return FutureBuilder(
+      return FutureBuilder<List<ShoppingListEntity>>(
         future: model.getLists(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -54,9 +55,11 @@ class ShoppingListOverviewScreen extends StatelessWidget {
             itemCount: snapshot.data.length,
             itemBuilder: (context, index) {
               var entry = snapshot.data[index];
+              var mealPlanName = model.getMealPlanName(entry.groupID);
               return ListTile(
                 title: Text(
                     '${kDateFormatter.format(entry.dateFrom)} - ${kDateFormatter.format(entry.dateUntil)}'),
+                subtitle: Text(mealPlanName),
                 onTap: () async {
                   var detailsViewModel = ShoppingListModel.from(entry);
                   await Navigator.pushNamed(
