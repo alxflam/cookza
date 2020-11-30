@@ -5,13 +5,12 @@ import 'package:cookza/services/flutter/service_locator.dart';
 abstract class ShoppingListManager {
   Future<List<ShoppingListEntity>> get shoppingListsAsList;
   Stream<List<ShoppingListEntity>> get shoppingLists;
-
-  Future<void> createOrUpdate(ShoppingListEntity entity);
+  Future<ShoppingListEntity> createOrUpdate(ShoppingListEntity entity);
 }
 
 class ShoppingListManagerImpl implements ShoppingListManager {
   @override
-  Future<void> createOrUpdate(ShoppingListEntity entity) {
+  Future<ShoppingListEntity> createOrUpdate(ShoppingListEntity entity) {
     return sl.get<FirebaseProvider>().createOrUpdateShoppingList(entity);
   }
 

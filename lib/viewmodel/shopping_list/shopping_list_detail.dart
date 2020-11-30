@@ -182,7 +182,7 @@ class ShoppingListModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void _save() {
+  void _save() async {
     // only save custom items
     var customItems =
         this._items.where((a) => a.isCustom || a.isBought).toList();
@@ -196,7 +196,11 @@ class ShoppingListModel extends ChangeNotifier {
     }
 
     // then save the changes - creates the list if it does not yet exist
-    sl.get<ShoppingListManager>().createOrUpdate(this._listEntity);
+    var updatedEntity =
+        await sl.get<ShoppingListManager>().createOrUpdate(this._listEntity);
+
+    // and update the document id inc as it changed (usually only if the list get's created on the first  save)
+    this._listEntity.id = updatedEntity.id;
   }
 
   void itemGotEdited(ShoppingListItemModel changedEntity) {

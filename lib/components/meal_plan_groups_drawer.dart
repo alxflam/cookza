@@ -36,8 +36,7 @@ class MealPlanGroupsTiles extends StatelessWidget {
                   child: Text(AppLocalizations.of(context).createGroup),
                   onPressed: () async {
                     // await the creation or cancellation
-                    var result = await this._createMealPlanGroup(context)
-                        as MealPlanCollectionEntity;
+                    var result = await this._createMealPlanGroup(context);
                     // if a new group got created
                     if (result != null) {
                       // then set the created group as the currently selected one

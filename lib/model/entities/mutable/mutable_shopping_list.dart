@@ -45,6 +45,8 @@ class MutableShoppingList implements ShoppingListEntity {
   @override
   String get id => this._documentID;
 
+  set id(String value) => this._documentID = value;
+
   @override
   List<ShoppingListItemEntity> get items => UnmodifiableListView(_items);
 
