@@ -72,6 +72,13 @@ class FirebaseProvider {
         .toList();
   }
 
+  Future<List<QueryDocumentSnapshot>> getShoppingListsByMealPlan(
+      String mealPlan) async {
+    var docs = await _shoppingListsQuery([mealPlan]).get();
+
+    return docs.docs;
+  }
+
   Stream<List<ShoppingListEntity>> get shoppingListsAsStream {
     // TODO: cache groups until visiting meal plan screen
     var groups = [];
@@ -575,11 +582,19 @@ class FirebaseProvider {
         .limit(1)
         .get();
 
+    var shoppingLists = await getShoppingListsByMealPlan(id);
+
     await _firestore.runTransaction((transaction) {
-      int updates = snapshot.docs.length + 1;
+      int updates = snapshot.docs.length + shoppingLists.length + 1;
+      // delete the meal plan
       for (var mealPlanDoc in snapshot.docs) {
         transaction.delete(mealPlanDoc.reference);
       }
+      // delete all the assigned shopping lists
+      for (var shoppingList in shoppingLists) {
+        transaction.delete(shoppingList.reference);
+      }
+      // delete the meal plan group
       transaction.delete(reference);
       return Future.value(updates);
     });
