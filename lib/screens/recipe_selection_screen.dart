@@ -1,3 +1,4 @@
+import 'package:cookza/components/future_progress_dialog.dart';
 import 'package:cookza/services/recipe/recipe_manager.dart';
 import 'package:cookza/viewmodel/recipe_selection_model.dart';
 import 'package:cookza/services/abstract/pdf_export.dart';
@@ -150,9 +151,17 @@ class RecipeSelectionScreen extends StatelessWidget {
         };
       case SELECTION_MODE.IMPORT:
         return (context, model) async {
-          await sl
-              .get<RecipeManager>()
-              .importRecipes(model.getSelectedRecipes());
+          var recipes = model.getSelectedRecipes();
+          var future = sl.get<RecipeManager>().importRecipes(recipes);
+          await showDialog(
+              context: context,
+              barrierDismissible: false,
+              child: SimpleDialog(
+                title: Center(
+                    child: Text(AppLocalizations.of(context)
+                        .importingRecipes(recipes.length))),
+                children: [FutureProgressDialog(future)],
+              ));
           Navigator.pop(context);
         };
       case SELECTION_MODE.REFERENCE_INGREDIENT:

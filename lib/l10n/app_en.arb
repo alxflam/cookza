@@ -269,5 +269,15 @@
 	"errorLog": "Error Log",
 	"@errorLog": {},
 	"noErrorLogEntry": "The error log is empty",
-	"@noErrorLogEntry": {}
+	"@noErrorLogEntry": {},
+	"importingRecipes": "{count,plural, =1{Importing {count} recipe} other{Importing {count} recipes}}",
+	"@importingRecipes": {
+		"description": "Importing X recipes",
+		"placeholders": {
+		"count": {
+			"type": "int",
+			"format": "compact"
+			}
+		}
+	}
 }

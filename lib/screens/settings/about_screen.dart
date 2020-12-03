@@ -1,3 +1,4 @@
+import 'package:cookza/components/future_progress_dialog.dart';
 import 'package:cookza/constants.dart';
 import 'package:cookza/screens/settings/changelog_screen.dart';
 import 'package:cookza/screens/settings/error_log_screen.dart';
@@ -195,9 +196,20 @@ class DeleteAllDataDialog extends StatelessWidget {
               ),
               color: Colors.red,
               onPressed: () async {
-                // TODO: add progress indicator
                 try {
-                  await sl.get<ProfileDeleter>().delete();
+                  await showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      child: SimpleDialog(
+                        title: Center(
+                            child: Text(
+                                AppLocalizations.of(context).deleteAllData)),
+                        children: [
+                          FutureProgressDialog(
+                              sl.get<ProfileDeleter>().delete())
+                        ],
+                      ));
+
                   Navigator.pop(context);
                   Scaffold.of(context).showSnackBar(SnackBar(
                       content: Text(

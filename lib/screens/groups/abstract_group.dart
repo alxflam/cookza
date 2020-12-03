@@ -1,3 +1,4 @@
+import 'package:cookza/components/future_progress_dialog.dart';
 import 'package:cookza/model/entities/abstract/user_entity.dart';
 import 'package:cookza/services/firebase_provider.dart';
 import 'package:cookza/services/mobile/qr_scanner.dart';
@@ -252,12 +253,16 @@ abstract class AbstractGroupScreen extends StatelessWidget {
               ),
               color: Colors.red,
               onPressed: () async {
-                try {
-                  await model.delete();
-                } catch (e) {
-                  // TODO: exception may occur if group has mor members!!
-                  // TODO: anyways group vanished after other member left group...why?
-                }
+                var future = model.delete();
+                await showDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    child: SimpleDialog(
+                      title: Center(
+                          child: Text(AppLocalizations.of(context).delete)),
+                      children: [FutureProgressDialog(future)],
+                    ));
+
                 Navigator.pop(context, true);
               },
             ),

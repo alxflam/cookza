@@ -111,5 +111,6 @@
   "unitLongPlural": "Mengeneinheiten",
   "until": "Bis",
   "web": "Web",
-  "weekDurationDesc": "Anzahl der Wochen, die im Essensplaner verfügbar sind."
+  "weekDurationDesc": "Anzahl der Wochen, die im Essensplaner verfügbar sind.",
+  "importingRecipes": "{count,plural, =1{Importiere {count} Rezept} other{Importiere {count} Rezepte}}"
 }
