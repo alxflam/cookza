@@ -9,10 +9,12 @@ import 'package:cookza/screens/web_login_app.dart';
 import 'package:cookza/services/firebase_provider.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:cookza/viewmodel/recipe_edit/recipe_edit_model.dart';
+import 'package:cookza/viewmodel/settings/theme_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 import '../constants.dart';
 
@@ -24,27 +26,29 @@ class MainAppDrawer extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: <Widget>[
           DrawerHeader(
+            decoration: BoxDecoration(
+              color: Provider.of<ThemeModel>(context).tileAccentColor,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    Icon(kAppIconData),
-                    SizedBox(
-                      width: 20,
+                    ConstrainedBox(
+                      constraints: BoxConstraints.tightFor(width: 40),
+                      child: Image(
+                        image: AssetImage(kIconTransparent),
+                      ),
                     ),
                     Text(
-                      kAppName,
+                      'ookza', // will anyways never be translated
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
                     ),
                   ],
                 ),
               ],
-            ),
-            decoration: BoxDecoration(
-              color: Theme.of(context).primaryColor,
             ),
           ),
           ListTile(

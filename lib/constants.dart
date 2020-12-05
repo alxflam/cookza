@@ -5,11 +5,10 @@ import 'package:intl/intl.dart';
 
 /// App name
 const kAppName = 'Cookza';
-const kAppVersion = '2020-09-alpha';
+const kAppVersion = '2020-12-alpha';
 const kPlayStoreLink = 'market://details?id=com.flammer.cookza';
 
 /// Icons
-const kAppIconData = Icons.local_dining;
 const kWebAppData = FontAwesomeIcons.desktop;
 const kNewRecipe = FontAwesomeIcons.plusCircle;
 const kSettingsIcon = FontAwesomeIcons.cog;
@@ -39,6 +38,10 @@ const kVeganTag = 'vegan';
 const kVegetarianTag = 'vegetarian';
 const kFishTag = 'fish';
 const kMeatTag = 'meat';
+
+/// custom image assets
+const kIcon = 'assets/images/icon.png';
+const kIconTransparent = 'assets/images/icon_transparent_small.png';
 
 const kBulletCharacter = '\u2022';
 

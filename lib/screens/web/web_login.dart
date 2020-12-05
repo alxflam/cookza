@@ -99,9 +99,11 @@ class WebLoginScreen extends StatelessWidget {
                   tag: 'appIcon',
                   child: CircleAvatar(
                     backgroundColor: tileColor,
-                    child: Icon(
-                      kAppIconData,
-                      size: 100,
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints.tightFor(width: 100),
+                      child: Image(
+                        image: AssetImage(kIconTransparent),
+                      ),
                     ),
                   ),
                 ),

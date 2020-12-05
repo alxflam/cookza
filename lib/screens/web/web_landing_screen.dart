@@ -45,9 +45,11 @@ class WebLandingPage extends StatelessWidget {
           tag: 'appIcon',
           child: CircleAvatar(
             backgroundColor: tileColor,
-            child: Icon(
-              kAppIconData,
-              size: 400,
+            child: ConstrainedBox(
+              constraints: BoxConstraints.tightFor(width: 400),
+              child: Image(
+                image: AssetImage(kIconTransparent),
+              ),
             ),
           ),
         ));
@@ -143,24 +145,6 @@ class WebLandingPage extends StatelessWidget {
           },
         );
       },
-    );
-  }
-
-  Widget build2(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Hero(
-            tag: 'appIcon',
-            child: Icon(
-              kAppIconData,
-              size: 70,
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

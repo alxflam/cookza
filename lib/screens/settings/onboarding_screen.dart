@@ -85,7 +85,12 @@ class OnBoardingScreen extends StatelessWidget {
         title: 'Welcome to Cookza',
         body:
             'Cookza let\'s you manage all your favorite recipes in a single app.',
-        image: _buildImage(kAppIconData, context),
+        image: ConstrainedBox(
+          constraints: BoxConstraints.tightFor(width: 40),
+          child: Image(
+            image: AssetImage(kIconTransparent),
+          ),
+        ),
         decoration: pageDecoration,
       ),
       PageViewModel(

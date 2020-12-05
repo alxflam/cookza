@@ -31,9 +31,9 @@ class AboutScreen extends StatelessWidget {
             Padding(
               padding: EdgeInsets.all(20),
               child: Center(
-                child: Icon(
-                  kAppIconData,
-                  size: 50,
+                child: CircleAvatar(
+                  backgroundImage: AssetImage(kIcon),
+                  radius: 45,
                 ),
               ),
             ),
@@ -139,7 +139,12 @@ class AboutScreen extends StatelessWidget {
                 showLicensePage(
                   context: context,
                   applicationVersion: kAppVersion,
-                  applicationIcon: Icon(kAppIconData),
+                  applicationIcon: ConstrainedBox(
+                    constraints: BoxConstraints.tightFor(width: 40),
+                    child: Image(
+                      image: AssetImage(kIconTransparent),
+                    ),
+                  ),
                   applicationLegalese: '© 2020',
                 );
               },

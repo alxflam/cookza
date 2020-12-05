@@ -52,14 +52,6 @@ class HomeScreen extends StatelessWidget {
           kAppName,
           style: TextStyle(),
         ),
-        leading: Builder(
-          builder: (context) {
-            return IconButton(
-              icon: Icon(kAppIconData),
-              onPressed: () => Scaffold.of(context).openDrawer(),
-            );
-          },
-        ),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
