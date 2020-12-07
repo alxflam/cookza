@@ -1,6 +1,5 @@
 import 'package:cookza/components/meal_plan_groups_drawer.dart';
 import 'package:cookza/components/open_drawer_button.dart';
-import 'package:cookza/components/round_icon_button.dart';
 import 'package:cookza/constants.dart';
 import 'package:cookza/model/entities/abstract/recipe_entity.dart';
 import 'package:cookza/screens/meal_plan/item_dialog.dart';
@@ -16,7 +15,6 @@ import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:cookza/viewmodel/recipe_view/recipe_view_model.dart';
 import 'package:cookza/viewmodel/settings/theme_model.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';

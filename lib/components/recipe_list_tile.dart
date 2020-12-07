@@ -25,7 +25,6 @@ class RecipeListTile extends StatelessWidget {
       },
       leading: Builder(
         builder: (context) {
-          // TODO: upon import, this field is empty even if an image got uploaded
           if (item.image == null || item.image.isEmpty) {
             return Container(
               child: Icon(Icons.photo),

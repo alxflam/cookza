@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:cookza/model/entities/abstract/user_entity.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:cookza/model/entities/json/user_entity.dart';
+import 'package:cookza/model/json/user.dart';
+import 'package:flutter/material.dart';
 
 abstract class GroupViewModel with ChangeNotifier {
   /// the name of the group
@@ -11,8 +15,23 @@ abstract class GroupViewModel with ChangeNotifier {
   /// delete the group
   Future<void> delete();
 
-  /// add the given user ID to the group witht the given name
+  /// add the given user ID to the group with the given name
   Future<void> addUser(String id, String name);
+
+  /// add the given user from the json content
+  Future<void> addUserFromJson(String json) {
+    if (json != null && json.isNotEmpty) {
+      var user = JsonUser.fromJson(jsonDecode(json));
+      if (user.id == null ||
+          user.id.isEmpty ||
+          user.name == null ||
+          user.name.isEmpty) {
+        return null;
+      }
+      var result = UserEntityJson.from(user);
+      this.addUser(result.id, result.name);
+    }
+  }
 
   /// leave the group
   Future<void> leaveGroup();

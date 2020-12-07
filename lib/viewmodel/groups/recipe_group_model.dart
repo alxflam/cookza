@@ -3,9 +3,8 @@ import 'package:cookza/model/entities/abstract/user_entity.dart';
 import 'package:cookza/services/recipe/recipe_manager.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:cookza/viewmodel/groups/abstract_group_model.dart';
-import 'package:flutter/material.dart';
 
-class RecipeGroupViewModel with ChangeNotifier implements GroupViewModel {
+class RecipeGroupViewModel extends GroupViewModel {
   RecipeCollectionEntity _entity;
 
   String _name;

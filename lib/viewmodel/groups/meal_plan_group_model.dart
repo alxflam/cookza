@@ -3,9 +3,8 @@ import 'package:cookza/model/entities/abstract/user_entity.dart';
 import 'package:cookza/services/meal_plan_manager.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:cookza/viewmodel/groups/abstract_group_model.dart';
-import 'package:flutter/material.dart';
 
-class MealPlanGroupViewModel with ChangeNotifier implements GroupViewModel {
+class MealPlanGroupViewModel extends GroupViewModel {
   MealPlanCollectionEntity _entity;
 
   String _name;
