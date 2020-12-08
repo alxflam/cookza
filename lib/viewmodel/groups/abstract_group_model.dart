@@ -29,8 +29,9 @@ abstract class GroupViewModel with ChangeNotifier {
         return null;
       }
       var result = UserEntityJson.from(user);
-      this.addUser(result.id, result.name);
+      return this.addUser(result.id, result.name);
     }
+    return Future.value();
   }
 
   /// leave the group
