@@ -30,7 +30,6 @@ dependencies:
   dots_indicator: ^1.1.0
   get_it: ^5.0.0
   file_picker: ^2.0.13
-  share_extend: ^1.1.5
   pdf: ^1.7.1
   barcode_widget: ^1.2.3
   firebase_auth: ^0.18.0

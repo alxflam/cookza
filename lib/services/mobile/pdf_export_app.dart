@@ -4,7 +4,7 @@ import 'package:cookza/services/abstract/pdf_export.dart';
 import 'package:cookza/services/local_storage.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:pdf/widgets.dart';
-import 'package:share_extend/share_extend.dart';
+import 'package:share/share.dart';
 
 class PDFExporterImpl extends PDFExporter {
   @override
@@ -13,6 +13,6 @@ class PDFExporterImpl extends PDFExporter {
     var file = File('$directory/${this.getExportFileName()}.pdf');
     await file.writeAsBytes(doc.save());
 
-    await ShareExtend.share(file.path, 'file');
+    await Share.shareFiles([file.path]);
   }
 }

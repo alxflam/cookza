@@ -6,7 +6,7 @@ import 'package:cookza/model/json/recipe_list.dart';
 import 'package:cookza/services/abstract/recipe_file_export.dart';
 import 'package:cookza/services/local_storage.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
-import 'package:share_extend/share_extend.dart';
+import 'package:share/share.dart';
 
 class RecipeFileExportImpl extends RecipeFileExport {
   @override
@@ -24,7 +24,7 @@ class RecipeFileExportImpl extends RecipeFileExport {
     await file.writeAsString(jsonEncode(json));
     print('profile saved at ${file.path}');
 
-    await ShareExtend.share(file.path, 'file');
+    await Share.shareFiles([file.path]);
   }
 
   @override

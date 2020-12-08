@@ -3,8 +3,8 @@ import 'package:cookza/services/abstract/recipe_text_export.dart';
 import 'package:cookza/services/flutter/navigator_service.dart';
 import 'package:cookza/services/recipe/recipe_text_generator.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
-import 'package:share_extend/share_extend.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:share/share.dart';
 
 // TODO: add web implementation!
 class RecipeTextExporterApp implements RecipeTextExporter {
@@ -17,6 +17,6 @@ class RecipeTextExporterApp implements RecipeTextExporter {
         .get<RecipeTextGenerator>()
         .generateRecipeText(entities, ingTitle, insTitle);
 
-    await ShareExtend.share(text, 'text');
+    await Share.share(text);
   }
 }
