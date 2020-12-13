@@ -79,7 +79,7 @@ abstract class AbstractGroupScreen extends StatelessWidget {
                       ),
                     ];
                   },
-                  onSelected: (value) {
+                  onSelected: (value) async {
                     switch (value) {
                       case PopupMenuButtonChoices.EDIT:
                         _renameCollection(context, model);
@@ -277,12 +277,31 @@ abstract class AbstractGroupScreen extends StatelessWidget {
 
   void _addUser(BuildContext context, GroupViewModel model) async {
     var result = await Navigator.pushNamed(context, LiveCameraScannerScreen.id);
+    if (!result) {
+      return;
+    }
+
     try {
-      await model.addUserFromJson(result);
-    } on FormatException catch (e) {
-      Scaffold.of(context).showSnackBar(SnackBar(
-          content:
-              Text('§The scanned barcode is not supported: ${e.message}')));
+      var user = await model.addUserFromJson(result);
+      if (user == null) {
+        return;
+      }
+      await showDialog(
+        context: context,
+        child: SimpleDialog(
+          title: Text('§Add user'),
+          children: [Text('§User has been added ${user.name}')],
+        ),
+      );
+    } catch (e) {
+      await showDialog(
+        context: context,
+        barrierDismissible: false,
+        child: AlertDialog(
+          title: Text('Error'),
+          content: Text('§The scanned QR-Code is not supported.'),
+        ),
+      );
     }
   }
 

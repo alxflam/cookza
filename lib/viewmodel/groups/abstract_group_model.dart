@@ -19,17 +19,18 @@ abstract class GroupViewModel with ChangeNotifier {
   Future<void> addUser(String id, String name);
 
   /// add the given user from the json content
-  Future<void> addUserFromJson(String json) {
+  Future<UserEntity> addUserFromJson(String json) async {
     if (json != null && json.isNotEmpty) {
       var user = JsonUser.fromJson(jsonDecode(json));
       if (user.id == null ||
           user.id.isEmpty ||
           user.name == null ||
           user.name.isEmpty) {
-        return null;
+        throw '§ QR-Code does not contain a valid user ID and name';
       }
       var result = UserEntityJson.from(user);
-      return this.addUser(result.id, result.name);
+      await this.addUser(result.id, result.name);
+      return result;
     }
     return Future.value();
   }

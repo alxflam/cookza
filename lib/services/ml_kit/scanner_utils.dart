@@ -40,9 +40,10 @@ import 'package:flutter/foundation.dart';
 class ScannerUtils {
   ScannerUtils._();
 
-  static Future<dynamic> detect({
+  static Future<List<Barcode>> detect({
     @required CameraImage image,
-    @required Future<dynamic> Function(FirebaseVisionImage image) detectInImage,
+    @required
+        Future<List<Barcode>> Function(FirebaseVisionImage image) detectInImage,
     @required int imageRotation,
   }) async {
     return detectInImage(

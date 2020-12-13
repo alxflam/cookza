@@ -43,8 +43,10 @@ class MainAppDrawer extends StatelessWidget {
                     ),
                     Text(
                       'ookza', // will anyways never be translated
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 24,
+                      ),
                     ),
                   ],
                 ),

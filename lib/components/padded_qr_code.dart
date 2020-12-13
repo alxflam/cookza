@@ -9,21 +9,16 @@ class PaddedQRCode extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 20),
-      child: Center(
-        child: Card(
-          child: BarcodeWidget(
-            barcode: Barcode.qrCode(),
-            data: this.data,
-            width: this.width.toDouble(),
-            height: this.height.toDouble(),
-            margin: EdgeInsets.all(20),
-            padding: EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              color: Colors.white,
-            ),
-          ),
+    return Center(
+      child: BarcodeWidget(
+        barcode: Barcode.qrCode(),
+        data: this.data,
+        width: this.width.toDouble(),
+        height: this.height.toDouble(),
+        // margin: EdgeInsets.all(10),
+        padding: EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: Colors.white,
         ),
       ),
     );
