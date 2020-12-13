@@ -45,8 +45,6 @@ class RecipeListScreen extends StatelessWidget {
                           return Container();
                         }
 
-                        // TODO: add filter text input at the top! => app bar with search icon then search field in app bar appears
-
                         return ListView.separated(
                           separatorBuilder: (context, index) => Padding(
                             padding: EdgeInsets.symmetric(horizontal: 20),

@@ -4,7 +4,6 @@ import 'package:cookza/screens/collections/live_camera_scanner_screen.dart';
 import 'package:cookza/services/firebase_provider.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:cookza/viewmodel/groups/abstract_group_model.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';

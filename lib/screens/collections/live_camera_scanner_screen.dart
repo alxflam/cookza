@@ -80,7 +80,7 @@ class _LiveCameraScannerScreenState extends State<LiveCameraScannerScreen> {
     _camera = CameraController(description, ResolutionPreset.medium);
     await _camera.initialize();
 
-    /// unawaited intentionally
+    // ignore: unawaited_futures
     _camera.startImageStream((CameraImage image) {
       if (_isDetecting || _mode != SelectionMode.liveCamera) return;
 

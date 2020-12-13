@@ -711,7 +711,6 @@ class FirebaseProvider {
   Future<String> saveMealPlan(MealPlanEntity entity) async {
     assert(entity.groupID != null && entity.groupID.isNotEmpty);
     DocumentReference docRef;
-    // TODO: somehow the ID is always null even if saved...return the documentID!!!
     if (entity.id != null && entity.id.isNotEmpty) {
       docRef = _firestore.collection(MEAL_PLANS).doc(entity.id);
     } else {

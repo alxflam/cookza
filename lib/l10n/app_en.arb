@@ -306,5 +306,7 @@
 	"addMeToGroup": "Add me to your groups on Cookza",
 	"@addMeToGroup": {},
 	"shareQRCodeSubject": "Cookza QR-Code",
-	"@shareQRCodeSubject": {}
+	"@shareQRCodeSubject": {},
+	"validationEnterNumber": "Please enter a number",
+	"@validationEnterNumber": {}	
 }

@@ -21,7 +21,8 @@ import 'package:provider/provider.dart';
 Future<void> saveModel(BuildContext context, RecipeEditModel model) async {
   print('show progress indicator before save');
 
-  // never await this future because whilst showing the dialog we want to perform the save
+  // never await this future because whilst showing the dialog we want to perform the
+  // ignore: unawaited_futures
   showDialog(
     context: context,
     barrierDismissible: false,

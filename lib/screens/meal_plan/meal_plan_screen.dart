@@ -164,7 +164,6 @@ class MealPlanScreen extends StatelessWidget {
         );
       },
       onWillAccept: (data) {
-        // TODO: change color while dragging, drag over and leave
         return data is MealDragModel;
       },
       onAccept: (data) {

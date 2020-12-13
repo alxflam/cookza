@@ -2,7 +2,6 @@ import 'package:cookza/constants.dart';
 import 'package:cookza/model/firebase/general/firebase_handshake.dart';
 import 'package:cookza/services/abstract/platform_info.dart';
 import 'package:cookza/services/firebase_provider.dart';
-import 'package:cookza/services/mobile/qr_scanner.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -21,11 +20,12 @@ class WebLoginOnAppScreen extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.add),
             onPressed: () async {
-              var user = await sl.get<QRScanner>().scanUserQRCode();
+              // TODO: reenable web login
+              // var user = await sl.get<QRScanner>().scanUserQRCode();
 
-              if (user != null) {
-                sl.get<FirebaseProvider>().enableWebLoginFor(user.id);
-              }
+              // if (user != null) {
+              //   sl.get<FirebaseProvider>().enableWebLoginFor(user.id);
+              // }
             },
           ),
         ],

@@ -54,8 +54,8 @@ class NewIngredientScreen extends StatelessWidget {
                           validator: (value) {
                             var numValue = double.tryParse(value);
                             if (value.isEmpty || numValue == 0) {
-                              // TODO: replace with localized string
-                              return 'Please provide a number';
+                              return AppLocalizations.of(context)
+                                  .validationEnterNumber;
                             }
                             return '';
                           },

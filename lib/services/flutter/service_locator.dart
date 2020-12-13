@@ -14,7 +14,6 @@ import 'package:cookza/services/image_parser.dart';
 import 'package:cookza/services/recipe/ingredients_calculator.dart';
 import 'package:cookza/services/local_storage.dart';
 import 'package:cookza/services/meal_plan_manager.dart';
-import 'package:cookza/services/mobile/qr_scanner.dart';
 import 'package:cookza/services/mobile/receive_intent_handler_app.dart';
 import 'package:cookza/services/mobile/recipe_text_export_app.dart';
 import 'package:cookza/services/mobile/shopping_list_text_export.dart';
@@ -63,7 +62,6 @@ void setupServiceLocator() {
   sl.registerSingleton<PlatformInfo>(PlatformInfoImpl());
   sl.registerSingleton<PDFExporter>(PDFExporterImpl());
   sl.registerSingleton<RecipeManager>(RecipeManagerFirebase());
-  sl.registerSingleton<QRScanner>(QRScanner());
   sl.registerSingleton<ImageManager>(ImageManagerFirebase());
   sl.registerSingleton<MealPlanManager>(MealPlanManagerFirebase());
   sl.registerSingleton<NavigatorService>(NavigatorService());
