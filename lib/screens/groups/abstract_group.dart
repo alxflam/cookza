@@ -4,6 +4,7 @@ import 'package:cookza/screens/collections/live_camera_scanner_screen.dart';
 import 'package:cookza/services/firebase_provider.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:cookza/viewmodel/groups/abstract_group_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -125,9 +126,11 @@ abstract class AbstractGroupScreen extends StatelessWidget {
 
                         return ListTile(
                           leading: _getLeadingUserIcon(user, isCurrentUser),
-                          title: Text(user.name ?? 'unknown'),
-                          subtitle:
-                              isCurrentUser ? Text('That\'s me') : Text(''),
+                          title: Text(user.name ??
+                              AppLocalizations.of(context).unknownUser),
+                          subtitle: isCurrentUser
+                              ? Text(AppLocalizations.of(context).selfUser)
+                              : Text(''),
                           trailing: !isCurrentUser
                               ? IconButton(
                                   icon: Icon(Icons.delete),
@@ -277,7 +280,7 @@ abstract class AbstractGroupScreen extends StatelessWidget {
 
   void _addUser(BuildContext context, GroupViewModel model) async {
     var result = await Navigator.pushNamed(context, LiveCameraScannerScreen.id);
-    if (!result) {
+    if (result == null) {
       return;
     }
 
@@ -289,8 +292,8 @@ abstract class AbstractGroupScreen extends StatelessWidget {
       await showDialog(
         context: context,
         child: SimpleDialog(
-          title: Text('§Add user'),
-          children: [Text('§User has been added ${user.name}')],
+          title: Text(AppLocalizations.of(context).addUser),
+          children: [Text(AppLocalizations.of(context).addedUser(user.name))],
         ),
       );
     } catch (e) {
@@ -298,8 +301,8 @@ abstract class AbstractGroupScreen extends StatelessWidget {
         context: context,
         barrierDismissible: false,
         child: AlertDialog(
-          title: Text('Error'),
-          content: Text('§The scanned QR-Code is not supported.'),
+          title: Text(AppLocalizations.of(context).error),
+          content: Text(AppLocalizations.of(context).invalidQRCode),
         ),
       );
     }

@@ -38,6 +38,7 @@ import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 enum SelectionMode { liveCamera, gallery }
 
@@ -56,6 +57,7 @@ class _LiveCameraScannerScreenState extends State<LiveCameraScannerScreen> {
   SelectionMode _mode = SelectionMode.liveCamera;
   File _galleryImage;
   bool _popped = false;
+  bool _cameraRunning = false;
 
   final BarcodeDetector _detector = FirebaseVision.instance.barcodeDetector(
       BarcodeDetectorOptions(barcodeFormats: BarcodeFormat.qrCode));
@@ -71,6 +73,8 @@ class _LiveCameraScannerScreenState extends State<LiveCameraScannerScreen> {
       return;
     }
 
+    _cameraRunning = true;
+
     CameraLensDirection _direction = CameraLensDirection.back;
     final CameraDescription description = await getCamera(_direction);
     _camera = CameraController(description, ResolutionPreset.medium);
@@ -78,7 +82,7 @@ class _LiveCameraScannerScreenState extends State<LiveCameraScannerScreen> {
 
     /// unawaited intentionally
     _camera.startImageStream((CameraImage image) {
-      if (_isDetecting) return;
+      if (_isDetecting || _mode != SelectionMode.liveCamera) return;
 
       if (!_isDetecting) {
         setState(() {
@@ -126,14 +130,18 @@ class _LiveCameraScannerScreenState extends State<LiveCameraScannerScreen> {
   void _popScreen() {
     /// popped member is needed as otherwise the method is called multiple times
     /// as the camera stream may still be running
-    if (_scanResults.isNotEmpty && !_popped) {
-      _popped = true;
-      var qrCode = _scanResults.first.rawValue;
-      _scanResults.clear();
+    if (this._scanResults.isNotEmpty && !this._popped) {
+      this._popped = true;
 
       /// wait until we can navigate
-      SchedulerBinding.instance.addPostFrameCallback((_) {
+      SchedulerBinding.instance.addPostFrameCallback((_) async {
+        /// make sure the image is at least shown and can be seen
+        await Future.delayed(Duration(seconds: 1));
+        var qrCode = _scanResults.first.rawValue;
+
+        /// then return to previous page with the scanned result
         Navigator.pop(context, qrCode);
+        _scanResults.clear();
       });
     }
   }
@@ -146,7 +154,7 @@ class _LiveCameraScannerScreenState extends State<LiveCameraScannerScreen> {
   Widget _buildImage() {
     return Scaffold(
       appBar: AppBar(
-        title: Text('§QR-Code scannen'),
+        title: Text(AppLocalizations.of(context).scanQRCode),
         actions: [
           IconButton(
               icon: Icon(Icons.photo_library),
@@ -154,10 +162,8 @@ class _LiveCameraScannerScreenState extends State<LiveCameraScannerScreen> {
                 var picker = ImagePicker();
                 var image = await picker.getImage(source: ImageSource.gallery);
                 if (image != null) {
-                  setState(() {
-                    _mode = SelectionMode.gallery;
-                    _galleryImage = File(image.path);
-                  });
+                  /// now that we'll display a gallery image, stop the camera
+                  await _disposeCamera();
 
                   // display the image
                   var visionImage =
@@ -165,9 +171,12 @@ class _LiveCameraScannerScreenState extends State<LiveCameraScannerScreen> {
                   var barcodes = await _detector.detectInImage(visionImage);
 
                   setState(() {
-                    _scanResults = barcodes;
-                    _popScreen();
+                    this._mode = SelectionMode.gallery;
+                    this._galleryImage = File(image.path);
+                    this._scanResults = barcodes;
                   });
+
+                  _popScreen();
                 }
               }),
         ],
@@ -218,40 +227,41 @@ class _LiveCameraScannerScreenState extends State<LiveCameraScannerScreen> {
   }
 
   Widget _checkQrCodeExistence() {
-    if (_scanResults.isEmpty) {
-      if (this._mode == SelectionMode.gallery) {
-        return SimpleDialog(
-          title: Icon(
-            Icons.error,
-            size: 50,
-          ),
-          backgroundColor: Color.fromARGB(150, 255, 0, 0),
-          children: [
-            Center(
-              child: Wrap(
-                children: [
-                  Center(child: Text('Could not detect any QR-Code.')),
-                  Center(child: Text('Please try another image.')),
-                ],
-              ),
-            )
-          ],
-        );
-      }
+    if (_scanResults.isEmpty && this._mode == SelectionMode.gallery) {
+      return SimpleDialog(
+        title: Icon(
+          Icons.error,
+          size: 50,
+        ),
+        backgroundColor: Color.fromARGB(150, 255, 0, 0),
+        children: [
+          Center(
+            child: Wrap(
+              children: [
+                Center(
+                    child: Text(AppLocalizations.of(context).noQRCodeDetected)),
+                Center(
+                    child: Text(AppLocalizations.of(context).tryAnotherImage)),
+              ],
+            ),
+          )
+        ],
+      );
     }
     return Container();
   }
 
   @override
   void dispose() {
-    _disposeCamera();
+    _disposeCamera().then((value) => _detector.close());
     super.dispose();
   }
 
   Future<void> _disposeCamera() async {
-    await this._camera.stopImageStream();
-    await _camera.dispose().then((_) {
-      _detector.close();
-    });
+    if (this._cameraRunning) {
+      await this._camera.stopImageStream();
+      await _camera.dispose();
+      this._cameraRunning = false;
+    }
   }
 }

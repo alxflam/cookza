@@ -26,7 +26,7 @@ abstract class GroupViewModel with ChangeNotifier {
           user.id.isEmpty ||
           user.name == null ||
           user.name.isEmpty) {
-        throw '§ QR-Code does not contain a valid user ID and name';
+        throw 'QR-Code does not contain a valid user ID and name';
       }
       var result = UserEntityJson.from(user);
       await this.addUser(result.id, result.name);

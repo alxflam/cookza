@@ -279,5 +279,32 @@
 			"format": "compact"
 			}
 		}
-	}
+	},
+	"scanQRCode": "Scan QR-Code",
+	"@scanQRCode": {},
+	"noQRCodeDetected": "Could not detect any QR-Code.",
+	"@noQRCodeDetected": {},
+	"tryAnotherImage": "Please try another image.",
+	"@tryAnotherImage": {},
+	"invalidQRCode": "The scanned QR-Code is not supported.",
+	"@invalidQRCode": {},
+	"addedUser": "The use {name} has been added.",
+	"@addedUser": {
+	"description": "A user has been added",
+	"placeholders": {
+		"name": {
+			"type": "String"
+			}	
+		}
+	},
+	"error": "Error",
+	"@error": {},
+	"unknownUser": "Unknown",
+	"@unknownUser": {},
+	"selfUser": "That's myself",
+	"@selfUser": {},
+	"addMeToGroup": "Add me to your groups on Cookza",
+	"@addMeToGroup": {},
+	"shareQRCodeSubject": "Cookza QR-Code",
+	"@shareQRCodeSubject": {}
 }

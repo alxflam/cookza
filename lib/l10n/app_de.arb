@@ -112,5 +112,15 @@
   "until": "Bis",
   "web": "Web",
   "weekDurationDesc": "Anzahl der Wochen, die im Essensplaner verfügbar sind.",
-  "importingRecipes": "{count,plural, =1{Importiere {count} Rezept} other{Importiere {count} Rezepte}}"
+  "importingRecipes": "{count,plural, =1{Importiere {count} Rezept} other{Importiere {count} Rezepte}}",
+  "scanQRCode": "QR-Code scannen",
+	"noQRCodeDetected": "Es wurde kein gültiger QR-Code erkannt.",
+	"tryAnotherImage": "Wählen Sie ein anderes Bild.",
+	"invalidQRCode": "Der erkannte QR-Code wird nicht unterstützt.",
+	"addedUser": "Der Benutzer {name} wurde hinzugefügt.",
+	"error": "Fehler",
+  "unknownUser": "Unbekannt",
+	"selfUser": "Das bin ich",
+  "addMeToGroup": "Füge mich bei Deinen Cookza Gruppen hinzu.",
+	"shareQRCodeSubject": "Cookza QR-Code"
 }

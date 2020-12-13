@@ -44,8 +44,8 @@ class ShareAccountScreen extends StatelessWidget {
               var file = File('$directory/${_model.userName}.png');
               await file.writeAsBytes(bytes);
               await Share.shareFiles([file.path],
-                  text: 'Add me to your groups on Cookza',
-                  subject: 'Share QR-Code');
+                  text: AppLocalizations.of(context).addMeToGroup,
+                  subject: AppLocalizations.of(context).shareQRCodeSubject);
             },
           ),
           IconButton(
