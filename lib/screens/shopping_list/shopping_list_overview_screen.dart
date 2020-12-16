@@ -1,3 +1,4 @@
+import 'package:cookza/components/nothing_found.dart';
 import 'package:cookza/constants.dart';
 import 'package:cookza/model/entities/abstract/shopping_list_entity.dart';
 import 'package:cookza/screens/shopping_list/shopping_list_detail_screen.dart';
@@ -48,7 +49,7 @@ class ShoppingListOverviewScreen extends StatelessWidget {
           }
 
           if (snapshot.data == null || snapshot.data.isEmpty) {
-            return Container();
+            return NothingFound(AppLocalizations.of(context).noItems);
           }
 
           return ListView.builder(

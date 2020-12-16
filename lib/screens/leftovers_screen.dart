@@ -1,9 +1,11 @@
+import 'package:cookza/components/nothing_found.dart';
 import 'package:cookza/components/recipe_list_tile.dart';
 import 'package:cookza/model/entities/abstract/recipe_entity.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:cookza/services/recipe/similarity_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class LeftoversScreen extends StatelessWidget {
   static final String id = 'leftovers';
@@ -96,15 +98,8 @@ class _LeftoversBodyState extends State<LeftoversBody> {
                   ),
                 );
               } else if (snapshot.hasData && snapshot.data.isEmpty) {
-                return Card(
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.warning,
-                      color: Colors.orange,
-                    ),
-                    title: Text(AppLocalizations.of(context).noRecipesFound),
-                  ),
-                );
+                return NothingFound(
+                    AppLocalizations.of(context).noRecipesFound);
               } else {
                 return Center(
                   child: CircularProgressIndicator(),

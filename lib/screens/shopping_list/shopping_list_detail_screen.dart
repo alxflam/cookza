@@ -1,3 +1,4 @@
+import 'package:cookza/components/nothing_found.dart';
 import 'package:cookza/constants.dart';
 import 'package:cookza/screens/new_ingredient_screen.dart';
 import 'package:cookza/services/abstract/shopping_list_text_export.dart';
@@ -95,21 +96,12 @@ class ShoppingListDetailScreen extends StatelessWidget {
                 if (snapshot.data == null || snapshot.data.isEmpty) {
                   return Container(
                     child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Center(
-                            child: Padding(
-                              padding: EdgeInsets.all(20),
-                              child: FaIcon(
-                                kShoppingListIconData,
-                                size: 70,
-                              ),
-                            ),
-                          ),
-                          Center(
-                              child: Text(AppLocalizations.of(context).noItems))
-                        ]),
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        NothingFound(AppLocalizations.of(context).noItems),
+                      ],
+                    ),
                   );
                 }
 
