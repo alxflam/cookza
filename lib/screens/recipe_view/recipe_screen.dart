@@ -176,7 +176,7 @@ class RecipeScreen extends StatelessWidget {
                       icon: FaIcon(kIngredientsIconData),
                     ),
                     Tab(
-                      icon: FaIcon(kRecipesIconData),
+                      icon: FaIcon(kInstructionsIconData),
                     ),
                     Tab(
                       icon: FaIcon(kSimilarRecipesIconData),
