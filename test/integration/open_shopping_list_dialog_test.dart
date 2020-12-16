@@ -46,7 +46,7 @@ void main() {
     // open fake app
     await _initApp(tester, observer);
     // open dialog
-    await tester.tap(find.byType(RaisedButton));
+    await tester.tap(find.byType(ElevatedButton));
     await tester.pumpAndSettle();
     // snackbar displays message
     expect(find.byType(SnackBar), findsOneWidget);
@@ -59,7 +59,7 @@ void main() {
     await mealPlanManager.createCollection('dummy1');
     await mealPlanManager.createCollection('dummy2');
     // open dialog
-    await tester.tap(find.byType(RaisedButton));
+    await tester.tap(find.byType(ElevatedButton));
     await tester.pumpAndSettle();
     // dialog opened
     expect(find.byType(SimpleDialog), findsOneWidget);
@@ -73,7 +73,7 @@ void main() {
     // create single collection
     await mealPlanManager.createCollection('dummy1');
     // open dialog
-    await tester.tap(find.byType(RaisedButton));
+    await tester.tap(find.byType(ElevatedButton));
     await tester.pumpAndSettle();
     // date range dialog opened - has only private widgets
     // therefore check for semantics widget which is used there internally
@@ -94,7 +94,7 @@ void main() {
     // open fake app
     await _initApp(tester, observer);
     // open dialog
-    await tester.tap(find.byType(RaisedButton));
+    await tester.tap(find.byType(ElevatedButton));
     //
   });
 }
@@ -124,7 +124,8 @@ class DummyScreen extends StatelessWidget {
       body: SafeArea(
         child: Builder(
           builder: (context) {
-            return RaisedButton(
+            return ElevatedButton(
+              child: Container(),
               onPressed: () {
                 openShoppingListDialog(context);
               },

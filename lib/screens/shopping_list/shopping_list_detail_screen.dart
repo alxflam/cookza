@@ -1,5 +1,4 @@
 import 'package:cookza/components/nothing_found.dart';
-import 'package:cookza/constants.dart';
 import 'package:cookza/screens/new_ingredient_screen.dart';
 import 'package:cookza/services/abstract/shopping_list_text_export.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
@@ -7,7 +6,6 @@ import 'package:cookza/viewmodel/recipe_edit/recipe_ingredient_model.dart';
 import 'package:cookza/viewmodel/shopping_list/shopping_list_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 class PopupMenuButtonChoices {

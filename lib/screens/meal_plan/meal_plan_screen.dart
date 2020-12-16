@@ -307,7 +307,7 @@ class MealPlanScreen extends StatelessWidget {
                   children: <Widget>[
                     Padding(
                       padding: EdgeInsets.all(10),
-                      child: RaisedButton(
+                      child: ElevatedButton(
                         child:
                             Text(AppLocalizations.of(context).mealPlanAddNote),
                         onPressed: () {
@@ -321,7 +321,7 @@ class MealPlanScreen extends StatelessWidget {
                     ),
                     Padding(
                       padding: EdgeInsets.all(10),
-                      child: RaisedButton(
+                      child: ElevatedButton(
                         child: Text(
                             AppLocalizations.of(context).mealPlanAddRecipe),
                         onPressed: () async {

@@ -160,9 +160,8 @@ class OnBoardingScreen extends StatelessWidget {
                                 () => kNotImplementedDialog(context),
                                 () => model.privacyStatement,
                                 (bool value) => model.privacyStatement = value),
-                            RaisedButton(
-                              disabledColor: Colors.red.shade400,
-                              color: Colors.green,
+                            ElevatedButton(
+                              style: kRaisedGreenButtonStyle,
                               child: Text(MaterialLocalizations.of(context)
                                   .saveButtonLabel),
                               onPressed: model.acceptedAll

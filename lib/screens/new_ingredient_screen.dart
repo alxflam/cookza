@@ -131,37 +131,37 @@ class NewIngredientScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Expanded(
-                        child: RaisedButton(
+                        child: ElevatedButton(
+                          style: kRaisedGreenButtonStyle,
                           onPressed: () {
                             Navigator.pop(context, model);
                           },
                           child: Icon(Icons.save),
-                          color: Colors.green,
                         ),
                       ),
                       SizedBox(
                         width: 16,
                       ),
                       Expanded(
-                        child: RaisedButton(
+                        child: ElevatedButton(
+                          style: kRaisedGreyButtonStyle,
                           onPressed: () {
                             Navigator.pop(context);
                           },
                           child: Icon(Icons.cancel),
-                          color: Colors.grey,
                         ),
                       ),
                       SizedBox(
                         width: 16,
                       ),
                       Expanded(
-                        child: RaisedButton(
+                        child: ElevatedButton(
+                          style: kRaisedRedButtonStyle,
                           onPressed: () {
                             model.setDeleted();
                             Navigator.pop(context, model);
                           },
                           child: Icon(Icons.delete),
-                          color: Colors.red,
                         ),
                       ),
                     ],
@@ -191,7 +191,7 @@ class NewIngredientScreen extends StatelessWidget {
   Widget _getRecipeRefButton(
       BuildContext context, RecipeIngredientModel model) {
     if (model.supportsRecipeReference) {
-      return RaisedButton.icon(
+      return ElevatedButton.icon(
         onPressed: () async {
           if (model.isRecipeReference) {
             // remove reference

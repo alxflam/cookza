@@ -96,11 +96,11 @@ class LogIns extends StatelessWidget {
               return col;
             },
           ),
-          RaisedButton(
+          ElevatedButton(
+            style: kRaisedOrangeButtonStyle,
             onPressed: () {
               sl.get<FirebaseProvider>().logOffAllWebClient();
             },
-            color: Colors.orange,
             child: Row(
               children: [
                 Icon(FontAwesomeIcons.signOutAlt),

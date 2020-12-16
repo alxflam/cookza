@@ -1,4 +1,5 @@
 import 'package:cookza/components/future_progress_dialog.dart';
+import 'package:cookza/constants.dart';
 import 'package:cookza/model/entities/abstract/user_entity.dart';
 import 'package:cookza/screens/collections/live_camera_scanner_screen.dart';
 import 'package:cookza/services/firebase_provider.dart';
@@ -198,16 +199,16 @@ abstract class AbstractGroupScreen extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: <Widget>[
-                          RaisedButton(
+                          ElevatedButton(
+                              style: kRaisedGreenButtonStyle,
                               child: Icon(Icons.save),
-                              color: Colors.green,
                               onPressed: () {
                                 model.rename(controller.text);
                                 Navigator.pop(context);
                               }),
-                          RaisedButton(
+                          ElevatedButton(
+                              style: kRaisedRedButtonStyle,
                               child: Icon(Icons.cancel),
-                              color: Colors.red,
                               onPressed: () {
                                 Navigator.pop(context);
                               }),

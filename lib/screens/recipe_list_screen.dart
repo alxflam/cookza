@@ -52,7 +52,7 @@ class RecipeListScreen extends StatelessWidget {
                                       CrossAxisAlignment.stretch,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    RaisedButton(
+                                    ElevatedButton(
                                       child: Text(AppLocalizations.of(context)
                                           .createRecipe),
                                       onPressed: () async {

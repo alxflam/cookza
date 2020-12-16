@@ -131,9 +131,8 @@ class WebLandingPage extends StatelessWidget {
                   ])),
                   controlAffinity: ListTileControlAffinity.trailing,
                 ),
-                RaisedButton(
-                  disabledColor: Colors.red.shade400,
-                  color: Colors.green,
+                ElevatedButton(
+                  style: kRaisedGreenButtonStyle,
                   child: Text('§Proceed'),
                   onPressed: consent
                       ? () => Navigator.pushReplacementNamed(

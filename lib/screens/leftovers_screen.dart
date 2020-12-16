@@ -5,7 +5,6 @@ import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:cookza/services/recipe/similarity_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class LeftoversScreen extends StatelessWidget {
   static final String id = 'leftovers';

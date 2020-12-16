@@ -15,7 +15,7 @@ class OpenDrawerButton extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              RaisedButton(
+              ElevatedButton(
                 child: Text(_buttonMsg),
                 onPressed: () => Scaffold.of(context).openDrawer(),
               )

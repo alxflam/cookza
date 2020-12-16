@@ -127,9 +127,9 @@ Future<ShoppingListModel> _showMultipleGroupsDialog(BuildContext context,
                         children: <Widget>[
                           Padding(
                             padding: EdgeInsets.all(10),
-                            child: RaisedButton(
+                            child: ElevatedButton(
+                              style: kRaisedGreenButtonStyle,
                               child: Icon(Icons.check),
-                              color: Colors.green,
                               onPressed: () async {
                                 Navigator.pop(context, model);
                               },

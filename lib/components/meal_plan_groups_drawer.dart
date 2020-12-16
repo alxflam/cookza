@@ -1,3 +1,4 @@
+import 'package:cookza/constants.dart';
 import 'package:cookza/model/entities/abstract/meal_plan_collection_entity.dart';
 import 'package:cookza/screens/groups/meal_plan_group.dart';
 import 'package:cookza/screens/meal_plan/meal_plan_screen.dart';
@@ -32,7 +33,7 @@ class MealPlanGroupsTiles extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              RaisedButton(
+              ElevatedButton(
                   child: Text(AppLocalizations.of(context).createGroup),
                   onPressed: () async {
                     // await the creation or cancellation
@@ -119,18 +120,18 @@ class MealPlanGroupsTiles extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: <Widget>[
-                          RaisedButton(
+                          ElevatedButton(
+                              style: kRaisedGreenButtonStyle,
                               child: Icon(Icons.save),
-                              color: Colors.green,
                               onPressed: () async {
                                 var entity = await sl
                                     .get<MealPlanManager>()
                                     .createCollection(controller.text);
                                 Navigator.pop(context, entity);
                               }),
-                          RaisedButton(
+                          ElevatedButton(
+                              style: kRaisedRedButtonStyle,
                               child: Icon(Icons.cancel),
-                              color: Colors.red,
                               onPressed: () {
                                 Navigator.pop(context);
                               }),

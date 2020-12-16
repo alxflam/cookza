@@ -69,7 +69,7 @@ void main() {
 
     expect(find.byType(OpenDrawerButton), findsOneWidget);
 
-    await tester.tap(find.byType(RaisedButton));
+    await tester.tap(find.byType(ElevatedButton));
 
     await tester.pumpAndSettle();
 
@@ -282,7 +282,7 @@ void main() {
     verify(mockObserver.didPush(any, any));
 
     var noteFinder = find.descendant(
-        of: find.byType(RaisedButton), matching: find.text('Note'));
+        of: find.byType(ElevatedButton), matching: find.text('Note'));
     await tester.tap(noteFinder);
     await tester.pumpAndSettle();
 

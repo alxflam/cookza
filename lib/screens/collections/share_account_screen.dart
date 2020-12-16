@@ -150,9 +150,9 @@ class ShareAccountScreen extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: <Widget>[
-                          RaisedButton(
+                          ElevatedButton(
+                            style: kRaisedGreenButtonStyle,
                             child: Icon(Icons.check),
-                            color: Colors.green,
                             onPressed: () {
                               Navigator.pop(context, model);
                             },

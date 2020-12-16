@@ -1,4 +1,5 @@
 import 'package:cookza/components/round_icon_button.dart';
+import 'package:cookza/constants.dart';
 import 'package:cookza/viewmodel/meal_plan/meal_plan_item_dialog_model.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -99,17 +100,17 @@ class DialogButtonRow extends StatelessWidget {
       return Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
-          RaisedButton(
+          ElevatedButton(
+            style: kRaisedGreenButtonStyle,
             child: Icon(Icons.check),
-            color: Colors.green,
             onPressed: () {
               model.applyChanges();
               Navigator.pop(context, model);
             },
           ),
-          RaisedButton(
+          ElevatedButton(
+            style: kRaisedRedButtonStyle,
             child: Icon(Icons.delete),
-            color: Colors.red,
             onPressed: () {
               model.setDeleted(true);
               Navigator.pop(context, model);

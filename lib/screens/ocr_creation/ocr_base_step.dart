@@ -4,6 +4,7 @@ import 'package:cookza/viewmodel/ocr_creation/recipe_ocr_step.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:cookza/constants.dart';
 
 class OCRImageStep extends StatelessWidget {
   final String title;
@@ -155,14 +156,14 @@ class ImageSelectedWidget extends StatelessWidget {
           return Container();
         }
 
-        return RaisedButton(
+        return ElevatedButton(
+          style: kRaisedGreenButtonStyle,
           onPressed: model.isPending || !model.isValid
               ? null
               : () {
                   // return the parsed model
                   Navigator.pop(context, model.model);
                 },
-          color: Colors.green,
           child: Text(MaterialLocalizations.of(context).continueButtonLabel),
         );
       },
