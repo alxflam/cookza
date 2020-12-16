@@ -187,7 +187,7 @@ class DeleteAllDataDialog extends StatelessWidget {
             ),
           ),
           actions: <Widget>[
-            FlatButton(
+            TextButton(
               child: Text(
                 AppLocalizations.of(context).cancel,
               ),
@@ -195,11 +195,11 @@ class DeleteAllDataDialog extends StatelessWidget {
                 Navigator.of(context).pop();
               },
             ),
-            FlatButton(
+            TextButton(
+              style: kTextButtonRedButtonStyle,
               child: Text(
                 AppLocalizations.of(context).delete,
               ),
-              color: Colors.red,
               onPressed: () async {
                 try {
                   await showDialog(

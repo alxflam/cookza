@@ -24,7 +24,7 @@ class InstructionsStepContent extends StatelessWidget {
         builder: (context, model, child) {
           return Column(
             children: <Widget>[
-              FlatButton.icon(
+              TextButton.icon(
                 onPressed: () {
                   model.addEmptyInstruction();
                 },

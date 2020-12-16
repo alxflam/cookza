@@ -242,7 +242,7 @@ abstract class AbstractGroupScreen extends StatelessWidget {
             ),
           ),
           actions: <Widget>[
-            FlatButton(
+            TextButton(
               child: Text(
                 AppLocalizations.of(context).cancel,
               ),
@@ -250,11 +250,11 @@ abstract class AbstractGroupScreen extends StatelessWidget {
                 Navigator.pop(context, false);
               },
             ),
-            FlatButton(
+            TextButton(
+              style: kTextButtonRedButtonStyle,
               child: Text(
                 AppLocalizations.of(context).delete,
               ),
-              color: Colors.red,
               onPressed: () async {
                 var future = model.delete();
                 await showDialog(
@@ -325,7 +325,7 @@ abstract class AbstractGroupScreen extends StatelessWidget {
             ),
           ),
           actions: <Widget>[
-            FlatButton(
+            TextButton(
               child: Text(
                 AppLocalizations.of(context).cancel,
               ),
@@ -333,11 +333,11 @@ abstract class AbstractGroupScreen extends StatelessWidget {
                 Navigator.pop(context, false);
               },
             ),
-            FlatButton(
+            TextButton(
+              style: kTextButtonRedButtonStyle,
               child: Text(
                 AppLocalizations.of(context).leaveGroup,
               ),
-              color: Colors.red,
               onPressed: () async {
                 await model.leaveGroup();
                 Navigator.pop(context, true);

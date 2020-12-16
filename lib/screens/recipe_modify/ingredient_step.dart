@@ -98,7 +98,7 @@ Widget _getServingsRow(RecipeIngredientEditStep model, BuildContext context) {
 }
 
 Widget _getAddRowButton(BuildContext context, RecipeIngredientEditStep model) {
-  return FlatButton.icon(
+  return TextButton.icon(
     onPressed: () async {
       RecipeIngredientModel ingModel =
           RecipeIngredientModel.of(MutableIngredientNote.empty());

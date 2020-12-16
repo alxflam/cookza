@@ -134,7 +134,7 @@ class RecipeScreen extends StatelessWidget {
                                   ),
                                 ),
                                 actions: <Widget>[
-                                  FlatButton(
+                                  TextButton(
                                     child: Text(
                                       AppLocalizations.of(context).cancel,
                                     ),
@@ -142,11 +142,11 @@ class RecipeScreen extends StatelessWidget {
                                       Navigator.of(context).pop();
                                     },
                                   ),
-                                  FlatButton(
+                                  TextButton(
+                                    style: kTextButtonRedButtonStyle,
                                     child: Text(
                                       AppLocalizations.of(context).delete,
                                     ),
-                                    color: Colors.red,
                                     onPressed: () {
                                       sl
                                           .get<RecipeManager>()
@@ -215,7 +215,7 @@ class RecipeScreen extends StatelessWidget {
         return AlertDialog(
           title: Text(AppLocalizations.of(context).shareAs),
           actions: <Widget>[
-            FlatButton(
+            TextButton(
               child: Text(
                 AppLocalizations.of(context).pdf,
               ),
@@ -225,7 +225,7 @@ class RecipeScreen extends StatelessWidget {
                 Navigator.pop(context);
               },
             ),
-            FlatButton(
+            TextButton(
               child: Text(AppLocalizations.of(context).json),
               onPressed: () {
                 sl
@@ -234,7 +234,7 @@ class RecipeScreen extends StatelessWidget {
                 Navigator.pop(context);
               },
             ),
-            FlatButton(
+            TextButton(
               child: Text(
                 AppLocalizations.of(context).text,
               ),

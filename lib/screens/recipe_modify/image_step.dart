@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cookza/constants.dart';
 import 'package:cookza/viewmodel/recipe_edit/recipe_edit_model.dart';
 import 'package:cookza/viewmodel/recipe_edit/recipe_edit_step.dart';
 import 'package:flutter/material.dart';
@@ -99,8 +100,8 @@ class ImageSelectedWidget extends StatelessWidget {
             Positioned(
               right: 0.0,
               bottom: 0.0,
-              child: FlatButton(
-                color: Colors.red.shade700,
+              child: TextButton(
+                style: kTextButtonRedButtonStyle,
                 child: Icon(Icons.delete, color: Colors.black),
                 onPressed: () {
                   this.onDelete();
