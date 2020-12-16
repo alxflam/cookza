@@ -2,8 +2,10 @@ import 'package:cookza/components/open_drawer_button.dart';
 import 'package:cookza/components/recipe_groups_drawer.dart';
 import 'package:cookza/components/recipe_list_tile.dart';
 import 'package:cookza/model/entities/abstract/recipe_entity.dart';
+import 'package:cookza/screens/recipe_modify/new_recipe_screen.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:cookza/services/recipe/recipe_manager.dart';
+import 'package:cookza/viewmodel/recipe_edit/recipe_edit_model.dart';
 import 'package:cookza/viewmodel/recipe_list/recipe_list_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -25,8 +27,8 @@ class RecipeListScreen extends StatelessWidget {
               body: Builder(
                 builder: (context) {
                   /// check if a recipe group is already selected
-                  var collection = sl.get<RecipeManager>().currentCollection;
-                  if (collection == null || collection.isEmpty) {
+                  var collectionID = sl.get<RecipeManager>().currentCollection;
+                  if (collectionID == null || collectionID.isEmpty) {
                     return OpenDrawerButton(
                         AppLocalizations.of(context).noRecipeGroupSelected);
                   }
@@ -41,8 +43,35 @@ class RecipeListScreen extends StatelessWidget {
                         var recipes = Provider.of<List<RecipeEntity>>(context);
 
                         if (recipes == null || recipes.isEmpty) {
-                          /// TODO: show an icon / message
-                          return Container();
+                          return Container(
+                            child: Center(
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 16),
+                                child: Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    RaisedButton(
+                                      child: Text(AppLocalizations.of(context)
+                                          .createRecipe),
+                                      onPressed: () async {
+                                        var collection = await sl
+                                            .get<RecipeManager>()
+                                            .collectionByID(collectionID);
+                                        await Navigator.pushNamed(
+                                          context,
+                                          NewRecipeScreen.id,
+                                          arguments: RecipeEditModel.create(
+                                              collection: collection),
+                                        );
+                                      },
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
                         }
 
                         return ListView.separated(

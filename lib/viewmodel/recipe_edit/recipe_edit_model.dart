@@ -1,3 +1,4 @@
+import 'package:cookza/model/entities/abstract/recipe_collection_entity.dart';
 import 'package:cookza/model/entities/abstract/recipe_entity.dart';
 import 'package:cookza/model/entities/mutable/mutable_recipe.dart';
 import 'package:cookza/services/recipe/image_manager.dart';
@@ -9,9 +10,12 @@ import 'package:flutter/material.dart';
 enum MODE { CREATE, MODIFY }
 
 class RecipeEditModel extends ChangeNotifier {
-  RecipeEditModel.create() {
+  RecipeEditModel.create({RecipeCollectionEntity collection}) {
     _mode = MODE.CREATE;
     _targetRecipe = MutableRecipe.empty();
+    if (collection != null) {
+      overviewStepModel.collection = collection;
+    }
   }
 
   RecipeEditModel.modify(RecipeEntity recipe) {
