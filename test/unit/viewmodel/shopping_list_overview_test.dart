@@ -1,9 +1,12 @@
 import 'package:cookza/model/entities/mutable/mutable_shopping_list.dart';
+import 'package:cookza/services/meal_plan_manager.dart';
 import 'package:cookza/services/shopping_list/shopping_list_manager.dart';
 import 'package:cookza/viewmodel/shopping_list/shopping_list_overview.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mockito/mockito.dart';
+
+import '../../mocks/meal_plan_manager_mock.dart';
 
 class ShoppingListManagerMock extends Mock implements ShoppingListManager {}
 
@@ -12,6 +15,7 @@ void main() {
 
   setUpAll(() {
     GetIt.I.registerSingleton<ShoppingListManager>(mock);
+    GetIt.I.registerSingleton<MealPlanManager>(MealPlanManagerMock());
   });
 
   test('Get persisted lists - do not show data from the past', () async {

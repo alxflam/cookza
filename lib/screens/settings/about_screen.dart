@@ -112,9 +112,9 @@ class AboutScreen extends StatelessWidget {
             ListTile(
               title: Text(AppLocalizations.of(context).deleteAllData),
               leading: FaIcon(FontAwesomeIcons.eraser),
-              onTap: () {
+              onTap: () async {
                 // open confirmation dialog
-                showDialog(
+                await showDialog(
                   context: context,
                   barrierDismissible: false, // user must tap button!
                   builder: (BuildContext context) {

@@ -289,12 +289,11 @@ void main() {
     /// Verify that a push event happened
     verify(mockObserver.didPush(any, any));
 
-    var descInput = find.ancestor(
-        of: find.text('Note'), matching: find.byType(TextFormField));
+    var descInput = find.byType(TextFormField);
     await _inputFormField(tester, descInput, 'My special note');
 
     /// then save
-    await tester.tap(find.byIcon(Icons.save));
+    await tester.tap(find.byIcon(Icons.check));
     await tester.pumpAndSettle();
 
     /// Verify that a pop event happened

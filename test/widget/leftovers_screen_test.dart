@@ -81,9 +81,6 @@ void main() {
     final recipeFinder = find.byType(RecipeListTile);
     expect(recipeFinder, findsNothing);
 
-    final cardFinder = find.byType(Card);
-    expect(cardFinder, findsOneWidget);
-
     final errorMessage = find.text('No recipes found');
     expect(errorMessage, findsOneWidget);
   });
