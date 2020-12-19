@@ -14,47 +14,57 @@ Step getOverviewStep(BuildContext context) {
     isActive:
         Provider.of<RecipeEditModel>(context, listen: false).currentStep == 0,
     state: StepState.indexed,
-    content: ChangeNotifierProvider.value(
-      value: Provider.of<RecipeEditModel>(context, listen: false)
-          .overviewStepModel,
-      child: Consumer<RecipeOverviewEditStep>(
-        builder: (context, model, child) {
-          return FutureBuilder<List<RecipeCollectionEntity>>(
-            future: sl.get<RecipeManager>().collections,
-            builder: (context, snapshot) {
-              /// if there are no collections, render a error card
-              if (snapshot.connectionState == ConnectionState.done &&
-                  snapshot.data.isEmpty) {
-                return Card(
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.error,
-                      color: Colors.red,
-                    ),
-                    title: Text(AppLocalizations.of(context)
-                        .mandatoryRecipeGroupNotAvailable),
-                    subtitle: Text(AppLocalizations.of(context)
-                        .createMandatoryRecipeGroup),
-                  ),
-                );
-              }
-              if (snapshot.connectionState == ConnectionState.done) {
-                final nameController = TextEditingController(text: model.name);
-                final descController =
-                    TextEditingController(text: model.description);
+    content: FutureBuilder<List<RecipeCollectionEntity>>(
+      future: sl.get<RecipeManager>().collections,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState != ConnectionState.done) {
+          // return a plain container until the future has finished
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
 
-                nameController.addListener(
-                  () {
-                    model.name = nameController.text;
-                  },
-                );
+        /// if there are no collections, render a error card
+        if (snapshot.connectionState == ConnectionState.done &&
+            snapshot.data.isEmpty) {
+          return Card(
+            child: ListTile(
+              leading: Icon(
+                Icons.error,
+                color: Colors.red,
+              ),
+              title: Text(AppLocalizations.of(context)
+                  .mandatoryRecipeGroupNotAvailable),
+              subtitle:
+                  Text(AppLocalizations.of(context).createMandatoryRecipeGroup),
+            ),
+          );
+        }
 
-                descController.addListener(
-                  () {
-                    model.description = descController.text;
-                  },
-                );
+        if (snapshot.connectionState == ConnectionState.done) {
+          var _model = Provider.of<RecipeEditModel>(context, listen: false)
+              .overviewStepModel;
 
+          final nameController = TextEditingController(text: _model.name);
+          final descController =
+              TextEditingController(text: _model.description);
+
+          nameController.addListener(
+            () {
+              _model.name = nameController.text;
+            },
+          );
+
+          descController.addListener(
+            () {
+              _model.description = descController.text;
+            },
+          );
+
+          return ChangeNotifierProvider.value(
+            value: _model,
+            child: Consumer<RecipeOverviewEditStep>(
+              builder: (context, model, child) {
                 return Column(
                   children: <Widget>[
                     TextFormField(
@@ -131,14 +141,11 @@ Step getOverviewStep(BuildContext context) {
                     )
                   ],
                 );
-              }
-
-              // return a plain container until the future has finished
-              return Container();
-            },
+              },
+            ),
           );
-        },
-      ),
+        }
+      },
     ),
   );
 }
