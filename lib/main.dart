@@ -101,6 +101,7 @@ class CookzaMaterialApp extends StatelessWidget {
       supportedLocales: AppLocalizations.supportedLocales,
       locale: localizationDelegate.currentLocale,
       debugShowCheckedModeBanner: false,
+      // TODO: register dark and light theme!?
       theme: Provider.of<ThemeModel>(context).current,
       navigatorKey: sl.get<NavigatorService>().navigatorKey,
       initialRoute: getInitialRoute(),

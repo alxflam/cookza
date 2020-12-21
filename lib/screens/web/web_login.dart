@@ -7,9 +7,7 @@ import 'package:cookza/model/json/user.dart';
 import 'package:cookza/screens/home_screen.dart';
 import 'package:cookza/services/firebase_provider.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
-import 'package:cookza/viewmodel/settings/theme_model.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class WebLoginScreen extends StatelessWidget {
   static final String id = 'webLogin';
@@ -82,7 +80,7 @@ class WebLoginScreen extends StatelessWidget {
   }
 
   Widget _barcodeExplanation(BuildContext context) {
-    var tileColor = Provider.of<ThemeModel>(context).tileAccentColor;
+    var tileColor = Theme.of(context).primaryColor;
 
     return Expanded(
       child: Padding(

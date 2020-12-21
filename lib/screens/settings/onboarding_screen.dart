@@ -3,7 +3,6 @@ import 'package:cookza/screens/home_screen.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:cookza/services/shared_preferences_provider.dart';
 import 'package:cookza/viewmodel/settings/onboarding_model.dart';
-import 'package:cookza/viewmodel/settings/theme_model.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -26,14 +25,14 @@ class OnBoardingScreen extends StatelessWidget {
   Widget _buildImage(IconData icon, BuildContext context) {
     return SafeArea(
       child: Padding(
-        padding: EdgeInsets.all(25),
+        padding: EdgeInsets.all(15),
         child: CircleAvatar(
-          backgroundColor: Provider.of<ThemeModel>(context).tileAccentColor,
+          backgroundColor: Theme.of(context).primaryColor,
           child: Align(
             child: FaIcon(
               icon,
               color: Colors.white,
-              size: 150,
+              size: 100,
             ),
             alignment: Alignment.center,
           ),
@@ -87,8 +86,14 @@ class OnBoardingScreen extends StatelessWidget {
             'Cookza let\'s you manage all your favorite recipes in a single app.',
         image: ConstrainedBox(
           constraints: BoxConstraints.tightFor(width: 40),
-          child: Image(
-            image: AssetImage(kIconTransparent),
+          child: Padding(
+            padding: EdgeInsets.all(20),
+            child: Center(
+              child: CircleAvatar(
+                backgroundImage: AssetImage(kIcon),
+                radius: 100,
+              ),
+            ),
           ),
         ),
         decoration: pageDecoration,

@@ -18,7 +18,7 @@ Step getOverviewStep(BuildContext context) {
       future: sl.get<RecipeManager>().collections,
       builder: (context, snapshot) {
         if (snapshot.connectionState != ConnectionState.done) {
-          // return a plain container until the future has finished
+          // return progress indicator until the future has finished
           return Center(
             child: CircularProgressIndicator(),
           );
@@ -92,6 +92,7 @@ Step getOverviewStep(BuildContext context) {
                               model.duration = value?.toInt();
                             },
                             value: model.duration?.toDouble(),
+                            activeColor: Theme.of(context).colorScheme.primary,
                           ),
                         ),
                         Container(
@@ -104,39 +105,9 @@ Step getOverviewStep(BuildContext context) {
                     Wrap(
                       spacing: 5,
                       children: <Widget>[
-                        FilterChip(
-                          label:
-                              Text(AppLocalizations.of(context).difficultyEasy),
-                          onSelected: (value) {
-                            model.difficulty = DIFFICULTY.EASY;
-                          },
-                          selected: model.difficulty == DIFFICULTY.EASY,
-                          avatar: CircleAvatar(
-                            backgroundColor: Colors.white,
-                          ),
-                        ),
-                        FilterChip(
-                          label: Text(
-                              AppLocalizations.of(context).difficultyMedium),
-                          onSelected: (value) {
-                            model.difficulty = DIFFICULTY.MEDIUM;
-                          },
-                          selected: model.difficulty == DIFFICULTY.MEDIUM,
-                          avatar: CircleAvatar(
-                            backgroundColor: Colors.white,
-                          ),
-                        ),
-                        FilterChip(
-                          label:
-                              Text(AppLocalizations.of(context).difficultyHard),
-                          onSelected: (value) {
-                            model.difficulty = DIFFICULTY.HARD;
-                          },
-                          selected: model.difficulty == DIFFICULTY.HARD,
-                          avatar: CircleAvatar(
-                            backgroundColor: Colors.white,
-                          ),
-                        ),
+                        DifficultyChip(DIFFICULTY.EASY, model),
+                        DifficultyChip(DIFFICULTY.MEDIUM, model),
+                        DifficultyChip(DIFFICULTY.HARD, model),
                       ],
                     )
                   ],
@@ -145,6 +116,8 @@ Step getOverviewStep(BuildContext context) {
             ),
           );
         }
+
+        return Container();
       },
     ),
   );
@@ -177,4 +150,39 @@ Widget _getCollectionDropDown(BuildContext context,
       model.collection = value;
     },
   );
+}
+
+class DifficultyChip extends StatelessWidget {
+  final DIFFICULTY _difficulty;
+  final RecipeOverviewEditStep _model;
+
+  const DifficultyChip(this._difficulty, this._model);
+
+  @override
+  Widget build(BuildContext context) {
+    return FilterChip(
+      label: _getLabel(context),
+      onSelected: (value) {
+        _model.difficulty = this._difficulty;
+      },
+      selected: _model.difficulty == this._difficulty,
+      checkmarkColor: Theme.of(context).colorScheme.primary,
+    );
+  }
+
+  Widget _getLabel(BuildContext context) {
+    switch (this._difficulty) {
+      case DIFFICULTY.EASY:
+        return Text(AppLocalizations.of(context).difficultyEasy);
+        break;
+      case DIFFICULTY.MEDIUM:
+        return Text(AppLocalizations.of(context).difficultyMedium);
+        break;
+      case DIFFICULTY.HARD:
+        return Text(AppLocalizations.of(context).difficultyHard);
+        break;
+      default:
+        return Text('unknown');
+    }
+  }
 }

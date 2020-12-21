@@ -1,9 +1,7 @@
 import 'package:cookza/constants.dart';
 import 'package:cookza/screens/web/web_login.dart';
-import 'package:cookza/viewmodel/settings/theme_model.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class WebLandingPage extends StatelessWidget {
   static final String id = 'landingPage';
@@ -36,7 +34,7 @@ class WebLandingPage extends StatelessWidget {
   }
 
   Widget addBackground(BuildContext context) {
-    var tileColor = Provider.of<ThemeModel>(context).tileAccentColor;
+    var tileColor = Theme.of(context).primaryColor;
 
     return FractionallySizedBox(
         alignment: Alignment.centerRight, //to keep images aligned to right

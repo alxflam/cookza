@@ -32,11 +32,6 @@ void main() {
     expect(cut.countThemes, 2);
   });
 
-  test('Tile Accent Color', () async {
-    var cut = ThemeModel();
-    expect(cut.tileAccentColor, isNotNull);
-  });
-
   test('Change theme', () async {
     var cut = ThemeModel();
     cut.theme = 'light';

@@ -6,41 +6,68 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 final kAllThemes = {
   'dark': DarkTheme.create(),
   'light': LightTheme.create(),
+  'bright': BrightTheme.create(),
 };
 
-const kAppIconColor = Color(0xFF021B2E);
+/// dark theme app icon color
+const kBlueAppIconColor = Color(0xFF021B2E);
 
 abstract class CustomTheme {
   ThemeData get themeData;
-
-  Color get appIconColor;
 
   String get id;
 
   String get displayName;
 }
 
-final kDarkTheme = ThemeData.dark().copyWith(
-  scaffoldBackgroundColor: Colors.grey.shade900,
-  appBarTheme: AppBarTheme(
-    color: kAppIconColor,
-  ),
-);
+final kBrightColorScheme =
+    ColorScheme.light().copyWith(primary: kBlueAppIconColor);
 
-class DarkTheme extends CustomTheme {
-  final ThemeData _themeData;
+// final kTextTheme = ThemeData(brightness: Brightness.light).textTheme.copyWith();
+final kBrightTheme = ThemeData.from(colorScheme: kBrightColorScheme).copyWith(
+    cardColor: Colors.grey.shade300,
+    appBarTheme: AppBarTheme(color: kBlueAppIconColor));
 
-  factory DarkTheme.create() {
-    return DarkTheme(kDarkTheme);
+class BrightTheme extends CustomTheme {
+  factory BrightTheme.create() {
+    return BrightTheme();
   }
 
-  DarkTheme(this._themeData);
+  BrightTheme();
 
   @override
-  Color get appIconColor => kAppIconColor;
+  ThemeData get themeData => kBrightTheme;
 
   @override
-  ThemeData get themeData => this._themeData;
+  String get id => 'bright';
+
+  @override
+  String get displayName {
+    return 'bright';
+  }
+}
+
+final kDarkColorScheme = ColorScheme.dark().copyWith(
+    background: Color(0xFF121212),
+    primary: Colors.greenAccent.shade100,
+    primaryVariant: Colors.greenAccent.shade400);
+
+final kDarkTheme = ThemeData.from(colorScheme: kDarkColorScheme).copyWith(
+    cardColor: Colors.grey.shade900,
+    accentColor: kDarkColorScheme.primary,
+    appBarTheme: AppBarTheme(
+      color: Colors.grey.shade900,
+    ));
+
+class DarkTheme extends CustomTheme {
+  factory DarkTheme.create() {
+    return DarkTheme();
+  }
+
+  DarkTheme();
+
+  @override
+  ThemeData get themeData => kDarkTheme;
 
   @override
   String get id => 'dark';
@@ -55,19 +82,14 @@ class DarkTheme extends CustomTheme {
 final kLightTheme = ThemeData.light().copyWith();
 
 class LightTheme extends CustomTheme {
-  final ThemeData _themeData;
-
   factory LightTheme.create() {
-    return LightTheme(kLightTheme);
+    return LightTheme();
   }
 
-  LightTheme(this._themeData);
+  LightTheme();
 
   @override
-  Color get appIconColor => this._themeData.primaryColor;
-
-  @override
-  ThemeData get themeData => this._themeData;
+  ThemeData get themeData => kLightTheme;
 
   @override
   String get id => 'light';

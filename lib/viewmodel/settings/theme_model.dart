@@ -38,10 +38,6 @@ class ThemeModel with ChangeNotifier {
 
   ThemeData get current => _currentTheme.themeData;
 
-  Color get tileAccentColor {
-    return _currentTheme.appIconColor;
-  }
-
   String getCurrentThemeKey() {
     var theme = kAllThemes.entries
         .firstWhere((e) => e.key == _currentTheme.id, orElse: () => null);

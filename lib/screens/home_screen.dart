@@ -8,12 +8,10 @@ import 'package:cookza/screens/shopping_list/shopping_list_overview_screen.dart'
 import 'package:cookza/services/abstract/receive_intent_handler.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:cookza/viewmodel/recipe_edit/recipe_edit_model.dart';
-import 'package:cookza/viewmodel/settings/theme_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -43,7 +41,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     init(context);
 
-    var tileColor = Provider.of<ThemeModel>(context).tileAccentColor;
+    var tileColor = Theme.of(context).cardColor;
 
     return Scaffold(
       drawer: MainAppDrawer(),
@@ -172,6 +170,7 @@ class IconContent extends StatelessWidget {
       children: <Widget>[
         FaIcon(
           icon,
+          color: Theme.of(context).colorScheme.primary,
           size: 70,
         ),
         SizedBox(

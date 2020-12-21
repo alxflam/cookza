@@ -13,7 +13,6 @@ import 'package:cookza/viewmodel/recipe_selection_model.dart';
 import 'package:cookza/screens/recipe_selection_screen.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:cookza/viewmodel/recipe_view/recipe_view_model.dart';
-import 'package:cookza/viewmodel/settings/theme_model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -100,7 +99,7 @@ class MealPlanScreen extends StatelessWidget {
   }
 
   List<Widget> _buildMainLayout(BuildContext context, MealPlanViewModel model) {
-    var tileColor = Provider.of<ThemeModel>(context).tileAccentColor;
+    var tileColor = Theme.of(context).colorScheme.primary;
 
     List<Widget> tiles = [];
     int previousWeek;
@@ -385,7 +384,9 @@ class WeekNumber extends StatelessWidget {
           foregroundColor: Colors.white,
           child: Text(
             week.toString(),
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).colorScheme.onPrimary),
           ),
         ),
       ),

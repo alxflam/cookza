@@ -168,6 +168,9 @@ class RecipeScreen extends StatelessWidget {
                   ),
                 ],
                 bottom: TabBar(
+                  indicatorColor: Theme.of(context).colorScheme.primary,
+                  labelColor: Theme.of(context).colorScheme.primary,
+                  unselectedLabelColor: Theme.of(context).colorScheme.onSurface,
                   tabs: [
                     Tab(
                       icon: FaIcon(kInfoIconData),

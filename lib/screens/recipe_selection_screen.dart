@@ -81,7 +81,7 @@ class RecipeSelectionScreen extends StatelessWidget {
                     itemCount: model.countAll,
                     itemBuilder: (context, index) {
                       return ListTile(
-                        leading: _getLeadingIcon(model, index),
+                        leading: _getLeadingIcon(context, model, index),
                         title: Text(
                           model.getRecipeName(index),
                         ),
@@ -100,19 +100,20 @@ class RecipeSelectionScreen extends StatelessWidget {
     );
   }
 
-  Widget _getLeadingIcon(RecipeSelectionModel model, int index) {
+  Widget _getLeadingIcon(
+      BuildContext context, RecipeSelectionModel model, int index) {
     if (model.isMultiSelection) {
       return model.isSelected(index)
           ? Icon(
               Icons.check_box,
-              color: Colors.green,
+              color: Theme.of(context).colorScheme.primary,
             )
           : Icon(Icons.check_box_outline_blank);
     } else {
       return model.isSelected(index)
           ? Icon(
               Icons.radio_button_checked,
-              color: Colors.green,
+              color: Theme.of(context).colorScheme.primary,
             )
           : Icon(Icons.radio_button_unchecked);
     }
