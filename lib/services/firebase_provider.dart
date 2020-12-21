@@ -600,6 +600,11 @@ class FirebaseProvider {
     });
   }
 
+  Future<void> deleteShoppingList(ShoppingListEntity entity) {
+    assert(entity.id != null);
+    return _firestore.collection(SHOPPING_LISTS).doc(entity.id).delete();
+  }
+
   Future<void> addUserToCollection(
       RecipeCollectionEntity model, String newUserID, String name) async {
     var docRef = _firestore.collection(RECIPE_GROUPS).doc(model.id);

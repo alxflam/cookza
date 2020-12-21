@@ -29,4 +29,10 @@ class ShoppingListOverviewModel extends ChangeNotifier {
         this._mealPlans.firstWhere((e) => e.id == id, orElse: () => null);
     return entry != null ? entry.name : 'unknown';
   }
+
+  Future<void> deleteList(ShoppingListEntity entry) async {
+    var result = await sl.get<ShoppingListManager>().delete(entry);
+    notifyListeners();
+    return result;
+  }
 }

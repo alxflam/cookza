@@ -38,41 +38,97 @@ class ShoppingListOverviewScreen extends StatelessWidget {
   }
 
   Widget _getBody() {
-    return Consumer<ShoppingListOverviewModel>(builder: (context, model, _) {
-      return FutureBuilder<List<ShoppingListEntity>>(
-        future: model.getLists(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-
-          if (snapshot.data == null || snapshot.data.isEmpty) {
-            return NothingFound(AppLocalizations.of(context).noItems);
-          }
-
-          return ListView.builder(
-            itemCount: snapshot.data.length,
-            itemBuilder: (context, index) {
-              var entry = snapshot.data[index];
-              var mealPlanName = model.getMealPlanName(entry.groupID);
-              return ListTile(
-                title: Text(
-                    '${kDateFormatter.format(entry.dateFrom)} - ${kDateFormatter.format(entry.dateUntil)}'),
-                subtitle: Text(mealPlanName),
-                onTap: () async {
-                  var detailsViewModel = ShoppingListModel.from(entry);
-                  await Navigator.pushNamed(
-                          context, ShoppingListDetailScreen.id,
-                          arguments: detailsViewModel)
-                      .then((value) => model.navigatedBack());
-                },
+    return Consumer<ShoppingListOverviewModel>(
+      builder: (context, model, _) {
+        return FutureBuilder<List<ShoppingListEntity>>(
+          future: model.getLists(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: CircularProgressIndicator(),
               );
-            },
-          );
-        },
-      );
-    });
+            }
+
+            if (snapshot.data == null || snapshot.data.isEmpty) {
+              return NothingFound(AppLocalizations.of(context).noItems);
+            }
+
+            return ListView.builder(
+              itemCount: snapshot.data.length,
+              itemBuilder: (context, index) {
+                var entry = snapshot.data[index];
+                var mealPlanName = model.getMealPlanName(entry.groupID);
+                var date =
+                    '${kDateFormatter.format(entry.dateFrom)} - ${kDateFormatter.format(entry.dateUntil)}';
+                return ListTile(
+                  title: Text(date),
+                  subtitle: Text(mealPlanName),
+                  onTap: () async {
+                    var detailsViewModel = ShoppingListModel.from(entry);
+                    await Navigator.pushNamed(
+                            context, ShoppingListDetailScreen.id,
+                            arguments: detailsViewModel)
+                        .then((value) => model.navigatedBack());
+                  },
+                  trailing: IconButton(
+                      icon: Icon(
+                        Icons.delete,
+                        color: Theme.of(context).colorScheme.error,
+                      ),
+                      onPressed: () async {
+                        var msg =
+                            AppLocalizations.of(context).functionsShoppingList +
+                                ' (' +
+                                date +
+                                ')';
+
+                        /// as with all deletions, show a dialog whether we should really delete the data
+                        await showDialog(
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text(AppLocalizations.of(context).delete),
+                              content: SingleChildScrollView(
+                                child: ListBody(
+                                  children: <Widget>[
+                                    Text(
+                                      AppLocalizations.of(context)
+                                          .confirmDelete(msg),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              actions: <Widget>[
+                                TextButton(
+                                  child: Text(
+                                    AppLocalizations.of(context).cancel,
+                                  ),
+                                  onPressed: () {
+                                    Navigator.pop(context, false);
+                                  },
+                                ),
+                                TextButton(
+                                  style: kTextButtonRedButtonStyle,
+                                  child: Text(
+                                    AppLocalizations.of(context).delete,
+                                  ),
+                                  onPressed: () async {
+                                    await model.deleteList(entry);
+                                    Navigator.pop(context, true);
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }),
+                );
+              },
+            );
+          },
+        );
+      },
+    );
   }
 }

@@ -6,6 +6,7 @@ abstract class ShoppingListManager {
   Future<List<ShoppingListEntity>> get shoppingListsAsList;
   Stream<List<ShoppingListEntity>> get shoppingLists;
   Future<ShoppingListEntity> createOrUpdate(ShoppingListEntity entity);
+  Future<void> delete(ShoppingListEntity entity);
 }
 
 class ShoppingListManagerImpl implements ShoppingListManager {
@@ -22,5 +23,10 @@ class ShoppingListManagerImpl implements ShoppingListManager {
   @override
   Stream<List<ShoppingListEntity>> get shoppingLists {
     return sl.get<FirebaseProvider>().shoppingListsAsStream;
+  }
+
+  @override
+  Future<void> delete(ShoppingListEntity entity) {
+    return sl.get<FirebaseProvider>().deleteShoppingList(entity);
   }
 }
