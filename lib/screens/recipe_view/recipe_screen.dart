@@ -48,6 +48,11 @@ class RecipeScreen extends StatelessWidget {
         length: 4,
         child: Consumer<RecipeViewModel>(
           builder: (context, model, child) {
+            var theme = Theme.of(context);
+            var color = theme.brightness == Brightness.dark
+                ? theme.colorScheme.primary
+                : theme.colorScheme.onPrimary;
+
             return Scaffold(
               appBar: AppBar(
                 title: Text(model.name ?? ''),
@@ -168,9 +173,9 @@ class RecipeScreen extends StatelessWidget {
                   ),
                 ],
                 bottom: TabBar(
-                  indicatorColor: Theme.of(context).colorScheme.primary,
-                  labelColor: Theme.of(context).colorScheme.primary,
-                  unselectedLabelColor: Theme.of(context).colorScheme.onSurface,
+                  indicatorColor: color,
+                  labelColor: color,
+                  unselectedLabelColor: color,
                   tabs: [
                     Tab(
                       icon: FaIcon(kInfoIconData),

@@ -249,16 +249,17 @@ class AboutScreenDivider extends StatelessWidget {
 class SettingSectionHeader extends StatelessWidget {
   final String _title;
 
-  const SettingSectionHeader(this._title);
+  SettingSectionHeader(this._title);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(16),
       child: Text(
         _title,
         style: TextStyle(
-            color: Theme.of(context).accentColor, fontWeight: FontWeight.bold),
+            color: Theme.of(context).colorScheme.primary,
+            fontWeight: FontWeight.bold),
       ),
     );
   }

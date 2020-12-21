@@ -51,7 +51,11 @@ class OverviewTab extends StatelessWidget {
                         Spacer(),
                         Align(
                             alignment: Alignment.center,
-                            child: Icon(Icons.image)),
+                            child: Icon(
+                              Icons.image,
+                              size: 100,
+                              color: Theme.of(context).colorScheme.primary,
+                            )),
                         Spacer(),
                         Align(
                             alignment: FractionalOffset.bottomCenter,

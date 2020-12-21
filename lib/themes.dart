@@ -6,7 +6,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 final kAllThemes = {
   'dark': DarkTheme.create(),
   'light': LightTheme.create(),
-  'bright': BrightTheme.create(),
 };
 
 /// dark theme app icon color
@@ -20,30 +19,33 @@ abstract class CustomTheme {
   String get displayName;
 }
 
-final kBrightColorScheme =
-    ColorScheme.light().copyWith(primary: kBlueAppIconColor);
+final kBrightColorScheme = ColorScheme.light().copyWith(
+  primary: kBlueAppIconColor,
+);
 
-// final kTextTheme = ThemeData(brightness: Brightness.light).textTheme.copyWith();
 final kBrightTheme = ThemeData.from(colorScheme: kBrightColorScheme).copyWith(
-    cardColor: Colors.grey.shade300,
-    appBarTheme: AppBarTheme(color: kBlueAppIconColor));
+  cardColor: Colors.grey.shade300,
+  accentColor: kBrightColorScheme.primary,
+  appBarTheme: AppBarTheme(color: kBlueAppIconColor),
+);
 
-class BrightTheme extends CustomTheme {
-  factory BrightTheme.create() {
-    return BrightTheme();
+class LightTheme extends CustomTheme {
+  factory LightTheme.create() {
+    return LightTheme();
   }
 
-  BrightTheme();
+  LightTheme();
 
   @override
   ThemeData get themeData => kBrightTheme;
 
   @override
-  String get id => 'bright';
+  String get id => 'light';
 
   @override
   String get displayName {
-    return 'bright';
+    var context = sl.get<NavigatorService>().currentContext;
+    return AppLocalizations.of(context).themeLight;
   }
 }
 
@@ -53,11 +55,12 @@ final kDarkColorScheme = ColorScheme.dark().copyWith(
     primaryVariant: Colors.greenAccent.shade400);
 
 final kDarkTheme = ThemeData.from(colorScheme: kDarkColorScheme).copyWith(
-    cardColor: Colors.grey.shade900,
-    accentColor: kDarkColorScheme.primary,
-    appBarTheme: AppBarTheme(
-      color: Colors.grey.shade900,
-    ));
+  cardColor: Colors.grey.shade900,
+  accentColor: kDarkColorScheme.primary,
+  appBarTheme: AppBarTheme(
+    color: Colors.grey.shade900,
+  ),
+);
 
 class DarkTheme extends CustomTheme {
   factory DarkTheme.create() {
@@ -76,27 +79,5 @@ class DarkTheme extends CustomTheme {
   String get displayName {
     var context = sl.get<NavigatorService>().currentContext;
     return AppLocalizations.of(context).themeDark;
-  }
-}
-
-final kLightTheme = ThemeData.light().copyWith();
-
-class LightTheme extends CustomTheme {
-  factory LightTheme.create() {
-    return LightTheme();
-  }
-
-  LightTheme();
-
-  @override
-  ThemeData get themeData => kLightTheme;
-
-  @override
-  String get id => 'light';
-
-  @override
-  String get displayName {
-    var context = sl.get<NavigatorService>().currentContext;
-    return AppLocalizations.of(context).themeLight;
   }
 }
