@@ -71,58 +71,60 @@ class ShoppingListOverviewScreen extends StatelessWidget {
                         .then((value) => model.navigatedBack());
                   },
                   trailing: IconButton(
-                      icon: Icon(
-                        Icons.delete,
-                        color: Theme.of(context).colorScheme.error,
-                      ),
-                      onPressed: () async {
-                        var msg =
-                            AppLocalizations.of(context).functionsShoppingList +
-                                ' (' +
-                                date +
-                                ')';
+                    icon: Icon(
+                      Icons.delete,
+                      color: Theme.of(context).colorScheme.error,
+                    ),
+                    onPressed: () async {
+                      var msg =
+                          AppLocalizations.of(context).functionsShoppingList +
+                              ' (' +
+                              date +
+                              ')';
 
-                        /// as with all deletions, show a dialog whether we should really delete the data
-                        await showDialog(
-                          context: context,
-                          barrierDismissible: false,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: Text(AppLocalizations.of(context).delete),
-                              content: SingleChildScrollView(
-                                child: ListBody(
-                                  children: <Widget>[
-                                    Text(
-                                      AppLocalizations.of(context)
-                                          .confirmDelete(msg),
-                                    ),
-                                  ],
-                                ),
+                      /// TODO: create a common reusable confirmations dialog
+                      /// as with all deletions, show a dialog whether we should really delete the data
+                      await showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text(AppLocalizations.of(context).delete),
+                            content: SingleChildScrollView(
+                              child: ListBody(
+                                children: <Widget>[
+                                  Text(
+                                    AppLocalizations.of(context)
+                                        .confirmDelete(msg),
+                                  ),
+                                ],
                               ),
-                              actions: <Widget>[
-                                TextButton(
-                                  child: Text(
-                                    AppLocalizations.of(context).cancel,
-                                  ),
-                                  onPressed: () {
-                                    Navigator.pop(context, false);
-                                  },
+                            ),
+                            actions: <Widget>[
+                              TextButton(
+                                child: Text(
+                                  AppLocalizations.of(context).cancel,
                                 ),
-                                TextButton(
-                                  style: kTextButtonRedButtonStyle,
-                                  child: Text(
-                                    AppLocalizations.of(context).delete,
-                                  ),
-                                  onPressed: () async {
-                                    await model.deleteList(entry);
-                                    Navigator.pop(context, true);
-                                  },
+                                onPressed: () {
+                                  Navigator.pop(context, false);
+                                },
+                              ),
+                              TextButton(
+                                style: kTextButtonRedButtonStyle,
+                                child: Text(
+                                  AppLocalizations.of(context).delete,
                                 ),
-                              ],
-                            );
-                          },
-                        );
-                      }),
+                                onPressed: () async {
+                                  await model.deleteList(entry);
+                                  Navigator.pop(context, true);
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                  ),
                 );
               },
             );

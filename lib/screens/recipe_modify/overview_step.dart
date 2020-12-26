@@ -87,7 +87,8 @@ Step getOverviewStep(BuildContext context) {
                           child: Slider(
                             min: 1,
                             max: 120,
-                            divisions: 24,
+                            divisions: 12,
+                            label: '${model.duration}',
                             onChanged: (double value) {
                               model.duration = value?.toInt();
                             },
