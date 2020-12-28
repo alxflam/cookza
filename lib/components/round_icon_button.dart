@@ -9,12 +9,14 @@ class RoundIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var color = Theme.of(context).colorScheme.onBackground;
+
     return IconButton(
       icon: FaIcon(
         this.icon,
         size: 15,
       ),
-      color: Colors.white,
+      color: color,
       onPressed: () {
         if (this.onPress != null) {
           onPress();
