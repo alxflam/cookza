@@ -37,19 +37,20 @@ class MealPlanGroupsTiles extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               ElevatedButton(
-                  child: Text(AppLocalizations.of(context).createGroup),
-                  onPressed: () async {
-                    // await the creation or cancellation
-                    var result = await this._createMealPlanGroup(context);
-                    // if a new group got created
-                    if (result != null) {
-                      // then set the created group as the currently selected one
-                      mealPlanManager.currentCollection = result.id;
-                      // and make sure that the underlying view is updated
-                      await Navigator.pushReplacementNamed(
-                          context, MealPlanScreen.id);
-                    }
-                  })
+                child: Text(AppLocalizations.of(context).createGroup),
+                onPressed: () async {
+                  // await the creation or cancellation
+                  var result = await this._createMealPlanGroup(context);
+                  // if a new group got created
+                  if (result != null) {
+                    // then set the created group as the currently selected one
+                    mealPlanManager.currentCollection = result.id;
+                    // and make sure that the underlying view is updated
+                    await Navigator.pushReplacementNamed(
+                        context, MealPlanScreen.id);
+                  }
+                },
+              ),
             ],
           ),
         ),
