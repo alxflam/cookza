@@ -3,6 +3,24 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test(
+    'First of January is a friday and the last week of the previous year',
+    () async {
+      int week = weekNumberOf(DateTime(2021, 1, 1));
+
+      expect(week, 53);
+    },
+  );
+
+  test(
+    'First monday in new year is a monday',
+    () async {
+      int week = weekNumberOf(DateTime(2021, 1, 4));
+
+      expect(week, 1);
+    },
+  );
+
+  test(
     'First of January is 53th week of previous year',
     () async {
       int week = weekNumberOf(DateTime(2016, 1, 1));

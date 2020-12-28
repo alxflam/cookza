@@ -15,6 +15,10 @@ int weekNumberOf(DateTime date) {
   // the week number is the difference of days between the given thursday and the first day of the year divided by 7
   // if the given date is actually the first thirsday and the first day of the year,
   // the elapsedDays are zero, hence one day needs to be added
+  if (elapsedDays == 6) {
+    elapsedDays--;
+  }
+
   return 1 + ((elapsedDays + 1) / 7).floor();
 }
 
