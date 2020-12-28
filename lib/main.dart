@@ -91,8 +91,6 @@ class CookzaMaterialApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var theme = ThemeModel().current;
-
     return MaterialApp(
       title: kAppName,
       localizationsDelegates: [
@@ -104,8 +102,7 @@ class CookzaMaterialApp extends StatelessWidget {
       supportedLocales: AppLocalizations.supportedLocales,
       locale: localizationDelegate.currentLocale,
       debugShowCheckedModeBanner: false,
-      theme: theme,
-      darkTheme: DarkTheme.create().themeData,
+      theme: Provider.of<ThemeModel>(context).current,
       navigatorKey: sl.get<NavigatorService>().navigatorKey,
       initialRoute: getInitialRoute(),
       routes: kRoutes,

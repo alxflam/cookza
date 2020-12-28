@@ -29,6 +29,9 @@ class RecipeGroupsTiles extends StatelessWidget {
     return Column(
       children: [
         DrawerHeader(
+          decoration: BoxDecoration(
+            color: Theme.of(context).cardColor,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -48,9 +51,6 @@ class RecipeGroupsTiles extends StatelessWidget {
                     }
                   })
             ],
-          ),
-          decoration: BoxDecoration(
-            color: Theme.of(context).primaryColor,
           ),
         ),
         Expanded(
