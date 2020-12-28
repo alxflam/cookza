@@ -7,7 +7,6 @@ import 'package:cookza/screens/web/web_landing_screen.dart';
 import 'package:cookza/services/flutter/exception_handler.dart';
 import 'package:cookza/services/flutter/navigator_service.dart';
 import 'package:cookza/services/shared_preferences_provider.dart';
-import 'package:cookza/themes.dart';
 import 'package:cookza/viewmodel/settings/theme_model.dart';
 import 'package:cookza/screens/home_screen.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
