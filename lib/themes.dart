@@ -50,9 +50,10 @@ class LightTheme extends CustomTheme {
 }
 
 final kDarkColorScheme = ColorScheme.dark().copyWith(
-    background: Color(0xFF121212),
-    primary: Colors.greenAccent.shade100,
-    primaryVariant: Colors.greenAccent.shade400);
+  background: Color(0xFF121212),
+  primary: Colors.tealAccent.shade700,
+  primaryVariant: Colors.tealAccent.shade700,
+);
 
 final kDarkTheme = ThemeData.from(colorScheme: kDarkColorScheme).copyWith(
   cardColor: Colors.grey.shade900,
