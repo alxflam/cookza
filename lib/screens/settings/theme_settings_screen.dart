@@ -18,12 +18,13 @@ class ThemeSettingsScreen extends StatelessWidget {
             itemBuilder: (context, index) {
               var theme = model.getAvailableThemes()[index];
               return RadioListTile(
-                  title: Text(theme.displayName),
-                  value: theme.key,
-                  groupValue: model.getCurrentThemeKey(),
-                  onChanged: (value) {
-                    model.theme = theme.key;
-                  });
+                title: Text(theme.displayName),
+                value: theme.key,
+                groupValue: model.getCurrentThemeKey(),
+                onChanged: (value) {
+                  model.theme = theme.key;
+                },
+              );
             },
           );
         },

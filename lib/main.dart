@@ -7,6 +7,7 @@ import 'package:cookza/screens/web/web_landing_screen.dart';
 import 'package:cookza/services/flutter/exception_handler.dart';
 import 'package:cookza/services/flutter/navigator_service.dart';
 import 'package:cookza/services/shared_preferences_provider.dart';
+import 'package:cookza/themes.dart';
 import 'package:cookza/viewmodel/settings/theme_model.dart';
 import 'package:cookza/screens/home_screen.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
@@ -90,6 +91,8 @@ class CookzaMaterialApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var theme = ThemeModel().current;
+
     return MaterialApp(
       title: kAppName,
       localizationsDelegates: [
@@ -101,8 +104,8 @@ class CookzaMaterialApp extends StatelessWidget {
       supportedLocales: AppLocalizations.supportedLocales,
       locale: localizationDelegate.currentLocale,
       debugShowCheckedModeBanner: false,
-      // TODO: register dark and light theme!?
-      theme: Provider.of<ThemeModel>(context).current,
+      theme: theme,
+      darkTheme: DarkTheme.create().themeData,
       navigatorKey: sl.get<NavigatorService>().navigatorKey,
       initialRoute: getInitialRoute(),
       routes: kRoutes,

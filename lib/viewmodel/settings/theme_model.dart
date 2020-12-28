@@ -16,8 +16,7 @@ class ThemeModel with ChangeNotifier {
   CustomTheme _currentTheme;
 
   ThemeModel() {
-    String theme =
-        sl.get<SharedPreferencesProvider>().instance.getString('theme');
+    String theme = sl.get<SharedPreferencesProvider>().theme;
     if (theme != null && kAllThemes.containsKey(theme)) {
       _currentTheme = kAllThemes[theme];
     } else {
@@ -50,6 +49,7 @@ class ThemeModel with ChangeNotifier {
   set theme(String key) {
     var themeData = kAllThemes[key];
     this._currentTheme = themeData;
+    sl.get<SharedPreferencesProvider>().setTheme(key);
     notifyListeners();
   }
 }

@@ -5,6 +5,9 @@ abstract class SharedPreferencesProvider {
 
   SharedPreferences get instance;
 
+  String get theme;
+  void setTheme(String value);
+
   bool isUnitOfMeasureVisible(String uom);
   void setUnitOfMeasureVisibility(String uom, bool visibility);
   void setMealPlanStandardServingsSize(int value);
@@ -35,6 +38,8 @@ abstract class SharedPreferencesProvider {
 
 class SharedPreferencesProviderImpl implements SharedPreferencesProvider {
   SharedPreferences _prefs;
+
+  static final String themeKey = 'theme';
 
   static final String showShoppingListCategoriesKey =
       'showShoppingListCategories';
@@ -179,5 +184,15 @@ class SharedPreferencesProviderImpl implements SharedPreferencesProvider {
   @override
   set leastRecentlyUsedRecipeGroup(String value) {
     this._prefs.setString(leastRecentlyUsedRecipeGroupKey, value);
+  }
+
+  @override
+  void setTheme(String value) {
+    this._prefs.setString(themeKey, value);
+  }
+
+  @override
+  String get theme {
+    return this._prefs.getString(themeKey);
   }
 }
