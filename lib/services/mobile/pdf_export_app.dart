@@ -11,7 +11,7 @@ class PDFExporterImpl extends PDFExporter {
   void export(Document doc) async {
     String directory = await sl.get<StorageProvider>().getTempDirectory();
     var file = File('$directory/${this.getExportFileName()}.pdf');
-    await file.writeAsBytes(doc.save());
+    await file.writeAsBytes(await doc.save());
 
     await Share.shareFiles([file.path]);
   }

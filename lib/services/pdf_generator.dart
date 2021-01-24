@@ -111,7 +111,7 @@ class PDFGeneratorImpl implements PDFGenerator {
                       child: pw.Container(
                         width: 600,
                         height: 200,
-                        child: pw.Image.provider(
+                        child: pw.Image(
                           pw.ImageProxy(recipeImage),
                         ),
                       ),
@@ -124,7 +124,7 @@ class PDFGeneratorImpl implements PDFGenerator {
                 text: AppLocalizations.of(buildContext).ingredient(2)),
             pw.Table.fromTextArray(
               context: context,
-              border: pw.TableBorder.ex(),
+              border: pw.TableBorder(),
               headerAlignment: pw.Alignment.center,
               cellAlignment: pw.Alignment.center,
               data: _getIngredientList(recipeViewModel),
