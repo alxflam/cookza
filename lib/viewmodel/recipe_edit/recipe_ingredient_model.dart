@@ -73,6 +73,7 @@ class RecipeIngredientModel extends ChangeNotifier {
     this.name = this._recipe.name;
     this._note.ingredient.recipeReference = id;
     this._note.unitOfMeasure = kUoMPortion;
+    this._note.amount = this._note.amount > 0 ? this._note.amount : 1;
     notifyListeners();
   }
 

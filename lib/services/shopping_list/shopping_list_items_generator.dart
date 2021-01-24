@@ -36,8 +36,6 @@ class ShoppingListItemsGeneratorImpl implements ShoppingListItemsGenerator {
       }
     }
 
-    // collect internal recipes
-
     // next create a set of the required ingredients
     var ingredients =
         await sl.get<IngredientsCalculator>().getIngredients(recipeReferences);

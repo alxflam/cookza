@@ -12,6 +12,7 @@ class MutableShoppingListItem implements ShoppingListItemEntity {
     this._ingredientNote = MutableIngredientNote.of(entity.ingredientNote);
     this._isBought = entity.isBought;
     this._isCustom = entity.isCustom;
+    this._index = entity.index;
   }
 
   MutableShoppingListItem.ofIngredientNote(
@@ -36,4 +37,6 @@ class MutableShoppingListItem implements ShoppingListItemEntity {
   set isCustom(bool value) => this._isCustom = value;
 
   set isBought(bool value) => this._isBought = value;
+
+  set index(int value) => this._index = value;
 }

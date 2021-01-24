@@ -1,5 +1,6 @@
 import 'package:cookza/components/recipe_list_tile.dart';
 import 'package:cookza/constants.dart';
+import 'package:cookza/model/entities/abstract/recipe_entity.dart';
 import 'package:cookza/services/recipe/recipe_manager.dart';
 import 'package:cookza/viewmodel/recipe_edit/recipe_ingredient_model.dart';
 import 'package:cookza/viewmodel/recipe_selection_model.dart';
@@ -115,14 +116,7 @@ class NewIngredientScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  // TODO: from here on column shown only if model supports recipe reference...
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: <Widget>[
-                      _getRecipeWidget(model, context),
-                    ],
-                  ),
+                  _getRecipeWidget(model, context),
                   SizedBox(
                     height: 8,
                   ),
@@ -206,9 +200,9 @@ class NewIngredientScreen extends StatelessWidget {
             // navigate to the selection screen
             var result = await Navigator.pushNamed(
                     context, RecipeSelectionScreen.id, arguments: selModel)
-                as String;
-            if (result != null && result.isNotEmpty) {
-              await model.setRecipeReference(result);
+                as RecipeEntity;
+            if (result != null) {
+              await model.setRecipeReference(result.id);
             }
           }
         },
@@ -232,13 +226,11 @@ class IngredientNameTextInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: TextFormField(
-        decoration: InputDecoration(
-            labelText: AppLocalizations.of(context).ingredient(1)),
-        controller: ingredientController,
-        keyboardType: TextInputType.text,
-      ),
+    return TextFormField(
+      decoration: InputDecoration(
+          labelText: AppLocalizations.of(context).ingredient(1)),
+      controller: ingredientController,
+      keyboardType: TextInputType.text,
     );
   }
 }

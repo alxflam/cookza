@@ -112,8 +112,7 @@ class IngredientsCalculatorImpl implements IngredientsCalculator {
 
       var sourceUoM = uomProvider.getUnitOfMeasureById(note.unitOfMeasure);
 
-      var convertable = sourceUoM.canBeConvertedTo(targetUoM);
-      print('convertible: $convertable');
+      var convertable = sourceUoM?.canBeConvertedTo(targetUoM) ?? false;
 
       // if it can be converted, convert it
       if (convertable) {

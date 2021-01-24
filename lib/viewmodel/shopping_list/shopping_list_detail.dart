@@ -60,6 +60,7 @@ class ShoppingListModel extends ChangeNotifier {
       this._items.add(MutableShoppingListItem.ofEntity(item));
     }
 
+    // generate items from current meal plan
     List<MutableShoppingListItem> generatedItems = [];
     try {
       generatedItems = await sl
@@ -77,9 +78,11 @@ class ShoppingListModel extends ChangeNotifier {
           content: Text(AppLocalizations.of(context).missingRecipeAccess)));
     }
 
-    // processed generated already bought items
-    for (var item
-        in this._listEntity.items.where((e) => !e.isCustom && e.isBought)) {
+    // processed generated already bought and/or reordered items
+    for (var item in this
+        ._listEntity
+        .items
+        .where((e) => !e.isCustom && (e.isBought || e.index != null))) {
       var generatedItem = generatedItems.firstWhere(
           (e) =>
               e.ingredientNote.amount == item.ingredientNote.amount &&
@@ -89,9 +92,11 @@ class ShoppingListModel extends ChangeNotifier {
                   item.ingredientNote.unitOfMeasure,
           orElse: () => null);
       if (generatedItem != null) {
+        // exactly the same item has been generated, then use the persisted one
         generatedItems.remove(generatedItem);
         this._items.add(MutableShoppingListItem.ofEntity(item));
       } else {
+        // the generation of ingredients did not produce an identical item, then forget about the persisted state
         this._listEntity.removeItem(item);
       }
     }
@@ -111,14 +116,27 @@ class ShoppingListModel extends ChangeNotifier {
   }
 
   void _sortItems() {
+    for (var item in this._items) {
+      print('${item.ingredientNote.ingredient.name} ${item.index}');
+    }
     this._items.sort((a, b) {
+      if (a.index != null) {
+        return a.index.compareTo(b.index ?? a.index + 1);
+      }
+      if (b.index != null) {
+        return a.index.compareTo(b.index ?? a.index + 1);
+      }
+      if (a.isCustom && !b.isCustom) {
+        -1;
+      }
       if (a.isBought && !b.isBought) {
         return 1;
       }
       if (b.isBought && !a.isBought) {
         return -1;
       }
-      return 0;
+      return a.ingredientNote.ingredient.name
+          .compareTo(b.ingredientNote.ingredient.name);
     });
     notifyListeners();
   }
@@ -158,13 +176,15 @@ class ShoppingListModel extends ChangeNotifier {
   }
 
   void reorder(int newIndex, int oldIndex) {
-    // if (newIndex > oldIndex) {
-    //   newIndex -= 1;
-    //   newIndex =
-    //       newIndex == 0 && _items.length > 1 ? _items.length - 1 : newIndex;
-    // }
+    // get the item to be reordered
     var item = _items.removeAt(oldIndex);
-    _items.insert(newIndex, item);
+    // set the desired index for persistence
+    item.index = newIndex;
+    // reorder in list
+    this._items.insert(newIndex, item);
+    // persist changes
+    this._save();
+    // and update the UI
     notifyListeners();
   }
 
@@ -183,9 +203,17 @@ class ShoppingListModel extends ChangeNotifier {
   }
 
   void _save() async {
-    // only save custom items
-    var customItems =
-        this._items.where((a) => a.isCustom || a.isBought).toList();
+    // set the  index for every element as we have to save the index of every element to make sure the same order can be restored later on
+    for (var i = 0; i < this._items.length; i++) {
+      this._items[i].index = i;
+    }
+
+    // only save custom items, bought items and items with an explicit index (hence has been moved manually)
+    var customItems = this
+        ._items
+        .where((a) => a.isCustom || a.isBought || a.index != null)
+        .toList();
+
     // remove all entities
     this._listEntity.clearItems();
 
@@ -199,7 +227,7 @@ class ShoppingListModel extends ChangeNotifier {
     var updatedEntity =
         await sl.get<ShoppingListManager>().createOrUpdate(this._listEntity);
 
-    // and update the document id inc as it changed (usually only if the list get's created on the first  save)
+    // and update the document id as it changed (usually only if the list get's created on the first save)
     this._listEntity.id = updatedEntity.id;
   }
 
