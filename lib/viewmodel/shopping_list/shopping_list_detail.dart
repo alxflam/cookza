@@ -116,9 +116,6 @@ class ShoppingListModel extends ChangeNotifier {
   }
 
   void _sortItems() {
-    for (var item in this._items) {
-      print('${item.ingredientNote.ingredient.name} ${item.index}');
-    }
     this._items.sort((a, b) {
       if (a.index != null) {
         return a.index.compareTo(b.index ?? a.index + 1);
