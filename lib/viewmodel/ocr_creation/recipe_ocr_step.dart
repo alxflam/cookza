@@ -14,8 +14,10 @@ abstract class RecipeOCRStep<T extends RecipeEditStep> with ChangeNotifier {
 
   Future<void> setImage(File image) async {
     this._image = image;
-    this._isPending = true;
-    await this.analyse();
+    if (this._image != null) {
+      this._isPending = true;
+      await this.analyse();
+    }
     notifyListeners();
   }
 

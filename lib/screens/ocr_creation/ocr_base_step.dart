@@ -100,8 +100,8 @@ class ImageSelectedWidget extends StatelessWidget {
               Positioned(
                 right: 0.0,
                 bottom: 0.0,
-                child: TextButton(
-                  style: kTextButtonRedButtonStyle,
+                child: ElevatedButton(
+                  style: kRaisedRedButtonStyle,
                   child: Icon(Icons.delete, color: Colors.black),
                   onPressed: () {
                     this.onDelete();
@@ -128,9 +128,9 @@ class ImageSelectedWidget extends StatelessWidget {
           return CircularProgressIndicator();
         }
 
-        return TextButton(
-          style: kTextButtonGreyButtonStyle,
-          onPressed: () {},
+        return ElevatedButton(
+          style: kRaisedGreyButtonStyle,
+          onPressed: null, // not needed
           child: Builder(
             builder: (context) {
               return model.isValid

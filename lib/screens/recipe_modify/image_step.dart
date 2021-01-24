@@ -100,8 +100,8 @@ class ImageSelectedWidget extends StatelessWidget {
             Positioned(
               right: 0.0,
               bottom: 0.0,
-              child: TextButton(
-                style: kTextButtonRedButtonStyle,
+              child: ElevatedButton(
+                style: kRaisedRedButtonStyle,
                 child: Icon(Icons.delete, color: Colors.black),
                 onPressed: () {
                   this.onDelete();
