@@ -68,8 +68,9 @@ class PDFGeneratorImpl implements PDFGenerator {
               margin: const pw.EdgeInsets.only(bottom: 3.0 * PdfPageFormat.mm),
               padding: const pw.EdgeInsets.only(bottom: 3.0 * PdfPageFormat.mm),
               decoration: const pw.BoxDecoration(
-                border: pw.BoxBorder(
-                    bottom: true, width: 0.5, color: PdfColors.grey),
+                border: pw.Border(
+                  bottom: pw.BorderSide(color: PdfColors.grey, width: 0.5),
+                ),
               ),
               child: pw.Text(
                 recipeViewModel.name,
@@ -110,7 +111,9 @@ class PDFGeneratorImpl implements PDFGenerator {
                       child: pw.Container(
                         width: 600,
                         height: 200,
-                        child: pw.Image(recipeImage),
+                        child: pw.Image.provider(
+                          pw.ImageProxy(recipeImage),
+                        ),
                       ),
                     ),
                   )
@@ -121,14 +124,7 @@ class PDFGeneratorImpl implements PDFGenerator {
                 text: AppLocalizations.of(buildContext).ingredient(2)),
             pw.Table.fromTextArray(
               context: context,
-              border: pw.TableBorder(
-                  width: 0,
-                  left: false,
-                  right: false,
-                  top: false,
-                  bottom: false,
-                  horizontalInside: false,
-                  verticalInside: false),
+              border: pw.TableBorder.ex(),
               headerAlignment: pw.Alignment.center,
               cellAlignment: pw.Alignment.center,
               data: _getIngredientList(recipeViewModel),
