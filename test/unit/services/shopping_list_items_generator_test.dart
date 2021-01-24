@@ -145,4 +145,59 @@ void main() {
       expect(result.length, 0);
     },
   );
+
+  test(
+    'Resolve inner recipes',
+    () async {
+      var startDate = DateTime.now();
+      var endDate = startDate.add(Duration(days: 7));
+      var shoppingList =
+          MutableShoppingList.ofValues(startDate, endDate, 'id', []);
+
+      var onion =
+          RecipeCreator.createIngredient('Onion', amount: 2, uom: 'PCS');
+      var pepper =
+          RecipeCreator.createIngredient('Pepper', amount: 100, uom: 'GRM');
+      var oil = RecipeCreator.createIngredient('Oil', amount: 200, uom: 'MLT');
+
+      var dressing = RecipeCreator.createRecipe('Dressing');
+      dressing.servings = 2;
+      dressing.ingredientList = [oil, pepper];
+
+      await recipeManager.createOrUpdate(dressing);
+
+      var dressingIngredient = RecipeCreator.createIngredientFromRecipe(
+          dressing,
+          uom: 'PCS',
+          amount: 2);
+
+      var salad = RecipeCreator.createRecipe('Salad');
+      salad.servings = 2;
+      salad.ingredientList = [onion, pepper, dressingIngredient];
+
+      await recipeManager.createOrUpdate(salad);
+
+      var midDateItem =
+          MutableMealPlanDateEntity.empty(startDate.add(Duration(days: 2)));
+      midDateItem.addRecipe(
+          MutableMealPlanRecipeEntity.fromValues(salad.id, salad.name, 2));
+
+      mealPlanManager.addMealPlan(
+          'id', MutableMealPlan.of('id', 'id', [midDateItem], 2));
+
+      var result = await cut.generateItems(shoppingList);
+
+      var resultIngredients =
+          result.map((e) => e.ingredientNote.ingredient.name).toList();
+      print(resultIngredients);
+
+      expect(result.length, 3);
+      expect(result[0].ingredientNote.ingredient.name, 'Onion');
+      expect(result[0].ingredientNote.amount, 2);
+      expect(result[1].ingredientNote.ingredient.name, 'Pepper');
+      expect(result[1].ingredientNote.amount, 200);
+      expect(result[2].ingredientNote.ingredient.name, 'Oil');
+      expect(result[2].ingredientNote.amount, 200);
+    },
+  );
 }
