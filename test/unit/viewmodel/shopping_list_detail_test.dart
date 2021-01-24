@@ -169,7 +169,7 @@ void main() {
     expect(items.last.name, 'First');
   });
 
-  test('Sort items - bought items appear at the end', () async {
+  test('Sort items - setting bought does not change order', () async {
     var cut = ShoppingListModel.empty();
     var item = MutableIngredientNote.empty();
     item.name = 'Something important';
@@ -183,7 +183,7 @@ void main() {
     items.first.noLongerNeeded = true;
 
     items = await cut.getItems();
-    expect(items.first.isNoLongerNeeded, false);
-    expect(items.last.isNoLongerNeeded, true);
+    expect(items.first.isNoLongerNeeded, true);
+    expect(items.last.isNoLongerNeeded, false);
   });
 }
