@@ -85,30 +85,31 @@ class ImageSelectedWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        constraints: BoxConstraints.expand(
-          height: 300.0,
+      constraints: BoxConstraints.expand(
+        height: 300.0,
+      ),
+      padding: EdgeInsets.only(left: 16.0, bottom: 8.0, right: 16.0),
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: FileImage(image),
+          fit: BoxFit.cover,
         ),
-        padding: EdgeInsets.only(left: 16.0, bottom: 8.0, right: 16.0),
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: FileImage(image),
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: Stack(
-          children: <Widget>[
-            Positioned(
-              right: 0.0,
-              bottom: 0.0,
-              child: ElevatedButton(
-                style: kRaisedRedButtonStyle,
-                child: Icon(Icons.delete, color: Colors.black),
-                onPressed: () {
-                  this.onDelete();
-                },
-              ),
+      ),
+      child: Stack(
+        children: <Widget>[
+          Positioned(
+            right: 0.0,
+            bottom: 0.0,
+            child: ElevatedButton(
+              style: kRaisedRedButtonStyle,
+              child: Icon(Icons.delete, color: Colors.black),
+              onPressed: () {
+                this.onDelete();
+              },
             ),
-          ],
-        ));
+          ),
+        ],
+      ),
+    );
   }
 }

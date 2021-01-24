@@ -30,6 +30,8 @@ abstract class GroupViewModel with ChangeNotifier {
       }
       var result = UserEntityJson.from(user);
       await this.addUser(result.id, result.name);
+      await refreshEntity();
+      notifyListeners();
       return result;
     }
     return Future.value();
@@ -43,4 +45,7 @@ abstract class GroupViewModel with ChangeNotifier {
 
   /// remove member
   Future<void> removeMember(UserEntity user);
+
+  /// refresh entity from firebase
+  Future<void> refreshEntity();
 }

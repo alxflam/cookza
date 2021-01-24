@@ -54,7 +54,12 @@ class MealPlanGroupViewModel extends GroupViewModel {
   @override
   Future<void> removeMember(UserEntity user) async {
     await sl.get<MealPlanManager>().removeMember(user, entity.id);
-    this._entity = await sl.get<MealPlanManager>().getCollectionByID(entity.id);
+    await refreshEntity();
     notifyListeners();
+  }
+
+  @override
+  Future<void> refreshEntity() async {
+    this._entity = await sl.get<MealPlanManager>().getCollectionByID(entity.id);
   }
 }

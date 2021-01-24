@@ -293,6 +293,7 @@ abstract class AbstractGroupScreen extends StatelessWidget {
         context: context,
         child: SimpleDialog(
           title: Text(AppLocalizations.of(context).addUser),
+          contentPadding: EdgeInsets.all(20),
           children: [Text(AppLocalizations.of(context).addedUser(user.name))],
         ),
       );

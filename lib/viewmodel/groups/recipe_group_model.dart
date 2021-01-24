@@ -55,8 +55,13 @@ class RecipeGroupViewModel extends GroupViewModel {
   @override
   Future<void> removeMember(UserEntity user) async {
     await sl.get<RecipeManager>().removeMember(user, this.entity.id);
+    await refreshEntity();
+    notifyListeners();
+  }
+
+  @override
+  Future<void> refreshEntity() async {
     this._entity =
         await sl.get<RecipeManager>().collectionByID(this._entity.id);
-    notifyListeners();
   }
 }
