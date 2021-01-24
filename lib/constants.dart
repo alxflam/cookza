@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 
 /// App name
 const kAppName = 'Cookza';
-const kAppVersion = '2020-12-alpha';
+const kAppVersion = '2021-01-alpha';
 const kPlayStoreLink = 'market://details?id=com.flammer.cookza';
 
 /// Icons
