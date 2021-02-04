@@ -64,8 +64,6 @@ Column _getInstructionRows(
       focusNode = FocusNode();
     }
 
-    print('row $i is autofocus: $autofocus');
-
     var row = Row(
       children: <Widget>[
         IconButton(
