@@ -54,6 +54,7 @@ class NewIngredientScreen extends StatelessWidget {
                           keyboardType: TextInputType.number,
                           validator: (value) {
                             var numValue = double.tryParse(value);
+
                             if (value.isEmpty || numValue == 0) {
                               return AppLocalizations.of(context)
                                   .validationEnterNumber;

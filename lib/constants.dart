@@ -99,14 +99,16 @@ dynamic kTimestampToJson(Timestamp val) {
 /// formatter
 var kDateFormatter = DateFormat('dd.MM.yyyy');
 var kFileNameDateFormatter = DateFormat('dd_MM_yyyy');
+var ingredientsAmountFormatter = NumberFormat('#####.00');
 
 String kFormatAmount(double amount) {
   if (amount == null || amount == 0) {
     return '';
   }
+
   return amount % 1 == 0
       ? amount.toInt().toString()
-      : amount.toStringAsFixed(2);
+      : ingredientsAmountFormatter.format(amount);
 }
 
 /// functions
