@@ -185,6 +185,8 @@ abstract class AbstractGroupScreen extends StatelessWidget {
                           children: [
                             Expanded(
                               child: TextFormField(
+                                textCapitalization:
+                                    TextCapitalization.sentences,
                                 controller: controller,
                                 maxLines: 1,
                                 autofocus: true,

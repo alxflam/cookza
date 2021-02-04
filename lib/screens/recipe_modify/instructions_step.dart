@@ -1,6 +1,7 @@
 import 'package:cookza/viewmodel/recipe_edit/recipe_edit_model.dart';
 import 'package:cookza/viewmodel/recipe_edit/recipe_edit_step.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
@@ -58,18 +59,26 @@ Column _getInstructionRows(
         textController.text.isEmpty && i == model.instructions.length - 1
             ? true
             : false;
+    FocusNode focusNode;
+    if (autofocus) {
+      focusNode = FocusNode();
+    }
+
+    print('row $i is autofocus: $autofocus');
 
     var row = Row(
       children: <Widget>[
         IconButton(
-          icon: Icon(Icons.delete),
+          icon: const Icon(Icons.delete),
           onPressed: () {
             model.removeInstruction(i);
           },
         ),
         Expanded(
           child: TextFormField(
-            autofocus: autofocus,
+            autofocus: false,
+            textCapitalization: TextCapitalization.sentences,
+            focusNode: focusNode, // null on all TextFormFields but a single one
             minLines: 1,
             keyboardType: TextInputType.multiline,
             maxLines: null,
@@ -78,6 +87,12 @@ Column _getInstructionRows(
         ),
       ],
     );
+
+    if (focusNode != null) {
+      SchedulerBinding.instance.scheduleTask(() {
+        focusNode.requestFocus();
+      }, Priority.animation);
+    }
 
     rows.add(row);
   }

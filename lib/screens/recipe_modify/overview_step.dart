@@ -68,11 +68,13 @@ Step getOverviewStep(BuildContext context) {
                 return Column(
                   children: <Widget>[
                     TextFormField(
+                      textCapitalization: TextCapitalization.sentences,
                       decoration: InputDecoration(
                           labelText: AppLocalizations.of(context).recipeName),
                       controller: nameController,
                     ),
                     TextFormField(
+                      textCapitalization: TextCapitalization.sentences,
                       decoration: InputDecoration(
                           labelText: AppLocalizations.of(context).recipeDesc),
                       controller: descController,

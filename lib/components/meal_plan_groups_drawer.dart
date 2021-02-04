@@ -107,6 +107,8 @@ class MealPlanGroupsTiles extends StatelessWidget {
                           children: [
                             Expanded(
                               child: TextFormField(
+                                textCapitalization:
+                                    TextCapitalization.sentences,
                                 controller: controller,
                                 maxLines: 1,
                                 autofocus: true,

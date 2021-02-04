@@ -142,6 +142,7 @@ class ShareAccountScreen extends StatelessWidget {
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20),
                         child: TextFormField(
+                          textCapitalization: TextCapitalization.sentences,
                           controller: nameController,
                           style: TextStyle(fontSize: 20),
                           autofocus: true,

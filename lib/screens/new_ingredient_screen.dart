@@ -227,6 +227,7 @@ class IngredientNameTextInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      textCapitalization: TextCapitalization.sentences,
       decoration: InputDecoration(
           labelText: AppLocalizations.of(context).ingredient(1)),
       controller: ingredientController,
