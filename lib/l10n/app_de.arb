@@ -123,5 +123,6 @@
 	"selfUser": "Das bin ich",
   "addMeToGroup": "Füge mich bei Deinen Cookza Gruppen hinzu.",
 	"shareQRCodeSubject": "Cookza QR-Code",
-	"validationEnterNumber": "Bitte geben Sie eine Zahl ein"
+	"validationEnterNumber": "Bitte geben Sie eine Zahl ein",
+  "skip": "Überspringen"
 }

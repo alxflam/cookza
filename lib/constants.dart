@@ -41,7 +41,6 @@ const kFishTag = 'fish';
 const kMeatTag = 'meat';
 
 /// custom image assets
-const kIcon = 'assets/images/icon.png';
 const kIconTransparent = 'assets/images/icon_transparent_small.png';
 
 const kBulletCharacter = '\u2022';

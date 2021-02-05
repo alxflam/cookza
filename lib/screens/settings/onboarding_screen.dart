@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OnBoardingScreen extends StatelessWidget {
   static final String id = 'onBoarding';
@@ -15,6 +16,8 @@ class OnBoardingScreen extends StatelessWidget {
   void _onIntroEnd(context) {
     // proceed to app and don't show onboarding anymore
     sl.get<SharedPreferencesProvider>().setIntroductionShown(true);
+    // the context can't be popped if the onboardign screen is shown on start of the app
+    // directly navigate to the HomeScreen in this case
     if (Navigator.canPop(context)) {
       Navigator.pop(context);
     } else {
@@ -23,18 +26,19 @@ class OnBoardingScreen extends StatelessWidget {
   }
 
   Widget _buildImage(IconData icon, BuildContext context) {
-    return SafeArea(
+    return ConstrainedBox(
+      constraints: BoxConstraints.tightFor(width: 40),
       child: Padding(
-        padding: EdgeInsets.all(15),
-        child: CircleAvatar(
-          backgroundColor: Theme.of(context).primaryColor,
-          child: Align(
+        padding: EdgeInsets.all(20),
+        child: Center(
+          child: CircleAvatar(
+            backgroundColor: Theme.of(context).colorScheme.primary,
+            radius: 100,
             child: FaIcon(
               icon,
               color: Colors.white,
               size: 100,
             ),
-            alignment: Alignment.center,
           ),
         ),
       ),
@@ -52,7 +56,7 @@ class OnBoardingScreen extends StatelessWidget {
       showSkipButton: true,
       skipFlex: 0,
       nextFlex: 0,
-      skip: Text(MaterialLocalizations.of(context).continueButtonLabel),
+      skip: Text(AppLocalizations.of(context).skip),
       next: Icon(Icons.arrow_forward),
       done: showDoneButton
           ? Text(MaterialLocalizations.of(context).closeButtonLabel,
@@ -76,7 +80,7 @@ class OnBoardingScreen extends StatelessWidget {
       bodyTextStyle: bodyStyle,
       descriptionPadding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
       //  pageColor: Colors.white,
-      imagePadding: EdgeInsets.zero,
+      imagePadding: EdgeInsets.all(10),
     );
 
     var basePages = [
@@ -90,8 +94,12 @@ class OnBoardingScreen extends StatelessWidget {
             padding: EdgeInsets.all(20),
             child: Center(
               child: CircleAvatar(
-                backgroundImage: AssetImage(kIcon),
+                backgroundColor: Theme.of(context).colorScheme.primary,
                 radius: 100,
+                child: Image(
+                  width: 100,
+                  image: AssetImage(kIconTransparent),
+                ),
               ),
             ),
           ),

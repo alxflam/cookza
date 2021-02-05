@@ -185,7 +185,11 @@ class ShareAccountScreen extends StatelessWidget {
         child: Column(
           children: [
             CircleAvatar(
-              backgroundImage: AssetImage(kIcon),
+              backgroundColor: Theme.of(context).colorScheme.primary,
+              child: Image(
+                width: 35,
+                image: AssetImage(kIconTransparent),
+              ),
               radius: 35,
             ),
             Padding(

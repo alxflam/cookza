@@ -32,7 +32,11 @@ class AboutScreen extends StatelessWidget {
               padding: EdgeInsets.all(20),
               child: Center(
                 child: CircleAvatar(
-                  backgroundImage: AssetImage(kIcon),
+                  backgroundColor: Theme.of(context).colorScheme.primary,
+                  child: Image(
+                    width: 45,
+                    image: AssetImage(kIconTransparent),
+                  ),
                   radius: 45,
                 ),
               ),

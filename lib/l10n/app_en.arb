@@ -308,5 +308,7 @@
 	"shareQRCodeSubject": "Cookza QR-Code",
 	"@shareQRCodeSubject": {},
 	"validationEnterNumber": "Please enter a number",
-	"@validationEnterNumber": {}	
+	"@validationEnterNumber": {},
+	"skip": "Skip",
+	"@skip": {}		
 }
