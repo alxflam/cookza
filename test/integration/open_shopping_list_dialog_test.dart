@@ -81,7 +81,7 @@ void main() {
     expect(find.byType(Semantics), findsWidgets);
     // then press confirm
 
-    await tester.tap(find.byType(TextButton).first);
+    await tester.tap(find.byType(ElevatedButton).first);
     await tester.pumpAndSettle();
     verify(observer.didPush(any, any));
 

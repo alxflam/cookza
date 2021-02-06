@@ -244,7 +244,8 @@ abstract class AbstractGroupScreen extends StatelessWidget {
             ),
           ),
           actions: <Widget>[
-            TextButton(
+            ElevatedButton(
+              style: kRaisedGreyButtonStyle,
               child: Text(
                 AppLocalizations.of(context).cancel,
               ),
@@ -252,8 +253,8 @@ abstract class AbstractGroupScreen extends StatelessWidget {
                 Navigator.pop(context, false);
               },
             ),
-            TextButton(
-              style: kTextButtonRedButtonStyle,
+            ElevatedButton(
+              style: kRaisedRedButtonStyle,
               child: Text(
                 AppLocalizations.of(context).delete,
               ),
@@ -317,7 +318,7 @@ abstract class AbstractGroupScreen extends StatelessWidget {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(AppLocalizations.of(context).delete),
+          title: Text(AppLocalizations.of(context).leaveGroup),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
@@ -328,7 +329,8 @@ abstract class AbstractGroupScreen extends StatelessWidget {
             ),
           ),
           actions: <Widget>[
-            TextButton(
+            ElevatedButton(
+              style: kRaisedGreyButtonStyle,
               child: Text(
                 AppLocalizations.of(context).cancel,
               ),
@@ -336,8 +338,8 @@ abstract class AbstractGroupScreen extends StatelessWidget {
                 Navigator.pop(context, false);
               },
             ),
-            TextButton(
-              style: kTextButtonRedButtonStyle,
+            ElevatedButton(
+              style: kRaisedRedButtonStyle,
               child: Text(
                 AppLocalizations.of(context).leaveGroup,
               ),

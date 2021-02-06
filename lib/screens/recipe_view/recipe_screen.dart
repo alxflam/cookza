@@ -139,7 +139,8 @@ class RecipeScreen extends StatelessWidget {
                                   ),
                                 ),
                                 actions: <Widget>[
-                                  TextButton(
+                                  ElevatedButton(
+                                    style: kRaisedGreyButtonStyle,
                                     child: Text(
                                       AppLocalizations.of(context).cancel,
                                     ),
@@ -147,8 +148,8 @@ class RecipeScreen extends StatelessWidget {
                                       Navigator.of(context).pop();
                                     },
                                   ),
-                                  TextButton(
-                                    style: kTextButtonRedButtonStyle,
+                                  ElevatedButton(
+                                    style: kRaisedRedButtonStyle,
                                     child: Text(
                                       AppLocalizations.of(context).delete,
                                     ),
@@ -223,7 +224,7 @@ class RecipeScreen extends StatelessWidget {
         return AlertDialog(
           title: Text(AppLocalizations.of(context).shareAs),
           actions: <Widget>[
-            TextButton(
+            ElevatedButton(
               child: Text(
                 AppLocalizations.of(context).pdf,
               ),
@@ -233,7 +234,7 @@ class RecipeScreen extends StatelessWidget {
                 Navigator.pop(context);
               },
             ),
-            TextButton(
+            ElevatedButton(
               child: Text(AppLocalizations.of(context).json),
               onPressed: () {
                 sl
@@ -242,7 +243,7 @@ class RecipeScreen extends StatelessWidget {
                 Navigator.pop(context);
               },
             ),
-            TextButton(
+            ElevatedButton(
               child: Text(
                 AppLocalizations.of(context).text,
               ),

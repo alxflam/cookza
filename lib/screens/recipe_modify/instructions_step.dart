@@ -1,3 +1,4 @@
+import 'package:cookza/constants.dart';
 import 'package:cookza/viewmodel/recipe_edit/recipe_edit_model.dart';
 import 'package:cookza/viewmodel/recipe_edit/recipe_edit_step.dart';
 import 'package:flutter/material.dart';
@@ -25,12 +26,13 @@ class InstructionsStepContent extends StatelessWidget {
         builder: (context, model, child) {
           return Column(
             children: <Widget>[
-              TextButton.icon(
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    primary: Theme.of(context).colorScheme.primary),
                 onPressed: () {
                   model.addEmptyInstruction();
                 },
-                icon: Icon(Icons.add),
-                label: Text(AppLocalizations.of(context).addRow),
+                child: Text(AppLocalizations.of(context).addRow),
               ),
               _getInstructionRows(context, model),
             ],

@@ -101,7 +101,8 @@ class ShoppingListOverviewScreen extends StatelessWidget {
                               ),
                             ),
                             actions: <Widget>[
-                              TextButton(
+                              ElevatedButton(
+                                style: kRaisedGreyButtonStyle,
                                 child: Text(
                                   AppLocalizations.of(context).cancel,
                                 ),
@@ -109,8 +110,8 @@ class ShoppingListOverviewScreen extends StatelessWidget {
                                   Navigator.pop(context, false);
                                 },
                               ),
-                              TextButton(
-                                style: kTextButtonRedButtonStyle,
+                              ElevatedButton(
+                                style: kRaisedRedButtonStyle,
                                 child: Text(
                                   AppLocalizations.of(context).delete,
                                 ),

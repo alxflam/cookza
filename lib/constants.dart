@@ -155,12 +155,3 @@ final ButtonStyle kRaisedGreyButtonStyle =
 
 final ButtonStyle kRaisedOrangeButtonStyle =
     ElevatedButton.styleFrom(primary: Colors.orange);
-
-final ButtonStyle kTextButtonRedButtonStyle =
-    TextButton.styleFrom(primary: Colors.red);
-
-final ButtonStyle kTextButtonGreenButtonStyle =
-    TextButton.styleFrom(primary: Colors.red);
-
-final ButtonStyle kTextButtonGreyButtonStyle =
-    TextButton.styleFrom(primary: Colors.grey);

@@ -84,6 +84,8 @@
 	"@themeDark": {},
 	"addRow": "Add Row",
 	"@addRow": {},
+	"addIngredient": "Add Ingredient",
+	"@addIngredient": {},
     "addImageLong": "Add an image from the gallery or take a picture",
     "@addImageLong": {},
 	"recipe": "{count,plural, =1{Recipe}other{Recipes}}",

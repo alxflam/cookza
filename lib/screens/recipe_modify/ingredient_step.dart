@@ -99,7 +99,9 @@ Widget _getServingsRow(RecipeIngredientEditStep model, BuildContext context) {
 }
 
 Widget _getAddRowButton(BuildContext context, RecipeIngredientEditStep model) {
-  return TextButton.icon(
+  return ElevatedButton(
+    style: ElevatedButton.styleFrom(
+        primary: Theme.of(context).colorScheme.primary),
     onPressed: () async {
       RecipeIngredientModel ingModel =
           RecipeIngredientModel.of(MutableIngredientNote.empty());
@@ -111,8 +113,7 @@ Widget _getAddRowButton(BuildContext context, RecipeIngredientEditStep model) {
         model.addNewIngredient(result);
       }
     },
-    icon: Icon(Icons.add),
-    label: Text(AppLocalizations.of(context).addRow),
+    child: Text(AppLocalizations.of(context).addIngredient),
   );
 }
 
