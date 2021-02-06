@@ -50,7 +50,7 @@ void main() {
   });
 
   testWidgets('Navigate to recipe list', (WidgetTester tester) async {
-    _verifyNavigation(tester, 'List Recipes', RecipeListScreen);
+    _verifyNavigation(tester, 'Recipes', RecipeListScreen);
   });
 
   testWidgets('Navigate to meal plan', (WidgetTester tester) async {

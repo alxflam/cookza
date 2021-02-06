@@ -106,7 +106,7 @@ void main() {
     expect(find.byType(IngredientStepContent), findsOneWidget);
 
     /// then navigate to add a new ingredient
-    var addButton = find.byIcon(Icons.add);
+    var addButton = find.text('Add Ingredient');
     await tester.tap(addButton);
     await tester.pumpAndSettle();
 

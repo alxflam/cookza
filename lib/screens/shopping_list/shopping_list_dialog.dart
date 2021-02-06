@@ -17,7 +17,6 @@ Future<void> openShoppingListDialog(BuildContext context) async {
   ShoppingListModel model;
 
   var collections = await sl.get<MealPlanManager>().collections;
-  DateTimeRange dateRange;
 
   if (collections.isEmpty) {
     Scaffold.of(context).showSnackBar(
@@ -27,7 +26,7 @@ Future<void> openShoppingListDialog(BuildContext context) async {
 
   if (collections.length == 1) {
     model = ShoppingListModel.empty(groupID: collections.first.id);
-    dateRange = await showDateRangePicker(
+    var dateRange = await showDateRangePicker(
         context: context,
         firstDate: model.dateFrom,
         lastDate: model.lastDate,

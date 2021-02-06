@@ -80,10 +80,10 @@ void main() {
     expect(find.text('SAVE'), findsOneWidget);
     expect(find.byType(Semantics), findsWidgets);
     // then press confirm
-
-    await tester.tap(find.byType(ElevatedButton).first);
+    await tester.tap(find.text('SAVE').first);
     await tester.pumpAndSettle();
     verify(observer.didPush(any, any));
+    await tester.pumpAndSettle();
 
     // now we should have navigated to the shopping list screen
     expect(find.byType(ShoppingListDetailScreen), findsOneWidget);

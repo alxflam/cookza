@@ -40,7 +40,7 @@ void main() {
     final shoppingList = find.text('Shopping List');
     expect(shoppingList, findsOneWidget);
 
-    final listRecipes = find.text('List Recipes');
+    final listRecipes = find.text('Recipes');
     expect(listRecipes, findsOneWidget);
   });
 }

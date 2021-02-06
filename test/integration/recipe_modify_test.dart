@@ -132,7 +132,7 @@ void main() {
     expect(find.byType(IngredientStepContent), findsOneWidget);
 
     /// then navigate to add a new ingredient
-    var addButton = find.byIcon(Icons.add);
+    var addButton = find.text('Add Ingredient');
     await tester.tap(addButton);
     await tester.pumpAndSettle();
 
@@ -253,7 +253,7 @@ void _navigateToRecipeScreen(WidgetTester tester) async {
   await tester.pumpWidget(MockApplication(mockObserver: mockObserver));
 
   expect(find.byType(MainFunctionCard), findsWidgets);
-  await tester.tap(find.text('List Recipes'));
+  await tester.tap(find.text('Recipes'));
   await tester.pumpAndSettle();
 
   /// Verify that a push event happened

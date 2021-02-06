@@ -47,7 +47,7 @@ void main() {
   });
 
   testWidgets('Recipe list tile exists', (WidgetTester tester) async {
-    await testTile(tester, 'List Recipes', RecipeListScreen);
+    await testTile(tester, 'Recipes', RecipeListScreen);
   });
 
   testWidgets('Meal planner tile exists', (WidgetTester tester) async {
