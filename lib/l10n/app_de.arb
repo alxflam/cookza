@@ -67,6 +67,7 @@
   "noErrorLogEntry": "Das Fehlerlog enthält keine Einträge",
   "noFileSelected": "Keine Datei ausgewählt",
   "noItems": "Die Einkaufsliste enthält keine Einträge.",
+  "noShoppingLists": "Du hast noch keine Einkaufslisten erstellt.",
   "noMealPlan": "Erstelle zuerst einen Essensplan",
   "mandatoryRecipeGroupNotAvailable": "Keine Rezeptgruppe vefügbar",
 	"createMandatoryRecipeGroup": "Jedes Rezept muss einer Gruppe zugeordnet werden. Erstelle daher zuerst eine Rezeptgruppe.",

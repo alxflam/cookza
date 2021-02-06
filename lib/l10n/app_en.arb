@@ -220,6 +220,8 @@
 	"@addItem": {},
 	"noItems": "There are no items in your shopping list.",
 	"@noItems": {},
+	"noShoppingLists": "There are no shopping lists.",
+	"@noShoppingLists": {},
 	"noMealPlan": "You haven't created a meal plan yet",
 	"@noMealPlan": {},
 	"mandatoryRecipeGroupNotAvailable": "No recipe group available",

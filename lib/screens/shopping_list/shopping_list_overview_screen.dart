@@ -50,7 +50,7 @@ class ShoppingListOverviewScreen extends StatelessWidget {
             }
 
             if (snapshot.data == null || snapshot.data.isEmpty) {
-              return NothingFound(AppLocalizations.of(context).noItems);
+              return NothingFound(AppLocalizations.of(context).noShoppingLists);
             }
 
             return ListView.builder(
