@@ -203,7 +203,7 @@ class MealPlanScreen extends StatelessWidget {
                 },
                 subtitle: recipeModel.servings != null
                     ? Text(
-                        '${recipeModel.servings.toString()} ${AppLocalizations.of(context).servings}')
+                        '${recipeModel.servings.toString()} ${AppLocalizations.of(context).servings(recipeModel.servings)}')
                     : null,
                 trailing: IconButton(
                   icon: Icon(Icons.edit),

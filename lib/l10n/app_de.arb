@@ -87,7 +87,7 @@
   "saveRecipeValidation": "Rezept konnte nicht gespeichert werden",
   "search": "Suchen",
   "selectRecipes": "Rezepte auswählen",
-  "servings": "Portionen",
+  "servings": "{count,plural, =1{Portion}other{Portionen}}",
   "settings": "Einstellungen",
   "share": "Teilen",
   "shareAccount": "Account teilen",

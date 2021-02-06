@@ -88,7 +88,8 @@ Widget _getServingsRow(RecipeIngredientEditStep model, BuildContext context) {
             ? model.servings = model.servings - 1
             : model.servings,
       ),
-      Text('${model.servings} ${AppLocalizations.of(context).servings}'),
+      Text(
+          '${model.servings} ${AppLocalizations.of(context).servings(model.servings)}'),
       RoundIconButton(
         icon: FontAwesomeIcons.plus,
         onPress: () => model.servings = model.servings + 1,

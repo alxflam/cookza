@@ -38,8 +38,16 @@
 	"@tagsMeat": {},
 	"tagsFish": "Fish",
 	"@tagsFish": {},
-	"servings": "Servings",
-	"@servings": {},
+	"servings": "{count,plural, =1{Serving}other{Servings}}",
+	"@servings": {
+		"description": "Servings",
+		"placeholders": {
+		"count": {
+			"type": "int",
+			"format": "compact"
+			}
+		}
+	},
 	"ingredientsForServings": "Ingredients for {count} Servings",
 	"@ingredientsForServings": {
 		"description": "Ingredients for X servings",

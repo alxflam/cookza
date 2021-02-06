@@ -49,7 +49,7 @@ class MealPlanSettingsScreen extends StatelessWidget {
                 ListTile(
                   title: Text(AppLocalizations.of(context).stdServings),
                   subtitle: Text(
-                      '${model.standardServingsSize} ${AppLocalizations.of(context).servings}'),
+                      '${model.standardServingsSize} ${AppLocalizations.of(context).servings(model.standardServingsSize)}'),
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20),
@@ -57,7 +57,8 @@ class MealPlanSettingsScreen extends StatelessWidget {
                     value: model.standardServingsSize.toDouble(),
                     max: 10,
                     min: 1,
-                    label: AppLocalizations.of(context).servings,
+                    label: AppLocalizations.of(context)
+                        .servings(model.standardServingsSize),
                     onChanged: (value) {
                       model.setStandardServingsSize(value.toInt());
                     },
