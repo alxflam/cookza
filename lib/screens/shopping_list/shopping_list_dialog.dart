@@ -51,12 +51,13 @@ Future<void> openShoppingListDialog(BuildContext context) async {
   }
 
   var existingPlans = await sl.get<ShoppingListManager>().shoppingListsAsList;
+  // TODO: refactor logic and provide tests
   var matchedList = existingPlans.isEmpty
       ? null
       : existingPlans.firstWhere(
           (e) =>
               e.groupID == model.groupID &&
-              (e.dateFrom == model.dateFrom ||
+              (isSameDay(model.dateFrom, e.dateFrom) ||
                   (e.dateFrom.isBefore(DateTime.now()) &&
                       isSameDay(model.dateFrom, DateTime.now()))) &&
               e.dateUntil == model.dateEnd,
