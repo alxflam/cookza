@@ -124,5 +124,20 @@
   "addMeToGroup": "Füge mich bei Deinen Cookza Gruppen hinzu.",
 	"shareQRCodeSubject": "Cookza QR-Code",
 	"validationEnterNumber": "Bitte geben Sie eine Zahl ein",
-  "skip": "Überspringen"
+  "onboardingWelcomeTitle": "Willkommen bei Cookza!",
+	"onboardingWelcomeBody": "Mit Cookza kannst du alle deine Lieblingsrezepte in einer App verwalten.",
+  "onboardingRecipeTitle": "Verwalte deine Rezepte",
+	"onboardingRecipeBody": "Erstelle Rezepte manuell oder mit Hilfe von Texterkennung. Organisiere deine Rezepte in Gruppen und teile sie mit deinen Freunden.",
+	"onboardingMealPlanTitle": "Essensplan",
+	"onboardingMealPlanBody": "Plane deine Mahlzeiten und teile deinen Essensplan mit den Mitgliedern deines Haushaltes.",
+	"onboardingShoppingListTitle": "Einkaufsliste",
+	"onboardingShoppingListBody": "Generiere aus deinem Essensplan eine stets aktuellen Einkaufsliste udn teile sie.",
+	"onboardingMoreTitle": "Und noch viel mehr",
+	"onboardingMoreBody": "Suche passende Rezepte für deine verfügbaren Zutaten oder exportiere deine Rezepte als PDF - und noch viel mehr kannst du mit Cookza machen.",
+	"onboardingDataPrivacyTitle": "Datenschutz",
+	"onboardingDataPrivacyBody": "Weder deine E-Mail-Adresse noch deine Telefonnummer werden zur Registrierung benötigt.",
+  "onboardingAcceptData": "Cookza speichert deine Daten auf einer Cloud Datenbank in Europa, die von Google betrieben wird.",
+	"onboardingAcceptAuthentication": "Benutzer werden anonym authentisiert, daher wird kein Benutzername oder Passwort benötigt.",
+  "accept": "Akzeptieren",
+  "readAndAccept": "Ich akzeptiere die "
 }

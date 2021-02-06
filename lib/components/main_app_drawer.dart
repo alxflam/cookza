@@ -1,3 +1,4 @@
+import 'package:cookza/components/app_icon_text.dart';
 import 'package:cookza/screens/collections/share_account_screen.dart';
 import 'package:cookza/screens/leftovers_screen.dart';
 import 'package:cookza/screens/meal_plan/meal_plan_screen.dart';
@@ -27,25 +28,7 @@ class MainAppDrawer extends StatelessWidget {
             decoration: BoxDecoration(
               color: Theme.of(context).cardColor,
             ),
-            child: Row(
-              children: <Widget>[
-                ConstrainedBox(
-                  constraints: BoxConstraints.tightFor(width: 40),
-                  child: Image(
-                    image: AssetImage(kIconTransparent),
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                ),
-                Text(
-                  'ookza', // will anyways never be translated
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 24,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                ),
-              ],
-            ),
+            child: AppIconTextWidget(),
           ),
           ListTile(
             title: Text(AppLocalizations.of(context).functionsListRecipes),
