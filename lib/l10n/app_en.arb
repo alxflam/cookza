@@ -2,7 +2,7 @@
 	"@@locale": "en",
 	"functionsAddRecipe": "New Recipe",
 	"@functionsAddRecipe": {},
-	"functionsListRecipes": "List Recipes",
+	"functionsListRecipes": "Recipes",
 	"@functionsListRecipes": {},
 	"functionsShoppingList": "Shopping List",
 	"@functionsShoppingList": {},
