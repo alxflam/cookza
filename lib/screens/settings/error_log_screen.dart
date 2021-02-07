@@ -1,3 +1,4 @@
+import 'package:cookza/components/alert_dialog_title.dart';
 import 'package:cookza/model/json/exception_log.dart';
 import 'package:cookza/viewmodel/settings/error_screen_model.dart';
 import 'package:flutter/material.dart';
@@ -121,7 +122,8 @@ class ExceptionEntry extends StatelessWidget {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text(AppLocalizations.of(context).errorLog),
+              title: AlertDialogTitle(
+                  title: AppLocalizations.of(context).errorLog),
               content: Padding(
                 padding: EdgeInsets.only(top: 10),
                 child: SingleChildScrollView(

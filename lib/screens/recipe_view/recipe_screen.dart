@@ -1,3 +1,4 @@
+import 'package:cookza/components/alert_dialog_title.dart';
 import 'package:cookza/constants.dart';
 import 'package:cookza/model/entities/abstract/recipe_entity.dart';
 import 'package:cookza/screens/home_screen.dart';
@@ -128,8 +129,8 @@ class RecipeScreen extends StatelessWidget {
                             barrierDismissible: false, // user must tap button!
                             builder: (BuildContext context) {
                               return AlertDialog(
-                                title:
-                                    Text(AppLocalizations.of(context).delete),
+                                title: AlertDialogTitle(
+                                    title: AppLocalizations.of(context).delete),
                                 content: SingleChildScrollView(
                                   child: ListBody(
                                     children: <Widget>[
@@ -222,7 +223,7 @@ class RecipeScreen extends StatelessWidget {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(AppLocalizations.of(context).shareAs),
+          title: AlertDialogTitle(title: AppLocalizations.of(context).shareAs),
           actions: <Widget>[
             ElevatedButton(
               child: Text(

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cookza/components/alert_dialog_title.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
@@ -125,7 +126,7 @@ void kErrorDialog(BuildContext context, String title, String message) {
   showDialog(
     context: context,
     child: AlertDialog(
-      title: Text(title),
+      title: AlertDialogTitle(title: title),
       content: Text(message),
       titlePadding: EdgeInsets.all(20),
     ),

@@ -6,6 +6,7 @@
   "addIngredient": "Zutat hinzufügen",
   "addUser": "User hinzufügen",
   "amount": "Menge",
+  "missingIngredientName": "Der Name der Zutat muss angegeben werden",
   "appDescription": "Cookza ermöglicht es Ihnen, Ihre Lieblingsrezepte datenschutzfreundlich zu speichern, zu sammeln und zu teilen",
   "assignEmptyInstructions": "Das Rezept enthält leere Zubereitungsanweisungen",
   "assignIngredients": "Das Rezept enthält keine Zutaten",

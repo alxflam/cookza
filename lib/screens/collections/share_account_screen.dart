@@ -4,6 +4,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui';
 
+import 'package:cookza/components/alert_dialog_title.dart';
 import 'package:cookza/components/padded_qr_code.dart';
 import 'package:cookza/constants.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
@@ -126,7 +127,8 @@ class ShareAccountScreen extends StatelessWidget {
           barrierDismissible: false,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text(AppLocalizations.of(context).enterUsername),
+              title: AlertDialogTitle(
+                  title: AppLocalizations.of(context).enterUsername),
               content: Builder(
                 builder: (context) {
                   final nameController =

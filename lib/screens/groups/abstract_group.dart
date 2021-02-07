@@ -1,3 +1,4 @@
+import 'package:cookza/components/alert_dialog_title.dart';
 import 'package:cookza/components/future_progress_dialog.dart';
 import 'package:cookza/constants.dart';
 import 'package:cookza/model/entities/abstract/user_entity.dart';
@@ -233,7 +234,7 @@ abstract class AbstractGroupScreen extends StatelessWidget {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(AppLocalizations.of(context).delete),
+          title: AlertDialogTitle(title: AppLocalizations.of(context).delete),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
@@ -305,7 +306,7 @@ abstract class AbstractGroupScreen extends StatelessWidget {
         context: context,
         barrierDismissible: false,
         child: AlertDialog(
-          title: Text(AppLocalizations.of(context).error),
+          title: AlertDialogTitle(title: AppLocalizations.of(context).error),
           content: Text(AppLocalizations.of(context).invalidQRCode),
         ),
       );
@@ -318,7 +319,8 @@ abstract class AbstractGroupScreen extends StatelessWidget {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(AppLocalizations.of(context).leaveGroup),
+          title:
+              AlertDialogTitle(title: AppLocalizations.of(context).leaveGroup),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[

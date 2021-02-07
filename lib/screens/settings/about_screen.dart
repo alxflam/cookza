@@ -1,3 +1,4 @@
+import 'package:cookza/components/alert_dialog_title.dart';
 import 'package:cookza/components/future_progress_dialog.dart';
 import 'package:cookza/constants.dart';
 import 'package:cookza/screens/settings/changelog_screen.dart';
@@ -182,7 +183,8 @@ class DeleteAllDataDialog extends StatelessWidget {
     return StatefulBuilder(
       builder: (context, setState) {
         return AlertDialog(
-          title: Text(AppLocalizations.of(context).deleteAllData),
+          title: AlertDialogTitle(
+              title: AppLocalizations.of(context).deleteAllData),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[

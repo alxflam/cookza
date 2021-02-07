@@ -58,6 +58,8 @@
 				}
 			}
 	},
+	"missingIngredientName": "Assign an ingredient name",
+	"@missingIngredientName": {},
 	"amount": "Amount",
 	"@amount": {},
 	"unit": "Unit",

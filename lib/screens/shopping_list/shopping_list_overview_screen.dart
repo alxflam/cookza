@@ -1,3 +1,4 @@
+import 'package:cookza/components/alert_dialog_title.dart';
 import 'package:cookza/components/nothing_found.dart';
 import 'package:cookza/constants.dart';
 import 'package:cookza/model/entities/abstract/shopping_list_entity.dart';
@@ -89,7 +90,8 @@ class ShoppingListOverviewScreen extends StatelessWidget {
                         barrierDismissible: false,
                         builder: (BuildContext context) {
                           return AlertDialog(
-                            title: Text(AppLocalizations.of(context).delete),
+                            title: AlertDialogTitle(
+                                title: AppLocalizations.of(context).delete),
                             content: SingleChildScrollView(
                               child: ListBody(
                                 children: <Widget>[

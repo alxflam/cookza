@@ -1,3 +1,4 @@
+import 'package:cookza/components/alert_dialog_title.dart';
 import 'package:cookza/components/recipe_list_tile.dart';
 import 'package:cookza/constants.dart';
 import 'package:cookza/model/entities/abstract/recipe_entity.dart';
@@ -129,7 +130,23 @@ class NewIngredientScreen extends StatelessWidget {
                         child: ElevatedButton(
                           style: kRaisedGreenButtonStyle,
                           onPressed: () {
-                            Navigator.pop(context, model);
+                            // check whether either a recipe ref is selected or the ingredient name is given
+                            try {
+                              model.validate();
+                              Navigator.pop(context, model);
+                            } catch (e) {
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title: AlertDialogTitle(
+                                      title: AppLocalizations.of(context).error,
+                                    ),
+                                    content: Text(e),
+                                  );
+                                },
+                              );
+                            }
                           },
                           child: Icon(Icons.save),
                         ),
