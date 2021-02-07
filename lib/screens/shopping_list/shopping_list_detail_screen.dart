@@ -8,15 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
-class PopupMenuButtonChoices {
-  final _icon;
-  const PopupMenuButtonChoices._internal(this._icon);
-  IconData get icon => this._icon;
-
-  static const SHARE = PopupMenuButtonChoices._internal(Icons.share);
-  static const ADD_ITEM = PopupMenuButtonChoices._internal(Icons.add);
-}
-
 class ShoppingListDetailScreen extends StatelessWidget {
   static final String id = 'shoppingListDetail';
 
@@ -29,56 +20,30 @@ class ShoppingListDetailScreen extends StatelessWidget {
       child: Consumer<ShoppingListModel>(
         builder: (context, model, _) {
           return Scaffold(
+            floatingActionButton: FloatingActionButton(
+              child: Icon(Icons.share),
+              onPressed: () async {
+                await sl
+                    .get<ShoppingListTextExporter>()
+                    .exportShoppingListAsText(model);
+              },
+            ),
             appBar: AppBar(
               title: Text(model.shortTitle),
               actions: [
-                PopupMenuButton(
-                  itemBuilder: (context) {
-                    return [
-                      PopupMenuItem(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Icon(PopupMenuButtonChoices.SHARE.icon),
-                            Text(AppLocalizations.of(context).share)
-                          ],
-                        ),
-                        value: PopupMenuButtonChoices.SHARE,
-                      ),
-                      PopupMenuItem(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Icon(PopupMenuButtonChoices.ADD_ITEM.icon),
-                            Text(AppLocalizations.of(context).addItem)
-                          ],
-                        ),
-                        value: PopupMenuButtonChoices.ADD_ITEM,
-                      ),
-                    ];
-                  },
-                  onSelected: (value) async {
-                    switch (value) {
-                      case PopupMenuButtonChoices.SHARE:
-                        await sl
-                            .get<ShoppingListTextExporter>()
-                            .exportShoppingListAsText(model);
-                        break;
-                      case PopupMenuButtonChoices.ADD_ITEM:
-                        // open ingredient screen
-                        var result = await Navigator.pushNamed(
-                            context, NewIngredientScreen.id,
-                            arguments: RecipeIngredientModel.empty(false));
+                IconButton(
+                  icon: Icon(Icons.add),
+                  onPressed: () async {
+                    // open ingredient screen
+                    var result = await Navigator.pushNamed(
+                        context, NewIngredientScreen.id,
+                        arguments: RecipeIngredientModel.empty(false));
 
-                        if (result != null && result is RecipeIngredientModel) {
-                          model.addCustomItem(result.toIngredientNote());
-                        }
-                        break;
-                      default:
-                        break;
+                    if (result != null && result is RecipeIngredientModel) {
+                      model.addCustomItem(result.toIngredientNote());
                     }
                   },
-                ),
+                )
               ],
             ),
             body: FutureBuilder<List<ShoppingListItemModel>>(
