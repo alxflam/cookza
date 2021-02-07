@@ -90,6 +90,8 @@
   "saveRecipeValidation": "Rezept konnte nicht gespeichert werden",
   "search": "Suchen",
   "selectRecipes": "Rezepte auswählen",
+  "selectAll": "Alle auswählen",
+	"deselectAll": "Alle abwählen",
   "servings": "{count,plural, =1{Portion}other{Portionen}}",
   "settings": "Einstellungen",
   "share": "Teilen",

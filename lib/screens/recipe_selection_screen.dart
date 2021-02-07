@@ -44,16 +44,6 @@ class RecipeSelectionScreen extends StatelessWidget {
               title: _getTitle(model, context),
               actions: <Widget>[
                 IconButton(
-                    icon: Icon(Icons.select_all),
-                    onPressed: () {
-                      model.selectAll();
-                    }),
-                IconButton(
-                    icon: Icon(Icons.block),
-                    onPressed: () {
-                      model.deselectAll();
-                    }),
-                IconButton(
                     icon: FaIcon(_icon),
                     onPressed: () {
                       _onPressed(context, model);
@@ -63,11 +53,23 @@ class RecipeSelectionScreen extends StatelessWidget {
             body: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SelectButton(
+                        icon: Icons.check_box_outlined,
+                        text: AppLocalizations.of(context).selectAll,
+                        onTap: () => model.selectAll()),
+                    SelectButton(
+                        icon: Icons.check_box_outline_blank,
+                        text: AppLocalizations.of(context).deselectAll,
+                        onTap: () => model.deselectAll()),
+                  ],
+                ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TextField(
                     onChanged: (value) {
-                      print('filter by $value');
                       model.filter(value);
                     },
                     decoration: InputDecoration(
@@ -174,5 +176,34 @@ class RecipeSelectionScreen extends StatelessWidget {
         };
     }
     return (context, model) async {};
+  }
+}
+
+class SelectButton extends StatelessWidget {
+  final IconData icon;
+  final String text;
+  final VoidCallback onTap;
+
+  const SelectButton({this.icon, this.text, this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Padding(
+        padding: EdgeInsets.all(8),
+        child: ElevatedButton(
+          onPressed: this.onTap,
+          child: Row(
+            children: [
+              Icon(this.icon),
+              SizedBox(
+                width: 8,
+              ),
+              Text(this.text)
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
