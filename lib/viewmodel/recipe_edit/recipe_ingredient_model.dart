@@ -20,6 +20,9 @@ class RecipeIngredientModel extends ChangeNotifier {
 
   RecipeIngredientModel.of(IngredientNoteEntity note) {
     this._note = MutableIngredientNote.of(note);
+    if (this._note.ingredient.isRecipeReference) {
+      this.setRecipeReference(this._note.ingredient.recipeReference);
+    }
   }
 
   RecipeIngredientModel.noteOnlyModelOf(IngredientNoteEntity note) {
@@ -91,4 +94,11 @@ class RecipeIngredientModel extends ChangeNotifier {
   }
 
   void setDeleted() => _deleted = true;
+
+  void validate() {
+    var noNameGiven = this.name == null || this.name.isEmpty;
+    if (noNameGiven && !this.isRecipeReference) {
+      // throw
+    }
+  }
 }
