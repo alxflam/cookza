@@ -223,7 +223,7 @@ class RecipeScreen extends StatelessWidget {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: AlertDialogTitle(title: AppLocalizations.of(context).shareAs),
+          title: Text(AppLocalizations.of(context).shareAs),
           actions: <Widget>[
             ElevatedButton(
               child: Text(

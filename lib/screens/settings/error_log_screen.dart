@@ -122,8 +122,7 @@ class ExceptionEntry extends StatelessWidget {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: AlertDialogTitle(
-                  title: AppLocalizations.of(context).errorLog),
+              title: Text(AppLocalizations.of(context).errorLog),
               content: Padding(
                 padding: EdgeInsets.only(top: 10),
                 child: SingleChildScrollView(

@@ -83,7 +83,6 @@ class ShoppingListOverviewScreen extends StatelessWidget {
                               date +
                               ')';
 
-                      /// TODO: create a common reusable confirmations dialog
                       /// as with all deletions, show a dialog whether we should really delete the data
                       await showDialog(
                         context: context,

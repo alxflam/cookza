@@ -127,8 +127,7 @@ class ShareAccountScreen extends StatelessWidget {
           barrierDismissible: false,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: AlertDialogTitle(
-                  title: AppLocalizations.of(context).enterUsername),
+              title: Text(AppLocalizations.of(context).enterUsername),
               content: Builder(
                 builder: (context) {
                   final nameController =
