@@ -78,9 +78,10 @@ class ImageManagerFirebase implements ImageManager {
 
     if (entity.image != null && entity.image.isNotEmpty) {
       try {
-        Reference reference = _storage.ref().child(entity.image);
+        Reference reference =
+            _storage.ref().child(getRecipeImagePath(entity.image));
         var task = reference.writeToFile(cacheFile);
-        // TODO future...
+        // TODO: catch error for future and log it!
         var bytes = (await task).bytesTransferred;
         print('$bytes downloaded');
       } catch (StorageException) {
