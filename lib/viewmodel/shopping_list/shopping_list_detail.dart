@@ -99,6 +99,7 @@ class ShoppingListModel extends ChangeNotifier {
         this._items.add(MutableShoppingListItem.ofEntity(item));
       } else {
         // the generation of ingredients did not produce an identical item, then forget about the persisted state
+        // most likely the meal plan changed: a recipe was removed or its ingredient changed
         this._listEntity.removeItem(item);
       }
     }
