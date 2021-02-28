@@ -79,10 +79,12 @@ class ShoppingListModel extends ChangeNotifier {
     }
 
     // processed generated already bought and/or reordered items
-    for (var item in this
+    var persisted = this
         ._listEntity
         .items
-        .where((e) => !e.isCustom && (e.isBought || e.index != null))) {
+        .where((e) => !e.isCustom && (e.isBought || e.index != null))
+        .toList();
+    for (var item in persisted) {
       var generatedItem = generatedItems.firstWhere(
           (e) =>
               e.ingredientNote.amount == item.ingredientNote.amount &&
@@ -122,9 +124,6 @@ class ShoppingListModel extends ChangeNotifier {
       }
       if (b.index != null) {
         return a.index.compareTo(b.index ?? a.index + 1);
-      }
-      if (a.isCustom && !b.isCustom) {
-        -1;
       }
       if (a.isBought && !b.isBought) {
         return 1;
@@ -290,6 +289,10 @@ class ShoppingListItemModel extends ChangeNotifier {
   set noLongerNeeded(value) {
     if (value != this._entity.isBought) {
       this._entity.isBought = value;
+      if (value) {
+        // reset index to make sure checked off items are sorted to the end
+        this._entity.index = -1;
+      }
       notifyListeners();
     }
   }
