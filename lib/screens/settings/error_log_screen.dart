@@ -1,4 +1,3 @@
-import 'package:cookza/components/alert_dialog_title.dart';
 import 'package:cookza/model/json/exception_log.dart';
 import 'package:cookza/viewmodel/settings/error_screen_model.dart';
 import 'package:flutter/material.dart';

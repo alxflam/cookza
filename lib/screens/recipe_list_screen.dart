@@ -35,6 +35,7 @@ class RecipeListScreen extends StatelessWidget {
 
                   /// read recipes for selected recipe
                   return StreamProvider<List<RecipeEntity>>.value(
+                    initialData: [],
                     value:
                         Provider.of<RecipeListViewModel>(context, listen: false)
                             .getRecipes(),

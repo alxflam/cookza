@@ -14,7 +14,7 @@ class IngredientNote {
   Ingredient ingredient;
   @JsonKey(defaultValue: '')
   String unitOfMeasure;
-  @JsonKey(nullable: false)
+  @JsonKey()
   double amount;
 
   IngredientNote({this.ingredient, this.unitOfMeasure, this.amount});

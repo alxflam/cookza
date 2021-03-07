@@ -6,11 +6,11 @@ part 'firebase_meal_plan.g.dart';
 
 @JsonSerializable(includeIfNull: false)
 class FirebaseMealPlanRecipe {
-  @JsonKey(nullable: false)
+  @JsonKey()
   String name;
-  @JsonKey(nullable: false)
+  @JsonKey()
   String id;
-  @JsonKey(nullable: false)
+  @JsonKey()
   int servings;
 
   FirebaseMealPlanRecipe({this.name, this.id, this.servings});
@@ -62,7 +62,7 @@ class FirebaseMealPlanDocument {
   // @JsonKey(nullable: false)
   // Map<String, String> users;
 
-  @JsonKey(nullable: false)
+  @JsonKey()
   String groupID;
 
   FirebaseMealPlanDocument({this.documentID, this.items, this.groupID});

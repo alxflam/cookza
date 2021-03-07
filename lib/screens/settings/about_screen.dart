@@ -212,23 +212,23 @@ class DeleteAllDataDialog extends StatelessWidget {
                   await showDialog(
                       context: context,
                       barrierDismissible: false,
-                      child: SimpleDialog(
-                        title: Center(
-                            child: Text(
-                                AppLocalizations.of(context).deleteAllData)),
-                        children: [
-                          FutureProgressDialog(
-                              sl.get<ProfileDeleter>().delete())
-                        ],
-                      ));
+                      builder: (context) => SimpleDialog(
+                            title: Center(
+                                child: Text(AppLocalizations.of(context)
+                                    .deleteAllData)),
+                            children: [
+                              FutureProgressDialog(
+                                  sl.get<ProfileDeleter>().delete())
+                            ],
+                          ));
 
                   Navigator.pop(context);
-                  Scaffold.of(context).showSnackBar(SnackBar(
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: Text(
                           AppLocalizations.of(context).deleteAllDataSuccess)));
                 } catch (e) {
                   Navigator.pop(context);
-                  Scaffold.of(context)
+                  ScaffoldMessenger.of(context)
                       .showSnackBar(SnackBar(content: Text(e.toString())));
                 }
               },

@@ -8,11 +8,11 @@ part 'firebase_meal_plan_collection.g.dart';
 class FirebaseMealPlanCollection {
   @JsonKey(ignore: true)
   String documentID;
-  @JsonKey(nullable: false)
+  @JsonKey()
   String name;
   @JsonKey(fromJson: kTimestampFromJson, toJson: kTimestampToJson)
   Timestamp creationTimestamp;
-  @JsonKey(nullable: false)
+  @JsonKey()
   Map<String, String> users;
 
   factory FirebaseMealPlanCollection.fromJson(

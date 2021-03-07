@@ -45,6 +45,7 @@ class WebLoginOnAppScreen extends StatelessWidget {
               radius: 45,
             ),
             StreamProvider<List<FirebaseHandshake>>.value(
+              initialData: [],
               value: sl.get<FirebaseProvider>().webAppSessions(),
               child: LogIns(),
             ),

@@ -5,11 +5,11 @@ part 'user.g.dart';
 
 @JsonSerializable(includeIfNull: false)
 class JsonUser {
-  @JsonKey(nullable: false)
+  @JsonKey()
   String id;
-  @JsonKey(nullable: false)
+  @JsonKey()
   String name;
-  @JsonKey(nullable: false)
+  @JsonKey()
   USER_TYPE type;
 
   factory JsonUser.fromJson(Map<String, dynamic> json) {

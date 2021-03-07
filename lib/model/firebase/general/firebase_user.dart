@@ -6,9 +6,9 @@ part 'firebase_user.g.dart';
 class FirebaseRecipeUser {
   @JsonKey(ignore: true)
   String documentID;
-  @JsonKey(nullable: false)
+  @JsonKey()
   String id;
-  @JsonKey(nullable: false)
+  @JsonKey()
   String name;
 
   FirebaseRecipeUser({this.name, this.id});

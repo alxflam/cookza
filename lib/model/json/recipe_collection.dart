@@ -6,9 +6,9 @@ part 'recipe_collection.g.dart';
 
 @JsonSerializable(includeIfNull: false)
 class RecipeCollection {
-  @JsonKey(nullable: false)
+  @JsonKey()
   String id;
-  @JsonKey(nullable: false)
+  @JsonKey()
   String name;
   @JsonKey(fromJson: kTimestampFromJson, toJson: kTimestampToJson)
   Timestamp creationTimestamp;

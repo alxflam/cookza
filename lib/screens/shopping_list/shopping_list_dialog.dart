@@ -19,7 +19,7 @@ Future<void> openShoppingListDialog(BuildContext context) async {
   var collections = await sl.get<MealPlanManager>().collections;
 
   if (collections.isEmpty) {
-    Scaffold.of(context).showSnackBar(
+    ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(AppLocalizations.of(context).noMealPlan)));
     return;
   }

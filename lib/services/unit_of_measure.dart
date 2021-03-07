@@ -1,6 +1,87 @@
+import 'package:cookza/services/flutter/navigator_service.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:cookza/services/shared_preferences_provider.dart';
-import 'package:flutter_translate/flutter_translate.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+var uomDisplayTexts = {
+  'MMT': (BuildContext context, int count) =>
+      AppLocalizations.of(context).uomMMT(count),
+  'CMT': (BuildContext context, int count) =>
+      AppLocalizations.of(context).uomCMT(count),
+  'MTR': (BuildContext context, int count) =>
+      AppLocalizations.of(context).uomMTR(count),
+  'GRM': (BuildContext context, int count) =>
+      AppLocalizations.of(context).uomGRM(count),
+  'KGM': (BuildContext context, int count) =>
+      AppLocalizations.of(context).uomKGM(count),
+  'MLT': (BuildContext context, int count) =>
+      AppLocalizations.of(context).uomMLT(count),
+  'CLT': (BuildContext context, int count) =>
+      AppLocalizations.of(context).uomCLT(count),
+  'DLT': (BuildContext context, int count) =>
+      AppLocalizations.of(context).uomDLT(count),
+  'LTR': (BuildContext context, int count) =>
+      AppLocalizations.of(context).uomLTR(count),
+  'H87': (BuildContext context, int count) =>
+      AppLocalizations.of(context).uomH87(count),
+  'G21': (BuildContext context, int count) =>
+      AppLocalizations.of(context).uomG21(count),
+  'G24': (BuildContext context, int count) =>
+      AppLocalizations.of(context).uomG24(count),
+  'G25': (BuildContext context, int count) =>
+      AppLocalizations.of(context).uomG25(count),
+  'BG': (BuildContext context, int count) =>
+      AppLocalizations.of(context).uomBG(count),
+  'LEF': (BuildContext context, int count) =>
+      AppLocalizations.of(context).uomLEF(count),
+  'X2': (BuildContext context, int count) =>
+      AppLocalizations.of(context).uomX2(count),
+  'X4': (BuildContext context, int count) =>
+      AppLocalizations.of(context).uomX4(count),
+  'CA': (BuildContext context, int count) =>
+      AppLocalizations.of(context).uomCA(count),
+  'BO': (BuildContext context, int count) =>
+      AppLocalizations.of(context).uomBO(count),
+  'STC': (BuildContext context, int count) =>
+      AppLocalizations.of(context).uomSTC(count),
+  'PR': (BuildContext context, int count) =>
+      AppLocalizations.of(context).uomPR(count),
+  'PA': (BuildContext context, int count) =>
+      AppLocalizations.of(context).uomPA(count),
+  'PTN': (BuildContext context, int count) =>
+      AppLocalizations.of(context).uomPTN(count),
+  'BR': (BuildContext context, int count) =>
+      AppLocalizations.of(context).uomBR(count),
+  'RO': (BuildContext context, int count) =>
+      AppLocalizations.of(context).uomRO(count),
+  '14': (BuildContext context, int count) =>
+      AppLocalizations.of(context).uom14(count),
+  'SR': (BuildContext context, int count) =>
+      AppLocalizations.of(context).uomSR(count),
+  'TU': (BuildContext context, int count) =>
+      AppLocalizations.of(context).uomTU(count),
+  'SLI': (BuildContext context, int count) =>
+      AppLocalizations.of(context).uomSLI(count),
+  'GLA': (BuildContext context, int count) =>
+      AppLocalizations.of(context).uomGLA(count),
+  'HAN': (BuildContext context, int count) =>
+      AppLocalizations.of(context).uomHAN(count),
+  'PIN': (BuildContext context, int count) =>
+      AppLocalizations.of(context).uomPIN(count),
+  'BOW': (BuildContext context, int count) =>
+      AppLocalizations.of(context).uomBOW(count),
+  'STE': (BuildContext context, int count) =>
+      AppLocalizations.of(context).uomSTE(count),
+  'CUB': (BuildContext context, int count) =>
+      AppLocalizations.of(context).uomCUB(count),
+  'CLO': (BuildContext context, int count) =>
+      AppLocalizations.of(context).uomCLO(count),
+  'ROT': (BuildContext context, int count) =>
+      AppLocalizations.of(context).uomROT(count),
+  'TWG': (BuildContext context, int count) =>
+      AppLocalizations.of(context).uomTWG(count),
+};
 
 /// metric unit of measures supporting conversion
 var metricUoM = <MetricUnitOfMeasure>{
@@ -67,12 +148,14 @@ class UnitOfMeasure {
 
   /// returns the display name
   String get displayName {
-    return translatePlural('unitOfMeasure.$_id', 1);
+    var context = sl.get<NavigatorService>().currentContext;
+    return uomDisplayTexts[this._id].call(context, 1);
   }
 
   /// returns the display name depending on the count of items referenced
   String getDisplayName(int amount) {
-    return translatePlural('unitOfMeasure.$_id', amount);
+    var context = sl.get<NavigatorService>().currentContext;
+    return uomDisplayTexts[this._id].call(context, amount);
   }
 
   /// returns the internal identifier for this unit of measure

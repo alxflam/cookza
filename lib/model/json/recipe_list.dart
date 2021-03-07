@@ -6,7 +6,7 @@ part 'recipe_list.g.dart';
 
 @JsonSerializable(includeIfNull: false)
 class RecipeList {
-  @JsonKey(nullable: false)
+  @JsonKey()
   int modelVersion;
 
   @JsonKey(toJson: kListToJson)

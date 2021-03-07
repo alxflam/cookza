@@ -13,6 +13,7 @@ class MealPlanGroupsDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       child: StreamProvider<List<MealPlanCollectionEntity>>.value(
+        initialData: [],
         value: sl.get<MealPlanManager>().collectionsAsStream,
         child: MealPlanGroupsTiles(),
       ),

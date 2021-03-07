@@ -7,9 +7,9 @@ part 'firebase_instruction.g.dart';
 
 @JsonSerializable(includeIfNull: false)
 class FirebaseInstruction {
-  @JsonKey(nullable: false)
+  @JsonKey()
   int step;
-  @JsonKey(nullable: false)
+  @JsonKey()
   String text;
   @JsonKey(nullable: true)
   String imagePath;
@@ -44,7 +44,7 @@ class FirebaseInstruction {
 class FirebaseInstructionDocument {
   @JsonKey(ignore: true)
   String documentID;
-  @JsonKey(nullable: false)
+  @JsonKey()
   String recipeID;
   @JsonKey(toJson: kListToJson)
   List<FirebaseInstruction> instructions;

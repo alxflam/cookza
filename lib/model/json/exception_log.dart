@@ -5,10 +5,10 @@ part 'exception_log.g.dart';
 
 @JsonSerializable(includeIfNull: false)
 class ExceptionItem {
-  @JsonKey(nullable: false)
+  @JsonKey()
   String error;
 
-  @JsonKey(nullable: false)
+  @JsonKey()
   String stackTrace;
 
   @JsonKey(fromJson: kDateFromJson, toJson: kDateToJson)

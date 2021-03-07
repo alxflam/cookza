@@ -358,5 +358,385 @@
 	"accept": "Accept",
 	"@accept": {},	
 	"readAndAccept": "I have read and accept the ",
-	"@readAndAccept": {}
+	"@readAndAccept": {},
+	"uomMMT": "{count,plural, =1{mm}other{mm}}",
+	"@uomMMT": {
+		"description": "uom plural",
+		"placeholders": {
+		"count": {
+			"type": "int",
+			"format": "compact"
+			}	
+		}
+	},
+	"uomCMT": "{count,plural, =1{cm}other{cm}}",
+	"@uomCMT": {
+		"description": "uom plural",
+		"placeholders": {
+		"count": {
+			"type": "int",
+			"format": "compact"
+			}	
+		}
+	},
+	"uomMTR": "{count,plural, =1{m}other{m}}",
+	"@uomMTR": {
+		"description": "uom plural",
+		"placeholders": {
+		"count": {
+			"type": "int",
+			"format": "compact"
+			}	
+		}
+	},
+	"uomGRM": "{count,plural, =1{g}other{g}}",
+	"@uomGRM": {
+		"description": "uom plural",
+		"placeholders": {
+		"count": {
+			"type": "int",
+			"format": "compact"
+			}	
+		}
+	},
+	"uomKGM": "{count,plural, =1{kg}other{kg}}",
+	"@uomKGM": {
+		"description": "uom plural",
+		"placeholders": {
+		"count": {
+			"type": "int",
+			"format": "compact"
+			}	
+		}
+	},
+	"uomMLT": "{count,plural, =1{ml}other{ml}}",
+	"@uomMLT": {
+		"description": "uom plural",
+		"placeholders": {
+		"count": {
+			"type": "int",
+			"format": "compact"
+			}	
+		}
+	},
+	"uomCLT": "{count,plural, =1{cl}other{cl}}",
+	"@uomCLT": {
+		"description": "uom plural",
+		"placeholders": {
+		"count": {
+			"type": "int",
+			"format": "compact"
+			}	
+		}
+	},
+	"uomDLT": "{count,plural, =1{dl}other{dl}}",
+	"@uomDLT": {
+		"description": "uom plural",
+		"placeholders": {
+		"count": {
+			"type": "int",
+			"format": "compact"
+			}	
+		}
+	},
+	"uomLTR": "{count,plural, =1{l}other{l}}",
+	"@uomLTR": {
+		"description": "uom plural",
+		"placeholders": {
+		"count": {
+			"type": "int",
+			"format": "compact"
+			}	
+		}
+	},
+	"uomH87": "{count,plural, =1{piece}other{pieces}}",
+	"@uomH87": {
+		"description": "uom plural",
+		"placeholders": {
+		"count": {
+			"type": "int",
+			"format": "compact"
+			}	
+		}
+	},
+	"uomG21": "{count,plural, =1{cup}other{cups}}",
+	"@uomG21": {
+		"description": "uom plural",
+		"placeholders": {
+		"count": {
+			"type": "int",
+			"format": "compact"
+			}	
+		}
+	},
+	"uomG24": "{count,plural, =1{tablespoon}other{tablespoons}}",
+	"@uomG24": {
+		"description": "uom plural",
+		"placeholders": {
+		"count": {
+			"type": "int",
+			"format": "compact"
+			}	
+		}
+	},
+	"uomG25": "{count,plural, =1{teaspoon}other{teaspoons}}",
+	"@uomG25": {
+		"description": "uom plural",
+		"placeholders": {
+		"count": {
+			"type": "int",
+			"format": "compact"
+			}	
+		}
+	},
+	"uomBG": "{count,plural, =1{bag}other{bag}}",
+	"@uomBG": {
+		"description": "uom plural",
+		"placeholders": {
+		"count": {
+			"type": "int",
+			"format": "compact"
+			}	
+		}
+	},
+	"uomLEF": "{count,plural, =1{leaf}other{leafs}}",
+	"@uomLEF": {
+		"description": "uom plural",
+		"placeholders": {
+		"count": {
+			"type": "int",
+			"format": "compact"
+			}	
+		}
+	},
+	"uomX2": "{count,plural, =1{bunch}other{bunches}}",
+	"@uomX2": {
+		"description": "uom plural",
+		"placeholders": {
+		"count": {
+			"type": "int",
+			"format": "compact"
+			}	
+		}
+	},
+	"uomX4": "{count,plural, =1{drop}other{drops}}",
+	"@uomX4": {
+		"description": "uom plural",
+		"placeholders": {
+		"count": {
+			"type": "int",
+			"format": "compact"
+			}	
+		}
+	},
+	"uomCA": "{count,plural, =1{can}other{cans}}",
+	"@uomCA": {
+		"description": "uom plural",
+		"placeholders": {
+		"count": {
+			"type": "int",
+			"format": "compact"
+			}	
+		}
+	},
+	"uomBO": "{count,plural, =1{bottle}other{bottles}}",
+	"@uomBO": {
+		"description": "uom plural",
+		"placeholders": {
+		"count": {
+			"type": "int",
+			"format": "compact"
+			}	
+		}
+	},
+	"uomSTC": "{count,plural, =1{stick}other{sticks}}",
+	"@uomSTC": {
+		"description": "uom plural",
+		"placeholders": {
+		"count": {
+			"type": "int",
+			"format": "compact"
+			}	
+		}
+	},
+	"uomPR": "{count,plural, =1{pair}other{pairs}}",
+	"@uomPR": {
+		"description": "uom plural",
+		"placeholders": {
+		"count": {
+			"type": "int",
+			"format": "compact"
+			}	
+		}
+	},
+	"uomPA": "{count,plural, =1{packets}other{packets}}",
+	"@uomPA": {
+		"description": "uom plural",
+		"placeholders": {
+		"count": {
+			"type": "int",
+			"format": "compact"
+			}	
+		}
+	},
+	"uomPTN": "{count,plural, =1{portion}other{portions}}",
+	"@uomPTN": {
+		"description": "uom plural",
+		"placeholders": {
+		"count": {
+			"type": "int",
+			"format": "compact"
+			}	
+		}
+	},
+	"uomBR": "{count,plural, =1{bar}other{bars}}",
+	"@uomBR": {
+		"description": "uom plural",
+		"placeholders": {
+		"count": {
+			"type": "int",
+			"format": "compact"
+			}	
+		}
+	},
+	"uomRO": "{count,plural, =1{roll}other{rolls}}",
+	"@uomRO": {
+		"description": "uom plural",
+		"placeholders": {
+		"count": {
+			"type": "int",
+			"format": "compact"
+			}	
+		}
+	},
+	"uom14": "{count,plural, =1{shot}other{shots}}",
+	"@uom14": {
+		"description": "uom plural",
+		"placeholders": {
+		"count": {
+			"type": "int",
+			"format": "compact"
+			}	
+		}
+	},
+	"uomSR": "{count,plural, =1{strip}other{strips}}",
+	"@uomSR": {
+		"description": "uom plural",
+		"placeholders": {
+		"count": {
+			"type": "int",
+			"format": "compact"
+			}	
+		}
+	},
+	"uomTU": "{count,plural, =1{tube}other{tubes}}",
+	"@uomTU": {
+		"description": "uom plural",
+		"placeholders": {
+		"count": {
+			"type": "int",
+			"format": "compact"
+			}	
+		}
+	},
+	"uomSLI": "{count,plural, =1{slice}other{slices}}",
+	"@uomSLI": {
+		"description": "uom plural",
+		"placeholders": {
+		"count": {
+			"type": "int",
+			"format": "compact"
+			}	
+		}
+	},
+	"uomGLA": "{count,plural, =1{glass}other{glasses}}",
+	"@uomGLA": {
+		"description": "uom plural",
+		"placeholders": {
+		"count": {
+			"type": "int",
+			"format": "compact"
+			}	
+		}
+	},
+	"uomHAN": "{count,plural, =1{handful}other{handful}}",
+	"@uomHAN": {
+		"description": "uom plural",
+		"placeholders": {
+		"count": {
+			"type": "int",
+			"format": "compact"
+			}	
+		}
+	},
+	"uomPIN": "{count,plural, =1{pinch}other{pinches}}",
+	"@uomPIN": {
+		"description": "uom plural",
+		"placeholders": {
+		"count": {
+			"type": "int",
+			"format": "compact"
+			}	
+		}
+	},
+	"uomBOW": "{count,plural, =1{bowl}other{bowls}}",
+	"@uomBOW": {
+		"description": "uom plural",
+		"placeholders": {
+		"count": {
+			"type": "int",
+			"format": "compact"
+			}	
+		}
+	},
+	"uomSTE": "{count,plural, =1{stem}other{stems}}",
+	"@uomSTE": {
+		"description": "uom plural",
+		"placeholders": {
+		"count": {
+			"type": "int",
+			"format": "compact"
+			}	
+		}
+	},
+	"uomCUB": "{count,plural, =1{cube}other{cubes}}",
+	"@uomCUB": {
+		"description": "uom plural",
+		"placeholders": {
+		"count": {
+			"type": "int",
+			"format": "compact"
+			}	
+		}
+	},
+	"uomCLO": "{count,plural, =1{clove}other{cloves}}",
+	"@uomCLO": {
+		"description": "uom plural",
+		"placeholders": {
+		"count": {
+			"type": "int",
+			"format": "compact"
+			}	
+		}
+	},
+	"uomROT": "{count,plural, =1{root}other{roots}}",
+	"@uomROT": {
+		"description": "uom plural",
+		"placeholders": {
+		"count": {
+			"type": "int",
+			"format": "compact"
+			}	
+		}
+	},
+	"uomTWG": "{count,plural, =1{twig}other{twigs}}",
+	"@uomTWG": {
+		"description": "uom plural",
+		"placeholders": {
+		"count": {
+			"type": "int",
+			"format": "compact"
+			}	
+		}
+	}
 }

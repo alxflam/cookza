@@ -15,7 +15,7 @@ class FirebaseIngredient {
   Ingredient ingredient;
   @JsonKey(defaultValue: '')
   String unitOfMeasure;
-  @JsonKey(nullable: false)
+  @JsonKey()
   double amount;
 
   FirebaseIngredient({this.ingredient, this.unitOfMeasure, this.amount});
@@ -52,7 +52,7 @@ class FirebaseIngredient {
 class FirebaseIngredientDocument {
   @JsonKey(ignore: true)
   String documentID;
-  @JsonKey(nullable: false)
+  @JsonKey()
   String recipeID;
   @JsonKey(toJson: kListToJson)
   List<FirebaseIngredient> ingredients;

@@ -22,16 +22,16 @@ class FirebaseRecipe {
   Timestamp creationDate;
   @JsonKey(fromJson: kTimestampFromJson, toJson: kTimestampToJson)
   Timestamp modificationDate;
-  @JsonKey(nullable: false)
+  @JsonKey()
   String ingredientsID;
-  @JsonKey(nullable: false)
+  @JsonKey()
   String instructionsID;
 
-  @JsonKey(nullable: false)
+  @JsonKey()
   String name;
   @JsonKey(defaultValue: '')
   String description;
-  @JsonKey(nullable: false)
+  @JsonKey()
   int duration;
   @JsonKey(defaultValue: 0)
   int rating;
@@ -39,12 +39,12 @@ class FirebaseRecipe {
   int servings;
   @JsonKey(nullable: true)
   String image;
-  @JsonKey(nullable: false)
+  @JsonKey()
   String recipeGroupID;
 
   @JsonKey(defaultValue: DIFFICULTY.MEDIUM)
   DIFFICULTY difficulty;
-  @JsonKey(nullable: false)
+  @JsonKey()
   List<String> tags;
 
   FirebaseRecipe({

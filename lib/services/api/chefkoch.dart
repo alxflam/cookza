@@ -13,7 +13,12 @@ class Chefkoch {
   static final String url = 'https://api.chefkoch.de/v2/recipes/';
 
   Future<RecipeEntity> getRecipe(String id) async {
-    var result = await http.get('$url$id');
+    final uri = Uri(
+      scheme: 'https',
+      host: 'api.chefkoch.de',
+      path: 'v2/recipes/$id',
+    );
+    var result = await http.get(uri);
     if (result.statusCode != 200) {
       throw 'Error contacting Chefkoch.de - pleasy try again later';
     }

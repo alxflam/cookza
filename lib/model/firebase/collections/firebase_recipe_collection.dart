@@ -8,11 +8,11 @@ part 'firebase_recipe_collection.g.dart';
 class FirebaseRecipeCollection {
   @JsonKey(ignore: true)
   String documentID;
-  @JsonKey(nullable: false)
+  @JsonKey()
   String name;
   @JsonKey(fromJson: kTimestampFromJson, toJson: kTimestampToJson)
   Timestamp creationTimestamp;
-  @JsonKey(nullable: false)
+  @JsonKey()
   Map<String, String> users;
 
   factory FirebaseRecipeCollection.fromJson(

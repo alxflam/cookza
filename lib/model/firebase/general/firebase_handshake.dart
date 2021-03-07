@@ -8,15 +8,15 @@ part 'firebase_handshake.g.dart';
 class FirebaseHandshake {
   @JsonKey(ignore: true)
   String documentID;
-  @JsonKey(nullable: false)
+  @JsonKey()
   String requestor;
-  @JsonKey(nullable: false)
+  @JsonKey()
   String owner;
   @JsonKey(fromJson: kTimestampFromJson, toJson: kTimestampToJson)
   Timestamp creationTimestamp;
-  @JsonKey(nullable: false)
+  @JsonKey()
   String operatingSystem;
-  @JsonKey(nullable: false)
+  @JsonKey()
   String browser;
 
   factory FirebaseHandshake.fromJson(Map<String, dynamic> json, String id) {

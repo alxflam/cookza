@@ -50,7 +50,7 @@ class RecipeFileImportImpl extends RecipeFileImport {
 
         // if reading file fails
         reader.onError.listen((fileEvent) {
-          Scaffold.of(context).showSnackBar(
+          ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(AppLocalizations.of(context).parseErrorRecipe),
             ),

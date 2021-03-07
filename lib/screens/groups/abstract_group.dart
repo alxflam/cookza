@@ -264,11 +264,11 @@ abstract class AbstractGroupScreen extends StatelessWidget {
                 await showDialog(
                     context: context,
                     barrierDismissible: false,
-                    child: SimpleDialog(
-                      title: Center(
-                          child: Text(AppLocalizations.of(context).delete)),
-                      children: [FutureProgressDialog(future)],
-                    ));
+                    builder: (context) => SimpleDialog(
+                          title: Center(
+                              child: Text(AppLocalizations.of(context).delete)),
+                          children: [FutureProgressDialog(future)],
+                        ));
 
                 Navigator.pop(context, true);
               },
@@ -295,7 +295,7 @@ abstract class AbstractGroupScreen extends StatelessWidget {
       }
       await showDialog(
         context: context,
-        child: SimpleDialog(
+        builder: (context) => SimpleDialog(
           title: Text(AppLocalizations.of(context).addUser),
           contentPadding: EdgeInsets.all(20),
           children: [Text(AppLocalizations.of(context).addedUser(user.name))],
@@ -305,7 +305,7 @@ abstract class AbstractGroupScreen extends StatelessWidget {
       await showDialog(
         context: context,
         barrierDismissible: false,
-        child: AlertDialog(
+        builder: (context) => AlertDialog(
           title: AlertDialogTitle(title: AppLocalizations.of(context).error),
           content: Text(AppLocalizations.of(context).invalidQRCode),
         ),

@@ -4,7 +4,6 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui';
 
-import 'package:cookza/components/alert_dialog_title.dart';
 import 'package:cookza/components/padded_qr_code.dart';
 import 'package:cookza/constants.dart';
 import 'package:cookza/services/flutter/service_locator.dart';

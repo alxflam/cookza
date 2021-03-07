@@ -27,13 +27,13 @@ class RecipeFileImportImpl extends RecipeFileImport {
 
     List<Recipe> result = [];
     if (file == null) {
-      Scaffold.of(context).showSnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(AppLocalizations.of(context).noFileSelected)));
 
       return; // no file selected
     }
     if (!file.existsSync()) {
-      Scaffold.of(context).showSnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(AppLocalizations.of(context).fileNotFound)));
       return;
     }

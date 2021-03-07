@@ -74,7 +74,7 @@ class ShoppingListModel extends ChangeNotifier {
           StackTrace.current,
           DateTime.now());
       // may happen if the shopping list contains a recipe from a group the current user does not have read access to
-      Scaffold.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(AppLocalizations.of(context).missingRecipeAccess)));
     }
 

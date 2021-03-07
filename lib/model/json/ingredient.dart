@@ -5,7 +5,7 @@ part 'ingredient.g.dart';
 
 @JsonSerializable(includeIfNull: false)
 class Ingredient {
-  @JsonKey(nullable: false)
+  @JsonKey()
   String name;
 
   @JsonKey(nullable: true)

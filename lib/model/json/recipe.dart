@@ -48,9 +48,9 @@ class Recipe {
 
   @JsonKey(ignore: true)
   String documentID;
-  @JsonKey(nullable: false)
+  @JsonKey()
   String id;
-  @JsonKey(nullable: false)
+  @JsonKey()
   String recipeCollection;
 
   @JsonKey(toJson: kDateToJson, fromJson: kDateFromJson)
@@ -58,11 +58,11 @@ class Recipe {
   @JsonKey(toJson: kDateToJson, fromJson: kDateFromJson)
   DateTime modificationDate;
 
-  @JsonKey(nullable: false)
+  @JsonKey()
   String name;
   @JsonKey(defaultValue: '')
   String shortDescription;
-  @JsonKey(nullable: false)
+  @JsonKey()
   int duration;
   @JsonKey(defaultValue: 0)
   int rating;
@@ -73,11 +73,11 @@ class Recipe {
 
   @JsonKey(defaultValue: DIFFICULTY.MEDIUM)
   DIFFICULTY diff;
-  @JsonKey(nullable: false)
+  @JsonKey()
   List<String> tags;
   @JsonKey(toJson: kListToJson)
   List<IngredientNote> ingredients;
-  @JsonKey(nullable: false)
+  @JsonKey()
   List<String> instructions;
 
   Recipe(

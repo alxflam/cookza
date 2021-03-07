@@ -50,7 +50,7 @@ class SavedImagesScreen extends StatelessWidget {
                         await sl
                             .get<ImageManager>()
                             .deleteLocalImage(file.path.split('/').last);
-                        Scaffold.of(context).showSnackBar(
+                        ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content:
                                 Text(AppLocalizations.of(context).imageDeleted),

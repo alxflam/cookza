@@ -12,8 +12,6 @@ import 'package:cookza/screens/home_screen.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/flutter_translate.dart';
-import 'package:flutter_translate/localization_delegate.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -21,15 +19,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() async {
-  /// the flutter_localizations plugin is only needed for translations of Unit of Measures
-  /// as their translation is called dynamically and the flutter translation
-  /// mechanism only allows static translation retrieval with generated methods.
-  /// flutter_localizations instead also allows to retrieve the translation by a dynamic string key
-  var delegate = await LocalizationDelegate.create(
-    fallbackLocale: 'en',
-    supportedLocales: ['en', 'de'],
-  );
-
   await Firebase.initializeApp();
   setupServiceLocator();
   await GetIt.I.allReady();
@@ -44,10 +33,7 @@ void main() async {
   /// this enables custom handling of uncatched exceptions
   runZonedGuarded(
     () => runApp(
-      LocalizedApp(
-        delegate,
-        ProviderChainApp(),
-      ),
+      ProviderChainApp(),
     ),
     (Object error, StackTrace stackTrace) => {
       // delegate exception to service
@@ -69,24 +55,15 @@ void setupFlutterErrorHandling() {
 class ProviderChainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var localizationDelegate = LocalizedApp.of(context).delegate;
-
-    return LocalizationProvider(
-      state: LocalizationProvider.of(context).state,
-      child: ChangeNotifierProvider<ThemeModel>(
-        create: (context) => ThemeModel(),
-        child: CookzaMaterialApp(localizationDelegate: localizationDelegate),
-      ),
+    return ChangeNotifierProvider<ThemeModel>(
+      create: (context) => ThemeModel(),
+      child: CookzaMaterialApp(),
     );
   }
 }
 
 class CookzaMaterialApp extends StatelessWidget {
-  const CookzaMaterialApp({
-    @required this.localizationDelegate,
-  });
-
-  final LocalizationDelegate localizationDelegate;
+  const CookzaMaterialApp();
 
   @override
   Widget build(BuildContext context) {
@@ -96,10 +73,8 @@ class CookzaMaterialApp extends StatelessWidget {
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
-        localizationDelegate
       ],
       supportedLocales: AppLocalizations.supportedLocales,
-      locale: localizationDelegate.currentLocale,
       debugShowCheckedModeBanner: false,
       theme: Provider.of<ThemeModel>(context).current,
       navigatorKey: sl.get<NavigatorService>().navigatorKey,
