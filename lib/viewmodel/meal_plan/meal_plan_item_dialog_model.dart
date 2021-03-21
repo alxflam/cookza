@@ -6,21 +6,19 @@ class MealPlanItemDialogModel with ChangeNotifier {
   String _name;
   bool _isNote;
   bool _deleted = false;
-  bool _changed;
-  MealPlanRecipeModel _model;
+  bool _changed = false;
+  MealPlanRecipeModel? _model;
 
-  MealPlanItemDialogModel.forItem(MealPlanRecipeModel model) {
-    this._model = model;
-    this._servings = model.servings;
-    this._name = model.name;
-    this._isNote = model.isNote;
-  }
+  MealPlanItemDialogModel.forItem(MealPlanRecipeModel model)
+      : this._model = model,
+        this._servings = model.servings,
+        this._name = model.name,
+        this._isNote = model.isNote;
 
-  MealPlanItemDialogModel.createNote() {
-    this._servings = 0;
-    this._name = '';
-    this._isNote = true;
-  }
+  MealPlanItemDialogModel.createNote()
+      : this._servings = 0,
+        this._name = '',
+        this._isNote = true;
 
   bool get isNote => _isNote;
   String get name => _name;
@@ -48,9 +46,9 @@ class MealPlanItemDialogModel with ChangeNotifier {
     }
 
     if (isNote) {
-      this._model.name = this._name;
+      this._model?.name = this._name;
     } else {
-      this._model.servings = this._servings;
+      this._model?.servings = this._servings;
     }
   }
 

@@ -26,7 +26,7 @@ abstract class AbstractGroupScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final GroupViewModel _viewModel =
-        buildGroupViewModel(ModalRoute.of(context).settings.arguments);
+        buildGroupViewModel(ModalRoute.of(context)!.settings.arguments!);
 
     return ChangeNotifierProvider<GroupViewModel>.value(
       value: _viewModel,
@@ -44,7 +44,7 @@ abstract class AbstractGroupScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Icon(PopupMenuButtonChoices.EDIT.icon),
-                            Text(AppLocalizations.of(context).rename)
+                            Text(AppLocalizations.of(context)!.rename)
                           ],
                         ),
                         value: PopupMenuButtonChoices.EDIT,
@@ -54,7 +54,7 @@ abstract class AbstractGroupScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Icon(PopupMenuButtonChoices.ADD_USER.icon),
-                            Text(AppLocalizations.of(context).addUser)
+                            Text(AppLocalizations.of(context)!.addUser)
                           ],
                         ),
                         value: PopupMenuButtonChoices.ADD_USER,
@@ -64,7 +64,7 @@ abstract class AbstractGroupScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Icon(PopupMenuButtonChoices.DELETE.icon),
-                            Text(AppLocalizations.of(context).delete)
+                            Text(AppLocalizations.of(context)!.delete)
                           ],
                         ),
                         value: PopupMenuButtonChoices.DELETE,
@@ -74,7 +74,7 @@ abstract class AbstractGroupScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Icon(PopupMenuButtonChoices.LEAVE.icon),
-                            Text(AppLocalizations.of(context).leaveGroup)
+                            Text(AppLocalizations.of(context)!.leaveGroup)
                           ],
                         ),
                         value: PopupMenuButtonChoices.LEAVE,
@@ -111,26 +111,26 @@ abstract class AbstractGroupScreen extends StatelessWidget {
                       return Container();
                     }
 
-                    if (snapshot.data.length == 1) {
+                    if (snapshot.data?.length == 1) {
                       return Center(
-                        child: Text(AppLocalizations.of(context).singleMember),
+                        child: Text(AppLocalizations.of(context)!.singleMember),
                       );
                     }
 
                     var fb = sl.get<FirebaseProvider>();
 
                     return ListView.builder(
-                      itemCount: snapshot.data.length,
+                      itemCount: snapshot.data?.length,
                       itemBuilder: (context, index) {
-                        var user = snapshot.data[index];
+                        var user = snapshot.data![index];
                         var isCurrentUser = fb.userUid == user.id;
 
                         return ListTile(
                           leading: _getLeadingUserIcon(user, isCurrentUser),
                           title: Text(user.name ??
-                              AppLocalizations.of(context).unknownUser),
+                              AppLocalizations.of(context)!.unknownUser),
                           subtitle: isCurrentUser
-                              ? Text(AppLocalizations.of(context).selfUser)
+                              ? Text(AppLocalizations.of(context)!.selfUser)
                               : Text(''),
                           trailing: !isCurrentUser
                               ? IconButton(
@@ -173,7 +173,7 @@ abstract class AbstractGroupScreen extends StatelessWidget {
           // builder is needed to get a new context for the Provider
           builder: (context) {
             return SimpleDialog(
-              title: Text(AppLocalizations.of(context).editGroup),
+              title: Text(AppLocalizations.of(context)!.editGroup),
               children: [
                 SingleChildScrollView(
                   child: Column(
@@ -192,8 +192,8 @@ abstract class AbstractGroupScreen extends StatelessWidget {
                                 maxLines: 1,
                                 autofocus: true,
                                 decoration: InputDecoration(
-                                    hintText:
-                                        AppLocalizations.of(context).groupName),
+                                    hintText: AppLocalizations.of(context)!
+                                        .groupName),
                               ),
                             )
                           ],
@@ -234,12 +234,12 @@ abstract class AbstractGroupScreen extends StatelessWidget {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: AlertDialogTitle(title: AppLocalizations.of(context).delete),
+          title: AlertDialogTitle(title: AppLocalizations.of(context)!.delete),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
                 Text(
-                  AppLocalizations.of(context).confirmDelete(model.name),
+                  AppLocalizations.of(context)!.confirmDelete(model.name),
                 ),
               ],
             ),
@@ -248,7 +248,7 @@ abstract class AbstractGroupScreen extends StatelessWidget {
             ElevatedButton(
               style: kRaisedGreyButtonStyle,
               child: Text(
-                AppLocalizations.of(context).cancel,
+                AppLocalizations.of(context)!.cancel,
               ),
               onPressed: () {
                 Navigator.pop(context, false);
@@ -257,7 +257,7 @@ abstract class AbstractGroupScreen extends StatelessWidget {
             ElevatedButton(
               style: kRaisedRedButtonStyle,
               child: Text(
-                AppLocalizations.of(context).delete,
+                AppLocalizations.of(context)!.delete,
               ),
               onPressed: () async {
                 var future = model.delete();
@@ -266,7 +266,8 @@ abstract class AbstractGroupScreen extends StatelessWidget {
                     barrierDismissible: false,
                     builder: (context) => SimpleDialog(
                           title: Center(
-                              child: Text(AppLocalizations.of(context).delete)),
+                              child:
+                                  Text(AppLocalizations.of(context)!.delete)),
                           children: [FutureProgressDialog(future)],
                         ));
 
@@ -289,16 +290,16 @@ abstract class AbstractGroupScreen extends StatelessWidget {
     }
 
     try {
-      var user = await model.addUserFromJson(result);
+      var user = await model.addUserFromJson(result as String);
       if (user == null) {
         return;
       }
       await showDialog(
         context: context,
         builder: (context) => SimpleDialog(
-          title: Text(AppLocalizations.of(context).addUser),
+          title: Text(AppLocalizations.of(context)!.addUser),
           contentPadding: EdgeInsets.all(20),
-          children: [Text(AppLocalizations.of(context).addedUser(user.name))],
+          children: [Text(AppLocalizations.of(context)!.addedUser(user.name))],
         ),
       );
     } catch (e) {
@@ -306,8 +307,8 @@ abstract class AbstractGroupScreen extends StatelessWidget {
         context: context,
         barrierDismissible: false,
         builder: (context) => AlertDialog(
-          title: AlertDialogTitle(title: AppLocalizations.of(context).error),
-          content: Text(AppLocalizations.of(context).invalidQRCode),
+          title: AlertDialogTitle(title: AppLocalizations.of(context)!.error),
+          content: Text(AppLocalizations.of(context)!.invalidQRCode),
         ),
       );
     }
@@ -320,12 +321,12 @@ abstract class AbstractGroupScreen extends StatelessWidget {
       builder: (BuildContext context) {
         return AlertDialog(
           title:
-              AlertDialogTitle(title: AppLocalizations.of(context).leaveGroup),
+              AlertDialogTitle(title: AppLocalizations.of(context)!.leaveGroup),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
                 Text(
-                  AppLocalizations.of(context).confirmLeave(model.name),
+                  AppLocalizations.of(context)!.confirmLeave(model.name),
                 ),
               ],
             ),
@@ -334,7 +335,7 @@ abstract class AbstractGroupScreen extends StatelessWidget {
             ElevatedButton(
               style: kRaisedGreyButtonStyle,
               child: Text(
-                AppLocalizations.of(context).cancel,
+                AppLocalizations.of(context)!.cancel,
               ),
               onPressed: () {
                 Navigator.pop(context, false);
@@ -343,7 +344,7 @@ abstract class AbstractGroupScreen extends StatelessWidget {
             ElevatedButton(
               style: kRaisedRedButtonStyle,
               child: Text(
-                AppLocalizations.of(context).leaveGroup,
+                AppLocalizations.of(context)!.leaveGroup,
               ),
               onPressed: () async {
                 await model.leaveGroup();

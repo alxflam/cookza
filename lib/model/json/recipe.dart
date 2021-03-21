@@ -12,34 +12,40 @@ part 'recipe.g.dart';
 
 @JsonSerializable(includeIfNull: false)
 class Recipe {
-  factory Recipe.fromJson(Map<String, dynamic> json, {String id}) {
+  factory Recipe.fromJson(Map<String, dynamic> json, {String? id}) {
     var instance = _$RecipeFromJson(json);
     instance.documentID = id;
     return instance;
   }
 
   static Future<Recipe> applyFrom(RecipeEntity entity) async {
-    var instance = Recipe();
-    instance.name = entity.name;
-    instance.shortDescription = entity.description;
-    instance.recipeCollection = entity.recipeCollectionId;
-    instance.creationDate = entity.creationDate;
-    instance.modificationDate = entity.modificationDate;
-    instance.duration = entity.duration;
-    instance.rating = entity.rating;
-    instance.servings = entity.servings;
-    instance.diff = entity.difficulty;
-    instance.tags = entity.tags;
+    var instance = Recipe(
+        name: entity.name,
+        shortDescription: entity.description,
+        recipeCollection: entity.recipeCollectionId,
+        creationDate: entity.creationDate,
+        modificationDate: entity.modificationDate,
+        duration: entity.duration,
+        rating: entity.rating ?? 0,
+        servings: entity.servings,
+        diff: entity.difficulty,
+        tags: entity.tags,
+        id: '',
+        instructions: [],
+        ingredients: []);
+
     var ins = await entity.instructions;
     instance.instructions = ins.map((e) => e.text).toList();
     var ing = await entity.ingredients;
     instance.ingredients =
         ing.map((e) => IngredientNote.fromEntity(e)).toList();
-    if (entity.image != null && entity.image.isNotEmpty) {
+    if (entity.image != null && entity.image!.isNotEmpty) {
       var imageFile = await sl.get<ImageManager>().getRecipeImageFile(entity);
-      List<int> imageBytes = imageFile.readAsBytesSync();
-      String base64Image = base64.encode(imageBytes);
-      instance.serializedImage = base64Image;
+      if (imageFile != null) {
+        List<int> imageBytes = imageFile.readAsBytesSync();
+        String base64Image = base64.encode(imageBytes);
+        instance.serializedImage = base64Image;
+      }
     }
     return instance;
   }
@@ -47,7 +53,7 @@ class Recipe {
   Map<String, dynamic> toJson() => _$RecipeToJson(this);
 
   @JsonKey(ignore: true)
-  String documentID;
+  String? documentID;
   @JsonKey()
   String id;
   @JsonKey()
@@ -68,8 +74,8 @@ class Recipe {
   int rating;
   @JsonKey(defaultValue: 1)
   int servings;
-  @JsonKey(nullable: true)
-  String serializedImage;
+  @JsonKey()
+  String? serializedImage;
 
   @JsonKey(defaultValue: DIFFICULTY.MEDIUM)
   DIFFICULTY diff;
@@ -81,19 +87,19 @@ class Recipe {
   List<String> instructions;
 
   Recipe(
-      {this.id,
-      this.recipeCollection,
-      this.name,
-      this.shortDescription,
-      this.creationDate,
-      this.modificationDate,
-      this.duration,
-      this.diff,
-      this.tags,
-      this.ingredients,
-      this.instructions,
-      this.rating,
-      this.servings,
+      {required this.id,
+      required this.recipeCollection,
+      required this.name,
+      required this.shortDescription,
+      required this.creationDate,
+      required this.modificationDate,
+      required this.duration,
+      required this.diff,
+      required this.tags,
+      required this.ingredients,
+      required this.instructions,
+      required this.rating,
+      required this.servings,
       this.serializedImage}) {
     // initalize values
     if (this.id == null) {

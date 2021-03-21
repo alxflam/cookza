@@ -22,7 +22,19 @@ void main() {
   test(
     'Collection with single user',
     () async {
-      var recipe = FirebaseRecipe(name: 'name');
+      var recipe = FirebaseRecipe(
+        name: 'name',
+        creationDate: Timestamp.now(),
+        description: '',
+        difficulty: DIFFICULTY.EASY,
+        duration: 20,
+        image: '',
+        modificationDate: Timestamp.now(),
+        rating: 2,
+        recipeGroupID: '',
+        servings: 2,
+        tags: [],
+      );
       var cut = RecipeEntityFirebase.of(recipe);
 
       expect(cut.name, 'name');
@@ -32,7 +44,19 @@ void main() {
   test(
     'lazy ingredients getter',
     () async {
-      var recipe = FirebaseRecipe(name: 'name');
+      var recipe = FirebaseRecipe(
+        name: 'name',
+        creationDate: Timestamp.now(),
+        description: '',
+        difficulty: DIFFICULTY.EASY,
+        duration: 20,
+        image: '',
+        modificationDate: Timestamp.now(),
+        rating: 2,
+        recipeGroupID: '',
+        servings: 2,
+        tags: [],
+      );
       recipe.documentID = 'DOCID';
       recipe.recipeGroupID = 'GROUPID';
       var cut = RecipeEntityFirebase.of(recipe);
@@ -60,14 +84,26 @@ void main() {
   test(
     'lazy instructions getter',
     () async {
-      var recipe = FirebaseRecipe(name: 'name');
+      var recipe = FirebaseRecipe(
+        name: 'name',
+        creationDate: Timestamp.now(),
+        description: '',
+        difficulty: DIFFICULTY.EASY,
+        duration: 20,
+        image: '',
+        modificationDate: Timestamp.now(),
+        rating: 2,
+        recipeGroupID: '',
+        servings: 2,
+        tags: [],
+      );
       recipe.documentID = 'DOCID';
       recipe.recipeGroupID = 'GROUPID';
       var cut = RecipeEntityFirebase.of(recipe);
 
       List<InstructionEntityFirebase> ingredients = [];
       ingredients.add(InstructionEntityFirebase.of(
-          FirebaseInstruction(text: 'Some instruction')));
+          FirebaseInstruction(text: 'Some instruction', step: 1)));
       when(fbMock.recipeInstructions('GROUPID', 'DOCID'))
           .thenAnswer((_) => Future.value(ingredients));
 
@@ -87,7 +123,19 @@ void main() {
   test(
     'never has in memory image',
     () async {
-      var recipe = FirebaseRecipe(name: 'name');
+      var recipe = FirebaseRecipe(
+        name: 'name',
+        creationDate: Timestamp.now(),
+        description: '',
+        difficulty: DIFFICULTY.EASY,
+        duration: 20,
+        image: '',
+        modificationDate: Timestamp.now(),
+        rating: 2,
+        recipeGroupID: '',
+        servings: 2,
+        tags: [],
+      );
       var cut = RecipeEntityFirebase.of(recipe);
 
       expect(cut.hasInMemoryImage, false);
@@ -100,7 +148,19 @@ void main() {
     () async {
       var creationDate = DateTime.now();
       var modDate = creationDate.add(Duration(days: 1));
-      var recipe = FirebaseRecipe(name: 'name');
+      var recipe = FirebaseRecipe(
+        name: 'name',
+        creationDate: Timestamp.now(),
+        description: '',
+        difficulty: DIFFICULTY.EASY,
+        duration: 20,
+        image: '',
+        modificationDate: Timestamp.now(),
+        rating: 2,
+        recipeGroupID: '',
+        servings: 2,
+        tags: [],
+      );
       recipe.creationDate = Timestamp.fromDate(creationDate);
       recipe.modificationDate = Timestamp.fromDate(modDate);
       var cut = RecipeEntityFirebase.of(recipe);
@@ -113,7 +173,19 @@ void main() {
   test(
     'basic getters',
     () async {
-      var recipe = FirebaseRecipe(name: 'name');
+      var recipe = FirebaseRecipe(
+        name: 'name',
+        creationDate: Timestamp.now(),
+        description: '',
+        difficulty: DIFFICULTY.EASY,
+        duration: 20,
+        image: '',
+        modificationDate: Timestamp.now(),
+        rating: 2,
+        recipeGroupID: '',
+        servings: 2,
+        tags: [],
+      );
       recipe.rating = 3;
       recipe.servings = 4;
       recipe.recipeGroupID = '1234';

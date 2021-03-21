@@ -7,17 +7,16 @@ class ShoppingListItemEntityFirebase implements ShoppingListItemEntity {
   bool _isCustom;
   bool _isBought;
   IngredientNoteEntityFirebase _ingredient;
-  int _index;
+  int? _index;
 
-  ShoppingListItemEntityFirebase.of(FirebaseShoppingListItem item) {
-    this._index = item.index;
-    this._isCustom = item.customItem;
-    this._isBought = item.bought;
-    this._ingredient = IngredientNoteEntityFirebase.of(item.ingredient);
-  }
+  ShoppingListItemEntityFirebase.of(FirebaseShoppingListItem item)
+      : this._index = item.index,
+        this._isCustom = item.customItem,
+        this._isBought = item.bought,
+        this._ingredient = IngredientNoteEntityFirebase.of(item.ingredient);
 
   @override
-  int get index => this._index;
+  int? get index => this._index;
 
   @override
   IngredientNoteEntity get ingredientNote => this._ingredient;
@@ -31,26 +30,25 @@ class ShoppingListItemEntityFirebase implements ShoppingListItemEntity {
 
 class ShoppingListEntityFirebase implements ShoppingListEntity {
   List<ShoppingListItemEntityFirebase> _items;
-  String _id;
+  String? _id;
   String _groupID;
   DateTime _dateFrom;
   DateTime _dateUntil;
 
-  ShoppingListEntityFirebase.of(FirebaseShoppingListDocument document) {
-    this._id = document.documentID;
-    this._groupID = document.groupID;
-    this._items = document.items
-        .map((e) => ShoppingListItemEntityFirebase.of(e))
-        .toList();
-    this._dateFrom = document.dateFrom;
-    this._dateUntil = document.dateUntil;
-  }
+  ShoppingListEntityFirebase.of(FirebaseShoppingListDocument document)
+      : this._id = document.documentID,
+        this._groupID = document.groupID,
+        this._items = document.items
+            .map((e) => ShoppingListItemEntityFirebase.of(e))
+            .toList(),
+        this._dateFrom = document.dateFrom,
+        this._dateUntil = document.dateUntil;
 
   @override
   List<ShoppingListItemEntityFirebase> get items => this._items;
 
   @override
-  String get id => this._id;
+  String? get id => this._id;
 
   @override
   String get groupID => this._groupID;

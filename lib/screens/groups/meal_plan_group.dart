@@ -9,6 +9,6 @@ class MealPlanGroupScreen extends AbstractGroupScreen {
   @override
   GroupViewModel buildGroupViewModel(Object arguments) {
     assert(arguments is MealPlanCollectionEntity);
-    return MealPlanGroupViewModel.of(arguments);
+    return MealPlanGroupViewModel.of(arguments as MealPlanCollectionEntity);
   }
 }

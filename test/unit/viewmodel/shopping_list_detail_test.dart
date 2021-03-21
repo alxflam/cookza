@@ -13,14 +13,12 @@ import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../mocks/meal_plan_manager_mock.dart';
+import '../../mocks/shared_mocks.mocks.dart';
 import '../../mocks/shopping_list_manager_mock.dart';
-
-class ShoppingListItemsGeneratorMock extends Mock
-    implements ShoppingListItemsGenerator {}
 
 void main() {
   var mock = ShoppingListManagerMock();
-  var itemsGenMock = ShoppingListItemsGeneratorMock();
+  var itemsGenMock = MockShoppingListItemsGenerator();
 
   setUpAll(() {
     SharedPreferences.setMockInitialValues({});

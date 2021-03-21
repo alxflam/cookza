@@ -56,7 +56,7 @@ class LocalStorageProvider implements StorageProvider {
   }
 
   @override
-  Future<void> updateExeptionLogFile(String content) async {
+  Future<File> updateExeptionLogFile(String content) async {
     String path = await _localPath;
     var logFilePath = '$path/$exceptionLogFileName';
     var logFile = File(logFilePath);

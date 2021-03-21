@@ -29,7 +29,7 @@ class InstructionsTab extends StatelessWidget {
     );
   }
 
-  Widget _buildStep({int num, String content}) {
+  Widget _buildStep({required int num, required String content}) {
     return InstructionRow(num, content);
   }
 }

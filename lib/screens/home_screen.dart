@@ -65,7 +65,7 @@ class HomeScreen extends StatelessWidget {
                     color: tileColor,
                     cardChild: IconContent(
                       icon: kNewRecipe,
-                      label: AppLocalizations.of(context).functionsAddRecipe,
+                      label: AppLocalizations.of(context)!.functionsAddRecipe,
                     ),
                   ),
                 ),
@@ -82,7 +82,7 @@ class HomeScreen extends StatelessWidget {
                     color: tileColor,
                     cardChild: IconContent(
                       icon: kLeftoversIconData,
-                      label: AppLocalizations.of(context).functionsLeftovers,
+                      label: AppLocalizations.of(context)!.functionsLeftovers,
                     ),
                   ),
                 ),
@@ -93,7 +93,7 @@ class HomeScreen extends StatelessWidget {
                     color: tileColor,
                     cardChild: IconContent(
                       icon: kRecipesIconData,
-                      label: AppLocalizations.of(context).functionsListRecipes,
+                      label: AppLocalizations.of(context)!.functionsListRecipes,
                     ),
                   ),
                 ),
@@ -110,7 +110,8 @@ class HomeScreen extends StatelessWidget {
                     color: tileColor,
                     cardChild: IconContent(
                       icon: kShoppingListIconData,
-                      label: AppLocalizations.of(context).functionsShoppingList,
+                      label:
+                          AppLocalizations.of(context)!.functionsShoppingList,
                     ),
                   ),
                 ),
@@ -121,7 +122,7 @@ class HomeScreen extends StatelessWidget {
                     color: tileColor,
                     cardChild: IconContent(
                       icon: kMealPlannerIconData,
-                      label: AppLocalizations.of(context).functionsMealPlanner,
+                      label: AppLocalizations.of(context)!.functionsMealPlanner,
                     ),
                   ),
                 ),
@@ -135,11 +136,12 @@ class HomeScreen extends StatelessWidget {
 }
 
 class MainFunctionCard extends StatelessWidget {
-  MainFunctionCard({@required this.color, this.cardChild, this.onPress});
+  MainFunctionCard(
+      {required this.color, required this.cardChild, required this.onPress});
 
   final Color color;
   final Widget cardChild;
-  final Function onPress;
+  final GestureTapCallback onPress;
 
   @override
   Widget build(BuildContext context) {
@@ -158,7 +160,7 @@ class MainFunctionCard extends StatelessWidget {
 }
 
 class IconContent extends StatelessWidget {
-  IconContent({@required this.icon, @required this.label});
+  IconContent({required this.icon, required this.label});
 
   final IconData icon;
   final String label;

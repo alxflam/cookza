@@ -11,41 +11,40 @@ import 'package:cookza/model/entities/mutable/mutable_instruction.dart';
 class MutableRecipe implements RecipeEntity {
   DateTime _creationDate;
   DateTime _modificationDate;
-  String _description;
-  String _name;
+  String _description = '';
+  String _name = '';
   DIFFICULTY _difficulty;
-  int _duration;
-  String _id;
-  String _recipeCollectionId;
-  List<IngredientNoteEntity> _ingredients;
-  List<InstructionEntity> _instructions;
-  Future<List<IngredientNoteEntity>> _origIngredients;
-  Future<List<InstructionEntity>> _origInstructions;
-  Set<String> _tags;
-  int _rating;
-  int _servings;
-  String _image;
-  Uint8List _inMemoryImage;
+  int _duration = 20;
+  String? _id;
+  String? _recipeCollectionId;
+  List<IngredientNoteEntity>? _ingredients;
+  List<InstructionEntity>? _instructions;
+  Future<List<IngredientNoteEntity>>? _origIngredients;
+  Future<List<InstructionEntity>>? _origInstructions;
+  Set<String> _tags = {};
+  int? _rating;
+  int _servings = 2;
+  String? _image;
+  Uint8List? _inMemoryImage;
 
-  MutableRecipe.empty() {
-    this._creationDate = DateTime.now();
-    this._modificationDate = DateTime.now();
-    this._difficulty = DIFFICULTY.EASY;
-    this._ingredients = [];
-    this._instructions = [];
-    this._tags = <String>{};
-    this._servings = 2;
-  }
+  MutableRecipe.empty()
+      : this._creationDate = DateTime.now(),
+        this._modificationDate = DateTime.now(),
+        this._difficulty = DIFFICULTY.EASY,
+        this._ingredients = [],
+        this._instructions = [],
+        this._tags = <String>{},
+        this._servings = 2;
 
-  MutableRecipe.of(RecipeEntity entity) {
-    this._creationDate = entity.creationDate;
-    this._modificationDate = entity.modificationDate;
-    this._description = entity.description;
-    this._name = entity.name;
-    this._difficulty = entity.difficulty;
-    this._duration = entity.duration;
-    this._id = entity.id;
-    this._recipeCollectionId = entity.recipeCollectionId;
+  MutableRecipe.of(RecipeEntity entity)
+      : this._creationDate = entity.creationDate,
+        this._modificationDate = entity.modificationDate,
+        this._description = entity.description,
+        this._name = entity.name,
+        this._difficulty = entity.difficulty,
+        this._duration = entity.duration,
+        this._id = entity.id,
+        this._recipeCollectionId = entity.recipeCollectionId {
     if (entity.hasInMemoryImage) {
       this._inMemoryImage = entity.inMemoryImage;
     }
@@ -78,7 +77,7 @@ class MutableRecipe implements RecipeEntity {
   @override
   String get description => this._description;
 
-  set id(String value) => this._id = value;
+  set id(String? value) => this._id = value;
 
   set description(String value) {
     this._description = value;
@@ -99,12 +98,12 @@ class MutableRecipe implements RecipeEntity {
   }
 
   @override
-  String get id => this._id;
+  String? get id => this._id;
 
   @override
   Future<UnmodifiableListView<IngredientNoteEntity>> get ingredients async {
     var original = await this._origIngredients;
-    return Future.value(UnmodifiableListView(this._ingredients ?? original));
+    return Future.value(UnmodifiableListView(this._ingredients ?? original!));
   }
 
   set ingredientList(List<IngredientNoteEntity> value) {
@@ -114,7 +113,7 @@ class MutableRecipe implements RecipeEntity {
   @override
   Future<UnmodifiableListView<InstructionEntity>> get instructions async {
     var original = await this._origInstructions;
-    return Future.value(UnmodifiableListView(this._instructions ?? original));
+    return Future.value(UnmodifiableListView(this._instructions ?? original!));
   }
 
   set instructionList(List<InstructionEntity> value) {
@@ -140,14 +139,14 @@ class MutableRecipe implements RecipeEntity {
   }
 
   @override
-  int get rating => this._rating;
+  int? get rating => this._rating;
 
-  set rating(int value) {
+  set rating(int? value) {
     this._rating = value;
   }
 
   @override
-  String get recipeCollectionId => this._recipeCollectionId;
+  String get recipeCollectionId => this._recipeCollectionId!;
 
   set recipeCollectionId(String value) {
     this._recipeCollectionId = value;
@@ -178,9 +177,9 @@ class MutableRecipe implements RecipeEntity {
   }
 
   @override
-  String get image => _image;
+  String? get image => _image;
 
-  set image(String value) {
+  set image(String? value) {
     this._image = value;
   }
 
@@ -192,6 +191,6 @@ class MutableRecipe implements RecipeEntity {
     if (!hasInMemoryImage) {
       throw 'Recipe has no in memory image';
     }
-    return this._inMemoryImage;
+    return this._inMemoryImage!;
   }
 }

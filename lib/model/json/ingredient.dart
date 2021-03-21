@@ -8,20 +8,18 @@ class Ingredient {
   @JsonKey()
   String name;
 
-  @JsonKey(nullable: true)
-  String recipeReference;
+  @JsonKey()
+  String? recipeReference;
 
-  Ingredient({this.name, this.recipeReference});
+  Ingredient({required this.name, this.recipeReference});
 
-  Ingredient.from(Ingredient ingredient) {
-    this.name = ingredient.name;
-    this.recipeReference = ingredient.recipeReference;
-  }
+  Ingredient.from(Ingredient ingredient)
+      : this.name = ingredient.name,
+        this.recipeReference = ingredient.recipeReference;
 
-  Ingredient.fromEntity(IngredientEntity ingredient) {
-    this.name = ingredient.name;
-    this.recipeReference = ingredient.recipeReference;
-  }
+  Ingredient.fromEntity(IngredientEntity ingredient)
+      : this.name = ingredient.name,
+        this.recipeReference = ingredient.recipeReference;
 
   factory Ingredient.fromJson(Map<String, dynamic> json) =>
       _$IngredientFromJson(json);

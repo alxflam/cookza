@@ -26,9 +26,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../mocks/firebase_provider_mock.dart';
 import '../mocks/meal_plan_manager_mock.dart';
-import '../mocks/navigator_observer_mock.dart';
 import '../mocks/receive_intent_handler_mock.dart';
 import '../mocks/recipe_manager_mock.dart';
+import '../mocks/shared_mocks.mocks.dart';
 import '../mocks/shopping_list_manager_mock.dart';
 
 void main() {
@@ -74,7 +74,7 @@ void main() {
   });
 }
 
-Future<void> testTile(WidgetTester tester, String name, Object target) async {
+Future<void> testTile(WidgetTester tester, String name, Type target) async {
   final mockObserver = MockNavigatorObserver();
   await tester.pumpWidget(MockApplication(mockObserver: mockObserver));
 
@@ -90,7 +90,7 @@ Future<void> testTile(WidgetTester tester, String name, Object target) async {
 
 class MockApplication extends StatelessWidget {
   const MockApplication({
-    @required this.mockObserver,
+    required this.mockObserver,
   });
 
   final MockNavigatorObserver mockObserver;

@@ -19,17 +19,17 @@ class RecipeSelectionScreen extends StatelessWidget {
   Text _getTitle(RecipeSelectionModel model, BuildContext context) {
     return model.countSelected == 0
         ? Text(
-            AppLocalizations.of(context).selectRecipes,
+            AppLocalizations.of(context)!.selectRecipes,
           )
         : Text(
-            '${model.countSelected} ${AppLocalizations.of(context).recipe(model.countSelected)}',
+            '${model.countSelected} ${AppLocalizations.of(context)!.recipe(model.countSelected)}',
           );
   }
 
   @override
   Widget build(BuildContext context) {
-    final RecipeSelectionModel _model =
-        ModalRoute.of(context).settings.arguments;
+    final _model =
+        ModalRoute.of(context)!.settings.arguments as RecipeSelectionModel;
 
     final IconData _icon = _getIconForMode(_model.mode);
     final OnActionButtonPressed _onPressed =
@@ -58,11 +58,11 @@ class RecipeSelectionScreen extends StatelessWidget {
                   children: [
                     SelectButton(
                         icon: Icons.check_box_outlined,
-                        text: AppLocalizations.of(context).selectAll,
+                        text: AppLocalizations.of(context)!.selectAll,
                         onTap: () => model.selectAll()),
                     SelectButton(
                         icon: Icons.check_box_outline_blank,
-                        text: AppLocalizations.of(context).deselectAll,
+                        text: AppLocalizations.of(context)!.deselectAll,
                         onTap: () => model.deselectAll()),
                   ],
                 ),
@@ -73,7 +73,7 @@ class RecipeSelectionScreen extends StatelessWidget {
                       model.filter(value);
                     },
                     decoration: InputDecoration(
-                      labelText: AppLocalizations.of(context).search,
+                      labelText: AppLocalizations.of(context)!.search,
                       prefixIcon: Icon(Icons.search),
                     ),
                   ),
@@ -161,7 +161,7 @@ class RecipeSelectionScreen extends StatelessWidget {
               barrierDismissible: false,
               builder: (context) => SimpleDialog(
                     title: Center(
-                        child: Text(AppLocalizations.of(context)
+                        child: Text(AppLocalizations.of(context)!
                             .importingRecipes(recipes.length))),
                     children: [FutureProgressDialog(future)],
                   ));
@@ -175,7 +175,6 @@ class RecipeSelectionScreen extends StatelessWidget {
           }
         };
     }
-    return (context, model) async {};
   }
 }
 
@@ -184,7 +183,8 @@ class SelectButton extends StatelessWidget {
   final String text;
   final VoidCallback onTap;
 
-  const SelectButton({this.icon, this.text, this.onTap});
+  const SelectButton(
+      {required this.icon, required this.text, required this.onTap});
 
   @override
   Widget build(BuildContext context) {

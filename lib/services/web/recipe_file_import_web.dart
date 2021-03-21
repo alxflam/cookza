@@ -15,20 +15,20 @@ class RecipeFileImportImpl extends RecipeFileImport {
   @override
   void parseAndImport(BuildContext context) {
     // configure file selection dialog
-    html.InputElement uploadInput = html.FileUploadInputElement();
+    html.FileUploadInputElement uploadInput = html.FileUploadInputElement();
     uploadInput.multiple = false;
     uploadInput.click();
 
     // on file selection
     uploadInput.onChange.listen((e) {
       final files = uploadInput.files;
-      if (files.length == 1) {
-        final file = files[0];
+      if (files?.length == 1) {
+        final file = files![0];
         html.FileReader reader = html.FileReader();
 
         // if reading selected file succeeds
         reader.onLoadEnd.listen((e) {
-          String data = reader.result;
+          String data = reader.result?.toString() ?? '';
           print('Read from file load up: $data');
           List<Recipe> result = [];
 
@@ -52,7 +52,7 @@ class RecipeFileImportImpl extends RecipeFileImport {
         reader.onError.listen((fileEvent) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(AppLocalizations.of(context).parseErrorRecipe),
+              content: Text(AppLocalizations.of(context)!.parseErrorRecipe),
             ),
           );
         });

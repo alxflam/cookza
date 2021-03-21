@@ -6,13 +6,13 @@ abstract class MealPlanDateEntity {
 
 abstract class MealPlanRecipeEntity {
   String get name;
-  String get id;
+  String? get id;
   int get servings;
   bool get isNote;
 }
 
 abstract class MealPlanEntity {
-  String get id;
+  String? get id;
   String get groupID;
 
   List<MealPlanDateEntity> get items;

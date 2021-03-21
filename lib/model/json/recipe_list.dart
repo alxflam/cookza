@@ -12,8 +12,7 @@ class RecipeList {
   @JsonKey(toJson: kListToJson)
   List<Recipe> recipes;
 
-  RecipeList({this.modelVersion, this.recipes}) {
-    this.modelVersion = 1;
+  RecipeList({required this.recipes}) : this.modelVersion = 1 {
     if (this.recipes == null) {
       this.recipes = [];
     }

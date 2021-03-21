@@ -7,22 +7,22 @@ import 'package:cookza/model/entities/abstract/instruction_entity.dart';
 enum DIFFICULTY { EASY, MEDIUM, HARD }
 
 abstract class RecipeEntity {
-  String get id;
+  String? get id;
   String get recipeCollectionId;
 
   String get name;
   String get description;
   int get duration;
   int get servings;
-  int get rating;
+  int? get rating;
   String get creationDateFormatted;
   String get modificationDateFormatted;
   DateTime get creationDate;
   DateTime get modificationDate;
 
-  String get image;
+  String? get image;
   bool get hasInMemoryImage;
-  Uint8List get inMemoryImage;
+  Uint8List? get inMemoryImage;
 
   DIFFICULTY get difficulty;
 

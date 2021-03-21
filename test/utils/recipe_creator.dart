@@ -12,7 +12,7 @@ class RecipeCreator {
   }
 
   static MutableIngredientNote createIngredient(String name,
-      {double amount, String uom}) {
+      {double? amount, String? uom}) {
     var ingredient = MutableIngredientNote.empty();
     ingredient.name = name;
     ingredient.amount = amount ?? 0;
@@ -21,12 +21,12 @@ class RecipeCreator {
   }
 
   static MutableIngredientNote createIngredientFromRecipe(RecipeEntity recipe,
-      {double amount, String uom}) {
+      {double? amount, String? uom}) {
     var ingredient = MutableIngredientNote.empty();
     ingredient.name = recipe.name;
     ingredient.amount = amount ?? 0;
     ingredient.unitOfMeasure = uom ?? '';
-    ingredient.recipeReference = recipe.id;
+    ingredient.recipeReference = recipe.id!;
     return ingredient;
   }
 }

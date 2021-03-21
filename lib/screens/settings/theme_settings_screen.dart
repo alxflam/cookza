@@ -9,7 +9,7 @@ class ThemeSettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context).themeTitle),
+        title: Text(AppLocalizations.of(context)!.themeTitle),
       ),
       body: Consumer<ThemeModel>(
         builder: (context, model, widget) {

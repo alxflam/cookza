@@ -33,7 +33,8 @@ class OCRImageStep extends StatelessWidget {
               child: model.image == null
                   ? SelectImageWidget(onSelect: getImage)
                   : ImageSelectedWidget(
-                      image: model.image, onDelete: () => model.setImage(null)),
+                      image: model.image!,
+                      onDelete: () => model.setImage(null)),
             );
           },
         ),
@@ -45,7 +46,7 @@ class OCRImageStep extends StatelessWidget {
 class SelectImageWidget extends StatelessWidget {
   final Function onSelect;
 
-  SelectImageWidget({@required this.onSelect});
+  SelectImageWidget({required this.onSelect});
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +76,7 @@ class SelectImageWidget extends StatelessWidget {
 }
 
 class ImageSelectedWidget extends StatelessWidget {
-  ImageSelectedWidget({@required this.image, @required this.onDelete});
+  ImageSelectedWidget({required this.image, required this.onDelete});
 
   final File image;
   final Function onDelete;

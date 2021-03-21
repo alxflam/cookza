@@ -31,7 +31,7 @@ class InstructionsStepContent extends StatelessWidget {
                 onPressed: () {
                   model.addEmptyInstruction();
                 },
-                child: Text(AppLocalizations.of(context).addRow),
+                child: Text(AppLocalizations.of(context)!.addRow),
               ),
               _getInstructionRows(context, model),
             ],
@@ -60,7 +60,7 @@ Column _getInstructionRows(
         textController.text.isEmpty && i == model.instructions.length - 1
             ? true
             : false;
-    FocusNode focusNode;
+    FocusNode? focusNode;
     if (autofocus) {
       focusNode = FocusNode();
     }
@@ -88,8 +88,8 @@ Column _getInstructionRows(
     );
 
     if (focusNode != null) {
-      SchedulerBinding.instance.scheduleTask(() {
-        focusNode.requestFocus();
+      SchedulerBinding.instance!.scheduleTask(() {
+        focusNode?.requestFocus();
       }, Priority.animation);
     }
 

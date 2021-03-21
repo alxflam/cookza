@@ -26,7 +26,7 @@ class PlatformInfoImpl extends BasePlatformInfo {
 
   @override
   String get os {
-    var platform = html.window.navigator.platform.toLowerCase();
+    var platform = html.window.navigator.platform?.toLowerCase() ?? '';
     var appVersion = html.window.navigator.appVersion.toLowerCase();
 
     if (platform.contains('win')) {
@@ -42,6 +42,6 @@ class PlatformInfoImpl extends BasePlatformInfo {
       return 'Mac';
     }
 
-    return html.window.navigator.platform;
+    return html.window.navigator.platform ?? 'unknown';
   }
 }

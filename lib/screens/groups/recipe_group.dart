@@ -9,6 +9,6 @@ class RecipeGroupScreen extends AbstractGroupScreen {
   @override
   GroupViewModel buildGroupViewModel(Object arguments) {
     assert(arguments is RecipeCollectionEntity);
-    return RecipeGroupViewModel.of(arguments);
+    return RecipeGroupViewModel.of(arguments as RecipeCollectionEntity);
   }
 }

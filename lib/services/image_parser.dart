@@ -6,6 +6,7 @@ import 'package:cookza/services/unit_of_measure.dart';
 import 'package:cookza/viewmodel/recipe_edit/recipe_edit_step.dart';
 import 'package:cookza/viewmodel/recipe_edit/recipe_ingredient_model.dart';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
+import 'package:collection/collection.dart';
 
 abstract class ImageTextExtractor {
   Future<RecipeOverviewEditStep> processOverviewImage(File file);
@@ -163,30 +164,30 @@ class ImageTextExtractorImpl implements ImageTextExtractor {
         e.text.trim().toLowerCase() == 'zutaten';
   }
 
-  RecipeIngredientModel parseIngredient(String textItem) {
+  RecipeIngredientModel? parseIngredient(String textItem) {
     // expect amount, unit and ingredient
     var words = textItem.split(' ');
     words.removeWhere((e) => e.isEmpty);
 
-    var unit = '';
-    double amount;
-    String ingredient;
+    String? unit = '';
+    double? amount;
+    String? ingredient;
 
     var doubleExp =
         RegExp('[0-9]*[\.,]?[0-9]+', caseSensitive: false, multiLine: false);
     var doubleMatch = doubleExp.firstMatch(textItem);
     if (doubleMatch != null) {
-      amount = double.parse(doubleMatch.group(0));
+      amount = double.parse(doubleMatch.group(0)!);
     }
 
     var nounsExp = RegExp('([A-ZÄÖÜ][\-\_]?[a-zäöü]*){1,}');
     var nounsMatch = nounsExp.firstMatch(textItem);
     if (nounsMatch != null) {
-      ingredient = nounsMatch.group(0);
+      ingredient = nounsMatch.group(0)!;
     }
 
     if (amount != null) {
-      var groupContent = doubleMatch.group(0);
+      var groupContent = doubleMatch!.group(0)!;
 
       // first check if uom is in same word like amount
       var unitIndex = words.indexOf(groupContent) + 1;
@@ -194,8 +195,7 @@ class ImageTextExtractorImpl implements ImageTextExtractor {
         var word = words[unitIndex];
         if (doubleMatch.end < word.length) {
           unit = word.substring(doubleMatch.end);
-          var uom =
-              uoms.firstWhere((e) => e.displayName == unit, orElse: () => null);
+          var uom = uoms.firstWhereOrNull((e) => e.displayName == unit);
           if (uom != null) {
             unit = uom.id;
           }
@@ -203,8 +203,7 @@ class ImageTextExtractorImpl implements ImageTextExtractor {
       }
       if (unit != null) {
         for (var word in words) {
-          var uom =
-              uoms.firstWhere((e) => e.displayName == word, orElse: () => null);
+          var uom = uoms.firstWhereOrNull((e) => e.displayName == word);
           if (uom != null) {
             unit = uom.id;
             break;
@@ -215,9 +214,9 @@ class ImageTextExtractorImpl implements ImageTextExtractor {
 
     if (ingredient != null) {
       var note = MutableIngredientNote.empty();
-      note.amount = amount;
+      note.amount = amount!;
       note.ingredient.name = ingredient;
-      note.unitOfMeasure = unit;
+      note.unitOfMeasure = unit!;
       return RecipeIngredientModel.of(note);
     }
 

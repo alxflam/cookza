@@ -8,6 +8,7 @@ import 'package:cookza/model/json/recipe.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:cookza/services/unit_of_measure.dart';
 import 'package:http/http.dart' as http;
+import 'package:collection/collection.dart';
 
 class Chefkoch {
   static final String url = 'https://api.chefkoch.de/v2/recipes/';
@@ -26,20 +27,28 @@ class Chefkoch {
     var uoms = sl.get<UnitOfMeasureProvider>().getAll();
 
     var json = jsonDecode(result.body);
-
-    var recipe = Recipe();
-
-    recipe.name = json['title'];
-    recipe.shortDescription = json['subtitle'];
-    recipe.rating = (double.parse(json['rating']['rating'].toString()).toInt());
     int difficulty = json['difficulty'];
-    recipe.diff = (difficulty == 1
+    DIFFICULTY diff = difficulty == 1
         ? DIFFICULTY.EASY
         : difficulty > 2
             ? DIFFICULTY.HARD
-            : DIFFICULTY.MEDIUM);
-    recipe.servings = (json['servings']);
-    recipe.duration = (json['totalTime']);
+            : DIFFICULTY.MEDIUM;
+
+    var recipe = Recipe(
+      name: json['title'],
+      shortDescription: json['subtitle'],
+      rating: (double.parse(json['rating']['rating'].toString()).toInt()),
+      diff: diff,
+      servings: (json['servings']),
+      duration: (json['totalTime']),
+      instructions: [],
+      ingredients: [],
+      tags: [],
+      recipeCollection: '',
+      creationDate: DateTime.now(),
+      modificationDate: DateTime.now(),
+      id: '',
+    );
 
     var instructions = LineSplitter.split(json['instructions']);
 
@@ -48,8 +57,7 @@ class Chefkoch {
     for (var group in json['ingredientGroups']) {
       for (var ingredient in group['ingredients']) {
         var unit = ingredient['unit'] as String;
-        var targetUom =
-            uoms.firstWhere((e) => e.displayName == unit, orElse: () => null);
+        var targetUom = uoms.firstWhereOrNull((e) => e.displayName == unit);
 
         recipe.ingredients.add(IngredientNote(
             amount: ingredient['amount'],

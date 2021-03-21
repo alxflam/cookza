@@ -86,8 +86,8 @@ class OnBoardingScreen extends StatelessWidget {
 
     var basePages = [
       PageViewModel(
-        title: AppLocalizations.of(context).onboardingWelcomeTitle,
-        body: AppLocalizations.of(context).onboardingWelcomeBody,
+        title: AppLocalizations.of(context)!.onboardingWelcomeTitle,
+        body: AppLocalizations.of(context)!.onboardingWelcomeBody,
         image: ConstrainedBox(
           constraints: BoxConstraints.tightFor(width: 40),
           child: Padding(
@@ -107,32 +107,32 @@ class OnBoardingScreen extends StatelessWidget {
         decoration: pageDecoration,
       ),
       PageViewModel(
-        title: AppLocalizations.of(context).onboardingRecipeTitle,
-        body: AppLocalizations.of(context).onboardingRecipeBody,
+        title: AppLocalizations.of(context)!.onboardingRecipeTitle,
+        body: AppLocalizations.of(context)!.onboardingRecipeBody,
         image: _buildImage(kRecipesIconData, context),
         decoration: pageDecoration,
       ),
       PageViewModel(
-        title: AppLocalizations.of(context).onboardingMealPlanTitle,
-        body: AppLocalizations.of(context).onboardingMealPlanBody,
+        title: AppLocalizations.of(context)!.onboardingMealPlanTitle,
+        body: AppLocalizations.of(context)!.onboardingMealPlanBody,
         image: _buildImage(kMealPlannerIconData, context),
         decoration: pageDecoration,
       ),
       PageViewModel(
-        title: AppLocalizations.of(context).onboardingShoppingListTitle,
-        body: AppLocalizations.of(context).onboardingShoppingListBody,
+        title: AppLocalizations.of(context)!.onboardingShoppingListTitle,
+        body: AppLocalizations.of(context)!.onboardingShoppingListBody,
         image: _buildImage(kShoppingListIconData, context),
         decoration: pageDecoration,
       ),
       PageViewModel(
-        title: AppLocalizations.of(context).onboardingMoreTitle,
-        body: AppLocalizations.of(context).onboardingMoreBody,
+        title: AppLocalizations.of(context)!.onboardingMoreTitle,
+        body: AppLocalizations.of(context)!.onboardingMoreBody,
         image: _buildImage(Icons.share, context),
         decoration: pageDecoration,
       ),
       PageViewModel(
-        title: AppLocalizations.of(context).onboardingDataPrivacyTitle,
-        body: AppLocalizations.of(context).onboardingDataPrivacyBody,
+        title: AppLocalizations.of(context)!.onboardingDataPrivacyTitle,
+        body: AppLocalizations.of(context)!.onboardingDataPrivacyBody,
         image: _buildImage(FontAwesomeIcons.userShield, context),
         decoration: pageDecoration,
       ),
@@ -180,17 +180,18 @@ class OnBoardingScreen extends StatelessWidget {
                   return SingleChildScrollView(
                     child: Column(
                       children: [
-                        Text(AppLocalizations.of(context).onboardingAcceptData),
+                        Text(
+                            AppLocalizations.of(context)!.onboardingAcceptData),
                         Text(''),
-                        Text(AppLocalizations.of(context)
+                        Text(AppLocalizations.of(context)!
                             .onboardingAcceptAuthentication),
                         TextCheckbox(
-                            AppLocalizations.of(context).termsOfUse,
+                            AppLocalizations.of(context)!.termsOfUse,
                             () => kNotImplementedDialog(context),
                             () => model.termsOfUse,
                             (bool value) => model.termsOfUse = value),
                         TextCheckbox(
-                            AppLocalizations.of(context).privacyStatement,
+                            AppLocalizations.of(context)!.privacyStatement,
                             () => kNotImplementedDialog(context),
                             () => model.privacyStatement,
                             (bool value) => model.privacyStatement = value),
@@ -200,7 +201,7 @@ class OnBoardingScreen extends StatelessWidget {
                               child: ElevatedButton(
                                 style: kRaisedGreenButtonStyle,
                                 child:
-                                    Text(AppLocalizations.of(context).accept),
+                                    Text(AppLocalizations.of(context)!.accept),
                                 onPressed: model.acceptedAll
                                     ? () {
                                         sl
@@ -232,7 +233,7 @@ class OnBoardingScreen extends StatelessWidget {
 
 class TextCheckbox extends StatelessWidget {
   final String title;
-  final Function onTap;
+  final GestureTapCallback onTap;
   final Function getValue;
   final Function setValue;
 
@@ -254,7 +255,7 @@ class TextCheckbox extends StatelessWidget {
             text: TextSpan(
               children: [
                 TextSpan(
-                    text: AppLocalizations.of(context).readAndAccept,
+                    text: AppLocalizations.of(context)!.readAndAccept,
                     style: TextStyle(color: Colors.white)),
                 TextSpan(
                   text: title,

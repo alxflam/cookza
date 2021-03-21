@@ -38,6 +38,10 @@ void main() {
           'Second step',
           'Last step',
         ],
+        id: '',
+        rating: 3,
+        recipeCollection: '',
+        servings: 2,
       );
 
       var cut = RecipeList(recipes: [recipe]);

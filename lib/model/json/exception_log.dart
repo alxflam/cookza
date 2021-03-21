@@ -19,7 +19,8 @@ class ExceptionItem {
   factory ExceptionItem.fromJson(Map<String, dynamic> json) =>
       _$ExceptionItemFromJson(json);
 
-  ExceptionItem({this.error, this.stackTrace, this.date});
+  ExceptionItem(
+      {required this.error, required this.stackTrace, required this.date});
 }
 
 @JsonSerializable(includeIfNull: false)
@@ -27,11 +28,7 @@ class ExceptionLog {
   @JsonKey(toJson: kListToJson)
   List<ExceptionItem> errors;
 
-  ExceptionLog({this.errors}) {
-    if (this.errors == null) {
-      this.errors = [];
-    }
-  }
+  ExceptionLog({required this.errors});
 
   factory ExceptionLog.fromJson(Map<String, dynamic> json) =>
       _$ExceptionLogFromJson(json);

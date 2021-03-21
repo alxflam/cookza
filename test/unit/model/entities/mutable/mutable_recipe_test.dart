@@ -68,6 +68,8 @@ void main() {
         servings: 3,
         rating: 5,
         tags: ['delicious'],
+        creationDate: DateTime.now(),
+        modificationDate: DateTime.now(),
       )));
 
       expect(cut.hasInMemoryImage, false);
@@ -142,8 +144,22 @@ void main() {
     var onion = MutableIngredientNote.empty();
     onion.name = 'Onion';
 
-    var cut = MutableRecipe.of(
-        RecipeEntityJson.of(Recipe(serializedImage: '1010', id: '1234')));
+    var cut = MutableRecipe.of(RecipeEntityJson.of(Recipe(
+      serializedImage: '1010',
+      id: '1234',
+      creationDate: DateTime.now(),
+      diff: DIFFICULTY.EASY,
+      duration: 20,
+      ingredients: [],
+      instructions: [],
+      modificationDate: DateTime.now(),
+      name: '',
+      rating: 2,
+      recipeCollection: '',
+      servings: 2,
+      shortDescription: '',
+      tags: [],
+    )));
 
     expect(cut.hasInMemoryImage, true);
     expect(cut.inMemoryImage.length, 3);
@@ -152,9 +168,20 @@ void main() {
   test('Dates are formatted', () async {
     var now = DateTime.now();
     var cut = MutableRecipe.of(RecipeEntityJson.of(Recipe(
-      creationDate: now,
-      modificationDate: now,
+      serializedImage: '1010',
       id: '1234',
+      creationDate: DateTime.now(),
+      diff: DIFFICULTY.EASY,
+      duration: 20,
+      ingredients: [],
+      instructions: [],
+      modificationDate: DateTime.now(),
+      name: '',
+      rating: 2,
+      recipeCollection: '',
+      servings: 2,
+      shortDescription: '',
+      tags: [],
     )));
 
     expect(cut.creationDate, now);

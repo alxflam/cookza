@@ -31,6 +31,7 @@ void main() {
         .thenAnswer((_) => Future.value([recipe]));
     await cut.setRecipeReference('1234');
     var model = await cut.recipe;
-    expect(model.recipe, recipe);
+    expect(model != null, true);
+    expect(model!.recipe, recipe);
   });
 }

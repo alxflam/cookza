@@ -9,7 +9,7 @@ part of 'ingredient.dart';
 Ingredient _$IngredientFromJson(Map<String, dynamic> json) {
   return Ingredient(
     name: json['name'] as String,
-    recipeReference: json['recipeReference'] as String,
+    recipeReference: json['recipeReference'] as String?,
   );
 }
 

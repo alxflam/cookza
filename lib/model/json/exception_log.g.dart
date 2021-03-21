@@ -32,11 +32,9 @@ Map<String, dynamic> _$ExceptionItemToJson(ExceptionItem instance) {
 
 ExceptionLog _$ExceptionLogFromJson(Map<String, dynamic> json) {
   return ExceptionLog(
-    errors: (json['errors'] as List)
-        ?.map((e) => e == null
-            ? null
-            : ExceptionItem.fromJson(e as Map<String, dynamic>))
-        ?.toList(),
+    errors: (json['errors'] as List<dynamic>)
+        .map((e) => ExceptionItem.fromJson(e as Map<String, dynamic>))
+        .toList(),
   );
 }
 

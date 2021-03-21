@@ -8,10 +8,8 @@ part of 'ingredient_note.dart';
 
 IngredientNote _$IngredientNoteFromJson(Map<String, dynamic> json) {
   return IngredientNote(
-    ingredient: json['ingredient'] == null
-        ? null
-        : Ingredient.fromJson(json['ingredient'] as Map<String, dynamic>),
-    unitOfMeasure: json['unitOfMeasure'] as String ?? '',
+    ingredient: Ingredient.fromJson(json['ingredient'] as Map<String, dynamic>),
+    unitOfMeasure: json['unitOfMeasure'] as String? ?? '',
     amount: (json['amount'] as num).toDouble(),
   );
 }
@@ -26,7 +24,7 @@ Map<String, dynamic> _$IngredientNoteToJson(IngredientNote instance) {
   }
 
   writeNotNull('ingredient', _toJson(instance.ingredient));
-  writeNotNull('unitOfMeasure', instance.unitOfMeasure);
+  val['unitOfMeasure'] = instance.unitOfMeasure;
   val['amount'] = instance.amount;
   return val;
 }

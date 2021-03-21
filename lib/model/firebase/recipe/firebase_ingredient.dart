@@ -18,13 +18,15 @@ class FirebaseIngredient {
   @JsonKey()
   double amount;
 
-  FirebaseIngredient({this.ingredient, this.unitOfMeasure, this.amount});
+  FirebaseIngredient(
+      {required this.ingredient,
+      required this.unitOfMeasure,
+      required this.amount});
 
-  FirebaseIngredient.create() {
-    this.ingredient = Ingredient(name: '');
-    this.amount = 0;
-    this.unitOfMeasure = '';
-  }
+  FirebaseIngredient.create()
+      : this.ingredient = Ingredient(name: ''),
+        this.amount = 0,
+        this.unitOfMeasure = '';
 
   factory FirebaseIngredient.fromJson(Map<String, dynamic> json) {
     var instance = _$FirebaseIngredientFromJson(json);
@@ -51,14 +53,14 @@ class FirebaseIngredient {
 @JsonSerializable(includeIfNull: false)
 class FirebaseIngredientDocument {
   @JsonKey(ignore: true)
-  String documentID;
+  String? documentID;
   @JsonKey()
   String recipeID;
   @JsonKey(toJson: kListToJson)
   List<FirebaseIngredient> ingredients;
 
   FirebaseIngredientDocument(
-      {this.documentID, this.recipeID, this.ingredients});
+      {this.documentID, required this.recipeID, required this.ingredients});
 
   factory FirebaseIngredientDocument.fromJson(
       Map<String, dynamic> json, String id) {

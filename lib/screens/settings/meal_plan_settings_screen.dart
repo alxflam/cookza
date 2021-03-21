@@ -13,7 +13,7 @@ class MealPlanSettingsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          AppLocalizations.of(context).functionsMealPlanner,
+          AppLocalizations.of(context)!.functionsMealPlanner,
         ),
       ),
       body: ChangeNotifierProvider<MealPlanSettingsModel>.value(
@@ -24,10 +24,10 @@ class MealPlanSettingsScreen extends StatelessWidget {
             return ListView(
               children: <Widget>[
                 ListTile(
-                  title: Text(AppLocalizations.of(context).weekDurationDesc),
+                  title: Text(AppLocalizations.of(context)!.weekDurationDesc),
                 ),
                 RadioListTile(
-                  title: Text(AppLocalizations.of(context).oneWeek),
+                  title: Text(AppLocalizations.of(context)!.oneWeek),
                   value: 1,
                   groupValue: model.weeks,
                   onChanged: (isActive) async {
@@ -35,7 +35,7 @@ class MealPlanSettingsScreen extends StatelessWidget {
                   },
                 ),
                 RadioListTile(
-                  title: Text(AppLocalizations.of(context).twoWeeks),
+                  title: Text(AppLocalizations.of(context)!.twoWeeks),
                   value: 2,
                   groupValue: model.weeks,
                   onChanged: (isActive) async {
@@ -44,12 +44,12 @@ class MealPlanSettingsScreen extends StatelessWidget {
                 ),
                 Divider(),
                 ListTile(
-                  title: Text(AppLocalizations.of(context).stdServingsDesc),
+                  title: Text(AppLocalizations.of(context)!.stdServingsDesc),
                 ),
                 ListTile(
-                  title: Text(AppLocalizations.of(context).stdServings),
+                  title: Text(AppLocalizations.of(context)!.stdServings),
                   subtitle: Text(
-                      '${model.standardServingsSize} ${AppLocalizations.of(context).servings(model.standardServingsSize)}'),
+                      '${model.standardServingsSize} ${AppLocalizations.of(context)!.servings(model.standardServingsSize)}'),
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20),
@@ -57,7 +57,7 @@ class MealPlanSettingsScreen extends StatelessWidget {
                     value: model.standardServingsSize.toDouble(),
                     max: 10,
                     min: 1,
-                    label: AppLocalizations.of(context)
+                    label: AppLocalizations.of(context)!
                         .servings(model.standardServingsSize),
                     onChanged: (value) {
                       model.setStandardServingsSize(value.toInt());

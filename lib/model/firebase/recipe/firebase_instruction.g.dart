@@ -8,17 +8,14 @@ part of 'firebase_instruction.dart';
 
 FirebaseInstruction _$FirebaseInstructionFromJson(Map<String, dynamic> json) {
   return FirebaseInstruction(
-    step: json['step'] as int,
+    step: json['step'] as int?,
     text: json['text'] as String,
-    imagePath: json['imagePath'] as String,
+    imagePath: json['imagePath'] as String?,
   );
 }
 
 Map<String, dynamic> _$FirebaseInstructionToJson(FirebaseInstruction instance) {
-  final val = <String, dynamic>{
-    'step': instance.step,
-    'text': instance.text,
-  };
+  final val = <String, dynamic>{};
 
   void writeNotNull(String key, dynamic value) {
     if (value != null) {
@@ -26,6 +23,8 @@ Map<String, dynamic> _$FirebaseInstructionToJson(FirebaseInstruction instance) {
     }
   }
 
+  writeNotNull('step', instance.step);
+  val['text'] = instance.text;
   writeNotNull('imagePath', instance.imagePath);
   return val;
 }
@@ -34,11 +33,9 @@ FirebaseInstructionDocument _$FirebaseInstructionDocumentFromJson(
     Map<String, dynamic> json) {
   return FirebaseInstructionDocument(
     recipeID: json['recipeID'] as String,
-    instructions: (json['instructions'] as List)
-        ?.map((e) => e == null
-            ? null
-            : FirebaseInstruction.fromJson(e as Map<String, dynamic>))
-        ?.toList(),
+    instructions: (json['instructions'] as List<dynamic>)
+        .map((e) => FirebaseInstruction.fromJson(e as Map<String, dynamic>))
+        .toList(),
   );
 }
 

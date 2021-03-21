@@ -48,7 +48,7 @@ void main() async {
 void setupFlutterErrorHandling() {
   FlutterError.onError = (FlutterErrorDetails details) {
     FlutterError.dumpErrorToConsole(details);
-    Zone.current.handleUncaughtError(details.exception, details.stack);
+    Zone.current.handleUncaughtError(details.exception, details.stack!);
   };
 }
 

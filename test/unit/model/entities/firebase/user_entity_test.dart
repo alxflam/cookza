@@ -7,7 +7,7 @@ void main() {
   test(
     'user is web session',
     () async {
-      var user = FirebaseRecipeUser(name: 'web');
+      var user = FirebaseRecipeUser(name: 'web', id: '');
       var cut = UserEntityFirebase.from(user);
       expect(cut.type, USER_TYPE.WEB_SESSION);
     },
@@ -16,7 +16,7 @@ void main() {
   test(
     'user is not web session',
     () async {
-      var user = FirebaseRecipeUser(name: 'someone');
+      var user = FirebaseRecipeUser(name: 'someone', id: '');
       var cut = UserEntityFirebase.from(user);
       expect(cut.type, USER_TYPE.USER);
     },

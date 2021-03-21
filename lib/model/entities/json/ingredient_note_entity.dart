@@ -7,14 +7,11 @@ import 'package:cookza/model/json/ingredient_note.dart';
 class IngredientNoteEntityJson implements IngredientNoteEntity {
   IngredientNote _ingredient;
 
-  IngredientNoteEntityJson.of(IngredientNote ingredient) {
-    this._ingredient = ingredient;
-  }
+  IngredientNoteEntityJson.of(this._ingredient);
 
-  IngredientNoteEntityJson.empty() {
-    this._ingredient = IngredientNote(
-        amount: 0, ingredient: Ingredient(name: ''), unitOfMeasure: '');
-  }
+  IngredientNoteEntityJson.empty()
+      : this._ingredient = IngredientNote(
+            amount: 0, ingredient: Ingredient(name: ''), unitOfMeasure: '');
 
   @override
   double get amount => this._ingredient.amount;

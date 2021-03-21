@@ -13,9 +13,7 @@ import 'package:cookza/model/json/recipe.dart';
 class RecipeEntityJson implements RecipeEntity {
   Recipe _recipe;
 
-  RecipeEntityJson.of(Recipe recipe) {
-    this._recipe = recipe;
-  }
+  RecipeEntityJson.of(this._recipe);
 
   @override
   String get description => _recipe.shortDescription;
@@ -74,8 +72,11 @@ class RecipeEntityJson implements RecipeEntity {
   @override
   String get image => '';
 
-  Uint8List get imageAsBytes {
-    return base64.decode(_recipe.serializedImage);
+  Uint8List? get imageAsBytes {
+    if (hasInMemoryImage) {
+      return base64.decode(_recipe.serializedImage!);
+    }
+    return null;
   }
 
   @override
@@ -86,6 +87,6 @@ class RecipeEntityJson implements RecipeEntity {
     if (!hasInMemoryImage) {
       throw 'Recipe has no in memory image';
     }
-    return imageAsBytes;
+    return imageAsBytes!;
   }
 }

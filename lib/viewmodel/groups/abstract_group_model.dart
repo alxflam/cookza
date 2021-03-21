@@ -19,7 +19,7 @@ abstract class GroupViewModel with ChangeNotifier {
   Future<void> addUser(String id, String name);
 
   /// add the given user from the json content
-  Future<UserEntity> addUserFromJson(String json) async {
+  Future<UserEntity?> addUserFromJson(String json) async {
     if (json != null && json.isNotEmpty) {
       var user = JsonUser.fromJson(jsonDecode(json));
       if (user.id == null ||

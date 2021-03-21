@@ -7,7 +7,7 @@ part 'firebase_meal_plan_collection.g.dart';
 @JsonSerializable(includeIfNull: false)
 class FirebaseMealPlanCollection {
   @JsonKey(ignore: true)
-  String documentID;
+  String? documentID;
   @JsonKey()
   String name;
   @JsonKey(fromJson: kTimestampFromJson, toJson: kTimestampToJson)
@@ -25,10 +25,9 @@ class FirebaseMealPlanCollection {
   Map<String, dynamic> toJson() => _$FirebaseMealPlanCollectionToJson(this);
 
   FirebaseMealPlanCollection({
-    this.creationTimestamp,
-    this.name,
-    this.users,
-  }) {
+    required this.name,
+    required this.users,
+  }) : this.creationTimestamp = Timestamp.now() {
     if (this.creationTimestamp == null) {
       this.creationTimestamp = Timestamp.now();
     }

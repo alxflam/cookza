@@ -4,9 +4,7 @@ import 'package:cookza/model/firebase/general/firebase_user.dart';
 class UserEntityFirebase implements UserEntity {
   FirebaseRecipeUser _user;
 
-  UserEntityFirebase.from(FirebaseRecipeUser user) {
-    this._user = user;
-  }
+  UserEntityFirebase.from(this._user);
 
   @override
   String get id => this._user.id;

@@ -45,7 +45,7 @@ class LightTheme extends CustomTheme {
   @override
   String get displayName {
     var context = sl.get<NavigatorService>().currentContext;
-    return AppLocalizations.of(context).themeLight;
+    return AppLocalizations.of(context)!.themeLight;
   }
 }
 
@@ -79,6 +79,6 @@ class DarkTheme extends CustomTheme {
   @override
   String get displayName {
     var context = sl.get<NavigatorService>().currentContext;
-    return AppLocalizations.of(context).themeDark;
+    return AppLocalizations.of(context)!.themeDark;
   }
 }

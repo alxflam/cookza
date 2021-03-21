@@ -39,7 +39,7 @@ void main() {
 
     var cut = IngredientsCalculatorImpl();
 
-    var result = await cut.getIngredients({recipe.id: 4, recipe2.id: 3});
+    var result = await cut.getIngredients({recipe.id!: 4, recipe2.id!: 3});
 
     expect(result.length, 3);
     expect(result[0].amount, 5.1);
@@ -66,7 +66,7 @@ void main() {
 
     var cut = IngredientsCalculatorImpl();
 
-    var result = await cut.getIngredients({recipe.id: 4, recipe2.id: 3});
+    var result = await cut.getIngredients({recipe.id!: 4, recipe2.id!: 3});
 
     expect(result.length, 1);
     expect(result.first.amount, 5.1);
@@ -92,7 +92,7 @@ void main() {
 
     var cut = IngredientsCalculatorImpl();
 
-    var result = await cut.getIngredients({recipe.id: 4, recipe2.id: 3});
+    var result = await cut.getIngredients({recipe.id!: 4, recipe2.id!: 3});
 
     expect(result.length, 2);
     expect(result.first.amount, 1500);

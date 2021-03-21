@@ -34,7 +34,7 @@ class WebLoginScreen extends StatelessWidget {
       builder: (context, AsyncSnapshot<String> snapshot) {
         if (snapshot.hasData) {
           var json = JsonUser(
-                  id: snapshot.data,
+                  id: snapshot.data!,
                   name: 'Cookly Web',
                   type: USER_TYPE.WEB_SESSION)
               .toJson();

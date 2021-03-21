@@ -13,7 +13,7 @@ abstract class ImageManager {
   Future<void> deleteRecipeImage(RecipeEntity entity);
   Future<String> getRecipeImageURL(String recipeId);
   String getRecipeImagePath(String recipeId);
-  Future<File> getRecipeImageFile(RecipeEntity entity);
+  Future<File?> getRecipeImageFile(RecipeEntity entity);
   Future<void> deleteLocalImage(String fileName);
 }
 
@@ -30,12 +30,12 @@ class ImageManagerFirebase implements ImageManager {
     }
 
     // return if the image does not have an image at all
-    if (entity.image == null || entity.image.isEmpty) {
+    if (entity.image == null || entity.image!.isEmpty) {
       return;
     }
 
     // delete the cloud image
-    Reference reference = _storage.ref().child(getRecipeImagePath(entity.id));
+    Reference reference = _storage.ref().child(getRecipeImagePath(entity.id!));
     try {
       // TODO: only call if really deleted... -> check in the model of the view
       await reference.delete();
@@ -62,7 +62,7 @@ class ImageManagerFirebase implements ImageManager {
   }
 
   @override
-  Future<File> getRecipeImageFile(RecipeEntity entity) async {
+  Future<File?> getRecipeImageFile(RecipeEntity entity) async {
     var imageDirectory = await sl.get<StorageProvider>().getImageDirectory();
     var cacheFile = File('$imageDirectory/${entity.id}.jpg');
 
@@ -76,10 +76,10 @@ class ImageManagerFirebase implements ImageManager {
       }
     }
 
-    if (entity.image != null && entity.image.isNotEmpty) {
+    if (entity.image != null && entity.image!.isNotEmpty) {
       try {
         Reference reference =
-            _storage.ref().child(getRecipeImagePath(entity.image));
+            _storage.ref().child(getRecipeImagePath(entity.image!));
         var task = reference.writeToFile(cacheFile);
         // TODO: catch error for future and log it!
         var bytes = (await task).bytesTransferred;
@@ -89,7 +89,7 @@ class ImageManagerFirebase implements ImageManager {
         return null;
       }
     } else {
-      cacheFile = null;
+      return null;
     }
 
     return cacheFile;

@@ -6,28 +6,26 @@ class MutableShoppingList implements ShoppingListEntity {
   DateTime _from;
   DateTime _until;
   String _groupID;
-  String _documentID;
+  String _documentID = '';
   List<ShoppingListItemEntity> _items = [];
 
-  MutableShoppingList.newList(String groupID, DateTime from, DateTime until) {
-    this._groupID = groupID;
-    this._from = from;
-    this._until = until;
-  }
+  MutableShoppingList.newList(String groupID, DateTime from, DateTime until)
+      : this._groupID = groupID,
+        this._from = from,
+        this._until = until;
 
   MutableShoppingList.ofValues(DateTime from, DateTime until, String groupID,
-      List<ShoppingListItemEntity> items) {
-    this._from = from;
-    this._until = until;
-    this._groupID = groupID;
-    this._items = items;
-  }
+      List<ShoppingListItemEntity> items)
+      : this._from = from,
+        this._until = until,
+        this._groupID = groupID,
+        this._items = items;
 
-  MutableShoppingList.of(ShoppingListEntity entity) {
-    this._from = entity.dateFrom;
-    this._until = entity.dateUntil;
-    this._documentID = entity.id;
-    this._groupID = entity.groupID;
+  MutableShoppingList.of(ShoppingListEntity entity)
+      : this._from = entity.dateFrom,
+        this._until = entity.dateUntil,
+        this._documentID = entity.id ?? '',
+        this._groupID = entity.groupID {
     this._items.addAll(entity.items);
   }
 

@@ -11,7 +11,7 @@ class ShoppingListTextExporterApp implements ShoppingListTextExporter {
   @override
   Future<void> exportShoppingListAsText(ShoppingListModel model) async {
     var context = sl.get<NavigatorService>().currentContext;
-    var title = AppLocalizations.of(context).functionsShoppingList;
+    var title = AppLocalizations.of(context)!.functionsShoppingList;
     var text =
         await sl.get<ShoppingListTextGenerator>().generateText(model, title);
 

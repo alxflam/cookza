@@ -14,8 +14,8 @@ abstract class RecipeManager {
   Stream<List<RecipeEntity>> get recipes;
   Future<RecipeCollectionEntity> collectionByID(String id);
 
-  String get currentCollection;
-  set currentCollection(String id);
+  String? get currentCollection;
+  set currentCollection(String? id);
 
   Future<RecipeCollectionEntity> createCollection(String name);
 
@@ -51,7 +51,7 @@ class RecipeManagerFirebase implements RecipeManager {
   /// the currently selected collection
   /// stored as a shared preference to reuse the LRU collection upon
   /// restart of the app
-  String _currentCollection;
+  String? _currentCollection;
 
   @override
   Future<List<RecipeCollectionEntity>> get collections async {
@@ -74,14 +74,14 @@ class RecipeManagerFirebase implements RecipeManager {
   }
 
   @override
-  String get currentCollection {
+  String? get currentCollection {
     return this._currentCollection;
   }
 
   @override
-  set currentCollection(String id) {
+  set currentCollection(String? id) {
     this._currentCollection = id;
-    sl.get<SharedPreferencesProvider>().leastRecentlyUsedRecipeGroup = id;
+    sl.get<SharedPreferencesProvider>().leastRecentlyUsedRecipeGroup = id ?? '';
   }
 
   @override
@@ -95,7 +95,7 @@ class RecipeManagerFirebase implements RecipeManager {
       return Stream.empty();
     }
 
-    return sl.get<FirebaseProvider>().recipes(this.currentCollection);
+    return sl.get<FirebaseProvider>().recipes(this.currentCollection!);
   }
 
   @override
@@ -107,14 +107,14 @@ class RecipeManagerFirebase implements RecipeManager {
   @override
   Future<void> deleteCollection(RecipeCollectionEntity entity) async {
     var firebase = sl.get<FirebaseProvider>();
-    var collection = await firebase.recipeCollectionByID(entity.id);
+    var collection = await firebase.recipeCollectionByID(entity.id!);
     if (collection.users.where((e) => e.id != firebase.userUid).isNotEmpty) {
       throw '§Can\'t delete a group with members';
     }
     if (this._currentCollection == entity.id) {
       this._currentCollection = null;
     }
-    return firebase.deleteRecipeCollection(entity.id);
+    return firebase.deleteRecipeCollection(entity.id!);
   }
 
   @override
@@ -150,6 +150,10 @@ class RecipeManagerFirebase implements RecipeManager {
 
   @override
   Future<void> importRecipes(List<RecipeEntity> recipes) async {
+    if (this.currentCollection == null) {
+      throw 'A collection needs to be set for import';
+    }
+
     for (var recipe in recipes) {
       // first create the recipe
       MutableRecipe entity = MutableRecipe.of(recipe);
@@ -158,16 +162,16 @@ class RecipeManagerFirebase implements RecipeManager {
       }
       var ids = await sl
           .get<FirebaseProvider>()
-          .importRecipes([entity], this.currentCollection);
+          .importRecipes([entity], this.currentCollection!);
       if (recipe.hasInMemoryImage) {
         // then upload the image if there is an in memory image
         await sl
             .get<ImageManager>()
-            .uploadRecipeImageFromBytes(ids.first.id, recipe.inMemoryImage);
+            .uploadRecipeImageFromBytes(ids.first.id!, recipe.inMemoryImage!);
         // update image reference field on recipe (to optimize network calls - only try to  fetch image if recipe has an image)
         await sl
             .get<FirebaseProvider>()
-            .updateImageReference(ids.first.id, ids.first.id);
+            .updateImageReference(ids.first.id!, ids.first.id!);
       }
     }
 
@@ -179,7 +183,7 @@ class RecipeManagerFirebase implements RecipeManager {
     if (this._currentCollection == entity.id) {
       this._currentCollection = null;
     }
-    return sl.get<FirebaseProvider>().leaveRecipeGroup(entity.id);
+    return sl.get<FirebaseProvider>().leaveRecipeGroup(entity.id!);
   }
 
   @override
@@ -190,7 +194,7 @@ class RecipeManagerFirebase implements RecipeManager {
   @override
   Future<void> init() {
     var collection =
-        sl.get<SharedPreferencesProvider>().leastRecentlyUsedRecipeGroup;
+        sl.get<SharedPreferencesProvider>().getLeastRecentlyUsedRecipeGroup();
     if (collection != null && collection.isNotEmpty) {
       this.currentCollection = collection;
     }

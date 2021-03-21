@@ -8,12 +8,10 @@ part of 'recipe_list.dart';
 
 RecipeList _$RecipeListFromJson(Map<String, dynamic> json) {
   return RecipeList(
-    modelVersion: json['modelVersion'] as int,
-    recipes: (json['recipes'] as List)
-        ?.map((e) =>
-            e == null ? null : Recipe.fromJson(e as Map<String, dynamic>))
-        ?.toList(),
-  );
+    recipes: (json['recipes'] as List<dynamic>)
+        .map((e) => Recipe.fromJson(e as Map<String, dynamic>))
+        .toList(),
+  )..modelVersion = json['modelVersion'] as int;
 }
 
 Map<String, dynamic> _$RecipeListToJson(RecipeList instance) {

@@ -18,9 +18,8 @@ class NewIngredientScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final RecipeIngredientModel _model =
-        ModalRoute.of(context).settings.arguments;
-    assert(_model != null);
+    final _model =
+        ModalRoute.of(context)!.settings.arguments as RecipeIngredientModel;
 
     return ChangeNotifierProvider<RecipeIngredientModel>.value(
       value: _model,
@@ -50,14 +49,18 @@ class NewIngredientScreen extends StatelessWidget {
                         child: TextFormField(
                           decoration: InputDecoration(
                               isDense: true,
-                              labelText: AppLocalizations.of(context).amount),
+                              labelText: AppLocalizations.of(context)!.amount),
                           controller: amountController,
                           keyboardType: TextInputType.number,
                           validator: (value) {
-                            var numValue = double.tryParse(value);
+                            if (value == null || value.isEmpty) {
+                              return AppLocalizations.of(context)!
+                                  .validationEnterNumber;
+                            }
 
-                            if (value.isEmpty || numValue == 0) {
-                              return AppLocalizations.of(context)
+                            var numValue = double.tryParse(value);
+                            if (numValue == 0) {
+                              return AppLocalizations.of(context)!
                                   .validationEnterNumber;
                             }
                             return '';
@@ -75,7 +78,7 @@ class NewIngredientScreen extends StatelessWidget {
                                 decoration: InputDecoration(
                                     isDense: true,
                                     labelText:
-                                        AppLocalizations.of(context).unit),
+                                        AppLocalizations.of(context)!.unit),
                                 keyboardType: TextInputType.number,
                                 initialValue: model.uomDisplayText,
                                 enabled: false,
@@ -84,7 +87,7 @@ class NewIngredientScreen extends StatelessWidget {
                           } else {
                             List<UnitOfMeasure> uoms =
                                 sl.get<UnitOfMeasureProvider>().getVisible();
-                            List<DropdownMenuItem> items = uoms
+                            List<DropdownMenuItem<UnitOfMeasure>> items = uoms
                                 // todo null check on uom
                                 // let it not be null, but have an empty uom instead
                                 // which returns an empty string instead of trying to translate the id
@@ -107,10 +110,10 @@ class NewIngredientScreen extends StatelessWidget {
                                   decoration: InputDecoration(
                                     isDense: true,
                                     labelText:
-                                        AppLocalizations.of(context).unit,
+                                        AppLocalizations.of(context)!.unit,
                                   ),
-                                  onChanged: (UnitOfMeasure value) {
-                                    model.uom = value;
+                                  onChanged: (UnitOfMeasure? value) {
+                                    model.uom = value!;
                                   }),
                             );
                           }
@@ -140,9 +143,10 @@ class NewIngredientScreen extends StatelessWidget {
                                 builder: (context) {
                                   return AlertDialog(
                                     title: AlertDialogTitle(
-                                      title: AppLocalizations.of(context).error,
+                                      title:
+                                          AppLocalizations.of(context)!.error,
                                     ),
-                                    content: Text(e),
+                                    content: Text(e.toString()),
                                   );
                                 },
                               );
@@ -189,7 +193,7 @@ class NewIngredientScreen extends StatelessWidget {
 
   Widget _getRecipeWidget(RecipeIngredientModel model, BuildContext context) {
     if (model.isRecipeReference) {
-      return RecipeListTile(item: model.recipe.recipe);
+      return RecipeListTile(item: model.recipe!.recipe);
     } else {
       var ingredientController = TextEditingController(text: model.name);
       ingredientController
@@ -227,8 +231,8 @@ class NewIngredientScreen extends StatelessWidget {
         icon:
             model.isRecipeReference ? Icon(Icons.delete) : Icon(Icons.note_add),
         label: model.isRecipeReference
-            ? Text(AppLocalizations.of(context).removeRecipe)
-            : Text(AppLocalizations.of(context).referToRecipe),
+            ? Text(AppLocalizations.of(context)!.removeRecipe)
+            : Text(AppLocalizations.of(context)!.referToRecipe),
       );
     }
     return Container();
@@ -237,7 +241,7 @@ class NewIngredientScreen extends StatelessWidget {
 
 class IngredientNameTextInput extends StatelessWidget {
   const IngredientNameTextInput({
-    @required this.ingredientController,
+    required this.ingredientController,
   });
 
   final TextEditingController ingredientController;
@@ -247,7 +251,7 @@ class IngredientNameTextInput extends StatelessWidget {
     return TextFormField(
       textCapitalization: TextCapitalization.sentences,
       decoration: InputDecoration(
-          labelText: AppLocalizations.of(context).ingredient(1)),
+          labelText: AppLocalizations.of(context)!.ingredient(1)),
       controller: ingredientController,
       keyboardType: TextInputType.text,
     );

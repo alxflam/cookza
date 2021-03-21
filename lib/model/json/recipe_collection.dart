@@ -21,12 +21,7 @@ class RecipeCollection {
   Map<String, dynamic> toJson() => _$RecipeCollectionToJson(this);
 
   RecipeCollection({
-    this.id,
-    this.name,
-    this.creationTimestamp,
-  }) {
-    if (this.creationTimestamp == null) {
-      this.creationTimestamp = Timestamp.now();
-    }
-  }
+    required this.id,
+    required this.name,
+  }) : this.creationTimestamp = Timestamp.now();
 }

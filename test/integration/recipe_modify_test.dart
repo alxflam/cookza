@@ -27,16 +27,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../mocks/application_mock.dart';
-import '../mocks/image_manager_mock.dart';
-import '../mocks/navigator_observer_mock.dart';
 import '../mocks/receive_intent_handler_mock.dart';
 import '../mocks/recipe_manager_mock.dart';
+import '../mocks/shared_mocks.mocks.dart';
 import '../mocks/uom_provider_mock.dart';
 import '../utils/recipe_creator.dart';
 
 void main() {
   var mock = RecipeManagerStub();
-  var imageMock = ImageManagerMock();
+  var imageMock = MockImageManager();
   GetIt.I.registerSingleton<RecipeManager>(mock);
   GetIt.I.registerSingleton<ImageManager>(imageMock);
   GetIt.I.registerSingleton<SimilarityService>(SimilarityService());
@@ -61,7 +60,7 @@ void main() {
     /// create the recipe
     var coll = await mock.createCollection('dummy');
     var recipe = RecipeCreator.createRecipe(originalRecipeName);
-    recipe.recipeCollectionId = coll.id;
+    recipe.recipeCollectionId = coll.id!;
     recipe.duration = 20;
     var onion = RecipeCreator.createIngredient('Onion', amount: 2, uom: 'GRM');
     var pepper =
@@ -248,7 +247,7 @@ Future _proceedStep(WidgetTester tester) async {
   await tester.pump();
 }
 
-void _navigateToRecipeScreen(WidgetTester tester) async {
+Future<void> _navigateToRecipeScreen(WidgetTester tester) async {
   final mockObserver = MockNavigatorObserver();
   await tester.pumpWidget(MockApplication(mockObserver: mockObserver));
 
@@ -270,14 +269,15 @@ void _navigateToRecipeScreen(WidgetTester tester) async {
   await tester.pumpAndSettle();
 }
 
-void _inputFormField(WidgetTester tester, Finder finder, String value) async {
+Future<void> _inputFormField(
+    WidgetTester tester, Finder finder, String value) async {
   await tester.enterText(finder, value);
   await tester.testTextInput.receiveAction(TextInputAction.done);
   await tester.pumpAndSettle();
   expect(find.text(value), findsOneWidget);
 }
 
-Future setupApplication(WidgetTester tester) async {
+Future<void> setupApplication(WidgetTester tester) async {
   await tester.pumpWidget(MaterialApp(
     routes: kRoutes,
     localizationsDelegates: [

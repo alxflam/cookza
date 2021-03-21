@@ -2,7 +2,7 @@ import 'package:cookza/model/entities/abstract/meal_plan_entity.dart';
 import 'package:cookza/services/util/week_calculation.dart';
 
 class MutableMealPlan implements MealPlanEntity {
-  String _id;
+  String? _id;
 
   final List<MutableMealPlanDateEntity> _items = [];
 
@@ -10,14 +10,14 @@ class MutableMealPlan implements MealPlanEntity {
 
   MutableMealPlan.of(
       String id, String groupID, List<MealPlanDateEntity> items, int weeks,
-      {DateTime startDate}) {
-    this._id = id;
-    this._groupID = groupID;
+      {DateTime? startDate})
+      : this._id = id,
+        this._groupID = groupID {
     init(items, weeks, startDate ?? DateTime.now());
   }
 
   @override
-  String get id => this._id;
+  String? get id => this._id;
 
   @override
   List<MutableMealPlanDateEntity> get items => this._items;
@@ -81,16 +81,16 @@ class MutableMealPlanDateEntity implements MealPlanDateEntity {
   DateTime _date;
   List<MutableMealPlanRecipeEntity> _recipes;
 
-  MutableMealPlanDateEntity.empty(DateTime date) {
-    this._date = date;
-    this._recipes = [];
-  }
+  MutableMealPlanDateEntity.empty(DateTime date)
+      : this._date = date,
+        this._recipes = [];
 
-  MutableMealPlanDateEntity.of(MealPlanDateEntity entity) {
-    this._date = entity.date;
-    this._recipes = List.of(
-        entity.recipes.map((e) => MutableMealPlanRecipeEntity.of(e)).toList());
-  }
+  MutableMealPlanDateEntity.of(MealPlanDateEntity entity)
+      : this._date = entity.date,
+        this._recipes = List.of(entity.recipes
+            .map((e) => MutableMealPlanRecipeEntity.of(e))
+            .toList());
+
   @override
   DateTime get date => this._date;
 
@@ -116,7 +116,7 @@ class MutableMealPlanDateEntity implements MealPlanDateEntity {
 }
 
 class MutableMealPlanRecipeEntity implements MealPlanRecipeEntity {
-  String _id;
+  String? _id;
 
   String _name;
 
@@ -124,14 +124,13 @@ class MutableMealPlanRecipeEntity implements MealPlanRecipeEntity {
 
   MutableMealPlanRecipeEntity.fromValues(this._id, this._name, this._servings);
 
-  MutableMealPlanRecipeEntity.of(MealPlanRecipeEntity entity) {
-    this._id = entity.id;
-    this._name = entity.name;
-    this._servings = entity.servings;
-  }
+  MutableMealPlanRecipeEntity.of(MealPlanRecipeEntity entity)
+      : this._id = entity.id,
+        this._name = entity.name,
+        this._servings = entity.servings;
 
   @override
-  String get id => this._id;
+  String? get id => this._id;
 
   @override
   String get name => this._name;

@@ -80,14 +80,4 @@ void main() {
       expect(cut.items.first.ingredient.ingredient.name, 'Onion');
     },
   );
-
-  test(
-    'Shopping list document empty factory method',
-    () async {
-      var cut = FirebaseShoppingListDocument.empty('1234');
-
-      expect(cut.groupID, '1234');
-      expect(cut.documentID, null);
-    },
-  );
 }

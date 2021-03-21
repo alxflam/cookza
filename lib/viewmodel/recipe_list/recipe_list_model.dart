@@ -6,7 +6,7 @@ import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:flutter/material.dart';
 
 class RecipeListViewModel with ChangeNotifier {
-  String _filterString;
+  String? _filterString;
 
   var _searchEnabled = false;
 
@@ -28,12 +28,12 @@ class RecipeListViewModel with ChangeNotifier {
     ));
   }
 
-  set filterString(String value) {
+  set filterString(String? value) {
     this._filterString = value;
     notifyListeners();
   }
 
-  String get filterString => this._filterString;
+  String? get filterString => this._filterString;
 
   bool get isSearchEnabled => this._searchEnabled;
 
@@ -46,9 +46,9 @@ class RecipeListViewModel with ChangeNotifier {
   }
 
   bool shouldAdd(RecipeEntity item) {
-    if (this._filterString == null || this._filterString.trim().isEmpty) {
+    if (this._filterString == null || this._filterString!.trim().isEmpty) {
       return true;
     }
-    return item.name.toLowerCase().contains(this._filterString.toLowerCase());
+    return item.name.toLowerCase().contains(this._filterString!.toLowerCase());
   }
 }

@@ -26,11 +26,9 @@ Map<String, dynamic> _$FirebaseMealPlanRecipeToJson(
 FirebaseMealPlanDate _$FirebaseMealPlanDateFromJson(Map<String, dynamic> json) {
   return FirebaseMealPlanDate(
     date: kDateFromJson(json['date'] as String),
-    recipes: (json['recipes'] as List)
-        ?.map((e) => e == null
-            ? null
-            : FirebaseMealPlanRecipe.fromJson(e as Map<String, dynamic>))
-        ?.toList(),
+    recipes: (json['recipes'] as List<dynamic>)
+        .map((e) => FirebaseMealPlanRecipe.fromJson(e as Map<String, dynamic>))
+        .toList(),
   );
 }
 
@@ -52,11 +50,9 @@ Map<String, dynamic> _$FirebaseMealPlanDateToJson(
 FirebaseMealPlanDocument _$FirebaseMealPlanDocumentFromJson(
     Map<String, dynamic> json) {
   return FirebaseMealPlanDocument(
-    items: (json['items'] as List)
-        ?.map((e) => e == null
-            ? null
-            : FirebaseMealPlanDate.fromJson(e as Map<String, dynamic>))
-        ?.toList(),
+    items: (json['items'] as List<dynamic>)
+        .map((e) => FirebaseMealPlanDate.fromJson(e as Map<String, dynamic>))
+        .toList(),
     groupID: json['groupID'] as String,
   );
 }

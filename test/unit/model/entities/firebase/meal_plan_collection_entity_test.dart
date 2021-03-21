@@ -8,9 +8,9 @@ void main() {
     'owner',
     () async {
       var collection = FirebaseMealPlanCollection(
-          users: {'1234': 'Someone'},
-          name: 'name',
-          creationTimestamp: Timestamp.now());
+        users: {'1234': 'Someone'},
+        name: 'name',
+      );
       var cut = MealPlanCollectionEntityFirebase.of(collection);
       expect(cut.users.length, 1);
       expect(cut.users.first.id, '1234');
@@ -23,9 +23,9 @@ void main() {
     () async {
       var createdAt = Timestamp.now();
       var collection = FirebaseMealPlanCollection(
-          users: {'1234': 'Someone'},
-          name: 'name',
-          creationTimestamp: createdAt);
+        users: {'1234': 'Someone'},
+        name: 'name',
+      );
       collection.documentID = 'SomeID';
       var cut = MealPlanCollectionEntityFirebase.of(collection);
       expect(cut.name, 'name');

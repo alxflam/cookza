@@ -8,7 +8,7 @@ part 'firebase_recipe.g.dart';
 
 @JsonSerializable(includeIfNull: false)
 class FirebaseRecipe {
-  factory FirebaseRecipe.fromJson(Map<String, dynamic> json, {String id}) {
+  factory FirebaseRecipe.fromJson(Map<String, dynamic> json, {String? id}) {
     var instance = _$FirebaseRecipeFromJson(json);
     instance.documentID = id;
     return instance;
@@ -17,15 +17,15 @@ class FirebaseRecipe {
   Map<String, dynamic> toJson() => _$FirebaseRecipeToJson(this);
 
   @JsonKey(ignore: true)
-  String documentID;
+  String? documentID;
   @JsonKey(fromJson: kTimestampFromJson, toJson: kTimestampToJson)
   Timestamp creationDate;
   @JsonKey(fromJson: kTimestampFromJson, toJson: kTimestampToJson)
   Timestamp modificationDate;
   @JsonKey()
-  String ingredientsID;
+  String? ingredientsID;
   @JsonKey()
-  String instructionsID;
+  String? instructionsID;
 
   @JsonKey()
   String name;
@@ -37,8 +37,8 @@ class FirebaseRecipe {
   int rating;
   @JsonKey(defaultValue: 1)
   int servings;
-  @JsonKey(nullable: true)
-  String image;
+  @JsonKey()
+  String? image;
   @JsonKey()
   String recipeGroupID;
 
@@ -51,17 +51,17 @@ class FirebaseRecipe {
     this.documentID,
     this.ingredientsID,
     this.instructionsID,
-    this.name,
-    this.description,
-    this.creationDate,
-    this.modificationDate,
-    this.duration,
-    this.difficulty,
-    this.tags,
-    this.rating,
-    this.servings,
-    this.image,
-    this.recipeGroupID,
+    required this.name,
+    required this.description,
+    required this.creationDate,
+    required this.modificationDate,
+    required this.duration,
+    required this.difficulty,
+    required this.tags,
+    required this.rating,
+    required this.servings,
+    required this.image,
+    required this.recipeGroupID,
   }) {
     // initalize values
     if (this.tags == null) {
@@ -90,7 +90,7 @@ class FirebaseRecipe {
       duration: recipe.duration,
       difficulty: recipe.difficulty,
       tags: recipe.tags,
-      rating: recipe.rating,
+      rating: recipe.rating ?? 0,
       servings: recipe.servings,
       image: recipe.image,
       documentID: recipe.id,

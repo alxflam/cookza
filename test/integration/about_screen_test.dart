@@ -8,12 +8,13 @@ import 'package:cookza/viewmodel/settings/theme_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../mocks/navigator_observer_mock.dart';
+import '../mocks/shared_mocks.mocks.dart';
 
 void main() {
   var observer = MockNavigatorObserver();

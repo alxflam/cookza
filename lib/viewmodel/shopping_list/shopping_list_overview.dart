@@ -4,9 +4,10 @@ import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:cookza/services/meal_plan_manager.dart';
 import 'package:cookza/services/shopping_list/shopping_list_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:collection/collection.dart';
 
 class ShoppingListOverviewModel extends ChangeNotifier {
-  List<MealPlanCollectionEntity> _mealPlans;
+  late List<MealPlanCollectionEntity> _mealPlans;
 
   void navigatedBack() {
     // update view just in case some data changed
@@ -22,8 +23,7 @@ class ShoppingListOverviewModel extends ChangeNotifier {
   }
 
   String getMealPlanName(String id) {
-    var entry =
-        this._mealPlans.firstWhere((e) => e.id == id, orElse: () => null);
+    var entry = this._mealPlans.firstWhereOrNull((e) => e.id == id);
     return entry != null ? entry.name : 'unknown';
   }
 

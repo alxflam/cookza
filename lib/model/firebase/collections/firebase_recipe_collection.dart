@@ -7,7 +7,7 @@ part 'firebase_recipe_collection.g.dart';
 @JsonSerializable(includeIfNull: false)
 class FirebaseRecipeCollection {
   @JsonKey(ignore: true)
-  String documentID;
+  String? documentID;
   @JsonKey()
   String name;
   @JsonKey(fromJson: kTimestampFromJson, toJson: kTimestampToJson)
@@ -25,9 +25,9 @@ class FirebaseRecipeCollection {
   Map<String, dynamic> toJson() => _$FirebaseRecipeCollectionToJson(this);
 
   FirebaseRecipeCollection({
-    this.name,
-    this.creationTimestamp,
-    this.users,
+    required this.name,
+    required this.creationTimestamp,
+    required this.users,
   }) {
     if (this.creationTimestamp == null) {
       throw 'a creation timestamp is needed';

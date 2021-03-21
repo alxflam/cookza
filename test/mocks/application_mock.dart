@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import 'navigator_observer_mock.dart';
+import 'shared_mocks.mocks.dart';
 
 class MockApplication extends StatelessWidget {
   const MockApplication({
-    @required this.mockObserver,
+    required this.mockObserver,
   });
 
   final MockNavigatorObserver mockObserver;

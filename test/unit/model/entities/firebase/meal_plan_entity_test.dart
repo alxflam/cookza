@@ -22,8 +22,7 @@ void main() {
   test(
     'RecipeEntity as note',
     () async {
-      var recipe =
-          FirebaseMealPlanRecipe(name: 'dummy', id: null, servings: null);
+      var recipe = FirebaseMealPlanRecipe(name: 'dummy', id: '', servings: 2);
 
       var cut = MealPlanRecipeEntityFirebase.of(recipe);
 

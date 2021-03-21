@@ -4,9 +4,7 @@ import 'package:cookza/model/json/user.dart';
 class UserEntityJson implements UserEntity {
   JsonUser _user;
 
-  UserEntityJson.from(JsonUser user) {
-    this._user = user;
-  }
+  UserEntityJson.from(this._user);
 
   @override
   String get id => this._user.id;

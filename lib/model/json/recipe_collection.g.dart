@@ -10,8 +10,7 @@ RecipeCollection _$RecipeCollectionFromJson(Map<String, dynamic> json) {
   return RecipeCollection(
     id: json['id'] as String,
     name: json['name'] as String,
-    creationTimestamp: kTimestampFromJson(json['creationTimestamp']),
-  );
+  )..creationTimestamp = kTimestampFromJson(json['creationTimestamp']);
 }
 
 Map<String, dynamic> _$RecipeCollectionToJson(RecipeCollection instance) {

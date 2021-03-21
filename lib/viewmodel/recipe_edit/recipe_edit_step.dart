@@ -31,7 +31,7 @@ class RecipeOverviewEditStep extends RecipeEditStep {
   DIFFICULTY _difficulty = DIFFICULTY.EASY;
   DateTime creationDate = DateTime.now();
   final DateTime modificationDate = DateTime.now();
-  RecipeCollectionEntity collection;
+  RecipeCollectionEntity? collection;
 
   int get duration => _duration;
   DIFFICULTY get difficulty => _difficulty;
@@ -53,7 +53,7 @@ class RecipeOverviewEditStep extends RecipeEditStep {
     recipe.difficulty = this.difficulty;
     recipe.duration = this.duration;
     recipe.modificationDate = this.modificationDate;
-    recipe.recipeCollectionId = this.collection.id;
+    recipe.recipeCollectionId = this.collection?.id ?? '';
   }
 
   @override
@@ -73,16 +73,16 @@ class RecipeOverviewEditStep extends RecipeEditStep {
     var context = sl.get<NavigatorService>().currentContext;
 
     if (name.isEmpty) {
-      throw AppLocalizations.of(context).assignRecipeName;
+      throw AppLocalizations.of(context)!.assignRecipeName;
     }
     if (duration <= 0) {
-      throw AppLocalizations.of(context).assignRecipeDuration;
+      throw AppLocalizations.of(context)!.assignRecipeDuration;
     }
     if (difficulty == null) {
-      throw AppLocalizations.of(context).assignRecipeDifficulty;
+      throw AppLocalizations.of(context)!.assignRecipeDifficulty;
     }
     if (this.collection == null) {
-      throw AppLocalizations.of(context).assignRecipeGroup;
+      throw AppLocalizations.of(context)!.assignRecipeGroup;
     }
   }
 
@@ -91,12 +91,12 @@ class RecipeOverviewEditStep extends RecipeEditStep {
 }
 
 class RecipeImageEditStep extends RecipeEditStep {
-  File _image;
+  File? _image;
   dynamic _initialState;
 
-  File get image => _image;
+  File? get image => _image;
 
-  set image(File image) {
+  set image(File? image) {
     _image = image;
     notifyListeners();
   }
@@ -265,11 +265,11 @@ class RecipeIngredientEditStep extends RecipeEditStep {
     var context = sl.get<NavigatorService>().currentContext;
 
     if (_ingredients.isEmpty) {
-      throw AppLocalizations.of(context).assignIngredients;
+      throw AppLocalizations.of(context)!.assignIngredients;
     }
 
     if (_servings <= 0) {
-      throw AppLocalizations.of(context).assignServings;
+      throw AppLocalizations.of(context)!.assignServings;
     }
   }
 
@@ -295,7 +295,7 @@ class RecipeInstructionEditStep extends RecipeEditStep {
 
   InstructionEntity getInstruction(int index) {
     if (index > _instructions.length) {
-      return null;
+      throw 'Index does not exist';
     }
     return _instructions[index];
   }
@@ -338,12 +338,12 @@ class RecipeInstructionEditStep extends RecipeEditStep {
 
     // there are instructions and there's no empty instruction
     if (_instructions.isEmpty) {
-      throw AppLocalizations.of(context).assignInstructions;
+      throw AppLocalizations.of(context)!.assignInstructions;
     }
     if (_instructions
         .where((f) => f.text == null || f.text.isEmpty)
         .isNotEmpty) {
-      throw AppLocalizations.of(context).assignEmptyInstructions;
+      throw AppLocalizations.of(context)!.assignEmptyInstructions;
     }
   }
 

@@ -38,7 +38,7 @@ class RecipeGroupsTiles extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               ElevatedButton(
-                  child: Text(AppLocalizations.of(context).createGroup),
+                  child: Text(AppLocalizations.of(context)!.createGroup),
                   onPressed: () async {
                     // await the creation or cancellation
                     var result = await this._createRecipeGroup(context);
@@ -95,7 +95,7 @@ class RecipeGroupsTiles extends StatelessWidget {
           // builder is needed to get a new context for the Provider
           builder: (context) {
             return SimpleDialog(
-              title: Text(AppLocalizations.of(context).createGroup),
+              title: Text(AppLocalizations.of(context)!.createGroup),
               children: [
                 SingleChildScrollView(
                   child: Column(
@@ -114,8 +114,8 @@ class RecipeGroupsTiles extends StatelessWidget {
                                 maxLines: 1,
                                 autofocus: true,
                                 decoration: InputDecoration(
-                                    hintText:
-                                        AppLocalizations.of(context).groupName),
+                                    hintText: AppLocalizations.of(context)!
+                                        .groupName),
                               ),
                             )
                           ],

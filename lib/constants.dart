@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 
 /// App name
 const kAppName = 'Cookza';
-const kAppVersion = '2021-02-alpha';
+const kAppVersion = '2021-03-alpha';
 const kPlayStoreLink = 'market://details?id=com.flammer.cookza';
 
 /// Icons
@@ -68,19 +68,19 @@ const kUoMPortion = 'PTN';
 
 /// json conversion
 DateTime kDateFromJson(String date) {
-  if (date != null) {
-    return kDateFormatter.parse(date);
-  } else {
-    return null;
-  }
+  // if (date != null) {
+  return kDateFormatter.parse(date);
+  // } else {
+  //   return null;
+  // }
 }
 
 String kDateToJson(DateTime date) {
-  if (date != null) {
-    return kDateFormatter.format(date);
-  } else {
-    return null;
-  }
+  // if (date != null) {
+  return kDateFormatter.format(date);
+  // } else {
+  //   return null;
+  // }
 }
 
 Timestamp kTimestampFromJson(dynamic val) {
@@ -101,7 +101,7 @@ var kDateFormatter = DateFormat('dd.MM.yyyy');
 var kFileNameDateFormatter = DateFormat('dd_MM_yyyy');
 var ingredientsAmountFormatter = NumberFormat('#####.00');
 
-String kFormatAmount(double amount) {
+String kFormatAmount(double? amount) {
   if (amount == null || amount == 0) {
     return '';
   }
@@ -134,7 +134,7 @@ void kErrorDialog(BuildContext context, String title, String message) {
 }
 
 // json transformation
-dynamic kListToJson(List list) {
+dynamic kListToJson(List? list) {
   if (list != null) {
     return list.map((f) => f.toJson()).toList();
   } else {

@@ -39,7 +39,8 @@ Step getImageStep(BuildContext context) {
                 child: model.image == null
                     ? SelectImageWidget(onSelect: getImage)
                     : ImageSelectedWidget(
-                        image: model.image, onDelete: () => model.image = null),
+                        image: model.image!,
+                        onDelete: () => model.image = null),
               ),
             ],
           );
@@ -52,13 +53,13 @@ Step getImageStep(BuildContext context) {
 class SelectImageWidget extends StatelessWidget {
   final Function onSelect;
 
-  SelectImageWidget({@required this.onSelect});
+  SelectImageWidget({required this.onSelect});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Text(AppLocalizations.of(context).addImageLong),
+        Text(AppLocalizations.of(context)!.addImageLong),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
@@ -82,7 +83,7 @@ class SelectImageWidget extends StatelessWidget {
 }
 
 class ImageSelectedWidget extends StatelessWidget {
-  ImageSelectedWidget({@required this.image, @required this.onDelete});
+  ImageSelectedWidget({required this.image, required this.onDelete});
 
   final File image;
   final Function onDelete;

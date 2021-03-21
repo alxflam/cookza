@@ -7,13 +7,13 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mockito/mockito.dart';
 
-import '../../viewmodel/settings/error_screen_model_test.dart';
+import '../../../mocks/shared_mocks.mocks.dart';
 
 class FileMock extends Mock implements File {}
 
 class StackTraceMock extends Mock implements StackTrace {}
 
-var sp = StorageProviderMock();
+var sp = MockStorageProvider();
 
 void main() {
   setUpAll(() {

@@ -3,15 +3,12 @@ import 'package:cookza/model/entities/abstract/instruction_entity.dart';
 class InstructionEntityJson implements InstructionEntity {
   String _instruction;
 
-  InstructionEntityJson.of(String instruction) {
-    this._instruction = instruction;
-  }
+  InstructionEntityJson.of(this._instruction);
+  @override
+  String? get image => null;
 
   @override
-  String get image => null;
-
-  @override
-  int get step => null;
+  int get step => 1;
 
   @override
   String get text => this._instruction;

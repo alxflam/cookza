@@ -6,12 +6,12 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mockito/mockito.dart';
 
-class StorageProviderMock extends Mock implements StorageProvider {}
+import '../../../mocks/shared_mocks.mocks.dart';
 
 class FileMock extends Mock implements File {}
 
 void main() {
-  var mock = StorageProviderMock();
+  var mock = MockStorageProvider();
 
   setUpAll(() {
     GetIt.I.registerSingleton<StorageProvider>(mock);

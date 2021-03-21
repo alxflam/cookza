@@ -25,7 +25,7 @@ class ErrorLogScreen extends StatelessWidget {
       value: _model,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(AppLocalizations.of(context).errorLog),
+          title: Text(AppLocalizations.of(context)!.errorLog),
           actions: [
             PopupMenuButton(itemBuilder: (context) {
               return [
@@ -34,7 +34,7 @@ class ErrorLogScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Icon(PopupMenuButtonChoices.SHARE.icon),
-                      Text(AppLocalizations.of(context).share),
+                      Text(AppLocalizations.of(context)!.share),
                     ],
                   ),
                   value: PopupMenuButtonChoices.SHARE,
@@ -44,7 +44,7 @@ class ErrorLogScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Icon(PopupMenuButtonChoices.DELETE.icon),
-                      Text(AppLocalizations.of(context).delete)
+                      Text(AppLocalizations.of(context)!.delete)
                     ],
                   ),
                   value: PopupMenuButtonChoices.DELETE,
@@ -65,11 +65,11 @@ class ErrorLogScreen extends StatelessWidget {
         ),
         body: Consumer<ErrorScreenModel>(
           builder: (context, value, child) {
-            return FutureBuilder(
+            return FutureBuilder<List<ExceptionItem>>(
               future: value.errors,
               builder: (context, snapshot) {
-                if (snapshot.hasData && snapshot.data.isNotEmpty) {
-                  List<ExceptionItem> files = snapshot.data;
+                if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                  List<ExceptionItem> files = snapshot.data!;
                   return ListView.separated(
                     shrinkWrap: true,
                     separatorBuilder: (BuildContext context, int index) =>
@@ -84,7 +84,8 @@ class ErrorLogScreen extends StatelessWidget {
                 } else {
                   return Container(
                     child: Center(
-                      child: Text(AppLocalizations.of(context).noErrorLogEntry),
+                      child:
+                          Text(AppLocalizations.of(context)!.noErrorLogEntry),
                     ),
                   );
                 }
@@ -121,7 +122,7 @@ class ExceptionEntry extends StatelessWidget {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text(AppLocalizations.of(context).errorLog),
+              title: Text(AppLocalizations.of(context)!.errorLog),
               content: Padding(
                 padding: EdgeInsets.only(top: 10),
                 child: SingleChildScrollView(

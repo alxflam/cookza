@@ -28,7 +28,7 @@ class TagColumn extends StatelessWidget {
               SwitchListTile(
                 activeColor: Theme.of(context).colorScheme.primary,
                 secondary: FaIcon(kVeganIcon),
-                title: Text(AppLocalizations.of(context).tagsVegan),
+                title: Text(AppLocalizations.of(context)!.tagsVegan),
                 value: model.isVegan,
                 onChanged: (value) {
                   model.setVegan(value);
@@ -37,7 +37,7 @@ class TagColumn extends StatelessWidget {
               SwitchListTile(
                 activeColor: Theme.of(context).colorScheme.primary,
                 secondary: FaIcon(kVegetarianIcon),
-                title: Text(AppLocalizations.of(context).tagsVegetarian),
+                title: Text(AppLocalizations.of(context)!.tagsVegetarian),
                 value: model.isVegetarian,
                 onChanged: (value) {
                   model.setVegetarian(value);
@@ -46,7 +46,7 @@ class TagColumn extends StatelessWidget {
               SwitchListTile(
                 activeColor: Theme.of(context).colorScheme.primary,
                 secondary: FaIcon(kMeatIcon),
-                title: Text(AppLocalizations.of(context).tagsMeat),
+                title: Text(AppLocalizations.of(context)!.tagsMeat),
                 value: model.containsMeat,
                 onChanged: (value) {
                   model.setContainsMeat(value);
@@ -55,7 +55,7 @@ class TagColumn extends StatelessWidget {
               SwitchListTile(
                 activeColor: Theme.of(context).colorScheme.primary,
                 secondary: FaIcon(kFishIcon),
-                title: Text(AppLocalizations.of(context).tagsFish),
+                title: Text(AppLocalizations.of(context)!.tagsFish),
                 value: model.containsFish,
                 onChanged: (value) {
                   model.setContainsFish(value);

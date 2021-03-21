@@ -9,10 +9,9 @@ class MealPlanGroupViewModel extends GroupViewModel {
 
   String _name;
 
-  MealPlanGroupViewModel.of(MealPlanCollectionEntity entity) {
-    this._entity = entity;
-    this._name = entity.name;
-  }
+  MealPlanGroupViewModel.of(MealPlanCollectionEntity entity)
+      : this._entity = entity,
+        this._name = entity.name;
 
   MealPlanCollectionEntity get entity => this._entity;
 
@@ -53,13 +52,14 @@ class MealPlanGroupViewModel extends GroupViewModel {
 
   @override
   Future<void> removeMember(UserEntity user) async {
-    await sl.get<MealPlanManager>().removeMember(user, entity.id);
+    await sl.get<MealPlanManager>().removeMember(user, entity.id!);
     await refreshEntity();
     notifyListeners();
   }
 
   @override
   Future<void> refreshEntity() async {
-    this._entity = await sl.get<MealPlanManager>().getCollectionByID(entity.id);
+    this._entity =
+        await sl.get<MealPlanManager>().getCollectionByID(entity.id!);
   }
 }

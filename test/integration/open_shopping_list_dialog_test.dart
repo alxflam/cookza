@@ -16,8 +16,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../mocks/meal_plan_manager_mock.dart';
-import '../mocks/navigator_observer_mock.dart';
 import '../mocks/recipe_manager_mock.dart';
+import '../mocks/shared_mocks.mocks.dart';
 import '../mocks/shopping_list_manager_mock.dart';
 
 void main() {

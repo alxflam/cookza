@@ -8,13 +8,13 @@ part 'firebase_instruction.g.dart';
 @JsonSerializable(includeIfNull: false)
 class FirebaseInstruction {
   @JsonKey()
-  int step;
+  int? step;
   @JsonKey()
   String text;
-  @JsonKey(nullable: true)
-  String imagePath;
+  @JsonKey()
+  String? imagePath;
 
-  FirebaseInstruction({this.step, this.text, this.imagePath});
+  FirebaseInstruction({required this.step, required this.text, this.imagePath});
 
   factory FirebaseInstruction.fromJson(Map<String, dynamic> json) {
     var instance = _$FirebaseInstructionFromJson(json);
@@ -33,24 +33,23 @@ class FirebaseInstruction {
     return result;
   }
 
-  FirebaseInstruction.fromInstructionEntity(InstructionEntity entity) {
-    this.imagePath = entity.image;
-    this.step = entity.step;
-    this.text = entity.text;
-  }
+  FirebaseInstruction.fromInstructionEntity(InstructionEntity entity)
+      : this.imagePath = entity.image,
+        this.step = entity.step,
+        this.text = entity.text;
 }
 
 @JsonSerializable(includeIfNull: false)
 class FirebaseInstructionDocument {
   @JsonKey(ignore: true)
-  String documentID;
+  String? documentID;
   @JsonKey()
   String recipeID;
   @JsonKey(toJson: kListToJson)
   List<FirebaseInstruction> instructions;
 
   FirebaseInstructionDocument(
-      {this.documentID, this.recipeID, this.instructions});
+      {this.documentID, required this.recipeID, required this.instructions});
 
   factory FirebaseInstructionDocument.fromJson(
       Map<String, dynamic> json, String id) {

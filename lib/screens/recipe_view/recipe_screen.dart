@@ -38,7 +38,7 @@ class RecipeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final RecipeEntity recipe = ModalRoute.of(context).settings.arguments;
+    final recipe = ModalRoute.of(context)!.settings.arguments as RecipeEntity;
 
     RecipeViewModel baseModel = RecipeViewModel.of(recipe);
     return ChangeNotifierProvider<RecipeViewModel>(
@@ -66,7 +66,7 @@ class RecipeScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Icon(PopupMenuButtonChoices.SHARE.icon),
-                              Text(AppLocalizations.of(context).share)
+                              Text(AppLocalizations.of(context)!.share)
                             ],
                           ),
                           value: PopupMenuButtonChoices.SHARE,
@@ -76,7 +76,7 @@ class RecipeScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Icon(PopupMenuButtonChoices.EDIT.icon),
-                              Text(AppLocalizations.of(context).edit)
+                              Text(AppLocalizations.of(context)!.edit)
                             ],
                           ),
                           value: PopupMenuButtonChoices.EDIT,
@@ -86,7 +86,7 @@ class RecipeScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Icon(PopupMenuButtonChoices.ADD_MEAL_PLAN.icon),
-                              Text(AppLocalizations.of(context)
+                              Text(AppLocalizations.of(context)!
                                   .functionsMealPlanner)
                             ],
                           ),
@@ -97,7 +97,7 @@ class RecipeScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Icon(PopupMenuButtonChoices.DELETE.icon),
-                              Text(AppLocalizations.of(context).delete)
+                              Text(AppLocalizations.of(context)!.delete)
                             ],
                           ),
                           value: PopupMenuButtonChoices.DELETE,
@@ -130,11 +130,12 @@ class RecipeScreen extends StatelessWidget {
                             builder: (BuildContext context) {
                               return AlertDialog(
                                 title: AlertDialogTitle(
-                                    title: AppLocalizations.of(context).delete),
+                                    title:
+                                        AppLocalizations.of(context)!.delete),
                                 content: SingleChildScrollView(
                                   child: ListBody(
                                     children: <Widget>[
-                                      Text(AppLocalizations.of(context)
+                                      Text(AppLocalizations.of(context)!
                                           .confirmDelete(model.name)),
                                     ],
                                   ),
@@ -143,7 +144,7 @@ class RecipeScreen extends StatelessWidget {
                                   ElevatedButton(
                                     style: kRaisedGreyButtonStyle,
                                     child: Text(
-                                      AppLocalizations.of(context).cancel,
+                                      AppLocalizations.of(context)!.cancel,
                                     ),
                                     onPressed: () {
                                       Navigator.of(context).pop();
@@ -152,7 +153,7 @@ class RecipeScreen extends StatelessWidget {
                                   ElevatedButton(
                                     style: kRaisedRedButtonStyle,
                                     child: Text(
-                                      AppLocalizations.of(context).delete,
+                                      AppLocalizations.of(context)!.delete,
                                     ),
                                     onPressed: () {
                                       sl
@@ -223,11 +224,11 @@ class RecipeScreen extends StatelessWidget {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(AppLocalizations.of(context).shareAs),
+          title: Text(AppLocalizations.of(context)!.shareAs),
           actions: <Widget>[
             ElevatedButton(
               child: Text(
-                AppLocalizations.of(context).pdf,
+                AppLocalizations.of(context)!.pdf,
               ),
               onPressed: () async {
                 var doc = await sl.get<PDFGenerator>().generatePDF([model]);
@@ -236,7 +237,7 @@ class RecipeScreen extends StatelessWidget {
               },
             ),
             ElevatedButton(
-              child: Text(AppLocalizations.of(context).json),
+              child: Text(AppLocalizations.of(context)!.json),
               onPressed: () {
                 sl
                     .get<RecipeFileExport>()
@@ -246,7 +247,7 @@ class RecipeScreen extends StatelessWidget {
             ),
             ElevatedButton(
               child: Text(
-                AppLocalizations.of(context).text,
+                AppLocalizations.of(context)!.text,
               ),
               onPressed: () {
                 sl

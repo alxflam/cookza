@@ -17,13 +17,15 @@ class IngredientNote {
   @JsonKey()
   double amount;
 
-  IngredientNote({this.ingredient, this.unitOfMeasure, this.amount});
+  IngredientNote(
+      {required this.ingredient,
+      required this.unitOfMeasure,
+      required this.amount});
 
-  IngredientNote.fromEntity(IngredientNoteEntity note) {
-    this.ingredient = Ingredient.fromEntity(note.ingredient);
-    this.amount = note.amount;
-    this.unitOfMeasure = note.unitOfMeasure;
-  }
+  IngredientNote.fromEntity(IngredientNoteEntity note)
+      : this.ingredient = Ingredient.fromEntity(note.ingredient),
+        this.amount = note.amount,
+        this.unitOfMeasure = note.unitOfMeasure;
 
   factory IngredientNote.fromJson(Map<String, dynamic> json) =>
       _$IngredientNoteFromJson(json);

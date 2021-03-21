@@ -12,10 +12,10 @@ import 'package:get_it/get_it.dart';
 import 'package:mockito/mockito.dart';
 
 import '../../../mocks/file_mock.dart';
-import '../../../mocks/image_manager_mock.dart';
+import '../../../mocks/shared_mocks.mocks.dart';
 
 void main() {
-  var mock = ImageManagerMock();
+  var mock = MockImageManager();
 
   setUpAll(() {
     GetIt.I.registerSingleton<ImageManager>(mock);
@@ -75,7 +75,7 @@ void main() {
 
     recipe.image = '/dummy/';
 
-    var mockFile = FileMock();
+    var mockFile = MockFile();
 
     when(mockFile.readAsBytesSync())
         .thenAnswer((_) => Uint8List.fromList([1, 2, 3, 4]));
@@ -84,7 +84,7 @@ void main() {
 
     var cut = await Recipe.applyFrom(recipe);
 
-    expect(cut.serializedImage.isNotEmpty, true);
+    expect(cut.serializedImage!.isNotEmpty, true);
     expect(cut.serializedImage, 'AQIDBA==');
   });
 }

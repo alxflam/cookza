@@ -4,18 +4,16 @@ import 'package:cookza/model/json/ingredient.dart';
 class IngredientEntityJson implements IngredientEntity {
   Ingredient _ingredient;
 
-  IngredientEntityJson.of(Ingredient ingredient) {
-    this._ingredient = ingredient;
-  }
+  IngredientEntityJson.of(this._ingredient);
 
   @override
   bool get isRecipeReference =>
       this._ingredient.recipeReference != null &&
-      this._ingredient.recipeReference.isNotEmpty;
+      this._ingredient.recipeReference!.isNotEmpty;
 
   @override
   String get name => this._ingredient.name;
 
   @override
-  String get recipeReference => this._ingredient.recipeReference;
+  String? get recipeReference => this._ingredient.recipeReference;
 }

@@ -8,8 +8,8 @@ import 'package:cookza/services/shared_preferences_provider.dart';
 abstract class MealPlanManager {
   Future<MealPlanEntity> get mealPlan;
 
-  String get currentCollection;
-  set currentCollection(String value);
+  String? get currentCollection;
+  set currentCollection(String? value);
   Future<MealPlanCollectionEntity> createCollection(String name);
   Future<void> renameCollection(String name, MealPlanCollectionEntity entity);
   Future<MealPlanCollectionEntity> getCollectionByID(String id);
@@ -32,16 +32,16 @@ abstract class MealPlanManager {
 }
 
 class MealPlanManagerFirebase implements MealPlanManager {
-  String documentID;
-  String _currentCollection;
+  String? documentID;
+  String? _currentCollection;
 
   @override
   Future<MealPlanEntity> get mealPlan async {
-    if (currentCollection == null || currentCollection.isEmpty) {
+    if (currentCollection == null || currentCollection!.isEmpty) {
       return Future.value(null);
     }
-    var result = await sl.get<FirebaseProvider>().mealPlan(currentCollection);
-    documentID = result.id;
+    var result = await sl.get<FirebaseProvider>().mealPlan(currentCollection!);
+    documentID = result.id!;
     return result;
   }
 
@@ -56,7 +56,7 @@ class MealPlanManagerFirebase implements MealPlanManager {
   }
 
   @override
-  String get currentCollection {
+  String? get currentCollection {
     return _currentCollection;
   }
 
@@ -66,9 +66,11 @@ class MealPlanManagerFirebase implements MealPlanManager {
   }
 
   @override
-  set currentCollection(String value) {
+  set currentCollection(String? value) {
     _currentCollection = value;
-    sl.get<SharedPreferencesProvider>().setCurrentMealPlanCollection(value);
+    if (value != null) {
+      sl.get<SharedPreferencesProvider>().setCurrentMealPlanCollection(value);
+    }
   }
 
   @override
@@ -87,16 +89,16 @@ class MealPlanManagerFirebase implements MealPlanManager {
   @override
   Future<void> deleteCollection(MealPlanCollectionEntity entity) async {
     var firebase = sl.get<FirebaseProvider>();
-    var group = await getCollectionByID(entity.id);
+    var group = await getCollectionByID(entity.id!);
     if (group.users.where((e) => e.id != firebase.userUid).isNotEmpty) {
       throw 'Can\'t delete group with members';
     }
-    return firebase.deleteMealPlanCollection(entity.id);
+    return firebase.deleteMealPlanCollection(entity.id!);
   }
 
   @override
   Future<void> leaveGroup(MealPlanCollectionEntity entity) {
-    return sl.get<FirebaseProvider>().leaveMealPlanGroup(entity.id);
+    return sl.get<FirebaseProvider>().leaveMealPlanGroup(entity.id!);
   }
 
   @override

@@ -14,9 +14,10 @@ import 'package:cookza/services/unit_of_measure.dart';
 import 'package:cookza/viewmodel/recipe_edit/recipe_ingredient_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:collection/collection.dart';
 
 class ShoppingListModel extends ChangeNotifier {
-  MutableShoppingList _listEntity;
+  late MutableShoppingList _listEntity;
 
   static final int _shoppingListDays =
       sl.get<SharedPreferencesProvider>().getMealPlanWeeks() * 7;
@@ -27,17 +28,16 @@ class ShoppingListModel extends ChangeNotifier {
   final List<MutableShoppingListItem> _items = [];
   bool _initalized = false;
 
-  ShoppingListModel.from(ShoppingListEntity listEntity) {
-    this._listEntity = MutableShoppingList.of(listEntity);
-    _firstDate = DateTime.now();
-    _lastDate = _firstDate.add(Duration(days: _shoppingListDays));
-  }
+  ShoppingListModel.from(ShoppingListEntity listEntity)
+      : this._listEntity = MutableShoppingList.of(listEntity),
+        _firstDate = DateTime.now(),
+        _lastDate = DateTime.now().add(Duration(days: _shoppingListDays));
 
-  ShoppingListModel.empty({String groupID})
+  ShoppingListModel.empty({String? groupID})
       : this._firstDate = DateTime.now(),
         this._lastDate = DateTime.now().add(Duration(days: _shoppingListDays)) {
-    _listEntity =
-        MutableShoppingList.newList(groupID, DateTime.now(), initialEndDate);
+    this._listEntity = MutableShoppingList.newList(
+        groupID ?? '', DateTime.now(), initialEndDate);
   }
 
   bool get initialized => this._initalized;
@@ -70,12 +70,12 @@ class ShoppingListModel extends ChangeNotifier {
       var context = sl.get<NavigatorService>().currentContext;
       // make sure that case is logged
       await sl.get<ExceptionHandler>().reportException(
-          '${AppLocalizations.of(context).missingRecipeAccess}: ${e.toString()}',
+          '${AppLocalizations.of(context)!.missingRecipeAccess}: ${e.toString()}',
           StackTrace.current,
           DateTime.now());
       // may happen if the shopping list contains a recipe from a group the current user does not have read access to
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(AppLocalizations.of(context).missingRecipeAccess)));
+          content: Text(AppLocalizations.of(context)!.missingRecipeAccess)));
     }
 
     // processed generated already bought and/or reordered items
@@ -85,14 +85,11 @@ class ShoppingListModel extends ChangeNotifier {
         .where((e) => !e.isCustom && (e.isBought || e.index != null))
         .toList();
     for (var item in persisted) {
-      var generatedItem = generatedItems.firstWhere(
-          (e) =>
-              e.ingredientNote.amount == item.ingredientNote.amount &&
-              e.ingredientNote.ingredient.name ==
-                  item.ingredientNote.ingredient.name &&
-              e.ingredientNote.unitOfMeasure ==
-                  item.ingredientNote.unitOfMeasure,
-          orElse: () => null);
+      var generatedItem = generatedItems.firstWhereOrNull((e) =>
+          e.ingredientNote.amount == item.ingredientNote.amount &&
+          e.ingredientNote.ingredient.name ==
+              item.ingredientNote.ingredient.name &&
+          e.ingredientNote.unitOfMeasure == item.ingredientNote.unitOfMeasure);
       if (generatedItem != null) {
         // exactly the same item has been generated, then use the persisted one
         generatedItems.remove(generatedItem);
@@ -225,7 +222,7 @@ class ShoppingListModel extends ChangeNotifier {
         await sl.get<ShoppingListManager>().createOrUpdate(this._listEntity);
 
     // and update the document id as it changed (usually only if the list get's created on the first save)
-    this._listEntity.id = updatedEntity.id;
+    this._listEntity.id = updatedEntity.id!;
   }
 
   void itemGotEdited(ShoppingListItemModel changedEntity) {
@@ -256,11 +253,11 @@ class ShoppingListModel extends ChangeNotifier {
 }
 
 class ShoppingListItemModel extends ChangeNotifier {
-  UnitOfMeasure _uom;
+  late UnitOfMeasure? _uom;
   MutableShoppingListItem _entity;
 
-  ShoppingListItemModel.ofEntity(ShoppingListItemEntity entity) {
-    this._entity = entity;
+  ShoppingListItemModel.ofEntity(ShoppingListItemEntity entity)
+      : this._entity = entity as MutableShoppingListItem {
     var uomProvider = sl.get<UnitOfMeasureProvider>();
     var uom =
         uomProvider.getUnitOfMeasureById(entity.ingredientNote.unitOfMeasure);
@@ -272,7 +269,7 @@ class ShoppingListItemModel extends ChangeNotifier {
     if (_uom == null) {
       return '';
     }
-    return _uom.getDisplayName(this._entity.ingredientNote.amount.toInt());
+    return _uom!.getDisplayName(this._entity.ingredientNote.amount.toInt());
   }
 
   bool get isCustomItem => this._entity.isCustom;

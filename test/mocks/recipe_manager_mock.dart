@@ -7,12 +7,13 @@ import 'package:cookza/model/json/recipe_collection.dart';
 import 'package:cookza/services/util/id_gen.dart';
 import 'package:cookza/services/recipe/recipe_manager.dart';
 import 'package:mockito/mockito.dart';
+import 'package:collection/collection.dart';
 
 class RecipeManagerMock extends Mock implements RecipeManager {}
 
 class RecipeManagerStub implements RecipeManager {
   @override
-  String currentCollection;
+  String? currentCollection = '';
 
   List<RecipeCollectionEntity> _collections = [];
   final List<RecipeEntity> _recipes = [];
@@ -33,8 +34,7 @@ class RecipeManagerStub implements RecipeManager {
 
   @override
   Future<RecipeCollectionEntity> collectionByID(String id) {
-    return Future.value(
-        _collections.firstWhere((e) => e.id == id, orElse: () => null));
+    return Future.value(_collections.firstWhereOrNull((e) => e.id == id));
   }
 
   @override
@@ -49,9 +49,9 @@ class RecipeManagerStub implements RecipeManager {
   @override
   Future<RecipeCollectionEntity> createCollection(String name) {
     var result = RecipeCollectionEntityJson.of(RecipeCollection(
-        id: UniqueKeyIdGenerator().id,
-        name: name,
-        creationTimestamp: Timestamp.now()));
+      id: UniqueKeyIdGenerator().id,
+      name: name,
+    ));
     this._collections.add(result);
     return Future.value(result);
   }

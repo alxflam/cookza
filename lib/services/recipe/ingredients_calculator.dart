@@ -4,6 +4,7 @@ import 'package:cookza/model/entities/mutable/mutable_ingredient_note.dart';
 import 'package:cookza/services/recipe/recipe_manager.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:cookza/services/unit_of_measure.dart';
+import 'package:collection/collection.dart';
 
 abstract class IngredientsCalculator {
   Future<List<IngredientNoteEntity>> getIngredients(Map<String, int> ids);
@@ -23,8 +24,7 @@ class IngredientsCalculatorImpl implements IngredientsCalculator {
         await sl.get<RecipeManager>().getRecipeById(ids.keys.toList());
 
     for (var entry in ids.entries) {
-      var recipe =
-          recipes.firstWhere((e) => e.id == entry.key, orElse: () => null);
+      var recipe = recipes.firstWhereOrNull((e) => e.id == entry.key);
       if (recipe == null) {
         continue;
       }
@@ -47,12 +47,11 @@ class IngredientsCalculatorImpl implements IngredientsCalculator {
         // read the recipe
         var targetRecipe = await sl
             .get<RecipeManager>()
-            .getRecipeById([note.ingredient.recipeReference]);
+            .getRecipeById([note.ingredient.recipeReference!]);
         if (targetRecipe.length == 1) {
           var ing = await targetRecipe.first.ingredients;
-          var circularDependency = ing.firstWhere(
-              (e) => e.ingredient.recipeReference == recipe.id,
-              orElse: () => null);
+          var circularDependency = ing.firstWhereOrNull(
+              (e) => e.ingredient.recipeReference == recipe.id);
           if (circularDependency == null) {
             //recurse
             await _processRecipe(targetRecipe.first, entry, result);
@@ -77,9 +76,8 @@ class IngredientsCalculatorImpl implements IngredientsCalculator {
       }
 
       // else if it exists with same uom, add the new amount
-      var sameUoM = sameIngredient.firstWhere(
-          (e) => e.unitOfMeasure == note.unitOfMeasure,
-          orElse: () => null);
+      var sameUoM = sameIngredient
+          .firstWhereOrNull((e) => e.unitOfMeasure == note.unitOfMeasure);
       if (sameUoM != null) {
         sameUoM.amount = sameUoM.amount + note.amount * ratio;
         continue;

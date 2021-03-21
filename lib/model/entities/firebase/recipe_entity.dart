@@ -18,13 +18,11 @@ class RecipeEntityFirebase implements RecipeEntity {
 
   List<InstructionEntityFirebase> _instructions = [];
 
-  RecipeEntityFirebase.of(FirebaseRecipe recipe) {
-    this._recipe = recipe;
-  }
+  RecipeEntityFirebase.of(this._recipe);
 
-  String get instructionsID => _recipe.instructionsID;
+  String? get instructionsID => _recipe.instructionsID;
 
-  String get ingredientsID => _recipe.ingredientsID;
+  String? get ingredientsID => _recipe.ingredientsID;
 
   @override
   String get description => this._recipe.description;
@@ -36,13 +34,13 @@ class RecipeEntityFirebase implements RecipeEntity {
   int get duration => this._recipe.duration;
 
   @override
-  String get id => this._recipe.documentID;
+  String? get id => this._recipe.documentID;
 
   @override
   Future<UnmodifiableListView<IngredientNoteEntity>> get ingredients async {
     if (this._ingredients.isEmpty) {
       this._ingredients = await sl.get<FirebaseProvider>().recipeIngredients(
-          this._recipe.recipeGroupID, this._recipe.documentID);
+          this._recipe.recipeGroupID, this._recipe.documentID!);
     }
     return Future.value(UnmodifiableListView(this._ingredients));
   }
@@ -51,7 +49,7 @@ class RecipeEntityFirebase implements RecipeEntity {
   Future<UnmodifiableListView<InstructionEntity>> get instructions async {
     if (this._instructions.isEmpty) {
       this._instructions = await sl.get<FirebaseProvider>().recipeInstructions(
-          this._recipe.recipeGroupID, this._recipe.documentID);
+          this._recipe.recipeGroupID, this._recipe.documentID!);
     }
     return Future.value(UnmodifiableListView(this._instructions));
   }
@@ -86,11 +84,11 @@ class RecipeEntityFirebase implements RecipeEntity {
   DateTime get modificationDate => this._recipe.modificationDate.toDate();
 
   @override
-  String get image => this._recipe.image;
+  String? get image => this._recipe.image;
 
   @override
   bool get hasInMemoryImage => false;
 
   @override
-  Uint8List get inMemoryImage => null;
+  Uint8List? get inMemoryImage => null;
 }

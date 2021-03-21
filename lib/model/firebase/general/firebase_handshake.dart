@@ -7,7 +7,7 @@ part 'firebase_handshake.g.dart';
 @JsonSerializable()
 class FirebaseHandshake {
   @JsonKey(ignore: true)
-  String documentID;
+  String? documentID;
   @JsonKey()
   String requestor;
   @JsonKey()
@@ -28,11 +28,11 @@ class FirebaseHandshake {
   Map<String, dynamic> toJson() => _$FirebaseHandshakeToJson(this);
 
   FirebaseHandshake(
-      {this.requestor,
-      this.owner,
-      this.creationTimestamp,
-      this.operatingSystem,
-      this.browser}) {
+      {required this.requestor,
+      required this.owner,
+      required this.creationTimestamp,
+      required this.operatingSystem,
+      required this.browser}) {
     if (this.creationTimestamp == null) {
       throw 'a handshake document can not be created without a timestamp';
     }

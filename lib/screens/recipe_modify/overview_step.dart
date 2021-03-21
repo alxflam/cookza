@@ -26,17 +26,17 @@ Step getOverviewStep(BuildContext context) {
 
         /// if there are no collections, render a error card
         if (snapshot.connectionState == ConnectionState.done &&
-            snapshot.data.isEmpty) {
+            !snapshot.hasData) {
           return Card(
             child: ListTile(
               leading: Icon(
                 Icons.error,
                 color: Colors.red,
               ),
-              title: Text(AppLocalizations.of(context)
+              title: Text(AppLocalizations.of(context)!
                   .mandatoryRecipeGroupNotAvailable),
-              subtitle:
-                  Text(AppLocalizations.of(context).createMandatoryRecipeGroup),
+              subtitle: Text(
+                  AppLocalizations.of(context)!.createMandatoryRecipeGroup),
             ),
           );
         }
@@ -70,20 +70,20 @@ Step getOverviewStep(BuildContext context) {
                     TextFormField(
                       textCapitalization: TextCapitalization.sentences,
                       decoration: InputDecoration(
-                          labelText: AppLocalizations.of(context).recipeName),
+                          labelText: AppLocalizations.of(context)!.recipeName),
                       controller: nameController,
                     ),
                     TextFormField(
                       textCapitalization: TextCapitalization.sentences,
                       decoration: InputDecoration(
-                          labelText: AppLocalizations.of(context).recipeDesc),
+                          labelText: AppLocalizations.of(context)!.recipeDesc),
                       controller: descController,
                     ),
-                    _getCollectionDropDown(context, model, snapshot.data),
+                    _getCollectionDropDown(context, model, snapshot.data!),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Text('${AppLocalizations.of(context).duration}:'),
+                        Text('${AppLocalizations.of(context)!.duration}:'),
                         Flexible(
                           flex: 1,
                           child: Slider(
@@ -92,9 +92,9 @@ Step getOverviewStep(BuildContext context) {
                             divisions: 12,
                             label: '${model.duration}',
                             onChanged: (double value) {
-                              model.duration = value?.toInt();
+                              model.duration = value.toInt();
                             },
-                            value: model.duration?.toDouble(),
+                            value: model.duration.toDouble(),
                             activeColor: Theme.of(context).colorScheme.primary,
                           ),
                         ),
@@ -140,16 +140,16 @@ Widget _getCollectionDropDown(BuildContext context,
   model.collection ??= collections.first;
 
   var selectedCollection =
-      collections.firstWhere((e) => e.id == model.collection.id);
+      collections.firstWhere((e) => e.id == model.collection!.id);
 
   return DropdownButtonFormField<RecipeCollectionEntity>(
     value: selectedCollection,
     items: items,
     decoration: InputDecoration(
       isDense: true,
-      labelText: AppLocalizations.of(context).recipeGroup,
+      labelText: AppLocalizations.of(context)!.recipeGroup,
     ),
-    onChanged: (RecipeCollectionEntity value) {
+    onChanged: (RecipeCollectionEntity? value) {
       model.collection = value;
     },
   );
@@ -176,13 +176,13 @@ class DifficultyChip extends StatelessWidget {
   Widget _getLabel(BuildContext context) {
     switch (this._difficulty) {
       case DIFFICULTY.EASY:
-        return Text(AppLocalizations.of(context).difficultyEasy);
+        return Text(AppLocalizations.of(context)!.difficultyEasy);
         break;
       case DIFFICULTY.MEDIUM:
-        return Text(AppLocalizations.of(context).difficultyMedium);
+        return Text(AppLocalizations.of(context)!.difficultyMedium);
         break;
       case DIFFICULTY.HARD:
-        return Text(AppLocalizations.of(context).difficultyHard);
+        return Text(AppLocalizations.of(context)!.difficultyHard);
         break;
       default:
         return Text('unknown');

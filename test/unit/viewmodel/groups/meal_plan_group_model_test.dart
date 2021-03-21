@@ -13,9 +13,9 @@ var mock = MealPlanManagerMock();
 
 MealPlanCollectionEntityFirebase createGroup() {
   var collection = FirebaseMealPlanCollection(
-      users: {'1234': 'Someone'},
-      name: 'Test',
-      creationTimestamp: Timestamp.now());
+    users: {'1234': 'Someone'},
+    name: 'Test',
+  );
   return MealPlanCollectionEntityFirebase.of(collection);
 }
 

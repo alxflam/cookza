@@ -18,8 +18,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../mocks/meal_plan_manager_mock.dart';
-import '../mocks/navigator_observer_mock.dart';
 import '../mocks/recipe_manager_mock.dart';
+import '../mocks/shared_mocks.mocks.dart';
 import '../utils/meal_plan_creator.dart';
 
 void main() {
@@ -308,8 +308,8 @@ void main() {
     var mealPlan = MealPlanCreator.createMealPlan('My Plan', 1);
 
     var item = MutableMealPlanDateEntity.empty(DateTime.now());
-    item.addRecipe(MutableMealPlanRecipeEntity.fromValues(
-        null, 'Some special note', null));
+    item.addRecipe(
+        MutableMealPlanRecipeEntity.fromValues(null, 'Some special note', 2));
     mealPlan.items.add(item);
     await mealPlanManager.saveMealPlan(mealPlan);
 
@@ -366,7 +366,8 @@ Future<void> _initApp(WidgetTester tester, NavigatorObserver observer) async {
   ));
 }
 
-void _inputFormField(WidgetTester tester, Finder finder, String value) async {
+Future<void> _inputFormField(
+    WidgetTester tester, Finder finder, String value) async {
   await tester.enterText(finder, value);
   await tester.testTextInput.receiveAction(TextInputAction.done);
   await tester.pumpAndSettle();

@@ -37,13 +37,13 @@ class IngredientStepContent extends StatelessWidget {
                 horizontalMargin: 0,
                 columns: [
                   DataColumn(
-                    label: Text(AppLocalizations.of(context).amount),
+                    label: Text(AppLocalizations.of(context)!.amount),
                   ),
                   DataColumn(
-                    label: Text(AppLocalizations.of(context).unit),
+                    label: Text(AppLocalizations.of(context)!.unit),
                   ),
                   DataColumn(
-                    label: Text(AppLocalizations.of(context).ingredient(1)),
+                    label: Text(AppLocalizations.of(context)!.ingredient(1)),
                   ),
                   DataColumn(label: Text('')),
                 ],
@@ -89,7 +89,7 @@ Widget _getServingsRow(RecipeIngredientEditStep model, BuildContext context) {
             : model.servings,
       ),
       Text(
-          '${model.servings} ${AppLocalizations.of(context).servings(model.servings)}'),
+          '${model.servings} ${AppLocalizations.of(context)!.servings(model.servings)}'),
       RoundIconButton(
         icon: FontAwesomeIcons.plus,
         onPress: () => model.servings = model.servings + 1,
@@ -113,7 +113,7 @@ Widget _getAddRowButton(BuildContext context, RecipeIngredientEditStep model) {
         model.addNewIngredient(result);
       }
     },
-    child: Text(AppLocalizations.of(context).addIngredient),
+    child: Text(AppLocalizations.of(context)!.addIngredient),
   );
 }
 

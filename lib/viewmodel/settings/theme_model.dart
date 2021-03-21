@@ -2,6 +2,7 @@ import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:cookza/services/shared_preferences_provider.dart';
 import 'package:cookza/themes.dart';
 import 'package:flutter/material.dart';
+import 'package:collection/collection.dart';
 
 class ThemeModelData {
   final CustomTheme _theme;
@@ -13,14 +14,14 @@ class ThemeModelData {
 }
 
 class ThemeModel with ChangeNotifier {
-  CustomTheme _currentTheme;
+  late CustomTheme _currentTheme;
 
   ThemeModel() {
-    String theme = sl.get<SharedPreferencesProvider>().theme;
+    final theme = sl.get<SharedPreferencesProvider>().theme;
     if (theme != null && kAllThemes.containsKey(theme)) {
-      _currentTheme = kAllThemes[theme];
+      _currentTheme = kAllThemes[theme]!;
     } else {
-      _currentTheme = kAllThemes['dark'];
+      _currentTheme = kAllThemes['dark']!;
     }
   }
 
@@ -38,8 +39,8 @@ class ThemeModel with ChangeNotifier {
   ThemeData get current => _currentTheme.themeData;
 
   String getCurrentThemeKey() {
-    var theme = kAllThemes.entries
-        .firstWhere((e) => e.key == _currentTheme.id, orElse: () => null);
+    var theme =
+        kAllThemes.entries.firstWhereOrNull((e) => e.key == _currentTheme.id);
     if (theme != null) {
       return theme.key;
     }
@@ -47,9 +48,11 @@ class ThemeModel with ChangeNotifier {
   }
 
   set theme(String key) {
-    var themeData = kAllThemes[key];
-    this._currentTheme = themeData;
-    sl.get<SharedPreferencesProvider>().setTheme(key);
-    notifyListeners();
+    if (kAllThemes.containsKey(key)) {
+      var themeData = kAllThemes[key]!;
+      this._currentTheme = themeData;
+      sl.get<SharedPreferencesProvider>().setTheme(key);
+      notifyListeners();
+    }
   }
 }

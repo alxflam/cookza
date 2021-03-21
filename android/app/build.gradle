@@ -54,6 +54,15 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+
+    // exclude unnecessary assets: https://github.com/FirebaseExtended/flutterfire/issues/4767
+    packagingOptions {
+        exclude 'lib/**/libclassifier_jni.so'
+        exclude 'lib/**/libface_detector_v2_jni.so'
+        exclude 'lib/**/libtensorflowlite_jni.so'
+        exclude 'assets/**/fssd_100_8bit_gray_v1.tflite'
+        exclude 'assets/**/fssd_100_8bit_v1.tflite'
+    }
 }
 
 flutter {

@@ -1,7 +1,10 @@
 import 'package:cookza/components/meal_plan_groups_drawer.dart';
 import 'package:cookza/components/open_drawer_button.dart';
 import 'package:cookza/constants.dart';
+import 'package:cookza/model/entities/abstract/meal_plan_collection_entity.dart';
+import 'package:cookza/model/entities/abstract/meal_plan_entity.dart';
 import 'package:cookza/model/entities/abstract/recipe_entity.dart';
+import 'package:cookza/model/entities/mutable/mutable_meal_plan.dart';
 import 'package:cookza/screens/meal_plan/item_dialog.dart';
 import 'package:cookza/screens/recipe_view/recipe_screen.dart';
 import 'package:cookza/screens/shopping_list/shopping_list_dialog.dart';
@@ -23,10 +26,10 @@ class MealPlanScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _recipe = ModalRoute.of(context).settings.arguments as RecipeEntity;
+    var _recipe = ModalRoute.of(context)!.settings.arguments as RecipeEntity?;
     var currentGroup = sl.get<MealPlanManager>().currentCollection;
 
-    return FutureBuilder(
+    return FutureBuilder<MealPlanCollectionEntity>(
       future: currentGroup == null
           ? Future.value(null)
           : sl.get<MealPlanManager>().getCollectionByID(currentGroup),
@@ -35,8 +38,8 @@ class MealPlanScreen extends StatelessWidget {
           drawer: MealPlanGroupsDrawer(),
           appBar: AppBar(
             title: snapshot.data == null
-                ? Text(AppLocalizations.of(context).functionsMealPlanner)
-                : Text(snapshot.data.name),
+                ? Text(AppLocalizations.of(context)!.functionsMealPlanner)
+                : Text(snapshot.data!.name),
             actions: [
               IconButton(
                 icon: Icon(kShoppingListIconData),
@@ -51,7 +54,7 @@ class MealPlanScreen extends StatelessWidget {
               if (snapshot.data == null &&
                   snapshot.connectionState == ConnectionState.done) {
                 return OpenDrawerButton(
-                    AppLocalizations.of(context).mealPlanSelect);
+                    AppLocalizations.of(context)!.mealPlanSelect);
               }
 
               if (snapshot.connectionState == ConnectionState.waiting) {
@@ -60,7 +63,7 @@ class MealPlanScreen extends StatelessWidget {
                 );
               }
 
-              return FutureBuilder(
+              return FutureBuilder<MealPlanEntity>(
                 future: sl.get<MealPlanManager>().mealPlan,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
@@ -68,9 +71,9 @@ class MealPlanScreen extends StatelessWidget {
                   }
                   if (snapshot.hasData) {
                     MealPlanViewModel _model =
-                        MealPlanViewModel.of(snapshot.data);
+                        MealPlanViewModel.of(snapshot.data!);
 
-                    if (_recipe != null && _recipe.id.isNotEmpty) {
+                    if (_recipe != null && _recipe.id!.isNotEmpty) {
                       _model.setRecipeForAddition(_recipe);
                     }
 
@@ -102,7 +105,7 @@ class MealPlanScreen extends StatelessWidget {
     var tileColor = Theme.of(context).colorScheme.primary;
 
     List<Widget> tiles = [];
-    int previousWeek;
+    int? previousWeek;
     for (var i = 0; i < model.entries.length; i++) {
       var currentWeek = model.entries[i].week;
       if (currentWeek != previousWeek) {
@@ -194,7 +197,7 @@ class MealPlanScreen extends StatelessWidget {
                   if (recipeModel.id != null) {
                     var recipeEntity = await sl
                         .get<RecipeManager>()
-                        .getRecipeById([recipeModel.id]);
+                        .getRecipeById([recipeModel.id!]);
                     if (recipeEntity.length == 1) {
                       await Navigator.pushNamed(context, RecipeScreen.id,
                           arguments: recipeEntity.first);
@@ -203,7 +206,7 @@ class MealPlanScreen extends StatelessWidget {
                 },
                 subtitle: recipeModel.servings != null
                     ? Text(
-                        '${recipeModel.servings.toString()} ${AppLocalizations.of(context).servings(recipeModel.servings)}')
+                        '${recipeModel.servings.toString()} ${AppLocalizations.of(context)!.servings(recipeModel.servings)}')
                     : null,
                 trailing: IconButton(
                   icon: Icon(Icons.edit),
@@ -221,7 +224,9 @@ class MealPlanScreen extends StatelessWidget {
 
                     if (dialogResult != null) {
                       if (dialogResult.isDeleted) {
-                        model.removeRecipe(recipeModel.entity, i);
+                        model.removeRecipe(
+                            recipeModel.entity as MutableMealPlanRecipeEntity,
+                            i);
                       } else if (dialogResult.hasChanged) {
                         mealPlanViewModel.recipeModelChanged(recipeModel);
                       }
@@ -255,7 +260,7 @@ class MealPlanScreen extends StatelessWidget {
                       subtitle: entry.isNote
                           ? null
                           : Text(
-                              '${entry.servings.toString()} ${AppLocalizations.of(context).servings}'),
+                              '${entry.servings.toString()} ${AppLocalizations.of(context)!.servings}'),
                     ),
                   ),
                 ),
@@ -308,7 +313,7 @@ class MealPlanScreen extends StatelessWidget {
                       padding: EdgeInsets.all(10),
                       child: ElevatedButton(
                         child:
-                            Text(AppLocalizations.of(context).mealPlanAddNote),
+                            Text(AppLocalizations.of(context)!.mealPlanAddNote),
                         onPressed: () {
                           // close dialog
                           Navigator.pop(context);
@@ -322,7 +327,7 @@ class MealPlanScreen extends StatelessWidget {
                       padding: EdgeInsets.all(10),
                       child: ElevatedButton(
                         child: Text(
-                            AppLocalizations.of(context).mealPlanAddRecipe),
+                            AppLocalizations.of(context)!.mealPlanAddRecipe),
                         onPressed: () async {
                           // fetch all recipes the app currently stores
                           var recipes =
@@ -336,8 +341,8 @@ class MealPlanScreen extends StatelessWidget {
                           // navigate to the selection screen
                           var result = await Navigator.pushNamed(
                               context, RecipeSelectionScreen.id,
-                              arguments: selModel) as RecipeEntity;
-                          if (result != null && result.id.isNotEmpty) {
+                              arguments: selModel) as RecipeEntity?;
+                          if (result != null && result.id!.isNotEmpty) {
                             model.addRecipeFromEntity(index, result);
                           }
 

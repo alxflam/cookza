@@ -18,48 +18,49 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context).settings),
+        title: Text(AppLocalizations.of(context)!.settings),
       ),
       body: Builder(
         builder: (context) {
           return ListView(
             children: <Widget>[
               ListTile(
-                title: Text(AppLocalizations.of(context).export),
+                title: Text(AppLocalizations.of(context)!.export),
                 leading: FaIcon(FontAwesomeIcons.fileExport),
                 onTap: () =>
                     Navigator.pushNamed(context, ExportSettingsScreen.id),
               ),
               ListTile(
-                title: Text(AppLocalizations.of(context).import),
+                title: Text(AppLocalizations.of(context)!.import),
                 leading: FaIcon(FontAwesomeIcons.fileImport),
                 onTap: () {
                   sl.get<RecipeFileImport>().parseAndImport(context);
                 },
               ),
               ListTile(
-                title: Text(AppLocalizations.of(context).unitLongPlural),
+                title: Text(AppLocalizations.of(context)!.unitLongPlural),
                 leading: FaIcon(FontAwesomeIcons.unity),
                 onTap: () {
                   Navigator.pushNamed(context, UoMVisibilityScreen.id);
                 },
               ),
               ListTile(
-                title: Text(AppLocalizations.of(context).themeTitle),
+                title: Text(AppLocalizations.of(context)!.themeTitle),
                 leading: FaIcon(FontAwesomeIcons.paintBrush),
                 onTap: () {
                   Navigator.pushNamed(context, ThemeSettingsScreen.id);
                 },
               ),
               ListTile(
-                title: Text(AppLocalizations.of(context).functionsMealPlanner),
+                title: Text(AppLocalizations.of(context)!.functionsMealPlanner),
                 leading: FaIcon(kMealPlannerIconData),
                 onTap: () {
                   Navigator.pushNamed(context, MealPlanSettingsScreen.id);
                 },
               ),
               ListTile(
-                title: Text(AppLocalizations.of(context).functionsShoppingList),
+                title:
+                    Text(AppLocalizations.of(context)!.functionsShoppingList),
                 leading: FaIcon(kShoppingListIconData),
                 onTap: () {
                   Navigator.pushNamed(context, ShoppingListSettingsScreen.id);

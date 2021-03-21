@@ -30,7 +30,7 @@ class RecipeListScreen extends StatelessWidget {
                   var collectionID = sl.get<RecipeManager>().currentCollection;
                   if (collectionID == null || collectionID.isEmpty) {
                     return OpenDrawerButton(
-                        AppLocalizations.of(context).noRecipeGroupSelected);
+                        AppLocalizations.of(context)!.noRecipeGroupSelected);
                   }
 
                   /// read recipes for selected recipe
@@ -54,7 +54,7 @@ class RecipeListScreen extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     ElevatedButton(
-                                      child: Text(AppLocalizations.of(context)
+                                      child: Text(AppLocalizations.of(context)!
                                           .createRecipe),
                                       onPressed: () async {
                                         var collection = await sl
@@ -125,7 +125,7 @@ class RecipeListScreen extends StatelessWidget {
       );
     }
     return AppBar(
-      title: Text('${AppLocalizations.of(context).recipe(2)}'),
+      title: Text('${AppLocalizations.of(context)!.recipe(2)}'),
       actions: [
         IconButton(
             icon: Icon(Icons.search),

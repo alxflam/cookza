@@ -41,10 +41,10 @@ class ScannerUtils {
   ScannerUtils._();
 
   static Future<List<Barcode>> detect({
-    @required CameraImage image,
-    @required
-        Future<List<Barcode>> Function(FirebaseVisionImage image) detectInImage,
-    @required int imageRotation,
+    required CameraImage image,
+    required Future<List<Barcode>> Function(FirebaseVisionImage image)
+        detectInImage,
+    required int imageRotation,
   }) async {
     return detectInImage(
       FirebaseVisionImage.fromBytes(

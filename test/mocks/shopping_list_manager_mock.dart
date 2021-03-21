@@ -22,9 +22,9 @@ class ShoppingListManagerMock extends Mock implements ShoppingListManager {
   @override
   Future<ShoppingListEntity> createOrUpdate(ShoppingListEntity entity) {
     if (this._entities.containsKey(entity.id)) {
-      this._entities.update(entity.id, (value) => entity);
+      this._entities.update(entity.id!, (value) => entity);
     } else {
-      this._entities.putIfAbsent(entity.id, () => entity);
+      this._entities.putIfAbsent(entity.id!, () => entity);
     }
     return Future.value(entity);
   }

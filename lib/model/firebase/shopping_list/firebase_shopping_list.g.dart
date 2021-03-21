@@ -9,13 +9,11 @@ part of 'firebase_shopping_list.dart';
 FirebaseShoppingListItem _$FirebaseShoppingListItemFromJson(
     Map<String, dynamic> json) {
   return FirebaseShoppingListItem(
-    ingredient: json['ingredient'] == null
-        ? null
-        : FirebaseIngredient.fromJson(
-            json['ingredient'] as Map<String, dynamic>),
-    bought: json['bought'] as bool ?? false,
-    customItem: json['customItem'] as bool ?? false,
-    index: json['index'] as int,
+    ingredient:
+        FirebaseIngredient.fromJson(json['ingredient'] as Map<String, dynamic>),
+    bought: json['bought'] as bool? ?? false,
+    customItem: json['customItem'] as bool? ?? false,
+    index: json['index'] as int?,
   );
 }
 
@@ -30,8 +28,8 @@ Map<String, dynamic> _$FirebaseShoppingListItemToJson(
   }
 
   writeNotNull('ingredient', _toJson(instance.ingredient));
-  writeNotNull('bought', instance.bought);
-  writeNotNull('customItem', instance.customItem);
+  val['bought'] = instance.bought;
+  val['customItem'] = instance.customItem;
   writeNotNull('index', instance.index);
   return val;
 }
@@ -39,11 +37,10 @@ Map<String, dynamic> _$FirebaseShoppingListItemToJson(
 FirebaseShoppingListDocument _$FirebaseShoppingListDocumentFromJson(
     Map<String, dynamic> json) {
   return FirebaseShoppingListDocument(
-    items: (json['items'] as List)
-        ?.map((e) => e == null
-            ? null
-            : FirebaseShoppingListItem.fromJson(e as Map<String, dynamic>))
-        ?.toList(),
+    items: (json['items'] as List<dynamic>)
+        .map(
+            (e) => FirebaseShoppingListItem.fromJson(e as Map<String, dynamic>))
+        .toList(),
     groupID: json['groupID'] as String,
     dateFrom: kDateFromJson(json['dateFrom'] as String),
     dateUntil: kDateFromJson(json['dateUntil'] as String),

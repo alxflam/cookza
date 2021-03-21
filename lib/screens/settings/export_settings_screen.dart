@@ -16,13 +16,13 @@ class ExportSettingsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          AppLocalizations.of(context).export,
+          AppLocalizations.of(context)!.export,
         ),
       ),
       body: ListView(
         children: <Widget>[
           ListTile(
-            title: Text(AppLocalizations.of(context).json),
+            title: Text(AppLocalizations.of(context)!.json),
             leading: FaIcon(FontAwesomeIcons.fileExport),
             onTap: () async {
               // fetch all recipes the app currently stores
@@ -36,7 +36,7 @@ class ExportSettingsScreen extends StatelessWidget {
             },
           ),
           ListTile(
-            title: Text(AppLocalizations.of(context).pdf),
+            title: Text(AppLocalizations.of(context)!.pdf),
             leading: FaIcon(FontAwesomeIcons.filePdf),
             onTap: () async {
               // fetch all recipes the app currently stores
@@ -51,7 +51,7 @@ class ExportSettingsScreen extends StatelessWidget {
             },
           ),
           ListTile(
-            title: Text(AppLocalizations.of(context).backup),
+            title: Text(AppLocalizations.of(context)!.backup),
             leading: FaIcon(FontAwesomeIcons.fileArchive),
             onTap: () async {
               // fetch all recipes the app currently stores

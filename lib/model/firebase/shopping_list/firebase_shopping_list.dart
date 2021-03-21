@@ -21,11 +21,14 @@ class FirebaseShoppingListItem {
   @JsonKey(defaultValue: false)
   bool customItem;
 
-  @JsonKey(nullable: true)
-  int index;
+  @JsonKey()
+  int? index;
 
   FirebaseShoppingListItem(
-      {this.ingredient, this.bought, this.customItem, this.index});
+      {required this.ingredient,
+      required this.bought,
+      required this.customItem,
+      required this.index});
 
   factory FirebaseShoppingListItem.fromJson(Map<String, dynamic> json) {
     return _$FirebaseShoppingListItemFromJson(json);
@@ -52,7 +55,7 @@ class FirebaseShoppingListItem {
 @JsonSerializable(includeIfNull: false)
 class FirebaseShoppingListDocument {
   @JsonKey(ignore: true)
-  String documentID;
+  String? documentID;
 
   @JsonKey(toJson: kListToJson)
   List<FirebaseShoppingListItem> items;
@@ -63,15 +66,15 @@ class FirebaseShoppingListDocument {
   @JsonKey(toJson: kDateToJson, fromJson: kDateFromJson)
   DateTime dateUntil;
 
-  @JsonKey(nullable: false)
+  @JsonKey()
   String groupID;
 
   FirebaseShoppingListDocument(
       {this.documentID,
-      this.items,
-      this.groupID,
-      this.dateFrom,
-      this.dateUntil});
+      required this.items,
+      required this.groupID,
+      required this.dateFrom,
+      required this.dateUntil});
 
   factory FirebaseShoppingListDocument.fromJson(
       Map<String, dynamic> json, String id) {
@@ -90,9 +93,5 @@ class FirebaseShoppingListDocument {
         groupID: entity.groupID,
         dateFrom: entity.dateFrom,
         dateUntil: entity.dateUntil);
-  }
-
-  static FirebaseShoppingListDocument empty(String groupID) {
-    return FirebaseShoppingListDocument(groupID: groupID, items: []);
   }
 }

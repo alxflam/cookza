@@ -13,7 +13,7 @@ class LeftoversScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context).functionsLeftovers),
+        title: Text(AppLocalizations.of(context)!.functionsLeftovers),
       ),
       body: LeftoversBody(),
     );
@@ -55,7 +55,7 @@ class _LeftoversBodyState extends State<LeftoversBody> {
                   controller: _ingredientController,
                   autofocus: true,
                   decoration: InputDecoration(
-                    labelText: AppLocalizations.of(context).ingredient(1),
+                    labelText: AppLocalizations.of(context)!.ingredient(1),
                     prefixIcon: Icon(Icons.search),
                   ),
                   keyboardType: TextInputType.text,
@@ -81,12 +81,12 @@ class _LeftoversBodyState extends State<LeftoversBody> {
           if (this._ingredients.isEmpty) {
             return Container();
           }
-          return FutureBuilder(
+          return FutureBuilder<List<RecipeEntity>>(
             future: sl
                 .get<SimilarityService>()
                 .getRecipesContaining(this._ingredients),
             builder: (context, snapshot) {
-              if (snapshot.hasData && snapshot.data.length > 0) {
+              if (snapshot.hasData && snapshot.data!.isNotEmpty) {
                 var result = snapshot.data as List<RecipeEntity>;
                 return Expanded(
                   child: ListView.builder(
@@ -96,9 +96,9 @@ class _LeftoversBodyState extends State<LeftoversBody> {
                     },
                   ),
                 );
-              } else if (snapshot.hasData && snapshot.data.isEmpty) {
+              } else if (snapshot.hasData && snapshot.data!.isEmpty) {
                 return NothingFound(
-                    AppLocalizations.of(context).noRecipesFound);
+                    AppLocalizations.of(context)!.noRecipesFound);
               } else {
                 return Center(
                   child: CircularProgressIndicator(),

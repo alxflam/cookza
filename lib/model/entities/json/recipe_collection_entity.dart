@@ -7,9 +7,7 @@ import 'package:cookza/model/json/recipe_collection.dart';
 class RecipeCollectionEntityJson implements RecipeCollectionEntity {
   RecipeCollection _collection;
 
-  RecipeCollectionEntityJson.of(RecipeCollection collection) {
-    this._collection = collection;
-  }
+  RecipeCollectionEntityJson.of(this._collection);
 
   @override
   DateTime get creationTimestamp => this._collection.creationTimestamp.toDate();

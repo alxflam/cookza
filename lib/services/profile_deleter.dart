@@ -1,6 +1,7 @@
 import 'package:cookza/model/entities/abstract/user_entity.dart';
 import 'package:cookza/services/firebase_provider.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
+import 'package:collection/collection.dart';
 
 abstract class ProfileDeleter {
   Future<void> delete();
@@ -24,20 +25,19 @@ class ProfileDeleterImpl implements ProfileDeleter {
       List<UserEntity> users = List.of(mealPlanGroup.users);
       users.remove(firebase.userUid);
       bool otherOwners = hasOtherUsers(users);
-      if (otherOwners != null) {
+      if (otherOwners) {
         // only leave group
-        await firebase.leaveMealPlanGroup(mealPlanGroup.id);
+        await firebase.leaveMealPlanGroup(mealPlanGroup.id!);
       } else {
         // delete group (also deletes meal plan)
-        await firebase.deleteMealPlanCollection(mealPlanGroup.id);
+        await firebase.deleteMealPlanCollection(mealPlanGroup.id!);
       }
     }
   }
 
   bool hasOtherUsers(List<UserEntity> users) {
-    var otherOwners = users.firstWhere(
-        (element) => element.type == USER_TYPE.USER,
-        orElse: () => null);
+    var otherOwners =
+        users.firstWhereOrNull((element) => element.type == USER_TYPE.USER);
     return otherOwners != null;
   }
 
@@ -48,10 +48,10 @@ class ProfileDeleterImpl implements ProfileDeleter {
       users.remove(firebase.userUid);
       if (hasOtherUsers(users)) {
         // leave group
-        await firebase.leaveRecipeGroup(recipeGroup.id);
+        await firebase.leaveRecipeGroup(recipeGroup.id!);
       } else {
         // delete group and all associated recipes including their images
-        await firebase.deleteRecipeCollection(recipeGroup.id);
+        await firebase.deleteRecipeCollection(recipeGroup.id!);
       }
     }
   }

@@ -20,7 +20,7 @@ class ShoppingListOverviewScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          AppLocalizations.of(context).functionsShoppingList,
+          AppLocalizations.of(context)!.functionsShoppingList,
         ),
         actions: [
           IconButton(
@@ -50,14 +50,15 @@ class ShoppingListOverviewScreen extends StatelessWidget {
               );
             }
 
-            if (snapshot.data == null || snapshot.data.isEmpty) {
-              return NothingFound(AppLocalizations.of(context).noShoppingLists);
+            if (snapshot.data == null || snapshot.data!.isEmpty) {
+              return NothingFound(
+                  AppLocalizations.of(context)!.noShoppingLists);
             }
 
             return ListView.builder(
-              itemCount: snapshot.data.length,
+              itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
-                var entry = snapshot.data[index];
+                var entry = snapshot.data![index];
                 var mealPlanName = model.getMealPlanName(entry.groupID);
                 var date =
                     '${kDateFormatter.format(entry.dateFrom)} - ${kDateFormatter.format(entry.dateUntil)}';
@@ -78,7 +79,7 @@ class ShoppingListOverviewScreen extends StatelessWidget {
                     ),
                     onPressed: () async {
                       var msg =
-                          AppLocalizations.of(context).functionsShoppingList +
+                          AppLocalizations.of(context)!.functionsShoppingList +
                               ' (' +
                               date +
                               ')';
@@ -90,12 +91,12 @@ class ShoppingListOverviewScreen extends StatelessWidget {
                         builder: (BuildContext context) {
                           return AlertDialog(
                             title: AlertDialogTitle(
-                                title: AppLocalizations.of(context).delete),
+                                title: AppLocalizations.of(context)!.delete),
                             content: SingleChildScrollView(
                               child: ListBody(
                                 children: <Widget>[
                                   Text(
-                                    AppLocalizations.of(context)
+                                    AppLocalizations.of(context)!
                                         .confirmDelete(msg),
                                   ),
                                 ],
@@ -105,7 +106,7 @@ class ShoppingListOverviewScreen extends StatelessWidget {
                               ElevatedButton(
                                 style: kRaisedGreyButtonStyle,
                                 child: Text(
-                                  AppLocalizations.of(context).cancel,
+                                  AppLocalizations.of(context)!.cancel,
                                 ),
                                 onPressed: () {
                                   Navigator.pop(context, false);
@@ -114,7 +115,7 @@ class ShoppingListOverviewScreen extends StatelessWidget {
                               ElevatedButton(
                                 style: kRaisedRedButtonStyle,
                                 child: Text(
-                                  AppLocalizations.of(context).delete,
+                                  AppLocalizations.of(context)!.delete,
                                 ),
                                 onPressed: () async {
                                   await model.deleteList(entry);

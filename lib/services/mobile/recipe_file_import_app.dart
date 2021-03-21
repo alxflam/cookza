@@ -21,20 +21,16 @@ class RecipeFileImportImpl extends RecipeFileImport {
         type: FileType.custom,
         allowCompression: true);
     if (filePickerResult == null || filePickerResult.paths.length != 1) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(AppLocalizations.of(context)!.noFileSelected)));
       return;
     }
-    File file = File(filePickerResult.paths.first);
+    File file = File(filePickerResult.paths.first!);
 
     List<Recipe> result = [];
-    if (file == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(AppLocalizations.of(context).noFileSelected)));
-
-      return; // no file selected
-    }
     if (!file.existsSync()) {
       ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(AppLocalizations.of(context).fileNotFound)));
+          SnackBar(content: Text(AppLocalizations.of(context)!.fileNotFound)));
       return;
     }
 

@@ -9,15 +9,13 @@ import 'package:cookza/model/firebase/general/firebase_user.dart';
 class MealPlanCollectionEntityFirebase implements MealPlanCollectionEntity {
   FirebaseMealPlanCollection _collection;
 
-  MealPlanCollectionEntityFirebase.of(FirebaseMealPlanCollection collection) {
-    this._collection = collection;
-  }
+  MealPlanCollectionEntityFirebase.of(this._collection);
 
   @override
   DateTime get creationTimestamp => _collection.creationTimestamp.toDate();
 
   @override
-  String get id => _collection.documentID;
+  String? get id => _collection.documentID;
 
   @override
   String get name => _collection.name;

@@ -9,7 +9,7 @@ class ChangelogScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context).changelog),
+        title: Text(AppLocalizations.of(context)!.changelog),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -38,7 +38,8 @@ class ChangelogEntry extends StatelessWidget {
   static final kTitleStyle =
       TextStyle(fontWeight: FontWeight.bold, fontStyle: FontStyle.italic);
 
-  const ChangelogEntry({this.version, this.date, this.changes});
+  const ChangelogEntry(
+      {required this.version, required this.date, required this.changes});
 
   @override
   Widget build(BuildContext context) {

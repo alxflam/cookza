@@ -18,13 +18,13 @@ class RecipeFileExportImpl extends RecipeFileExport {
       ..href = url
       ..style.display = 'none'
       ..download = '${this.getExportFileName()}.json';
-    html.document.body.children.add(anchor);
+    html.document.body?.children.add(anchor);
 
     // trigger downlaod
     anchor.click();
 
     // remove DOM element
-    html.document.body.children.remove(anchor);
+    html.document.body?.children.remove(anchor);
     html.Url.revokeObjectUrl(url);
   }
 

@@ -97,7 +97,7 @@ class WebLandingPage extends StatelessWidget {
                   value: consent,
                   onChanged: (value) {
                     setState(() {
-                      consent = value;
+                      consent = value ?? false;
                     });
                   },
                   title: RichText(

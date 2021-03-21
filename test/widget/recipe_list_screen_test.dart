@@ -21,10 +21,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../mocks/firebase_provider_mock.dart';
-import '../mocks/image_manager_mock.dart';
-import '../mocks/navigator_observer_mock.dart';
 import '../mocks/receive_intent_handler_mock.dart';
 import '../mocks/recipe_manager_mock.dart';
+import '../mocks/shared_mocks.mocks.dart';
 import '../mocks/shopping_list_manager_mock.dart';
 import '../utils/recipe_creator.dart';
 
@@ -41,7 +40,7 @@ void main() {
     GetIt.I.registerSingleton<ShoppingListManager>(ShoppingListManagerMock());
     GetIt.I.registerSingleton<FirebaseProvider>(FirebaseProviderMock());
     GetIt.I.registerSingleton<RecipeManager>(recipeManager);
-    GetIt.I.registerSingleton<ImageManager>(ImageManagerMock());
+    GetIt.I.registerSingleton<ImageManager>(MockImageManager());
   });
 
   setUp(() {
@@ -54,7 +53,7 @@ void main() {
     var recipe = RecipeCreator.createRecipe('some Recipe');
     var pepper = RecipeCreator.createIngredient('Pepper');
     recipe.ingredientList = [pepper];
-    recipe.recipeCollectionId = group.id;
+    recipe.recipeCollectionId = group.id!;
 
     await recipeManager.createOrUpdate(recipe);
 
@@ -88,7 +87,7 @@ void main() {
     var recipe = RecipeCreator.createRecipe('some Recipe');
     var pepper = RecipeCreator.createIngredient('Pepper');
     recipe.ingredientList = [pepper];
-    recipe.recipeCollectionId = group.id;
+    recipe.recipeCollectionId = group.id!;
 
     await recipeManager.createOrUpdate(recipe);
 
@@ -113,7 +112,7 @@ void main() {
     var recipe = RecipeCreator.createRecipe('Käsespätzle');
     var pepper = RecipeCreator.createIngredient('Pepper');
     recipe.ingredientList = [pepper];
-    recipe.recipeCollectionId = group.id;
+    recipe.recipeCollectionId = group.id!;
 
     await recipeManager.createOrUpdate(recipe);
     recipeManager.currentCollection = group.id;
@@ -142,7 +141,8 @@ void main() {
   });
 }
 
-void _inputFormField(WidgetTester tester, Finder finder, String value) async {
+Future<void> _inputFormField(
+    WidgetTester tester, Finder finder, String value) async {
   await tester.enterText(finder, value);
   await tester.testTextInput.receiveAction(TextInputAction.search);
   await tester.pumpAndSettle();
@@ -151,7 +151,7 @@ void _inputFormField(WidgetTester tester, Finder finder, String value) async {
 
 class MockApplication extends StatelessWidget {
   const MockApplication({
-    @required this.mockObserver,
+    required this.mockObserver,
   });
 
   final MockNavigatorObserver mockObserver;

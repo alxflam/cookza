@@ -49,6 +49,7 @@ void main() {
 
 FirebaseShoppingListItem createPepperItem() {
   var item = FirebaseShoppingListItem(
+      index: 1,
       bought: false,
       customItem: false,
       ingredient: FirebaseIngredient(

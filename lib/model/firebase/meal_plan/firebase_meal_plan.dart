@@ -13,7 +13,8 @@ class FirebaseMealPlanRecipe {
   @JsonKey()
   int servings;
 
-  FirebaseMealPlanRecipe({this.name, this.id, this.servings});
+  FirebaseMealPlanRecipe(
+      {required this.name, required this.id, required this.servings});
 
   factory FirebaseMealPlanRecipe.fromJson(Map<String, dynamic> json) {
     return _$FirebaseMealPlanRecipeFromJson(json);
@@ -21,7 +22,7 @@ class FirebaseMealPlanRecipe {
 
   factory FirebaseMealPlanRecipe.from(MealPlanRecipeEntity entity) {
     return FirebaseMealPlanRecipe(
-        name: entity.name, id: entity.id, servings: entity.servings);
+        name: entity.name, id: entity.id!, servings: entity.servings);
   }
 
   Map<String, dynamic> toJson() => _$FirebaseMealPlanRecipeToJson(this);
@@ -35,7 +36,7 @@ class FirebaseMealPlanDate {
   @JsonKey(toJson: kListToJson)
   List<FirebaseMealPlanRecipe> recipes;
 
-  FirebaseMealPlanDate({this.date, this.recipes});
+  FirebaseMealPlanDate({required this.date, required this.recipes});
 
   factory FirebaseMealPlanDate.fromJson(Map<String, dynamic> json) {
     return _$FirebaseMealPlanDateFromJson(json);
@@ -54,7 +55,7 @@ class FirebaseMealPlanDate {
 @JsonSerializable(includeIfNull: false)
 class FirebaseMealPlanDocument {
   @JsonKey(ignore: true)
-  String documentID;
+  String? documentID;
 
   @JsonKey(toJson: kListToJson)
   List<FirebaseMealPlanDate> items;
@@ -65,7 +66,8 @@ class FirebaseMealPlanDocument {
   @JsonKey()
   String groupID;
 
-  FirebaseMealPlanDocument({this.documentID, this.items, this.groupID});
+  FirebaseMealPlanDocument(
+      {this.documentID, required this.items, required this.groupID});
 
   factory FirebaseMealPlanDocument.fromJson(
       Map<String, dynamic> json, String id) {

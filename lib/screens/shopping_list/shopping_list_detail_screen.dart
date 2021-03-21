@@ -13,7 +13,8 @@ class ShoppingListDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _model = ModalRoute.of(context).settings.arguments as ShoppingListModel;
+    var _model =
+        ModalRoute.of(context)!.settings.arguments as ShoppingListModel;
 
     return ChangeNotifierProvider.value(
       value: _model,
@@ -56,21 +57,21 @@ class ShoppingListDetailScreen extends StatelessWidget {
                   );
                 }
 
-                if (snapshot.data == null || snapshot.data.isEmpty) {
+                if (snapshot.data == null || snapshot.data!.isEmpty) {
                   return Container(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        NothingFound(AppLocalizations.of(context).noItems),
+                        NothingFound(AppLocalizations.of(context)!.noItems),
                       ],
                     ),
                   );
                 }
 
                 return ReorderableListView(
-                  children: List.generate(snapshot.data.length, (index) {
-                    var _item = snapshot.data[index];
+                  children: List.generate(snapshot.data!.length, (index) {
+                    var _item = snapshot.data![index];
 
                     return ChangeNotifierProvider<ShoppingListItemModel>.value(
                       value: _item,

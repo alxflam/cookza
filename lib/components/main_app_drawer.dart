@@ -31,45 +31,45 @@ class MainAppDrawer extends StatelessWidget {
             child: AppIconTextWidget(),
           ),
           ListTile(
-            title: Text(AppLocalizations.of(context).functionsListRecipes),
+            title: Text(AppLocalizations.of(context)!.functionsListRecipes),
             leading: FaIcon(kRecipesIconData),
             onTap: () {
               Navigator.pushNamed(context, RecipeListScreen.id);
             },
           ),
           ListTile(
-            title: Text(AppLocalizations.of(context).functionsAddRecipe),
+            title: Text(AppLocalizations.of(context)!.functionsAddRecipe),
             leading: FaIcon(kNewRecipe),
             onTap: () => Navigator.pushNamed(context, NewRecipeScreen.id,
                 arguments: RecipeEditModel.create()),
           ),
           ListTile(
-            title: Text(AppLocalizations.of(context).functionsMealPlanner),
+            title: Text(AppLocalizations.of(context)!.functionsMealPlanner),
             leading: FaIcon(kMealPlannerIconData),
             onTap: () {
               Navigator.pushNamed(context, MealPlanScreen.id);
             },
           ),
           ListTile(
-            title: Text(AppLocalizations.of(context).functionsShoppingList),
+            title: Text(AppLocalizations.of(context)!.functionsShoppingList),
             leading: FaIcon(kShoppingListIconData),
             onTap: () {
               Navigator.pushNamed(context, ShoppingListOverviewScreen.id);
             },
           ),
           ListTile(
-            title: Text(AppLocalizations.of(context).functionsLeftovers),
+            title: Text(AppLocalizations.of(context)!.functionsLeftovers),
             leading: FaIcon(kLeftoversIconData),
             onTap: () => Navigator.pushNamed(context, LeftoversScreen.id),
           ),
           _getWebAppListTile(context),
           ListTile(
-            title: Text(AppLocalizations.of(context).shareAccount),
+            title: Text(AppLocalizations.of(context)!.shareAccount),
             leading: FaIcon(kShareAccountIcon),
             onTap: () => Navigator.pushNamed(context, ShareAccountScreen.id),
           ),
           ListTile(
-            title: Text(AppLocalizations.of(context).settings),
+            title: Text(AppLocalizations.of(context)!.settings),
             leading: FaIcon(kSettingsIcon),
             onTap: () => Navigator.pushNamed(context, SettingsScreen.id),
           ),
@@ -81,7 +81,7 @@ class MainAppDrawer extends StatelessWidget {
   ListTile _getWebAppListTile(BuildContext context) {
     if (kIsWeb) {
       return ListTile(
-          title: Text(AppLocalizations.of(context).logout),
+          title: Text(AppLocalizations.of(context)!.logout),
           leading: Icon(Icons.power_settings_new),
           onTap: () async {
             var util = sl.get<FirebaseProvider>();
@@ -89,7 +89,7 @@ class MainAppDrawer extends StatelessWidget {
           });
     }
     return ListTile(
-      title: Text('$kAppName ${AppLocalizations.of(context).web}'),
+      title: Text('$kAppName ${AppLocalizations.of(context)!.web}'),
       leading: FaIcon(kWebAppData),
       onTap: () => Navigator.pushNamed(context, WebLoginOnAppScreen.id),
     );

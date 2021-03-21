@@ -12,6 +12,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:collection/collection.dart';
 
 Future<void> openShoppingListDialog(BuildContext context) async {
   ShoppingListModel model;
@@ -20,12 +21,12 @@ Future<void> openShoppingListDialog(BuildContext context) async {
 
   if (collections.isEmpty) {
     ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(AppLocalizations.of(context).noMealPlan)));
+        SnackBar(content: Text(AppLocalizations.of(context)!.noMealPlan)));
     return;
   }
 
   if (collections.length == 1) {
-    model = ShoppingListModel.empty(groupID: collections.first.id);
+    model = ShoppingListModel.empty(groupID: collections.first.id!);
     var dateRange = await showDateRangePicker(
         context: context,
         firstDate: model.dateFrom,
@@ -38,7 +39,7 @@ Future<void> openShoppingListDialog(BuildContext context) async {
     }
     model.dateEnd = dateRange.end;
     model.dateFrom = dateRange.start;
-    model.groupID = collections.first.id;
+    model.groupID = collections.first.id!;
   } else {
     model = ShoppingListModel.empty();
     model = await _showMultipleGroupsDialog(context, collections, model);
@@ -53,14 +54,12 @@ Future<void> openShoppingListDialog(BuildContext context) async {
   // TODO: refactor logic and provide tests
   var matchedList = existingPlans.isEmpty
       ? null
-      : existingPlans.firstWhere(
-          (e) =>
-              e.groupID == model.groupID &&
-              (isSameDay(model.dateFrom, e.dateFrom) ||
-                  (e.dateFrom.isBefore(DateTime.now()) &&
-                      isSameDay(model.dateFrom, DateTime.now()))) &&
-              e.dateUntil == model.dateEnd,
-          orElse: () => null);
+      : existingPlans.firstWhereOrNull((e) =>
+          e.groupID == model.groupID &&
+          (isSameDay(model.dateFrom, e.dateFrom) ||
+              (e.dateFrom.isBefore(DateTime.now()) &&
+                  isSameDay(model.dateFrom, DateTime.now()))) &&
+          e.dateUntil == model.dateEnd);
 
   var listEntity = matchedList ??
       MutableShoppingList.ofValues(
@@ -115,9 +114,10 @@ Future<ShoppingListModel> _showMultipleGroupsDialog(BuildContext context,
                                   initialDateRange: DateTimeRange(
                                       start: model.dateFrom,
                                       end: model.dateEnd));
-
-                              model.dateEnd = dateRange.end;
-                              model.dateFrom = dateRange.start;
+                              if (dateRange != null) {
+                                model.dateEnd = dateRange.end;
+                                model.dateFrom = dateRange.start;
+                              }
                             },
                           ),
                         ],
@@ -159,27 +159,27 @@ Widget _getMealPlanGroupDropDown(
   return Expanded(
     child: Padding(
       padding: EdgeInsets.symmetric(horizontal: 20),
-      child: FutureBuilder(
+      child: FutureBuilder<List<MealPlanCollectionEntity>>(
         future: sl.get<MealPlanManager>().collections,
         builder: (context, snapshot) {
-          if (snapshot.hasData && snapshot.data.isNotEmpty) {
+          if (snapshot.hasData && snapshot.data!.isNotEmpty) {
             var collections = snapshot.data as List<MealPlanCollectionEntity>;
             List<DropdownMenuItem<MealPlanCollectionEntity>> items = collections
                 .map((item) => DropdownMenuItem<MealPlanCollectionEntity>(
                     child: Text(item.name), value: item))
                 .toList();
 
-            model.groupID = collections.first.id;
+            model.groupID = collections.first.id!;
 
             return DropdownButtonFormField<MealPlanCollectionEntity>(
               value: collections.first,
               items: items,
               decoration: InputDecoration(
                 isDense: true,
-                labelText: AppLocalizations.of(context).functionsMealPlanner,
+                labelText: AppLocalizations.of(context)!.functionsMealPlanner,
               ),
-              onChanged: (MealPlanCollectionEntity value) {
-                model.groupID = value.id;
+              onChanged: (MealPlanCollectionEntity? value) {
+                model.groupID = value!.id!;
               },
             );
           }

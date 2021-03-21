@@ -41,7 +41,7 @@ class BasePlatformInfo implements PlatformInfo {
   @override
   IconData getOSIcon(String osName) {
     if (osIcons.containsKey(osName.toLowerCase())) {
-      return osIcons[osName.toLowerCase()];
+      return osIcons[osName.toLowerCase()]!;
     }
     return Icons.device_unknown;
   }

@@ -8,8 +8,8 @@ void main() {
     'Create Recipe Collection',
     () async {
       var timestamp = Timestamp.now();
-      var cut = RecipeCollectionEntityJson.of(RecipeCollection(
-          id: 'ID', name: 'Test', creationTimestamp: timestamp));
+      var cut = RecipeCollectionEntityJson.of(
+          RecipeCollection(id: 'ID', name: 'Test'));
 
       expect(cut.id, 'ID');
       expect(cut.creationTimestamp, timestamp.toDate());

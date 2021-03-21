@@ -53,9 +53,9 @@ class LiveCameraScannerScreen extends StatefulWidget {
 class _LiveCameraScannerScreenState extends State<LiveCameraScannerScreen> {
   bool _isDetecting = false;
   List<Barcode> _scanResults = [];
-  CameraController _camera;
+  late CameraController _camera;
   SelectionMode _mode = SelectionMode.liveCamera;
-  File _galleryImage;
+  File? _galleryImage;
   bool _popped = false;
   bool _cameraRunning = false;
 
@@ -134,7 +134,7 @@ class _LiveCameraScannerScreenState extends State<LiveCameraScannerScreen> {
       this._popped = true;
 
       /// wait until we can navigate
-      SchedulerBinding.instance.addPostFrameCallback((_) async {
+      SchedulerBinding.instance!.addPostFrameCallback((_) async {
         /// make sure the image is at least shown and can be seen
         await Future.delayed(Duration(seconds: 1));
         var qrCode = _scanResults.first.rawValue;
@@ -154,7 +154,7 @@ class _LiveCameraScannerScreenState extends State<LiveCameraScannerScreen> {
   Widget _buildImage() {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context).scanQRCode),
+        title: Text(AppLocalizations.of(context)!.scanQRCode),
         actions: [
           IconButton(
               icon: Icon(Icons.photo_library),
@@ -194,6 +194,9 @@ class _LiveCameraScannerScreenState extends State<LiveCameraScannerScreen> {
   }
 
   Widget _displayGalleryImage() {
+    if (_galleryImage == null) {
+      return Container();
+    }
     return Container(
       constraints: const BoxConstraints.expand(),
       child: Stack(
@@ -202,7 +205,7 @@ class _LiveCameraScannerScreenState extends State<LiveCameraScannerScreen> {
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                  image: FileImage(_galleryImage), fit: BoxFit.cover),
+                  image: FileImage(_galleryImage!), fit: BoxFit.cover),
             ),
           ),
           _checkQrCodeExistence(),
@@ -239,9 +242,10 @@ class _LiveCameraScannerScreenState extends State<LiveCameraScannerScreen> {
             child: Wrap(
               children: [
                 Center(
-                    child: Text(AppLocalizations.of(context).noQRCodeDetected)),
+                    child:
+                        Text(AppLocalizations.of(context)!.noQRCodeDetected)),
                 Center(
-                    child: Text(AppLocalizations.of(context).tryAnotherImage)),
+                    child: Text(AppLocalizations.of(context)!.tryAnotherImage)),
               ],
             ),
           )

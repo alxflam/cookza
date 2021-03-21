@@ -47,8 +47,8 @@ void main() {
   test(
     'mutable ingredient of without reference',
     () async {
-      var cut = MutableIngredient.of(
-          IngredientEntityJson.of(Ingredient(recipeReference: 'recipeRef')));
+      var cut = MutableIngredient.of(IngredientEntityJson.of(
+          Ingredient(recipeReference: 'recipeRef', name: '')));
       expect(cut.isRecipeReference, true);
       expect(cut.recipeReference, 'recipeRef');
     },

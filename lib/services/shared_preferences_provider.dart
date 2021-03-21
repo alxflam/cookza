@@ -5,7 +5,7 @@ abstract class SharedPreferencesProvider {
 
   SharedPreferences get instance;
 
-  String get theme;
+  String? get theme;
   void setTheme(String value);
 
   bool isUnitOfMeasureVisible(String uom);
@@ -18,7 +18,7 @@ abstract class SharedPreferencesProvider {
   void setUserName(String value);
 
   void setCurrentMealPlanCollection(String value);
-  String getCurrentMealPlanCollection();
+  String? getCurrentMealPlanCollection();
 
   bool introductionShown();
   void setIntroductionShown(bool value);
@@ -32,12 +32,12 @@ abstract class SharedPreferencesProvider {
   bool get showShoppingListCategories;
   set showShoppingListCategories(bool value);
 
-  String get leastRecentlyUsedRecipeGroup;
+  String? getLeastRecentlyUsedRecipeGroup();
   set leastRecentlyUsedRecipeGroup(String value);
 }
 
 class SharedPreferencesProviderImpl implements SharedPreferencesProvider {
-  SharedPreferences _prefs;
+  late SharedPreferences _prefs;
 
   static final String themeKey = 'theme';
 
@@ -90,7 +90,7 @@ class SharedPreferencesProviderImpl implements SharedPreferencesProvider {
 
   @override
   bool isUnitOfMeasureVisible(String uom) {
-    bool result = _prefs.getBool(getUomVisibilityKey(uom));
+    bool? result = _prefs.getBool(getUomVisibilityKey(uom));
     return result ?? true;
   }
 
@@ -118,12 +118,11 @@ class SharedPreferencesProviderImpl implements SharedPreferencesProvider {
 
   @override
   void setUserName(String value) {
-    assert(value != null);
     this._prefs.setString(userName, value);
   }
 
   @override
-  String getCurrentMealPlanCollection() {
+  String? getCurrentMealPlanCollection() {
     return _prefs.getString(mealPlanCollection);
   }
 
@@ -177,7 +176,7 @@ class SharedPreferencesProviderImpl implements SharedPreferencesProvider {
   }
 
   @override
-  String get leastRecentlyUsedRecipeGroup {
+  String? getLeastRecentlyUsedRecipeGroup() {
     return _prefs.getString(leastRecentlyUsedRecipeGroupKey);
   }
 
@@ -192,7 +191,7 @@ class SharedPreferencesProviderImpl implements SharedPreferencesProvider {
   }
 
   @override
-  String get theme {
+  String? get theme {
     return this._prefs.getString(themeKey);
   }
 }

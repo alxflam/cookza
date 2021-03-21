@@ -40,7 +40,7 @@ void main() {
       // but it may contain an in memory image
       expect(cut.inMemoryImage.length, 3);
       expect(cut.hasInMemoryImage, true);
-      expect(cut.imageAsBytes.length, 3);
+      expect(cut.imageAsBytes!.length, 3);
 
       expect(cut.difficulty, DIFFICULTY.HARD);
       expect(cut.name, 'My name');

@@ -6,21 +6,19 @@ class MutableShoppingListItem implements ShoppingListItemEntity {
   MutableIngredientNote _ingredientNote;
   bool _isBought;
   bool _isCustom;
-  int _index;
+  int _index = -1;
 
-  MutableShoppingListItem.ofEntity(ShoppingListItemEntity entity) {
-    this._ingredientNote = MutableIngredientNote.of(entity.ingredientNote);
-    this._isBought = entity.isBought;
-    this._isCustom = entity.isCustom;
-    this._index = entity.index;
-  }
+  MutableShoppingListItem.ofEntity(ShoppingListItemEntity entity)
+      : this._ingredientNote = MutableIngredientNote.of(entity.ingredientNote),
+        this._isBought = entity.isBought,
+        this._isCustom = entity.isCustom,
+        this._index = entity.index ?? -1;
 
   MutableShoppingListItem.ofIngredientNote(
-      IngredientNoteEntity note, bool isBought, bool isCustom) {
-    this._ingredientNote = MutableIngredientNote.of(note);
-    this._isBought = isBought;
-    this._isCustom = isCustom;
-  }
+      IngredientNoteEntity note, bool isBought, bool isCustom)
+      : this._ingredientNote = MutableIngredientNote.of(note),
+        this._isBought = isBought,
+        this._isCustom = isCustom;
 
   @override
   int get index => this._index;

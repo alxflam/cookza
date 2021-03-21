@@ -12,9 +12,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../mocks/application_mock.dart';
 import '../mocks/meal_plan_manager_mock.dart';
-import '../mocks/navigator_observer_mock.dart';
 import '../mocks/receive_intent_handler_mock.dart';
 import '../mocks/recipe_manager_mock.dart';
+import '../mocks/shared_mocks.mocks.dart';
 
 void main() {
   setUpAll(() {

@@ -20,14 +20,13 @@ class MealDragModel {
 class MealPlanRecipeModel with ChangeNotifier {
   MutableMealPlanRecipeEntity _entity;
 
-  MealPlanRecipeModel.of(MutableMealPlanRecipeEntity entity) {
-    this._entity = entity;
-  }
+  MealPlanRecipeModel.of(MutableMealPlanRecipeEntity entity)
+      : this._entity = entity;
 
   bool get isNote => _entity.id == null;
 
   String get name => _entity.name;
-  String get id => _entity.id;
+  String? get id => _entity.id;
   int get servings => _entity.servings;
   MealPlanRecipeEntity get entity => _entity;
 
@@ -43,18 +42,18 @@ class MealPlanRecipeModel with ChangeNotifier {
 }
 
 class MealPlanViewModel extends ChangeNotifier {
-  RecipeEntity _recipeForAddition;
-  MutableMealPlan _mealPlan;
+  RecipeEntity? _recipeForAddition;
+  late MutableMealPlan _mealPlan;
 
   final int _standardServings =
       sl.get<SharedPreferencesProvider>().getMealPlanStandardServingsSize();
 
-  MealPlanViewModel.of(MealPlanEntity plan, {DateTime startDate}) {
+  MealPlanViewModel.of(MealPlanEntity plan, {DateTime? startDate}) {
     // first retrieve how many weeks should be shown
     var targetWeeks = sl.get<SharedPreferencesProvider>().getMealPlanWeeks();
     // create a mutable meal plan model
     _mealPlan = MutableMealPlan.of(
-        plan.id, plan.groupID, plan.items, targetWeeks,
+        plan.id!, plan.groupID, plan.items, targetWeeks,
         startDate: startDate ?? DateTime.now());
   }
 
@@ -80,7 +79,10 @@ class MealPlanViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addRecipeFromEntity(int index, RecipeEntity entity) {
+  void addRecipeFromEntity(int index, RecipeEntity? entity) {
+    if (entity == null) {
+      return;
+    }
     _mealPlan.items[index].addRecipe(MutableMealPlanRecipeEntity.fromValues(
         entity.id, entity.name, _standardServings));
     _save();
@@ -101,7 +103,7 @@ class MealPlanViewModel extends ChangeNotifier {
   }
 
   bool get addByNavigationRequired =>
-      _recipeForAddition != null && _recipeForAddition.id.isNotEmpty
+      _recipeForAddition != null && _recipeForAddition!.id!.isNotEmpty
           ? true
           : false;
 
@@ -111,18 +113,17 @@ class MealPlanViewModel extends ChangeNotifier {
 
   void addNote(int index, String text) {
     _mealPlan.items[index]
-        .addRecipe(MutableMealPlanRecipeEntity.fromValues(null, text, null));
+        .addRecipe(MutableMealPlanRecipeEntity.fromValues(null, text, 1));
     _save();
     notifyListeners();
   }
 }
 
 class MealPlanDateEntry with ChangeNotifier {
-  MutableMealPlanDateEntity _entity;
+  final MutableMealPlanDateEntity _entity;
 
-  MealPlanDateEntry.of(MutableMealPlanDateEntity entity) {
-    this._entity = entity;
-  }
+  MealPlanDateEntry.of(MutableMealPlanDateEntity entity)
+      : this._entity = entity;
 
   void addRecipe(MealPlanRecipeModel entry) {
     _entity.recipes.add(MutableMealPlanRecipeEntity.of(entry.entity));

@@ -24,15 +24,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../mocks/application_mock.dart';
-import '../mocks/image_manager_mock.dart';
-import '../mocks/navigator_observer_mock.dart';
 import '../mocks/receive_intent_handler_mock.dart';
 import '../mocks/recipe_manager_mock.dart';
+import '../mocks/shared_mocks.mocks.dart';
 import '../mocks/uom_provider_mock.dart';
 
 void main() {
   var mock = RecipeManagerStub();
-  var imageMock = ImageManagerMock();
+  var imageMock = MockImageManager();
   GetIt.I.registerSingleton<NavigatorService>(NavigatorService());
   GetIt.I.registerSingleton<RecipeManager>(mock);
   GetIt.I.registerSingleton<ImageManager>(imageMock);
@@ -211,7 +210,7 @@ Future _proceedStep(WidgetTester tester) async {
   await tester.pumpAndSettle();
 }
 
-void _navigateToNewRecipeScreen(WidgetTester tester) async {
+Future<void> _navigateToNewRecipeScreen(WidgetTester tester) async {
   final mockObserver = MockNavigatorObserver();
   await tester.pumpWidget(MockApplication(mockObserver: mockObserver));
 
@@ -226,14 +225,15 @@ void _navigateToNewRecipeScreen(WidgetTester tester) async {
   expect(find.byType(NewRecipeScreen), findsOneWidget);
 }
 
-void _inputFormField(WidgetTester tester, Finder finder, String value) async {
+Future<void> _inputFormField(
+    WidgetTester tester, Finder finder, String value) async {
   await tester.enterText(finder, value);
   await tester.testTextInput.receiveAction(TextInputAction.done);
   await tester.pumpAndSettle();
   expect(find.text(value), findsOneWidget);
 }
 
-Future setupApplication(WidgetTester tester) async {
+Future<void> setupApplication(WidgetTester tester) async {
   await tester.pumpWidget(MaterialApp(
     routes: kRoutes,
     localizationsDelegates: [

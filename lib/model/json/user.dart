@@ -20,10 +20,8 @@ class JsonUser {
   Map<String, dynamic> toJson() => _$JsonUserToJson(this);
 
   JsonUser({
-    this.id,
-    this.name,
-    this.type,
-  }) {
-    assert(this.id != null);
-  }
+    required this.id,
+    required this.name,
+    required this.type,
+  });
 }

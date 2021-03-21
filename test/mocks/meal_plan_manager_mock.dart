@@ -7,14 +7,14 @@ import 'package:mockito/mockito.dart';
 
 class MealPlanManagerMock extends Mock implements MealPlanManager {
   final Map<String, MealPlanCollectionEntity> _collections = {};
-  String _currentCollection;
+  String? _currentCollection;
   final Map<String, MealPlanEntity> _mealPlans = {};
 
   @override
-  String get currentCollection => this._currentCollection;
+  String? get currentCollection => this._currentCollection;
 
   @override
-  set currentCollection(String value) => _currentCollection = value;
+  set currentCollection(String? value) => _currentCollection = value;
 
   @override
   Future<MealPlanEntity> getMealPlanByCollectionID(String id) {
@@ -49,7 +49,7 @@ class MealPlanManagerMock extends Mock implements MealPlanManager {
 
   @override
   Future<MealPlanEntity> get mealPlan {
-    return this.getMealPlanByCollectionID(this.currentCollection);
+    return this.getMealPlanByCollectionID(this.currentCollection!);
   }
 
   @override

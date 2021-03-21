@@ -9,10 +9,9 @@ class RecipeGroupViewModel extends GroupViewModel {
 
   String _name;
 
-  RecipeGroupViewModel.of(RecipeCollectionEntity entity) {
-    this._entity = entity;
-    this._name = entity.name;
-  }
+  RecipeGroupViewModel.of(RecipeCollectionEntity entity)
+      : this._entity = entity,
+        this._name = entity.name;
 
   RecipeCollectionEntity get entity => this._entity;
 
@@ -54,7 +53,7 @@ class RecipeGroupViewModel extends GroupViewModel {
 
   @override
   Future<void> removeMember(UserEntity user) async {
-    await sl.get<RecipeManager>().removeMember(user, this.entity.id);
+    await sl.get<RecipeManager>().removeMember(user, this.entity.id!);
     await refreshEntity();
     notifyListeners();
   }
@@ -62,6 +61,6 @@ class RecipeGroupViewModel extends GroupViewModel {
   @override
   Future<void> refreshEntity() async {
     this._entity =
-        await sl.get<RecipeManager>().collectionByID(this._entity.id);
+        await sl.get<RecipeManager>().collectionByID(this._entity.id!);
   }
 }

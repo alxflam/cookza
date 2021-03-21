@@ -6,13 +6,13 @@ import 'package:cookza/viewmodel/recipe_edit/recipe_edit_step.dart';
 import 'package:flutter/material.dart';
 
 abstract class RecipeOCRStep<T extends RecipeEditStep> with ChangeNotifier {
-  File _image;
+  File? _image;
 
   bool _isPending = false;
 
   T get model;
 
-  Future<void> setImage(File image) async {
+  Future<void> setImage(File? image) async {
     this._image = image;
     if (this._image != null) {
       this._isPending = true;
@@ -21,7 +21,7 @@ abstract class RecipeOCRStep<T extends RecipeEditStep> with ChangeNotifier {
     notifyListeners();
   }
 
-  File get image => this._image;
+  File? get image => this._image;
 
   bool get isPending => this._isPending;
 
@@ -41,7 +41,7 @@ class RecipeOverviewOCRStep extends RecipeOCRStep<RecipeOverviewEditStep> {
   @override
   Future<void> analyse() async {
     this._model =
-        await sl.get<ImageTextExtractor>().processOverviewImage(this._image);
+        await sl.get<ImageTextExtractor>().processOverviewImage(this._image!);
     this._isPending = false;
     notifyListeners();
   }
@@ -60,8 +60,9 @@ class RecipeIngredientOCRStep extends RecipeOCRStep<RecipeIngredientEditStep> {
 
   @override
   Future<void> analyse() async {
-    this._model =
-        await sl.get<ImageTextExtractor>().processIngredientsImage(this._image);
+    this._model = await sl
+        .get<ImageTextExtractor>()
+        .processIngredientsImage(this._image!);
     this._isPending = false;
     notifyListeners();
   }
@@ -88,7 +89,7 @@ class RecipeInstructionOCRStep
   Future<void> analyse() async {
     this._model = await sl
         .get<ImageTextExtractor>()
-        .processInstructionsImage(this._image);
+        .processInstructionsImage(this._image!);
     this._isPending = false;
     notifyListeners();
   }

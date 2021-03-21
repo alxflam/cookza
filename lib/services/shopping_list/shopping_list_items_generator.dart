@@ -29,7 +29,7 @@ class ShoppingListItemsGeneratorImpl implements ShoppingListItemsGenerator {
         for (var recipe in item.recipes) {
           if (!recipe.isNote) {
             recipeReferences.update(
-                recipe.id, (value) => value + recipe.servings,
+                recipe.id!, (value) => value + recipe.servings,
                 ifAbsent: () => recipe.servings);
           }
         }

@@ -10,7 +10,7 @@ class RecipeListTile extends StatelessWidget {
   final RecipeEntity item;
   final bool replaceRoute;
 
-  RecipeListTile({this.item, this.replaceRoute = false});
+  RecipeListTile({required this.item, this.replaceRoute = false});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class RecipeListTile extends StatelessWidget {
       },
       leading: Builder(
         builder: (context) {
-          if (item.image == null || item.image.isEmpty) {
+          if (item.image == null || item.image == null) {
             return Container(
               child: Icon(Icons.photo),
             );
@@ -75,9 +75,9 @@ class RecipeListTile extends StatelessWidget {
       ),
       trailing: item.rating == null
           ? FaIcon(FontAwesomeIcons.questionCircle)
-          : Icon(item.rating < 2
+          : Icon(item.rating! < 2
               ? Icons.star_border
-              : item.rating < 4
+              : item.rating! < 4
                   ? Icons.star_half
                   : Icons.star),
     );

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class AlertDialogTitle extends StatelessWidget {
   final String title;
 
-  const AlertDialogTitle({@required this.title});
+  const AlertDialogTitle({required this.title});
 
   @override
   Widget build(BuildContext context) {

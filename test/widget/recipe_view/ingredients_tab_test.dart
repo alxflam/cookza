@@ -10,7 +10,7 @@ import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../mocks/image_manager_mock.dart';
+import '../../mocks/shared_mocks.mocks.dart';
 import '../../mocks/uom_provider_mock.dart';
 import '../../utils/localization_parent.dart';
 import '../../utils/recipe_creator.dart';
@@ -18,7 +18,7 @@ import '../../utils/recipe_creator.dart';
 void main() {
   setUpAll(() {
     SharedPreferences.setMockInitialValues({});
-    GetIt.I.registerSingleton<ImageManager>(ImageManagerMock());
+    GetIt.I.registerSingleton<ImageManager>(MockImageManager());
     GetIt.I.registerSingleton<UnitOfMeasureProvider>(UoMMock());
 
     GetIt.I.registerSingletonAsync<SharedPreferencesProvider>(
