@@ -101,7 +101,7 @@ class _LiveCameraScannerScreenState extends State<LiveCameraScannerScreen> {
           bool _setState = false;
           if (_scanResults.isEmpty && results.isNotEmpty) {
             _setState = true;
-          } else if (_scanResults.first?.rawValue != results.first?.rawValue &&
+          } else if (_scanResults.first.rawValue != results.first.rawValue &&
               results.isNotEmpty) {
             _setState = true;
           }

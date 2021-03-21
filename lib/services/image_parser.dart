@@ -53,16 +53,16 @@ class ImageTextExtractorImpl implements ImageTextExtractor {
     var model = RecipeIngredientEditStep();
 
     var startIndex = 0;
-    var headerBlock = text.blocks
-        .firstWhere((e) => isIngredientHeader(e), orElse: () => null);
+    var headerBlock =
+        text.blocks.firstWhereOrNull((e) => isIngredientHeader(e));
     if (headerBlock != null) {
       startIndex = text.blocks.indexOf(headerBlock) + 1;
     }
 
     for (var i = startIndex; i < text.blocks.length; i++) {
       var block = text.blocks[i];
-      var textItems = block.text.split(',');
-      for (var textItem in textItems) {
+      var textItems = block.text?.split(',');
+      for (var textItem in textItems ?? []) {
         var ingredient = parseIngredient(textItem);
         if (ingredient != null) {
           model.addNewIngredient(ingredient);
@@ -84,7 +84,7 @@ class ImageTextExtractorImpl implements ImageTextExtractor {
     // a block may be only a single line (an incomplete sentence to be continued in the next line)
     for (var i = 0; i < text.blocks.length; i++) {
       var block = text.blocks[i];
-      var lines = block.text.split('. ');
+      var lines = block.text?.split('. ') ?? [];
 
       // TODO: split block if it's lines is greater than a certain threshold by dot
       // TODO: block.lines corresponds to optical lines - manually check whether the line is a complete sentence and ends with dot
@@ -101,7 +101,7 @@ class ImageTextExtractorImpl implements ImageTextExtractor {
       }
 
       possiblyIncompleteSentence =
-          !block.lines.last.text.trimRight().endsWith('.');
+          !block.lines.last.text!.trimRight().endsWith('.');
     }
 
     for (var line in instructions) {
@@ -116,8 +116,8 @@ class ImageTextExtractorImpl implements ImageTextExtractor {
     var model = RecipeOverviewEditStep();
 
     var heights = text.blocks
-        .where((e) => e.text != null && e.text.isNotEmpty)
-        .map((e) => e.boundingBox.height)
+        .where((e) => e.text != null && e.text!.isNotEmpty)
+        .map((e) => e.boundingBox!.height)
         .toList();
 
     var avgHeight = heights.isNotEmpty
@@ -126,12 +126,12 @@ class ImageTextExtractorImpl implements ImageTextExtractor {
     var maxHeight = heights.isNotEmpty ? heights.reduce(max) : 0;
 
     for (var block in text.blocks) {
-      var height = block.boundingBox.height;
+      var height = block.boundingBox!.height;
       var text = block.text;
       print('height: $height, text: $text');
 
       // recipe title: bigger size and rather short text
-      if (text.length > 10 && text.length < 50 && height > avgHeight) {
+      if (text!.length > 10 && text!.length < 50 && height > avgHeight) {
         model.name = text;
         continue;
       }
@@ -160,8 +160,8 @@ class ImageTextExtractorImpl implements ImageTextExtractor {
   }
 
   bool isIngredientHeader(TextBlock e) {
-    return e.text.trim().toLowerCase() == 'ingredients' ||
-        e.text.trim().toLowerCase() == 'zutaten';
+    return e.text!.trim().toLowerCase() == 'ingredients' ||
+        e.text!.trim().toLowerCase() == 'zutaten';
   }
 
   RecipeIngredientModel? parseIngredient(String textItem) {
