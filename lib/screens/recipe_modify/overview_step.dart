@@ -26,7 +26,7 @@ Step getOverviewStep(BuildContext context) {
 
         /// if there are no collections, render a error card
         if (snapshot.connectionState == ConnectionState.done &&
-            !snapshot.hasData) {
+            (!snapshot.hasData || snapshot.data!.isEmpty)) {
           return Card(
             child: ListTile(
               leading: Icon(

@@ -7,7 +7,7 @@ class AlertDialogTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Wrap(
       children: [
         Padding(
           padding: EdgeInsets.only(right: 20),
