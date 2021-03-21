@@ -69,8 +69,8 @@ void main() {
       var json = {
         'recipeID': '1234',
         'instructions': [
-          {'text': 'Some Instruction 1', 'step': null},
-          {'text': 'Some Instruction 2', 'step': null}
+          {'text': 'Some Instruction 1'},
+          {'text': 'Some Instruction 2'}
         ]
       };
 

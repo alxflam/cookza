@@ -12,7 +12,7 @@ void main() {
       var cut = ShoppingListItemEntityFirebase.of(pepper);
 
       expect(cut.isBought, false);
-      expect(cut.index, null);
+      expect(cut.index, 1);
       expect(cut.isCustom, false);
       expect(cut.ingredientNote.amount, 2);
       expect(cut.ingredientNote.unitOfMeasure, 'KGM');

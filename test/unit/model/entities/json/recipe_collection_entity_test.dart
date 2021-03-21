@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cookza/model/entities/json/recipe_collection_entity.dart';
 import 'package:cookza/model/json/recipe_collection.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -12,7 +13,8 @@ void main() {
           RecipeCollection(id: 'ID', name: 'Test'));
 
       expect(cut.id, 'ID');
-      expect(cut.creationTimestamp, timestamp.toDate());
+      expect(
+          DateUtils.isSameDay(cut.creationTimestamp, timestamp.toDate()), true);
       expect(cut.name, 'Test');
       expect(cut.users.length, 0);
     },
