@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class MealPlanItemDialogModel with ChangeNotifier {
   int _servings;
   String _name;
-  bool _isNote;
+  final bool _isNote;
   bool _deleted = false;
   bool _changed = false;
   MealPlanRecipeModel? _model;

@@ -49,7 +49,7 @@ class RecipeViewModel extends ChangeNotifier {
   int get servings => _servings;
   String get id => _recipe.id!;
   String get name => _recipe.name;
-  String get description => _recipe.description;
+  String? get description => _recipe.description;
   int get duration => _recipe.duration;
   int get rating => this._rating;
   String get creationDate => _recipe.creationDateFormatted;

@@ -18,7 +18,7 @@ class MealDragModel {
 }
 
 class MealPlanRecipeModel with ChangeNotifier {
-  MutableMealPlanRecipeEntity _entity;
+  final MutableMealPlanRecipeEntity _entity;
 
   MealPlanRecipeModel.of(MutableMealPlanRecipeEntity entity)
       : this._entity = entity;

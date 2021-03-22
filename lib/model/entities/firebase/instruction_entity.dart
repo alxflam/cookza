@@ -2,7 +2,7 @@ import 'package:cookza/model/entities/abstract/instruction_entity.dart';
 import 'package:cookza/model/firebase/recipe/firebase_instruction.dart';
 
 class InstructionEntityFirebase implements InstructionEntity {
-  FirebaseInstruction _instruction;
+  final FirebaseInstruction _instruction;
 
   InstructionEntityFirebase.of(this._instruction);
 

@@ -5,7 +5,7 @@ import 'package:cookza/model/firebase/recipe/firebase_ingredient.dart';
 import 'package:cookza/model/json/ingredient.dart';
 
 class IngredientNoteEntityFirebase implements IngredientNoteEntity {
-  FirebaseIngredient _ingredient;
+  final FirebaseIngredient _ingredient;
 
   IngredientNoteEntityFirebase.of(this._ingredient);
 

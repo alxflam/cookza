@@ -2,7 +2,7 @@ import 'package:cookza/model/entities/abstract/ingredient_entity.dart';
 import 'package:cookza/model/json/ingredient.dart';
 
 class IngredientEntityJson implements IngredientEntity {
-  Ingredient _ingredient;
+  final Ingredient _ingredient;
 
   IngredientEntityJson.of(this._ingredient);
 

@@ -131,8 +131,9 @@ class RecipeSelectionScreen extends StatelessWidget {
       case SELECTION_MODE.REFERENCE_INGREDIENT:
       case SELECTION_MODE.ADD_TO_MEAL_PLAN:
         return FontAwesomeIcons.check;
+      default:
+        return Icons.device_unknown;
     }
-    return Icons.device_unknown;
   }
 
   OnActionButtonPressed _getOnPressedCallbackForMode(SELECTION_MODE mode) {

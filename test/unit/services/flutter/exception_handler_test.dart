@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:cookza/constants.dart';
 import 'package:cookza/services/flutter/exception_handler.dart';
 import 'package:cookza/services/local_storage.dart';
@@ -9,8 +7,6 @@ import 'package:mockito/mockito.dart';
 
 import '../../../mocks/file_mock.dart';
 import '../../../mocks/shared_mocks.mocks.dart';
-
-// class StackTraceMock extends Mock implements StackTrace {}
 
 var sp = MockStorageProvider();
 

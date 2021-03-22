@@ -30,7 +30,7 @@ class FirebaseRecipe {
   @JsonKey()
   String name;
   @JsonKey(defaultValue: '')
-  String description;
+  String? description;
   @JsonKey()
   int duration;
   @JsonKey(defaultValue: 0)

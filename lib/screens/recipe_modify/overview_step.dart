@@ -177,13 +177,10 @@ class DifficultyChip extends StatelessWidget {
     switch (this._difficulty) {
       case DIFFICULTY.EASY:
         return Text(AppLocalizations.of(context)!.difficultyEasy);
-        break;
       case DIFFICULTY.MEDIUM:
         return Text(AppLocalizations.of(context)!.difficultyMedium);
-        break;
       case DIFFICULTY.HARD:
         return Text(AppLocalizations.of(context)!.difficultyHard);
-        break;
       default:
         return Text('unknown');
     }

@@ -10,8 +10,8 @@ import 'package:flutter/material.dart';
 enum MODE { CREATE, MODIFY }
 
 class RecipeEditModel extends ChangeNotifier {
-  MutableRecipe _targetRecipe;
-  MODE _mode;
+  final MutableRecipe _targetRecipe;
+  final MODE _mode;
   final List<RecipeEditStep> _stepModels = [
     RecipeOverviewEditStep(),
     RecipeImageEditStep(),

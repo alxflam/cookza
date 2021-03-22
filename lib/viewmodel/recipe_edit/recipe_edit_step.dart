@@ -8,7 +8,6 @@ import 'package:cookza/model/entities/mutable/mutable_ingredient.dart';
 import 'package:cookza/model/entities/mutable/mutable_ingredient_note.dart';
 import 'package:cookza/model/entities/mutable/mutable_instruction.dart';
 import 'package:cookza/model/entities/mutable/mutable_recipe.dart';
-import 'package:cookza/services/flutter/navigator_service.dart';
 import 'package:cookza/services/recipe/image_manager.dart';
 import 'package:cookza/services/recipe/recipe_manager.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
@@ -26,7 +25,7 @@ abstract class RecipeEditStep extends ChangeNotifier {
 
 class RecipeOverviewEditStep extends RecipeEditStep {
   String name = '';
-  String description = '';
+  String? description = '';
   int _duration = 10;
   DIFFICULTY _difficulty = DIFFICULTY.EASY;
   DateTime creationDate = DateTime.now();

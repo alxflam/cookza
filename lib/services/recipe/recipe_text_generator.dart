@@ -21,7 +21,7 @@ class RecipeTextGeneratorImpl implements RecipeTextGenerator {
       buffer.write(entity.name);
       buffer.write('*');
       buffer.writeln();
-      if (entity.description.isNotEmpty) {
+      if (entity.description?.isNotEmpty ?? false) {
         buffer.writeln(entity.description);
       }
 

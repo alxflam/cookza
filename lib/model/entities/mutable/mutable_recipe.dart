@@ -9,9 +9,9 @@ import 'package:cookza/model/entities/mutable/mutable_ingredient_note.dart';
 import 'package:cookza/model/entities/mutable/mutable_instruction.dart';
 
 class MutableRecipe implements RecipeEntity {
-  DateTime _creationDate;
+  final DateTime _creationDate;
   DateTime _modificationDate;
-  String _description = '';
+  String? _description = '';
   String _name = '';
   DIFFICULTY _difficulty;
   int _duration = 20;
@@ -75,11 +75,11 @@ class MutableRecipe implements RecipeEntity {
   DateTime get creationDate => this._creationDate;
 
   @override
-  String get description => this._description;
+  String? get description => this._description;
 
   set id(String? value) => this._id = value;
 
-  set description(String value) {
+  set description(String? value) {
     this._description = value;
   }
 

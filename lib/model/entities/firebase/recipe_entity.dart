@@ -12,7 +12,7 @@ import 'package:cookza/services/firebase_provider.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
 
 class RecipeEntityFirebase implements RecipeEntity {
-  FirebaseRecipe _recipe;
+  final FirebaseRecipe _recipe;
 
   List<IngredientNoteEntityFirebase> _ingredients = [];
 
@@ -25,7 +25,7 @@ class RecipeEntityFirebase implements RecipeEntity {
   String? get ingredientsID => _recipe.ingredientsID;
 
   @override
-  String get description => this._recipe.description;
+  String? get description => this._recipe.description;
 
   @override
   DIFFICULTY get difficulty => this._recipe.difficulty;

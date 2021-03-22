@@ -4,10 +4,10 @@ import 'package:cookza/model/entities/firebase/ingredient_note_entity.dart';
 import 'package:cookza/model/firebase/shopping_list/firebase_shopping_list.dart';
 
 class ShoppingListItemEntityFirebase implements ShoppingListItemEntity {
-  bool _isCustom;
-  bool _isBought;
-  IngredientNoteEntityFirebase _ingredient;
-  int? _index;
+  final bool _isCustom;
+  final bool _isBought;
+  final IngredientNoteEntityFirebase _ingredient;
+  final int? _index;
 
   ShoppingListItemEntityFirebase.of(FirebaseShoppingListItem item)
       : this._index = item.index,
@@ -29,11 +29,11 @@ class ShoppingListItemEntityFirebase implements ShoppingListItemEntity {
 }
 
 class ShoppingListEntityFirebase implements ShoppingListEntity {
-  List<ShoppingListItemEntityFirebase> _items;
-  String? _id;
-  String _groupID;
-  DateTime _dateFrom;
-  DateTime _dateUntil;
+  final List<ShoppingListItemEntityFirebase> _items;
+  final String? _id;
+  final String _groupID;
+  final DateTime _dateFrom;
+  final DateTime _dateUntil;
 
   ShoppingListEntityFirebase.of(FirebaseShoppingListDocument document)
       : this._id = document.documentID,

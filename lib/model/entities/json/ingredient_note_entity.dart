@@ -5,7 +5,7 @@ import 'package:cookza/model/json/ingredient.dart';
 import 'package:cookza/model/json/ingredient_note.dart';
 
 class IngredientNoteEntityJson implements IngredientNoteEntity {
-  IngredientNote _ingredient;
+  final IngredientNote _ingredient;
 
   IngredientNoteEntityJson.of(this._ingredient);
 

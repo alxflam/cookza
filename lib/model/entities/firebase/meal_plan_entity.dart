@@ -2,8 +2,8 @@ import 'package:cookza/model/entities/abstract/meal_plan_entity.dart';
 import 'package:cookza/model/firebase/meal_plan/firebase_meal_plan.dart';
 
 class MealPlanDateEntityFirebase implements MealPlanDateEntity {
-  DateTime _date;
-  List<MealPlanRecipeEntity> _recipes;
+  final DateTime _date;
+  final List<MealPlanRecipeEntity> _recipes;
 
   MealPlanDateEntityFirebase.of(FirebaseMealPlanDate item)
       : this._date = item.date,
@@ -19,9 +19,9 @@ class MealPlanDateEntityFirebase implements MealPlanDateEntity {
 }
 
 class MealPlanRecipeEntityFirebase implements MealPlanRecipeEntity {
-  String _id;
-  String _name;
-  int _servings;
+  final String _id;
+  final String _name;
+  final int _servings;
 
   MealPlanRecipeEntityFirebase.of(FirebaseMealPlanRecipe item)
       : this._id = item.id,
@@ -42,10 +42,10 @@ class MealPlanRecipeEntityFirebase implements MealPlanRecipeEntity {
 }
 
 class MealPlanEntityFirebase implements MealPlanEntity {
-  List<MealPlanDateEntity> _items;
-  String? _id;
+  final List<MealPlanDateEntity> _items;
+  final String? _id;
 
-  String _groupID;
+  final String _groupID;
 
   MealPlanEntityFirebase.of(FirebaseMealPlanDocument document)
       : this._id = document.documentID,

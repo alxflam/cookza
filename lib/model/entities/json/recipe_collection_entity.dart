@@ -5,7 +5,7 @@ import 'package:cookza/model/entities/abstract/user_entity.dart';
 import 'package:cookza/model/json/recipe_collection.dart';
 
 class RecipeCollectionEntityJson implements RecipeCollectionEntity {
-  RecipeCollection _collection;
+  final RecipeCollection _collection;
 
   RecipeCollectionEntityJson.of(this._collection);
 

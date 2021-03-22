@@ -11,12 +11,12 @@ import 'package:cookza/model/entities/json/instruction_entity.dart';
 import 'package:cookza/model/json/recipe.dart';
 
 class RecipeEntityJson implements RecipeEntity {
-  Recipe _recipe;
+  final Recipe _recipe;
 
   RecipeEntityJson.of(this._recipe);
 
   @override
-  String get description => _recipe.shortDescription;
+  String? get description => _recipe.shortDescription;
 
   @override
   DIFFICULTY get difficulty => _recipe.diff;

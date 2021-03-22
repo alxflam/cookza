@@ -127,11 +127,11 @@ class ImageTextExtractorImpl implements ImageTextExtractor {
 
     for (var block in text.blocks) {
       var height = block.boundingBox!.height;
-      var text = block.text;
+      var text = block.text ?? '';
       print('height: $height, text: $text');
 
       // recipe title: bigger size and rather short text
-      if (text!.length > 10 && text!.length < 50 && height > avgHeight) {
+      if (text.length > 10 && text.length < 50 && height > avgHeight) {
         model.name = text;
         continue;
       }

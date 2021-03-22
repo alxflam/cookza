@@ -2,11 +2,11 @@ import 'package:cookza/model/entities/abstract/meal_plan_entity.dart';
 import 'package:cookza/services/util/week_calculation.dart';
 
 class MutableMealPlan implements MealPlanEntity {
-  String? _id;
+  final String? _id;
 
   final List<MutableMealPlanDateEntity> _items = [];
 
-  String _groupID;
+  final String _groupID;
 
   MutableMealPlan.of(
       String id, String groupID, List<MealPlanDateEntity> items, int weeks,
@@ -78,8 +78,8 @@ class MutableMealPlan implements MealPlanEntity {
 }
 
 class MutableMealPlanDateEntity implements MealPlanDateEntity {
-  DateTime _date;
-  List<MutableMealPlanRecipeEntity> _recipes;
+  final DateTime _date;
+  final List<MutableMealPlanRecipeEntity> _recipes;
 
   MutableMealPlanDateEntity.empty(DateTime date)
       : this._date = date,
@@ -116,7 +116,7 @@ class MutableMealPlanDateEntity implements MealPlanDateEntity {
 }
 
 class MutableMealPlanRecipeEntity implements MealPlanRecipeEntity {
-  String? _id;
+  final String? _id;
 
   String _name;
 

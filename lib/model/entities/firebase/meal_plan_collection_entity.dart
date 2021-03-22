@@ -7,7 +7,7 @@ import 'package:cookza/model/entities/abstract/meal_plan_collection_entity.dart'
 import 'package:cookza/model/firebase/general/firebase_user.dart';
 
 class MealPlanCollectionEntityFirebase implements MealPlanCollectionEntity {
-  FirebaseMealPlanCollection _collection;
+  final FirebaseMealPlanCollection _collection;
 
   MealPlanCollectionEntityFirebase.of(this._collection);
 

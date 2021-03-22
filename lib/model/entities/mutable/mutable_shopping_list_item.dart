@@ -3,7 +3,7 @@ import 'package:cookza/model/entities/abstract/shopping_list_entity.dart';
 import 'package:cookza/model/entities/mutable/mutable_ingredient_note.dart';
 
 class MutableShoppingListItem implements ShoppingListItemEntity {
-  MutableIngredientNote _ingredientNote;
+  final MutableIngredientNote _ingredientNote;
   bool _isBought;
   bool _isCustom;
   int _index = -1;

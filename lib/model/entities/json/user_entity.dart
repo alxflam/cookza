@@ -2,7 +2,7 @@ import 'package:cookza/model/entities/abstract/user_entity.dart';
 import 'package:cookza/model/json/user.dart';
 
 class UserEntityJson implements UserEntity {
-  JsonUser _user;
+  final JsonUser _user;
 
   UserEntityJson.from(this._user);
 

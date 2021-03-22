@@ -3,7 +3,7 @@ description: Organize and share your favorite recipes.
 
 version: 0.0.5+1
 
-publish to: none
+publish_to: none
 
 environment:
   sdk: ">=2.12.0 <3.0.0"

@@ -11,7 +11,7 @@ abstract class RecipeEntity {
   String get recipeCollectionId;
 
   String get name;
-  String get description;
+  String? get description;
   int get duration;
   int get servings;
   int? get rating;

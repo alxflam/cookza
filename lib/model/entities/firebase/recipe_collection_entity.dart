@@ -7,7 +7,7 @@ import 'package:cookza/model/firebase/collections/firebase_recipe_collection.dar
 import 'package:cookza/model/firebase/general/firebase_user.dart';
 
 class RecipeCollectionEntityFirebase implements RecipeCollectionEntity {
-  FirebaseRecipeCollection _collection;
+  final FirebaseRecipeCollection _collection;
 
   RecipeCollectionEntityFirebase.of(this._collection);
 

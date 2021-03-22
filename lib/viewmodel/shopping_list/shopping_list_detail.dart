@@ -22,8 +22,8 @@ class ShoppingListModel extends ChangeNotifier {
   static final int _shoppingListDays =
       sl.get<SharedPreferencesProvider>().getMealPlanWeeks() * 7;
 
-  DateTime _lastDate;
-  DateTime _firstDate;
+  final DateTime _lastDate;
+  final DateTime _firstDate;
 
   final List<MutableShoppingListItem> _items = [];
   bool _initalized = false;
@@ -254,7 +254,7 @@ class ShoppingListModel extends ChangeNotifier {
 
 class ShoppingListItemModel extends ChangeNotifier {
   late UnitOfMeasure? _uom;
-  MutableShoppingListItem _entity;
+  final MutableShoppingListItem _entity;
 
   ShoppingListItemModel.ofEntity(ShoppingListItemEntity entity)
       : this._entity = entity as MutableShoppingListItem {

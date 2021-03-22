@@ -2,7 +2,6 @@ import 'package:cookza/constants.dart';
 import 'package:cookza/model/entities/abstract/ingredient_entity.dart';
 import 'package:cookza/model/entities/abstract/ingredient_note_entity.dart';
 import 'package:cookza/model/entities/mutable/mutable_ingredient_note.dart';
-import 'package:cookza/services/flutter/navigator_service.dart';
 import 'package:cookza/services/recipe/recipe_manager.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:cookza/services/unit_of_measure.dart';
@@ -11,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class RecipeIngredientModel extends ChangeNotifier {
-  MutableIngredientNote _note;
+  final MutableIngredientNote _note;
   bool _deleted = false;
   RecipeViewModel? _recipe;
   bool _supportsRecipeReference = true;

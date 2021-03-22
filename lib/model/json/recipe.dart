@@ -67,7 +67,7 @@ class Recipe {
   @JsonKey()
   String name;
   @JsonKey(defaultValue: '')
-  String shortDescription;
+  String? shortDescription;
   @JsonKey()
   int duration;
   @JsonKey(defaultValue: 0)
