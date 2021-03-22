@@ -28,7 +28,7 @@ dependencies:
   introduction_screen: ^2.0.0
   get_it: ^6.0.0
   file_picker: ^3.0.0
-  pdf: ^3.0.1
+  pdf: ^3.1.0
   barcode_widget: ^2.0.1
   firebase_auth: ^1.0.1
   cloud_firestore: ^1.0.1
