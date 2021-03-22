@@ -7,7 +7,18 @@ import 'package:mockito/mockito.dart';
 
 import '../../mocks/unit_of_measure_provider_mock.dart';
 
-class VisionTextMock extends Mock implements VisionText {}
+class VisionTextMock extends Fake implements VisionText {
+  final String _text;
+  final List<TextBlock> _blocks;
+
+  VisionTextMock(this._text, this._blocks);
+
+  @override
+  String? get text => this._text;
+
+  @override
+  List<TextBlock> get blocks => this._blocks;
+}
 
 class TextBlockMock extends Mock implements TextBlock {}
 
@@ -23,10 +34,7 @@ void main() {
     'Parse overview',
     () {
       var cut = ImageTextExtractorImpl();
-      var mock = VisionTextMock();
-
-      when(mock.text).thenReturn('');
-      when(mock.blocks).thenReturn([]);
+      var mock = VisionTextMock('', []);
 
       var result = cut.processOverviewImageFromText(mock);
       expect(result, isNotNull);

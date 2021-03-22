@@ -6,6 +6,7 @@ import 'package:cookza/viewmodel/recipe_view/recipe_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
+import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -13,11 +14,15 @@ import '../../mocks/shared_mocks.mocks.dart';
 import '../../utils/recipe_creator.dart';
 
 void main() {
+  final imageManager = MockImageManager();
+
   setUpAll(() {
     SharedPreferences.setMockInitialValues({});
-    GetIt.I.registerSingleton<ImageManager>(MockImageManager());
+    GetIt.I.registerSingleton<ImageManager>(imageManager);
     GetIt.I.registerSingletonAsync<SharedPreferencesProvider>(
         () async => SharedPreferencesProviderImpl().init());
+    when(imageManager.getRecipeImageFile(any))
+        .thenAnswer((_) => Future.value(null));
   });
 
   testWidgets('Overview tab displays general recipe information',

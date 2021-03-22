@@ -38,7 +38,7 @@ class MealPlanRecipeEntityFirebase implements MealPlanRecipeEntity {
   int get servings => this._servings;
 
   @override
-  bool get isNote => this._id == null;
+  bool get isNote => this._id == null || this._id.isEmpty;
 }
 
 class MealPlanEntityFirebase implements MealPlanEntity {

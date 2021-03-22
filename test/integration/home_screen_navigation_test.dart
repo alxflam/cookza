@@ -14,7 +14,6 @@ import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../mocks/application_mock.dart';
-import '../mocks/meal_plan_manager_mock.dart';
 import '../mocks/receive_intent_handler_mock.dart';
 import '../mocks/recipe_manager_mock.dart';
 import '../mocks/shared_mocks.mocks.dart';
@@ -27,7 +26,7 @@ void main() {
     GetIt.I.registerSingleton<ReceiveIntentHandler>(ReceiveIntentHandlerMock());
     GetIt.I.registerSingleton<NavigatorService>(NavigatorService());
     GetIt.I.registerSingleton<RecipeManager>(RecipeManagerStub());
-    GetIt.I.registerSingleton<MealPlanManager>(MealPlanManagerMock());
+    GetIt.I.registerSingleton<MealPlanManager>(MockMealPlanManager());
   });
 
   void _verifyNavigation(WidgetTester tester, String button, Type type) async {

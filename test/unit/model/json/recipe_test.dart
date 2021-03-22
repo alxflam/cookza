@@ -72,13 +72,12 @@ void main() {
 
   test('Image is serialized in field', () async {
     var recipe = MutableRecipe.empty();
-
+    recipe.recipeCollectionId = 'test';
+    recipe.id = '1234';
     recipe.image = '/dummy/';
 
-    var mockFile = MockFile();
-
-    when(mockFile.readAsBytesSync())
-        .thenAnswer((_) => Uint8List.fromList([1, 2, 3, 4]));
+    var mockFile = FakeFile();
+    mockFile.stubByteContent(Uint8List.fromList([1, 2, 3, 4]));
 
     when(mock.getRecipeImageFile(any)).thenAnswer((_) async => mockFile);
 

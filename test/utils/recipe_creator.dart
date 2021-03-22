@@ -8,6 +8,7 @@ class RecipeCreator {
     var recipe = MutableRecipe.empty();
     recipe.id = UniqueKeyIdGenerator().id;
     recipe.name = name;
+    recipe.recipeCollectionId = '';
     return recipe;
   }
 

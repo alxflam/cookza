@@ -7,11 +7,10 @@ import 'package:get_it/get_it.dart';
 import 'package:mockito/mockito.dart';
 
 import '../../mocks/meal_plan_manager_mock.dart';
-
-class ShoppingListManagerMock extends Mock implements ShoppingListManager {}
+import '../../mocks/shared_mocks.mocks.dart';
 
 void main() {
-  var mock = ShoppingListManagerMock();
+  var mock = MockShoppingListManager();
 
   setUpAll(() {
     GetIt.I.registerSingleton<ShoppingListManager>(mock);

@@ -6,6 +6,7 @@ import 'package:cookza/model/entities/mutable/mutable_instruction.dart';
 import 'package:cookza/model/entities/mutable/mutable_recipe.dart';
 import 'package:cookza/model/json/ingredient_note.dart';
 import 'package:cookza/model/json/recipe.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -13,11 +14,12 @@ void main() {
     'empty recipe',
     () async {
       var cut = MutableRecipe.empty();
+      cut.recipeCollectionId = 'C1';
 
-      expect(cut.name, null);
-      expect(cut.description, null);
+      expect(cut.name, '');
+      expect(cut.description, '');
       expect(cut.id, null);
-      expect(cut.recipeCollectionId, null);
+      expect(cut.recipeCollectionId, 'C1');
     },
   );
 
@@ -184,8 +186,8 @@ void main() {
       tags: [],
     )));
 
-    expect(cut.creationDate, now);
-    expect(cut.modificationDate, now);
+    expect(DateUtils.isSameDay(cut.creationDate, now), true);
+    expect(DateUtils.isSameDay(cut.modificationDate, now), true);
     expect(cut.creationDateFormatted, kDateFormatter.format(now));
     expect(cut.modificationDateFormatted, kDateFormatter.format(now));
   });

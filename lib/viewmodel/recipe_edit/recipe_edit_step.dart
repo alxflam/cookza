@@ -18,7 +18,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'recipe_ingredient_model.dart';
 
 abstract class RecipeEditStep extends ChangeNotifier {
-  void validate();
+  void validate(BuildContext context);
   void applyTo(MutableRecipe recipe);
   void applyFrom(RecipeEntity recipe);
   bool get hasOCR => false;
@@ -69,9 +69,7 @@ class RecipeOverviewEditStep extends RecipeEditStep {
   }
 
   @override
-  void validate() {
-    var context = sl.get<NavigatorService>().currentContext;
-
+  void validate(BuildContext context) {
     if (name.isEmpty) {
       throw AppLocalizations.of(context)!.assignRecipeName;
     }
@@ -125,7 +123,7 @@ class RecipeImageEditStep extends RecipeEditStep {
   }
 
   @override
-  void validate() {
+  void validate(BuildContext context) {
     // nothing to validate - it's fine if the user chose no image
   }
 }
@@ -197,7 +195,7 @@ class RecipeTagEditStep extends RecipeEditStep {
   }
 
   @override
-  void validate() {
+  void validate(BuildContext context) {
     // allow adding no tags at all
   }
 }
@@ -261,9 +259,7 @@ class RecipeIngredientEditStep extends RecipeEditStep {
   }
 
   @override
-  void validate() {
-    var context = sl.get<NavigatorService>().currentContext;
-
+  void validate(BuildContext context) {
     if (_ingredients.isEmpty) {
       throw AppLocalizations.of(context)!.assignIngredients;
     }
@@ -333,9 +329,7 @@ class RecipeInstructionEditStep extends RecipeEditStep {
   }
 
   @override
-  void validate() {
-    var context = sl.get<NavigatorService>().currentContext;
-
+  void validate(BuildContext context) {
     // there are instructions and there's no empty instruction
     if (_instructions.isEmpty) {
       throw AppLocalizations.of(context)!.assignInstructions;

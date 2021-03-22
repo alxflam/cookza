@@ -16,6 +16,7 @@ import 'package:cookza/viewmodel/settings/theme_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
+import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -29,6 +30,7 @@ import '../utils/recipe_creator.dart';
 
 void main() {
   var recipeManager = RecipeManagerStub();
+  final imageManager = MockImageManager();
 
   setUpAll(() {
     SharedPreferences.setMockInitialValues({});
@@ -40,7 +42,9 @@ void main() {
     GetIt.I.registerSingleton<ShoppingListManager>(ShoppingListManagerMock());
     GetIt.I.registerSingleton<FirebaseProvider>(FirebaseProviderMock());
     GetIt.I.registerSingleton<RecipeManager>(recipeManager);
-    GetIt.I.registerSingleton<ImageManager>(MockImageManager());
+    GetIt.I.registerSingleton<ImageManager>(imageManager);
+    when(imageManager.getRecipeImageFile(any))
+        .thenAnswer((_) => Future.value(null));
   });
 
   setUp(() {

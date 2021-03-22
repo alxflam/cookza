@@ -57,7 +57,7 @@ void main() {
     () async {
       var cut = MutableInstruction.of(InstructionEntityJson.of('My Text'));
       expect(cut.text, 'My Text');
-      expect(cut.step, null);
+      expect(cut.step, 1);
       expect(cut.image, null);
     },
   );

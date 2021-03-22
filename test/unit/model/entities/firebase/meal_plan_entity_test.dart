@@ -27,8 +27,8 @@ void main() {
       var cut = MealPlanRecipeEntityFirebase.of(recipe);
 
       expect(cut.name, 'dummy');
-      expect(cut.servings, null);
-      expect(cut.id, null);
+      expect(cut.servings, 2);
+      expect(cut.id, '');
       expect(cut.isNote, true);
     },
   );

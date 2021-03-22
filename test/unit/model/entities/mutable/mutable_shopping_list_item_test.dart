@@ -66,6 +66,6 @@ void main() {
     var cut = MutableShoppingListItem.ofEntity(entity);
 
     /// not yet implemented
-    expect(cut.index, null);
+    expect(cut.index, -1);
   });
 }

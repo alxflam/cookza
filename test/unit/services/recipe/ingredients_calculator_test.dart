@@ -19,7 +19,7 @@ void main() {
     var recipe = RecipeCreator.createRecipe('First Recipe');
     recipe.servings = 2;
     var pepper =
-        RecipeCreator.createIngredient('Pepper', amount: 100, uom: 'PCS');
+        RecipeCreator.createIngredient('Pepper', amount: 100, uom: 'H87');
     var flour =
         RecipeCreator.createIngredient('Flour', amount: 750, uom: 'GRM');
     recipe.ingredientList = [flour, pepper];
@@ -32,7 +32,7 @@ void main() {
     var flour2 =
         RecipeCreator.createIngredient('Flour', amount: 1.2, uom: 'KGM');
     var pepper2 =
-        RecipeCreator.createIngredient('Pepper', amount: 300, uom: 'PCS');
+        RecipeCreator.createIngredient('Pepper', amount: 300, uom: 'H87');
 
     recipe2.ingredientList = [flour2, pepper2, onion];
     await rm.createOrUpdate(recipe2);
@@ -78,7 +78,7 @@ void main() {
     var recipe = RecipeCreator.createRecipe('First Recipe');
     recipe.servings = 2;
     var flour =
-        RecipeCreator.createIngredient('Flour', amount: 750, uom: 'PCS');
+        RecipeCreator.createIngredient('Flour', amount: 750, uom: 'H87');
     recipe.ingredientList = [flour];
 
     await rm.createOrUpdate(recipe);

@@ -46,7 +46,7 @@ Future<void> saveModel(BuildContext context, RecipeEditModel model) async {
 
   String id;
   try {
-    id = await model.save();
+    id = await model.save(context);
   } catch (e) {
     // close progress dialog
     Navigator.pop(context);

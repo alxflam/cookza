@@ -34,6 +34,7 @@ void main() {
     var cut = ShoppingListModel.empty();
     var item = MutableIngredientNote.empty();
     item.name = 'Something important';
+    item.unitOfMeasure = 'H87';
     cut.addCustomItem(item);
     var items = await cut.getItems();
     expect(items.length, 1);
@@ -48,6 +49,7 @@ void main() {
     var cut = ShoppingListModel.empty();
     var item = MutableIngredientNote.empty();
     item.name = 'Something important';
+    item.unitOfMeasure = 'H87';
     cut.addCustomItem(item);
     var items = await cut.getItems();
     expect(items.length, 1);
@@ -60,12 +62,15 @@ void main() {
     var cut = ShoppingListModel.empty();
     var item = MutableIngredientNote.empty();
     item.name = 'Something important';
+    item.unitOfMeasure = 'H87';
     cut.addCustomItem(item);
     var items = await cut.getItems();
     expect(items.length, 1);
 
-    var updateItem = RecipeIngredientModel.empty(false);
-    updateItem.name = 'Whatever';
+    var update = MutableIngredientNote.empty();
+    update.name = 'Whatever';
+    update.unitOfMeasure = 'H87';
+    var updateItem = RecipeIngredientModel.noteOnlyModelOf(update);
     items.first.updateFrom(updateItem);
     expect(items.first.name, 'Whatever');
   });
@@ -78,6 +83,7 @@ void main() {
     var cut = ShoppingListModel.empty();
     var item = MutableIngredientNote.empty();
     item.name = 'Something important';
+    item.unitOfMeasure = 'H87';
     cut.addCustomItem(item);
 
     var items = await cut.getItems();
@@ -92,10 +98,12 @@ void main() {
     var cut = ShoppingListModel.empty();
     var item = MutableIngredientNote.empty();
     item.name = 'Something important';
+    item.unitOfMeasure = 'H87';
     cut.addCustomItem(item);
 
     var boughtItem = MutableIngredientNote.empty();
     boughtItem.name = 'Something else';
+    boughtItem.unitOfMeasure = 'H87';
     cut.addCustomItem(boughtItem);
 
     var items = await cut.getItems();
@@ -113,18 +121,22 @@ void main() {
     var cut = ShoppingListModel.empty();
     var first = MutableIngredientNote.empty();
     first.name = 'First';
+    first.unitOfMeasure = 'H87';
     cut.addCustomItem(first);
 
     var second = MutableIngredientNote.empty();
     second.name = 'Second';
+    second.unitOfMeasure = 'H87';
     cut.addCustomItem(second);
 
     var third = MutableIngredientNote.empty();
     third.name = 'Third';
+    third.unitOfMeasure = 'H87';
     cut.addCustomItem(third);
 
     var fourth = MutableIngredientNote.empty();
     fourth.name = 'Fourth';
+    fourth.unitOfMeasure = 'H87';
     cut.addCustomItem(fourth);
 
     var items = await cut.getItems();
@@ -142,18 +154,22 @@ void main() {
     var cut = ShoppingListModel.empty();
     var first = MutableIngredientNote.empty();
     first.name = 'First';
+    first.unitOfMeasure = 'H87';
     cut.addCustomItem(first);
 
     var second = MutableIngredientNote.empty();
     second.name = 'Second';
+    second.unitOfMeasure = 'H87';
     cut.addCustomItem(second);
 
     var third = MutableIngredientNote.empty();
     third.name = 'Third';
+    third.unitOfMeasure = 'H87';
     cut.addCustomItem(third);
 
     var fourth = MutableIngredientNote.empty();
     fourth.name = 'Fourth';
+    fourth.unitOfMeasure = 'H87';
     cut.addCustomItem(fourth);
 
     var items = await cut.getItems();
@@ -171,10 +187,12 @@ void main() {
     var cut = ShoppingListModel.empty();
     var item = MutableIngredientNote.empty();
     item.name = 'Something important';
+    item.unitOfMeasure = 'H87';
     cut.addCustomItem(item);
 
     var boughtItem = MutableIngredientNote.empty();
     boughtItem.name = 'Already bought';
+    boughtItem.unitOfMeasure = 'H87';
     cut.addCustomItem(boughtItem);
 
     var items = await cut.getItems();

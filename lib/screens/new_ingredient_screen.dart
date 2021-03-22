@@ -135,7 +135,7 @@ class NewIngredientScreen extends StatelessWidget {
                           onPressed: () {
                             // check whether either a recipe ref is selected or the ingredient name is given
                             try {
-                              model.validate();
+                              model.validate(context);
                               Navigator.pop(context, model);
                             } catch (e) {
                               showDialog(

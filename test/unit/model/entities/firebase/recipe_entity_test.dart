@@ -13,10 +13,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mockito/mockito.dart';
 
-import '../../../../mocks/firebase_provider_mock.dart';
+import '../../../../mocks/shared_mocks.mocks.dart';
 
 void main() {
-  var fbMock = FirebaseProviderMock();
+  var fbMock = MockFirebaseProvider();
   GetIt.I.registerSingleton<FirebaseProvider>(fbMock);
 
   test(

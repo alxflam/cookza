@@ -4,12 +4,12 @@ import 'package:cookza/viewmodel/recipe_view/recipe_view_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 
-import '../../mocks/recipe_manager_mock.dart';
+import '../../mocks/shared_mocks.mocks.dart';
 import '../../utils/recipe_creator.dart';
 
 void main() {
   setUpAll(() {
-    GetIt.I.registerSingleton<RecipeManager>(RecipeManagerMock());
+    GetIt.I.registerSingleton<RecipeManager>(MockRecipeManager());
   });
 
   test('Refresh model', () async {

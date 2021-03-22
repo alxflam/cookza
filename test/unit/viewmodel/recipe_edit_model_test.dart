@@ -1,18 +1,26 @@
+import 'package:cookza/model/entities/json/recipe_collection_entity.dart';
+import 'package:cookza/model/json/recipe_collection.dart';
 import 'package:cookza/services/recipe/recipe_manager.dart';
 import 'package:cookza/viewmodel/recipe_edit/recipe_edit_model.dart';
 import 'package:cookza/viewmodel/recipe_edit/recipe_edit_step.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
+import 'package:mockito/mockito.dart';
 
-import '../../mocks/recipe_manager_mock.dart';
+import '../../mocks/shared_mocks.mocks.dart';
 import '../../utils/recipe_creator.dart';
 
 void main() {
+  final mock = MockRecipeManager();
+
   setUpAll(() {
-    GetIt.I.registerSingleton<RecipeManager>(RecipeManagerMock());
+    GetIt.I.registerSingleton<RecipeManager>(mock);
   });
 
   test('Modify mode', () async {
+    final collection = RecipeCollectionEntityJson.of(
+        RecipeCollection(id: 'test', name: 'test'));
+    when(mock.collectionByID(any)).thenAnswer((_) => Future.value(collection));
     var recipe = RecipeCreator.createRecipe('Something delicious');
     var cut = RecipeEditModel.modify(recipe);
 

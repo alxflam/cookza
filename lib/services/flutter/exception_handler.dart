@@ -24,25 +24,29 @@ class ExceptionHandlerImpl implements ExceptionHandler {
     /// read and parse the persisted log file
     var sp = sl.get<StorageProvider>();
     File logFile = await sp.getExeptionLogFile();
-    var content = logFile.readAsStringSync();
-    if (content.isEmpty) {
-      content = '''{ 
-
-      }''';
+    var content = '';
+    if (logFile.existsSync()) {
+      content = logFile.readAsStringSync();
     }
 
-    ExceptionLog logModel;
-    try {
-      logModel = ExceptionLog.fromJson(jsonDecode(content));
-    } on FormatException {
-      /// create a new empty exception log if some weird string got persisted that can't be deserialized
-      /// this should only happen whilst development is ongoing...
-      logModel = ExceptionLog(errors: []);
-    }
+    ExceptionLog logModel = getLogModel(content);
 
     /// then add the model to the persisted log
     logModel.errors.add(newError);
     var json = jsonEncode(logModel.toJson());
     return sp.updateExeptionLogFile(json);
+  }
+
+  ExceptionLog getLogModel(String content) {
+    if (content.isEmpty) {
+      return ExceptionLog(errors: []);
+    }
+    try {
+      return ExceptionLog.fromJson(jsonDecode(content));
+    } on FormatException {
+      /// create a new empty exception log if some weird string got persisted that can't be deserialized
+      /// this should only happen whilst development is ongoing...
+      return ExceptionLog(errors: []);
+    }
   }
 }

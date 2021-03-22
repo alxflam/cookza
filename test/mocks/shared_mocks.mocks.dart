@@ -2,20 +2,42 @@
 // in cookza/test/mocks/shared_mocks.dart.
 // Do not manually edit this file.
 
-import 'dart:async' as _i5;
+import 'dart:async' as _i11;
 import 'dart:io' as _i2;
-import 'dart:typed_data' as _i10;
+import 'dart:typed_data' as _i21;
 
-import 'package:cookza/model/entities/abstract/recipe_entity.dart' as _i11;
+import 'package:cloud_firestore/cloud_firestore.dart' as _i22;
+import 'package:cookza/model/entities/abstract/meal_plan_collection_entity.dart'
+    as _i6;
+import 'package:cookza/model/entities/abstract/meal_plan_entity.dart' as _i5;
+import 'package:cookza/model/entities/abstract/recipe_collection_entity.dart'
+    as _i3;
+import 'package:cookza/model/entities/abstract/recipe_entity.dart' as _i15;
 import 'package:cookza/model/entities/abstract/shopping_list_entity.dart'
+    as _i4;
+import 'package:cookza/model/entities/abstract/user_entity.dart' as _i16;
+import 'package:cookza/model/entities/firebase/ingredient_note_entity.dart'
+    as _i25;
+import 'package:cookza/model/entities/firebase/instruction_entity.dart' as _i26;
+import 'package:cookza/model/entities/firebase/meal_plan_collection_entity.dart'
     as _i7;
 import 'package:cookza/model/entities/mutable/mutable_shopping_list_item.dart'
-    as _i6;
-import 'package:cookza/services/local_storage.dart' as _i8;
-import 'package:cookza/services/recipe/image_manager.dart' as _i9;
+    as _i12;
+import 'package:cookza/model/firebase/general/firebase_handshake.dart' as _i24;
+import 'package:cookza/services/firebase_provider.dart' as _i8;
+import 'package:cookza/services/image_parser.dart' as _i27;
+import 'package:cookza/services/local_storage.dart' as _i13;
+import 'package:cookza/services/meal_plan_manager.dart' as _i19;
+import 'package:cookza/services/recipe/image_manager.dart' as _i20;
+import 'package:cookza/services/recipe/recipe_manager.dart' as _i14;
 import 'package:cookza/services/shopping_list/shopping_list_items_generator.dart'
-    as _i4;
-import 'package:flutter/src/widgets/navigator.dart' as _i3;
+    as _i10;
+import 'package:cookza/services/shopping_list/shopping_list_manager.dart'
+    as _i17;
+import 'package:cookza/viewmodel/recipe_edit/recipe_edit_step.dart' as _i9;
+import 'package:firebase_ml_vision/firebase_ml_vision.dart' as _i28;
+import 'package:flutter/src/widgets/framework.dart' as _i23;
+import 'package:flutter/src/widgets/navigator.dart' as _i18;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: comment_references
@@ -23,128 +45,666 @@ import 'package:mockito/mockito.dart' as _i1;
 
 class _FakeFile extends _i1.Fake implements _i2.File {}
 
-/// A class which mocks [NavigatorObserver].
-///
-/// See the documentation for Mockito's code generation for more information.
-class MockNavigatorObserver extends _i1.Mock implements _i3.NavigatorObserver {
-  MockNavigatorObserver() {
-    _i1.throwOnMissingStub(this);
-  }
+class _FakeRecipeCollectionEntity extends _i1.Fake
+    implements _i3.RecipeCollectionEntity {}
 
-  @override
-  void didPush(_i3.Route<dynamic>? route, _i3.Route<dynamic>? previousRoute) =>
-      super.noSuchMethod(Invocation.method(#didPush, [route, previousRoute]),
-          returnValueForMissingStub: null);
-  @override
-  void didPop(_i3.Route<dynamic>? route, _i3.Route<dynamic>? previousRoute) =>
-      super.noSuchMethod(Invocation.method(#didPop, [route, previousRoute]),
-          returnValueForMissingStub: null);
-  @override
-  void didRemove(
-          _i3.Route<dynamic>? route, _i3.Route<dynamic>? previousRoute) =>
-      super.noSuchMethod(Invocation.method(#didRemove, [route, previousRoute]),
-          returnValueForMissingStub: null);
-  @override
-  void didStartUserGesture(
-          _i3.Route<dynamic>? route, _i3.Route<dynamic>? previousRoute) =>
-      super.noSuchMethod(
-          Invocation.method(#didStartUserGesture, [route, previousRoute]),
-          returnValueForMissingStub: null);
-}
+class _FakeShoppingListEntity extends _i1.Fake
+    implements _i4.ShoppingListEntity {}
+
+class _FakeMealPlanEntity extends _i1.Fake implements _i5.MealPlanEntity {}
+
+class _FakeMealPlanCollectionEntity extends _i1.Fake
+    implements _i6.MealPlanCollectionEntity {}
+
+class _FakeMealPlanCollectionEntityFirebase extends _i1.Fake
+    implements _i7.MealPlanCollectionEntityFirebase {}
+
+class _FakeFirebaseProvider extends _i1.Fake implements _i8.FirebaseProvider {}
+
+class _FakeRecipeOverviewEditStep extends _i1.Fake
+    implements _i9.RecipeOverviewEditStep {}
+
+class _FakeRecipeIngredientEditStep extends _i1.Fake
+    implements _i9.RecipeIngredientEditStep {}
+
+class _FakeRecipeInstructionEditStep extends _i1.Fake
+    implements _i9.RecipeInstructionEditStep {}
 
 /// A class which mocks [ShoppingListItemsGenerator].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockShoppingListItemsGenerator extends _i1.Mock
-    implements _i4.ShoppingListItemsGenerator {
+    implements _i10.ShoppingListItemsGenerator {
   MockShoppingListItemsGenerator() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i5.Future<List<_i6.MutableShoppingListItem>> generateItems(
-          _i7.ShoppingListEntity? entity) =>
+  _i11.Future<List<_i12.MutableShoppingListItem>> generateItems(
+          _i4.ShoppingListEntity? entity) =>
       (super.noSuchMethod(Invocation.method(#generateItems, [entity]),
-              returnValue: Future.value(<_i6.MutableShoppingListItem>[]))
-          as _i5.Future<List<_i6.MutableShoppingListItem>>);
+              returnValue: Future.value(<_i12.MutableShoppingListItem>[]))
+          as _i11.Future<List<_i12.MutableShoppingListItem>>);
 }
 
 /// A class which mocks [StorageProvider].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockStorageProvider extends _i1.Mock implements _i8.StorageProvider {
+class MockStorageProvider extends _i1.Mock implements _i13.StorageProvider {
   MockStorageProvider() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i5.Future<bool> fileExists(String? path) =>
+  _i11.Future<bool> fileExists(String? path) =>
       (super.noSuchMethod(Invocation.method(#fileExists, [path]),
-          returnValue: Future.value(false)) as _i5.Future<bool>);
+          returnValue: Future.value(false)) as _i11.Future<bool>);
   @override
-  _i5.Future<String> getTempDirectory() =>
+  _i11.Future<String> getTempDirectory() =>
       (super.noSuchMethod(Invocation.method(#getTempDirectory, []),
-          returnValue: Future.value('')) as _i5.Future<String>);
+          returnValue: Future.value('')) as _i11.Future<String>);
   @override
-  _i5.Future<String> getImageDirectory() =>
+  _i11.Future<String> getImageDirectory() =>
       (super.noSuchMethod(Invocation.method(#getImageDirectory, []),
-          returnValue: Future.value('')) as _i5.Future<String>);
+          returnValue: Future.value('')) as _i11.Future<String>);
   @override
-  _i5.Future<_i2.File> getExeptionLogFile() =>
+  _i11.Future<_i2.File> getExeptionLogFile() =>
       (super.noSuchMethod(Invocation.method(#getExeptionLogFile, []),
-          returnValue: Future.value(_FakeFile())) as _i5.Future<_i2.File>);
+          returnValue: Future.value(_FakeFile())) as _i11.Future<_i2.File>);
   @override
-  _i5.Future<void> updateExeptionLogFile(String? content) =>
+  _i11.Future<void> updateExeptionLogFile(String? content) =>
       (super.noSuchMethod(Invocation.method(#updateExeptionLogFile, [content]),
           returnValue: Future.value(null),
-          returnValueForMissingStub: Future.value()) as _i5.Future<void>);
+          returnValueForMissingStub: Future.value()) as _i11.Future<void>);
   @override
-  _i5.Future<void> clearExceptionLogFile() =>
+  _i11.Future<void> clearExceptionLogFile() =>
       (super.noSuchMethod(Invocation.method(#clearExceptionLogFile, []),
           returnValue: Future.value(null),
-          returnValueForMissingStub: Future.value()) as _i5.Future<void>);
+          returnValueForMissingStub: Future.value()) as _i11.Future<void>);
+}
+
+/// A class which mocks [RecipeManager].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockRecipeManager extends _i1.Mock implements _i14.RecipeManager {
+  MockRecipeManager() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i11.Future<List<_i3.RecipeCollectionEntity>> get collections =>
+      (super.noSuchMethod(Invocation.getter(#collections),
+              returnValue: Future.value(<_i3.RecipeCollectionEntity>[]))
+          as _i11.Future<List<_i3.RecipeCollectionEntity>>);
+  @override
+  _i11.Stream<List<_i3.RecipeCollectionEntity>> get collectionsAsStream =>
+      (super.noSuchMethod(Invocation.getter(#collectionsAsStream),
+              returnValue: Stream<List<_i3.RecipeCollectionEntity>>.empty())
+          as _i11.Stream<List<_i3.RecipeCollectionEntity>>);
+  @override
+  _i11.Stream<List<_i15.RecipeEntity>> get recipes =>
+      (super.noSuchMethod(Invocation.getter(#recipes),
+              returnValue: Stream<List<_i15.RecipeEntity>>.empty())
+          as _i11.Stream<List<_i15.RecipeEntity>>);
+  @override
+  _i11.Future<_i3.RecipeCollectionEntity> collectionByID(String? id) =>
+      (super.noSuchMethod(Invocation.method(#collectionByID, [id]),
+              returnValue: Future.value(_FakeRecipeCollectionEntity()))
+          as _i11.Future<_i3.RecipeCollectionEntity>);
+  @override
+  _i11.Future<_i3.RecipeCollectionEntity> createCollection(String? name) =>
+      (super.noSuchMethod(Invocation.method(#createCollection, [name]),
+              returnValue: Future.value(_FakeRecipeCollectionEntity()))
+          as _i11.Future<_i3.RecipeCollectionEntity>);
+  @override
+  _i11.Future<String> createOrUpdate(_i15.RecipeEntity? recipe) =>
+      (super.noSuchMethod(Invocation.method(#createOrUpdate, [recipe]),
+          returnValue: Future.value('')) as _i11.Future<String>);
+  @override
+  _i11.Future<void> renameCollection(
+          String? name, _i3.RecipeCollectionEntity? collection) =>
+      (super.noSuchMethod(
+          Invocation.method(#renameCollection, [name, collection]),
+          returnValue: Future.value(null),
+          returnValueForMissingStub: Future.value()) as _i11.Future<void>);
+  @override
+  _i11.Future<void> deleteCollection(_i3.RecipeCollectionEntity? model) =>
+      (super.noSuchMethod(Invocation.method(#deleteCollection, [model]),
+          returnValue: Future.value(null),
+          returnValueForMissingStub: Future.value()) as _i11.Future<void>);
+  @override
+  _i11.Future<void> addUserToCollection(
+          _i3.RecipeCollectionEntity? model, String? userID, String? name) =>
+      (super.noSuchMethod(
+          Invocation.method(#addUserToCollection, [model, userID, name]),
+          returnValue: Future.value(null),
+          returnValueForMissingStub: Future.value()) as _i11.Future<void>);
+  @override
+  String getNextRecipeDocumentId(String? recipeGroup) => (super.noSuchMethod(
+      Invocation.method(#getNextRecipeDocumentId, [recipeGroup]),
+      returnValue: '') as String);
+  @override
+  _i11.Future<void> deleteRecipe(_i15.RecipeEntity? recipe) =>
+      (super.noSuchMethod(Invocation.method(#deleteRecipe, [recipe]),
+          returnValue: Future.value(null),
+          returnValueForMissingStub: Future.value()) as _i11.Future<void>);
+  @override
+  _i11.Future<List<_i15.RecipeEntity>> getAllRecipes() =>
+      (super.noSuchMethod(Invocation.method(#getAllRecipes, []),
+              returnValue: Future.value(<_i15.RecipeEntity>[]))
+          as _i11.Future<List<_i15.RecipeEntity>>);
+  @override
+  _i11.Future<List<_i15.RecipeEntity>> getRecipeById(List<String>? ids) =>
+      (super.noSuchMethod(Invocation.method(#getRecipeById, [ids]),
+              returnValue: Future.value(<_i15.RecipeEntity>[]))
+          as _i11.Future<List<_i15.RecipeEntity>>);
+  @override
+  _i11.Future<void> updateRating(_i15.RecipeEntity? recipe, int? rating) =>
+      (super.noSuchMethod(Invocation.method(#updateRating, [recipe, rating]),
+          returnValue: Future.value(null),
+          returnValueForMissingStub: Future.value()) as _i11.Future<void>);
+  @override
+  _i11.Future<void> importRecipes(List<_i15.RecipeEntity>? recipes) =>
+      (super.noSuchMethod(Invocation.method(#importRecipes, [recipes]),
+          returnValue: Future.value(null),
+          returnValueForMissingStub: Future.value()) as _i11.Future<void>);
+  @override
+  _i11.Future<void> leaveRecipeGroup(_i3.RecipeCollectionEntity? entity) =>
+      (super.noSuchMethod(Invocation.method(#leaveRecipeGroup, [entity]),
+          returnValue: Future.value(null),
+          returnValueForMissingStub: Future.value()) as _i11.Future<void>);
+  @override
+  _i11.Future<void> removeMember(_i16.UserEntity? user, String? group) =>
+      (super.noSuchMethod(Invocation.method(#removeMember, [user, group]),
+          returnValue: Future.value(null),
+          returnValueForMissingStub: Future.value()) as _i11.Future<void>);
+  @override
+  _i11.Future<void> init() => (super.noSuchMethod(Invocation.method(#init, []),
+      returnValue: Future.value(null),
+      returnValueForMissingStub: Future.value()) as _i11.Future<void>);
+}
+
+/// A class which mocks [ShoppingListManager].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockShoppingListManager extends _i1.Mock
+    implements _i17.ShoppingListManager {
+  MockShoppingListManager() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i11.Future<List<_i4.ShoppingListEntity>> get shoppingListsAsList =>
+      (super.noSuchMethod(Invocation.getter(#shoppingListsAsList),
+              returnValue: Future.value(<_i4.ShoppingListEntity>[]))
+          as _i11.Future<List<_i4.ShoppingListEntity>>);
+  @override
+  _i11.Stream<List<_i4.ShoppingListEntity>> get shoppingLists =>
+      (super.noSuchMethod(Invocation.getter(#shoppingLists),
+              returnValue: Stream<List<_i4.ShoppingListEntity>>.empty())
+          as _i11.Stream<List<_i4.ShoppingListEntity>>);
+  @override
+  _i11.Future<_i4.ShoppingListEntity> createOrUpdate(
+          _i4.ShoppingListEntity? entity) =>
+      (super.noSuchMethod(Invocation.method(#createOrUpdate, [entity]),
+              returnValue: Future.value(_FakeShoppingListEntity()))
+          as _i11.Future<_i4.ShoppingListEntity>);
+  @override
+  _i11.Future<void> delete(_i4.ShoppingListEntity? entity) =>
+      (super.noSuchMethod(Invocation.method(#delete, [entity]),
+          returnValue: Future.value(null),
+          returnValueForMissingStub: Future.value()) as _i11.Future<void>);
+}
+
+/// A class which mocks [StackTrace].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockStackTrace extends _i1.Mock implements StackTrace {
+  MockStackTrace() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  String toString() =>
+      (super.noSuchMethod(Invocation.method(#toString, []), returnValue: '')
+          as String);
+}
+
+/// A class which mocks [NavigatorObserver].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockNavigatorObserver extends _i1.Mock implements _i18.NavigatorObserver {
+  @override
+  void didPush(
+          _i18.Route<dynamic>? route, _i18.Route<dynamic>? previousRoute) =>
+      super.noSuchMethod(Invocation.method(#didPush, [route, previousRoute]),
+          returnValueForMissingStub: null);
+  @override
+  void didPop(_i18.Route<dynamic>? route, _i18.Route<dynamic>? previousRoute) =>
+      super.noSuchMethod(Invocation.method(#didPop, [route, previousRoute]),
+          returnValueForMissingStub: null);
+  @override
+  void didRemove(
+          _i18.Route<dynamic>? route, _i18.Route<dynamic>? previousRoute) =>
+      super.noSuchMethod(Invocation.method(#didRemove, [route, previousRoute]),
+          returnValueForMissingStub: null);
+  @override
+  void didStartUserGesture(
+          _i18.Route<dynamic>? route, _i18.Route<dynamic>? previousRoute) =>
+      super.noSuchMethod(
+          Invocation.method(#didStartUserGesture, [route, previousRoute]),
+          returnValueForMissingStub: null);
+}
+
+/// A class which mocks [MealPlanManager].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockMealPlanManager extends _i1.Mock implements _i19.MealPlanManager {
+  @override
+  _i11.Future<_i5.MealPlanEntity> get mealPlan =>
+      (super.noSuchMethod(Invocation.getter(#mealPlan),
+              returnValue: Future.value(_FakeMealPlanEntity()))
+          as _i11.Future<_i5.MealPlanEntity>);
+  @override
+  _i11.Future<List<_i6.MealPlanCollectionEntity>> get collections =>
+      (super.noSuchMethod(Invocation.getter(#collections),
+              returnValue: Future.value(<_i6.MealPlanCollectionEntity>[]))
+          as _i11.Future<List<_i6.MealPlanCollectionEntity>>);
+  @override
+  _i11.Stream<List<_i6.MealPlanCollectionEntity>> get collectionsAsStream =>
+      (super.noSuchMethod(Invocation.getter(#collectionsAsStream),
+              returnValue: Stream<List<_i6.MealPlanCollectionEntity>>.empty())
+          as _i11.Stream<List<_i6.MealPlanCollectionEntity>>);
+  @override
+  _i11.Future<_i6.MealPlanCollectionEntity> createCollection(String? name) =>
+      (super.noSuchMethod(Invocation.method(#createCollection, [name]),
+              returnValue: Future.value(_FakeMealPlanCollectionEntity()))
+          as _i11.Future<_i6.MealPlanCollectionEntity>);
+  @override
+  _i11.Future<void> renameCollection(
+          String? name, _i6.MealPlanCollectionEntity? entity) =>
+      (super.noSuchMethod(Invocation.method(#renameCollection, [name, entity]),
+          returnValue: Future.value(null),
+          returnValueForMissingStub: Future.value()) as _i11.Future<void>);
+  @override
+  _i11.Future<_i6.MealPlanCollectionEntity> getCollectionByID(String? id) =>
+      (super.noSuchMethod(Invocation.method(#getCollectionByID, [id]),
+              returnValue: Future.value(_FakeMealPlanCollectionEntity()))
+          as _i11.Future<_i6.MealPlanCollectionEntity>);
+  @override
+  _i11.Future<void> saveMealPlan(_i5.MealPlanEntity? entity) =>
+      (super.noSuchMethod(Invocation.method(#saveMealPlan, [entity]),
+          returnValue: Future.value(null),
+          returnValueForMissingStub: Future.value()) as _i11.Future<void>);
+  @override
+  _i11.Future<void> addUserToCollection(
+          _i6.MealPlanCollectionEntity? entity, String? userID, String? name) =>
+      (super.noSuchMethod(
+          Invocation.method(#addUserToCollection, [entity, userID, name]),
+          returnValue: Future.value(null),
+          returnValueForMissingStub: Future.value()) as _i11.Future<void>);
+  @override
+  _i11.Future<void> deleteCollection(_i6.MealPlanCollectionEntity? entity) =>
+      (super.noSuchMethod(Invocation.method(#deleteCollection, [entity]),
+          returnValue: Future.value(null),
+          returnValueForMissingStub: Future.value()) as _i11.Future<void>);
+  @override
+  _i11.Future<void> leaveGroup(_i6.MealPlanCollectionEntity? entity) =>
+      (super.noSuchMethod(Invocation.method(#leaveGroup, [entity]),
+          returnValue: Future.value(null),
+          returnValueForMissingStub: Future.value()) as _i11.Future<void>);
+  @override
+  _i11.Future<_i5.MealPlanEntity> getMealPlanByCollectionID(String? id) =>
+      (super.noSuchMethod(Invocation.method(#getMealPlanByCollectionID, [id]),
+              returnValue: Future.value(_FakeMealPlanEntity()))
+          as _i11.Future<_i5.MealPlanEntity>);
+  @override
+  _i11.Future<void> init() => (super.noSuchMethod(Invocation.method(#init, []),
+      returnValue: Future.value(null),
+      returnValueForMissingStub: Future.value()) as _i11.Future<void>);
+  @override
+  _i11.Future<void> removeMember(_i16.UserEntity? user, String? mealPlan) =>
+      (super.noSuchMethod(Invocation.method(#removeMember, [user, mealPlan]),
+          returnValue: Future.value(null),
+          returnValueForMissingStub: Future.value()) as _i11.Future<void>);
 }
 
 /// A class which mocks [ImageManager].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockImageManager extends _i1.Mock implements _i9.ImageManager {
-  MockImageManager() {
-    _i1.throwOnMissingStub(this);
-  }
-
+class MockImageManager extends _i1.Mock implements _i20.ImageManager {
   @override
-  _i5.Future<void> uploadRecipeImage(String? recipeId, _i2.File? file) => (super
-      .noSuchMethod(Invocation.method(#uploadRecipeImage, [recipeId, file]),
+  _i11.Future<void> uploadRecipeImage(String? recipeId, _i2.File? file) =>
+      (super.noSuchMethod(
+          Invocation.method(#uploadRecipeImage, [recipeId, file]),
           returnValue: Future.value(null),
-          returnValueForMissingStub: Future.value()) as _i5.Future<void>);
+          returnValueForMissingStub: Future.value()) as _i11.Future<void>);
   @override
-  _i5.Future<void> uploadRecipeImageFromBytes(
-          String? recipeId, _i10.Uint8List? bytes) =>
+  _i11.Future<void> uploadRecipeImageFromBytes(
+          String? recipeId, _i21.Uint8List? bytes) =>
       (super.noSuchMethod(
           Invocation.method(#uploadRecipeImageFromBytes, [recipeId, bytes]),
           returnValue: Future.value(null),
-          returnValueForMissingStub: Future.value()) as _i5.Future<void>);
+          returnValueForMissingStub: Future.value()) as _i11.Future<void>);
   @override
-  _i5.Future<void> deleteRecipeImage(_i11.RecipeEntity? entity) =>
+  _i11.Future<void> deleteRecipeImage(_i15.RecipeEntity? entity) =>
       (super.noSuchMethod(Invocation.method(#deleteRecipeImage, [entity]),
           returnValue: Future.value(null),
-          returnValueForMissingStub: Future.value()) as _i5.Future<void>);
+          returnValueForMissingStub: Future.value()) as _i11.Future<void>);
   @override
-  _i5.Future<String> getRecipeImageURL(String? recipeId) =>
+  _i11.Future<String> getRecipeImageURL(String? recipeId) =>
       (super.noSuchMethod(Invocation.method(#getRecipeImageURL, [recipeId]),
-          returnValue: Future.value('')) as _i5.Future<String>);
+          returnValue: Future.value('')) as _i11.Future<String>);
   @override
   String getRecipeImagePath(String? recipeId) =>
       (super.noSuchMethod(Invocation.method(#getRecipeImagePath, [recipeId]),
           returnValue: '') as String);
   @override
-  _i5.Future<_i2.File?> getRecipeImageFile(_i11.RecipeEntity? entity) =>
+  _i11.Future<_i2.File?> getRecipeImageFile(_i15.RecipeEntity? entity) =>
       (super.noSuchMethod(Invocation.method(#getRecipeImageFile, [entity]),
-          returnValue: Future.value(_FakeFile())) as _i5.Future<_i2.File?>);
+          returnValue: Future.value(_FakeFile())) as _i11.Future<_i2.File?>);
   @override
-  _i5.Future<void> deleteLocalImage(String? fileName) =>
+  _i11.Future<void> deleteLocalImage(String? fileName) =>
       (super.noSuchMethod(Invocation.method(#deleteLocalImage, [fileName]),
           returnValue: Future.value(null),
-          returnValueForMissingStub: Future.value()) as _i5.Future<void>);
+          returnValueForMissingStub: Future.value()) as _i11.Future<void>);
+}
+
+/// A class which mocks [FirebaseProvider].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockFirebaseProvider extends _i1.Mock implements _i8.FirebaseProvider {
+  @override
+  _i11.Stream<List<_i6.MealPlanCollectionEntity>> get mealPlanGroups =>
+      (super.noSuchMethod(Invocation.getter(#mealPlanGroups),
+              returnValue: Stream<List<_i6.MealPlanCollectionEntity>>.empty())
+          as _i11.Stream<List<_i6.MealPlanCollectionEntity>>);
+  @override
+  _i11.Future<List<_i4.ShoppingListEntity>> get shoppingListsAsList =>
+      (super.noSuchMethod(Invocation.getter(#shoppingListsAsList),
+              returnValue: Future.value(<_i4.ShoppingListEntity>[]))
+          as _i11.Future<List<_i4.ShoppingListEntity>>);
+  @override
+  _i11.Stream<List<_i4.ShoppingListEntity>> get shoppingListsAsStream =>
+      (super.noSuchMethod(Invocation.getter(#shoppingListsAsStream),
+              returnValue: Stream<List<_i4.ShoppingListEntity>>.empty())
+          as _i11.Stream<List<_i4.ShoppingListEntity>>);
+  @override
+  _i11.Future<List<_i6.MealPlanCollectionEntity>> get mealPlanGroupsAsList =>
+      (super.noSuchMethod(Invocation.getter(#mealPlanGroupsAsList),
+              returnValue: Future.value(<_i6.MealPlanCollectionEntity>[]))
+          as _i11.Future<List<_i6.MealPlanCollectionEntity>>);
+  @override
+  String get userUid =>
+      (super.noSuchMethod(Invocation.getter(#userUid), returnValue: '')
+          as String);
+  @override
+  _i11.Future<List<_i22.QueryDocumentSnapshot>> getShoppingListsByMealPlan(
+          String? mealPlan) =>
+      (super.noSuchMethod(
+              Invocation.method(#getShoppingListsByMealPlan, [mealPlan]),
+              returnValue: Future.value(<_i22.QueryDocumentSnapshot>[]))
+          as _i11.Future<List<_i22.QueryDocumentSnapshot>>);
+  @override
+  _i11.Future<_i7.MealPlanCollectionEntityFirebase> createMealPlanGroup(
+          String? name) =>
+      (super.noSuchMethod(Invocation.method(#createMealPlanGroup, [name]),
+              returnValue:
+                  Future.value(_FakeMealPlanCollectionEntityFirebase()))
+          as _i11.Future<_i7.MealPlanCollectionEntityFirebase>);
+  @override
+  _i11.Future<void> renameMealPlanCollection(
+          String? name, _i6.MealPlanCollectionEntity? entity) =>
+      (super.noSuchMethod(
+          Invocation.method(#renameMealPlanCollection, [name, entity]),
+          returnValue: Future.value(null),
+          returnValueForMissingStub: Future.value()) as _i11.Future<void>);
+  @override
+  _i11.Future<List<_i6.MealPlanCollectionEntity>> mealPlanCollectionsAsList() =>
+      (super.noSuchMethod(Invocation.method(#mealPlanCollectionsAsList, []),
+              returnValue: Future.value(<_i6.MealPlanCollectionEntity>[]))
+          as _i11.Future<List<_i6.MealPlanCollectionEntity>>);
+  @override
+  _i11.Future<_i8.FirebaseProvider> init() =>
+      (super.noSuchMethod(Invocation.method(#init, []),
+              returnValue: Future.value(_FakeFirebaseProvider()))
+          as _i11.Future<_i8.FirebaseProvider>);
+  @override
+  _i11.Future<String> initializeWebLogin(
+          _i8.OnAcceptWebLogin? onLoginAccepted, _i23.BuildContext? context) =>
+      (super.noSuchMethod(
+          Invocation.method(#initializeWebLogin, [onLoginAccepted, context]),
+          returnValue: Future.value('')) as _i11.Future<String>);
+  @override
+  void enableWebLoginFor(String? documentID) =>
+      super.noSuchMethod(Invocation.method(#enableWebLoginFor, [documentID]),
+          returnValueForMissingStub: null);
+  @override
+  _i11.Stream<List<_i24.FirebaseHandshake>> webAppSessions() =>
+      (super.noSuchMethod(Invocation.method(#webAppSessions, []),
+              returnValue: Stream<List<_i24.FirebaseHandshake>>.empty())
+          as _i11.Stream<List<_i24.FirebaseHandshake>>);
+  @override
+  _i11.Future<void> logOffFromWebClient(String? requestor) =>
+      (super.noSuchMethod(Invocation.method(#logOffFromWebClient, [requestor]),
+          returnValue: Future.value(null),
+          returnValueForMissingStub: Future.value()) as _i11.Future<void>);
+  @override
+  _i11.Future<int> logOffAllWebClient() =>
+      (super.noSuchMethod(Invocation.method(#logOffAllWebClient, []),
+          returnValue: Future.value(0)) as _i11.Future<int>);
+  @override
+  _i11.Future<_i3.RecipeCollectionEntity> createRecipeCollection(
+          String? name) =>
+      (super.noSuchMethod(Invocation.method(#createRecipeCollection, [name]),
+              returnValue: Future.value(_FakeRecipeCollectionEntity()))
+          as _i11.Future<_i3.RecipeCollectionEntity>);
+  @override
+  _i11.Future<void> renameRecipeCollection(
+          String? name, _i3.RecipeCollectionEntity? entity) =>
+      (super.noSuchMethod(
+          Invocation.method(#renameRecipeCollection, [name, entity]),
+          returnValue: Future.value(null),
+          returnValueForMissingStub: Future.value()) as _i11.Future<void>);
+  @override
+  _i11.Future<List<_i3.RecipeCollectionEntity>> recipeCollectionsAsList() =>
+      (super.noSuchMethod(Invocation.method(#recipeCollectionsAsList, []),
+              returnValue: Future.value(<_i3.RecipeCollectionEntity>[]))
+          as _i11.Future<List<_i3.RecipeCollectionEntity>>);
+  @override
+  _i11.Stream<List<_i3.RecipeCollectionEntity>> recipeCollectionsAsStream() =>
+      (super.noSuchMethod(Invocation.method(#recipeCollectionsAsStream, []),
+              returnValue: Stream<List<_i3.RecipeCollectionEntity>>.empty())
+          as _i11.Stream<List<_i3.RecipeCollectionEntity>>);
+  @override
+  _i11.Stream<List<_i15.RecipeEntity>> recipes(String? groupId) =>
+      (super.noSuchMethod(Invocation.method(#recipes, [groupId]),
+              returnValue: Stream<List<_i15.RecipeEntity>>.empty())
+          as _i11.Stream<List<_i15.RecipeEntity>>);
+  @override
+  _i11.Future<String> createOrUpdateRecipe(_i15.RecipeEntity? recipe) =>
+      (super.noSuchMethod(Invocation.method(#createOrUpdateRecipe, [recipe]),
+          returnValue: Future.value('')) as _i11.Future<String>);
+  @override
+  _i11.Future<void> deleteRecipe(_i15.RecipeEntity? recipe) =>
+      (super.noSuchMethod(Invocation.method(#deleteRecipe, [recipe]),
+          returnValue: Future.value(null),
+          returnValueForMissingStub: Future.value()) as _i11.Future<void>);
+  @override
+  _i11.Future<_i3.RecipeCollectionEntity> recipeCollectionByID(String? id) =>
+      (super.noSuchMethod(Invocation.method(#recipeCollectionByID, [id]),
+              returnValue: Future.value(_FakeRecipeCollectionEntity()))
+          as _i11.Future<_i3.RecipeCollectionEntity>);
+  @override
+  _i11.Future<void> deleteRecipeCollection(String? id) =>
+      (super.noSuchMethod(Invocation.method(#deleteRecipeCollection, [id]),
+          returnValue: Future.value(null),
+          returnValueForMissingStub: Future.value()) as _i11.Future<void>);
+  @override
+  _i11.Future<void> deleteMealPlanCollection(String? id) =>
+      (super.noSuchMethod(Invocation.method(#deleteMealPlanCollection, [id]),
+          returnValue: Future.value(null),
+          returnValueForMissingStub: Future.value()) as _i11.Future<void>);
+  @override
+  _i11.Future<void> deleteShoppingList(_i4.ShoppingListEntity? entity) =>
+      (super.noSuchMethod(Invocation.method(#deleteShoppingList, [entity]),
+          returnValue: Future.value(null),
+          returnValueForMissingStub: Future.value()) as _i11.Future<void>);
+  @override
+  _i11.Future<void> addUserToCollection(
+          _i3.RecipeCollectionEntity? model, String? newUserID, String? name) =>
+      (super.noSuchMethod(
+          Invocation.method(#addUserToCollection, [model, newUserID, name]),
+          returnValue: Future.value(null),
+          returnValueForMissingStub: Future.value()) as _i11.Future<void>);
+  @override
+  _i11.Future<void> addUserToMealPlanCollection(
+          _i6.MealPlanCollectionEntity? model,
+          String? newUserID,
+          String? name) =>
+      (super.noSuchMethod(
+          Invocation.method(
+              #addUserToMealPlanCollection, [model, newUserID, name]),
+          returnValue: Future.value(null),
+          returnValueForMissingStub: Future.value()) as _i11.Future<void>);
+  @override
+  String getNextRecipeDocumentId(String? recipeGroup) => (super.noSuchMethod(
+      Invocation.method(#getNextRecipeDocumentId, [recipeGroup]),
+      returnValue: '') as String);
+  @override
+  _i11.Future<List<_i25.IngredientNoteEntityFirebase>> recipeIngredients(
+          String? recipeGroup, String? recipeID) =>
+      (super.noSuchMethod(
+              Invocation.method(#recipeIngredients, [recipeGroup, recipeID]),
+              returnValue: Future.value(<_i25.IngredientNoteEntityFirebase>[]))
+          as _i11.Future<List<_i25.IngredientNoteEntityFirebase>>);
+  @override
+  _i11.Future<List<_i15.RecipeEntity>> getAllRecipes() =>
+      (super.noSuchMethod(Invocation.method(#getAllRecipes, []),
+              returnValue: Future.value(<_i15.RecipeEntity>[]))
+          as _i11.Future<List<_i15.RecipeEntity>>);
+  @override
+  _i11.Future<List<_i15.RecipeEntity>> getRecipeById(List<String>? ids) =>
+      (super.noSuchMethod(Invocation.method(#getRecipeById, [ids]),
+              returnValue: Future.value(<_i15.RecipeEntity>[]))
+          as _i11.Future<List<_i15.RecipeEntity>>);
+  @override
+  _i11.Future<List<_i26.InstructionEntityFirebase>> recipeInstructions(
+          String? recipeGroup, String? recipeID) =>
+      (super.noSuchMethod(
+              Invocation.method(#recipeInstructions, [recipeGroup, recipeID]),
+              returnValue: Future.value(<_i26.InstructionEntityFirebase>[]))
+          as _i11.Future<List<_i26.InstructionEntityFirebase>>);
+  @override
+  _i11.Future<void> updateRating(_i15.RecipeEntity? recipe, int? rating) =>
+      (super.noSuchMethod(Invocation.method(#updateRating, [recipe, rating]),
+          returnValue: Future.value(null),
+          returnValueForMissingStub: Future.value()) as _i11.Future<void>);
+  @override
+  _i11.Future<_i5.MealPlanEntity> mealPlan(String? groupID) =>
+      (super.noSuchMethod(Invocation.method(#mealPlan, [groupID]),
+              returnValue: Future.value(_FakeMealPlanEntity()))
+          as _i11.Future<_i5.MealPlanEntity>);
+  @override
+  _i11.Future<String> saveMealPlan(_i5.MealPlanEntity? entity) =>
+      (super.noSuchMethod(Invocation.method(#saveMealPlan, [entity]),
+          returnValue: Future.value('')) as _i11.Future<String>);
+  @override
+  _i11.Future<List<_i15.RecipeEntity>> importRecipes(
+          List<_i15.RecipeEntity>? recipes, String? groupId) =>
+      (super.noSuchMethod(Invocation.method(#importRecipes, [recipes, groupId]),
+              returnValue: Future.value(<_i15.RecipeEntity>[]))
+          as _i11.Future<List<_i15.RecipeEntity>>);
+  @override
+  _i11.Future<void> leaveMealPlanGroup(String? id) =>
+      (super.noSuchMethod(Invocation.method(#leaveMealPlanGroup, [id]),
+          returnValue: Future.value(null),
+          returnValueForMissingStub: Future.value()) as _i11.Future<void>);
+  @override
+  _i11.Future<void> leaveRecipeGroup(String? id) =>
+      (super.noSuchMethod(Invocation.method(#leaveRecipeGroup, [id]),
+          returnValue: Future.value(null),
+          returnValueForMissingStub: Future.value()) as _i11.Future<void>);
+  @override
+  _i11.Future<_i6.MealPlanCollectionEntity> getMealPlanGroupByID(String? id) =>
+      (super.noSuchMethod(Invocation.method(#getMealPlanGroupByID, [id]),
+              returnValue: Future.value(_FakeMealPlanCollectionEntity()))
+          as _i11.Future<_i6.MealPlanCollectionEntity>);
+  @override
+  _i11.Future<_i5.MealPlanEntity> getMealPlanByID(String? id) =>
+      (super.noSuchMethod(Invocation.method(#getMealPlanByID, [id]),
+              returnValue: Future.value(_FakeMealPlanEntity()))
+          as _i11.Future<_i5.MealPlanEntity>);
+  @override
+  _i11.Future<void> updateImageReference(String? id, String? value) =>
+      (super.noSuchMethod(Invocation.method(#updateImageReference, [id, value]),
+          returnValue: Future.value(null),
+          returnValueForMissingStub: Future.value()) as _i11.Future<void>);
+  @override
+  _i11.Future<_i4.ShoppingListEntity> createOrUpdateShoppingList(
+          _i4.ShoppingListEntity? entity) =>
+      (super.noSuchMethod(
+              Invocation.method(#createOrUpdateShoppingList, [entity]),
+              returnValue: Future.value(_FakeShoppingListEntity()))
+          as _i11.Future<_i4.ShoppingListEntity>);
+  @override
+  _i11.Future<void> removeFromMealPlan(
+          _i16.UserEntity? user, String? mealPlan) =>
+      (super.noSuchMethod(
+          Invocation.method(#removeFromMealPlan, [user, mealPlan]),
+          returnValue: Future.value(null),
+          returnValueForMissingStub: Future.value()) as _i11.Future<void>);
+  @override
+  _i11.Future<void> removeFromRecipeGroup(
+          _i16.UserEntity? user, String? group) =>
+      (super.noSuchMethod(
+          Invocation.method(#removeFromRecipeGroup, [user, group]),
+          returnValue: Future.value(null),
+          returnValueForMissingStub: Future.value()) as _i11.Future<void>);
+}
+
+/// A class which mocks [ImageTextExtractor].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockImageTextExtractor extends _i1.Mock
+    implements _i27.ImageTextExtractor {
+  @override
+  _i11.Future<_i9.RecipeOverviewEditStep> processOverviewImage(
+          _i2.File? file) =>
+      (super.noSuchMethod(Invocation.method(#processOverviewImage, [file]),
+              returnValue: Future.value(_FakeRecipeOverviewEditStep()))
+          as _i11.Future<_i9.RecipeOverviewEditStep>);
+  @override
+  _i11.Future<_i9.RecipeIngredientEditStep> processIngredientsImage(
+          _i2.File? file) =>
+      (super.noSuchMethod(Invocation.method(#processIngredientsImage, [file]),
+              returnValue: Future.value(_FakeRecipeIngredientEditStep()))
+          as _i11.Future<_i9.RecipeIngredientEditStep>);
+  @override
+  _i11.Future<_i9.RecipeInstructionEditStep> processInstructionsImage(
+          _i2.File? file) =>
+      (super.noSuchMethod(Invocation.method(#processInstructionsImage, [file]),
+              returnValue: Future.value(_FakeRecipeInstructionEditStep()))
+          as _i11.Future<_i9.RecipeInstructionEditStep>);
+  @override
+  _i9.RecipeOverviewEditStep processOverviewImageFromText(
+          _i28.VisionText? text) =>
+      (super.noSuchMethod(
+              Invocation.method(#processOverviewImageFromText, [text]),
+              returnValue: _FakeRecipeOverviewEditStep())
+          as _i9.RecipeOverviewEditStep);
+  @override
+  _i9.RecipeIngredientEditStep processIngredientsImageFromText(
+          _i28.VisionText? text) =>
+      (super.noSuchMethod(
+              Invocation.method(#processIngredientsImageFromText, [text]),
+              returnValue: _FakeRecipeIngredientEditStep())
+          as _i9.RecipeIngredientEditStep);
+  @override
+  _i9.RecipeInstructionEditStep processInstructionsImageFromText(
+          _i28.VisionText? text) =>
+      (super.noSuchMethod(
+              Invocation.method(#processInstructionsImageFromText, [text]),
+              returnValue: _FakeRecipeInstructionEditStep())
+          as _i9.RecipeInstructionEditStep);
 }

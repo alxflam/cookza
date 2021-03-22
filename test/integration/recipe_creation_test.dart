@@ -40,6 +40,8 @@ void main() {
   setUp(() {
     mock.reset();
     mock.createCollection('dummy');
+    when(imageMock.getRecipeImageFile(any))
+        .thenAnswer((_) => Future.value(null));
   });
 
   setUpAll(() {

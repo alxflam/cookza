@@ -11,8 +11,6 @@ void main() {
         'creationDate': Timestamp.now(),
         'modificationDate': Timestamp.now(),
         'name': 'Name',
-        'ingredientsID': null,
-        'instructionsID': null,
         'description': 'Description',
         'duration': 40,
         'rating': 4,
@@ -33,6 +31,8 @@ void main() {
     'Recipe from Entity',
     () async {
       var recipe = MutableRecipe.empty();
+      recipe.id = '1234';
+      recipe.recipeCollectionId = '456';
       recipe.name = 'Name';
 
       var cut = FirebaseRecipe.from(recipe);

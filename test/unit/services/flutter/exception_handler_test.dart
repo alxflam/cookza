@@ -7,11 +7,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mockito/mockito.dart';
 
+import '../../../mocks/file_mock.dart';
 import '../../../mocks/shared_mocks.mocks.dart';
 
-class FileMock extends Mock implements File {}
-
-class StackTraceMock extends Mock implements StackTrace {}
+// class StackTraceMock extends Mock implements StackTrace {}
 
 var sp = MockStorageProvider();
 
@@ -21,9 +20,8 @@ void main() {
   });
 
   test('Add exception', () async {
-    var file = FileMock();
-
-    when(file.readAsStringSync()).thenReturn('');
+    var file = FakeFile();
+    file.stubContent('');
     when(sp.getExeptionLogFile()).thenAnswer((_) => Future.value(file));
 
     var cut = ExceptionHandlerImpl();

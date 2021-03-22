@@ -3,13 +3,11 @@ import 'package:cookza/model/entities/abstract/recipe_entity.dart';
 import 'package:cookza/model/entities/abstract/recipe_collection_entity.dart';
 import 'package:cookza/model/entities/abstract/user_entity.dart';
 import 'package:cookza/model/entities/json/recipe_collection_entity.dart';
+import 'package:cookza/model/entities/mutable/mutable_recipe.dart';
 import 'package:cookza/model/json/recipe_collection.dart';
 import 'package:cookza/services/util/id_gen.dart';
 import 'package:cookza/services/recipe/recipe_manager.dart';
-import 'package:mockito/mockito.dart';
 import 'package:collection/collection.dart';
-
-class RecipeManagerMock extends Mock implements RecipeManager {}
 
 class RecipeManagerStub implements RecipeManager {
   @override
@@ -58,12 +56,16 @@ class RecipeManagerStub implements RecipeManager {
 
   @override
   Future<String> createOrUpdate(RecipeEntity recipe) {
+    if (recipe is MutableRecipe) {
+      recipe.id ??= '1234';
+    }
+
     /// if it's an update, remove the old entity
     _recipes.removeWhere((e) => e.id == recipe.id);
 
     /// then add the entity
     _recipes.add(recipe);
-    return Future.value(recipe.id);
+    return Future.value(recipe.id ?? 'id'); // always return a non null value
   }
 
   @override

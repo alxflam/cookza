@@ -54,14 +54,14 @@ class RecipeEditModel extends ChangeNotifier {
     }
   }
 
-  void _validate() {
+  void _validate(BuildContext context) {
     for (var step in _stepModels) {
-      step.validate();
+      step.validate(context);
     }
   }
 
-  Future<String> save() async {
-    _validate();
+  Future<String> save(BuildContext context) async {
+    _validate(context);
     print('validation succeeded');
 
     for (var model in _stepModels) {

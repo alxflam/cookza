@@ -29,7 +29,7 @@ class MealPlanScreen extends StatelessWidget {
     var _recipe = ModalRoute.of(context)!.settings.arguments as RecipeEntity?;
     var currentGroup = sl.get<MealPlanManager>().currentCollection;
 
-    return FutureBuilder<MealPlanCollectionEntity>(
+    return FutureBuilder<MealPlanCollectionEntity?>(
       future: currentGroup == null
           ? Future.value(null)
           : sl.get<MealPlanManager>().getCollectionByID(currentGroup),

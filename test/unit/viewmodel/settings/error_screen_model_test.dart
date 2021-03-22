@@ -6,9 +6,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mockito/mockito.dart';
 
+import '../../../mocks/file_mock.dart';
 import '../../../mocks/shared_mocks.mocks.dart';
-
-class FileMock extends Mock implements File {}
 
 void main() {
   var mock = MockStorageProvider();
@@ -19,14 +18,14 @@ void main() {
 
   test('Exception file exists', () async {
     var cut = ErrorScreenModel();
-    var file = FileMock();
-    when(mock.getExeptionLogFile())
-        .thenAnswer((realInvocation) => Future.value(file));
-    when(file.existsSync()).thenReturn(true);
+    var file = FakeFile();
     var json =
         '{"errors":[{"error":"Some Error","stackTrace":"StackTrace","date":"19.09.2020"}]}';
 
-    when(file.readAsStringSync()).thenReturn(json);
+    file.stubExists(true);
+    file.stubContent(json);
+    when(mock.getExeptionLogFile())
+        .thenAnswer((realInvocation) => Future.value(file));
 
     var errors = await cut.errors;
     var errorsAsText = await cut.errorsAsText;
@@ -36,12 +35,11 @@ void main() {
 
   test('Clear log', () async {
     var cut = ErrorScreenModel();
-    var file = FileMock();
-    when(mock.getExeptionLogFile())
-        .thenAnswer((realInvocation) => Future.value(file));
-    when(file.existsSync()).thenReturn(true);
-    when(mock.clearExceptionLogFile())
-        .thenAnswer((realInvocation) => Future.value());
+    var file = FakeFile();
+
+    file.stubExists(true);
+    when(mock.getExeptionLogFile()).thenAnswer((_) => Future<File>.value(file));
+    when(mock.clearExceptionLogFile()).thenAnswer((_) => Future.value());
 
     cut.clearLog();
     verify(mock.clearExceptionLogFile());
@@ -49,10 +47,6 @@ void main() {
 
   test('Exception file does not exist', () async {
     var cut = ErrorScreenModel();
-    var file = FileMock();
-    when(mock.getExeptionLogFile())
-        .thenAnswer((realInvocation) => Future.value(file));
-    when(file.existsSync()).thenReturn(false);
 
     var errors = await cut.errors;
     var errorsAsText = await cut.errorsAsText;

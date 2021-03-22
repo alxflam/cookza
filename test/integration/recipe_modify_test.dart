@@ -42,6 +42,8 @@ void main() {
 
   setUp(() {
     mock.reset();
+    when(imageMock.getRecipeImageFile(any))
+        .thenAnswer((_) => Future.value(null));
   });
 
   setUpAll(() {

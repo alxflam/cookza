@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:cookza/model/entities/mutable/mutable_ingredient_note.dart';
 import 'package:cookza/services/image_parser.dart';
 import 'package:cookza/viewmodel/ocr_creation/recipe_ocr_step.dart';
@@ -9,19 +7,18 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mockito/mockito.dart';
 
-class ImageTextExtractorMock extends Mock implements ImageTextExtractor {}
-
-class FileMock extends Mock implements File {}
+import '../../mocks/file_mock.dart';
+import '../../mocks/shared_mocks.mocks.dart';
 
 void main() {
-  var mock = ImageTextExtractorMock();
+  var mock = MockImageTextExtractor();
   setUpAll(() {
     GetIt.I.registerSingleton<ImageTextExtractor>(mock);
   });
 
   test('Overview step', () async {
     var cut = RecipeOverviewOCRStep();
-    var file = FileMock();
+    var file = FakeFile();
     var model = RecipeOverviewEditStep();
     model.name = 'Dummy';
 
@@ -38,7 +35,7 @@ void main() {
 
   test('Ingredient step', () async {
     var cut = RecipeIngredientOCRStep();
-    var file = FileMock();
+    var file = FakeFile();
     var model = RecipeIngredientEditStep();
     var ingredient = MutableIngredientNote.empty();
     ingredient.name = 'Pepper';
@@ -57,7 +54,7 @@ void main() {
 
   test('Instruction step', () async {
     var cut = RecipeInstructionOCRStep();
-    var file = FileMock();
+    var file = FakeFile();
     var model = RecipeInstructionEditStep();
     model.addInstruction('Do Something');
 
