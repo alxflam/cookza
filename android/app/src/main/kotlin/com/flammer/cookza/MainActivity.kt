@@ -60,7 +60,7 @@ class MainActivity: FlutterActivity() {
   }
 
   internal fun handleSendText(intent: Intent) {
-    sharedText = intent.getStringExtra(Intent.EXTRA_TEXT)
+    sharedText = intent.getStringExtra(Intent.EXTRA_TEXT) ?: ""
   }
 
   internal fun handleSendJson(intent: Intent) {

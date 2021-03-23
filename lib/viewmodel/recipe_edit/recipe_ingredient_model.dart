@@ -60,8 +60,12 @@ class RecipeIngredientModel extends ChangeNotifier {
 
   IngredientNoteEntity toIngredientNote() => _note;
 
-  UnitOfMeasure get uom =>
+  UnitOfMeasure? get uom {
+    if (_note.unitOfMeasure.isNotEmpty) {
       sl.get<UnitOfMeasureProvider>().getUnitOfMeasureById(_note.unitOfMeasure);
+    }
+    return null;
+  }
 
   void removeRecipeReference() {
     this.name = '';
@@ -88,8 +92,8 @@ class RecipeIngredientModel extends ChangeNotifier {
     this._note.amount = amount;
   }
 
-  set uom(UnitOfMeasure uom) {
-    this._note.unitOfMeasure = uom.id;
+  set uom(UnitOfMeasure? uom) {
+    this._note.unitOfMeasure = uom?.id ?? '';
   }
 
   void setDeleted() => _deleted = true;

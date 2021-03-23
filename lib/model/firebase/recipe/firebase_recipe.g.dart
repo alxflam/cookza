@@ -39,7 +39,7 @@ Map<String, dynamic> _$FirebaseRecipeToJson(FirebaseRecipe instance) {
   writeNotNull('ingredientsID', instance.ingredientsID);
   writeNotNull('instructionsID', instance.instructionsID);
   val['name'] = instance.name;
-  val['description'] = instance.description;
+  writeNotNull('description', instance.description);
   val['duration'] = instance.duration;
   val['rating'] = instance.rating;
   val['servings'] = instance.servings;
