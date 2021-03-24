@@ -210,7 +210,6 @@ class FirebaseProvider {
         requestor: userUid,
         browser: platformInfo.browser,
         operatingSystem: platformInfo.os,
-        creationTimestamp: Timestamp.now(),
         owner: '');
 
     // add entry
@@ -238,7 +237,7 @@ class FirebaseProvider {
 
     var handshake = FirebaseHandshake.fromJson(document.data()!, document.id);
 
-    if (handshake.requestor == null || handshake.requestor.isEmpty) {
+    if (handshake.requestor.isEmpty) {
       print('no webclient ID');
       return;
     }
@@ -719,7 +718,7 @@ class FirebaseProvider {
   }
 
   Future<String> saveMealPlan(MealPlanEntity entity) async {
-    assert(entity.groupID != null && entity.groupID.isNotEmpty);
+    assert(entity.groupID.isNotEmpty);
     DocumentReference docRef;
     if (entity.id != null && entity.id!.isNotEmpty) {
       docRef = _firestore.collection(MEAL_PLANS).doc(entity.id);
@@ -806,7 +805,7 @@ class FirebaseProvider {
       BuildContext context, DocumentSnapshot event, OnAcceptWebLogin callback) {
     var target = FirebaseHandshake.fromJson(event.data()!, event.id);
     // wait until somebody accepts the offer
-    if (target.owner != null) {
+    if (target.owner.isNotEmpty) {
       // update owners uid
       _ownerUserID = target.owner;
       // navigate to the home screen
@@ -866,10 +865,7 @@ class FirebaseProvider {
 
   Future<ShoppingListEntity> createOrUpdateShoppingList(
       ShoppingListEntity entity) async {
-    assert(entity.groupID != null && entity.groupID.isNotEmpty);
-    assert(entity.dateFrom != null);
-    assert(entity.dateUntil != null);
-    assert(entity.items != null);
+    assert(entity.groupID.isNotEmpty);
     if (entity.id == null || entity.id!.isEmpty) {
       assert(entity.items.isNotEmpty);
     }

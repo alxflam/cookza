@@ -222,7 +222,7 @@ class NewIngredientScreen extends StatelessWidget {
             // navigate to the selection screen
             var result = await Navigator.pushNamed(
                     context, RecipeSelectionScreen.id, arguments: selModel)
-                as RecipeEntity;
+                as RecipeEntity?;
             if (result != null) {
               await model.setRecipeReference(result.id);
             }

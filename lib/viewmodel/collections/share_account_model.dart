@@ -17,8 +17,7 @@ class ShareAccountScreenModel with ChangeNotifier {
   String get userName => sl.get<SharedPreferencesProvider>().getUserName();
 
   bool get hasName {
-    var name = userName;
-    return name != null && name.isNotEmpty;
+    return userName.isNotEmpty;
   }
 
   JsonUser get jsonUser {

@@ -107,7 +107,7 @@ Widget _getAddRowButton(BuildContext context, RecipeIngredientEditStep model) {
           RecipeIngredientModel.of(MutableIngredientNote.empty());
 
       var result = await Navigator.pushNamed(context, NewIngredientScreen.id,
-          arguments: ingModel) as RecipeIngredientModel;
+          arguments: ingModel) as RecipeIngredientModel?;
 
       if (result != null && !result.isDeleted) {
         model.addNewIngredient(result);

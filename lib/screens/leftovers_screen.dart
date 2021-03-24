@@ -29,9 +29,7 @@ class _LeftoversBodyState extends State<LeftoversBody> {
   final List<String> _ingredients = [];
 
   void _addIngredient(String ingredient) {
-    if (ingredient != null &&
-        ingredient.isNotEmpty &&
-        !_ingredients.contains(ingredient)) {
+    if (ingredient.isNotEmpty && !_ingredients.contains(ingredient)) {
       setState(() {
         _ingredients.add(ingredient);
       });

@@ -29,8 +29,8 @@ class MealPlanGroupViewModel extends GroupViewModel {
 
   @override
   Future<void> addUser(String userID, String name) async {
-    await sl.get<MealPlanManager>().addUserToCollection(this.entity, userID,
-        name == null || name.isEmpty ? 'unknown user' : name);
+    await sl.get<MealPlanManager>().addUserToCollection(
+        this.entity, userID, name.isEmpty ? 'unknown user' : name);
 
     notifyListeners();
   }

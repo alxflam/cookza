@@ -11,11 +11,7 @@ class SimilarityService {
       RecipeEntity sourceRecipe) async {
     List<RecipeEntity> result = [];
 
-    // immediately return if the recipe does not exist or does not contain any ingredients
-    if (sourceRecipe == null) {
-      return result;
-    }
-
+    // immediately return if the recipe does not contain any ingredients
     var sourceIngredients = await sourceRecipe.ingredients;
     if (sourceIngredients.isEmpty) {
       return result;

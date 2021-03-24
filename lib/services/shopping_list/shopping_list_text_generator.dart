@@ -8,7 +8,7 @@ abstract class ShoppingListTextGenerator {
 class ShoppingListTextGeneratorImpl implements ShoppingListTextGenerator {
   @override
   Future<String> generateText(ShoppingListModel model, String title) async {
-    assert(title != null && title.isNotEmpty);
+    assert(title.isNotEmpty);
     var buffer = StringBuffer();
 
     buffer.write('*');
@@ -27,11 +27,11 @@ class ShoppingListTextGeneratorImpl implements ShoppingListTextGenerator {
       buffer.write(item.name);
       buffer.write(' ');
 
-      if (item.amount != null && item.amount.isNotEmpty) {
+      if (item.amount.isNotEmpty) {
         buffer.write('(');
         buffer.write(item.amount);
 
-        if (item.uom != null && item.uom.isNotEmpty) {
+        if (item.uom.isNotEmpty) {
           buffer.write(' '); // space between amount and unit
           buffer.write(item.uom);
         }

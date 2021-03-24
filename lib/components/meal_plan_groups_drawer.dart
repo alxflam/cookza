@@ -58,7 +58,7 @@ class MealPlanGroupsTiles extends StatelessWidget {
         Expanded(
           child: ListView.builder(
             padding: EdgeInsets.zero,
-            itemCount: groups == null ? 0 : groups.length,
+            itemCount: groups.length,
             itemBuilder: (context, index) {
               var item = groups[index];
               var isActive = mealPlanManager.currentCollection == item.id;
@@ -83,7 +83,7 @@ class MealPlanGroupsTiles extends StatelessWidget {
     );
   }
 
-  Future<MealPlanCollectionEntity> _createMealPlanGroup(
+  Future<MealPlanCollectionEntity>? _createMealPlanGroup(
       BuildContext context) async {
     return await showDialog(
       context: context,

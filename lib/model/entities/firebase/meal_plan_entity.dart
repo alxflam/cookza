@@ -19,7 +19,7 @@ class MealPlanDateEntityFirebase implements MealPlanDateEntity {
 }
 
 class MealPlanRecipeEntityFirebase implements MealPlanRecipeEntity {
-  final String _id;
+  final String? _id;
   final String _name;
   final int _servings;
 
@@ -29,7 +29,7 @@ class MealPlanRecipeEntityFirebase implements MealPlanRecipeEntity {
         this._servings = item.servings;
 
   @override
-  String get id => this._id;
+  String? get id => this._id;
 
   @override
   String get name => this._name;
@@ -38,7 +38,7 @@ class MealPlanRecipeEntityFirebase implements MealPlanRecipeEntity {
   int get servings => this._servings;
 
   @override
-  bool get isNote => this._id == null || this._id.isEmpty;
+  bool get isNote => this._id == null || this._id!.isEmpty;
 }
 
 class MealPlanEntityFirebase implements MealPlanEntity {

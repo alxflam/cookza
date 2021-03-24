@@ -246,7 +246,7 @@ class AmountedUnitOfMeasure {
 
       // get descending!
       var targetUoM = sameBaseUnit
-          .firstWhere((e) => e.conversionFactor < uom.conversionFactor);
+          .firstWhereOrNull((e) => e.conversionFactor < uom.conversionFactor);
 
       // directly return if there's no next lower dimension
       if (targetUoM == null) {

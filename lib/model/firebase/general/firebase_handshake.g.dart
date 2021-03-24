@@ -10,10 +10,9 @@ FirebaseHandshake _$FirebaseHandshakeFromJson(Map<String, dynamic> json) {
   return FirebaseHandshake(
     requestor: json['requestor'] as String,
     owner: json['owner'] as String,
-    creationTimestamp: kTimestampFromJson(json['creationTimestamp']),
-    operatingSystem: json['operatingSystem'] as String,
     browser: json['browser'] as String,
-  );
+    operatingSystem: json['operatingSystem'] as String,
+  )..creationTimestamp = kTimestampFromJson(json['creationTimestamp']);
 }
 
 Map<String, dynamic> _$FirebaseHandshakeToJson(FirebaseHandshake instance) =>

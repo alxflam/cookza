@@ -30,11 +30,7 @@ class FirebaseHandshake {
   FirebaseHandshake(
       {required this.requestor,
       required this.owner,
-      required this.creationTimestamp,
-      required this.operatingSystem,
-      required this.browser}) {
-    if (this.creationTimestamp == null) {
-      throw 'a handshake document can not be created without a timestamp';
-    }
-  }
+      required this.browser,
+      required this.operatingSystem})
+      : this.creationTimestamp = Timestamp.now();
 }

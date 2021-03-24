@@ -12,7 +12,7 @@ import 'package:cookza/viewmodel/recipe_view/recipe_view_model.dart';
 import 'package:flutter/cupertino.dart';
 
 class ShareReceiveHandler {
-  void handleReceivedText(String text, BuildContext context) {
+  void handleReceivedText(String? text, BuildContext context) {
     if (text == null || text.isEmpty) {
       return;
     }
@@ -40,7 +40,7 @@ class ShareReceiveHandler {
     );
   }
 
-  void handleReceivedJson(String text, BuildContext context) {
+  void handleReceivedJson(String? text, BuildContext context) {
     if (text == null || text.isEmpty) {
       return;
     }

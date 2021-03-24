@@ -102,28 +102,10 @@ class Recipe {
       required this.servings,
       this.serializedImage}) {
     // initalize values
-    if (this.id == null) {
+    if (this.id.isEmpty) {
       this.id = sl.get<IdGenerator>().id;
     }
-    if (this.ingredients == null) {
-      this.ingredients = [];
-    }
-    if (this.tags == null) {
-      this.tags = [];
-    }
-    if (this.rating == null) {
-      this.rating = 0;
-    }
-    if (this.instructions == null) {
-      this.instructions = [];
-    }
-    if (this.creationDate == null) {
-      this.creationDate = DateTime.now();
-    }
-    if (this.modificationDate == null) {
-      this.modificationDate = DateTime.now();
-    }
-    if (this.servings == null || this.servings == 0) {
+    if (this.servings == 0) {
       this.servings = 1;
     }
   }

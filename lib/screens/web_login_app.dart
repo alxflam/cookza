@@ -62,7 +62,7 @@ class LogIns extends StatelessWidget {
     var handshakes = Provider.of<List<FirebaseHandshake>>(context);
     var platformInfo = sl.get<PlatformInfo>();
 
-    if (handshakes == null || handshakes.isEmpty) {
+    if (handshakes.isEmpty) {
       return Container();
     }
 

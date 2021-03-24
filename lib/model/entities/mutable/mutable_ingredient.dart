@@ -24,7 +24,7 @@ class MutableIngredient implements IngredientEntity {
   String? get recipeReference => _recipeReference;
 
   set name(String value) {
-    if (value != null && value.isNotEmpty) {
+    if (value.isNotEmpty) {
       this._name = value;
     }
   }

@@ -53,7 +53,7 @@ class LiveCameraScannerScreen extends StatefulWidget {
 class _LiveCameraScannerScreenState extends State<LiveCameraScannerScreen> {
   bool _isDetecting = false;
   List<Barcode> _scanResults = [];
-  late CameraController _camera;
+  CameraController? _camera;
   SelectionMode _mode = SelectionMode.liveCamera;
   File? _galleryImage;
   bool _popped = false;
@@ -78,10 +78,10 @@ class _LiveCameraScannerScreenState extends State<LiveCameraScannerScreen> {
     CameraLensDirection _direction = CameraLensDirection.back;
     final CameraDescription description = await getCamera(_direction);
     _camera = CameraController(description, ResolutionPreset.medium);
-    await _camera.initialize();
+    await _camera!.initialize();
 
     // ignore: unawaited_futures
-    _camera.startImageStream((CameraImage image) {
+    _camera!.startImageStream((CameraImage image) {
       if (_isDetecting || _mode != SelectionMode.liveCamera) return;
 
       if (!_isDetecting) {
@@ -222,7 +222,7 @@ class _LiveCameraScannerScreenState extends State<LiveCameraScannerScreen> {
           : Stack(
               fit: StackFit.expand,
               children: <Widget>[
-                CameraPreview(_camera),
+                CameraPreview(_camera!),
                 _checkQrCodeExistence(),
               ],
             ),
@@ -262,9 +262,9 @@ class _LiveCameraScannerScreenState extends State<LiveCameraScannerScreen> {
   }
 
   Future<void> _disposeCamera() async {
-    if (this._cameraRunning) {
-      await this._camera.stopImageStream();
-      await _camera.dispose();
+    if (this._cameraRunning && this._camera != null) {
+      await this._camera!.stopImageStream();
+      await _camera!.dispose();
       this._cameraRunning = false;
     }
   }

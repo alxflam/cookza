@@ -286,12 +286,12 @@ abstract class AbstractGroupScreen extends StatelessWidget {
 
   void _addUser(BuildContext context, GroupViewModel model) async {
     var result = await Navigator.pushNamed(context, LiveCameraScannerScreen.id);
-    if (result == null) {
+    if (result == null || (!(result is String))) {
       return;
     }
 
     try {
-      var user = await model.addUserFromJson(result as String);
+      var user = await model.addUserFromJson(result);
       if (user == null) {
         return;
       }

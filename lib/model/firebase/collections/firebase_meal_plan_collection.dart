@@ -28,9 +28,6 @@ class FirebaseMealPlanCollection {
     required this.name,
     required this.users,
   }) : this.creationTimestamp = Timestamp.now() {
-    if (this.creationTimestamp == null) {
-      this.creationTimestamp = Timestamp.now();
-    }
     if (this.users.isEmpty) {
       throw 'a meal plan collection without users can not be created';
     }

@@ -63,20 +63,7 @@ class FirebaseRecipe {
     required this.image,
     required this.recipeGroupID,
   }) {
-    // initalize values
-    if (this.tags == null) {
-      this.tags = [];
-    }
-    if (this.rating == null) {
-      this.rating = 0;
-    }
-    if (this.creationDate == null) {
-      this.creationDate = Timestamp.now();
-    }
-    if (this.modificationDate == null) {
-      this.modificationDate = Timestamp.now();
-    }
-    if (this.servings == null || this.servings == 0) {
+    if (this.servings == 0) {
       this.servings = 1;
     }
   }

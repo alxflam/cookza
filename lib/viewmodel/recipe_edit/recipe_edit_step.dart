@@ -75,9 +75,6 @@ class RecipeOverviewEditStep extends RecipeEditStep {
     if (duration <= 0) {
       throw AppLocalizations.of(context)!.assignRecipeDuration;
     }
-    if (difficulty == null) {
-      throw AppLocalizations.of(context)!.assignRecipeDifficulty;
-    }
     if (this.collection == null) {
       throw AppLocalizations.of(context)!.assignRecipeGroup;
     }
@@ -239,10 +236,6 @@ class RecipeIngredientEditStep extends RecipeEditStep {
 
   @override
   void applyFrom(RecipeEntity recipe) {
-    assert(recipe != null);
-    assert(recipe.ingredients != null);
-    assert(recipe.servings != null);
-
     recipe.ingredients.then((value) {
       var ing = value.map((e) => MutableIngredientNote.of(e)).toList();
       this._ingredients = ing;
@@ -296,14 +289,12 @@ class RecipeInstructionEditStep extends RecipeEditStep {
   }
 
   void addEmptyInstruction() {
-    addInstruction('');
+    this._instructions.add(MutableInstruction.empty());
     notifyListeners();
   }
 
   void addInstruction(String text) {
-    this._instructions.add(text == null
-        ? MutableInstruction.empty()
-        : MutableInstruction.withValues(text: text));
+    this._instructions.add(MutableInstruction.withValues(text: text));
   }
 
   void removeInstruction(int i) {
@@ -333,9 +324,7 @@ class RecipeInstructionEditStep extends RecipeEditStep {
     if (_instructions.isEmpty) {
       throw AppLocalizations.of(context)!.assignInstructions;
     }
-    if (_instructions
-        .where((f) => f.text == null || f.text.isEmpty)
-        .isNotEmpty) {
+    if (_instructions.where((f) => f.text.isEmpty).isNotEmpty) {
       throw AppLocalizations.of(context)!.assignEmptyInstructions;
     }
   }

@@ -57,7 +57,7 @@ class RecipeGroupsTiles extends StatelessWidget {
         Expanded(
           child: ListView.builder(
             padding: EdgeInsets.zero,
-            itemCount: groups == null ? 0 : groups.length,
+            itemCount: groups.length,
             itemBuilder: (context, index) {
               var item = groups[index];
               var isActive = recipeManager.currentCollection == item.id;
@@ -83,7 +83,7 @@ class RecipeGroupsTiles extends StatelessWidget {
     );
   }
 
-  Future<RecipeCollectionEntity> _createRecipeGroup(
+  Future<RecipeCollectionEntity>? _createRecipeGroup(
       BuildContext context) async {
     return await showDialog(
       context: context,

@@ -15,8 +15,6 @@ import 'package:provider/provider.dart';
 import 'package:collection/collection.dart';
 
 Future<void> openShoppingListDialog(BuildContext context) async {
-  ShoppingListModel model;
-
   var collections = await sl.get<MealPlanManager>().collections;
 
   if (collections.isEmpty) {
@@ -25,6 +23,7 @@ Future<void> openShoppingListDialog(BuildContext context) async {
     return;
   }
 
+  ShoppingListModel? model;
   if (collections.length == 1) {
     model = ShoppingListModel.empty(groupID: collections.first.id!);
     var dateRange = await showDateRangePicker(
@@ -46,7 +45,7 @@ Future<void> openShoppingListDialog(BuildContext context) async {
   }
 
   // model is null if user cancelled multiple groups dialog
-  if (model == null || model.groupID == null) {
+  if (model == null || model.groupID.isEmpty) {
     return;
   }
 
@@ -55,7 +54,7 @@ Future<void> openShoppingListDialog(BuildContext context) async {
   var matchedList = existingPlans.isEmpty
       ? null
       : existingPlans.firstWhereOrNull((e) =>
-          e.groupID == model.groupID &&
+          e.groupID == model!.groupID &&
           (isSameDay(model.dateFrom, e.dateFrom) ||
               (e.dateFrom.isBefore(DateTime.now()) &&
                   isSameDay(model.dateFrom, DateTime.now()))) &&
@@ -71,7 +70,7 @@ Future<void> openShoppingListDialog(BuildContext context) async {
       arguments: newModel);
 }
 
-Future<ShoppingListModel> _showMultipleGroupsDialog(BuildContext context,
+Future<ShoppingListModel>? _showMultipleGroupsDialog(BuildContext context,
     List<MealPlanCollectionEntity> collections, ShoppingListModel model) async {
   return await showDialog(
       context: context,

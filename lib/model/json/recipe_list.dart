@@ -12,11 +12,7 @@ class RecipeList {
   @JsonKey(toJson: kListToJson)
   List<Recipe> recipes;
 
-  RecipeList({required this.recipes}) : this.modelVersion = 1 {
-    if (this.recipes == null) {
-      this.recipes = [];
-    }
-  }
+  RecipeList({required this.recipes}) : this.modelVersion = 1;
 
   factory RecipeList.fromJson(Map<String, dynamic> json) =>
       _$RecipeListFromJson(json);

@@ -128,7 +128,7 @@ Step getOverviewStep(BuildContext context) {
 
 Widget _getCollectionDropDown(BuildContext context,
     RecipeOverviewEditStep model, List<RecipeCollectionEntity> collections) {
-  if (collections == null || collections.isEmpty) {
+  if (collections.isEmpty) {
     return Container();
   }
 

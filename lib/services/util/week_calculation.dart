@@ -22,11 +22,8 @@ int weekNumberOf(DateTime date) {
   return 1 + ((elapsedDays + 1) / 7).floor();
 }
 
-bool isSameDay(DateTime first, DateTime second) {
-  if (first == null) {
-    return false;
-  }
-  if (second == null) {
+bool isSameDay(DateTime? first, DateTime? second) {
+  if (first == null || second == null) {
     return false;
   }
   return first.day == second.day &&

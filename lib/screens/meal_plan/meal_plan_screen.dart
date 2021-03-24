@@ -206,7 +206,7 @@ class MealPlanScreen extends StatelessWidget {
                 },
                 subtitle: recipeModel.servings != null
                     ? Text(
-                        '${recipeModel.servings.toString()} ${AppLocalizations.of(context)!.servings(recipeModel.servings)}')
+                        '${recipeModel.servings.toString()} ${AppLocalizations.of(context)!.servings(recipeModel.servings!)}')
                     : null,
                 trailing: IconButton(
                   icon: Icon(Icons.edit),
@@ -220,7 +220,7 @@ class MealPlanScreen extends StatelessWidget {
                         return MealPlanItemDialog(
                             MealPlanItemDialogModel.forItem(recipeModel));
                       },
-                    ) as MealPlanItemDialogModel;
+                    ) as MealPlanItemDialogModel?;
 
                     if (dialogResult != null) {
                       if (dialogResult.isDeleted) {
@@ -367,7 +367,7 @@ class MealPlanScreen extends StatelessWidget {
       builder: (context) {
         return MealPlanItemDialog(MealPlanItemDialogModel.createNote());
       },
-    ) as MealPlanItemDialogModel;
+    ) as MealPlanItemDialogModel?;
 
     if (dialogResult != null && !dialogResult.isDeleted) {
       model.addNote(index, dialogResult.name);

@@ -90,7 +90,7 @@ class CustomizedRatingBar extends StatelessWidget {
     }
 
     return RatingBar.builder(
-      initialRating: _model.rating == null ? 0 : _model.rating.toDouble(),
+      initialRating: _model.rating.toDouble(),
       minRating: 0,
       maxRating: 5,
       direction: Axis.horizontal,

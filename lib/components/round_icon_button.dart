@@ -3,7 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class RoundIconButton extends StatelessWidget {
   final IconData icon;
-  final Function onPress;
+  final VoidCallback onPress;
 
   RoundIconButton({required this.icon, required this.onPress});
 
@@ -17,11 +17,7 @@ class RoundIconButton extends StatelessWidget {
         size: 15,
       ),
       color: color,
-      onPressed: () {
-        if (this.onPress != null) {
-          onPress();
-        }
-      },
+      onPressed: this.onPress,
     );
   }
 }

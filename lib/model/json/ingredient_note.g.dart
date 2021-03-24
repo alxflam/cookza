@@ -10,7 +10,7 @@ IngredientNote _$IngredientNoteFromJson(Map<String, dynamic> json) {
   return IngredientNote(
     ingredient: Ingredient.fromJson(json['ingredient'] as Map<String, dynamic>),
     unitOfMeasure: json['unitOfMeasure'] as String? ?? '',
-    amount: (json['amount'] as num).toDouble(),
+    amount: (json['amount'] as num?)?.toDouble(),
   );
 }
 
@@ -24,7 +24,7 @@ Map<String, dynamic> _$IngredientNoteToJson(IngredientNote instance) {
   }
 
   writeNotNull('ingredient', _toJson(instance.ingredient));
-  val['unitOfMeasure'] = instance.unitOfMeasure;
-  val['amount'] = instance.amount;
+  writeNotNull('unitOfMeasure', instance.unitOfMeasure);
+  writeNotNull('amount', instance.amount);
   return val;
 }

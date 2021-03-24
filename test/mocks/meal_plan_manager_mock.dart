@@ -54,7 +54,7 @@ class MealPlanManagerMock extends Mock implements MealPlanManager {
 
   @override
   Future<void> saveMealPlan(MealPlanEntity entity) {
-    assert(entity.groupID != null && entity.groupID.isNotEmpty);
+    assert(entity.groupID.isNotEmpty);
     if (this._mealPlans.containsKey(entity.groupID)) {
       this._mealPlans.update(entity.groupID, (value) => entity);
     } else {

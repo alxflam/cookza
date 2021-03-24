@@ -29,9 +29,6 @@ class FirebaseRecipeCollection {
     required this.creationTimestamp,
     required this.users,
   }) {
-    if (this.creationTimestamp == null) {
-      throw 'a creation timestamp is needed';
-    }
     if (this.users.isEmpty) {
       throw 'a recipe collection without users can not be created';
     }

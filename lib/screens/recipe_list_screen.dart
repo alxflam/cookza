@@ -43,7 +43,7 @@ class RecipeListScreen extends StatelessWidget {
                       builder: (context) {
                         var recipes = Provider.of<List<RecipeEntity>>(context);
 
-                        if (recipes == null || recipes.isEmpty) {
+                        if (recipes.isEmpty) {
                           return Container(
                             child: Center(
                               child: Padding(
