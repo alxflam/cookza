@@ -14,12 +14,12 @@ class IngredientNoteEntityJson implements IngredientNoteEntity {
             amount: 0, ingredient: Ingredient(name: ''), unitOfMeasure: '');
 
   @override
-  double get amount => this._ingredient.amount;
+  double? get amount => this._ingredient.amount;
 
   @override
   IngredientEntity get ingredient =>
       IngredientEntityJson.of(this._ingredient.ingredient);
 
   @override
-  String get unitOfMeasure => this._ingredient.unitOfMeasure;
+  String? get unitOfMeasure => this._ingredient.unitOfMeasure;
 }

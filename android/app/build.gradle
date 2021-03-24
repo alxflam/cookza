@@ -74,8 +74,5 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
-    implementation 'com.google.android.gms:play-services-vision:20.1.1'
-    implementation 'com.google.android.gms:play-services-vision-common:19.1.1'
-    implementation 'com.google.android.gms:play-services-vision-image-label:18.0.5'
     implementation "com.google.firebase:firebase-ml-vision:24.1.0"
 }

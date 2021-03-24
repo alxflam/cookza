@@ -2,8 +2,8 @@ import 'package:cookza/model/entities/abstract/ingredient_note_entity.dart';
 import 'package:cookza/model/entities/mutable/mutable_ingredient.dart';
 
 class MutableIngredientNote implements IngredientNoteEntity {
-  double _amount;
-  String _uom;
+  double? _amount;
+  String? _uom;
   MutableIngredient _ingredient;
 
   MutableIngredientNote.of(IngredientNoteEntity note)
@@ -17,21 +17,21 @@ class MutableIngredientNote implements IngredientNoteEntity {
         this._ingredient = MutableIngredient.empty();
 
   @override
-  double get amount => _amount;
+  double? get amount => _amount;
 
   @override
   MutableIngredient get ingredient => _ingredient;
 
   @override
-  String get unitOfMeasure => _uom;
+  String? get unitOfMeasure => _uom;
 
-  set amount(double value) {
+  set amount(double? value) {
     if (value != null && value > 0) {
       _amount = value;
     }
   }
 
-  set unitOfMeasure(String value) {
+  set unitOfMeasure(String? value) {
     if (value != null && value.isNotEmpty) {
       this._uom = value;
     }

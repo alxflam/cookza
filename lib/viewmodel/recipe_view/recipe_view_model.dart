@@ -95,7 +95,7 @@ class RecipeViewModel extends ChangeNotifier {
     _recipe.ingredients.then((value) {
       for (var i = 0; i < value.length; i++) {
         var baseAmount = value[i].amount;
-        _ingredients[i].amount = baseAmount * ratio;
+        _ingredients[i].amount = (baseAmount ?? 1) * ratio;
         print('calculated amount is ${_ingredients[i].amount}');
       }
 

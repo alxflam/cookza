@@ -33,7 +33,7 @@ class RecipeIngredientModel extends ChangeNotifier {
 
   String get name => _note.ingredient.name;
 
-  double get amount => _note.amount;
+  double? get amount => _note.amount;
 
   IngredientEntity get ingredient => _note.ingredient;
 
@@ -41,14 +41,14 @@ class RecipeIngredientModel extends ChangeNotifier {
 
   bool get isRecipeReference => _note.ingredient.recipeReference != null;
 
-  String get unitOfMeasure => _note.unitOfMeasure;
+  String? get unitOfMeasure => _note.unitOfMeasure;
 
   String get uomDisplayText {
     var uom = this.uom;
     if (uom == null) {
       return '';
     } else {
-      return uom.getDisplayName(this.amount == null ? 1 : this.amount.toInt());
+      return uom.getDisplayName(this.amount == null ? 1 : this.amount!.toInt());
     }
   }
 
@@ -61,8 +61,10 @@ class RecipeIngredientModel extends ChangeNotifier {
   IngredientNoteEntity toIngredientNote() => _note;
 
   UnitOfMeasure? get uom {
-    if (_note.unitOfMeasure.isNotEmpty) {
-      sl.get<UnitOfMeasureProvider>().getUnitOfMeasureById(_note.unitOfMeasure);
+    if (_note.unitOfMeasure != null) {
+      sl
+          .get<UnitOfMeasureProvider>()
+          .getUnitOfMeasureById(_note.unitOfMeasure!);
     }
     return null;
   }
@@ -79,7 +81,7 @@ class RecipeIngredientModel extends ChangeNotifier {
     this.name = this._recipe!.name;
     this._note.ingredient.recipeReference = id;
     this._note.unitOfMeasure = kUoMPortion;
-    this._note.amount = this._note.amount > 0 ? this._note.amount : 1;
+    this._note.amount = (this._note.amount ?? 0) > 0 ? this._note.amount : 1;
     notifyListeners();
   }
 
@@ -88,7 +90,7 @@ class RecipeIngredientModel extends ChangeNotifier {
     this._note.ingredient.recipeReference = null;
   }
 
-  set amount(double amount) {
+  set amount(double? amount) {
     this._note.amount = amount;
   }
 

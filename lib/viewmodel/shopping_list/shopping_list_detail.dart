@@ -259,9 +259,11 @@ class ShoppingListItemModel extends ChangeNotifier {
   ShoppingListItemModel.ofEntity(ShoppingListItemEntity entity)
       : this._entity = entity as MutableShoppingListItem {
     var uomProvider = sl.get<UnitOfMeasureProvider>();
-    var uom =
-        uomProvider.getUnitOfMeasureById(entity.ingredientNote.unitOfMeasure);
-    this._uom = uom;
+    if (entity.ingredientNote.unitOfMeasure != null) {
+      var uom = uomProvider
+          .getUnitOfMeasureById(entity.ingredientNote.unitOfMeasure!);
+      this._uom = uom;
+    }
   }
 
   String get uom {
@@ -269,7 +271,8 @@ class ShoppingListItemModel extends ChangeNotifier {
     if (_uom == null) {
       return '';
     }
-    return _uom!.getDisplayName(this._entity.ingredientNote.amount.toInt());
+    return _uom!
+        .getDisplayName(this._entity.ingredientNote.amount?.toInt() ?? 1);
   }
 
   bool get isCustomItem => this._entity.isCustom;
@@ -301,8 +304,11 @@ class ShoppingListItemModel extends ChangeNotifier {
 
   void updateFrom(RecipeIngredientModel entity) {
     var uomProvider = sl.get<UnitOfMeasureProvider>();
-    var uom = uomProvider.getUnitOfMeasureById(entity.unitOfMeasure);
-    this._uom = uom;
+    this._uom = null;
+    if (entity.unitOfMeasure != null) {
+      var uom = uomProvider.getUnitOfMeasureById(entity.unitOfMeasure!);
+      this._uom = uom;
+    }
     this._entity.ingredientNote.amount = entity.amount;
     this._entity.ingredientNote.ingredient.name = entity.ingredient.name;
     notifyListeners();

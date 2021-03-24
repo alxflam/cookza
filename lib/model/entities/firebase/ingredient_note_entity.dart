@@ -19,12 +19,12 @@ class IngredientNoteEntityFirebase implements IngredientNoteEntity {
         );
 
   @override
-  double get amount => this._ingredient.amount;
+  double? get amount => this._ingredient.amount;
 
   @override
   IngredientEntity get ingredient =>
       IngredientEntityImpl.of(this._ingredient.ingredient);
 
   @override
-  String get unitOfMeasure => this._ingredient.unitOfMeasure;
+  String? get unitOfMeasure => this._ingredient.unitOfMeasure;
 }

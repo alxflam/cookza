@@ -127,8 +127,9 @@ abstract class AbstractGroupScreen extends StatelessWidget {
 
                         return ListTile(
                           leading: _getLeadingUserIcon(user, isCurrentUser),
-                          title: Text(user.name ??
-                              AppLocalizations.of(context)!.unknownUser),
+                          title: Text(user.name.isNotEmpty
+                              ? user.name
+                              : AppLocalizations.of(context)!.unknownUser),
                           subtitle: isCurrentUser
                               ? Text(AppLocalizations.of(context)!.selfUser)
                               : Text(''),

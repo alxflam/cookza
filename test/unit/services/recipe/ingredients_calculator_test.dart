@@ -96,6 +96,6 @@ void main() {
 
     expect(result.length, 2);
     expect(result.first.amount, 1500);
-    expect(result.last.amount.toStringAsPrecision(3), '3.60');
+    expect(result.last.amount!.toStringAsPrecision(3), '3.60');
   });
 }

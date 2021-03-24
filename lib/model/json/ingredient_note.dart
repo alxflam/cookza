@@ -13,9 +13,9 @@ class IngredientNote {
   @JsonKey(toJson: _toJson)
   Ingredient ingredient;
   @JsonKey(defaultValue: '')
-  String unitOfMeasure;
+  String? unitOfMeasure;
   @JsonKey()
-  double amount;
+  double? amount;
 
   IngredientNote(
       {required this.ingredient,

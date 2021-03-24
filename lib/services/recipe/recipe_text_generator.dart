@@ -36,15 +36,15 @@ class RecipeTextGeneratorImpl implements RecipeTextGenerator {
         buffer.write(ingredient.ingredient.name);
         buffer.write(' ');
 
-        if (ingredient.amount != null && ingredient.amount > 0) {
+        if ((ingredient.amount ?? 0) > 0) {
           buffer.write('(');
           buffer.write(kFormatAmount(ingredient.amount));
 
           if (ingredient.unitOfMeasure != null) {
             buffer.write(' '); // space between amount and unit
             var uom =
-                uomProvider.getUnitOfMeasureById(ingredient.unitOfMeasure);
-            buffer.write(uom != null ? uom.displayName : '');
+                uomProvider.getUnitOfMeasureById(ingredient.unitOfMeasure!);
+            buffer.write(uom.displayName);
           }
           buffer.write(')');
         }

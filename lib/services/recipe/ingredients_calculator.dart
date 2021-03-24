@@ -69,7 +69,7 @@ class IngredientsCalculatorImpl implements IngredientsCalculator {
       // if it does not exist yet, directly add it
       if (sameIngredient.isEmpty) {
         var targetNote = MutableIngredientNote.of(note);
-        var amount = note.amount * ratio;
+        var amount = (note.amount ?? 1) * ratio;
         targetNote.amount = amount;
         result.add(targetNote);
         continue;
@@ -79,7 +79,7 @@ class IngredientsCalculatorImpl implements IngredientsCalculator {
       var sameUoM = sameIngredient
           .firstWhereOrNull((e) => e.unitOfMeasure == note.unitOfMeasure);
       if (sameUoM != null) {
-        sameUoM.amount = sameUoM.amount + note.amount * ratio;
+        sameUoM.amount = (sameUoM.amount ?? 1) + (note.amount ?? 1) * ratio;
         continue;
       }
 
@@ -89,7 +89,7 @@ class IngredientsCalculatorImpl implements IngredientsCalculator {
       if (!updated) {
         // if the unit could not be coonverted, add the ingredient
         var targetNote = MutableIngredientNote.of(note);
-        var amount = note.amount * ratio;
+        var amount = (note.amount ?? 1) * ratio;
         targetNote.amount = amount;
         result.add(targetNote);
       }
@@ -101,23 +101,26 @@ class IngredientsCalculatorImpl implements IngredientsCalculator {
       UnitOfMeasureProvider uomProvider,
       IngredientNoteEntity note,
       double ratio) {
+    if (note.unitOfMeasure?.isEmpty ?? true) {
+      return false;
+    }
+
     for (var sameIngredientDiffUoM in sameIngredient) {
-      if (sameIngredientDiffUoM.unitOfMeasure.isEmpty) {
+      if (sameIngredientDiffUoM.unitOfMeasure?.isEmpty ?? true) {
         continue;
       }
-      var targetUoM =
-          uomProvider.getUnitOfMeasureById(sameIngredientDiffUoM.unitOfMeasure);
 
-      var sourceUoM = uomProvider.getUnitOfMeasureById(note.unitOfMeasure);
-
-      var convertable = sourceUoM?.canBeConvertedTo(targetUoM) ?? false;
+      var targetUoM = uomProvider
+          .getUnitOfMeasureById(sameIngredientDiffUoM.unitOfMeasure!);
+      var sourceUoM = uomProvider.getUnitOfMeasureById(note.unitOfMeasure!);
+      var convertable = sourceUoM.canBeConvertedTo(targetUoM);
 
       // if it can be converted, convert it
       if (convertable) {
         AmountedUnitOfMeasure amountedUoM =
-            AmountedUnitOfMeasure(targetUoM, sameIngredientDiffUoM.amount);
+            AmountedUnitOfMeasure(targetUoM, sameIngredientDiffUoM.amount ?? 1);
         AmountedUnitOfMeasure sourceAmountedUoM =
-            AmountedUnitOfMeasure(sourceUoM, note.amount * ratio);
+            AmountedUnitOfMeasure(sourceUoM, (note.amount ?? 1) * ratio);
 
         var calcResult = amountedUoM.add(sourceAmountedUoM);
         sameIngredientDiffUoM.amount = calcResult.amount;

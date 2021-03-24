@@ -215,11 +215,11 @@ class RecipeIngredientEditStep extends RecipeEditStep {
     notifyListeners();
   }
 
-  void setAmount(int index, double amount) {
+  void setAmount(int index, double? amount) {
     this._ingredients[index].amount = amount;
   }
 
-  void setScale(int index, String scale) {
+  void setScale(int index, String? scale) {
     this._ingredients[index].unitOfMeasure = scale;
     notifyListeners();
   }

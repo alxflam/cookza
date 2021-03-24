@@ -140,15 +140,13 @@ List<DataRow> _getIngredientRows(
               onPressed: () async {
                 var result = await Navigator.pushNamed(
                         context, NewIngredientScreen.id, arguments: item)
-                    as RecipeIngredientModel;
-                if (result != null) {
-                  if (!result.isDeleted) {
-                    model.setAmount(i, result.amount);
-                    model.setIngredient(i, result.ingredient);
-                    model.setScale(i, result.unitOfMeasure);
-                  } else {
-                    model.removeIngredient(i);
-                  }
+                    as RecipeIngredientModel?;
+                if (result != null && !result.isDeleted) {
+                  model.setAmount(i, result.amount);
+                  model.setIngredient(i, result.ingredient);
+                  model.setScale(i, result.unitOfMeasure);
+                } else {
+                  model.removeIngredient(i);
                 }
               },
             ),

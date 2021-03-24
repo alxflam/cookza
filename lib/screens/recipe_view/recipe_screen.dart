@@ -56,7 +56,7 @@ class RecipeScreen extends StatelessWidget {
 
             return Scaffold(
               appBar: AppBar(
-                title: Text(model.name ?? ''),
+                title: Text(model.name),
                 actions: <Widget>[
                   PopupMenuButton(
                     itemBuilder: (context) {
