@@ -9,12 +9,11 @@ class FirebaseMealPlanRecipe {
   @JsonKey()
   String name;
   @JsonKey()
-  String id;
+  String? id;
   @JsonKey()
-  int servings;
+  int? servings;
 
-  FirebaseMealPlanRecipe(
-      {required this.name, required this.id, required this.servings});
+  FirebaseMealPlanRecipe({required this.name, this.id, this.servings});
 
   factory FirebaseMealPlanRecipe.fromJson(Map<String, dynamic> json) {
     return _$FirebaseMealPlanRecipeFromJson(json);
@@ -22,7 +21,7 @@ class FirebaseMealPlanRecipe {
 
   factory FirebaseMealPlanRecipe.from(MealPlanRecipeEntity entity) {
     return FirebaseMealPlanRecipe(
-        name: entity.name, id: entity.id!, servings: entity.servings);
+        name: entity.name, id: entity.id, servings: entity.servings);
   }
 
   Map<String, dynamic> toJson() => _$FirebaseMealPlanRecipeToJson(this);

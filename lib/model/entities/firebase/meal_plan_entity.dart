@@ -21,7 +21,7 @@ class MealPlanDateEntityFirebase implements MealPlanDateEntity {
 class MealPlanRecipeEntityFirebase implements MealPlanRecipeEntity {
   final String? _id;
   final String _name;
-  final int _servings;
+  final int? _servings;
 
   MealPlanRecipeEntityFirebase.of(FirebaseMealPlanRecipe item)
       : this._id = item.id,
@@ -35,7 +35,7 @@ class MealPlanRecipeEntityFirebase implements MealPlanRecipeEntity {
   String get name => this._name;
 
   @override
-  int get servings => this._servings;
+  int? get servings => this._servings;
 
   @override
   bool get isNote => this._id == null || this._id!.isEmpty;

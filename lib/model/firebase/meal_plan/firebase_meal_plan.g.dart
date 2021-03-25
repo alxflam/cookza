@@ -10,18 +10,27 @@ FirebaseMealPlanRecipe _$FirebaseMealPlanRecipeFromJson(
     Map<String, dynamic> json) {
   return FirebaseMealPlanRecipe(
     name: json['name'] as String,
-    id: json['id'] as String,
-    servings: json['servings'] as int,
+    id: json['id'] as String?,
+    servings: json['servings'] as int?,
   );
 }
 
 Map<String, dynamic> _$FirebaseMealPlanRecipeToJson(
-        FirebaseMealPlanRecipe instance) =>
-    <String, dynamic>{
-      'name': instance.name,
-      'id': instance.id,
-      'servings': instance.servings,
-    };
+    FirebaseMealPlanRecipe instance) {
+  final val = <String, dynamic>{
+    'name': instance.name,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('id', instance.id);
+  writeNotNull('servings', instance.servings);
+  return val;
+}
 
 FirebaseMealPlanDate _$FirebaseMealPlanDateFromJson(Map<String, dynamic> json) {
   return FirebaseMealPlanDate(

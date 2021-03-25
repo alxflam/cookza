@@ -27,10 +27,10 @@ class MealPlanRecipeModel with ChangeNotifier {
 
   String get name => _entity.name;
   String? get id => _entity.id;
-  int get servings => _entity.servings;
+  int? get servings => _entity.servings;
   MealPlanRecipeEntity get entity => _entity;
 
-  set servings(int value) {
+  set servings(int? value) {
     _entity.servings = value;
     notifyListeners();
   }
@@ -53,7 +53,7 @@ class MealPlanViewModel extends ChangeNotifier {
     var targetWeeks = sl.get<SharedPreferencesProvider>().getMealPlanWeeks();
     // create a mutable meal plan model
     _mealPlan = MutableMealPlan.of(
-        plan.id!, plan.groupID, plan.items, targetWeeks,
+        plan.id, plan.groupID, plan.items, targetWeeks,
         startDate: startDate ?? DateTime.now());
   }
 

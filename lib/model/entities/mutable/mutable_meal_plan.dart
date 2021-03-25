@@ -9,7 +9,7 @@ class MutableMealPlan implements MealPlanEntity {
   final String _groupID;
 
   MutableMealPlan.of(
-      String id, String groupID, List<MealPlanDateEntity> items, int weeks,
+      String? id, String groupID, List<MealPlanDateEntity> items, int weeks,
       {DateTime? startDate})
       : this._id = id,
         this._groupID = groupID {
@@ -120,7 +120,7 @@ class MutableMealPlanRecipeEntity implements MealPlanRecipeEntity {
 
   String _name;
 
-  int _servings;
+  int? _servings;
 
   MutableMealPlanRecipeEntity.fromValues(this._id, this._name, this._servings);
 
@@ -136,9 +136,9 @@ class MutableMealPlanRecipeEntity implements MealPlanRecipeEntity {
   String get name => this._name;
 
   @override
-  int get servings => this._servings;
+  int? get servings => this._servings;
 
-  set servings(int value) => this._servings = value;
+  set servings(int? value) => this._servings = value;
 
   set name(String value) {
     assert(isNote);

@@ -9,8 +9,8 @@ part of 'firebase_ingredient.dart';
 FirebaseIngredient _$FirebaseIngredientFromJson(Map<String, dynamic> json) {
   return FirebaseIngredient(
     ingredient: Ingredient.fromJson(json['ingredient'] as Map<String, dynamic>),
-    unitOfMeasure: json['unitOfMeasure'] as String? ?? '',
     amount: (json['amount'] as num?)?.toDouble(),
+    unitOfMeasure: json['unitOfMeasure'] as String? ?? '',
   );
 }
 

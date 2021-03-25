@@ -7,7 +7,7 @@ abstract class MealPlanDateEntity {
 abstract class MealPlanRecipeEntity {
   String get name;
   String? get id;
-  int get servings;
+  int? get servings;
   bool get isNote;
 }
 

@@ -44,18 +44,18 @@ class RecipeItemDialog extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              Text(AppLocalizations.of(context)!.servings(model.servings)),
+              Text(AppLocalizations.of(context)!.servings(model.servings ?? 1)),
               RoundIconButton(
                 icon: FontAwesomeIcons.minus,
                 onPress: () {
-                  model.servings = model.servings - 1;
+                  model.servings = model.servings! - 1;
                 },
               ),
               Text(model.servings.toString()),
               RoundIconButton(
                 icon: FontAwesomeIcons.plus,
                 onPress: () {
-                  model.servings = model.servings + 1;
+                  model.servings = model.servings! + 1;
                 },
               ),
             ],

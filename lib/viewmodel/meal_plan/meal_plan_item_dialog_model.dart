@@ -2,7 +2,7 @@ import 'package:cookza/viewmodel/meal_plan/recipe_meal_plan_model.dart';
 import 'package:flutter/material.dart';
 
 class MealPlanItemDialogModel with ChangeNotifier {
-  int _servings;
+  int? _servings;
   String _name;
   final bool _isNote;
   bool _deleted = false;
@@ -16,13 +16,12 @@ class MealPlanItemDialogModel with ChangeNotifier {
         this._isNote = model.isNote;
 
   MealPlanItemDialogModel.createNote()
-      : this._servings = 0,
-        this._name = '',
+      : this._name = '',
         this._isNote = true;
 
   bool get isNote => _isNote;
   String get name => _name;
-  int get servings => _servings;
+  int? get servings => _servings;
   bool get isDeleted => _deleted;
   bool get hasChanged => _changed;
 
@@ -30,8 +29,8 @@ class MealPlanItemDialogModel with ChangeNotifier {
     this._name = value;
   }
 
-  set servings(int value) {
-    if (value > 0 && value < 20) {
+  set servings(int? value) {
+    if (value != null && value > 0 && value < 20) {
       this._servings = value;
       notifyListeners();
     }

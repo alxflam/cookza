@@ -41,7 +41,7 @@ class MealPlanManagerFirebase implements MealPlanManager {
       return Future.value(null);
     }
     var result = await sl.get<FirebaseProvider>().mealPlan(currentCollection!);
-    documentID = result.id!;
+    documentID = result.id;
     return result;
   }
 
