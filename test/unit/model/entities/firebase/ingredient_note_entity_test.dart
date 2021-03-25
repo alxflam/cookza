@@ -12,8 +12,8 @@ void main() {
       ingredient.ingredient.name = name;
       var cut = IngredientNoteEntityFirebase.of(ingredient);
       expect(cut.ingredient.isRecipeReference, false);
-      expect(cut.amount, 0.0);
-      expect(cut.unitOfMeasure!.isEmpty, true);
+      expect(cut.amount, null);
+      expect(cut.unitOfMeasure, null);
     },
   );
 
@@ -26,8 +26,8 @@ void main() {
       var cut = IngredientNoteEntityFirebase.of(ingredient);
       expect(cut.ingredient.isRecipeReference, true);
       expect(cut.ingredient.recipeReference, 'ABCD');
-      expect(cut.amount, 0.0);
-      expect(cut.unitOfMeasure!.isEmpty, true);
+      expect(cut.amount, null);
+      expect(cut.unitOfMeasure, null);
     },
   );
 
@@ -69,8 +69,8 @@ void main() {
       var ingredientEntity = IngredientNoteEntityFirebase.of(ingredient);
       var cut = IngredientNoteEntityFirebase.copy(ingredientEntity);
       expect(cut.ingredient.isRecipeReference, false);
-      expect(cut.amount, 0.0);
-      expect(cut.unitOfMeasure!.isEmpty, true);
+      expect(cut.amount, null);
+      expect(cut.unitOfMeasure, null);
     },
   );
 

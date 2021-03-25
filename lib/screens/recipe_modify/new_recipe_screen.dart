@@ -155,43 +155,23 @@ class NewRecipeStepper extends StatelessWidget {
 
   ControlsWidgetBuilder getControlsBuilder() {
     return (context, {onStepCancel, onStepContinue}) {
-      final ThemeData themeData = Theme.of(context);
       final MaterialLocalizations localizations =
           MaterialLocalizations.of(context);
-      Color cancelColor = Colors.black54;
 
-      var brightness = Theme.of(context).brightness;
-      if (brightness == Brightness.dark) {
-        cancelColor = Colors.white70;
-      }
-
-      var nextButton = FlatButton(
-        onPressed: () {
-          nextButtonPressed(context);
-        },
-        color: Theme.of(context).brightness == Brightness.dark
-            ? themeData.backgroundColor
-            : themeData.primaryColor,
-        textColor: Colors.white,
-        textTheme: ButtonTextTheme.normal,
+      var nextButton = ElevatedButton(
+        onPressed: () => nextButtonPressed(context),
         child: Text(localizations.continueButtonLabel),
       );
 
-      var cancelButton = Container(
-        margin: EdgeInsetsDirectional.only(start: 8.0),
-        child: FlatButton(
-          onPressed: () {
-            cancelButtonPressed(context);
-          },
-          textColor: cancelColor,
-          textTheme: ButtonTextTheme.normal,
-          child: Text(localizations.cancelButtonLabel),
-        ),
+      var cancelButton = ElevatedButton(
+        onPressed: () => cancelButtonPressed(context),
+        style: kRaisedGreyButtonStyle,
+        child: Text(localizations.cancelButtonLabel),
       );
 
       var ocrButton = Container(
         margin: EdgeInsetsDirectional.only(start: 8.0),
-        child: FlatButton(
+        child: TextButton(
             onPressed: () async {
               var model = Provider.of<RecipeEditModel>(context, listen: false);
 
@@ -216,12 +196,13 @@ class NewRecipeStepper extends StatelessWidget {
                 model.applyCurrentStep(result);
               }
             },
-            textColor: cancelColor,
-            textTheme: ButtonTextTheme.normal,
+            // textColor: cancelColor,
+            // textTheme: ButtonTextTheme.normal,
             child: Icon(Icons.image)),
       );
 
       var buttonRow = Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[],
       );
 

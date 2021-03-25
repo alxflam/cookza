@@ -9,8 +9,8 @@ void main() {
       var cut = MutableIngredientNote.empty();
 
       expect(cut.ingredient, isNotNull);
-      expect(cut.amount, 0);
-      expect(cut.unitOfMeasure, '');
+      expect(cut.amount, null);
+      expect(cut.unitOfMeasure, null);
     },
   );
 

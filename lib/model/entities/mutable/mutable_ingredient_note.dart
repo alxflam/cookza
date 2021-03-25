@@ -11,10 +11,7 @@ class MutableIngredientNote implements IngredientNoteEntity {
         this._uom = note.unitOfMeasure,
         this._ingredient = MutableIngredient.of(note.ingredient);
 
-  MutableIngredientNote.empty()
-      : this._amount = 0,
-        this._uom = null,
-        this._ingredient = MutableIngredient.empty();
+  MutableIngredientNote.empty() : this._ingredient = MutableIngredient.empty();
 
   @override
   double? get amount => _amount;

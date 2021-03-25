@@ -23,19 +23,16 @@ class ShoppingListModel extends ChangeNotifier {
       sl.get<SharedPreferencesProvider>().getMealPlanWeeks() * 7;
 
   final DateTime _lastDate;
-  final DateTime _firstDate;
 
   final List<MutableShoppingListItem> _items = [];
   bool _initalized = false;
 
   ShoppingListModel.from(ShoppingListEntity listEntity)
       : this._listEntity = MutableShoppingList.of(listEntity),
-        _firstDate = DateTime.now(),
         _lastDate = DateTime.now().add(Duration(days: _shoppingListDays));
 
   ShoppingListModel.empty({String? groupID})
-      : this._firstDate = DateTime.now(),
-        this._lastDate = DateTime.now().add(Duration(days: _shoppingListDays)) {
+      : this._lastDate = DateTime.now().add(Duration(days: _shoppingListDays)) {
     this._listEntity = MutableShoppingList.newList(
         groupID ?? '', DateTime.now(), initialEndDate);
   }
