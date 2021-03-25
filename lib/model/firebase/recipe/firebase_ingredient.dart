@@ -18,15 +18,13 @@ class FirebaseIngredient {
   @JsonKey()
   double? amount;
 
-  FirebaseIngredient(
-      {required this.ingredient,
-      required this.unitOfMeasure,
-      required this.amount});
+  FirebaseIngredient({
+    required this.ingredient,
+    this.amount,
+    this.unitOfMeasure,
+  });
 
-  FirebaseIngredient.create()
-      : this.ingredient = Ingredient(name: ''),
-        this.amount = 0,
-        this.unitOfMeasure = '';
+  FirebaseIngredient.create() : this.ingredient = Ingredient(name: '');
 
   factory FirebaseIngredient.fromJson(Map<String, dynamic> json) {
     var instance = _$FirebaseIngredientFromJson(json);

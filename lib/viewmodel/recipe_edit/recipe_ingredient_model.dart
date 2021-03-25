@@ -61,8 +61,8 @@ class RecipeIngredientModel extends ChangeNotifier {
   IngredientNoteEntity toIngredientNote() => _note;
 
   UnitOfMeasure? get uom {
-    if (_note.unitOfMeasure != null) {
-      sl
+    if (_note.unitOfMeasure != null && _note.unitOfMeasure!.isNotEmpty) {
+      return sl
           .get<UnitOfMeasureProvider>()
           .getUnitOfMeasureById(_note.unitOfMeasure!);
     }

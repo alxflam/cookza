@@ -13,7 +13,7 @@ class MutableIngredientNote implements IngredientNoteEntity {
 
   MutableIngredientNote.empty()
       : this._amount = 0,
-        this._uom = '',
+        this._uom = null,
         this._ingredient = MutableIngredient.empty();
 
   @override
