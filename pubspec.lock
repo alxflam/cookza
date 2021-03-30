@@ -307,7 +307,7 @@ packages:
     description:
       path: "packages/firebase_ml_vision"
       ref: HEAD
-      resolved-ref: "10a1704f338f24a4583efc35d9e094b21eb50eff"
+      resolved-ref: "0ddc0d56369fba1410fa8b3179b3f7c4157206ca"
       url: "git://github.com/alex0711/flutterfire.git"
     source: git
     version: "1.0.0"

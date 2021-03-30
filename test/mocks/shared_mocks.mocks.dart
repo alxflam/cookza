@@ -3,10 +3,13 @@
 // Do not manually edit this file.
 
 import 'dart:async' as _i11;
+import 'dart:collection' as _i19;
 import 'dart:io' as _i2;
-import 'dart:typed_data' as _i21;
+import 'dart:typed_data' as _i24;
 
-import 'package:cloud_firestore/cloud_firestore.dart' as _i22;
+import 'package:cloud_firestore/cloud_firestore.dart' as _i25;
+import 'package:cookza/model/entities/abstract/ingredient_note_entity.dart'
+    as _i20;
 import 'package:cookza/model/entities/abstract/meal_plan_collection_entity.dart'
     as _i6;
 import 'package:cookza/model/entities/abstract/meal_plan_entity.dart' as _i5;
@@ -17,27 +20,28 @@ import 'package:cookza/model/entities/abstract/shopping_list_entity.dart'
     as _i4;
 import 'package:cookza/model/entities/abstract/user_entity.dart' as _i16;
 import 'package:cookza/model/entities/firebase/ingredient_note_entity.dart'
-    as _i25;
-import 'package:cookza/model/entities/firebase/instruction_entity.dart' as _i26;
+    as _i28;
+import 'package:cookza/model/entities/firebase/instruction_entity.dart' as _i29;
 import 'package:cookza/model/entities/firebase/meal_plan_collection_entity.dart'
     as _i7;
 import 'package:cookza/model/entities/mutable/mutable_shopping_list_item.dart'
     as _i12;
-import 'package:cookza/model/firebase/general/firebase_handshake.dart' as _i24;
+import 'package:cookza/model/firebase/general/firebase_handshake.dart' as _i27;
 import 'package:cookza/services/firebase_provider.dart' as _i8;
-import 'package:cookza/services/image_parser.dart' as _i27;
+import 'package:cookza/services/image_parser.dart' as _i30;
 import 'package:cookza/services/local_storage.dart' as _i13;
-import 'package:cookza/services/meal_plan_manager.dart' as _i19;
-import 'package:cookza/services/recipe/image_manager.dart' as _i20;
+import 'package:cookza/services/meal_plan_manager.dart' as _i22;
+import 'package:cookza/services/recipe/image_manager.dart' as _i23;
 import 'package:cookza/services/recipe/recipe_manager.dart' as _i14;
+import 'package:cookza/services/recipe/similarity_service.dart' as _i18;
 import 'package:cookza/services/shopping_list/shopping_list_items_generator.dart'
     as _i10;
 import 'package:cookza/services/shopping_list/shopping_list_manager.dart'
     as _i17;
 import 'package:cookza/viewmodel/recipe_edit/recipe_edit_step.dart' as _i9;
-import 'package:firebase_ml_vision/firebase_ml_vision.dart' as _i28;
-import 'package:flutter/src/widgets/framework.dart' as _i23;
-import 'package:flutter/src/widgets/navigator.dart' as _i18;
+import 'package:firebase_ml_vision/firebase_ml_vision.dart' as _i31;
+import 'package:flutter/src/widgets/framework.dart' as _i26;
+import 'package:flutter/src/widgets/navigator.dart' as _i21;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: comment_references
@@ -270,27 +274,58 @@ class MockStackTrace extends _i1.Mock implements StackTrace {
           as String);
 }
 
+/// A class which mocks [SimilarityService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockSimilarityService extends _i1.Mock implements _i18.SimilarityService {
+  MockSimilarityService() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i11.Future<List<_i15.RecipeEntity>> getSimilarRecipes(
+          _i15.RecipeEntity? sourceRecipe) =>
+      (super.noSuchMethod(Invocation.method(#getSimilarRecipes, [sourceRecipe]),
+              returnValue: Future.value(<_i15.RecipeEntity>[]))
+          as _i11.Future<List<_i15.RecipeEntity>>);
+  @override
+  bool containsIngredient(
+          _i19.UnmodifiableListView<_i20.IngredientNoteEntity>? ingredients,
+          String? targetIngredient) =>
+      (super.noSuchMethod(
+          Invocation.method(
+              #containsIngredient, [ingredients, targetIngredient]),
+          returnValue: false) as bool);
+  @override
+  _i11.Future<List<_i15.RecipeEntity>> getRecipesContaining(
+          List<String>? targetIngredients) =>
+      (super.noSuchMethod(
+              Invocation.method(#getRecipesContaining, [targetIngredients]),
+              returnValue: Future.value(<_i15.RecipeEntity>[]))
+          as _i11.Future<List<_i15.RecipeEntity>>);
+}
+
 /// A class which mocks [NavigatorObserver].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockNavigatorObserver extends _i1.Mock implements _i18.NavigatorObserver {
+class MockNavigatorObserver extends _i1.Mock implements _i21.NavigatorObserver {
   @override
   void didPush(
-          _i18.Route<dynamic>? route, _i18.Route<dynamic>? previousRoute) =>
+          _i21.Route<dynamic>? route, _i21.Route<dynamic>? previousRoute) =>
       super.noSuchMethod(Invocation.method(#didPush, [route, previousRoute]),
           returnValueForMissingStub: null);
   @override
-  void didPop(_i18.Route<dynamic>? route, _i18.Route<dynamic>? previousRoute) =>
+  void didPop(_i21.Route<dynamic>? route, _i21.Route<dynamic>? previousRoute) =>
       super.noSuchMethod(Invocation.method(#didPop, [route, previousRoute]),
           returnValueForMissingStub: null);
   @override
   void didRemove(
-          _i18.Route<dynamic>? route, _i18.Route<dynamic>? previousRoute) =>
+          _i21.Route<dynamic>? route, _i21.Route<dynamic>? previousRoute) =>
       super.noSuchMethod(Invocation.method(#didRemove, [route, previousRoute]),
           returnValueForMissingStub: null);
   @override
   void didStartUserGesture(
-          _i18.Route<dynamic>? route, _i18.Route<dynamic>? previousRoute) =>
+          _i21.Route<dynamic>? route, _i21.Route<dynamic>? previousRoute) =>
       super.noSuchMethod(
           Invocation.method(#didStartUserGesture, [route, previousRoute]),
           returnValueForMissingStub: null);
@@ -299,7 +334,7 @@ class MockNavigatorObserver extends _i1.Mock implements _i18.NavigatorObserver {
 /// A class which mocks [MealPlanManager].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockMealPlanManager extends _i1.Mock implements _i19.MealPlanManager {
+class MockMealPlanManager extends _i1.Mock implements _i22.MealPlanManager {
   @override
   _i11.Future<_i5.MealPlanEntity> get mealPlan =>
       (super.noSuchMethod(Invocation.getter(#mealPlan),
@@ -372,7 +407,7 @@ class MockMealPlanManager extends _i1.Mock implements _i19.MealPlanManager {
 /// A class which mocks [ImageManager].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockImageManager extends _i1.Mock implements _i20.ImageManager {
+class MockImageManager extends _i1.Mock implements _i23.ImageManager {
   @override
   _i11.Future<void> uploadRecipeImage(String? recipeId, _i2.File? file) =>
       (super.noSuchMethod(
@@ -381,7 +416,7 @@ class MockImageManager extends _i1.Mock implements _i20.ImageManager {
           returnValueForMissingStub: Future.value()) as _i11.Future<void>);
   @override
   _i11.Future<void> uploadRecipeImageFromBytes(
-          String? recipeId, _i21.Uint8List? bytes) =>
+          String? recipeId, _i24.Uint8List? bytes) =>
       (super.noSuchMethod(
           Invocation.method(#uploadRecipeImageFromBytes, [recipeId, bytes]),
           returnValue: Future.value(null),
@@ -439,12 +474,12 @@ class MockFirebaseProvider extends _i1.Mock implements _i8.FirebaseProvider {
       (super.noSuchMethod(Invocation.getter(#userUid), returnValue: '')
           as String);
   @override
-  _i11.Future<List<_i22.QueryDocumentSnapshot>> getShoppingListsByMealPlan(
+  _i11.Future<List<_i25.QueryDocumentSnapshot>> getShoppingListsByMealPlan(
           String? mealPlan) =>
       (super.noSuchMethod(
               Invocation.method(#getShoppingListsByMealPlan, [mealPlan]),
-              returnValue: Future.value(<_i22.QueryDocumentSnapshot>[]))
-          as _i11.Future<List<_i22.QueryDocumentSnapshot>>);
+              returnValue: Future.value(<_i25.QueryDocumentSnapshot>[]))
+          as _i11.Future<List<_i25.QueryDocumentSnapshot>>);
   @override
   _i11.Future<_i7.MealPlanCollectionEntityFirebase> createMealPlanGroup(
           String? name) =>
@@ -471,7 +506,7 @@ class MockFirebaseProvider extends _i1.Mock implements _i8.FirebaseProvider {
           as _i11.Future<_i8.FirebaseProvider>);
   @override
   _i11.Future<String> initializeWebLogin(
-          _i8.OnAcceptWebLogin? onLoginAccepted, _i23.BuildContext? context) =>
+          _i8.OnAcceptWebLogin? onLoginAccepted, _i26.BuildContext? context) =>
       (super.noSuchMethod(
           Invocation.method(#initializeWebLogin, [onLoginAccepted, context]),
           returnValue: Future.value('')) as _i11.Future<String>);
@@ -480,10 +515,10 @@ class MockFirebaseProvider extends _i1.Mock implements _i8.FirebaseProvider {
       super.noSuchMethod(Invocation.method(#enableWebLoginFor, [documentID]),
           returnValueForMissingStub: null);
   @override
-  _i11.Stream<List<_i24.FirebaseHandshake>> webAppSessions() =>
+  _i11.Stream<List<_i27.FirebaseHandshake>> webAppSessions() =>
       (super.noSuchMethod(Invocation.method(#webAppSessions, []),
-              returnValue: Stream<List<_i24.FirebaseHandshake>>.empty())
-          as _i11.Stream<List<_i24.FirebaseHandshake>>);
+              returnValue: Stream<List<_i27.FirebaseHandshake>>.empty())
+          as _i11.Stream<List<_i27.FirebaseHandshake>>);
   @override
   _i11.Future<void> logOffFromWebClient(String? requestor) =>
       (super.noSuchMethod(Invocation.method(#logOffFromWebClient, [requestor]),
@@ -572,12 +607,12 @@ class MockFirebaseProvider extends _i1.Mock implements _i8.FirebaseProvider {
       Invocation.method(#getNextRecipeDocumentId, [recipeGroup]),
       returnValue: '') as String);
   @override
-  _i11.Future<List<_i25.IngredientNoteEntityFirebase>> recipeIngredients(
+  _i11.Future<List<_i28.IngredientNoteEntityFirebase>> recipeIngredients(
           String? recipeGroup, String? recipeID) =>
       (super.noSuchMethod(
               Invocation.method(#recipeIngredients, [recipeGroup, recipeID]),
-              returnValue: Future.value(<_i25.IngredientNoteEntityFirebase>[]))
-          as _i11.Future<List<_i25.IngredientNoteEntityFirebase>>);
+              returnValue: Future.value(<_i28.IngredientNoteEntityFirebase>[]))
+          as _i11.Future<List<_i28.IngredientNoteEntityFirebase>>);
   @override
   _i11.Future<List<_i15.RecipeEntity>> getAllRecipes() =>
       (super.noSuchMethod(Invocation.method(#getAllRecipes, []),
@@ -589,12 +624,12 @@ class MockFirebaseProvider extends _i1.Mock implements _i8.FirebaseProvider {
               returnValue: Future.value(<_i15.RecipeEntity>[]))
           as _i11.Future<List<_i15.RecipeEntity>>);
   @override
-  _i11.Future<List<_i26.InstructionEntityFirebase>> recipeInstructions(
+  _i11.Future<List<_i29.InstructionEntityFirebase>> recipeInstructions(
           String? recipeGroup, String? recipeID) =>
       (super.noSuchMethod(
               Invocation.method(#recipeInstructions, [recipeGroup, recipeID]),
-              returnValue: Future.value(<_i26.InstructionEntityFirebase>[]))
-          as _i11.Future<List<_i26.InstructionEntityFirebase>>);
+              returnValue: Future.value(<_i29.InstructionEntityFirebase>[]))
+          as _i11.Future<List<_i29.InstructionEntityFirebase>>);
   @override
   _i11.Future<void> updateRating(_i15.RecipeEntity? recipe, int? rating) =>
       (super.noSuchMethod(Invocation.method(#updateRating, [recipe, rating]),
@@ -667,7 +702,7 @@ class MockFirebaseProvider extends _i1.Mock implements _i8.FirebaseProvider {
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockImageTextExtractor extends _i1.Mock
-    implements _i27.ImageTextExtractor {
+    implements _i30.ImageTextExtractor {
   @override
   _i11.Future<_i9.RecipeOverviewEditStep> processOverviewImage(
           _i2.File? file) =>
@@ -688,21 +723,21 @@ class MockImageTextExtractor extends _i1.Mock
           as _i11.Future<_i9.RecipeInstructionEditStep>);
   @override
   _i9.RecipeOverviewEditStep processOverviewImageFromText(
-          _i28.VisionText? text) =>
+          _i31.VisionText? text) =>
       (super.noSuchMethod(
               Invocation.method(#processOverviewImageFromText, [text]),
               returnValue: _FakeRecipeOverviewEditStep())
           as _i9.RecipeOverviewEditStep);
   @override
   _i9.RecipeIngredientEditStep processIngredientsImageFromText(
-          _i28.VisionText? text) =>
+          _i31.VisionText? text) =>
       (super.noSuchMethod(
               Invocation.method(#processIngredientsImageFromText, [text]),
               returnValue: _FakeRecipeIngredientEditStep())
           as _i9.RecipeIngredientEditStep);
   @override
   _i9.RecipeInstructionEditStep processInstructionsImageFromText(
-          _i28.VisionText? text) =>
+          _i31.VisionText? text) =>
       (super.noSuchMethod(
               Invocation.method(#processInstructionsImageFromText, [text]),
               returnValue: _FakeRecipeInstructionEditStep())

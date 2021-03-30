@@ -4,6 +4,7 @@ import 'package:cookza/services/local_storage.dart';
 import 'package:cookza/services/meal_plan_manager.dart';
 import 'package:cookza/services/recipe/image_manager.dart';
 import 'package:cookza/services/recipe/recipe_manager.dart';
+import 'package:cookza/services/recipe/similarity_service.dart';
 import 'package:cookza/services/shopping_list/shopping_list_items_generator.dart';
 import 'package:cookza/services/shopping_list/shopping_list_manager.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,8 @@ import 'package:mockito/annotations.dart';
   StorageProvider,
   RecipeManager,
   ShoppingListManager,
-  StackTrace
+  StackTrace,
+  SimilarityService
 ], customMocks: [
   MockSpec<NavigatorObserver>(returnNullOnMissingStub: true),
   MockSpec<MealPlanManager>(returnNullOnMissingStub: true),

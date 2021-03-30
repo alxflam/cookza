@@ -1,6 +1,7 @@
 import 'package:cookza/components/main_app_drawer.dart';
 import 'package:cookza/routes.dart';
 import 'package:cookza/screens/collections/share_account_screen.dart';
+import 'package:cookza/screens/leftovers_screen.dart';
 import 'package:cookza/screens/meal_plan/meal_plan_screen.dart';
 import 'package:cookza/screens/recipe_list_screen.dart';
 import 'package:cookza/screens/recipe_modify/new_recipe_screen.dart';
@@ -71,6 +72,10 @@ void main() {
 
   testWidgets('Web Login tile exists', (WidgetTester tester) async {
     await testTile(tester, 'Cookza Web', WebLoginOnAppScreen);
+  });
+
+  testWidgets('Leftovers tile exists', (WidgetTester tester) async {
+    await testTile(tester, 'Leftover Reuse', LeftoversScreen);
   });
 }
 

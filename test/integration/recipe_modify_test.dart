@@ -56,7 +56,6 @@ void main() {
   });
 
   testWidgets('Modify a recipe', (WidgetTester tester) async {
-    await setupApplication(tester);
     var originalRecipeName = 'My awesome recipe';
 
     /// create the recipe
@@ -277,17 +276,4 @@ Future<void> _inputFormField(
   await tester.testTextInput.receiveAction(TextInputAction.done);
   await tester.pumpAndSettle();
   expect(find.text(value), findsOneWidget);
-}
-
-Future<void> setupApplication(WidgetTester tester) async {
-  await tester.pumpWidget(MaterialApp(
-    routes: kRoutes,
-    localizationsDelegates: [
-      AppLocalizations.delegate,
-    ],
-    home: ChangeNotifierProvider<ThemeModel>(
-      create: (context) => ThemeModel(),
-      child: HomeScreen(),
-    ),
-  ));
 }

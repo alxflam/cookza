@@ -84,7 +84,7 @@ class _LiveCameraScannerScreenState extends State<LiveCameraScannerScreen> {
     _camera!.startImageStream((CameraImage image) {
       if (_isDetecting || _mode != SelectionMode.liveCamera) return;
 
-      if (!_isDetecting) {
+      if (!_isDetecting && !this._popped) {
         setState(() {
           // force refresh, now the camera has been initialized and the live preview should be shown
         });
@@ -99,7 +99,9 @@ class _LiveCameraScannerScreenState extends State<LiveCameraScannerScreen> {
         (List<Barcode> results) {
           // only call set state if detected qrCode changed
           bool _setState = false;
-          if (_scanResults.isEmpty && results.isNotEmpty) {
+          if (results.isEmpty) {
+            // do nothing
+          } else if (results.isNotEmpty && _scanResults.isEmpty) {
             _setState = true;
           } else if (_scanResults.first.rawValue != results.first.rawValue &&
               results.isNotEmpty) {

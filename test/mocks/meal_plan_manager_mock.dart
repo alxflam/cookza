@@ -1,6 +1,7 @@
 import 'package:cookza/model/entities/abstract/meal_plan_collection_entity.dart';
 import 'package:cookza/model/entities/abstract/meal_plan_entity.dart';
 import 'package:cookza/model/entities/firebase/meal_plan_collection_entity.dart';
+import 'package:cookza/model/entities/mutable/mutable_meal_plan.dart';
 import 'package:cookza/model/firebase/collections/firebase_meal_plan_collection.dart';
 import 'package:cookza/services/meal_plan_manager.dart';
 import 'package:mockito/mockito.dart';
@@ -18,7 +19,9 @@ class MealPlanManagerMock extends Mock implements MealPlanManager {
 
   @override
   Future<MealPlanEntity> getMealPlanByCollectionID(String id) {
-    return Future.value(this._mealPlans[id]);
+    // if the meal plan for the given id does not exist, create it (same behavior as actual firebase implementation)
+    return Future.value(
+        this._mealPlans[id] ?? MutableMealPlan.of(id, 'id', [], 2));
   }
 
   void addMealPlan(String group, MealPlanEntity entity) {

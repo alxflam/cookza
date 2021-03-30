@@ -1,11 +1,14 @@
+import 'package:cookza/constants.dart';
 import 'package:cookza/routes.dart';
 import 'package:cookza/screens/settings/about_screen.dart';
 import 'package:cookza/screens/settings/changelog_screen.dart';
+import 'package:cookza/screens/settings/error_log_screen.dart';
 import 'package:cookza/screens/settings/onboarding_screen.dart';
 import 'package:cookza/screens/settings/saved_images_screen.dart';
 import 'package:cookza/services/shared_preferences_provider.dart';
 import 'package:cookza/viewmodel/settings/theme_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mockito/mockito.dart';
@@ -16,9 +19,20 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../mocks/shared_mocks.mocks.dart';
 
 void main() {
-  var observer = MockNavigatorObserver();
-
   setUpAll(() {
+    const MethodChannel('plugins.flutter.io/package_info')
+        .setMockMethodCallHandler((MethodCall methodCall) async {
+      if (methodCall.method == 'getAll') {
+        return <String, dynamic>{
+          'appName': kAppName,
+          'packageName': 'test',
+          'version': '0.42.0',
+          'buildNumber': '42'
+        };
+      }
+      return null;
+    });
+
     SharedPreferences.setMockInitialValues({});
     GetIt.I.registerSingletonAsync<SharedPreferencesProvider>(
         () async => SharedPreferencesProviderImpl().init());
@@ -26,6 +40,7 @@ void main() {
 
   testWidgets('Onboarding tile exists', (WidgetTester tester) async {
     // open fake app
+    final observer = MockNavigatorObserver();
     await _initApp(tester, observer);
 
     var tile = find.text('Get Started');
@@ -40,6 +55,7 @@ void main() {
 
   testWidgets('Copyright notice exists', (WidgetTester tester) async {
     // open fake app
+    final observer = MockNavigatorObserver();
     await _initApp(tester, observer);
 
     var tile = find.text('© 2020 The Great Cookza Foundation');
@@ -48,6 +64,7 @@ void main() {
 
   testWidgets('Changelog tile exists', (WidgetTester tester) async {
     // open fake app
+    final observer = MockNavigatorObserver();
     await _initApp(tester, observer);
 
     var tile = find.text('Changelog');
@@ -62,6 +79,7 @@ void main() {
 
   testWidgets('Saved Images tile exists', (WidgetTester tester) async {
     // open fake app
+    final observer = MockNavigatorObserver();
     await _initApp(tester, observer);
 
     var tile = find.text('Local Images');
@@ -76,6 +94,7 @@ void main() {
 
   testWidgets('Support tile exists', (WidgetTester tester) async {
     // open fake app
+    final observer = MockNavigatorObserver();
     await _initApp(tester, observer);
 
     var tile = find.text('Support');
@@ -84,23 +103,27 @@ void main() {
 
   testWidgets('Delete All Data tile exists', (WidgetTester tester) async {
     // open fake app
+    final observer = MockNavigatorObserver();
     await _initApp(tester, observer);
+    await tester.pumpAndSettle();
 
-    var tile = find.text('Delete all data');
-    expect(tile, findsOneWidget);
+    final tile = find.ancestor(
+        of: find.text('Delete all data'), matching: find.byType(ListTile));
 
-    await tester.tap(tile);
+    // somehow tester#tap doesn't work, there invoke the onTap manually
+    ListTile wd = tile.first.evaluate().first.widget as ListTile;
+    wd.onTap!.call();
+    await tester.pumpAndSettle();
+
     verify(observer.didPush(any, any));
     await tester.pumpAndSettle();
 
-    // dialog opened
-    // TODO: test does not work currently
-    // expect(find.text('Do you really want to delete all your Cookza data?'),
-    //     findsOneWidget);
+    expect(find.byType(DeleteAllDataDialog), findsOneWidget);
   });
 
   testWidgets('License Page tile exists', (WidgetTester tester) async {
     // open fake app
+    final observer = MockNavigatorObserver();
     await _initApp(tester, observer);
 
     var tile = find.text('Licenses');
@@ -109,6 +132,7 @@ void main() {
 
   testWidgets('Privacy Statement tile exists', (WidgetTester tester) async {
     // open fake app
+    final observer = MockNavigatorObserver();
     await _initApp(tester, observer);
 
     var tile = find.text('Data Privacy Statement');
@@ -117,21 +141,40 @@ void main() {
 
   testWidgets('Terms of Use tile exists', (WidgetTester tester) async {
     // open fake app
+    final observer = MockNavigatorObserver();
     await _initApp(tester, observer);
 
     var tile = find.text('Terms of Use');
     expect(tile, findsOneWidget);
   });
 
-  testWidgets('Exception tile exists', (WidgetTester tester) async {
+  testWidgets('Error log tile exists', (WidgetTester tester) async {
     // open fake app
+    final observer = MockNavigatorObserver();
     await _initApp(tester, observer);
 
-    var tile = find.text('Error Log');
-    expect(tile, findsOneWidget);
+    final tile = find.ancestor(
+        of: find.text('Error Log'), matching: find.byType(ListTile));
 
-    await tester.tap(tile);
+    // somehow tester#tap doesn't work, there invoke the onTap manually
+    ListTile wd = tile.first.evaluate().first.widget as ListTile;
+    wd.onTap!.call();
+    await tester.pumpAndSettle();
+
     verify(observer.didPush(any, any));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(ErrorLogScreen), findsOneWidget);
+  });
+
+  testWidgets('Version is shown', (WidgetTester tester) async {
+    // open fake app
+    final observer = MockNavigatorObserver();
+    await _initApp(tester, observer);
+    await tester.pumpAndSettle();
+
+    var tile = find.text('0.42.0 - Build 42');
+    expect(tile, findsOneWidget);
   });
 }
 

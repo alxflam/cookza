@@ -8,7 +8,7 @@ final kAllThemes = {
   'light': LightTheme.create(),
 };
 
-/// dark theme app icon color
+/// light theme app icon color
 const kBlueAppIconColor = Color(0xFF021B2E);
 
 abstract class CustomTheme {
