@@ -35,8 +35,8 @@ import 'package:flutter/material.dart';
 typedef OnAcceptWebLogin = void Function(BuildContext context);
 
 class FirebaseProvider {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseAuth _auth = sl.get<FirebaseAuth>();
+  final FirebaseFirestore _firestore = sl.get<FirebaseFirestore>();
 
   static const HANDSHAKES = 'handshakes';
   static const RECIPE_GROUPS = 'recipeGroups';
@@ -58,7 +58,7 @@ class FirebaseProvider {
     return _mealPlanGroupsQuery().snapshots().map((e) => e.docs
         .where((e) => e.exists)
         .map((e) => MealPlanCollectionEntityFirebase.of(
-            FirebaseMealPlanCollection.fromJson(e.data()!, e.id)))
+            FirebaseMealPlanCollection.fromJson(e.data(), e.id)))
         .toList());
   }
 
@@ -71,7 +71,7 @@ class FirebaseProvider {
 
     return docs.docs
         .map((e) => ShoppingListEntityFirebase.of(
-            FirebaseShoppingListDocument.fromJson(e.data()!, e.id)))
+            FirebaseShoppingListDocument.fromJson(e.data(), e.id)))
         .toList();
   }
 
@@ -88,7 +88,7 @@ class FirebaseProvider {
 
     return _shoppingListsQuery(groups).snapshots().map((e) => e.docs
         .map((e) => ShoppingListEntityFirebase.of(
-            FirebaseShoppingListDocument.fromJson(e.data()!, e.id)))
+            FirebaseShoppingListDocument.fromJson(e.data(), e.id)))
         .toList());
   }
 
@@ -109,7 +109,7 @@ class FirebaseProvider {
 
     return docs.docs
         .map((e) => MealPlanCollectionEntityFirebase.of(
-            FirebaseMealPlanCollection.fromJson(e.data()!, e.id)))
+            FirebaseMealPlanCollection.fromJson(e.data(), e.id)))
         .toList();
   }
 
@@ -146,7 +146,7 @@ class FirebaseProvider {
 
     return docs.docs
         .map((e) => MealPlanCollectionEntityFirebase.of(
-            FirebaseMealPlanCollection.fromJson(e.data()!, e.id)))
+            FirebaseMealPlanCollection.fromJson(e.data(), e.id)))
         .toList();
   }
 
@@ -288,7 +288,7 @@ class FirebaseProvider {
         .where('owner', isEqualTo: userUid)
         .snapshots()
         .map((e) => e.docs
-            .map((e) => FirebaseHandshake.fromJson(e.data()!, e.id))
+            .map((e) => FirebaseHandshake.fromJson(e.data(), e.id))
             .toList());
     return res;
   }
@@ -372,7 +372,7 @@ class FirebaseProvider {
           mealPlanGroupSnapshot.docs.length;
 
       for (var item in handshakeSnapshots.docs) {
-        var requestor = item.data()!['requestor'];
+        var requestor = item.data()['requestor'];
 
         for (var item in recipeGroupSnapshot.docs) {
           // setting the map value to null will remove the entry
@@ -438,7 +438,7 @@ class FirebaseProvider {
 
     return docs.docs
         .map((e) => RecipeCollectionEntityFirebase.of(
-            FirebaseRecipeCollection.fromJson(e.data()!, e.id)))
+            FirebaseRecipeCollection.fromJson(e.data(), e.id)))
         .toList();
   }
 
@@ -449,7 +449,7 @@ class FirebaseProvider {
         .snapshots()
         .map((e) => e.docs
             .map((e) => RecipeCollectionEntityFirebase.of(
-                FirebaseRecipeCollection.fromJson(e.data()!, e.id)))
+                FirebaseRecipeCollection.fromJson(e.data(), e.id)))
             .toList());
   }
 
@@ -462,7 +462,7 @@ class FirebaseProvider {
         .snapshots()
         .map((e) => e.docs
             .map((e) => RecipeEntityFirebase.of(
-                FirebaseRecipe.fromJson(e.data()!, id: e.id)))
+                FirebaseRecipe.fromJson(e.data(), id: e.id)))
             .toList());
   }
 
@@ -562,7 +562,7 @@ class FirebaseProvider {
 
     for (var recipe in recipes.docs) {
       var entity = RecipeEntityFirebase.of(
-          FirebaseRecipe.fromJson(recipe.data()!, id: recipe.id));
+          FirebaseRecipe.fromJson(recipe.data(), id: recipe.id));
       await sl.get<ImageManager>().deleteRecipeImage(entity);
     }
 
@@ -656,7 +656,7 @@ class FirebaseProvider {
 
     return docs.docs
         .map((e) => RecipeEntityFirebase.of(
-            FirebaseRecipe.fromJson(e.data()!, id: e.id)))
+            FirebaseRecipe.fromJson(e.data(), id: e.id)))
         .toList();
   }
 
@@ -668,7 +668,7 @@ class FirebaseProvider {
 
     return docs.docs
         .map((e) => RecipeEntityFirebase.of(
-            FirebaseRecipe.fromJson(e.data()!, id: e.id)))
+            FirebaseRecipe.fromJson(e.data(), id: e.id)))
         .toList();
   }
 
@@ -711,7 +711,7 @@ class FirebaseProvider {
     } else {
       var document = snapshot.docs.first;
       parsedDoc =
-          FirebaseMealPlanDocument.fromJson(document.data()!, document.id);
+          FirebaseMealPlanDocument.fromJson(document.data(), document.id);
     }
 
     var model = MealPlanEntityFirebase.of(parsedDoc);
@@ -832,7 +832,7 @@ class FirebaseProvider {
       var handshakes = await _getAllExistingWebHandshakes();
 
       for (var item in handshakes.docs) {
-        var model = FirebaseHandshake.fromJson(item.data()!, item.id);
+        var model = FirebaseHandshake.fromJson(item.data(), item.id);
         result.putIfAbsent(model.requestor, () => 'Web Session');
       }
     }

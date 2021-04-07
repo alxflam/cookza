@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cookza/services/abstract/pdf_export.dart';
 import 'package:cookza/services/abstract/pdf_generator.dart';
 import 'package:cookza/services/abstract/platform_info.dart';
@@ -28,6 +29,7 @@ import 'package:cookza/services/shopping_list/shopping_list_manager.dart';
 import 'package:cookza/services/shopping_list/shopping_list_text_generator.dart';
 import 'package:cookza/services/recipe/similarity_service.dart';
 import 'package:cookza/services/unit_of_measure.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 
 /// recipe import: use file_picker (mobile) or open a explorer window (web)
@@ -49,6 +51,9 @@ import 'package:cookza/services/mobile/platform_info_app.dart'
 final sl = GetIt.instance;
 
 void setupServiceLocator() {
+  sl.registerLazySingleton<FirebaseFirestore>(() => FirebaseFirestore.instance);
+  sl.registerLazySingleton<FirebaseAuth>(() => FirebaseAuth.instance);
+
   sl.registerSingleton<IdGenerator>(UniqueKeyIdGenerator());
   sl.registerSingleton<StorageProvider>(LocalStorageProvider());
   sl.registerSingleton<UnitOfMeasureProvider>(StaticUnitOfMeasure());

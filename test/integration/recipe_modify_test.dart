@@ -1,6 +1,5 @@
 import 'package:cookza/components/recipe_list_tile.dart';
 import 'package:cookza/model/entities/mutable/mutable_instruction.dart';
-import 'package:cookza/routes.dart';
 import 'package:cookza/screens/home_screen.dart';
 import 'package:cookza/screens/new_ingredient_screen.dart';
 import 'package:cookza/screens/recipe_list_screen.dart';
@@ -17,14 +16,11 @@ import 'package:cookza/services/recipe/recipe_manager.dart';
 import 'package:cookza/services/shared_preferences_provider.dart';
 import 'package:cookza/services/recipe/similarity_service.dart';
 import 'package:cookza/services/unit_of_measure.dart';
-import 'package:cookza/viewmodel/settings/theme_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mockito/mockito.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../mocks/application_mock.dart';
 import '../mocks/receive_intent_handler_mock.dart';

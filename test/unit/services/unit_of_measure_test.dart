@@ -1,4 +1,3 @@
-import 'package:cookza/services/flutter/navigator_service.dart';
 import 'package:cookza/services/shared_preferences_provider.dart';
 import 'package:cookza/services/unit_of_measure.dart';
 import 'package:flutter_test/flutter_test.dart';
