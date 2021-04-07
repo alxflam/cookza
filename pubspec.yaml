@@ -1,7 +1,7 @@
 name: cookza
 description: Organize and share your favorite recipes.
 
-version: 0.0.5+1
+version: 0.0.6+1
 
 publish_to: none
 
@@ -33,10 +33,7 @@ dependencies:
   firebase_auth: ^1.0.1
   cloud_firestore: ^1.0.1
   firebase_storage: ^8.0.0
-  firebase_ml_vision: 
-    git:
-      url: git://github.com/alex0711/flutterfire.git
-      path: packages/firebase_ml_vision
+  firebase_ml_vision: ^0.11.0+1
   package_info: '^2.0.0'
   url_launcher: ^6.0.2
   camera: ^0.8.0
