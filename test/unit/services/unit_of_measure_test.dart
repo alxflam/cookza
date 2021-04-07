@@ -1,7 +1,17 @@
+import 'package:cookza/services/flutter/navigator_service.dart';
+import 'package:cookza/services/shared_preferences_provider.dart';
 import 'package:cookza/services/unit_of_measure.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:get_it/get_it.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
+  setUpAll(() {
+    SharedPreferences.setMockInitialValues({});
+    GetIt.I.registerSingletonAsync<SharedPreferencesProvider>(
+        () async => SharedPreferencesProviderImpl().init());
+  });
+
   test(
     'Convert Volume next Bigger',
     () {
@@ -83,6 +93,66 @@ void main() {
 
       expect(grm.amount, 2750);
       expect(grm.uom.id, 'GRM');
+    },
+  );
+
+  test(
+    'Get visible UoMs',
+    () {
+      var provider = StaticUnitOfMeasure();
+
+      var visible = provider.getVisible();
+      var all = provider.getAll();
+
+      expect(visible, all);
+    },
+  );
+
+  test(
+    'Check KGM can be converted to GRM',
+    () {
+      var provider = StaticUnitOfMeasure();
+      final kgm = provider.getUnitOfMeasureById('KGM');
+      final grm = provider.getUnitOfMeasureById('GRM');
+      final convertable = kgm.canBeConvertedTo(grm);
+
+      expect(convertable, true);
+    },
+  );
+
+  test(
+    'Check KGM can not be converted to LTR',
+    () {
+      var provider = StaticUnitOfMeasure();
+      final kgm = provider.getUnitOfMeasureById('KGM');
+      final ltr = provider.getUnitOfMeasureById('LTR');
+      final convertable = kgm.canBeConvertedTo(ltr);
+
+      expect(convertable, false);
+    },
+  );
+
+  test(
+    'Check non metric UoM can be converted to itself',
+    () {
+      var provider = StaticUnitOfMeasure();
+      final first = provider.getUnitOfMeasureById('H87');
+      final second = provider.getUnitOfMeasureById('H87');
+      final convertable = first.canBeConvertedTo(second);
+
+      expect(convertable, true);
+    },
+  );
+
+  test(
+    'Check non metric UoM can not be converted to other UoM',
+    () {
+      var provider = StaticUnitOfMeasure();
+      final first = provider.getUnitOfMeasureById('H87');
+      final second = provider.getUnitOfMeasureById('HAN');
+      final convertable = first.canBeConvertedTo(second);
+
+      expect(convertable, false);
     },
   );
 }

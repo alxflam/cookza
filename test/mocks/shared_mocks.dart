@@ -1,4 +1,5 @@
 import 'package:cookza/services/firebase_provider.dart';
+import 'package:cookza/services/flutter/navigator_service.dart';
 import 'package:cookza/services/image_parser.dart';
 import 'package:cookza/services/local_storage.dart';
 import 'package:cookza/services/meal_plan_manager.dart';
@@ -22,7 +23,8 @@ import 'package:mockito/annotations.dart';
   MockSpec<MealPlanManager>(returnNullOnMissingStub: true),
   MockSpec<ImageManager>(returnNullOnMissingStub: true),
   MockSpec<FirebaseProvider>(returnNullOnMissingStub: true),
-  MockSpec<ImageTextExtractor>(returnNullOnMissingStub: true)
+  MockSpec<ImageTextExtractor>(returnNullOnMissingStub: true),
+  MockSpec<NavigatorService>(returnNullOnMissingStub: true)
 ])
 class Dummy {
   // just a dummy class to generate mocks
