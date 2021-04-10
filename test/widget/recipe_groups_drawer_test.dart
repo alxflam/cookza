@@ -16,6 +16,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../mocks/meal_plan_manager_mock.dart';
 import '../mocks/recipe_manager_mock.dart';
 import '../mocks/shared_mocks.mocks.dart';
+import '../utils/test_utils.dart';
 
 void main() {
   var recipeManager = RecipeManagerStub();
@@ -52,7 +53,7 @@ void main() {
     expect(find.text('Group Name'), findsWidgets);
 
     // set some name
-    await _inputFormField(tester, find.byType(TextFormField), 'Some Test');
+    await inputFormField(tester, find.byType(TextFormField), 'Some Test');
     await tester.tap(find.byIcon(Icons.save));
     await tester.pumpAndSettle();
 
@@ -83,12 +84,4 @@ Future<void> _initApp(WidgetTester tester, NavigatorObserver observer) async {
       child: RecipeGroupsDrawer(),
     ),
   ));
-}
-
-Future<void> _inputFormField(
-    WidgetTester tester, Finder finder, String value) async {
-  await tester.enterText(finder, value);
-  await tester.testTextInput.receiveAction(TextInputAction.done);
-  await tester.pumpAndSettle();
-  expect(find.text(value), findsOneWidget);
 }

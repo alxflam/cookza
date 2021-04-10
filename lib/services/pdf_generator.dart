@@ -15,7 +15,7 @@ class PDFGeneratorImpl implements PDFGenerator {
     var context = sl.get<NavigatorService>().currentContext;
 
     result.add([
-      AppLocalizations.of(context)!.amount,
+      AppLocalizations.of(context!)!.amount,
       AppLocalizations.of(context)!.unit,
       AppLocalizations.of(context)!.ingredient(1)
     ]);
@@ -121,7 +121,7 @@ class PDFGeneratorImpl implements PDFGenerator {
             pw.Paragraph(text: recipeViewModel.description),
             pw.Header(
                 level: 1,
-                text: AppLocalizations.of(buildContext)!.ingredient(2)),
+                text: AppLocalizations.of(buildContext!)!.ingredient(2)),
             pw.Table.fromTextArray(
               context: context,
               border: pw.TableBorder(),

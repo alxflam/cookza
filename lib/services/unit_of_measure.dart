@@ -150,13 +150,20 @@ class UnitOfMeasure {
   /// returns the display name
   String get displayName {
     var context = sl.get<NavigatorService>().currentContext;
-    return uomDisplayTexts[this._id]!.call(context, 1);
+    if (context != null) {
+      return uomDisplayTexts[this._id]!.call(context, 1);
+    }
+    // fallback only used in tests
+    return _id;
   }
 
   /// returns the display name depending on the count of items referenced
   String getDisplayName(int amount) {
     var context = sl.get<NavigatorService>().currentContext;
-    return uomDisplayTexts[this._id]!.call(context, amount);
+    if (context != null) {
+      return uomDisplayTexts[this._id]!.call(context, amount);
+    }
+    return _id;
   }
 
   /// returns the internal identifier for this unit of measure

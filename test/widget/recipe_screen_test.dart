@@ -128,6 +128,7 @@ void main() {
 
     /// navigated to meal plan
     verify(mockObserver.didPush(any, any));
+    // TODO: then select a day and add to meal plan
   });
 }
 

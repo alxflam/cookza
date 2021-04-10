@@ -11,7 +11,7 @@ class RecipeTextExporterApp implements RecipeTextExporter {
   @override
   Future<void> exportRecipesAsText(List<RecipeEntity> entities) async {
     var context = sl.get<NavigatorService>().currentContext;
-    var ingTitle = AppLocalizations.of(context)!.ingredient(2);
+    var ingTitle = AppLocalizations.of(context!)!.ingredient(2);
     var insTitle = AppLocalizations.of(context)!.instructions;
     var text = await sl
         .get<RecipeTextGenerator>()

@@ -27,6 +27,7 @@ import '../mocks/recipe_manager_mock.dart';
 import '../mocks/shared_mocks.mocks.dart';
 import '../mocks/shopping_list_manager_mock.dart';
 import '../utils/recipe_creator.dart';
+import '../utils/test_utils.dart';
 
 void main() {
   var recipeManager = RecipeManagerStub();
@@ -136,21 +137,13 @@ void main() {
     await tester.pumpAndSettle();
 
     /// type search text
-    await _inputFormField(tester, find.byType(TextField), 'something');
+    await inputFormField(tester, find.byType(TextField), 'something');
 
     /// recipe no longer shown
     // expect(find.byType(RecipeListScreen), findsNothing);
     // expect(find.byType(RecipeListTile), findsNothing);
     // expect(find.text('Käsespätzle'), findsNothing);
   });
-}
-
-Future<void> _inputFormField(
-    WidgetTester tester, Finder finder, String value) async {
-  await tester.enterText(finder, value);
-  await tester.testTextInput.receiveAction(TextInputAction.search);
-  await tester.pumpAndSettle();
-  expect(find.text(value), findsOneWidget);
 }
 
 class MockApplication extends StatelessWidget {

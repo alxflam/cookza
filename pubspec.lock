@@ -305,10 +305,12 @@ packages:
   firebase_ml_vision:
     dependency: "direct main"
     description:
-      name: firebase_ml_vision
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.11.0+1"
+      path: "packages/firebase_ml_vision"
+      ref: HEAD
+      resolved-ref: "0ddc0d56369fba1410fa8b3179b3f7c4157206ca"
+      url: "git://github.com/alex0711/flutterfire.git"
+    source: git
+    version: "1.0.0"
   firebase_storage:
     dependency: "direct main"
     description:

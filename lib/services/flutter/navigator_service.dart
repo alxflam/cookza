@@ -20,5 +20,5 @@ class NavigatorService {
     return navigatorKey.currentState!.pop();
   }
 
-  BuildContext get currentContext => navigatorKey.currentContext!;
+  BuildContext? get currentContext => navigatorKey.currentContext;
 }

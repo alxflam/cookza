@@ -67,7 +67,7 @@ class ShoppingListModel extends ChangeNotifier {
       var context = sl.get<NavigatorService>().currentContext;
       // make sure that case is logged
       await sl.get<ExceptionHandler>().reportException(
-          '${AppLocalizations.of(context)!.missingRecipeAccess}: ${e.toString()}',
+          '${AppLocalizations.of(context!)!.missingRecipeAccess}: ${e.toString()}',
           StackTrace.current,
           DateTime.now());
       // may happen if the shopping list contains a recipe from a group the current user does not have read access to
@@ -250,13 +250,14 @@ class ShoppingListModel extends ChangeNotifier {
 }
 
 class ShoppingListItemModel extends ChangeNotifier {
-  late UnitOfMeasure? _uom;
+  UnitOfMeasure? _uom;
   final MutableShoppingListItem _entity;
 
   ShoppingListItemModel.ofEntity(ShoppingListItemEntity entity)
       : this._entity = entity as MutableShoppingListItem {
     var uomProvider = sl.get<UnitOfMeasureProvider>();
-    if (entity.ingredientNote.unitOfMeasure != null) {
+    if (entity.ingredientNote.unitOfMeasure != null &&
+        entity.ingredientNote.unitOfMeasure!.trim().isNotEmpty) {
       var uom = uomProvider
           .getUnitOfMeasureById(entity.ingredientNote.unitOfMeasure!);
       this._uom = uom;

@@ -9,6 +9,7 @@ import 'package:cookza/services/meal_plan_manager.dart';
 import 'package:cookza/services/recipe/recipe_manager.dart';
 import 'package:cookza/services/shared_preferences_provider.dart';
 import 'package:cookza/viewmodel/settings/theme_model.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
@@ -21,6 +22,7 @@ import '../mocks/meal_plan_manager_mock.dart';
 import '../mocks/recipe_manager_mock.dart';
 import '../mocks/shared_mocks.mocks.dart';
 import '../utils/meal_plan_creator.dart';
+import '../utils/test_utils.dart';
 
 void main() {
   var recipeManager = RecipeManagerStub();
@@ -78,6 +80,72 @@ void main() {
     // there's one meal plan group existing
     expect(find.text('dummy'), findsWidgets);
     find.descendant(of: find.byType(ListTile), matching: find.text('dummy'));
+  });
+
+  testWidgets('Drag recipe to next day', (WidgetTester tester) async {
+    var mealPlan = MealPlanCreator.createMealPlan('My Plan', 1);
+
+    var item = MutableMealPlanDateEntity.empty(DateTime.now());
+    item.addRecipe(MutableMealPlanRecipeEntity.fromValues('1', 'Spätzle', 2));
+    mealPlan.items.add(item);
+
+    await mealPlanManager.saveMealPlan(mealPlan);
+
+    await mealPlanManager.createCollection(mealPlan.groupID);
+    mealPlanManager.currentCollection = mealPlan.groupID;
+    mealPlanManager.addMealPlan(mealPlan.groupID, mealPlan);
+
+    await _initApp(tester, mockObserver);
+    await tester.pumpAndSettle();
+
+    var cards = find.byType(WeekdayHeaderTitle);
+    expect(cards, findsWidgets);
+
+    var startLoc = tester.getCenter(find.text('Spätzle'));
+
+    // move the recipe to the next day
+    final Offset firstLocation = tester.getCenter(find.text('Spätzle'));
+    final TestGesture gesture = await tester.startGesture(firstLocation);
+    await tester.pump(kLongPressTimeout + kPressTimeout);
+    await gesture.moveTo(tester.getCenter(cards.at(1)));
+    await tester.pumpAndSettle();
+    await gesture.up();
+    await tester.pump(kLongPressTimeout + kPressTimeout);
+    await tester.pumpAndSettle();
+
+    final afterMove = tester.getCenter(find.text('Spätzle'));
+    expect(startLoc.dy < afterMove.dy, true);
+  });
+
+  testWidgets('Drag recipe shows feedback', (WidgetTester tester) async {
+    var mealPlan = MealPlanCreator.createMealPlan('My Plan', 1);
+
+    var item = MutableMealPlanDateEntity.empty(DateTime.now());
+    item.addRecipe(MutableMealPlanRecipeEntity.fromValues('1', 'Spätzle', 2));
+    mealPlan.items.add(item);
+
+    await mealPlanManager.saveMealPlan(mealPlan);
+
+    await mealPlanManager.createCollection(mealPlan.groupID);
+    mealPlanManager.currentCollection = mealPlan.groupID;
+    mealPlanManager.addMealPlan(mealPlan.groupID, mealPlan);
+
+    await _initApp(tester, mockObserver);
+    await tester.pumpAndSettle();
+
+    var cards = find.byType(WeekdayHeaderTitle);
+    expect(cards, findsWidgets);
+
+    // move the recipe to the next day
+    final Offset firstLocation = tester.getCenter(find.text('Spätzle'));
+    await tester.startGesture(firstLocation);
+    await tester.pump(kLongPressTimeout + kPressTimeout);
+
+    expect(find.byType(DragFeedbackTile), findsOneWidget);
+    final subtitleFinder = find.descendant(
+        of: find.byType(DragFeedbackTile), matching: find.text('2 Servings'));
+
+    expect(subtitleFinder, findsOneWidget);
   });
 
   testWidgets('Display recipe', (WidgetTester tester) async {
@@ -290,7 +358,7 @@ void main() {
     verify(mockObserver.didPush(any, any));
 
     var descInput = find.byType(TextFormField);
-    await _inputFormField(tester, descInput, 'My special note');
+    await inputFormField(tester, descInput, 'My special note');
 
     /// then save
     await tester.tap(find.byIcon(Icons.check));
@@ -364,12 +432,4 @@ Future<void> _initApp(WidgetTester tester, NavigatorObserver observer) async {
       child: MealPlanScreen(),
     ),
   ));
-}
-
-Future<void> _inputFormField(
-    WidgetTester tester, Finder finder, String value) async {
-  await tester.enterText(finder, value);
-  await tester.testTextInput.receiveAction(TextInputAction.done);
-  await tester.pumpAndSettle();
-  expect(find.text(value), findsOneWidget);
 }

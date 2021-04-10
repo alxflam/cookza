@@ -1,5 +1,9 @@
+import 'package:cookza/model/entities/abstract/meal_plan_collection_entity.dart';
+import 'package:cookza/model/entities/abstract/user_entity.dart';
 import 'package:cookza/model/entities/firebase/meal_plan_collection_entity.dart';
+import 'package:cookza/model/entities/json/user_entity.dart';
 import 'package:cookza/model/firebase/collections/firebase_meal_plan_collection.dart';
+import 'package:cookza/model/json/user.dart';
 import 'package:cookza/services/meal_plan_manager.dart';
 import 'package:cookza/viewmodel/groups/meal_plan_group_model.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -15,6 +19,7 @@ MealPlanCollectionEntityFirebase createGroup() {
     users: {'1234': 'Someone'},
     name: 'Test',
   );
+  collection.documentID = '1';
   return MealPlanCollectionEntityFirebase.of(collection);
 }
 
@@ -63,5 +68,17 @@ void main() {
     var cut = MealPlanGroupViewModel.of(entity);
     await cut.addUser('1234', 'Master Tester');
     verify(mock.addUserToCollection(entity, '1234', 'Master Tester'));
+  });
+
+  test('Remove user', () async {
+    MealPlanCollectionEntityFirebase entity = createGroup();
+    when(mock.getCollectionByID(any)).thenAnswer((_) => Future.value(entity));
+
+    var cut = MealPlanGroupViewModel.of(entity);
+
+    var user = UserEntityJson.from(
+        JsonUser(id: '1234', name: 'Master Tester', type: USER_TYPE.USER));
+    await cut.removeMember(user);
+    verify(mock.removeMember(any, any));
   });
 }

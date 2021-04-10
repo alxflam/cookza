@@ -10,13 +10,13 @@ void main() {
     // GetIt.I.registerSingleton<FirebaseFirestore>(MockFirestoreInstance());
   });
 
-  test(
-    'Test initialization',
-    () async {
-      // var cut = FirebaseProvider();
-      // await cut.init();
+  // test(
+  //   'Test initialization',
+  //   () async {
+  //     var cut = FirebaseProvider();
+  //     await cut.init();
 
-      // expect(cut.userUid, isNotNull);
-    },
-  );
+  //     expect(cut.userUid, isNotNull);
+  //   },
+  // );
 }

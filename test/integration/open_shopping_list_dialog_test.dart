@@ -95,7 +95,7 @@ void main() {
     await _initApp(tester, observer);
     // open dialog
     await tester.tap(find.byType(ElevatedButton));
-    //
+    // TODO: separate test in other class, add sl detail screen test, add dnd test for meal plan, add ImageTextExtractor test
   });
 }
 

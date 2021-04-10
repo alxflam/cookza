@@ -109,8 +109,7 @@ class MealPlanScreen extends StatelessWidget {
     for (var i = 0; i < model.entries.length; i++) {
       var currentWeek = model.entries[i].week;
       if (currentWeek != previousWeek) {
-        var weekTile = _createWeekTile(currentWeek, tileColor);
-        tiles.add(weekTile);
+        tiles.add(WeekNumber(i, tileColor));
         previousWeek = currentWeek;
       }
 
@@ -136,10 +135,8 @@ class MealPlanScreen extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      _getWeekDayHeaderText(context, model.entries[i]),
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    WeekdayHeaderTitle(
+                      entry: model.entries[i],
                     ),
                     IconButton(
                       icon: Icon(Icons.add),
@@ -253,16 +250,8 @@ class MealPlanScreen extends StatelessWidget {
                 color: Colors.transparent,
                 child: Transform.scale(
                   scale: 0.5,
-                  child: Card(
-                    color: accentColor,
-                    child: ListTile(
-                      title: Text(entry.name),
-                      subtitle: entry.isNote
-                          ? null
-                          : Text(
-                              '${entry.servings.toString()} ${AppLocalizations.of(context)!.servings}'),
-                    ),
-                  ),
+                  child:
+                      DragFeedbackTile(accentColor: accentColor, model: entry),
                 ),
               ),
             ),
@@ -282,17 +271,6 @@ class MealPlanScreen extends StatelessWidget {
     }
 
     return tiles;
-  }
-
-  Widget _createWeekTile(int i, Color backgroundColor) {
-    return WeekNumber(i, backgroundColor);
-  }
-
-  String _getWeekDayHeaderText(BuildContext context, MealPlanDateEntry entry) {
-    var locale = Localizations.localeOf(context);
-    var day = DateFormat.EEEE(locale.toString()).format(entry.date);
-    var date = DateFormat('d.MM.yyyy').format(entry.date);
-    return '$day, $date';
   }
 
   void _showSelectAddModeDialog(
@@ -394,6 +372,48 @@ class WeekNumber extends StatelessWidget {
                 color: Theme.of(context).colorScheme.onPrimary),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class WeekdayHeaderTitle extends StatelessWidget {
+  final MealPlanDateEntry entry;
+
+  const WeekdayHeaderTitle({required this.entry});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      _getWeekDayHeaderText(context, entry),
+      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+    );
+  }
+
+  String _getWeekDayHeaderText(BuildContext context, MealPlanDateEntry entry) {
+    var locale = Localizations.localeOf(context);
+    var day = DateFormat.EEEE(locale.toString()).format(entry.date);
+    var date = DateFormat('d.MM.yyyy').format(entry.date);
+    return '$day, $date';
+  }
+}
+
+class DragFeedbackTile extends StatelessWidget {
+  final Color accentColor;
+  final MealPlanRecipeModel model;
+
+  const DragFeedbackTile({required this.accentColor, required this.model});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      color: accentColor,
+      child: ListTile(
+        title: Text(model.name),
+        subtitle: model.isNote || model.servings == null
+            ? null
+            : Text(
+                '${model.servings} ${AppLocalizations.of(context)!.servings(model.servings!)}'),
       ),
     );
   }

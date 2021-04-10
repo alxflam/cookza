@@ -28,6 +28,7 @@ import '../mocks/recipe_manager_mock.dart';
 import '../mocks/shared_mocks.mocks.dart';
 import '../mocks/uom_provider_mock.dart';
 import '../utils/recipe_creator.dart';
+import '../utils/test_utils.dart';
 
 void main() {
   var mock = RecipeManagerStub();
@@ -93,13 +94,13 @@ void main() {
     var nameInput = find.ancestor(
         of: find.text('Recipe Name'), matching: find.byType(TextFormField));
     expect(nameInput, findsOneWidget);
-    await _inputFormField(tester, nameInput, 'My simple recipe');
+    await inputFormField(tester, nameInput, 'My simple recipe');
 
     /// add desc
     var descInput = find.ancestor(
         of: find.text('Recipe Description'),
         matching: find.byType(TextFormField));
-    await _inputFormField(tester, descInput, 'My Desc');
+    await inputFormField(tester, descInput, 'My Desc');
 
     /// navigate to next page
     await tester.tap(find.text('CONTINUE'));
@@ -138,14 +139,14 @@ void main() {
     /// set amount
     var amountInput = find.ancestor(
         of: find.text('Amount'), matching: find.byType(TextFormField));
-    await _inputFormField(tester, amountInput, '10');
+    await inputFormField(tester, amountInput, '10');
     expect(find.text('10'), findsOneWidget);
 
     /// set ingredient
     var ingredientNameInput = find.descendant(
         of: find.byType(IngredientNameTextInput),
         matching: find.byType(TextFormField));
-    await _inputFormField(tester, ingredientNameInput, 'Flour');
+    await inputFormField(tester, ingredientNameInput, 'Flour');
     expect(find.text('Flour'), findsOneWidget);
 
     /// then save the ingredient
@@ -173,7 +174,7 @@ void main() {
     expect(find.text('2'), findsWidgets);
 
     /// change amount
-    await _inputFormField(tester, amountInput, '12');
+    await inputFormField(tester, amountInput, '12');
     expect(find.text('12'), findsOneWidget);
 
     /// then save the ingredient
@@ -264,12 +265,4 @@ Future<void> _navigateToRecipeScreen(WidgetTester tester) async {
   /// navigate to the recipe
   await tester.tap(find.byType(RecipeListTile));
   await tester.pumpAndSettle();
-}
-
-Future<void> _inputFormField(
-    WidgetTester tester, Finder finder, String value) async {
-  await tester.enterText(finder, value);
-  await tester.testTextInput.receiveAction(TextInputAction.done);
-  await tester.pumpAndSettle();
-  expect(find.text(value), findsOneWidget);
 }
