@@ -170,6 +170,7 @@ class FirebaseProvider {
 
     /// notify dependent services that firebase is ready to use now
     /// TODO refactor: use GetIt dependencies instead of manually triggering the init...
+    /// use event bus mechanism
     // ignore: unawaited_futures
     Future.microtask(() {
       // TODO: await finish of shared preferences? or how to sync?

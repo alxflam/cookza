@@ -5,11 +5,11 @@ import 'package:mockito/mockito.dart';
 class ReceiveIntentHandlerMock extends Mock implements ReceiveIntentHandler {
   @override
   void handleSharedJson(BuildContext context) {
-    // TODO: implement handleSharedJson
+    // not needed
   }
 
   @override
   void handleSharedText(BuildContext context) {
-    // TODO: implement handleSharedText
+    // not needed
   }
 }

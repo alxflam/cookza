@@ -15,7 +15,6 @@ class RecipeViewModel extends ChangeNotifier {
   final List<MutableIngredientNote> _ingredients = [];
   final List<InstructionEntity> _instructions = [];
 
-  // TODO: make it capable of in memory images like import json
   RecipeViewModel.of(this._recipe) {
     _copyValues();
   }
@@ -91,7 +90,6 @@ class RecipeViewModel extends ChangeNotifier {
     var ratio = servings / baseServings;
     print('ratio for ing is $ratio');
 
-    // TODO necessary async?
     _recipe.ingredients.then((value) {
       for (var i = 0; i < value.length; i++) {
         var baseAmount = value[i].amount;

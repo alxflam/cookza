@@ -50,7 +50,6 @@ Future<void> openShoppingListDialog(BuildContext context) async {
   }
 
   var existingPlans = await sl.get<ShoppingListManager>().shoppingListsAsList;
-  // TODO: refactor logic and provide tests
   var matchedList = existingPlans.firstWhereOrNull((e) =>
       e.groupID == model!.groupID &&
       (isSameDay(model.dateFrom, e.dateFrom) ||

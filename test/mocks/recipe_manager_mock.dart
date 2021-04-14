@@ -84,7 +84,6 @@ class RecipeManagerStub implements RecipeManager {
 
   @override
   String getNextRecipeDocumentId(String recipeGroup) {
-    // TODO: implement getNextRecipeDocumentId
     throw UnimplementedError();
   }
 
@@ -95,13 +94,11 @@ class RecipeManagerStub implements RecipeManager {
 
   @override
   Future<void> importRecipes(List<RecipeEntity> recipes) {
-    // TODO: implement importRecipes
     throw UnimplementedError();
   }
 
   @override
   Future<void> leaveRecipeGroup(RecipeCollectionEntity entity) {
-    // TODO: implement leaveRecipeGroup
     throw UnimplementedError();
   }
 
@@ -112,19 +109,16 @@ class RecipeManagerStub implements RecipeManager {
   @override
   Future<void> renameCollection(
       String name, RecipeCollectionEntity collection) {
-    // TODO: implement renameCollection
     throw UnimplementedError();
   }
 
   @override
   Future<void> updateRating(RecipeEntity recipe, int rating) {
-    // TODO: implement updateRating
     throw UnimplementedError();
   }
 
   @override
   Future<void> removeMember(UserEntity user, String group) {
-    // TODO: implement removeMember
     throw UnimplementedError();
   }
 

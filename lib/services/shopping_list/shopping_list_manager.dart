@@ -22,6 +22,7 @@ class ShoppingListManagerImpl implements ShoppingListManager {
 
   @override
   Stream<List<ShoppingListEntity>> get shoppingLists {
+    // TODO unused method!
     return sl.get<FirebaseProvider>().shoppingListsAsStream;
   }
 

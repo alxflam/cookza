@@ -125,8 +125,6 @@ void main() {
     expect(find.text('Cheese'), findsOneWidget);
   });
 
-  // TODO: sort order tests
-
   testWidgets('Delete a custom list entry', (WidgetTester tester) async {
     ShoppingListModel model = ShoppingListModel.empty();
     model.groupID = '1';

@@ -46,7 +46,6 @@ void main() {
     recipeManager.reset();
     mealPlanManager.reset();
   });
-  // TODO: separate test in other class, add sl detail screen test, add dnd test for meal plan, add ImageTextExtractor test
 
   testWidgets('Shopping lists in the past are not shown',
       (WidgetTester tester) async {

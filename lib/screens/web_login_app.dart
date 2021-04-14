@@ -20,7 +20,7 @@ class WebLoginOnAppScreen extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.add),
             onPressed: () async {
-              // TODO: reenable web login
+              // TODO: reenable web login sometime
               // var user = await sl.get<QRScanner>().scanUserQRCode();
 
               // if (user != null) {

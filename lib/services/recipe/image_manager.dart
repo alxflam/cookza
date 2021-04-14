@@ -5,7 +5,6 @@ import 'package:cookza/model/entities/abstract/recipe_entity.dart';
 import 'package:cookza/services/local_storage.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/services.dart';
 
 abstract class ImageManager {
   Future<void> uploadRecipeImage(String recipeId, File file);
@@ -36,13 +35,7 @@ class ImageManagerFirebase implements ImageManager {
 
     // delete the cloud image
     Reference reference = _storage.ref().child(getRecipeImagePath(entity.id!));
-    try {
-      // TODO: only call if really deleted... -> check in the model of the view
-      await reference.delete();
-    } on PlatformException catch (e) {
-      print(e.message);
-      print(e);
-    }
+    await reference.delete();
   }
 
   @override
@@ -81,8 +74,8 @@ class ImageManagerFirebase implements ImageManager {
         Reference reference =
             _storage.ref().child(getRecipeImagePath(entity.image!));
         var task = reference.writeToFile(cacheFile);
-        // TODO: catch error for future and log it!
-        var bytes = (await task).bytesTransferred;
+        var taskSnapshot = await task;
+        var bytes = taskSnapshot.bytesTransferred;
         print('$bytes downloaded');
       } catch (StorageException) {
         // the image for the given recipe does not exist

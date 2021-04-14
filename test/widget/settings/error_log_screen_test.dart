@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:cookza/routes.dart';
 import 'package:cookza/screens/settings/error_log_screen.dart';
 import 'package:cookza/services/flutter/exception_handler.dart';
@@ -7,7 +5,6 @@ import 'package:cookza/services/local_storage.dart';
 import 'package:cookza/services/shared_preferences_provider.dart';
 import 'package:cookza/viewmodel/settings/theme_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mockito/mockito.dart';

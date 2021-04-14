@@ -265,7 +265,6 @@ class ShoppingListItemModel extends ChangeNotifier {
   }
 
   String get uom {
-    // TODO: there should be a null uom!
     if (_uom == null) {
       return '';
     }

@@ -6,7 +6,6 @@ import 'package:cookza/viewmodel/shopping_list/shopping_list_detail.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:share/share.dart';
 
-// TODO: add web implementation!
 class ShoppingListTextExporterApp implements ShoppingListTextExporter {
   @override
   Future<void> exportShoppingListAsText(ShoppingListModel model) async {

@@ -30,6 +30,6 @@ class RecipeFileExportImpl extends RecipeFileExport {
 
   @override
   void exportRecipesFromEntity(List<RecipeEntity> recipes) {
-    // TODO: implement exportRecipesFromEntity
+    // to be implemented for web
   }
 }
