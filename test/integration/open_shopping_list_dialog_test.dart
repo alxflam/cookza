@@ -1,6 +1,13 @@
+import 'package:cookza/model/entities/mutable/mutable_ingredient_note.dart';
+import 'package:cookza/model/entities/mutable/mutable_shopping_list.dart';
+import 'package:cookza/model/entities/mutable/mutable_shopping_list_item.dart';
 import 'package:cookza/routes.dart';
 import 'package:cookza/screens/shopping_list/shopping_list_detail_screen.dart';
 import 'package:cookza/screens/shopping_list/shopping_list_dialog.dart';
+import 'package:cookza/services/flutter/navigator_service.dart';
+import 'package:cookza/services/recipe/ingredients_calculator.dart';
+import 'package:cookza/services/shopping_list/shopping_list_items_generator.dart';
+import 'package:cookza/services/unit_of_measure.dart';
 import 'package:cookza/services/util/id_gen.dart';
 import 'package:cookza/services/meal_plan_manager.dart';
 import 'package:cookza/services/recipe/recipe_manager.dart';
@@ -25,6 +32,7 @@ void main() {
   var mealPlanManager = MealPlanManagerMock();
   var observer = MockNavigatorObserver();
   var shoppingListManager = ShoppingListManagerMock();
+  var navigatorService = NavigatorService();
 
   setUpAll(() {
     SharedPreferences.setMockInitialValues({});
@@ -32,6 +40,12 @@ void main() {
     GetIt.I.registerSingleton<MealPlanManager>(mealPlanManager);
     GetIt.I.registerSingleton<IdGenerator>(UniqueKeyIdGenerator());
     GetIt.I.registerSingleton<ShoppingListManager>(shoppingListManager);
+    GetIt.I.registerSingleton<ShoppingListItemsGenerator>(
+        ShoppingListItemsGeneratorImpl());
+    GetIt.I
+        .registerSingleton<IngredientsCalculator>(IngredientsCalculatorImpl());
+    GetIt.I.registerSingleton<UnitOfMeasureProvider>(StaticUnitOfMeasure());
+    GetIt.I.registerSingleton<NavigatorService>(navigatorService);
 
     GetIt.I.registerSingletonAsync<SharedPreferencesProvider>(
         () async => SharedPreferencesProviderImpl().init());
@@ -62,7 +76,23 @@ void main() {
     await tester.tap(find.byType(ElevatedButton));
     await tester.pumpAndSettle();
     // dialog opened
-    expect(find.byType(SimpleDialog), findsOneWidget);
+    expect(find.byType(MultipeGroupSelectionDialog), findsOneWidget);
+    //  date range is editable
+    await tester.tap(find.byType(IconButton));
+    await tester.pumpAndSettle();
+
+    // change selected date
+    await tester.tap(find.text(DateTime.now().day.toString()).first);
+    await tester.tap(
+        find.text(DateTime.now().add(Duration(days: 2)).day.toString()).first);
+
+    expect(find.text('SAVE'), findsOneWidget);
+    expect(find.byType(Semantics), findsWidgets);
+    // then press confirm
+    await tester.tap(find.text('SAVE').first);
+    await tester.pumpAndSettle();
+
+    expect(find.byType(MultipeGroupSelectionDialog), findsOneWidget);
   });
 
   testWidgets(
@@ -80,8 +110,8 @@ void main() {
     expect(find.text('SAVE'), findsOneWidget);
     expect(find.byType(Semantics), findsWidgets);
     // then press confirm
-    await tester.tap(find.text('SAVE').first);
-    await tester.pumpAndSettle();
+    await tester.tap(find.text('SAVE'));
+    await tester.pump();
     verify(observer.didPush(any, any));
     await tester.pumpAndSettle();
 
@@ -91,11 +121,82 @@ void main() {
 
   testWidgets('Single meal plan with existing list',
       (WidgetTester tester) async {
+    final plan = await mealPlanManager.createCollection('dummy1');
+
+    MutableShoppingList list = MutableShoppingList.newList(
+        plan.id!,
+        DateTime.now().add(Duration(days: 1)),
+        DateTime.now().add(Duration(days: 6)));
+    list.id = plan.id!;
+
+    var item = MutableIngredientNote.empty();
+    item.name = 'Cheese';
+    item.unitOfMeasure = 'H87';
+    list.addItem(MutableShoppingListItem.ofIngredientNote(item, false, true));
+
+    await shoppingListManager.createOrUpdate(list);
+
     // open fake app
     await _initApp(tester, observer);
     // open dialog
     await tester.tap(find.byType(ElevatedButton));
-    // TODO: separate test in other class, add sl detail screen test, add dnd test for meal plan, add ImageTextExtractor test
+    await tester.pumpAndSettle();
+    // date range dialog opened - has only private widgets
+    // therefore check for semantics widget which is used there internally
+
+    await tester.tap(find.text(list.dateFrom.day.toString()).first);
+    await tester.tap(find.text(list.dateUntil.day.toString()).first);
+
+    expect(find.text('SAVE'), findsOneWidget);
+    expect(find.byType(Semantics), findsWidgets);
+    // then press confirm
+    await tester.tap(find.text('SAVE').first);
+    await tester.pumpAndSettle();
+    verify(observer.didPush(any, any));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(ShoppingListDetailScreen), findsOneWidget);
+    expect(find.text('Cheese'), findsOneWidget);
+  });
+
+  testWidgets('Single meal plan with existing list from the past',
+      (WidgetTester tester) async {
+    final plan = await mealPlanManager.createCollection('dummy1');
+
+    MutableShoppingList list = MutableShoppingList.newList(
+        plan.id!,
+        DateTime.now().subtract(Duration(days: 3)),
+        DateTime.now().add(Duration(days: 6)));
+    list.id = plan.id!;
+
+    var item = MutableIngredientNote.empty();
+    item.name = 'Cheese';
+    item.unitOfMeasure = 'H87';
+    list.addItem(MutableShoppingListItem.ofIngredientNote(item, false, true));
+
+    await shoppingListManager.createOrUpdate(list);
+
+    // open fake app
+    await _initApp(tester, observer);
+    // open dialog
+    await tester.tap(find.byType(ElevatedButton));
+    await tester.pumpAndSettle();
+    // date range dialog opened - has only private widgets
+    // therefore check for semantics widget which is used there internally
+
+    await tester.tap(find.text(DateTime.now().day.toString()).first);
+    await tester.tap(find.text(list.dateUntil.day.toString()).first);
+
+    expect(find.text('SAVE'), findsOneWidget);
+    expect(find.byType(Semantics), findsWidgets);
+    // then press confirm
+    await tester.tap(find.text('SAVE').first);
+    await tester.pumpAndSettle();
+    verify(observer.didPush(any, any));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(ShoppingListDetailScreen), findsOneWidget);
+    expect(find.text('Cheese'), findsOneWidget);
   });
 }
 
@@ -107,6 +208,7 @@ Future<void> _initApp(WidgetTester tester, NavigatorObserver observer) async {
       localizationsDelegates: [
         AppLocalizations.delegate,
       ],
+      navigatorKey: GetIt.I.get<NavigatorService>().navigatorKey,
       home: ChangeNotifierProvider<ThemeModel>(
         create: (context) => ThemeModel(),
         child: Builder(builder: (context) {

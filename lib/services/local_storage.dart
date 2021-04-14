@@ -3,8 +3,6 @@ import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 
 abstract class StorageProvider {
-  Future<bool> fileExists(String path);
-
   Future<String> getTempDirectory();
   Future<String> getImageDirectory();
   Future<File> getExeptionLogFile();
@@ -19,12 +17,6 @@ class LocalStorageProvider implements StorageProvider {
   Future<String> get _localPath async {
     final directory = await getApplicationDocumentsDirectory();
     return directory.path;
-  }
-
-  @override
-  Future<bool> fileExists(String path) async {
-    final file = File(path);
-    return file.exists();
   }
 
   @override
@@ -46,8 +38,7 @@ class LocalStorageProvider implements StorageProvider {
 
   @override
   Future<File> getExeptionLogFile() async {
-    String path = await _localPath;
-    var logFilePath = '$path/$exceptionLogFileName';
+    String logFilePath = await _logFilePath();
     var logFile = File(logFilePath);
     if (!logFile.existsSync()) {
       logFile.createSync();
@@ -57,10 +48,15 @@ class LocalStorageProvider implements StorageProvider {
 
   @override
   Future<File> updateExeptionLogFile(String content) async {
-    String path = await _localPath;
-    var logFilePath = '$path/$exceptionLogFileName';
+    String logFilePath = await _logFilePath();
     var logFile = File(logFilePath);
     return logFile.writeAsString(content);
+  }
+
+  Future<String> _logFilePath() async {
+    String path = await _localPath;
+    var logFilePath = '$path/$exceptionLogFileName';
+    return logFilePath;
   }
 
   @override

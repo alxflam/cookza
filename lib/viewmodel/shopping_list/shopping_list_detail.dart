@@ -41,7 +41,7 @@ class ShoppingListModel extends ChangeNotifier {
 
   Future<List<ShoppingListItemModel>> getItems() async {
     // lazy initialize on first get call
-    if (_items.isNotEmpty) {
+    if (this.initialized) {
       // create the viewmodels
       var viewModels =
           this._items.map((e) => ShoppingListItemModel.ofEntity(e)).toList();

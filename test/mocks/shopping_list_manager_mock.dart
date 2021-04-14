@@ -28,4 +28,10 @@ class ShoppingListManagerMock extends Mock implements ShoppingListManager {
     }
     return Future.value(entity);
   }
+
+  @override
+  Future<void> delete(ShoppingListEntity entity) {
+    this._entities.removeWhere((key, value) => key == entity.id);
+    return Future.value();
+  }
 }

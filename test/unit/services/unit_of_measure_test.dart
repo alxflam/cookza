@@ -1,14 +1,18 @@
+import 'package:cookza/services/flutter/navigator_service.dart';
 import 'package:cookza/services/shared_preferences_provider.dart';
 import 'package:cookza/services/unit_of_measure.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../mocks/shared_mocks.mocks.dart';
+
 void main() {
   setUpAll(() {
     SharedPreferences.setMockInitialValues({});
     GetIt.I.registerSingletonAsync<SharedPreferencesProvider>(
         () async => SharedPreferencesProviderImpl().init());
+    GetIt.I.registerSingleton<NavigatorService>(MockNavigatorService());
   });
 
   test(
@@ -22,6 +26,17 @@ void main() {
 
       expect(clt_01.amount, 1);
       expect(clt_01.uom.id, 'CLT');
+    },
+  );
+
+  test(
+    'Verify there is a display name consumer for every UoM',
+    () {
+      var provider = StaticUnitOfMeasure();
+      for (var uom in provider.getAll()) {
+        var nameConsumer = uomDisplayTexts[uom.id];
+        expect(nameConsumer, isNotNull);
+      }
     },
   );
 

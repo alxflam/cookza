@@ -243,14 +243,14 @@ class TextCheckbox extends StatelessWidget {
   Widget build(BuildContext context) {
     return StatefulBuilder(
       builder: (context, setState) {
-        return CheckboxListTile(
-          activeColor: Colors.green,
-          value: getValue(),
-          onChanged: (value) {
-            setState(() {
+        return ListTile(
+          trailing: Checkbox(
+            activeColor: Colors.green,
+            value: getValue(),
+            onChanged: (value) => setState(() {
               setValue(value);
-            });
-          },
+            }),
+          ),
           title: RichText(
             text: TextSpan(
               children: [
@@ -265,7 +265,6 @@ class TextCheckbox extends StatelessWidget {
               ],
             ),
           ),
-          controlAffinity: ListTileControlAffinity.trailing,
         );
       },
     );

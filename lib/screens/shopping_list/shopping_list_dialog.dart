@@ -51,14 +51,12 @@ Future<void> openShoppingListDialog(BuildContext context) async {
 
   var existingPlans = await sl.get<ShoppingListManager>().shoppingListsAsList;
   // TODO: refactor logic and provide tests
-  var matchedList = existingPlans.isEmpty
-      ? null
-      : existingPlans.firstWhereOrNull((e) =>
-          e.groupID == model!.groupID &&
-          (isSameDay(model.dateFrom, e.dateFrom) ||
-              (e.dateFrom.isBefore(DateTime.now()) &&
-                  isSameDay(model.dateFrom, DateTime.now()))) &&
-          e.dateUntil == model.dateEnd);
+  var matchedList = existingPlans.firstWhereOrNull((e) =>
+      e.groupID == model!.groupID &&
+      (isSameDay(model.dateFrom, e.dateFrom) ||
+          (e.dateFrom.isBefore(DateTime.now()) &&
+              isSameDay(model.dateFrom, DateTime.now()))) &&
+      isSameDay(e.dateUntil, model.dateEnd));
 
   var listEntity = matchedList ??
       MutableShoppingList.ofValues(
@@ -78,72 +76,81 @@ Future<ShoppingListModel>? _showMultipleGroupsDialog(BuildContext context,
         return ChangeNotifierProvider.value(
           value: model,
           child: Consumer<ShoppingListModel>(builder: (context, model, _) {
-            return SimpleDialog(
-              children: <Widget>[
-                SingleChildScrollView(
-                  child: Column(
-                    children: <Widget>[
-                      Row(
-                        children: [
-                          _getMealPlanGroupDropDown(context, model),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          Padding(
-                            padding: EdgeInsets.all(18),
-                            child: Column(
-                              children: [
-                                Text(formatDate(model.dateFrom, context)),
-                                Text(' - '),
-                                Text(formatDate(model.dateEnd, context)),
-                              ],
-                            ),
-                          ),
-                          IconButton(
-                            icon: FaIcon(FontAwesomeIcons.edit),
-                            onPressed: () async {
-                              var dateRange = await showDateRangePicker(
-                                  context: context,
-                                  firstDate: model.dateFrom,
-                                  lastDate: model.lastDate,
-                                  initialEntryMode:
-                                      DatePickerEntryMode.calendar,
-                                  initialDateRange: DateTimeRange(
-                                      start: model.dateFrom,
-                                      end: model.dateEnd));
-                              if (dateRange != null) {
-                                model.dateEnd = dateRange.end;
-                                model.dateFrom = dateRange.start;
-                              }
-                            },
-                          ),
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: <Widget>[
-                          Padding(
-                            padding: EdgeInsets.all(10),
-                            child: ElevatedButton(
-                              style: kRaisedGreenButtonStyle,
-                              child: Icon(Icons.check),
-                              onPressed: () async {
-                                Navigator.pop(context, model);
-                              },
-                            ),
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                )
-              ],
-            );
+            return MultipeGroupSelectionDialog(model);
           }),
         );
       });
+}
+
+class MultipeGroupSelectionDialog extends StatelessWidget {
+  final ShoppingListModel model;
+
+  const MultipeGroupSelectionDialog(this.model);
+
+  @override
+  Widget build(BuildContext context) {
+    return SimpleDialog(
+      children: <Widget>[
+        SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              Row(
+                children: [
+                  _getMealPlanGroupDropDown(context, model),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.all(18),
+                    child: Column(
+                      children: [
+                        Text(formatDate(model.dateFrom, context)),
+                        Text(' - '),
+                        Text(formatDate(model.dateEnd, context)),
+                      ],
+                    ),
+                  ),
+                  IconButton(
+                    icon: FaIcon(FontAwesomeIcons.edit),
+                    onPressed: () async {
+                      var dateRange = await showDateRangePicker(
+                          context: context,
+                          firstDate: model.dateFrom,
+                          lastDate: model.lastDate,
+                          initialEntryMode: DatePickerEntryMode.calendar,
+                          initialDateRange: DateTimeRange(
+                              start: model.dateFrom, end: model.dateEnd));
+                      if (dateRange != null) {
+                        model.dateEnd = dateRange.end;
+                        model.dateFrom = dateRange.start;
+                      }
+                    },
+                  ),
+                ],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.all(10),
+                    child: ElevatedButton(
+                      style: kRaisedGreenButtonStyle,
+                      child: Icon(Icons.check),
+                      onPressed: () async {
+                        Navigator.pop(context, model);
+                      },
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
+        )
+      ],
+    );
+  }
 }
 
 String formatDate(DateTime dateFrom, BuildContext context) {

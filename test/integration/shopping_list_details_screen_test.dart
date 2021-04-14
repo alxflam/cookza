@@ -2,8 +2,9 @@ import 'package:cookza/model/entities/mutable/mutable_ingredient_note.dart';
 import 'package:cookza/routes.dart';
 import 'package:cookza/screens/new_ingredient_screen.dart';
 import 'package:cookza/screens/shopping_list/shopping_list_detail_screen.dart';
-import 'package:cookza/screens/shopping_list/shopping_list_dialog.dart';
 import 'package:cookza/services/flutter/navigator_service.dart';
+import 'package:cookza/services/recipe/ingredients_calculator.dart';
+import 'package:cookza/services/shopping_list/shopping_list_items_generator.dart';
 import 'package:cookza/services/unit_of_measure.dart';
 import 'package:cookza/services/util/id_gen.dart';
 import 'package:cookza/services/meal_plan_manager.dart';
@@ -16,7 +17,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
-import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -42,6 +42,10 @@ void main() {
     GetIt.I.registerSingleton<ShoppingListManager>(shoppingListManager);
     GetIt.I.registerSingleton<UnitOfMeasureProvider>(StaticUnitOfMeasure());
     GetIt.I.registerSingleton<NavigatorService>(NavigatorService());
+    GetIt.I.registerSingleton<ShoppingListItemsGenerator>(
+        ShoppingListItemsGeneratorImpl());
+    GetIt.I
+        .registerSingleton<IngredientsCalculator>(IngredientsCalculatorImpl());
 
     GetIt.I.registerSingletonAsync<SharedPreferencesProvider>(
         () async => SharedPreferencesProviderImpl().init());
@@ -51,22 +55,22 @@ void main() {
     recipeManager.reset();
     mealPlanManager.reset();
   });
-  // TODO: separate test in other class, add sl detail screen test, add dnd test for meal plan, add ImageTextExtractor test
 
   testWidgets('Shopping list with single custom entry',
       (WidgetTester tester) async {
     ShoppingListModel model = ShoppingListModel.empty();
     model.groupID = '1';
 
-    var item = MutableIngredientNote.empty();
-    item.name = 'Something important';
-    item.unitOfMeasure = 'H87';
-    model.addCustomItem(item);
-
     // open fake app
     await _initApp(tester, observer, model);
     // navigate
     await tester.tap(find.byType(ElevatedButton));
+    await tester.pumpAndSettle();
+
+    var item = MutableIngredientNote.empty();
+    item.name = 'Something important';
+    item.unitOfMeasure = 'H87';
+    model.addCustomItem(item);
     await tester.pumpAndSettle();
 
     expect(find.text('Something important'), findsOneWidget);
@@ -77,15 +81,16 @@ void main() {
     ShoppingListModel model = ShoppingListModel.empty();
     model.groupID = '1';
 
-    var item = MutableIngredientNote.empty();
-    item.name = 'Something important';
-    item.unitOfMeasure = 'H87';
-    model.addCustomItem(item);
-
     // open fake app
     await _initApp(tester, observer, model);
     // navigate
     await tester.tap(find.byType(ElevatedButton));
+    await tester.pumpAndSettle();
+
+    var item = MutableIngredientNote.empty();
+    item.name = 'Something important';
+    item.unitOfMeasure = 'H87';
+    model.addCustomItem(item);
     await tester.pumpAndSettle();
 
     await tester.tap(find.byType(Checkbox));
@@ -126,15 +131,16 @@ void main() {
     ShoppingListModel model = ShoppingListModel.empty();
     model.groupID = '1';
 
-    var item = MutableIngredientNote.empty();
-    item.name = 'Cheese';
-    item.unitOfMeasure = 'H87';
-    model.addCustomItem(item);
-
     // open fake app
     await _initApp(tester, observer, model);
     // navigate
     await tester.tap(find.byType(ElevatedButton));
+    await tester.pumpAndSettle();
+
+    var item = MutableIngredientNote.empty();
+    item.name = 'Cheese';
+    item.unitOfMeasure = 'H87';
+    model.addCustomItem(item);
     await tester.pumpAndSettle();
 
     expect(find.text('Cheese'), findsOneWidget);
@@ -155,15 +161,16 @@ void main() {
     ShoppingListModel model = ShoppingListModel.empty();
     model.groupID = '1';
 
-    var item = MutableIngredientNote.empty();
-    item.name = 'Something important';
-    item.unitOfMeasure = 'H87';
-    model.addCustomItem(item);
-
     // open fake app
     await _initApp(tester, observer, model);
     // navigate
     await tester.tap(find.byType(ElevatedButton));
+    await tester.pumpAndSettle();
+
+    var item = MutableIngredientNote.empty();
+    item.name = 'Something important';
+    item.unitOfMeasure = 'H87';
+    model.addCustomItem(item);
     await tester.pumpAndSettle();
 
     expect(find.text('Something important'), findsOneWidget);
@@ -189,6 +196,11 @@ void main() {
     ShoppingListModel model = ShoppingListModel.empty();
     model.groupID = '1';
 
+    // open fake app
+    await _initApp(tester, observer, model);
+    await tester.tap(find.byType(ElevatedButton));
+    await tester.pumpAndSettle();
+
     var item = MutableIngredientNote.empty();
     item.name = 'First';
     item.unitOfMeasure = 'H87';
@@ -203,10 +215,6 @@ void main() {
     item.name = 'Third';
     item.unitOfMeasure = 'H87';
     model.addCustomItem(item);
-
-    // open fake app
-    await _initApp(tester, observer, model);
-    await tester.tap(find.byType(ElevatedButton));
     await tester.pumpAndSettle();
 
     expect(find.byType(CheckboxListTile), findsNWidgets(3));

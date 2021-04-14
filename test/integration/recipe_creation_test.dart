@@ -1,6 +1,9 @@
 import 'package:cookza/routes.dart';
 import 'package:cookza/screens/home_screen.dart';
 import 'package:cookza/screens/new_ingredient_screen.dart';
+import 'package:cookza/screens/ocr_creation/ingredients_image_step.dart';
+import 'package:cookza/screens/ocr_creation/instruction_image_step.dart';
+import 'package:cookza/screens/ocr_creation/overview_image_step.dart';
 import 'package:cookza/screens/recipe_modify/image_step.dart';
 import 'package:cookza/screens/recipe_modify/ingredient_step.dart';
 import 'package:cookza/screens/recipe_modify/instructions_step.dart';
@@ -205,6 +208,61 @@ void main() {
     expect(ingredients.length, 1);
     expect(ingredients.first.ingredient.name, 'Mushrooms');
     expect(ingredients.first.amount, 12);
+  });
+
+  testWidgets('Verify OCR buttons available', (WidgetTester tester) async {
+    await setupApplication(tester);
+    await _navigateToNewRecipeScreen(tester);
+
+    /// add name
+    await tester.tap(find.byIcon(Icons.image));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(OCROverviewImageScreen), findsOneWidget);
+    await tester.tap(find.byType(BackButton));
+    await tester.pumpAndSettle();
+    expect(find.byType(OCROverviewImageScreen), findsNothing);
+
+    /// navigate to next page
+    await tester.tap(find.text('CONTINUE'));
+    await tester.pumpAndSettle();
+
+    /// then verify we're on the image step
+    expect(find.byType(SelectImageWidget), findsOneWidget);
+
+    /// then proceed
+    await tester.tap(find.text('CONTINUE'));
+    await tester.pumpAndSettle();
+
+    /// then verify we're on the tag step
+    expect(find.byType(TagColumn), findsOneWidget);
+
+    /// then proceed
+    await _proceedStep(tester);
+
+    /// then verify we're on the ingredient step
+    expect(find.byType(IngredientStepContent), findsOneWidget);
+
+    await tester.tap(find.byIcon(Icons.image));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(OCRIngredientsImageScreen), findsOneWidget);
+    await tester.tap(find.byType(BackButton));
+    await tester.pumpAndSettle();
+    expect(find.byType(OCRIngredientsImageScreen), findsNothing);
+
+    /// then proceed
+    await _proceedStep(tester);
+
+    /// then verify we're on the ingredient step
+    expect(find.byType(InstructionsStepContent), findsOneWidget);
+    await tester.tap(find.byIcon(Icons.image));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(OCRInstructionsImageScreen), findsOneWidget);
+    await tester.tap(find.byType(BackButton));
+    await tester.pumpAndSettle();
+    expect(find.byType(OCRInstructionsImageScreen), findsNothing);
   });
 }
 

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:collection/collection.dart';
 
-var uomDisplayTexts = {
+final uomDisplayTexts = {
   'MMT': (BuildContext context, int count) =>
       AppLocalizations.of(context)!.uomMMT(count),
   'CMT': (BuildContext context, int count) =>
@@ -160,8 +160,9 @@ class UnitOfMeasure {
   /// returns the display name depending on the count of items referenced
   String getDisplayName(int amount) {
     var context = sl.get<NavigatorService>().currentContext;
+    final consumer = uomDisplayTexts[this._id];
     if (context != null) {
-      return uomDisplayTexts[this._id]!.call(context, amount);
+      return consumer!.call(context, amount);
     }
     return _id;
   }

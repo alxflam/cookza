@@ -19,6 +19,7 @@ import '../../mocks/shopping_list_manager_mock.dart';
 void main() {
   var mock = ShoppingListManagerMock();
   var itemsGenMock = MockShoppingListItemsGenerator();
+  late ShoppingListModel cut;
 
   setUpAll(() {
     SharedPreferences.setMockInitialValues({});
@@ -28,10 +29,19 @@ void main() {
     GetIt.I.registerSingleton<UnitOfMeasureProvider>(StaticUnitOfMeasure());
     GetIt.I.registerSingleton<ShoppingListItemsGenerator>(itemsGenMock);
     GetIt.I.registerSingleton<MealPlanManager>(MealPlanManagerMock());
+
+    List<MutableShoppingListItem> mockedValue = [];
+    when(itemsGenMock.generateItems(any))
+        .thenAnswer((_) async => Future.value(mockedValue));
+  });
+
+  setUp(() async {
+    cut = ShoppingListModel.empty();
+    // initialize model
+    await cut.getItems();
   });
 
   test('Add custom item and set bought', () async {
-    var cut = ShoppingListModel.empty();
     var item = MutableIngredientNote.empty();
     item.name = 'Something important';
     item.unitOfMeasure = 'H87';
@@ -46,7 +56,6 @@ void main() {
   });
 
   test('Item to ingredient note', () async {
-    var cut = ShoppingListModel.empty();
     var item = MutableIngredientNote.empty();
     item.name = 'Something important';
     item.unitOfMeasure = 'H87';
@@ -59,7 +68,6 @@ void main() {
   });
 
   test('Update item from ingredient note', () async {
-    var cut = ShoppingListModel.empty();
     var item = MutableIngredientNote.empty();
     item.name = 'Something important';
     item.unitOfMeasure = 'H87';
@@ -80,7 +88,6 @@ void main() {
     when(itemsGenMock.generateItems(any))
         .thenAnswer((_) async => Future.value(mockedValue));
 
-    var cut = ShoppingListModel.empty();
     var item = MutableIngredientNote.empty();
     item.name = 'Something important';
     item.unitOfMeasure = 'H87';
@@ -95,7 +102,6 @@ void main() {
   });
 
   test('Reorder items - swap two items', () async {
-    var cut = ShoppingListModel.empty();
     var item = MutableIngredientNote.empty();
     item.name = 'Something important';
     item.unitOfMeasure = 'H87';
@@ -118,7 +124,6 @@ void main() {
   });
 
   test('Reorder items - middle to the top', () async {
-    var cut = ShoppingListModel.empty();
     var first = MutableIngredientNote.empty();
     first.name = 'First';
     first.unitOfMeasure = 'H87';
@@ -151,7 +156,6 @@ void main() {
   });
 
   test('Reorder items - first to last', () async {
-    var cut = ShoppingListModel.empty();
     var first = MutableIngredientNote.empty();
     first.name = 'First';
     first.unitOfMeasure = 'H87';
@@ -184,7 +188,6 @@ void main() {
   });
 
   test('Sort items - setting bought does not change order', () async {
-    var cut = ShoppingListModel.empty();
     var item = MutableIngredientNote.empty();
     item.name = 'Something important';
     item.unitOfMeasure = 'H87';

@@ -1,4 +1,3 @@
-import 'package:cookza/model/entities/abstract/meal_plan_collection_entity.dart';
 import 'package:cookza/model/entities/abstract/user_entity.dart';
 import 'package:cookza/model/entities/firebase/meal_plan_collection_entity.dart';
 import 'package:cookza/model/entities/json/user_entity.dart';
