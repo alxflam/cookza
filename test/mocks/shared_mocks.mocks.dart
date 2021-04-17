@@ -1148,19 +1148,4 @@ class MockNavigatorService extends _i1.Mock implements _i42.NavigatorService {
       (super.noSuchMethod(Invocation.getter(#navigatorKey),
               returnValue: _FakeGlobalKey<_i33.NavigatorState>())
           as _i15.GlobalKey<_i33.NavigatorState>);
-  @override
-  _i17.Future<dynamic> pushNamed(String? routeName) =>
-      (super.noSuchMethod(Invocation.method(#pushNamed, [routeName]),
-          returnValue: Future<dynamic>.value(null)) as _i17.Future<dynamic>);
-  @override
-  _i17.Future<dynamic> pushReplacementNamed(String? routeName) =>
-      (super.noSuchMethod(Invocation.method(#pushReplacementNamed, [routeName]),
-          returnValue: Future<dynamic>.value(null)) as _i17.Future<dynamic>);
-  @override
-  _i17.Future<dynamic> navigateToNewInitialRoute(String? routeName) => (super
-      .noSuchMethod(Invocation.method(#navigateToNewInitialRoute, [routeName]),
-          returnValue: Future<dynamic>.value(null)) as _i17.Future<dynamic>);
-  @override
-  void goBack() => super.noSuchMethod(Invocation.method(#goBack, []),
-      returnValueForMissingStub: null);
 }
