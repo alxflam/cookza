@@ -8,6 +8,7 @@ import 'package:cookza/services/recipe/recipe_manager.dart';
 import 'package:cookza/services/recipe/similarity_service.dart';
 import 'package:cookza/services/shopping_list/shopping_list_items_generator.dart';
 import 'package:cookza/services/shopping_list/shopping_list_manager.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mockito/annotations.dart';
 
@@ -17,7 +18,9 @@ import 'package:mockito/annotations.dart';
   RecipeManager,
   ShoppingListManager,
   StackTrace,
-  SimilarityService
+  SimilarityService,
+  FirebaseAuth,
+  User
 ], customMocks: [
   MockSpec<NavigatorObserver>(returnNullOnMissingStub: true),
   MockSpec<MealPlanManager>(returnNullOnMissingStub: true),

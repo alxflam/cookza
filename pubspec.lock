@@ -168,7 +168,16 @@ packages:
       name: cloud_firestore
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.4"
+    version: "1.0.5"
+  cloud_firestore_mocks:
+    dependency: "direct dev"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: "91c2856d1744e84e1f1293dc30ad32452ad75600"
+      url: "git://github.com/alex0711/cloud_firestore_mocks.git"
+    source: git
+    version: "0.8.0"
   cloud_firestore_platform_interface:
     dependency: transitive
     description:
@@ -182,7 +191,7 @@ packages:
       name: cloud_firestore_web
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.4"
+    version: "1.0.5"
   code_builder:
     dependency: transitive
     description:
@@ -449,7 +458,7 @@ packages:
       name: image_picker_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.1"
+    version: "2.1.0"
   intl:
     dependency: "direct main"
     description:

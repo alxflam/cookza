@@ -6,7 +6,7 @@ import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:cookza/services/shared_preferences_provider.dart';
 
 abstract class MealPlanManager {
-  Future<MealPlanEntity> get mealPlan;
+  Future<MealPlanEntity?> get mealPlan;
 
   String? get currentCollection;
   set currentCollection(String? value);
@@ -36,7 +36,7 @@ class MealPlanManagerFirebase implements MealPlanManager {
   String? _currentCollection;
 
   @override
-  Future<MealPlanEntity> get mealPlan async {
+  Future<MealPlanEntity?> get mealPlan async {
     if (currentCollection == null || currentCollection!.isEmpty) {
       return Future.value(null);
     }
@@ -92,6 +92,9 @@ class MealPlanManagerFirebase implements MealPlanManager {
     var group = await getCollectionByID(entity.id!);
     if (group.users.where((e) => e.id != firebase.userUid).isNotEmpty) {
       throw 'Can\'t delete group with members';
+    }
+    if (currentCollection == entity.id) {
+      currentCollection = null;
     }
     return firebase.deleteMealPlanCollection(entity.id!);
   }

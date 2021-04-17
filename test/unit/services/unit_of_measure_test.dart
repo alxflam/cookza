@@ -36,6 +36,8 @@ void main() {
       for (var uom in provider.getAll()) {
         var nameConsumer = uomDisplayTexts[uom.id];
         expect(nameConsumer, isNotNull);
+        // TODO: create widget test so we can provide test coverage on the consumers or display the UoM settings page
+        // see settings screen test maybe?
       }
     },
   );

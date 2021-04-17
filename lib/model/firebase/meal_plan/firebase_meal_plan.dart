@@ -59,9 +59,6 @@ class FirebaseMealPlanDocument {
   @JsonKey(toJson: kListToJson)
   List<FirebaseMealPlanDate> items;
 
-  // @JsonKey(nullable: false)
-  // Map<String, String> users;
-
   @JsonKey()
   String groupID;
 

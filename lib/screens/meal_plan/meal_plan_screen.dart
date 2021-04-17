@@ -63,7 +63,7 @@ class MealPlanScreen extends StatelessWidget {
                 );
               }
 
-              return FutureBuilder<MealPlanEntity>(
+              return FutureBuilder<MealPlanEntity?>(
                 future: sl.get<MealPlanManager>().mealPlan,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
