@@ -5,7 +5,6 @@ import 'package:cookza/model/entities/mutable/mutable_ingredient_note.dart';
 import 'package:cookza/model/entities/mutable/mutable_instruction.dart';
 import 'package:cookza/model/entities/mutable/mutable_recipe.dart';
 import 'package:cookza/model/json/recipe.dart';
-import 'package:cookza/services/util/id_gen.dart';
 import 'package:cookza/services/recipe/image_manager.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
@@ -19,7 +18,6 @@ void main() {
 
   setUpAll(() {
     GetIt.I.registerSingleton<ImageManager>(mock);
-    GetIt.I.registerSingleton<IdGenerator>(UniqueKeyIdGenerator());
   });
 
   test('Copy values from entity', () async {
@@ -46,6 +44,7 @@ void main() {
     recipe.servings = 2;
     recipe.difficulty = DIFFICULTY.HARD;
     recipe.tags = ['veggie'];
+    recipe.id = '1234';
 
     var cut = await Recipe.applyFrom(recipe);
 

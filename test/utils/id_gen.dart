@@ -1,11 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-abstract class IdGenerator {
-  String get id;
-}
-
-class UniqueKeyIdGenerator implements IdGenerator {
-  @override
+class UniqueKeyIdGenerator {
   String get id {
     String key = UniqueKey().toString();
     key = key.trim();

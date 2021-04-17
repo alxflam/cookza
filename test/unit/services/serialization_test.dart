@@ -3,16 +3,12 @@ import 'package:cookza/model/json/ingredient.dart';
 import 'package:cookza/model/json/ingredient_note.dart';
 import 'package:cookza/model/json/recipe.dart';
 import 'package:cookza/model/json/recipe_list.dart';
-import 'package:cookza/services/util/id_gen.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:get_it/get_it.dart';
 
 void main() {
   test(
     'Serialize',
     () async {
-      GetIt.I.registerSingleton<IdGenerator>(UniqueKeyIdGenerator());
-
       var list = [
         IngredientNote(
             ingredient: Ingredient(name: 'Onion'),
@@ -38,7 +34,7 @@ void main() {
           'Second step',
           'Last step',
         ],
-        id: '',
+        id: '1',
         rating: 3,
         recipeCollection: '',
         servings: 2,

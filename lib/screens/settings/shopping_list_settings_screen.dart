@@ -23,19 +23,15 @@ class ShoppingListSettingsScreen extends StatelessWidget {
                 var column = Column(
                   children: [],
                 );
-                var tile = SwitchListTile(
-                    title: Text('§Group items'),
-                    subtitle: Text('§Group items by category'),
-                    value: model.showCategories,
-                    onChanged: (value) {
-                      model.showCategories = value;
-                    });
+                // var tile = SwitchListTile(
+                //     title: Text('§Group items'),
+                //     subtitle: Text('§Group items by category'),
+                //     value: model.showCategories,
+                //     onChanged: (value) {
+                //       model.showCategories = value;
+                //     });
 
-                column.children.add(tile);
-
-                if (model.showCategories) {
-                  column.children.add(_buildCategories(model, context));
-                }
+                // column.children.add(tile);
 
                 return column;
               },
@@ -44,28 +40,5 @@ class ShoppingListSettingsScreen extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  Widget _buildCategories(
-      ShoppingListSettingsModel model, BuildContext context) {
-    List<Widget> tiles = [];
-
-    tiles.add(
-      Text('§Categories: '),
-    );
-
-    for (var item in model.categories) {
-      tiles.add(
-        ListTile(
-          title: Text(item),
-          trailing: IconButton(
-            icon: Icon(Icons.edit),
-            onPressed: () {},
-          ),
-        ),
-      );
-    }
-
-    return Column(children: tiles);
   }
 }

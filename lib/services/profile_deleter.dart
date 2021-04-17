@@ -13,13 +13,13 @@ class ProfileDeleterImpl implements ProfileDeleter {
   @override
   Future<void> delete() async {
     // delete meal plan groups and assigned meal plans
-    await deleteMealPlans();
+    await _deleteMealPlans();
 
     // delete recipe groups and assigned recipes
-    await deleteRecipes();
+    await _deleteRecipes();
   }
 
-  Future<void> deleteMealPlans() async {
+  Future<void> _deleteMealPlans() async {
     var mealPlanGroups = await firebase.mealPlanCollectionsAsList();
     for (var mealPlanGroup in mealPlanGroups) {
       List<UserEntity> users = List.of(mealPlanGroup.users);
@@ -41,7 +41,7 @@ class ProfileDeleterImpl implements ProfileDeleter {
     return otherOwners != null;
   }
 
-  Future<void> deleteRecipes() async {
+  Future<void> _deleteRecipes() async {
     var recipeGroups = await firebase.recipeCollectionsAsList();
     for (var recipeGroup in recipeGroups) {
       List<UserEntity> users = List.of(recipeGroup.users);

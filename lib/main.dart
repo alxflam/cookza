@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:cookza/constants.dart';
 import 'package:cookza/routes.dart';
 import 'package:cookza/screens/settings/onboarding_screen.dart';
-import 'package:cookza/screens/web/web_landing_screen.dart';
 import 'package:cookza/services/flutter/exception_handler.dart';
 import 'package:cookza/services/flutter/navigator_service.dart';
 import 'package:cookza/services/shared_preferences_provider.dart';

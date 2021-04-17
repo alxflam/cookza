@@ -1,7 +1,6 @@
 import 'package:cookza/components/recipe_groups_drawer.dart';
 import 'package:cookza/routes.dart';
 import 'package:cookza/screens/recipe_list_screen.dart';
-import 'package:cookza/services/util/id_gen.dart';
 import 'package:cookza/services/meal_plan_manager.dart';
 import 'package:cookza/services/recipe/recipe_manager.dart';
 import 'package:cookza/services/shared_preferences_provider.dart';
@@ -27,7 +26,6 @@ void main() {
     SharedPreferences.setMockInitialValues({});
     GetIt.I.registerSingleton<RecipeManager>(recipeManager);
     GetIt.I.registerSingleton<MealPlanManager>(mealPlanManager);
-    GetIt.I.registerSingleton<IdGenerator>(UniqueKeyIdGenerator());
 
     GetIt.I.registerSingletonAsync<SharedPreferencesProvider>(
         () async => SharedPreferencesProviderImpl().init());

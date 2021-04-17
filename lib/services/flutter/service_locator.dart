@@ -9,7 +9,6 @@ import 'package:cookza/services/abstract/recipe_text_export.dart';
 import 'package:cookza/services/abstract/shopping_list_text_export.dart';
 import 'package:cookza/services/flutter/exception_handler.dart';
 import 'package:cookza/services/firebase_provider.dart';
-import 'package:cookza/services/util/id_gen.dart';
 import 'package:cookza/services/recipe/image_manager.dart';
 import 'package:cookza/services/image_parser.dart';
 import 'package:cookza/services/recipe/ingredients_calculator.dart';
@@ -54,7 +53,6 @@ void setupServiceLocator() {
   sl.registerLazySingleton<FirebaseFirestore>(() => FirebaseFirestore.instance);
   sl.registerLazySingleton<FirebaseAuth>(() => FirebaseAuth.instance);
 
-  sl.registerSingleton<IdGenerator>(UniqueKeyIdGenerator());
   sl.registerSingleton<StorageProvider>(LocalStorageProvider());
   sl.registerSingleton<UnitOfMeasureProvider>(StaticUnitOfMeasure());
   sl.registerSingleton<SimilarityService>(SimilarityService());
@@ -67,7 +65,7 @@ void setupServiceLocator() {
   sl.registerSingleton<PlatformInfo>(PlatformInfoImpl());
   sl.registerSingleton<PDFExporter>(PDFExporterImpl());
   sl.registerSingleton<RecipeManager>(RecipeManagerFirebase());
-  sl.registerSingleton<ImageManager>(ImageManagerFirebase());
+  sl.registerSingletonAsync<ImageManager>(() async => ImageManagerFirebase());
   sl.registerSingleton<MealPlanManager>(MealPlanManagerFirebase());
   sl.registerSingleton<NavigatorService>(NavigatorService());
   sl.registerSingleton<ImageTextExtractor>(ImageTextExtractorImpl());

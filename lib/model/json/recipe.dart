@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:cookza/constants.dart';
 import 'package:cookza/model/entities/abstract/recipe_entity.dart';
 import 'package:cookza/model/json/ingredient_note.dart';
-import 'package:cookza/services/util/id_gen.dart';
 import 'package:cookza/services/recipe/image_manager.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -101,10 +100,6 @@ class Recipe {
       required this.rating,
       required this.servings,
       this.serializedImage}) {
-    // initalize values
-    if (this.id.isEmpty) {
-      this.id = sl.get<IdGenerator>().id;
-    }
     if (this.servings == 0) {
       this.servings = 1;
     }

@@ -15,22 +15,17 @@ import 'package:cookza/model/entities/firebase/shopping_list_entity.dart';
 import 'package:cookza/model/entities/mutable/mutable_recipe.dart';
 import 'package:cookza/model/firebase/collections/firebase_meal_plan_collection.dart';
 import 'package:cookza/model/firebase/collections/firebase_recipe_collection.dart';
-import 'package:cookza/model/firebase/general/firebase_handshake.dart';
 import 'package:cookza/model/firebase/meal_plan/firebase_meal_plan.dart';
 import 'package:cookza/model/firebase/recipe/firebase_ingredient.dart';
 import 'package:cookza/model/firebase/recipe/firebase_instruction.dart';
 import 'package:cookza/model/firebase/recipe/firebase_recipe.dart';
 import 'package:cookza/model/firebase/shopping_list/firebase_shopping_list.dart';
-import 'package:cookza/screens/web/web_landing_screen.dart';
-import 'package:cookza/services/abstract/platform_info.dart';
 import 'package:cookza/services/recipe/image_manager.dart';
 import 'package:cookza/services/meal_plan_manager.dart';
-import 'package:cookza/services/flutter/navigator_service.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:cookza/services/recipe/recipe_manager.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 
 const RECIPE_GROUPS = 'recipeGroups';
 const INGREDIENTS = 'ingredients';
@@ -78,7 +73,7 @@ class FirebaseProvider {
 
   Stream<List<ShoppingListEntity>> get shoppingListsAsStream {
     // TODO: cache groups until visiting meal plan screen
-    var groups = [] as List<String>;
+    List<String> groups = [];
 
     return _shoppingListsQuery(groups).snapshots().map((e) => e.docs
         .map((e) => ShoppingListEntityFirebase.of(

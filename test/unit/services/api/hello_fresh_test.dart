@@ -1,5 +1,4 @@
 import 'package:cookza/services/api/hello_fresh.dart';
-import 'package:cookza/services/util/id_gen.dart';
 import 'package:cookza/services/unit_of_measure.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
@@ -12,7 +11,6 @@ void main() {
     () async {
       final sl = GetIt.instance;
 
-      sl.registerSingleton<IdGenerator>(UniqueKeyIdGenerator());
       sl.registerSingleton<UnitOfMeasureProvider>(UoMMock());
 
       // var id = '5f2ac031226ba26eee2f9574';

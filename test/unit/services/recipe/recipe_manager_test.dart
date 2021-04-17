@@ -1,4 +1,3 @@
-import 'package:cookza/model/entities/abstract/user_entity.dart';
 import 'package:cookza/model/entities/firebase/user_entity.dart';
 import 'package:cookza/model/entities/mutable/mutable_ingredient_note.dart';
 import 'package:cookza/model/entities/mutable/mutable_instruction.dart';
@@ -132,7 +131,7 @@ void main() {
 
   test('Create a recipe', () async {
     var cut = RecipeManagerFirebase();
-    MutableRecipe recipe = _createMutableRecipe('Test', '1');
+    MutableRecipe recipe = createMutableRecipe('Test', '1');
 
     var id = await cut.createOrUpdate(recipe);
     expect(id, isNotNull);
@@ -145,7 +144,7 @@ void main() {
   test('Delete a recipe', () async {
     var cut = RecipeManagerFirebase();
 
-    MutableRecipe recipe = _createMutableRecipe('Test', '1');
+    MutableRecipe recipe = createMutableRecipe('Test', '1');
 
     var id = await cut.createOrUpdate(recipe);
     expect(id, isNotNull);
@@ -160,7 +159,7 @@ void main() {
   test('Update a recipe', () async {
     var cut = RecipeManagerFirebase();
 
-    MutableRecipe recipe = _createMutableRecipe('Test', '1');
+    MutableRecipe recipe = createMutableRecipe('Test', '1');
 
     var id = await cut.createOrUpdate(recipe);
     expect(id, isNotNull);
@@ -176,7 +175,7 @@ void main() {
   test('Set recipe rating', () async {
     var cut = RecipeManagerFirebase();
 
-    MutableRecipe recipe = _createMutableRecipe('Test', '1');
+    MutableRecipe recipe = createMutableRecipe('Test', '1');
 
     var id = await cut.createOrUpdate(recipe);
     expect(id, isNotNull);
@@ -194,8 +193,8 @@ void main() {
     var firstGroup = await cut.createCollection('1');
     var secondGroup = await cut.createCollection('2');
 
-    MutableRecipe first = _createMutableRecipe('Test', firstGroup.id!);
-    MutableRecipe second = _createMutableRecipe('Test', secondGroup.id!);
+    MutableRecipe first = createMutableRecipe('Test', firstGroup.id!);
+    MutableRecipe second = createMutableRecipe('Test', secondGroup.id!);
 
     await cut.createOrUpdate(first);
     await cut.createOrUpdate(second);
@@ -220,8 +219,8 @@ void main() {
     var group = await cut.createCollection('1');
     cut.currentCollection = group.id!;
 
-    MutableRecipe first = _createMutableRecipe('Test', group.id!);
-    MutableRecipe second = _createMutableRecipe('Test', group.id!);
+    MutableRecipe first = createMutableRecipe('Test', group.id!);
+    MutableRecipe second = createMutableRecipe('Test', group.id!);
 
     await cut.importRecipes([first, second]);
 
@@ -236,8 +235,8 @@ void main() {
     var secondGroup = await cut.createCollection('2');
     cut.currentCollection = firstGroup.id!;
 
-    MutableRecipe first = _createMutableRecipe('Test', firstGroup.id!);
-    MutableRecipe second = _createMutableRecipe('Test', secondGroup.id!);
+    MutableRecipe first = createMutableRecipe('Test', firstGroup.id!);
+    MutableRecipe second = createMutableRecipe('Test', secondGroup.id!);
 
     await cut.createOrUpdate(first);
     await cut.createOrUpdate(second);
@@ -253,7 +252,7 @@ void main() {
     var firstGroup = await cut.createCollection('1');
     cut.currentCollection = null;
 
-    MutableRecipe first = _createMutableRecipe('Test', firstGroup.id!);
+    MutableRecipe first = createMutableRecipe('Test', firstGroup.id!);
 
     await cut.createOrUpdate(first);
 
@@ -263,7 +262,7 @@ void main() {
   });
 }
 
-MutableRecipe _createMutableRecipe(String name, String group) {
+MutableRecipe createMutableRecipe(String name, String group) {
   var recipe = MutableRecipe.empty();
   recipe.recipeCollectionId = group;
   recipe.name = name;

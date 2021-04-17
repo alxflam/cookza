@@ -7,7 +7,6 @@ import 'package:cookza/screens/recipe_list_screen.dart';
 import 'package:cookza/screens/recipe_modify/new_recipe_screen.dart';
 import 'package:cookza/screens/settings/settings_screen.dart';
 import 'package:cookza/screens/shopping_list/shopping_list_overview_screen.dart';
-import 'package:cookza/screens/web_login_app.dart';
 import 'package:cookza/services/abstract/platform_info.dart';
 import 'package:cookza/services/abstract/receive_intent_handler.dart';
 import 'package:cookza/services/firebase_provider.dart';

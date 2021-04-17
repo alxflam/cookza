@@ -4,7 +4,6 @@ import 'package:cookza/screens/shopping_list/shopping_list_detail_screen.dart';
 import 'package:cookza/screens/shopping_list/shopping_list_overview_screen.dart';
 import 'package:cookza/services/flutter/navigator_service.dart';
 import 'package:cookza/services/unit_of_measure.dart';
-import 'package:cookza/services/util/id_gen.dart';
 import 'package:cookza/services/meal_plan_manager.dart';
 import 'package:cookza/services/recipe/recipe_manager.dart';
 import 'package:cookza/services/shared_preferences_provider.dart';
@@ -33,7 +32,6 @@ void main() {
     SharedPreferences.setMockInitialValues({});
     GetIt.I.registerSingleton<RecipeManager>(recipeManager);
     GetIt.I.registerSingleton<MealPlanManager>(mealPlanManager);
-    GetIt.I.registerSingleton<IdGenerator>(UniqueKeyIdGenerator());
     GetIt.I.registerSingleton<ShoppingListManager>(shoppingListManager);
     GetIt.I.registerSingleton<UnitOfMeasureProvider>(StaticUnitOfMeasure());
     GetIt.I.registerSingleton<NavigatorService>(NavigatorService());

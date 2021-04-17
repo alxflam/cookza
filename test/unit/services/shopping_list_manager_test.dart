@@ -69,4 +69,44 @@ void main() {
     retrievedLists = await cut.shoppingListsAsList;
     expect(retrievedLists.first.items.length, 2);
   });
+
+  test('Get lists as stream', () async {
+    var cut = ShoppingListManagerImpl();
+    var mealPlanManager = MealPlanManagerFirebase();
+
+    var group = await mealPlanManager.createCollection('Test');
+    var cheese = MutableShoppingListItem.ofIngredientNote(
+        MutableIngredientNote.empty()..name = 'Cheese', false, true);
+
+    var list = MutableShoppingList.ofValues(DateTime.now(),
+        DateTime.now().add(Duration(days: 2)), group.id!, [cheese]);
+    var createdList = await cut.createOrUpdate(list);
+    expect(createdList, isNotNull);
+    expect(createdList.items.length, 1);
+
+    var listsStream = await cut.shoppingLists;
+    expect(listsStream, isNotNull);
+  });
+
+  test('Delete shopping list', () async {
+    var cut = ShoppingListManagerImpl();
+    var mealPlanManager = MealPlanManagerFirebase();
+
+    var group = await mealPlanManager.createCollection('Test');
+
+    var retrievedLists = await cut.shoppingListsAsList;
+    expect(retrievedLists, isEmpty);
+
+    var cheese = MutableShoppingListItem.ofIngredientNote(
+        MutableIngredientNote.empty()..name = 'Cheese', false, true);
+
+    var list = MutableShoppingList.ofValues(DateTime.now(),
+        DateTime.now().add(Duration(days: 2)), group.id!, [cheese]);
+    var createdList = await cut.createOrUpdate(list);
+    expect(createdList, isNotNull);
+    expect(createdList.items.length, 1);
+
+    await cut.delete(createdList);
+    expect(await cut.shoppingListsAsList, isEmpty);
+  });
 }

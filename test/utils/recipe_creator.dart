@@ -1,7 +1,8 @@
 import 'package:cookza/model/entities/abstract/recipe_entity.dart';
 import 'package:cookza/model/entities/mutable/mutable_ingredient_note.dart';
 import 'package:cookza/model/entities/mutable/mutable_recipe.dart';
-import 'package:cookza/services/util/id_gen.dart';
+
+import 'id_gen.dart';
 
 class RecipeCreator {
   static MutableRecipe createRecipe(String name) {
