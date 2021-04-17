@@ -85,9 +85,9 @@ class CookzaMaterialApp extends StatelessWidget {
   }
 
   String getInitialRoute() {
-    if (kIsWeb) {
-      return WebLandingPage.id;
-    }
+    // if (kIsWeb) {
+    //   return WebLandingPage.id;
+    // }
 
     var prefs = sl.get<SharedPreferencesProvider>();
     if (!prefs.introductionShown() ||

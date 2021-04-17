@@ -85,13 +85,13 @@ class MainAppDrawer extends StatelessWidget {
           leading: Icon(Icons.power_settings_new),
           onTap: () async {
             var util = sl.get<FirebaseProvider>();
-            await util.logOffFromWebClient(util.userUid);
+            // await util.logOffFromWebClient(util.userUid);
           });
     }
     return ListTile(
       title: Text('$kAppName ${AppLocalizations.of(context)!.web}'),
       leading: FaIcon(kWebAppData),
-      onTap: () => Navigator.pushNamed(context, WebLoginOnAppScreen.id),
+      // onTap: () => Navigator.pushNamed(context, WebLoginOnAppScreen.id),
     );
   }
 }
