@@ -150,7 +150,7 @@ void main() {
 
     var planByManager = await cut.getMealPlanByCollectionID(group.id!);
     expect(planByManager, isNotNull);
-    expect(planByManager.items, isEmpty);
+    expect(planByManager?.items, isEmpty);
 
     var item = MutableMealPlanDateEntity.empty(DateTime.now());
     item.addRecipe(MutableMealPlanRecipeEntity.fromValues('', 'Test', 0));
@@ -159,7 +159,7 @@ void main() {
 
     planByManager = await cut.getMealPlanByCollectionID(group.id!);
     expect(planByManager, isNotNull);
-    expect(planByManager.items.length, 1);
+    expect(planByManager?.items.length, 1);
   });
 
   test('Get current meal plan', () async {
@@ -184,17 +184,16 @@ void main() {
   test('Get meal plan by id', () async {
     var cut = MealPlanManagerFirebase();
 
-    var plan = await cut.mealPlan;
-    expect(plan, isNull);
-
     var group = await cut.createCollection('Test');
     cut.currentCollection = group.id;
 
-    // TODO: list is null as the meal plan does not exist yet...
-    plan = await cut.getMealPlanByCollectionID(group.id!);
-    expect(plan, isNotNull);
+    var plan = MutableMealPlan.of(null, group.id!, [], 2);
+    await cut.saveMealPlan(plan);
 
-    plan = await cut.getMealPlanByCollectionID('I-do-not-exist');
-    expect(plan, isNull);
+    var savedPlan = await cut.getMealPlanByCollectionID(group.id!);
+    expect(savedPlan, isNotNull);
+
+    savedPlan = await cut.getMealPlanByCollectionID('I-do-not-exist');
+    expect(savedPlan, isNull);
   });
 }

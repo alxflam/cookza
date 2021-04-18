@@ -604,9 +604,12 @@ class FirebaseProvider {
     return result;
   }
 
-  Future<MealPlanEntity> getMealPlanByID(String id) async {
+  Future<MealPlanEntity?> getMealPlanByID(String id) async {
     // TODO: change query to where if ever doc id of meal plan is different from meal plan group
     var doc = await _firestore.collection(MEAL_PLANS).doc(id).get();
+    if (!doc.exists) {
+      return Future.value(null);
+    }
     var parsedDoc = FirebaseMealPlanDocument.fromJson(doc.data()!, doc.id);
     return MealPlanEntityFirebase.of(parsedDoc);
   }

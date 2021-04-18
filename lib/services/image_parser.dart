@@ -201,13 +201,11 @@ class ImageTextExtractorImpl implements ImageTextExtractor {
           }
         }
       }
-      if (unit != null) {
-        for (var word in words) {
-          var uom = uoms.firstWhereOrNull((e) => e.displayName == word);
-          if (uom != null) {
-            unit = uom.id;
-            break;
-          }
+      for (var word in words) {
+        var uom = uoms.firstWhereOrNull((e) => e.displayName == word);
+        if (uom != null) {
+          unit = uom.id;
+          break;
         }
       }
     }

@@ -23,14 +23,16 @@ class ShoppingListItemsGeneratorImpl implements ShoppingListItemsGenerator {
         .get<MealPlanManager>()
         .getMealPlanByCollectionID(entity.groupID);
 
-    // collect all recipes planned for the given duration
-    for (var item in mealPlanEntity.items) {
-      if (item.recipes.isNotEmpty && _dateIsMatching(item, entity)) {
-        for (var recipe in item.recipes) {
-          if (!recipe.isNote) {
-            recipeReferences.update(
-                recipe.id!, (value) => value + recipe.servings!,
-                ifAbsent: () => recipe.servings!);
+    if (mealPlanEntity != null) {
+      // collect all recipes planned for the given duration
+      for (var item in mealPlanEntity.items) {
+        if (item.recipes.isNotEmpty && _dateIsMatching(item, entity)) {
+          for (var recipe in item.recipes) {
+            if (!recipe.isNote) {
+              recipeReferences.update(
+                  recipe.id!, (value) => value + recipe.servings!,
+                  ifAbsent: () => recipe.servings!);
+            }
           }
         }
       }

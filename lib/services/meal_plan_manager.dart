@@ -24,7 +24,7 @@ abstract class MealPlanManager {
 
   Future<void> leaveGroup(MealPlanCollectionEntity entity);
 
-  Future<MealPlanEntity> getMealPlanByCollectionID(String id);
+  Future<MealPlanEntity?> getMealPlanByCollectionID(String id);
 
   Future<void> init();
 
@@ -115,7 +115,7 @@ class MealPlanManagerFirebase implements MealPlanManager {
   }
 
   @override
-  Future<MealPlanEntity> getMealPlanByCollectionID(String id) {
+  Future<MealPlanEntity?> getMealPlanByCollectionID(String id) {
     return sl.get<FirebaseProvider>().getMealPlanByID(id);
   }
 
