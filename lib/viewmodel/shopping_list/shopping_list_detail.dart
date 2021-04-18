@@ -114,11 +114,11 @@ class ShoppingListModel extends ChangeNotifier {
 
   void _sortItems() {
     this._items.sort((a, b) {
-      if (a.index != null) {
-        return a.index.compareTo(b.index ?? a.index + 1);
+      if (a.index >= 0) {
+        return a.index.compareTo(b.index);
       }
-      if (b.index != null) {
-        return a.index.compareTo(b.index ?? a.index + 1);
+      if (b.index >= 0) {
+        return a.index.compareTo(b.index);
       }
       if (a.isBought && !b.isBought) {
         return 1;
@@ -202,7 +202,7 @@ class ShoppingListModel extends ChangeNotifier {
     // only save custom items, bought items and items with an explicit index (hence has been moved manually)
     var customItems = this
         ._items
-        .where((a) => a.isCustom || a.isBought || a.index != null)
+        .where((a) => a.isCustom || a.isBought || a.index >= 0)
         .toList();
 
     // remove all entities

@@ -9,7 +9,6 @@ import 'package:get_it/get_it.dart';
 import 'package:mockito/mockito.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../../integration/shopping_list_overview_screen_test.dart';
 import '../../mocks/shared_mocks.mocks.dart';
 import '../../utils/recipe_creator.dart';
 
