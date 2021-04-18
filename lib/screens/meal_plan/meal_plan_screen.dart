@@ -109,7 +109,7 @@ class MealPlanScreen extends StatelessWidget {
     for (var i = 0; i < model.entries.length; i++) {
       var currentWeek = model.entries[i].week;
       if (currentWeek != previousWeek) {
-        tiles.add(WeekNumber(i, tileColor));
+        tiles.add(WeekNumber(currentWeek, tileColor));
         previousWeek = currentWeek;
       }
 
