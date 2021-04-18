@@ -28,20 +28,6 @@ void main() {
       expect(clt_01.uom.id, 'CLT');
     },
   );
-
-  test(
-    'Verify there is a display name consumer for every UoM',
-    () {
-      var provider = StaticUnitOfMeasure();
-      for (var uom in provider.getAll()) {
-        var nameConsumer = uomDisplayTexts[uom.id];
-        expect(nameConsumer, isNotNull);
-        // TODO: create widget test so we can provide test coverage on the consumers or display the UoM settings page
-        // see settings screen test maybe?
-      }
-    },
-  );
-
   test(
     'Convert Length next Bigger',
     () {

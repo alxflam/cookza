@@ -17,7 +17,6 @@ var navigatorService = NavigatorService();
 
 void main() {
   setUpAll(() async {
-    // TODO: needs to run as a widget test as a build context is needed...
     GetIt.I.registerSingleton<NavigatorService>(navigatorService);
     GetIt.I.registerSingleton<ImageManager>(imageManager);
   });
