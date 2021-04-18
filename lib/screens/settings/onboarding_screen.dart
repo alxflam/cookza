@@ -27,20 +27,14 @@ class OnBoardingScreen extends StatelessWidget {
   }
 
   Widget _buildImage(IconData icon, BuildContext context) {
-    return ConstrainedBox(
-      constraints: BoxConstraints.tightFor(width: 40),
-      child: Padding(
-        padding: EdgeInsets.all(20),
-        child: Center(
-          child: CircleAvatar(
-            backgroundColor: Theme.of(context).colorScheme.primary,
-            radius: 100,
-            child: FaIcon(
-              icon,
-              color: Colors.white,
-              size: 100,
-            ),
-          ),
+    return Center(
+      child: CircleAvatar(
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        radius: 100,
+        child: FaIcon(
+          icon,
+          color: Colors.white,
+          size: 90,
         ),
       ),
     );
@@ -88,19 +82,13 @@ class OnBoardingScreen extends StatelessWidget {
       PageViewModel(
         title: AppLocalizations.of(context)!.onboardingWelcomeTitle,
         body: AppLocalizations.of(context)!.onboardingWelcomeBody,
-        image: ConstrainedBox(
-          constraints: BoxConstraints.tightFor(width: 40),
-          child: Padding(
-            padding: EdgeInsets.all(20),
-            child: Center(
-              child: CircleAvatar(
-                backgroundColor: Theme.of(context).colorScheme.primary,
-                radius: 100,
-                child: Image(
-                  width: 100,
-                  image: AssetImage(kIconTransparent),
-                ),
-              ),
+        image: Center(
+          child: CircleAvatar(
+            backgroundColor: Theme.of(context).colorScheme.primary,
+            radius: 100,
+            child: Image(
+              width: 100,
+              image: AssetImage(kIconTransparent),
             ),
           ),
         ),
