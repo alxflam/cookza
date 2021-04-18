@@ -48,16 +48,6 @@
 			}
 		}
 	},
-	"ingredientsForServings": "Ingredients for {count} Servings",
-	"@ingredientsForServings": {
-		"description": "Ingredients for X servings",
-		"placeholders": {
-			"count": {
-				"type": "int",
-				"format": "compact"
-				}
-			}
-	},
 	"missingIngredientName": "Assign an ingredient name",
 	"@missingIngredientName": {},
 	"amount": "Amount",

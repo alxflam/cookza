@@ -73,8 +73,8 @@ class ListOfIngredientsHeader extends StatelessWidget {
               model.decreaseServings();
             },
           ),
-          Text(AppLocalizations.of(context)!
-              .ingredientsForServings(model.servings)),
+          Text(
+              '${model.servings} ${AppLocalizations.of(context)!.servings(model.servings)}'),
           RoundIconButton(
             icon: FontAwesomeIcons.plus,
             onPress: () {

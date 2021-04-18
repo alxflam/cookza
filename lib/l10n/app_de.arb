@@ -52,7 +52,6 @@
   "imageDeleted": "Bild gelöscht",
   "import": "Import",
   "ingredient": "{count,plural, =1{Zutat}other{Zutaten}}",
-  "ingredientsForServings": "Zutaten für {count} Portionen",
   "instructions": "Zubereitung",
   "json": "JSON",
   "leaveGroup": "Gruppe verlassen",
