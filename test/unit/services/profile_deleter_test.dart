@@ -15,14 +15,9 @@ import '../../utils/firebase.dart';
 import 'recipe/recipe_manager_test.dart';
 
 void main() {
-  setUpAll(() async {
+  setUp(() async {
     await mockFirestore();
-
     GetIt.I.registerSingleton<ImageManager>(MockImageManager());
-  });
-
-  setUp(() {
-    resetFirestoreMock();
   });
 
   test('Delete profile', () async {

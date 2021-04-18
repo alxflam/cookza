@@ -8,12 +8,8 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../../utils/firebase.dart';
 
 void main() {
-  setUpAll(() async {
+  setUp(() async {
     await mockFirestore();
-  });
-
-  setUp(() {
-    resetFirestoreMock();
   });
 
   test('Create collection', () async {

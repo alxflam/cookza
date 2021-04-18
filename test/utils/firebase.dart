@@ -12,15 +12,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../mocks/shared_mocks.mocks.dart';
 
-void resetFirestoreMock() {
-  var mock = GetIt.I.get<FirebaseFirestore>();
-  if (mock is MockFirestoreInstance) {
-    mock.reset();
-  }
-}
-
 Future<void> mockFirestore() async {
   TestWidgetsFlutterBinding.ensureInitialized();
+  await GetIt.I.reset();
 
   var prefProvider = await SharedPreferencesProviderImpl().init();
   SharedPreferences.setMockInitialValues({});

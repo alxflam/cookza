@@ -174,10 +174,10 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "91c2856d1744e84e1f1293dc30ad32452ad75600"
+      resolved-ref: e0182cf635f671755beac824acc861dcbe38d030
       url: "git://github.com/alex0711/cloud_firestore_mocks.git"
     source: git
-    version: "0.8.0"
+    version: "0.8.1"
   cloud_firestore_platform_interface:
     dependency: transitive
     description:
