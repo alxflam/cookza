@@ -113,7 +113,7 @@ class MealPlanViewModel extends ChangeNotifier {
 
   void addNote(int index, String text) {
     _mealPlan.items[index]
-        .addRecipe(MutableMealPlanRecipeEntity.fromValues(null, text, 1));
+        .addRecipe(MutableMealPlanRecipeEntity.fromValues(null, text, null));
     _save();
     notifyListeners();
   }

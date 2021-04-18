@@ -201,7 +201,7 @@ class MealPlanScreen extends StatelessWidget {
                     }
                   }
                 },
-                subtitle: recipeModel.servings != null
+                subtitle: !recipeModel.isNote
                     ? Text(
                         '${recipeModel.servings.toString()} ${AppLocalizations.of(context)!.servings(recipeModel.servings!)}')
                     : null,
