@@ -9,7 +9,6 @@ import 'package:cookza/model/json/recipe_list.dart';
 import 'package:cookza/routes.dart';
 import 'package:cookza/screens/recipe_modify/new_recipe_screen.dart';
 import 'package:cookza/screens/recipe_selection_screen.dart';
-import 'package:cookza/screens/recipe_view/recipe_screen.dart';
 import 'package:cookza/services/api/chefkoch.dart';
 import 'package:cookza/services/flutter/navigator_service.dart';
 import 'package:cookza/services/recipe/image_manager.dart';
