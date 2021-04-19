@@ -45,10 +45,7 @@ dev_dependencies:
   json_serializable: ^4.0.2
   mockito: ^5.0.0
   pedantic: ^1.11.0
-  cloud_firestore_mocks: 
-    git:
-      url: git://github.com/alex0711/cloud_firestore_mocks.git
-      path: 
+  cloud_firestore_mocks: ^0.8.2
 
 flutter:
   generate: true
