@@ -42,6 +42,8 @@ class ShoppingListModel extends ChangeNotifier {
   Future<List<ShoppingListItemModel>> getItems() async {
     // lazy initialize on first get call
     if (this.initialized) {
+      // sort items
+      this._sortItems();
       // create the viewmodels
       var viewModels =
           this._items.map((e) => ShoppingListItemModel.ofEntity(e)).toList();
@@ -117,11 +119,11 @@ class ShoppingListModel extends ChangeNotifier {
       if (a.index >= 0) {
         return a.index.compareTo(b.index);
       }
-      if (b.index >= 0) {
-        return a.index.compareTo(b.index);
-      }
       if (a.isBought && !b.isBought) {
         return 1;
+      }
+      if (b.index >= 0) {
+        return a.index.compareTo(b.index);
       }
       if (b.isBought && !a.isBought) {
         return -1;
@@ -129,7 +131,6 @@ class ShoppingListModel extends ChangeNotifier {
       return a.ingredientNote.ingredient.name
           .compareTo(b.ingredientNote.ingredient.name);
     });
-    notifyListeners();
   }
 
   String get shortTitle {
@@ -194,10 +195,11 @@ class ShoppingListModel extends ChangeNotifier {
   }
 
   void _save() async {
-    // set the  index for every element as we have to save the index of every element to make sure the same order can be restored later on
-    for (var i = 0; i < this._items.length; i++) {
-      this._items[i].index = i;
-    }
+    // set the  index for every element
+    // as we have to save the index of every element to make sure the same order can be restored later on
+    // for (var i = 0; i < this._items.length; i++) {
+    //   this._items[i].index = i;
+    // }
 
     // only save custom items, bought items and items with an explicit index (hence has been moved manually)
     var customItems = this

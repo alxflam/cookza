@@ -113,14 +113,14 @@ void main() {
     cut.addCustomItem(boughtItem);
 
     var items = await cut.getItems();
-    expect(items.first.name, 'Something important');
-    expect(items.last.name, 'Something else');
+    expect(items.first.name, 'Something else');
+    expect(items.last.name, 'Something important');
 
     cut.reorder(1, 0);
 
     items = await cut.getItems();
-    expect(items.first.name, 'Something else');
-    expect(items.last.name, 'Something important');
+    expect(items.first.name, 'Something important');
+    expect(items.last.name, 'Something else');
   });
 
   test('Reorder items - middle to the top', () async {
@@ -146,13 +146,13 @@ void main() {
 
     var items = await cut.getItems();
     expect(items.first.name, 'First');
-    expect(items.last.name, 'Fourth');
+    expect(items.last.name, 'Third');
 
     cut.reorder(0, 2);
 
     items = await cut.getItems();
-    expect(items.first.name, 'Third');
-    expect(items.last.name, 'Fourth');
+    expect(items.first.name, 'First');
+    expect(items.last.name, 'Second');
   });
 
   test('Reorder items - first to last', () async {
@@ -178,31 +178,48 @@ void main() {
 
     var items = await cut.getItems();
     expect(items.first.name, 'First');
-    expect(items.last.name, 'Fourth');
+    expect(items.last.name, 'Third');
 
     cut.reorder(3, 0);
 
     items = await cut.getItems();
-    expect(items.first.name, 'Second');
+    expect(items.first.name, 'Fourth');
     expect(items.last.name, 'First');
   });
 
   test('Sort items - setting bought does not change order', () async {
-    var item = MutableIngredientNote.empty();
-    item.name = 'Something important';
-    item.unitOfMeasure = 'H87';
-    cut.addCustomItem(item);
+    var onion = MutableIngredientNote.empty();
+    onion.name = 'Onion';
+    cut.addCustomItem(onion);
 
-    var boughtItem = MutableIngredientNote.empty();
-    boughtItem.name = 'Already bought';
-    boughtItem.unitOfMeasure = 'H87';
-    cut.addCustomItem(boughtItem);
+    var cheese = MutableIngredientNote.empty();
+    cheese.name = 'Cheese';
+    cut.addCustomItem(cheese);
+
+    var salt = MutableIngredientNote.empty();
+    salt.name = 'Salt';
+    cut.addCustomItem(salt);
 
     var items = await cut.getItems();
+    // items are sorted alphabetically
+    expect(items.map((e) => e.name).toList(), ['Cheese', 'Onion', 'Salt']);
+
     items.first.noLongerNeeded = true;
+    items = await cut.getItems();
+    // setting an item bought moves it to the back
+    expect(items.map((e) => e.name).toList(), ['Onion', 'Salt', 'Cheese']);
+    items[0].noLongerNeeded = true;
 
     items = await cut.getItems();
-    expect(items.first.isNoLongerNeeded, true);
-    expect(items.last.isNoLongerNeeded, false);
+    // setting an item bought moves it to the back and sorts it alphabetically
+    expect(items.map((e) => e.name).toList(), ['Salt', 'Cheese', 'Onion']);
+
+    var mushrooms = MutableIngredientNote.empty();
+    mushrooms.name = 'Mushrooms';
+    cut.addCustomItem(mushrooms);
+
+    items = await cut.getItems();
+    expect(items.map((e) => e.name).toList(),
+        ['Mushrooms', 'Salt', 'Cheese', 'Onion']);
   });
 }

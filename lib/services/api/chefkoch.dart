@@ -10,9 +10,14 @@ import 'package:cookza/services/unit_of_measure.dart';
 import 'package:http/http.dart' as http;
 import 'package:collection/collection.dart';
 
-class Chefkoch {
+abstract class ChefkochAccessor {
+  Future<RecipeEntity> getRecipe(String id);
+}
+
+class ChefkochAccessorImpl implements ChefkochAccessor {
   static final String url = 'https://api.chefkoch.de/v2/recipes/';
 
+  @override
   Future<RecipeEntity> getRecipe(String id) async {
     final uri = Uri(
       scheme: 'https',

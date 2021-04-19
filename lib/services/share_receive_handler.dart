@@ -11,14 +11,15 @@ import 'package:cookza/services/api/chefkoch.dart';
 import 'package:cookza/viewmodel/recipe_view/recipe_view_model.dart';
 import 'package:flutter/cupertino.dart';
 
+import 'flutter/service_locator.dart';
+
 class ShareReceiveHandler {
   void handleReceivedText(String? text, BuildContext context) {
     if (text == null || text.isEmpty) {
       return;
     }
-    print('received in handler: $text');
 
-    // todo: make it more flexible: register multiple handlers, with methods canHandle() to identify which one can handle the shared text...
+    // TODO: make it more flexible: register multiple handlers, with methods canHandle() to identify which one can handle the shared text...
     var exp = RegExp(r'rezepte\/([0-9]*)\/');
     var matches = exp.allMatches(text);
 
@@ -27,10 +28,11 @@ class ShareReceiveHandler {
           'The text that got shared to Cookza could not be imported. There\'s no registered handler for the given text: $text.');
     }
 
+    final chefkoch = sl.get<ChefkochAccessor>();
     matches.forEach(
       (match) {
         var id = text.substring(match.start + 8, match.end - 1);
-        Chefkoch().getRecipe(id).then(
+        chefkoch.getRecipe(id).then(
           (recipe) {
             Navigator.pushNamed(context, NewRecipeScreen.id,
                 arguments: RecipeEditModel.modify(recipe));
@@ -44,22 +46,17 @@ class ShareReceiveHandler {
     if (text == null || text.isEmpty) {
       return;
     }
-
-    // find out what kind of json we got
-
     var map = jsonDecode(text);
-    print('received json $map');
 
     var isRecipeList = map['recipes'] != null;
-    if (isRecipeList) {}
+    if (isRecipeList) {
+      var importData = RecipeList.fromJson(map);
+      var viewModel = importData.recipes
+          .map((item) => RecipeViewModel.of(RecipeEntityJson.of(item)))
+          .toList();
 
-    var importData = RecipeList.fromJson(map);
-    var viewModel = importData.recipes
-        .map((item) => RecipeViewModel.of(RecipeEntityJson.of(item)))
-        .toList();
-
-    // todo: create named constructors for import / export instead of giving a parameter
-    var model = RecipeSelectionModel.forImport(viewModel);
-    Navigator.pushNamed(context, RecipeSelectionScreen.id, arguments: model);
+      var model = RecipeSelectionModel.forImport(viewModel);
+      Navigator.pushNamed(context, RecipeSelectionScreen.id, arguments: model);
+    }
   }
 }

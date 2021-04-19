@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cookza/model/entities/abstract/user_entity.dart';
 import 'package:cookza/model/entities/firebase/recipe_collection_entity.dart';
+import 'package:cookza/model/entities/json/user_entity.dart';
 import 'package:cookza/model/firebase/collections/firebase_recipe_collection.dart';
+import 'package:cookza/model/json/user.dart';
 import 'package:cookza/services/recipe/recipe_manager.dart';
 import 'package:cookza/viewmodel/groups/recipe_group_model.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -16,6 +19,7 @@ RecipeCollectionEntityFirebase createGroup() {
       users: {'1234': 'Someone'},
       name: 'Test',
       creationTimestamp: Timestamp.now());
+  collection.documentID = '123456789';
   return RecipeCollectionEntityFirebase.of(collection);
 }
 
@@ -64,5 +68,18 @@ void main() {
     var cut = RecipeGroupViewModel.of(entity);
     await cut.addUser('1234', 'Master Tester');
     verify(mock.addUserToCollection(entity, '1234', 'Master Tester'));
+  });
+
+  test('Remove user', () async {
+    RecipeCollectionEntityFirebase entity = createGroup();
+    when(mock.collectionByID(any)).thenAnswer((_) => Future.value(entity));
+
+    var cut = RecipeGroupViewModel.of(entity);
+    await cut.addUser('1234', 'Master Tester');
+
+    var user = UserEntityJson.from(
+        JsonUser(id: '1234', name: 'Master Tester', type: USER_TYPE.USER));
+    await cut.removeMember(user);
+    verify(mock.removeMember(any, any));
   });
 }

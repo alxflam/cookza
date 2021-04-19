@@ -15,7 +15,7 @@ void main() {
 
       var id = '922651197624364';
 
-      var cut = Chefkoch();
+      var cut = ChefkochAccessorImpl();
 
       var result = await cut.getRecipe(id);
 
