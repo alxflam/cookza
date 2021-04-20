@@ -173,7 +173,8 @@ class ShoppingListModel extends ChangeNotifier {
     // set the desired index for persistence
     item.index = newIndex;
     // reorder in list
-    this._items.insert(newIndex, item);
+    var targetIndex = newIndex > _items.length ? newIndex - 1 : newIndex;
+    this._items.insert(targetIndex, item);
     // persist changes
     this._save();
     // and update the UI
