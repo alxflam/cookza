@@ -7,11 +7,11 @@ import 'package:mockito/mockito.dart';
 
 import '../../mocks/unit_of_measure_provider_mock.dart';
 
-class VisionTextMock extends Fake implements VisionText {
+class VisionTextFake extends Fake implements VisionText {
   final String _text;
   final List<TextBlock> _blocks;
 
-  VisionTextMock(this._text, this._blocks);
+  VisionTextFake(this._text, this._blocks);
 
   @override
   String? get text => this._text;
@@ -34,10 +34,17 @@ void main() {
     'Parse overview',
     () {
       var cut = ImageTextExtractorImpl();
-      var mock = VisionTextMock('', []);
+      var mock = VisionTextFake('', []);
 
-      var result = cut.processOverviewImageFromText(mock);
-      expect(result, isNotNull);
+      // TODO: forn tests, dump instances to json to get real test data
+      var ov = cut.processOverviewImageFromText(mock);
+      expect(ov, isNotNull);
+
+      var ing = cut.processIngredientsImageFromText(mock);
+      expect(ing, isNotNull);
+
+      var ins = cut.processInstructionsImageFromText(mock);
+      expect(ins, isNotNull);
     },
   );
 }
