@@ -251,11 +251,11 @@ Future<void> _initApp(WidgetTester tester, NavigatorObserver observer,
           builder: (context) {
             return Container(
               child: ElevatedButton(
-                child: Container(),
                 onPressed: () {
                   Navigator.pushNamed(context, ShoppingListDetailScreen.id,
                       arguments: model);
                 },
+                child: Container(),
               ),
             );
           },

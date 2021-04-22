@@ -80,7 +80,7 @@ void main() {
     expect(createdList, isNotNull);
     expect(createdList.items.length, 1);
 
-    var listsStream = await cut.shoppingLists;
+    var listsStream = cut.shoppingLists;
     expect(listsStream, isNotNull);
   });
 

@@ -30,7 +30,7 @@ void main() {
     when(mock.getRecipeById(['1234']))
         .thenAnswer((_) => Future.value([recipe]));
     await cut.setRecipeReference('1234');
-    var model = await cut.recipe;
+    var model = cut.recipe;
     expect(model != null, true);
     expect(model!.recipe, recipe);
   });

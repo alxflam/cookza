@@ -1,6 +1,10 @@
-include: package:pedantic/analysis_options.1.9.0.yaml
+include: package:pedantic/analysis_options.yaml
 
 linter:
   rules:
     unnecessary_this: false
     omit_local_variable_types: false
+
+analyzer:
+  errors:
+    unsafe_html: ignore

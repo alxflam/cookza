@@ -105,22 +105,22 @@ class ShoppingListOverviewScreen extends StatelessWidget {
                             actions: <Widget>[
                               ElevatedButton(
                                 style: kRaisedGreyButtonStyle,
-                                child: Text(
-                                  AppLocalizations.of(context)!.cancel,
-                                ),
                                 onPressed: () {
                                   Navigator.pop(context, false);
                                 },
+                                child: Text(
+                                  AppLocalizations.of(context)!.cancel,
+                                ),
                               ),
                               ElevatedButton(
                                 style: kRaisedRedButtonStyle,
-                                child: Text(
-                                  AppLocalizations.of(context)!.delete,
-                                ),
                                 onPressed: () async {
                                   await model.deleteList(entry);
                                   Navigator.pop(context, true);
                                 },
+                                child: Text(
+                                  AppLocalizations.of(context)!.delete,
+                                ),
                               ),
                             ],
                           );

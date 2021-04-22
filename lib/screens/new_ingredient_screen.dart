@@ -92,13 +92,13 @@ class NewIngredientScreen extends StatelessWidget {
                                 // let it not be null, but have an empty uom instead
                                 // which returns an empty string instead of trying to translate the id
                                 .map((uom) => DropdownMenuItem<UnitOfMeasure>(
+                                      value: uom,
                                       child: Text(uom.getDisplayName(
                                           amountController.text.isNotEmpty
                                               ? double.parse(
                                                       amountController.text)
                                                   .toInt()
                                               : 0)),
-                                      value: uom,
                                     ))
                                 .toList();
                             return Expanded(

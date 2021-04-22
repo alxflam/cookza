@@ -66,7 +66,7 @@ void main() {
 
     await cut.createCollection('Test');
 
-    var collections = await cut.collectionsAsStream;
+    var collections = cut.collectionsAsStream;
 
     expect(collections, isNotNull);
   });
@@ -121,7 +121,7 @@ void main() {
     var collections = await cut.collections;
 
     expect(collections, isEmpty);
-    var currentCollection = await cut.currentCollection;
+    var currentCollection = cut.currentCollection;
     expect(currentCollection, isNull);
   });
 
@@ -204,7 +204,7 @@ void main() {
     var cut = RecipeManagerFirebase();
     var group = await cut.createCollection('1');
 
-    var nextId = await cut.getNextRecipeDocumentId(group.id!);
+    var nextId = cut.getNextRecipeDocumentId(group.id!);
 
     expect(nextId, isNotEmpty);
     expect(nextId == group.id!, false);
@@ -237,7 +237,7 @@ void main() {
     await cut.createOrUpdate(first);
     await cut.createOrUpdate(second);
 
-    var recipes = await cut.recipes;
+    var recipes = cut.recipes;
 
     expect(recipes, isNotNull);
   });
@@ -252,7 +252,7 @@ void main() {
 
     await cut.createOrUpdate(first);
 
-    var recipes = await cut.recipes;
+    var recipes = cut.recipes;
 
     expect(await recipes.isEmpty, true);
   });

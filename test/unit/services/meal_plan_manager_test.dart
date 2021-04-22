@@ -65,7 +65,7 @@ void main() {
 
     await cut.createCollection('Test');
 
-    var collections = await cut.collectionsAsStream;
+    var collections = cut.collectionsAsStream;
 
     expect(collections, isNotNull);
   });
@@ -120,7 +120,7 @@ void main() {
     var collections = await cut.collections;
 
     expect(collections, isEmpty);
-    var currentCollection = await cut.currentCollection;
+    var currentCollection = cut.currentCollection;
     expect(currentCollection, isNull);
   });
 

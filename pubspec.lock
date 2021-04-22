@@ -323,6 +323,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "8.0.3"
+  firebase_storage_mocks:
+    dependency: "direct dev"
+    description:
+      path: "."
+      ref: "update_to_storage8.0.0"
+      resolved-ref: "531aa966685b13a762235012bacfd75ccda941e3"
+      url: "git://github.com/GabrielIneichen/firebase_storage_mocks.git"
+    source: git
+    version: "0.2.0"
   firebase_storage_platform_interface:
     dependency: transitive
     description:

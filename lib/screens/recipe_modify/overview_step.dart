@@ -134,7 +134,7 @@ Widget _getCollectionDropDown(BuildContext context,
 
   List<DropdownMenuItem<RecipeCollectionEntity>> items = collections
       .map((item) => DropdownMenuItem<RecipeCollectionEntity>(
-          child: Text(item.name), value: item))
+          value: item, child: Text(item.name)))
       .toList();
 
   model.collection ??= collections.first;

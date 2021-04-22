@@ -188,8 +188,6 @@ class OnBoardingScreen extends StatelessWidget {
                             Expanded(
                               child: ElevatedButton(
                                 style: kRaisedGreenButtonStyle,
-                                child:
-                                    Text(AppLocalizations.of(context)!.accept),
                                 onPressed: model.acceptedAll
                                     ? () {
                                         sl
@@ -202,6 +200,8 @@ class OnBoardingScreen extends StatelessWidget {
                                         this._onIntroEnd(context);
                                       }
                                     : null,
+                                child:
+                                    Text(AppLocalizations.of(context)!.accept),
                               ),
                             ),
                           ],

@@ -38,7 +38,6 @@ class MealPlanGroupsTiles extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               ElevatedButton(
-                child: Text(AppLocalizations.of(context)!.createGroup),
                 onPressed: () async {
                   // await the creation or cancellation
                   var result = await this._createMealPlanGroup(context);
@@ -51,6 +50,7 @@ class MealPlanGroupsTiles extends StatelessWidget {
                         context, MealPlanScreen.id);
                   }
                 },
+                child: Text(AppLocalizations.of(context)!.createGroup),
               ),
             ],
           ),
@@ -125,20 +125,22 @@ class MealPlanGroupsTiles extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: <Widget>[
                           ElevatedButton(
-                              style: kRaisedGreenButtonStyle,
-                              child: Icon(Icons.save),
-                              onPressed: () async {
-                                var entity = await sl
-                                    .get<MealPlanManager>()
-                                    .createCollection(controller.text);
-                                Navigator.pop(context, entity);
-                              }),
+                            style: kRaisedGreenButtonStyle,
+                            onPressed: () async {
+                              var entity = await sl
+                                  .get<MealPlanManager>()
+                                  .createCollection(controller.text);
+                              Navigator.pop(context, entity);
+                            },
+                            child: Icon(Icons.save),
+                          ),
                           ElevatedButton(
-                              style: kRaisedRedButtonStyle,
-                              child: Icon(Icons.cancel),
-                              onPressed: () {
-                                Navigator.pop(context);
-                              }),
+                            style: kRaisedRedButtonStyle,
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: Icon(Icons.cancel),
+                          ),
                         ],
                       )
                     ],

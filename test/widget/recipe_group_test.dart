@@ -210,10 +210,10 @@ class TestHomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: ElevatedButton(
-        child: Container(),
         onPressed: () {
           Navigator.pushNamed(context, RecipeGroupScreen.id, arguments: args);
         },
+        child: Container(),
       ),
     );
   }

@@ -38,19 +38,20 @@ class RecipeGroupsTiles extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               ElevatedButton(
-                  child: Text(AppLocalizations.of(context)!.createGroup),
-                  onPressed: () async {
-                    // await the creation or cancellation
-                    var result = await this._createRecipeGroup(context);
-                    // if a new group got created
-                    if (result != null) {
-                      // then set the created group as the currently selected one
-                      recipeManager.currentCollection = result.id;
-                      // and make sure that the underlying view is updated
-                      await Navigator.pushReplacementNamed(
-                          context, RecipeListScreen.id);
-                    }
-                  })
+                onPressed: () async {
+                  // await the creation or cancellation
+                  var result = await this._createRecipeGroup(context);
+                  // if a new group got created
+                  if (result != null) {
+                    // then set the created group as the currently selected one
+                    recipeManager.currentCollection = result.id;
+                    // and make sure that the underlying view is updated
+                    await Navigator.pushReplacementNamed(
+                        context, RecipeListScreen.id);
+                  }
+                },
+                child: Text(AppLocalizations.of(context)!.createGroup),
+              )
             ],
           ),
         ),
@@ -125,20 +126,22 @@ class RecipeGroupsTiles extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: <Widget>[
                           ElevatedButton(
-                              style: kRaisedGreenButtonStyle,
-                              child: Icon(Icons.save),
-                              onPressed: () async {
-                                var entity = await sl
-                                    .get<RecipeManager>()
-                                    .createCollection(controller.text);
-                                Navigator.pop(context, entity);
-                              }),
+                            style: kRaisedGreenButtonStyle,
+                            onPressed: () async {
+                              var entity = await sl
+                                  .get<RecipeManager>()
+                                  .createCollection(controller.text);
+                              Navigator.pop(context, entity);
+                            },
+                            child: Icon(Icons.save),
+                          ),
                           ElevatedButton(
-                              style: kRaisedRedButtonStyle,
-                              child: Icon(Icons.cancel),
-                              onPressed: () {
-                                Navigator.pop(context);
-                              }),
+                            style: kRaisedRedButtonStyle,
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: Icon(Icons.cancel),
+                          ),
                         ],
                       )
                     ],

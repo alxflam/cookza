@@ -155,10 +155,10 @@ class ShareAccountScreen extends StatelessWidget {
                         children: <Widget>[
                           ElevatedButton(
                             style: kRaisedGreenButtonStyle,
-                            child: Icon(Icons.check),
                             onPressed: () {
                               Navigator.pop(context, model);
                             },
+                            child: Icon(Icons.check),
                           ),
                         ],
                       ),
@@ -188,11 +188,11 @@ class ShareAccountScreen extends StatelessWidget {
           children: [
             CircleAvatar(
               backgroundColor: Theme.of(context).colorScheme.primary,
+              radius: 35,
               child: Image(
                 width: 35,
                 image: AssetImage(kIconTransparent),
               ),
-              radius: 35,
             ),
             Padding(
               padding: EdgeInsets.only(top: 10),

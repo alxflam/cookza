@@ -34,11 +34,11 @@ class AboutScreen extends StatelessWidget {
               child: Center(
                 child: CircleAvatar(
                   backgroundColor: Theme.of(context).colorScheme.primary,
+                  radius: 45,
                   child: Image(
                     width: 45,
                     image: AssetImage(kIconTransparent),
                   ),
-                  radius: 45,
                 ),
               ),
             ),
@@ -195,18 +195,15 @@ class DeleteAllDataDialog extends StatelessWidget {
           actions: <Widget>[
             ElevatedButton(
               style: kRaisedGreyButtonStyle,
-              child: Text(
-                AppLocalizations.of(context)!.cancel,
-              ),
               onPressed: () {
                 Navigator.of(context).pop();
               },
+              child: Text(
+                AppLocalizations.of(context)!.cancel,
+              ),
             ),
             ElevatedButton(
               style: kRaisedRedButtonStyle,
-              child: Text(
-                AppLocalizations.of(context)!.delete,
-              ),
               onPressed: () async {
                 try {
                   await showDialog(
@@ -232,6 +229,9 @@ class DeleteAllDataDialog extends StatelessWidget {
                       .showSnackBar(SnackBar(content: Text(e.toString())));
                 }
               },
+              child: Text(
+                AppLocalizations.of(context)!.delete,
+              ),
             ),
           ],
         );

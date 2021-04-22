@@ -62,6 +62,7 @@ class RecipeScreen extends StatelessWidget {
                     itemBuilder: (context) {
                       return [
                         PopupMenuItem(
+                          value: PopupMenuButtonChoices.SHARE,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -69,9 +70,9 @@ class RecipeScreen extends StatelessWidget {
                               Text(AppLocalizations.of(context)!.share)
                             ],
                           ),
-                          value: PopupMenuButtonChoices.SHARE,
                         ),
                         PopupMenuItem(
+                          value: PopupMenuButtonChoices.EDIT,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -79,9 +80,9 @@ class RecipeScreen extends StatelessWidget {
                               Text(AppLocalizations.of(context)!.edit)
                             ],
                           ),
-                          value: PopupMenuButtonChoices.EDIT,
                         ),
                         PopupMenuItem(
+                          value: PopupMenuButtonChoices.ADD_MEAL_PLAN,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -90,9 +91,9 @@ class RecipeScreen extends StatelessWidget {
                                   .functionsMealPlanner)
                             ],
                           ),
-                          value: PopupMenuButtonChoices.ADD_MEAL_PLAN,
                         ),
                         PopupMenuItem(
+                          value: PopupMenuButtonChoices.DELETE,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -100,7 +101,6 @@ class RecipeScreen extends StatelessWidget {
                               Text(AppLocalizations.of(context)!.delete)
                             ],
                           ),
-                          value: PopupMenuButtonChoices.DELETE,
                         ),
                       ];
                     },
@@ -143,18 +143,15 @@ class RecipeScreen extends StatelessWidget {
                                 actions: <Widget>[
                                   ElevatedButton(
                                     style: kRaisedGreyButtonStyle,
-                                    child: Text(
-                                      AppLocalizations.of(context)!.cancel,
-                                    ),
                                     onPressed: () {
                                       Navigator.of(context).pop();
                                     },
+                                    child: Text(
+                                      AppLocalizations.of(context)!.cancel,
+                                    ),
                                   ),
                                   ElevatedButton(
                                     style: kRaisedRedButtonStyle,
-                                    child: Text(
-                                      AppLocalizations.of(context)!.delete,
-                                    ),
                                     onPressed: () {
                                       sl
                                           .get<RecipeManager>()
@@ -163,6 +160,9 @@ class RecipeScreen extends StatelessWidget {
                                       Navigator.pushNamed(
                                           context, HomeScreen.id);
                                     },
+                                    child: Text(
+                                      AppLocalizations.of(context)!.delete,
+                                    ),
                                   ),
                                 ],
                               );
@@ -227,34 +227,34 @@ class RecipeScreen extends StatelessWidget {
           title: Text(AppLocalizations.of(context)!.shareAs),
           actions: <Widget>[
             ElevatedButton(
-              child: Text(
-                AppLocalizations.of(context)!.pdf,
-              ),
               onPressed: () async {
                 var doc = await sl.get<PDFGenerator>().generatePDF([model]);
                 sl.get<PDFExporter>().export(doc);
                 Navigator.pop(context);
               },
+              child: Text(
+                AppLocalizations.of(context)!.pdf,
+              ),
             ),
             ElevatedButton(
-              child: Text(AppLocalizations.of(context)!.json),
               onPressed: () {
                 sl
                     .get<RecipeFileExport>()
                     .exportRecipesFromEntity([model.recipe]);
                 Navigator.pop(context);
               },
+              child: Text(AppLocalizations.of(context)!.json),
             ),
             ElevatedButton(
-              child: Text(
-                AppLocalizations.of(context)!.text,
-              ),
               onPressed: () {
                 sl
                     .get<RecipeTextExporter>()
                     .exportRecipesAsText([model.recipe]);
                 Navigator.pop(context);
               },
+              child: Text(
+                AppLocalizations.of(context)!.text,
+              ),
             ),
           ],
         );

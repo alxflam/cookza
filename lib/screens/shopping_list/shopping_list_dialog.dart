@@ -136,10 +136,10 @@ class MultipeGroupSelectionDialog extends StatelessWidget {
                     padding: EdgeInsets.all(10),
                     child: ElevatedButton(
                       style: kRaisedGreenButtonStyle,
-                      child: Icon(Icons.check),
                       onPressed: () async {
                         Navigator.pop(context, model);
                       },
+                      child: Icon(Icons.check),
                     ),
                   ),
                 ],
@@ -171,7 +171,7 @@ Widget _getMealPlanGroupDropDown(
             var collections = snapshot.data as List<MealPlanCollectionEntity>;
             List<DropdownMenuItem<MealPlanCollectionEntity>> items = collections
                 .map((item) => DropdownMenuItem<MealPlanCollectionEntity>(
-                    child: Text(item.name), value: item))
+                    value: item, child: Text(item.name)))
                 .toList();
 
             model.groupID = collections.first.id!;

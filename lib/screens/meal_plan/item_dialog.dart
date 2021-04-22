@@ -103,19 +103,19 @@ class DialogButtonRow extends StatelessWidget {
         children: <Widget>[
           ElevatedButton(
             style: kRaisedGreenButtonStyle,
-            child: Icon(Icons.check),
             onPressed: () {
               model.applyChanges();
               Navigator.pop(context, model);
             },
+            child: Icon(Icons.check),
           ),
           ElevatedButton(
             style: kRaisedRedButtonStyle,
-            child: Icon(Icons.delete),
             onPressed: () {
               model.setDeleted(true);
               Navigator.pop(context, model);
             },
+            child: Icon(Icons.delete),
           ),
         ],
       );

@@ -22,12 +22,12 @@ class ShoppingListDetailScreen extends StatelessWidget {
         builder: (context, model, _) {
           return Scaffold(
             floatingActionButton: FloatingActionButton(
-              child: Icon(Icons.share),
               onPressed: () async {
                 await sl
                     .get<ShoppingListTextExporter>()
                     .exportShoppingListAsText(model);
               },
+              child: Icon(Icons.share),
             ),
             appBar: AppBar(
               title: Text(model.shortTitle),
@@ -70,6 +70,9 @@ class ShoppingListDetailScreen extends StatelessWidget {
                 }
 
                 return ReorderableListView(
+                  onReorder: (oldIndex, newIndex) {
+                    model.reorder(newIndex, oldIndex);
+                  },
                   children: List.generate(snapshot.data!.length, (index) {
                     var _item = snapshot.data![index];
 
@@ -126,9 +129,6 @@ class ShoppingListDetailScreen extends StatelessWidget {
                       ),
                     );
                   }),
-                  onReorder: (oldIndex, newIndex) {
-                    model.reorder(newIndex, oldIndex);
-                  },
                 );
               },
             ),

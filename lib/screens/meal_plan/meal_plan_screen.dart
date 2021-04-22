@@ -260,13 +260,13 @@ class MealPlanScreen extends StatelessWidget {
       );
 
       var draggable = LongPressDraggable<MealDragModel>(
-          dragAnchor: DragAnchor.child,
-          maxSimultaneousDrags: 1,
-          // axis: Axis.vertical,
-          child: tile,
-          feedback: feedback,
-          childWhenDragging: Container(),
-          data: MealDragModel(entry, i));
+        dragAnchor: DragAnchor.child,
+        maxSimultaneousDrags: 1,
+        feedback: feedback,
+        childWhenDragging: Container(),
+        data: MealDragModel(entry, i),
+        child: tile,
+      );
       tiles.add(draggable);
     }
 
@@ -290,8 +290,6 @@ class MealPlanScreen extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.all(10),
                       child: ElevatedButton(
-                        child:
-                            Text(AppLocalizations.of(context)!.mealPlanAddNote),
                         onPressed: () {
                           // close dialog
                           Navigator.pop(context);
@@ -299,13 +297,13 @@ class MealPlanScreen extends StatelessWidget {
                           // open note dialog
                           _showAddNoteDialog(context, model, index);
                         },
+                        child:
+                            Text(AppLocalizations.of(context)!.mealPlanAddNote),
                       ),
                     ),
                     Padding(
                       padding: EdgeInsets.all(10),
                       child: ElevatedButton(
-                        child: Text(
-                            AppLocalizations.of(context)!.mealPlanAddRecipe),
                         onPressed: () async {
                           // fetch all recipes the app currently stores
                           var recipes =
@@ -326,6 +324,8 @@ class MealPlanScreen extends StatelessWidget {
 
                           Navigator.pop(context);
                         },
+                        child: Text(
+                            AppLocalizations.of(context)!.mealPlanAddRecipe),
                       ),
                     ),
                   ],

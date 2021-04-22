@@ -54,8 +54,6 @@ class RecipeListScreen extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     ElevatedButton(
-                                      child: Text(AppLocalizations.of(context)!
-                                          .createRecipe),
                                       onPressed: () async {
                                         var collection = await sl
                                             .get<RecipeManager>()
@@ -67,6 +65,8 @@ class RecipeListScreen extends StatelessWidget {
                                               collection: collection),
                                         );
                                       },
+                                      child: Text(AppLocalizations.of(context)!
+                                          .createRecipe),
                                     )
                                   ],
                                 ),

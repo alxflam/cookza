@@ -225,10 +225,10 @@ class DummyScreen extends StatelessWidget {
         child: Builder(
           builder: (context) {
             return ElevatedButton(
-              child: Container(),
               onPressed: () {
                 openShoppingListDialog(context);
               },
+              child: Container(),
             );
           },
         ),

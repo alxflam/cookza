@@ -148,12 +148,12 @@ class MainFunctionCard extends StatelessWidget {
     return GestureDetector(
       onTap: onPress,
       child: Container(
-        child: cardChild,
         margin: EdgeInsets.all(15),
         decoration: BoxDecoration(
           color: this.color,
           borderRadius: BorderRadius.circular(10),
         ),
+        child: cardChild,
       ),
     );
   }

@@ -30,6 +30,7 @@ class ErrorLogScreen extends StatelessWidget {
             PopupMenuButton(itemBuilder: (context) {
               return [
                 PopupMenuItem(
+                  value: PopupMenuButtonChoices.SHARE,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -37,9 +38,9 @@ class ErrorLogScreen extends StatelessWidget {
                       Text(AppLocalizations.of(context)!.share),
                     ],
                   ),
-                  value: PopupMenuButtonChoices.SHARE,
                 ),
                 PopupMenuItem(
+                  value: PopupMenuButtonChoices.DELETE,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -47,7 +48,6 @@ class ErrorLogScreen extends StatelessWidget {
                       Text(AppLocalizations.of(context)!.delete)
                     ],
                   ),
-                  value: PopupMenuButtonChoices.DELETE,
                 ),
               ];
             }, onSelected: (value) async {

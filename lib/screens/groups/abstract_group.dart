@@ -40,6 +40,7 @@ abstract class AbstractGroupScreen extends StatelessWidget {
                   itemBuilder: (context) {
                     return [
                       PopupMenuItem(
+                        value: PopupMenuButtonChoices.EDIT,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -47,9 +48,9 @@ abstract class AbstractGroupScreen extends StatelessWidget {
                             Text(AppLocalizations.of(context)!.rename)
                           ],
                         ),
-                        value: PopupMenuButtonChoices.EDIT,
                       ),
                       PopupMenuItem(
+                        value: PopupMenuButtonChoices.ADD_USER,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -57,9 +58,9 @@ abstract class AbstractGroupScreen extends StatelessWidget {
                             Text(AppLocalizations.of(context)!.addUser)
                           ],
                         ),
-                        value: PopupMenuButtonChoices.ADD_USER,
                       ),
                       PopupMenuItem(
+                        value: PopupMenuButtonChoices.DELETE,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -67,9 +68,9 @@ abstract class AbstractGroupScreen extends StatelessWidget {
                             Text(AppLocalizations.of(context)!.delete)
                           ],
                         ),
-                        value: PopupMenuButtonChoices.DELETE,
                       ),
                       PopupMenuItem(
+                        value: PopupMenuButtonChoices.LEAVE,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -77,7 +78,6 @@ abstract class AbstractGroupScreen extends StatelessWidget {
                             Text(AppLocalizations.of(context)!.leaveGroup)
                           ],
                         ),
-                        value: PopupMenuButtonChoices.LEAVE,
                       ),
                     ];
                   },
@@ -204,18 +204,20 @@ abstract class AbstractGroupScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: <Widget>[
                           ElevatedButton(
-                              style: kRaisedGreenButtonStyle,
-                              child: Icon(Icons.save),
-                              onPressed: () {
-                                model.rename(controller.text);
-                                Navigator.pop(context);
-                              }),
+                            style: kRaisedGreenButtonStyle,
+                            onPressed: () {
+                              model.rename(controller.text);
+                              Navigator.pop(context);
+                            },
+                            child: Icon(Icons.save),
+                          ),
                           ElevatedButton(
-                              style: kRaisedRedButtonStyle,
-                              child: Icon(Icons.cancel),
-                              onPressed: () {
-                                Navigator.pop(context);
-                              }),
+                            style: kRaisedRedButtonStyle,
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: Icon(Icons.cancel),
+                          ),
                         ],
                       )
                     ],
@@ -248,18 +250,15 @@ abstract class AbstractGroupScreen extends StatelessWidget {
           actions: <Widget>[
             ElevatedButton(
               style: kRaisedGreyButtonStyle,
-              child: Text(
-                AppLocalizations.of(context)!.cancel,
-              ),
               onPressed: () {
                 Navigator.pop(context, false);
               },
+              child: Text(
+                AppLocalizations.of(context)!.cancel,
+              ),
             ),
             ElevatedButton(
               style: kRaisedRedButtonStyle,
-              child: Text(
-                AppLocalizations.of(context)!.delete,
-              ),
               onPressed: () async {
                 var future = model.delete();
                 await showDialog(
@@ -274,6 +273,9 @@ abstract class AbstractGroupScreen extends StatelessWidget {
 
                 Navigator.pop(context, true);
               },
+              child: Text(
+                AppLocalizations.of(context)!.delete,
+              ),
             ),
           ],
         );
@@ -335,22 +337,22 @@ abstract class AbstractGroupScreen extends StatelessWidget {
           actions: <Widget>[
             ElevatedButton(
               style: kRaisedGreyButtonStyle,
-              child: Text(
-                AppLocalizations.of(context)!.cancel,
-              ),
               onPressed: () {
                 Navigator.pop(context, false);
               },
+              child: Text(
+                AppLocalizations.of(context)!.cancel,
+              ),
             ),
             ElevatedButton(
               style: kRaisedRedButtonStyle,
-              child: Text(
-                AppLocalizations.of(context)!.leaveGroup,
-              ),
               onPressed: () async {
                 await model.leaveGroup();
                 Navigator.pop(context, true);
               },
+              child: Text(
+                AppLocalizations.of(context)!.leaveGroup,
+              ),
             ),
           ],
         );
