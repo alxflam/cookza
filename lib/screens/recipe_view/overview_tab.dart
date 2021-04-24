@@ -144,29 +144,7 @@ class SubImageRow extends StatelessWidget {
             SizedBox(
               height: 20,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Icon(
-                      Icons.timer,
-                      size: 20,
-                    ),
-                    Text('${model.duration}min'),
-                  ],
-                ),
-                Row(
-                  children: <Widget>[
-                    Icon(
-                      Icons.calendar_today,
-                      size: 20,
-                    ),
-                    Text('${model.creationDate}'),
-                  ],
-                ),
-              ],
-            ),
+            _buildDateRow(model),
             SizedBox(
               height: 20,
             ),
@@ -174,6 +152,49 @@ class SubImageRow extends StatelessWidget {
           ],
         );
       },
+    );
+  }
+
+  Row _buildDateRow(RecipeViewModel model) {
+    var duration = Row(
+      children: <Widget>[
+        Icon(
+          Icons.timer,
+          size: 20,
+        ),
+        Text('${model.duration}min'),
+      ],
+    );
+
+    var created = Row(
+      children: <Widget>[
+        Icon(
+          Icons.add,
+          size: 20,
+        ),
+        Text('${model.creationDate}'),
+      ],
+    );
+
+    var modified = Row(
+      children: <Widget>[
+        Icon(
+          Icons.edit,
+          size: 20,
+        ),
+        Text('${model.modificationDate}'),
+      ],
+    );
+
+    var widgets = [duration, created];
+
+    if (model.modificationDate != model.creationDate) {
+      widgets.add(modified);
+    }
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: widgets,
     );
   }
 
