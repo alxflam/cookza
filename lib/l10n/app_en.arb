@@ -300,12 +300,12 @@
 	"@invalidQRCode": {},
 	"addedUser": "The use {name} has been added.",
 	"@addedUser": {
-	"description": "A user has been added",
-	"placeholders": {
-		"name": {
-			"type": "String"
-			}	
-		}
+		"description": "A user has been added",
+			"placeholders": {
+				"name": {
+					"type": "String"
+					}	
+				}
 	},
 	"error": "Error",
 	"@error": {},
@@ -351,6 +351,16 @@
 	"@accept": {},	
 	"readAndAccept": "I have read and accept the ",
 	"@readAndAccept": {},
+	"favoriteNotExisting": "{count,plural, =1{There are no recipes rated with at least {count} star} other{There are no recipes rated with at least {count} stars}}",
+	"@favoriteNotExisting": {
+		"description": "Favorite recipe not existing",
+		"placeholders": {
+		"count": {
+			"type": "int",
+			"format": "compact"
+			}
+		}
+	},
 	"uomMMT": "{count,plural, =1{mm}other{mm}}",
 	"@uomMMT": {
 		"description": "uom plural",

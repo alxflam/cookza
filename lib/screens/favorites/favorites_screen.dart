@@ -1,7 +1,6 @@
+import 'package:cookza/components/nothing_found.dart';
 import 'package:cookza/components/recipe_list_tile.dart';
 import 'package:cookza/model/entities/abstract/recipe_entity.dart';
-import 'package:cookza/services/flutter/service_locator.dart';
-import 'package:cookza/services/recipe/recipe_manager.dart';
 import 'package:cookza/viewmodel/favorites/favorite_recipes_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -13,58 +12,46 @@ class FavoriteRecipesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<RecipeEntity>>(
-      future: sl.get<RecipeManager>().getFavoriteRecipes(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState != ConnectionState.done) {
-          return Scaffold(
-            appBar: AppBar(),
-          );
-        }
-        return ChangeNotifierProvider.value(
-          value: FavoriteRecipesViewModel(favorites: snapshot.data ?? []),
-          builder: (context, child) {
-            return Scaffold(
-              appBar: _buildAppBar(context),
-              body: FutureBuilder<List<RecipeEntity>>(
-                future: sl.get<RecipeManager>().getFavoriteRecipes(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState != ConnectionState.done) {
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
+    return ChangeNotifierProvider.value(
+      value: FavoriteRecipesViewModel(),
+      builder: (context, child) {
+        return Scaffold(
+          appBar: _buildAppBar(context),
+          body: FutureBuilder<List<RecipeEntity>>(
+            future: Provider.of<FavoriteRecipesViewModel>(context)
+                .getFavoriteRecipes(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState != ConnectionState.done) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
 
-                  final model = Provider.of<FavoriteRecipesViewModel>(context);
-                  var favorites = model.getFavoriteRecipes();
+              var favorites = snapshot.data ?? [];
 
-                  if (favorites.isEmpty) {
-                    return Container(
-                      child: Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 16),
-                          child: Text('§You have not yet rated any recipes'),
-                        ),
-                      ),
-                    );
-                  }
+              if (favorites.isEmpty) {
+                var minRating = Provider.of<FavoriteRecipesViewModel>(context,
+                        listen: false)
+                    .minRating;
 
-                  return ListView.separated(
-                    separatorBuilder: (context, index) => Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20),
-                      child: Divider(
-                        color: Theme.of(context).primaryColorLight,
-                      ),
-                    ),
-                    itemCount: favorites.length,
-                    itemBuilder: (context, index) {
-                      return RecipeListTile(item: favorites[index]);
-                    },
-                  );
+                return NothingFound(AppLocalizations.of(context)!
+                    .favoriteNotExisting(minRating));
+              }
+
+              return ListView.separated(
+                separatorBuilder: (context, index) => Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: Divider(
+                    color: Theme.of(context).primaryColorLight,
+                  ),
+                ),
+                itemCount: favorites.length,
+                itemBuilder: (context, index) {
+                  return RecipeListTile(item: favorites[index]);
                 },
-              ),
-            );
-          },
+              );
+            },
+          ),
         );
       },
     );

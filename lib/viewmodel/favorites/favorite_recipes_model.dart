@@ -6,31 +6,23 @@ import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:flutter/material.dart';
 
 class FavoriteRecipesViewModel with ChangeNotifier {
-  int _minRating = 1;
+  /// initially only show the highes rated recipes
+  int _minRating = 5;
 
   final recipeManager = sl.get<RecipeManager>();
 
-  final List<RecipeEntity> favorites;
+  List<RecipeEntity> favorites = [];
 
   bool _initialized = false;
 
-  FavoriteRecipesViewModel({required this.favorites});
-
-  List<RecipeEntity> getFavoriteRecipes() {
-    // if (!_initialized) {
-    //   favorites = sl.get<RecipeManager>().getFavoriteRecipes()
-    // }
+  Future<List<RecipeEntity>> getFavoriteRecipes() async {
+    /// only load the favorites once and cache them
+    /// to prevent loading them again when the user changes the rating filter
+    if (!_initialized) {
+      favorites = await recipeManager.getFavoriteRecipes();
+      _initialized = true;
+    }
     return favorites.where((e) => shouldAdd(e)).toList();
-
-    // return Stream.fromIterable(favorites).transform(
-    //   StreamTransformer.fromHandlers(
-    //     handleData: (data, sink) {
-    //       if (shouldAdd(data)) {
-    //         sink.add([data]);
-    //       }
-    //     },
-    //   ),
-    // );
   }
 
   set minRating(int value) {
