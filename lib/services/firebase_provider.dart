@@ -474,18 +474,6 @@ class FirebaseProvider {
     }
   }
 
-  // Stream<List<RecipeEntity>> getRecipeByIdAsStream(List<String> ids) {
-  //   return _firestore
-  //       .collection(RECIPES)
-  //       .where(FieldPath.documentId, whereIn: ids)
-  //       .orderBy(FieldPath.documentId, descending: true)
-  //       .snapshots()
-  //       .map((e) => e.docs
-  //           .map((e) => RecipeEntityFirebase.of(
-  //               FirebaseRecipe.fromJson(e.data(), id: e.id)))
-  //           .toList());
-  // }
-
   Future<List<RecipeEntity>> getRecipeById(List<String> ids) async {
     var docs = await _firestore
         .collection(RECIPES)
