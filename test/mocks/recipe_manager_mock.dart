@@ -1,3 +1,4 @@
+import 'package:cookza/model/entities/abstract/rating_entity.dart';
 import 'package:cookza/model/entities/abstract/recipe_entity.dart';
 import 'package:cookza/model/entities/abstract/recipe_collection_entity.dart';
 import 'package:cookza/model/entities/abstract/user_entity.dart';
@@ -115,7 +116,7 @@ class RecipeManagerStub implements RecipeManager {
 
   @override
   Future<void> updateRating(RecipeEntity recipe, int rating) {
-    throw UnimplementedError();
+    return Future.value();
   }
 
   @override
@@ -126,5 +127,20 @@ class RecipeManagerStub implements RecipeManager {
   @override
   Future<void> init() {
     throw UnimplementedError();
+  }
+
+  @override
+  Stream<List<RecipeEntity>> getFavoriteRecipes() {
+    return Stream.empty();
+  }
+
+  @override
+  Future<int> getRating(RecipeEntity recipe) {
+    return Future.value(0);
+  }
+
+  @override
+  Future<List<RatingEntity>> getRatings() {
+    return Future.value([]);
   }
 }

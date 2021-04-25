@@ -68,7 +68,6 @@ void main() {
         instructions: ['First one'],
         ingredients: [IngredientNote.fromEntity(onion)],
         servings: 3,
-        rating: 5,
         tags: ['delicious'],
         creationDate: DateTime.now(),
         modificationDate: DateTime.now(),
@@ -86,7 +85,6 @@ void main() {
       expect(ingredients.length, 1);
       expect(ingredients.first.ingredient.name, 'Onion');
       expect(cut.servings, 3);
-      expect(cut.rating, 5);
       expect(cut.tags, ['delicious']);
       expect(cut.duration, 50);
     },
@@ -117,8 +115,6 @@ void main() {
       expect(ingredients.first.ingredient.name, 'Onion');
       cut.servings = 3;
       expect(cut.servings, 3);
-      cut.rating = 5;
-      expect(cut.rating, 5);
       cut.addTag('delicious');
       expect(cut.tags, ['delicious']);
       cut.duration = 50;
@@ -156,7 +152,6 @@ void main() {
       instructions: [],
       modificationDate: DateTime.now(),
       name: '',
-      rating: 2,
       recipeCollection: '',
       servings: 2,
       shortDescription: '',
@@ -179,7 +174,6 @@ void main() {
       instructions: [],
       modificationDate: DateTime.now(),
       name: '',
-      rating: 2,
       recipeCollection: '',
       servings: 2,
       shortDescription: '',

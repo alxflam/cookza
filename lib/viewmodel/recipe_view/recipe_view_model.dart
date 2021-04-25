@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 class RecipeViewModel extends ChangeNotifier {
   RecipeEntity _recipe;
   late int _servings;
-  late int _rating;
+  int _rating = 0;
   final List<MutableIngredientNote> _ingredients = [];
   final List<InstructionEntity> _instructions = [];
 
@@ -24,7 +24,6 @@ class RecipeViewModel extends ChangeNotifier {
     this._instructions.clear();
 
     this._servings = this._recipe.servings;
-    this._rating = _recipe.rating ?? 0;
 
     this._recipe.ingredients.then((value) {
       for (var note in value) {

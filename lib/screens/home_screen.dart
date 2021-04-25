@@ -1,5 +1,6 @@
 import 'package:cookza/components/main_app_drawer.dart';
 import 'package:cookza/constants.dart';
+import 'package:cookza/screens/favorites/favorites_screen.dart';
 import 'package:cookza/screens/leftovers_screen.dart';
 import 'package:cookza/screens/meal_plan/meal_plan_screen.dart';
 import 'package:cookza/screens/recipe_list_screen.dart';
@@ -66,6 +67,17 @@ class HomeScreen extends StatelessWidget {
                     cardChild: IconContent(
                       icon: kNewRecipe,
                       label: AppLocalizations.of(context)!.functionsAddRecipe,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: MainFunctionCard(
+                    onPress: () =>
+                        Navigator.pushNamed(context, FavoriteRecipesScreen.id),
+                    color: tileColor,
+                    cardChild: IconContent(
+                      icon: kFavoriteRecipes,
+                      label: AppLocalizations.of(context)!.functionsFavorites,
                     ),
                   ),
                 ),

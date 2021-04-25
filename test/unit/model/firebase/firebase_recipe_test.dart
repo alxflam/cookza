@@ -13,7 +13,6 @@ void main() {
         'name': 'Name',
         'description': 'Description',
         'duration': 40,
-        'rating': 4,
         'servings': 2,
         'image': '/image/',
         'recipeGroupID': '1234',

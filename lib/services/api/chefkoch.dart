@@ -42,7 +42,6 @@ class ChefkochAccessorImpl implements ChefkochAccessor {
     var recipe = Recipe(
       name: json['title'],
       shortDescription: json['subtitle'],
-      rating: (double.parse(json['rating']['rating'].toString()).toInt()),
       diff: diff,
       servings: (json['servings']),
       duration: (json['totalTime']),

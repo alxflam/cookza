@@ -1,3 +1,4 @@
+import 'package:cookza/model/entities/abstract/rating_entity.dart';
 import 'package:cookza/model/entities/abstract/recipe_collection_entity.dart';
 import 'package:cookza/model/entities/abstract/recipe_entity.dart';
 import 'package:cookza/model/entities/abstract/user_entity.dart';
@@ -36,7 +37,15 @@ abstract class RecipeManager {
 
   Future<List<RecipeEntity>> getRecipeById(List<String> ids);
 
+  Future<List<RecipeEntity>> getFavoriteRecipes();
+
   Future<void> updateRating(RecipeEntity recipe, int rating);
+
+  Future<List<RatingEntity>> getRatings();
+
+  Future<int> getRating(RecipeEntity recipe);
+
+  int? getCachedRating(RecipeEntity recipe);
 
   Future<void> importRecipes(List<RecipeEntity> recipes);
 
@@ -52,6 +61,7 @@ class RecipeManagerFirebase implements RecipeManager {
   /// stored as a shared preference to reuse the LRU collection upon
   /// restart of the app
   String? _currentCollection;
+  final Map<String, int> _ratings = {};
 
   @override
   Future<List<RecipeCollectionEntity>> get collections async {
@@ -144,8 +154,56 @@ class RecipeManagerFirebase implements RecipeManager {
   }
 
   @override
+  Future<List<RatingEntity>> getRatings() async {
+    // TODO: only call this once! all other times return cache!
+    final ratings = await sl.get<FirebaseProvider>().getRatings();
+    for (var item in ratings) {
+      this._ratings.update(item.recipeId, (value) => item.rating,
+          ifAbsent: () => item.rating);
+    }
+    return ratings;
+  }
+
+  @override
+  Future<List<RecipeEntity>> getFavoriteRecipes() async {
+    var ratings = await this.getRatings();
+    if (ratings.isEmpty) {
+      return Future.value([]);
+    } else {
+      final recipes = await sl
+          .get<FirebaseProvider>()
+          .getRecipeById(ratings.map((e) => e.recipeId).toList());
+      recipes.sort((a, b) {
+        final ratingA = this._ratings[a.id] ?? 0;
+        final ratingB = this._ratings[b.id] ?? 0;
+        return ratingB.compareTo(ratingA);
+      });
+      return recipes;
+    }
+  }
+
+  @override
   Future<void> updateRating(RecipeEntity recipe, int rating) {
+    this._ratings.update(recipe.id!, (value) => rating, ifAbsent: () => rating);
     return sl.get<FirebaseProvider>().updateRating(recipe, rating);
+  }
+
+  @override
+  Future<int> getRating(RecipeEntity recipe) async {
+    var cached = getCachedRating(recipe);
+    if (cached != null) {
+      return cached;
+    }
+
+    /// update cache of ratings
+    await getRatings();
+    cached = this._ratings[recipe.id];
+    return cached ?? 0;
+  }
+
+  @override
+  int? getCachedRating(RecipeEntity recipe) {
+    return this._ratings[recipe.id];
   }
 
   @override

@@ -30,7 +30,6 @@ void main() {
         duration: 20,
         image: '',
         modificationDate: Timestamp.now(),
-        rating: 2,
         recipeGroupID: '',
         servings: 2,
         tags: [],
@@ -52,7 +51,6 @@ void main() {
         duration: 20,
         image: '',
         modificationDate: Timestamp.now(),
-        rating: 2,
         recipeGroupID: '',
         servings: 2,
         tags: [],
@@ -92,7 +90,6 @@ void main() {
         duration: 20,
         image: '',
         modificationDate: Timestamp.now(),
-        rating: 2,
         recipeGroupID: '',
         servings: 2,
         tags: [],
@@ -131,7 +128,6 @@ void main() {
         duration: 20,
         image: '',
         modificationDate: Timestamp.now(),
-        rating: 2,
         recipeGroupID: '',
         servings: 2,
         tags: [],
@@ -156,7 +152,6 @@ void main() {
         duration: 20,
         image: '',
         modificationDate: Timestamp.now(),
-        rating: 2,
         recipeGroupID: '',
         servings: 2,
         tags: [],
@@ -181,12 +176,10 @@ void main() {
         duration: 20,
         image: '',
         modificationDate: Timestamp.now(),
-        rating: 2,
         recipeGroupID: '',
         servings: 2,
         tags: [],
       );
-      recipe.rating = 3;
       recipe.servings = 4;
       recipe.recipeGroupID = '1234';
       recipe.tags = ['someTag'];
@@ -203,7 +196,6 @@ void main() {
       expect(cut.instructionsID, '77');
       expect(cut.ingredientsID, '99');
       expect(cut.duration, 55);
-      expect(cut.rating, 3);
       expect(cut.servings, 4);
       expect(cut.recipeCollectionId, '1234');
       expect(cut.tags.length, 1);

@@ -40,7 +40,6 @@ void main() {
     recipe.recipeCollectionId = '12';
     recipe.modificationDate = now;
     recipe.duration = 30;
-    recipe.rating = 3;
     recipe.servings = 2;
     recipe.difficulty = DIFFICULTY.HARD;
     recipe.tags = ['veggie'];
@@ -53,7 +52,6 @@ void main() {
     expect(cut.recipeCollection, '12');
     expect(cut.modificationDate, now);
     expect(cut.duration, 30);
-    expect(cut.rating, 3);
     expect(cut.servings, 2);
     expect(cut.diff, DIFFICULTY.HARD);
     expect(cut.tags.length, 1);

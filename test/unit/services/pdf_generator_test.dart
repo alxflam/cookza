@@ -29,7 +29,6 @@ void main() {
     var recipe = RecipeCreator.createRecipe('My Recipe');
     recipe.description = 'My description';
     recipe.duration = 65;
-    recipe.rating = 3;
     recipe.difficulty = DIFFICULTY.HARD;
     recipe.addTag('vegetarian');
 

@@ -44,9 +44,6 @@ class RecipeEntityJson implements RecipeEntity {
   String get name => _recipe.name;
 
   @override
-  int get rating => _recipe.rating;
-
-  @override
   String get recipeCollectionId => _recipe.recipeCollection;
 
   @override

@@ -20,7 +20,6 @@ void main() {
       var result = await cut.getRecipe(id);
 
       expect(result.name, 'Philadelphia-Hähnchen');
-      expect(result.rating, 4);
       var ins = await result.instructions;
       expect(ins.length, 9);
       var ing = await result.ingredients;

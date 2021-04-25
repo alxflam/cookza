@@ -42,6 +42,7 @@
   "fileNotFound": "Die ausgewählte Datei wurde nicht gefunden",
   "from": "Von",
   "functionsAddRecipe": "Neues Rezept",
+  "functionsFavorites": "Favoriten",
   "functionsLeftovers": "Resteverwertung",
   "functionsListRecipes": "Rezepte",
   "functionsMealPlanner": "Essensplan",

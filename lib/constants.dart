@@ -12,6 +12,7 @@ const kPlayStoreLink = 'market://details?id=com.flammer.cookza';
 /// Icons
 const kWebAppData = FontAwesomeIcons.desktop;
 const kNewRecipe = FontAwesomeIcons.plusCircle;
+const kFavoriteRecipes = FontAwesomeIcons.star;
 const kSettingsIcon = FontAwesomeIcons.cog;
 const kShareAccountIcon = FontAwesomeIcons.handshake;
 const kRecipesIconData = FontAwesomeIcons.bookOpen;
@@ -94,6 +95,17 @@ Timestamp kTimestampFromJson(dynamic val) {
 
 dynamic kTimestampToJson(Timestamp val) {
   return val;
+}
+
+/// Workaround as the model changed:
+/// rating used to be a simple int, now it is a map to allow for ratings for every user
+Map<String, int> kRatingFromJson(dynamic val) {
+  if (val is Map<String, int>) {
+    return val;
+  } else if (val is int) {
+    return {};
+  }
+  return {};
 }
 
 /// formatter

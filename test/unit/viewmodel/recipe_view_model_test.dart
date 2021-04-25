@@ -16,7 +16,6 @@ void main() {
     var recipe = RecipeCreator.createRecipe('My Recipe');
     recipe.description = 'My description';
     recipe.duration = 65;
-    recipe.rating = 3;
     recipe.difficulty = DIFFICULTY.HARD;
     recipe.addTag('vegetarian');
 
@@ -31,12 +30,11 @@ void main() {
     var recipe = RecipeCreator.createRecipe('My Recipe');
     recipe.description = 'My description';
     recipe.duration = 65;
-    recipe.rating = 3;
     recipe.difficulty = DIFFICULTY.HARD;
     recipe.addTag('vegetarian');
 
     var cut = RecipeViewModel.of(recipe);
-    expect(cut.rating, 3);
+    expect(cut.rating, 0);
 
     await cut.setRating(5);
     expect(cut.rating, 5);
@@ -46,7 +44,6 @@ void main() {
     var recipe = RecipeCreator.createRecipe('My Recipe');
     recipe.description = 'My description';
     recipe.duration = 65;
-    recipe.rating = 3;
     recipe.difficulty = DIFFICULTY.HARD;
     recipe.addTag('vegetarian');
 

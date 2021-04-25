@@ -33,8 +33,6 @@ class FirebaseRecipe {
   String? description;
   @JsonKey()
   int duration;
-  @JsonKey(defaultValue: 0)
-  int rating;
   @JsonKey(defaultValue: 1)
   int servings;
   @JsonKey()
@@ -58,7 +56,6 @@ class FirebaseRecipe {
     required this.duration,
     required this.difficulty,
     required this.tags,
-    required this.rating,
     required this.servings,
     required this.image,
     required this.recipeGroupID,
@@ -77,7 +74,6 @@ class FirebaseRecipe {
       duration: recipe.duration,
       difficulty: recipe.difficulty,
       tags: recipe.tags,
-      rating: recipe.rating ?? 0,
       servings: recipe.servings,
       image: recipe.image,
       documentID: recipe.id,

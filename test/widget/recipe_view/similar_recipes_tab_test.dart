@@ -2,6 +2,7 @@ import 'package:cookza/components/nothing_found.dart';
 import 'package:cookza/components/recipe_list_tile.dart';
 import 'package:cookza/model/entities/mutable/mutable_instruction.dart';
 import 'package:cookza/screens/recipe_view/similar_recipes_tab.dart';
+import 'package:cookza/services/recipe/recipe_manager.dart';
 import 'package:cookza/services/recipe/similarity_service.dart';
 import 'package:cookza/services/shared_preferences_provider.dart';
 import 'package:cookza/viewmodel/recipe_view/recipe_view_model.dart';
@@ -12,12 +13,14 @@ import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../mocks/recipe_manager_mock.dart';
 import '../../mocks/shared_mocks.mocks.dart';
 import '../../utils/localization_parent.dart';
 import '../../utils/recipe_creator.dart';
 
 void main() {
   final smMock = MockSimilarityService();
+  final recipeManager = RecipeManagerStub();
 
   setUpAll(() {
     SharedPreferences.setMockInitialValues({});
@@ -25,6 +28,7 @@ void main() {
     GetIt.I.registerSingletonAsync<SharedPreferencesProvider>(
         () async => SharedPreferencesProviderImpl().init());
     GetIt.I.registerSingleton<SimilarityService>(smMock);
+    GetIt.I.registerSingleton<RecipeManager>(recipeManager);
   });
 
   testWidgets('no similar recipes', (WidgetTester tester) async {

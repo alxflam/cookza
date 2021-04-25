@@ -22,7 +22,6 @@ class MutableRecipe implements RecipeEntity {
   Future<List<IngredientNoteEntity>>? _origIngredients;
   Future<List<InstructionEntity>>? _origInstructions;
   Set<String> _tags = {};
-  int? _rating;
   int _servings = 2;
   String? _image;
   Uint8List? _inMemoryImage;
@@ -63,7 +62,6 @@ class MutableRecipe implements RecipeEntity {
     });
 
     this._tags = Set.of(entity.tags);
-    this._rating = entity.rating;
     this._servings = entity.servings;
     this._image = entity.image;
   }
@@ -136,13 +134,6 @@ class MutableRecipe implements RecipeEntity {
 
   set name(String value) {
     this._name = value;
-  }
-
-  @override
-  int? get rating => this._rating;
-
-  set rating(int? value) {
-    this._rating = value;
   }
 
   @override

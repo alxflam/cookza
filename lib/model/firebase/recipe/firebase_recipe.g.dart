@@ -18,7 +18,6 @@ FirebaseRecipe _$FirebaseRecipeFromJson(Map<String, dynamic> json) {
     difficulty: _$enumDecodeNullable(_$DIFFICULTYEnumMap, json['difficulty']) ??
         DIFFICULTY.MEDIUM,
     tags: (json['tags'] as List<dynamic>).map((e) => e as String).toList(),
-    rating: json['rating'] as int? ?? 0,
     servings: json['servings'] as int? ?? 1,
     image: json['image'] as String?,
     recipeGroupID: json['recipeGroupID'] as String,
@@ -41,7 +40,6 @@ Map<String, dynamic> _$FirebaseRecipeToJson(FirebaseRecipe instance) {
   val['name'] = instance.name;
   writeNotNull('description', instance.description);
   val['duration'] = instance.duration;
-  val['rating'] = instance.rating;
   val['servings'] = instance.servings;
   writeNotNull('image', instance.image);
   val['recipeGroupID'] = instance.recipeGroupID;

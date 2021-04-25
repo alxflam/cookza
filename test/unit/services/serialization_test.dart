@@ -35,7 +35,6 @@ void main() {
           'Last step',
         ],
         id: '1',
-        rating: 3,
         recipeCollection: '',
         servings: 2,
       );

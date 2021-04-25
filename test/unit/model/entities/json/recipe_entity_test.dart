@@ -25,7 +25,6 @@ void main() {
         instructions: ['First one'],
         ingredients: [IngredientNote.fromEntity(onion)],
         servings: 3,
-        rating: 5,
         tags: ['delicious'],
         serializedImage: '1010',
       ));
@@ -54,7 +53,6 @@ void main() {
       expect(ingredients.length, 1);
       expect(ingredients.first.ingredient.name, 'Onion');
       expect(cut.servings, 3);
-      expect(cut.rating, 5);
       expect(cut.tags, ['delicious']);
       expect(cut.duration, 50);
     },

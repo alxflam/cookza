@@ -14,7 +14,6 @@ abstract class RecipeEntity {
   String? get description;
   int get duration;
   int get servings;
-  int? get rating;
   String get creationDateFormatted;
   String get modificationDateFormatted;
   DateTime get creationDate;

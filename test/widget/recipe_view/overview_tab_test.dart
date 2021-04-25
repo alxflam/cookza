@@ -1,6 +1,7 @@
 import 'package:cookza/model/entities/abstract/recipe_entity.dart';
 import 'package:cookza/screens/recipe_view/overview_tab.dart';
 import 'package:cookza/services/recipe/image_manager.dart';
+import 'package:cookza/services/recipe/recipe_manager.dart';
 import 'package:cookza/services/shared_preferences_provider.dart';
 import 'package:cookza/viewmodel/recipe_view/recipe_view_model.dart';
 import 'package:flutter/material.dart';
@@ -10,14 +11,17 @@ import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../mocks/recipe_manager_mock.dart';
 import '../../mocks/shared_mocks.mocks.dart';
 import '../../utils/recipe_creator.dart';
 
 void main() {
   final imageManager = MockImageManager();
+  final recipeManager = RecipeManagerStub();
 
   setUpAll(() {
     SharedPreferences.setMockInitialValues({});
+    GetIt.I.registerSingleton<RecipeManager>(recipeManager);
     GetIt.I.registerSingleton<ImageManager>(imageManager);
     GetIt.I.registerSingletonAsync<SharedPreferencesProvider>(
         () async => SharedPreferencesProviderImpl().init());
@@ -30,7 +34,6 @@ void main() {
     var recipe = RecipeCreator.createRecipe('My Recipe');
     recipe.description = 'My description';
     recipe.duration = 65;
-    recipe.rating = 3;
     recipe.difficulty = DIFFICULTY.HARD;
     recipe.addTag('vegetarian');
 

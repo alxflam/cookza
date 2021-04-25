@@ -25,7 +25,6 @@ class Recipe {
         creationDate: entity.creationDate,
         modificationDate: entity.modificationDate,
         duration: entity.duration,
-        rating: entity.rating ?? 0,
         servings: entity.servings,
         diff: entity.difficulty,
         tags: entity.tags,
@@ -69,8 +68,6 @@ class Recipe {
   String? shortDescription;
   @JsonKey()
   int duration;
-  @JsonKey(defaultValue: 0)
-  int rating;
   @JsonKey(defaultValue: 1)
   int servings;
   @JsonKey()
@@ -97,7 +94,6 @@ class Recipe {
       required this.tags,
       required this.ingredients,
       required this.instructions,
-      required this.rating,
       required this.servings,
       this.serializedImage}) {
     if (this.servings == 0) {

@@ -143,7 +143,11 @@ void main() {
     // therefore check for semantics widget which is used there internally
 
     await tester.tap(find.text(list.dateFrom.day.toString()).first);
-    await tester.tap(find.text(list.dateUntil.day.toString()).first);
+    var lastDayFinder = find.text(list.dateUntil.day.toString());
+    if (lastDayFinder.evaluate().length > 1) {
+      lastDayFinder = lastDayFinder.last;
+    }
+    await tester.tap(lastDayFinder);
 
     expect(find.text('SAVE'), findsOneWidget);
     expect(find.byType(Semantics), findsWidgets);
@@ -183,7 +187,11 @@ void main() {
     // therefore check for semantics widget which is used there internally
 
     await tester.tap(find.text(DateTime.now().day.toString()).first);
-    await tester.tap(find.text(list.dateUntil.day.toString()).first);
+    var lastDayFinder = find.text(list.dateUntil.day.toString());
+    if (lastDayFinder.evaluate().length > 1) {
+      lastDayFinder = lastDayFinder.last;
+    }
+    await tester.tap(lastDayFinder);
 
     expect(find.text('SAVE'), findsOneWidget);
     expect(find.byType(Semantics), findsWidgets);

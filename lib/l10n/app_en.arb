@@ -2,6 +2,8 @@
 	"@@locale": "en",
 	"functionsAddRecipe": "New Recipe",
 	"@functionsAddRecipe": {},
+	"functionsFavorites": "Favorites",
+	"@functionsFavorites": {},
 	"functionsListRecipes": "Recipes",
 	"@functionsListRecipes": {},
 	"functionsShoppingList": "Shopping List",

@@ -11,7 +11,6 @@ List<RecipeViewModel> createRecipes() {
   recipe.id = 'A';
   recipe.description = 'My description';
   recipe.duration = 65;
-  recipe.rating = 3;
   recipe.difficulty = DIFFICULTY.HARD;
   recipe.addTag('vegetarian');
   result.add(RecipeViewModel.of(recipe));
@@ -20,7 +19,6 @@ List<RecipeViewModel> createRecipes() {
   recipe.id = 'B';
   recipe.description = 'Some Desc';
   recipe.duration = 30;
-  recipe.rating = 5;
   recipe.difficulty = DIFFICULTY.EASY;
   recipe.addTag('meat');
   result.add(RecipeViewModel.of(recipe));

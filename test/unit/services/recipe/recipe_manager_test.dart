@@ -181,7 +181,9 @@ void main() {
     await cut.updateRating(recipe, 4);
 
     var recipes = await cut.getRecipeById([id]);
-    expect(recipes.first.rating, 4);
+    expect(recipes.first, isNotNull);
+    var actualRating = await cut.getRating(recipes.first);
+    expect(actualRating, 4);
   });
 
   test('Get all recipes - no matter which collection', () async {

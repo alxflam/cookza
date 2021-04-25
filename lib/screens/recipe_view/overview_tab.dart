@@ -1,6 +1,7 @@
 import 'package:cookza/constants.dart';
 import 'package:cookza/services/recipe/image_manager.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
+import 'package:cookza/services/recipe/recipe_manager.dart';
 import 'package:cookza/viewmodel/recipe_view/recipe_view_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -89,12 +90,24 @@ class CustomizedRatingBar extends StatelessWidget {
       return Container();
     }
 
+    return FutureBuilder<int>(
+      future: sl.get<RecipeManager>().getRating(_model.recipe),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState != ConnectionState.done) {
+          return _createRatingBar(0);
+        }
+        return _createRatingBar(snapshot.data);
+      },
+    );
+  }
+
+  RatingBar _createRatingBar(int? rating) {
     return RatingBar.builder(
-      initialRating: _model.rating.toDouble(),
+      initialRating: rating?.toDouble() ?? 0,
       minRating: 0,
       maxRating: 5,
       direction: Axis.horizontal,
-      allowHalfRating: true,
+      allowHalfRating: false,
       unratedColor: Colors.amber.withAlpha(50),
       itemCount: 5,
       itemSize: 20.0,
@@ -106,7 +119,7 @@ class CustomizedRatingBar extends StatelessWidget {
       onRatingUpdate: (rating) {
         _model.setRating(rating.toInt());
       },
-      updateOnDrag: true,
+      updateOnDrag: false,
     );
   }
 }

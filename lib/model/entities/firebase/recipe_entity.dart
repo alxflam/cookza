@@ -58,9 +58,6 @@ class RecipeEntityFirebase implements RecipeEntity {
   String get name => this._recipe.name;
 
   @override
-  int get rating => this._recipe.rating;
-
-  @override
   String get recipeCollectionId => this._recipe.recipeGroupID;
 
   @override

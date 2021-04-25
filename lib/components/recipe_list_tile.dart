@@ -3,6 +3,7 @@ import 'package:cookza/model/entities/abstract/recipe_entity.dart';
 import 'package:cookza/screens/recipe_view/recipe_screen.dart';
 import 'package:cookza/services/recipe/image_manager.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
+import 'package:cookza/services/recipe/recipe_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -73,18 +74,30 @@ class RecipeListTile extends StatelessWidget {
           _buildTileIcons(item),
         ],
       ),
-      trailing: item.rating == null
-          ? FaIcon(FontAwesomeIcons.questionCircle)
-          : Icon(item.rating! < 2
-              ? Icons.star_border
-              : item.rating! < 4
-                  ? Icons.star_half
-                  : Icons.star),
+      trailing: FutureBuilder<int>(
+        future: sl.get<RecipeManager>().getRating(item),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState != ConnectionState.done) {
+            return SizedBox(
+              width: 0,
+              height: 0,
+            ); // no trailing widget
+          }
+          final rating = snapshot.data;
+          return rating == null
+              ? FaIcon(FontAwesomeIcons.questionCircle)
+              : Icon(rating < 2
+                  ? Icons.star_border
+                  : rating < 4
+                      ? Icons.star_half
+                      : Icons.star);
+        },
+      ),
     );
   }
 
   Widget _buildTileIcons(RecipeEntity item) {
-    // todo make a static map in the constants file for the static tags and their icon mapping
+    // TODO make a static map in the constants file for the static tags and their icon mapping
     List<IconData> icons = [];
     var isVegan = item.tags.contains(kVeganTag);
     var isVegetarian = item.tags.contains(kVegetarianTag);

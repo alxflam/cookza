@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cookza/model/entities/abstract/meal_plan_collection_entity.dart';
 import 'package:cookza/model/entities/abstract/meal_plan_entity.dart';
+import 'package:cookza/model/entities/abstract/rating_entity.dart';
 import 'package:cookza/model/entities/abstract/recipe_collection_entity.dart';
 import 'package:cookza/model/entities/abstract/recipe_entity.dart';
 import 'package:cookza/model/entities/abstract/shopping_list_entity.dart';
@@ -9,6 +10,7 @@ import 'package:cookza/model/entities/firebase/ingredient_note_entity.dart';
 import 'package:cookza/model/entities/firebase/instruction_entity.dart';
 import 'package:cookza/model/entities/firebase/meal_plan_collection_entity.dart';
 import 'package:cookza/model/entities/firebase/meal_plan_entity.dart';
+import 'package:cookza/model/entities/firebase/rating_entity.dart';
 import 'package:cookza/model/entities/firebase/recipe_collection_entity.dart';
 import 'package:cookza/model/entities/firebase/recipe_entity.dart';
 import 'package:cookza/model/entities/firebase/shopping_list_entity.dart';
@@ -18,6 +20,7 @@ import 'package:cookza/model/firebase/collections/firebase_recipe_collection.dar
 import 'package:cookza/model/firebase/meal_plan/firebase_meal_plan.dart';
 import 'package:cookza/model/firebase/recipe/firebase_ingredient.dart';
 import 'package:cookza/model/firebase/recipe/firebase_instruction.dart';
+import 'package:cookza/model/firebase/recipe/firebase_rating.dart';
 import 'package:cookza/model/firebase/recipe/firebase_recipe.dart';
 import 'package:cookza/model/firebase/shopping_list/firebase_shopping_list.dart';
 import 'package:cookza/services/recipe/image_manager.dart';
@@ -31,6 +34,7 @@ const RECIPE_GROUPS = 'recipeGroups';
 const INGREDIENTS = 'ingredients';
 const INSTRUCTIONS = 'instructions';
 const RECIPES = 'recipes';
+const RATINGS = 'ratings';
 const MEAL_PLAN_GROUPS = 'mealPlanGroups';
 const MEAL_PLANS = 'mealPlans';
 const SHOPPING_LISTS = 'shoppingLists';
@@ -439,6 +443,49 @@ class FirebaseProvider {
         .toList();
   }
 
+  /// Returns all ratings for the current user
+  Future<List<RatingEntity>> getRatings() async {
+    var docs = await _firestore
+        .collection(RATINGS)
+        .where('userId', isEqualTo: userUid)
+        .orderBy('rating', descending: true)
+        .get();
+
+    return docs.docs
+        .map((e) => RatingEntityFirebase.of(
+            FirebaseRating.fromJson(e.data(), id: e.id)))
+        .toList();
+  }
+
+  /// Returns the rating for a given recipe for the logged in user
+  Future<RatingEntity?> getRatingById(String recipeId) async {
+    var docs = await _firestore
+        .collection(RATINGS)
+        .where('userId', isEqualTo: userUid)
+        .where('recipeId', isEqualTo: recipeId)
+        .get();
+
+    var doc = docs.docs.first;
+    if (doc.exists) {
+      return RatingEntityFirebase.of(
+          FirebaseRating.fromJson(doc.data(), id: doc.id));
+    } else {
+      return Future.value(null);
+    }
+  }
+
+  // Stream<List<RecipeEntity>> getRecipeByIdAsStream(List<String> ids) {
+  //   return _firestore
+  //       .collection(RECIPES)
+  //       .where(FieldPath.documentId, whereIn: ids)
+  //       .orderBy(FieldPath.documentId, descending: true)
+  //       .snapshots()
+  //       .map((e) => e.docs
+  //           .map((e) => RecipeEntityFirebase.of(
+  //               FirebaseRecipe.fromJson(e.data(), id: e.id)))
+  //           .toList());
+  // }
+
   Future<List<RecipeEntity>> getRecipeById(List<String> ids) async {
     var docs = await _firestore
         .collection(RECIPES)
@@ -470,10 +517,21 @@ class FirebaseProvider {
     return result;
   }
 
-  Future<void> updateRating(RecipeEntity recipe, int rating) {
-    var recipeDocRef = _firestore.collection(RECIPES).doc(recipe.id);
+  Future<void> updateRating(RecipeEntity recipe, int rating) async {
+    var ratingDocQuery = await _firestore
+        .collection(RATINGS)
+        .where('userId', isEqualTo: userUid)
+        .where('recipeId', isEqualTo: recipe.id)
+        .get();
 
-    return recipeDocRef.set({'rating': rating}, SetOptions(merge: true));
+    if (ratingDocQuery.docs.isNotEmpty) {
+      var doc = ratingDocQuery.docs.first;
+      await doc.reference.set({'rating': rating}, SetOptions(merge: true));
+    } else {
+      var entity =
+          FirebaseRating(recipeId: recipe.id!, userId: userUid, rating: rating);
+      await _firestore.collection(RATINGS).add(entity.toJson());
+    }
   }
 
   Future<MealPlanEntity> mealPlan(String groupID) async {
