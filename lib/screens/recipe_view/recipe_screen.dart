@@ -152,13 +152,13 @@ class RecipeScreen extends StatelessWidget {
                                   ),
                                   ElevatedButton(
                                     style: kRaisedRedButtonStyle,
-                                    onPressed: () {
-                                      sl
+                                    onPressed: () async {
+                                      await sl
                                           .get<RecipeManager>()
                                           .deleteRecipe(model.recipe);
 
-                                      Navigator.pushNamed(
-                                          context, HomeScreen.id);
+                                      Navigator.popUntil(context,
+                                          ModalRoute.withName(HomeScreen.id));
                                     },
                                     child: Text(
                                       AppLocalizations.of(context)!.delete,
