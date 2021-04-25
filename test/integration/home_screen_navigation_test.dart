@@ -1,3 +1,4 @@
+import 'package:cookza/screens/favorites/favorites_screen.dart';
 import 'package:cookza/screens/home_screen.dart';
 import 'package:cookza/screens/leftovers_screen.dart';
 import 'package:cookza/screens/meal_plan/meal_plan_screen.dart';
@@ -58,5 +59,9 @@ void main() {
 
   testWidgets('Navigate to leftovers', (WidgetTester tester) async {
     _verifyNavigation(tester, 'Leftover Reuse', LeftoversScreen);
+  });
+
+  testWidgets('Navigate to Favorites', (WidgetTester tester) async {
+    _verifyNavigation(tester, 'Favorites', FavoriteRecipesScreen);
   });
 }
