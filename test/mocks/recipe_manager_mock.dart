@@ -130,8 +130,8 @@ class RecipeManagerStub implements RecipeManager {
   }
 
   @override
-  Stream<List<RecipeEntity>> getFavoriteRecipes() {
-    return Stream.empty();
+  Future<List<RecipeEntity>> getFavoriteRecipes() {
+    return Future.value([]);
   }
 
   @override
@@ -142,5 +142,10 @@ class RecipeManagerStub implements RecipeManager {
   @override
   Future<List<RatingEntity>> getRatings() {
     return Future.value([]);
+  }
+
+  @override
+  int? getCachedRating(RecipeEntity recipe) {
+    return 0;
   }
 }

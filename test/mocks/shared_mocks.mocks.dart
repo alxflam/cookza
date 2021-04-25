@@ -252,10 +252,11 @@ class MockRecipeManager extends _i1.Mock implements _i22.RecipeManager {
                   Future<List<_i10.RecipeEntity>>.value(<_i10.RecipeEntity>[]))
           as _i19.Future<List<_i10.RecipeEntity>>);
   @override
-  _i19.Stream<List<_i10.RecipeEntity>> getFavoriteRecipes() =>
+  _i19.Future<List<_i10.RecipeEntity>> getFavoriteRecipes() =>
       (super.noSuchMethod(Invocation.method(#getFavoriteRecipes, []),
-              returnValue: Stream<List<_i10.RecipeEntity>>.empty())
-          as _i19.Stream<List<_i10.RecipeEntity>>);
+              returnValue:
+                  Future<List<_i10.RecipeEntity>>.value(<_i10.RecipeEntity>[]))
+          as _i19.Future<List<_i10.RecipeEntity>>);
   @override
   _i19.Future<void> updateRating(_i10.RecipeEntity? recipe, int? rating) =>
       (super.noSuchMethod(Invocation.method(#updateRating, [recipe, rating]),
@@ -271,6 +272,10 @@ class MockRecipeManager extends _i1.Mock implements _i22.RecipeManager {
   _i19.Future<int> getRating(_i10.RecipeEntity? recipe) =>
       (super.noSuchMethod(Invocation.method(#getRating, [recipe]),
           returnValue: Future<int>.value(0)) as _i19.Future<int>);
+  @override
+  int? getCachedRating(_i10.RecipeEntity? recipe) =>
+      (super.noSuchMethod(Invocation.method(#getCachedRating, [recipe]))
+          as int?);
   @override
   _i19.Future<void> importRecipes(List<_i10.RecipeEntity>? recipes) =>
       (super.noSuchMethod(Invocation.method(#importRecipes, [recipes]),
@@ -1051,12 +1056,6 @@ class MockFirebaseProvider extends _i1.Mock implements _i14.FirebaseProvider {
               returnValue:
                   Future<_i15.RatingEntity?>.value(_FakeRatingEntity()))
           as _i19.Future<_i15.RatingEntity?>);
-  @override
-  _i19.Stream<List<_i10.RecipeEntity>> getRecipeByIdAsStream(
-          List<String>? ids) =>
-      (super.noSuchMethod(Invocation.method(#getRecipeByIdAsStream, [ids]),
-              returnValue: Stream<List<_i10.RecipeEntity>>.empty())
-          as _i19.Stream<List<_i10.RecipeEntity>>);
   @override
   _i19.Future<List<_i10.RecipeEntity>> getRecipeById(List<String>? ids) =>
       (super.noSuchMethod(Invocation.method(#getRecipeById, [ids]),
