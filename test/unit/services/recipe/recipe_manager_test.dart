@@ -184,6 +184,108 @@ void main() {
     expect(recipes.first, isNotNull);
     var actualRating = await cut.getRating(recipes.first);
     expect(actualRating, 4);
+
+    await cut.updateRating(recipe, 2);
+    actualRating = await cut.getRating(recipes.first);
+    expect(actualRating, 2);
+  });
+
+  test('Get cached rating', () async {
+    var cut = RecipeManagerFirebase();
+
+    MutableRecipe pasta = createMutableRecipe('Pasta', '1');
+    var id = await cut.createOrUpdate(pasta);
+    pasta.id = id;
+
+    var rating = cut.getCachedRating(pasta);
+    expect(rating, isNull);
+
+    await cut.updateRating(pasta, 2);
+    rating = cut.getCachedRating(pasta);
+    expect(rating, 2);
+  });
+
+  test('Get ratings', () async {
+    var cut = RecipeManagerFirebase();
+
+    MutableRecipe pasta = createMutableRecipe('Pasta', '1');
+    var pastaId = await cut.createOrUpdate(pasta);
+    pasta.id = pastaId;
+
+    MutableRecipe salad = createMutableRecipe('Salad', '1');
+    var saladId = await cut.createOrUpdate(salad);
+    salad.id = saladId;
+
+    MutableRecipe cheese = createMutableRecipe('Cheese', '1');
+    var cheeseId = await cut.createOrUpdate(cheese);
+    cheese.id = cheeseId;
+
+    await cut.updateRating(pasta, 2);
+    await cut.updateRating(salad, 4);
+
+    var ratings = await cut.getRatings();
+    expect(ratings.length, 2);
+
+    var rating = cut.getCachedRating(pasta);
+    expect(rating, 2);
+
+    rating = cut.getCachedRating(salad);
+    expect(rating, 4);
+
+    rating = cut.getCachedRating(cheese);
+    expect(rating, isNull);
+  });
+
+  test('Get rating by id', () async {
+    var cut = RecipeManagerFirebase();
+
+    MutableRecipe pasta = createMutableRecipe('Pasta', '1');
+    var pastaId = await cut.createOrUpdate(pasta);
+    pasta.id = pastaId;
+
+    MutableRecipe salad = createMutableRecipe('Salad', '1');
+    var saladId = await cut.createOrUpdate(salad);
+    salad.id = saladId;
+
+    MutableRecipe cheese = createMutableRecipe('Cheese', '1');
+    var cheeseId = await cut.createOrUpdate(cheese);
+    cheese.id = cheeseId;
+
+    await cut.updateRating(pasta, 2);
+    await cut.updateRating(salad, 4);
+
+    var rating = await cut.getRating(pasta);
+    expect(rating, 2);
+
+    rating = await cut.getRating(salad);
+    expect(rating, 4);
+
+    rating = await cut.getRating(cheese);
+    expect(rating, 0);
+  });
+
+  test('Get favourite recipes is sorted', () async {
+    var cut = RecipeManagerFirebase();
+
+    MutableRecipe pasta = createMutableRecipe('Pasta', '1');
+    var pastaId = await cut.createOrUpdate(pasta);
+    pasta.id = pastaId;
+
+    MutableRecipe salad = createMutableRecipe('Salad', '1');
+    var saladId = await cut.createOrUpdate(salad);
+    salad.id = saladId;
+
+    MutableRecipe cheese = createMutableRecipe('Cheese', '1');
+    var cheeseId = await cut.createOrUpdate(cheese);
+    cheese.id = cheeseId;
+
+    await cut.updateRating(pasta, 2);
+    await cut.updateRating(salad, 4);
+
+    var favorites = await cut.getFavoriteRecipes();
+    expect(favorites.first.id, salad.id);
+    expect(favorites.last.id, pasta.id);
+    expect(favorites.length, 2);
   });
 
   test('Get all recipes - no matter which collection', () async {
