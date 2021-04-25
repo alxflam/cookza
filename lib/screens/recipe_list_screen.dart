@@ -113,6 +113,7 @@ class RecipeListScreen extends StatelessWidget {
           decoration: InputDecoration(
             prefixIcon: Icon(Icons.search),
           ),
+          style: TextStyle(color: Theme.of(context).colorScheme.onBackground),
         ),
         actions: [
           IconButton(

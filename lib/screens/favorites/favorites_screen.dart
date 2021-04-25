@@ -1,5 +1,6 @@
 import 'package:cookza/components/nothing_found.dart';
 import 'package:cookza/components/recipe_list_tile.dart';
+import 'package:cookza/components/recipe_rating_bar.dart';
 import 'package:cookza/model/entities/abstract/recipe_entity.dart';
 import 'package:cookza/viewmodel/favorites/favorite_recipes_model.dart';
 import 'package:flutter/material.dart';
@@ -63,24 +64,9 @@ class FavoriteRecipesScreen extends StatelessWidget {
 
     return AppBar(
       centerTitle: true,
-      title: RatingBar.builder(
-        initialRating: viewModel.minRating.toDouble(),
-        minRating: 1,
-        maxRating: 5,
-        direction: Axis.horizontal,
-        allowHalfRating: false,
-        unratedColor: Colors.amber.withAlpha(50),
-        itemCount: 5,
-        itemSize: 20.0,
-        itemPadding: EdgeInsets.symmetric(horizontal: 5.0),
-        itemBuilder: (context, _) => Icon(
-          Icons.star,
-          color: Colors.amberAccent,
-        ),
-        onRatingUpdate: (rating) {
-          viewModel.minRating = rating.toInt();
-        },
-        updateOnDrag: false,
+      title: RecipeRatingBar(
+        initialRating: viewModel.minRating,
+        onUpdate: (value) => viewModel.minRating = value.toInt(),
       ),
     );
   }
