@@ -1,3 +1,4 @@
+import 'package:cookza/components/recipe_rating_bar.dart';
 import 'package:cookza/constants.dart';
 import 'package:cookza/services/recipe/image_manager.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
@@ -5,7 +6,6 @@ import 'package:cookza/services/recipe/recipe_manager.dart';
 import 'package:cookza/viewmodel/recipe_view/recipe_view_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
@@ -101,26 +101,10 @@ class CustomizedRatingBar extends StatelessWidget {
     );
   }
 
-  RatingBar _createRatingBar(int? rating) {
-    return RatingBar.builder(
-      initialRating: rating?.toDouble() ?? 0,
-      minRating: 0,
-      maxRating: 5,
-      direction: Axis.horizontal,
-      allowHalfRating: false,
-      unratedColor: Colors.amber.withAlpha(50),
-      itemCount: 5,
-      itemSize: 20.0,
-      itemPadding: EdgeInsets.symmetric(horizontal: 5.0),
-      itemBuilder: (context, _) => Icon(
-        Icons.star,
-        color: Colors.amberAccent,
-      ),
-      onRatingUpdate: (rating) {
-        _model.setRating(rating.toInt());
-      },
-      updateOnDrag: false,
-    );
+  Widget _createRatingBar(int? rating) {
+    return RecipeRatingBar(
+        initialRating: rating ?? 0,
+        onUpdate: (value) => _model.setRating(value.toInt()));
   }
 }
 
