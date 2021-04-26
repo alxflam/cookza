@@ -6,7 +6,7 @@ import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:flutter/material.dart';
 
 class FavoriteRecipesViewModel with ChangeNotifier {
-  /// initially only show the highes rated recipes
+  /// initially only show the highest rated recipes
   int _minRating = 5;
 
   final recipeManager = sl.get<RecipeManager>();
