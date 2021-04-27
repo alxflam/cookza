@@ -1,12 +1,9 @@
 import 'package:cookza/constants.dart';
 import 'package:cookza/screens/settings/about_screen.dart';
-import 'package:cookza/screens/settings/export_settings_screen.dart';
 import 'package:cookza/screens/settings/meal_plan_settings_screen.dart';
 import 'package:cookza/screens/settings/shopping_list_settings_screen.dart';
 import 'package:cookza/screens/settings/theme_settings_screen.dart';
 import 'package:cookza/screens/settings/uom_visibility_settings_screen.dart';
-import 'package:cookza/services/abstract/recipe_file_import.dart';
-import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -24,19 +21,6 @@ class SettingsScreen extends StatelessWidget {
         builder: (context) {
           return ListView(
             children: <Widget>[
-              ListTile(
-                title: Text(AppLocalizations.of(context)!.export),
-                leading: FaIcon(FontAwesomeIcons.fileExport),
-                onTap: () =>
-                    Navigator.pushNamed(context, ExportSettingsScreen.id),
-              ),
-              ListTile(
-                title: Text(AppLocalizations.of(context)!.import),
-                leading: FaIcon(FontAwesomeIcons.fileImport),
-                onTap: () {
-                  sl.get<RecipeFileImport>().parseAndImport(context);
-                },
-              ),
               ListTile(
                 title: Text(AppLocalizations.of(context)!.unitLongPlural),
                 leading: FaIcon(FontAwesomeIcons.unity),

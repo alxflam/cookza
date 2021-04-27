@@ -1,7 +1,10 @@
 import 'package:cookza/components/app_icon_text.dart';
 import 'package:cookza/components/version_text.dart';
 import 'package:cookza/screens/collections/share_account_screen.dart';
+import 'package:cookza/screens/settings/export_settings_screen.dart';
 import 'package:cookza/screens/settings/settings_screen.dart';
+import 'package:cookza/services/abstract/recipe_file_import.dart';
+import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -29,6 +32,19 @@ class MainAppDrawer extends StatelessWidget {
                   leading: FaIcon(kShareAccountIcon),
                   onTap: () =>
                       Navigator.pushNamed(context, ShareAccountScreen.id),
+                ),
+                ListTile(
+                  title: Text(AppLocalizations.of(context)!.export),
+                  leading: FaIcon(FontAwesomeIcons.fileExport),
+                  onTap: () =>
+                      Navigator.pushNamed(context, ExportSettingsScreen.id),
+                ),
+                ListTile(
+                  title: Text(AppLocalizations.of(context)!.import),
+                  leading: FaIcon(FontAwesomeIcons.fileImport),
+                  onTap: () {
+                    sl.get<RecipeFileImport>().parseAndImport(context);
+                  },
                 ),
                 ListTile(
                   title: Text(AppLocalizations.of(context)!.settings),

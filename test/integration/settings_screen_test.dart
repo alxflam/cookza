@@ -1,6 +1,5 @@
 import 'package:cookza/routes.dart';
 import 'package:cookza/screens/settings/about_screen.dart';
-import 'package:cookza/screens/settings/export_settings_screen.dart';
 import 'package:cookza/screens/settings/meal_plan_settings_screen.dart';
 import 'package:cookza/screens/settings/settings_screen.dart';
 import 'package:cookza/screens/settings/shopping_list_settings_screen.dart';
@@ -29,29 +28,6 @@ void main() {
     GetIt.I.registerSingleton<UnitOfMeasureProvider>(StaticUnitOfMeasure());
     GetIt.I.registerSingletonAsync<SharedPreferencesProvider>(
         () async => SharedPreferencesProviderImpl().init());
-  });
-
-  testWidgets('Import tile exists', (WidgetTester tester) async {
-    // open fake app
-    await _initApp(tester, observer);
-
-    var tile = find.text('Import');
-    expect(tile, findsOneWidget);
-  });
-
-  testWidgets('Export tile exists', (WidgetTester tester) async {
-    // open fake app
-    await _initApp(tester, observer);
-
-    var tile = find.text('Export');
-    expect(tile, findsOneWidget);
-
-    await tester.tap(tile);
-    verify(observer.didPush(any, any));
-    await tester.pumpAndSettle();
-
-    // now we should have navigated to the shopping list screen
-    expect(find.byType(ExportSettingsScreen), findsOneWidget);
   });
 
   testWidgets('UnitOfMeasureTile tile exists', (WidgetTester tester) async {
