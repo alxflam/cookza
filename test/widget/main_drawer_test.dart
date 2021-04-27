@@ -1,12 +1,7 @@
 import 'package:cookza/components/main_app_drawer.dart';
 import 'package:cookza/routes.dart';
 import 'package:cookza/screens/collections/share_account_screen.dart';
-import 'package:cookza/screens/leftovers_screen.dart';
-import 'package:cookza/screens/meal_plan/meal_plan_screen.dart';
-import 'package:cookza/screens/recipe_list_screen.dart';
-import 'package:cookza/screens/recipe_modify/new_recipe_screen.dart';
 import 'package:cookza/screens/settings/settings_screen.dart';
-import 'package:cookza/screens/shopping_list/shopping_list_overview_screen.dart';
 import 'package:cookza/services/abstract/platform_info.dart';
 import 'package:cookza/services/abstract/receive_intent_handler.dart';
 import 'package:cookza/services/firebase_provider.dart';
@@ -46,21 +41,6 @@ void main() {
     GetIt.I.registerSingleton<FirebaseProvider>(FirebaseProviderMock());
   });
 
-  testWidgets('Recipe list tile exists', (WidgetTester tester) async {
-    await testTile(tester, 'Recipes', RecipeListScreen);
-  });
-
-  testWidgets('Meal planner tile exists', (WidgetTester tester) async {
-    await testTile(tester, 'Meal Planner', MealPlanScreen);
-  });
-
-  testWidgets('Shopping List tile exists', (WidgetTester tester) async {
-    await testTile(tester, 'Shopping List', ShoppingListOverviewScreen);
-  });
-  testWidgets('Create Recipe tile exists', (WidgetTester tester) async {
-    await testTile(tester, 'New Recipe', NewRecipeScreen);
-  });
-
   testWidgets('Share Account tile exists', (WidgetTester tester) async {
     await testTile(tester, 'Share Account', ShareAccountScreen);
   });
@@ -71,10 +51,6 @@ void main() {
 
   testWidgets('Web Login tile exists', (WidgetTester tester) async {
     // await testTile(tester, 'Cookza Web', WebLoginOnAppScreen);
-  });
-
-  testWidgets('Leftovers tile exists', (WidgetTester tester) async {
-    await testTile(tester, 'Leftover Reuse', LeftoversScreen);
   });
 }
 

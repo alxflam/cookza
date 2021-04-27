@@ -1,5 +1,6 @@
 import 'package:cookza/components/alert_dialog_title.dart';
 import 'package:cookza/components/future_progress_dialog.dart';
+import 'package:cookza/components/version_text.dart';
 import 'package:cookza/constants.dart';
 import 'package:cookza/screens/settings/changelog_screen.dart';
 import 'package:cookza/screens/settings/error_log_screen.dart';
@@ -11,7 +12,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:package_info/package_info.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AboutScreen extends StatelessWidget {
@@ -54,19 +54,7 @@ class AboutScreen extends StatelessWidget {
               if (kIsWeb) {
                 return Container();
               }
-              return FutureBuilder(
-                future: PackageInfo.fromPlatform(),
-                builder: (context, snapshot) {
-                  if (snapshot.data != null) {
-                    var info = snapshot.data as PackageInfo;
-                    return Text(
-                      '${info.version} - Build ${info.buildNumber}',
-                      style: TextStyle(fontStyle: FontStyle.italic),
-                    );
-                  }
-                  return Container();
-                },
-              );
+              return VersionText();
             }),
             Text(
               AppLocalizations.of(context)!.copyright,
