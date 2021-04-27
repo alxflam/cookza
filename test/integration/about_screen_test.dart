@@ -173,7 +173,7 @@ void main() {
     await _initApp(tester, observer);
     await tester.pumpAndSettle();
 
-    var tile = find.text('0.42.0 - Build 42');
+    var tile = find.text('v0.42.0');
     expect(tile, findsOneWidget);
   });
 }
