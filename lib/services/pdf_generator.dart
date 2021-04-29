@@ -121,7 +121,8 @@ class PDFGeneratorImpl implements PDFGenerator {
             pw.Paragraph(text: recipeViewModel.description),
             pw.Header(
                 level: 1,
-                text: AppLocalizations.of(buildContext!)!.ingredient(2)),
+                text:
+                    '${AppLocalizations.of(buildContext!)!.ingredient(2)} (${recipeViewModel.servings} ${AppLocalizations.of(buildContext)!.servings(recipeViewModel.servings)})'),
             pw.Table.fromTextArray(
               context: context,
               border: pw.TableBorder(),
