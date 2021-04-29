@@ -60,6 +60,9 @@ class FirebaseProvider {
         .where((a) => a.id != null)
         .map((e) => e.id!)
         .toList();
+    if (groups.isEmpty) {
+      return Future.value([]);
+    }
     var docs = await _shoppingListsQuery(groups).get();
 
     return docs.docs
@@ -73,16 +76,6 @@ class FirebaseProvider {
     var docs = await _shoppingListsQuery([mealPlan]).get();
 
     return docs.docs;
-  }
-
-  Stream<List<ShoppingListEntity>> get shoppingListsAsStream {
-    // TODO: cache groups until visiting meal plan screen
-    List<String> groups = [];
-
-    return _shoppingListsQuery(groups).snapshots().map((e) => e.docs
-        .map((e) => ShoppingListEntityFirebase.of(
-            FirebaseShoppingListDocument.fromJson(e.data(), e.id)))
-        .toList());
   }
 
   Query _mealPlanGroupsQuery() {

@@ -66,7 +66,7 @@ void main() {
     expect(retrievedLists.first.items.length, 2);
   });
 
-  test('Get lists as stream', () async {
+  test('Get lists', () async {
     var cut = ShoppingListManagerImpl();
     var mealPlanManager = MealPlanManagerFirebase();
 
@@ -80,8 +80,8 @@ void main() {
     expect(createdList, isNotNull);
     expect(createdList.items.length, 1);
 
-    var listsStream = cut.shoppingLists;
-    expect(listsStream, isNotNull);
+    var lists = await cut.shoppingListsAsList;
+    expect(lists.length, 1);
   });
 
   test('Delete shopping list', () async {
