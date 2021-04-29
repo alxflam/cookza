@@ -316,11 +316,6 @@ class MockShoppingListManager extends _i1.Mock
                   <_i4.ShoppingListEntity>[]))
           as _i19.Future<List<_i4.ShoppingListEntity>>);
   @override
-  _i19.Stream<List<_i4.ShoppingListEntity>> get shoppingLists =>
-      (super.noSuchMethod(Invocation.getter(#shoppingLists),
-              returnValue: Stream<List<_i4.ShoppingListEntity>>.empty())
-          as _i19.Stream<List<_i4.ShoppingListEntity>>);
-  @override
   _i19.Future<_i4.ShoppingListEntity> createOrUpdate(
           _i4.ShoppingListEntity? entity) =>
       (super.noSuchMethod(Invocation.method(#createOrUpdate, [entity]),
@@ -902,11 +897,6 @@ class MockFirebaseProvider extends _i1.Mock implements _i14.FirebaseProvider {
               returnValue: Future<List<_i4.ShoppingListEntity>>.value(
                   <_i4.ShoppingListEntity>[]))
           as _i19.Future<List<_i4.ShoppingListEntity>>);
-  @override
-  _i19.Stream<List<_i4.ShoppingListEntity>> get shoppingListsAsStream =>
-      (super.noSuchMethod(Invocation.getter(#shoppingListsAsStream),
-              returnValue: Stream<List<_i4.ShoppingListEntity>>.empty())
-          as _i19.Stream<List<_i4.ShoppingListEntity>>);
   @override
   _i19.Future<List<_i12.MealPlanCollectionEntity>> get mealPlanGroupsAsList =>
       (super.noSuchMethod(Invocation.getter(#mealPlanGroupsAsList),
