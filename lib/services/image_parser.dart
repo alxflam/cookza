@@ -106,8 +106,6 @@ class ImageTextExtractorImpl implements ImageTextExtractor {
 
       var lines = block.text?.split('. ') ?? [];
 
-      // TODO: split block if it's lines is greater than a certain threshold by dot
-      // TODO: block.lines corresponds to optical lines - manually check whether the line is a complete sentence and ends with dot
       for (var j = 0; j < lines.length; j++) {
         var line = lines[j];
         line = line.trimLeft();

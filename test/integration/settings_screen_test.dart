@@ -43,12 +43,6 @@ void main() {
 
     // now we should have navigated to the shopping list screen
     expect(find.byType(UoMVisibilityScreen), findsOneWidget);
-
-    // TODO: scroll all the way down, does not yet work...
-    final gesture =
-        await tester.startGesture(Offset(50, 300)); //Position of the scrollview
-    await gesture.moveBy(Offset(0, -1000)); //How much to scroll by
-    await tester.pumpAndSettle();
   });
 
   testWidgets('Themes tile exists', (WidgetTester tester) async {

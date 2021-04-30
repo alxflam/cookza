@@ -73,6 +73,7 @@ Column _getInstructionRows(
             model.removeInstruction(i);
           },
         ),
+        // TODO: does not support long press delete
         Expanded(
           child: TextFormField(
             autofocus: false,

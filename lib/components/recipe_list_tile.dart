@@ -97,7 +97,6 @@ class RecipeListTile extends StatelessWidget {
   }
 
   Widget _buildTileIcons(RecipeEntity item) {
-    // TODO make a static map in the constants file for the static tags and their icon mapping
     List<IconData> icons = [];
     var isVegan = item.tags.contains(kVeganTag);
     var isVegetarian = item.tags.contains(kVegetarianTag);

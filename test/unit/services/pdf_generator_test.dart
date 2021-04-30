@@ -39,7 +39,6 @@ void main() {
     var cut = PDFGeneratorImpl();
     var doc = await cut.generatePDF([recipeViewModel]);
 
-    // TODO: improve testcase
     expect(doc, isNotNull);
   });
 }

@@ -36,7 +36,6 @@ void main() {
       var cut = ImageTextExtractorImpl();
       var mock = VisionTextFake('', []);
 
-      // TODO: forn tests, dump instances to json to get real test data
       var ov = cut.processOverviewImageFromText(mock);
       expect(ov, isNotNull);
 

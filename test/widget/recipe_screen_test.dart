@@ -2,6 +2,7 @@ import 'package:cookza/components/alert_dialog_title.dart';
 import 'package:cookza/model/entities/mutable/mutable_instruction.dart';
 import 'package:cookza/model/entities/mutable/mutable_recipe.dart';
 import 'package:cookza/routes.dart';
+import 'package:cookza/screens/meal_plan/meal_plan_screen.dart';
 import 'package:cookza/screens/recipe_view/recipe_screen.dart';
 import 'package:cookza/services/abstract/receive_intent_handler.dart';
 import 'package:cookza/services/flutter/navigator_service.dart';
@@ -128,6 +129,8 @@ void main() {
 
     /// navigated to meal plan
     verify(mockObserver.didPush(any, any));
+    expect(find.byType(MealPlanScreen), findsOneWidget);
+
     // TODO: then select a day and add to meal plan
   });
 }
