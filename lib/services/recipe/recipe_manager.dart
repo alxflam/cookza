@@ -1,4 +1,3 @@
-import 'package:cookza/model/entities/abstract/rating_entity.dart';
 import 'package:cookza/model/entities/abstract/recipe_collection_entity.dart';
 import 'package:cookza/model/entities/abstract/recipe_entity.dart';
 import 'package:cookza/model/entities/abstract/user_entity.dart';
@@ -41,7 +40,7 @@ abstract class RecipeManager {
 
   Future<void> updateRating(RecipeEntity recipe, int rating);
 
-  Future<List<RatingEntity>> getRatings();
+  Future<Map<String, int>> getRatings();
 
   Future<int> getRating(RecipeEntity recipe);
 
@@ -62,6 +61,9 @@ class RecipeManagerFirebase implements RecipeManager {
   /// restart of the app
   String? _currentCollection;
   final Map<String, int> _ratings = {};
+
+  /// whether ratigns have been fetched from firestore
+  bool _ratingsInitialized = false;
 
   @override
   Future<List<RecipeCollectionEntity>> get collections async {
@@ -154,14 +156,17 @@ class RecipeManagerFirebase implements RecipeManager {
   }
 
   @override
-  Future<List<RatingEntity>> getRatings() async {
-    // TODO: only call this once! all other times return cache!
-    final ratings = await sl.get<FirebaseProvider>().getRatings();
-    for (var item in ratings) {
-      this._ratings.update(item.recipeId, (value) => item.rating,
-          ifAbsent: () => item.rating);
+  Future<Map<String, int>> getRatings() async {
+    if (!_ratingsInitialized) {
+      final ratings = await sl.get<FirebaseProvider>().getRatings();
+      for (var item in ratings) {
+        this._ratings.update(item.recipeId, (value) => item.rating,
+            ifAbsent: () => item.rating);
+      }
+      _ratingsInitialized = true;
     }
-    return ratings;
+
+    return Future.value(this._ratings);
   }
 
   @override
@@ -170,9 +175,8 @@ class RecipeManagerFirebase implements RecipeManager {
     if (ratings.isEmpty) {
       return Future.value([]);
     } else {
-      final recipes = await sl
-          .get<FirebaseProvider>()
-          .getRecipeById(ratings.map((e) => e.recipeId).toList());
+      final recipes =
+          await sl.get<FirebaseProvider>().getRecipeById(ratings.keys.toList());
       recipes.sort((a, b) {
         final ratingA = this._ratings[a.id] ?? 0;
         final ratingB = this._ratings[b.id] ?? 0;
