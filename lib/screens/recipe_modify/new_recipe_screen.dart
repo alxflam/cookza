@@ -189,11 +189,12 @@ class NewRecipeStepper extends StatelessWidget {
                   break;
               }
 
-              var result = await Navigator.pushNamed(context, targetScreen);
+              RecipeEditModel editModel =
+                  Provider.of<RecipeEditModel>(context, listen: false);
+              var result = await Navigator.pushNamed(context, targetScreen,
+                  arguments: editModel);
               if (result != null && result is RecipeEditStep) {
-                RecipeEditModel model =
-                    Provider.of<RecipeEditModel>(context, listen: false);
-                model.applyCurrentStep(result);
+                editModel.applyCurrentStep(result);
               }
             },
             // textColor: cancelColor,

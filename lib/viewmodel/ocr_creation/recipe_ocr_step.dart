@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cookza/services/image_parser.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
+import 'package:cookza/viewmodel/recipe_edit/recipe_edit_model.dart';
 import 'package:cookza/viewmodel/recipe_edit/recipe_edit_step.dart';
 import 'package:flutter/material.dart';
 
@@ -75,6 +76,11 @@ class RecipeInstructionOCRStep
     extends RecipeOCRStep<RecipeInstructionEditStep> {
   RecipeInstructionEditStep _model = RecipeInstructionEditStep();
 
+  final RecipeEditModel? editModel;
+
+  RecipeInstructionOCRStep({RecipeEditModel? editModel})
+      : this.editModel = editModel;
+
   @override
   bool get isValid {
     return this
@@ -87,9 +93,13 @@ class RecipeInstructionOCRStep
 
   @override
   Future<void> analyse() async {
-    this._model = await sl
-        .get<ImageTextExtractor>()
-        .processInstructionsImage(this._image!);
+    final title = editModel?.overviewStepModel.name ?? '';
+    final desc = editModel?.overviewStepModel.description ?? '';
+
+    this._model = await sl.get<ImageTextExtractor>().processInstructionsImage(
+        this._image!,
+        recipeTitle: title,
+        recipeDescription: desc);
     this._isPending = false;
     notifyListeners();
   }

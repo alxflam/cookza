@@ -1157,8 +1157,16 @@ class MockImageTextExtractor extends _i1.Mock
           as _i19.Future<_i16.RecipeIngredientEditStep>);
   @override
   _i19.Future<_i16.RecipeInstructionEditStep> processInstructionsImage(
-          _i2.File? file) =>
-      (super.noSuchMethod(Invocation.method(#processInstructionsImage, [file]),
+          _i2.File? file,
+          {String? recipeTitle,
+          String? recipeDescription}) =>
+      (super.noSuchMethod(
+              Invocation.method(#processInstructionsImage, [
+                file
+              ], {
+                #recipeTitle: recipeTitle,
+                #recipeDescription: recipeDescription
+              }),
               returnValue: Future<_i16.RecipeInstructionEditStep>.value(
                   _FakeRecipeInstructionEditStep()))
           as _i19.Future<_i16.RecipeInstructionEditStep>);
@@ -1178,9 +1186,16 @@ class MockImageTextExtractor extends _i1.Mock
           as _i16.RecipeIngredientEditStep);
   @override
   _i16.RecipeInstructionEditStep processInstructionsImageFromText(
-          _i43.VisionText? text) =>
+          _i43.VisionText? text,
+          {String? recipeTitle,
+          String? recipeDescription}) =>
       (super.noSuchMethod(
-              Invocation.method(#processInstructionsImageFromText, [text]),
+              Invocation.method(#processInstructionsImageFromText, [
+                text
+              ], {
+                #recipeTitle: recipeTitle,
+                #recipeDescription: recipeDescription
+              }),
               returnValue: _FakeRecipeInstructionEditStep())
           as _i16.RecipeInstructionEditStep);
 }

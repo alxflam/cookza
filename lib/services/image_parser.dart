@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:cookza/model/entities/mutable/mutable_ingredient_note.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:cookza/services/unit_of_measure.dart';
+import 'package:cookza/services/util/levenshtein.dart';
 import 'package:cookza/viewmodel/recipe_edit/recipe_edit_step.dart';
 import 'package:cookza/viewmodel/recipe_edit/recipe_ingredient_model.dart';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
@@ -11,11 +12,13 @@ import 'package:collection/collection.dart';
 abstract class ImageTextExtractor {
   Future<RecipeOverviewEditStep> processOverviewImage(File file);
   Future<RecipeIngredientEditStep> processIngredientsImage(File file);
-  Future<RecipeInstructionEditStep> processInstructionsImage(File file);
+  Future<RecipeInstructionEditStep> processInstructionsImage(File file,
+      {String? recipeTitle, String? recipeDescription});
 
   RecipeOverviewEditStep processOverviewImageFromText(VisionText text);
   RecipeIngredientEditStep processIngredientsImageFromText(VisionText text);
-  RecipeInstructionEditStep processInstructionsImageFromText(VisionText text);
+  RecipeInstructionEditStep processInstructionsImageFromText(VisionText text,
+      {String? recipeTitle, String? recipeDescription});
 }
 
 class ImageTextExtractorImpl implements ImageTextExtractor {
@@ -37,9 +40,12 @@ class ImageTextExtractorImpl implements ImageTextExtractor {
   }
 
   @override
-  Future<RecipeInstructionEditStep> processInstructionsImage(File file) async {
+  Future<RecipeInstructionEditStep> processInstructionsImage(File file,
+      {String? recipeTitle, String? recipeDescription}) async {
     var text = await this.analyse(file);
-    return processInstructionsImageFromText(text);
+
+    return processInstructionsImageFromText(text,
+        recipeTitle: recipeTitle, recipeDescription: recipeDescription);
   }
 
   @override
@@ -74,9 +80,11 @@ class ImageTextExtractorImpl implements ImageTextExtractor {
   }
 
   @override
-  RecipeInstructionEditStep processInstructionsImageFromText(VisionText text) {
+  RecipeInstructionEditStep processInstructionsImageFromText(VisionText text,
+      {String? recipeTitle, String? recipeDescription}) {
     var model = RecipeInstructionEditStep();
-
+    // remove the dummy entry only added to ease editing in the dialog
+    model.instructions.clear();
     // indicator that the previous instruction may have ended abrupty
     bool possiblyIncompleteSentence = false;
     List<String> instructions = [];
@@ -84,6 +92,18 @@ class ImageTextExtractorImpl implements ImageTextExtractor {
     // a block may be only a single line (an incomplete sentence to be continued in the next line)
     for (var i = 0; i < text.blocks.length; i++) {
       var block = text.blocks[i];
+      if (block.text == null || block.text!.trim().isEmpty) {
+        continue;
+      }
+
+      // skip recipe name and description
+      final distTitle = levenshtein(block.text ?? '', recipeTitle ?? '');
+      final distDesc = levenshtein(block.text ?? '', recipeDescription ?? '');
+      final maxDist = block.text!.length / 3;
+      if (distTitle < maxDist || distDesc < maxDist) {
+        continue;
+      }
+
       var lines = block.text?.split('. ') ?? [];
 
       // TODO: split block if it's lines is greater than a certain threshold by dot
@@ -125,35 +145,51 @@ class ImageTextExtractorImpl implements ImageTextExtractor {
         : 0;
     var maxHeight = heights.isNotEmpty ? heights.reduce(max) : 0;
 
+    TextBlock? recipeNameBlock;
+    TextBlock? recipeDescriptionBlock;
+
     for (var block in text.blocks) {
       var height = block.boundingBox!.height;
       var text = block.text ?? '';
+      var currentNameHeight = recipeNameBlock?.boundingBox?.height ?? 0;
+      var currentDescriptionBlock =
+          recipeDescriptionBlock?.boundingBox?.height ?? 0;
       print('height: $height, text: $text');
 
       // recipe title: bigger size and rather short text
-      if (text.length > 10 && text.length < 50 && height > avgHeight) {
-        model.name = text;
+      if (block.lines.length == 1 &&
+          text.length > 10 &&
+          text.length < 50 &&
+          height > avgHeight &&
+          height > currentNameHeight) {
+        recipeNameBlock = block;
         continue;
       }
 
-      // description: rather short text and more than average height but not max height
-      if (text.length > 10 &&
-          text.length < 300 &&
+      // description: rather short text in a single line (or at least two words) and more than average height but not max height
+      if (block.lines.length == 1 &&
+          (text.length > 10 || text.split(' ').length > 1) &&
+          text.length < 150 &&
           height > avgHeight &&
-          height < maxHeight) {
-        model.description = text;
+          height < maxHeight &&
+          height > currentDescriptionBlock) {
+        recipeDescriptionBlock = block;
         continue;
       }
 
       // duration: maximum 3 digit integer
       if (text.length > 1 && text.length < 3 && int.tryParse(text) is int) {
         model.duration = int.parse(text);
+        continue;
       }
+    }
 
-      // servings: usually 1 digit integer
-      if (text.length == 1 && int.tryParse(text) is int) {
-        // this._model.servings = int.parse(text);
-      }
+    if (recipeNameBlock != null) {
+      model.name = recipeNameBlock.text!;
+    }
+
+    if (recipeDescriptionBlock != null) {
+      model.description = recipeDescriptionBlock.text;
     }
 
     return model;
@@ -180,29 +216,30 @@ class ImageTextExtractorImpl implements ImageTextExtractor {
       amount = double.parse(doubleMatch.group(0)!);
     }
 
-    var nounsExp = RegExp('([A-ZÄÖÜ][\-\_]?[a-zäöü]*){1,}');
-    var nounsMatch = nounsExp.firstMatch(textItem);
+    final nounsExp = RegExp('([A-ZÄÖÜ][\-\_]?[a-zäöü]*){1,}');
+    final nounsMatch = nounsExp.firstMatch(textItem);
     if (nounsMatch != null) {
       ingredient = nounsMatch.group(0)!;
     }
 
     if (amount != null) {
-      var groupContent = doubleMatch!.group(0)!;
+      final groupContent = doubleMatch!.group(0)!;
 
       // first check if uom is in same word like amount
       var unitIndex = words.indexOf(groupContent) + 1;
       if (unitIndex < words.length) {
-        var word = words[unitIndex];
+        final word = words[unitIndex];
         if (doubleMatch.end < word.length) {
-          unit = word.substring(doubleMatch.end);
-          var uom = uoms.firstWhereOrNull((e) => e.displayName == unit);
+          final unitCandidate = word.substring(doubleMatch.end);
+          final uom =
+              uoms.firstWhereOrNull((e) => e.displayName == unitCandidate);
           if (uom != null) {
             unit = uom.id;
           }
         }
       }
       for (var word in words) {
-        var uom = uoms.firstWhereOrNull((e) => e.displayName == word);
+        final uom = uoms.firstWhereOrNull((e) => e.displayName == word);
         if (uom != null) {
           unit = uom.id;
           break;
@@ -212,7 +249,7 @@ class ImageTextExtractorImpl implements ImageTextExtractor {
 
     if (ingredient != null) {
       var note = MutableIngredientNote.empty();
-      note.amount = amount!;
+      note.amount = amount ?? 1;
       note.ingredient.name = ingredient;
       note.unitOfMeasure = unit!;
       return RecipeIngredientModel.of(note);
