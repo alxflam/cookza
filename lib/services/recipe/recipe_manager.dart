@@ -52,7 +52,7 @@ abstract class RecipeManager {
 
   Future<void> removeMember(UserEntity user, String group);
 
-  Future<void> init();
+  Future<RecipeManager> init();
 }
 
 class RecipeManagerFirebase implements RecipeManager {
@@ -254,12 +254,12 @@ class RecipeManagerFirebase implements RecipeManager {
   }
 
   @override
-  Future<void> init() {
+  Future<RecipeManager> init() {
     var collection =
         sl.get<SharedPreferencesProvider>().getLeastRecentlyUsedRecipeGroup();
     if (collection != null && collection.isNotEmpty) {
       this.currentCollection = collection;
     }
-    return Future.value(this._currentCollection);
+    return Future.value(this);
   }
 }

@@ -26,7 +26,7 @@ abstract class MealPlanManager {
 
   Future<MealPlanEntity?> getMealPlanByCollectionID(String id);
 
-  Future<void> init();
+  Future<MealPlanManager> init();
 
   Future<void> removeMember(UserEntity user, String mealPlan);
 }
@@ -120,13 +120,13 @@ class MealPlanManagerFirebase implements MealPlanManager {
   }
 
   @override
-  Future<void> init() {
+  Future<MealPlanManager> init() {
     var collection =
         sl.get<SharedPreferencesProvider>().getCurrentMealPlanCollection();
     if (collection != null && collection.isNotEmpty) {
       this.currentCollection = collection;
     }
-    return Future.value(this._currentCollection);
+    return Future.value(this);
   }
 
   @override

@@ -148,25 +148,12 @@ class FirebaseProvider {
 
     _currentUser = _auth.currentUser;
     if (_currentUser == null) {
+      // TODO catch FirebaseException if device is offline, better check for connection beforehand!
       await _signInAnonymously();
     }
     _ownerUserID = _currentUser?.uid;
 
     print('logged in anonymously using token ${_currentUser?.uid}');
-
-    /// notify dependent services that firebase is ready to use now
-    /// TODO refactor: use GetIt dependencies instead of manually triggering the init...
-    /// use event bus mechanism
-    // ignore: unawaited_futures
-    Future.microtask(() {
-      // TODO: await finish of shared preferences? or how to sync?
-      // maybe make firebase provider dependent of shared preferences
-      /// initialize recipe manager
-      sl.get<RecipeManager>().init();
-
-      /// initialize meal plan manager
-      return sl.get<MealPlanManager>().init();
-    });
 
     return this;
   }
@@ -644,7 +631,6 @@ class FirebaseProvider {
   }
 
   Future<MealPlanEntity?> getMealPlanByID(String id) async {
-    // TODO: change query to where if ever doc id of meal plan is different from meal plan group
     var doc = await _firestore.collection(MEAL_PLANS).doc(id).get();
     if (!doc.exists) {
       return Future.value(null);
