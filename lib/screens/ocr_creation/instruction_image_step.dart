@@ -11,10 +11,10 @@ class OCRInstructionsImageScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var editModel =
-        ModalRoute.of(context)!.settings.arguments as RecipeEditModel;
+        ModalRoute.of(context)!.settings.arguments as RecipeEditModel?;
 
     return ChangeNotifierProvider<RecipeOCRStep>.value(
-        value: RecipeInstructionOCRStep(editModel),
+        value: RecipeInstructionOCRStep(editModel: editModel),
         child: OCRImageStep(
             AppLocalizations.of(context)!.functionsTextRecognition));
   }
