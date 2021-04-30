@@ -24,9 +24,7 @@ import 'package:cookza/model/firebase/recipe/firebase_rating.dart';
 import 'package:cookza/model/firebase/recipe/firebase_recipe.dart';
 import 'package:cookza/model/firebase/shopping_list/firebase_shopping_list.dart';
 import 'package:cookza/services/recipe/image_manager.dart';
-import 'package:cookza/services/meal_plan_manager.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
-import 'package:cookza/services/recipe/recipe_manager.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 

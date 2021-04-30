@@ -103,8 +103,10 @@ Widget _getAddRowButton(BuildContext context, RecipeIngredientEditStep model) {
     style: ElevatedButton.styleFrom(
         primary: Theme.of(context).colorScheme.primary),
     onPressed: () async {
-      RecipeIngredientModel ingModel =
-          RecipeIngredientModel.of(MutableIngredientNote.empty());
+      final rootModel = Provider.of<RecipeEditModel>(context, listen: false);
+      RecipeIngredientModel ingModel = RecipeIngredientModel.of(
+          MutableIngredientNote.empty(),
+          sourceRecipe: rootModel.targetEntity.id);
 
       var result = await Navigator.pushNamed(context, NewIngredientScreen.id,
           arguments: ingModel) as RecipeIngredientModel?;

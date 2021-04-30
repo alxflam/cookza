@@ -11,15 +11,18 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class RecipeIngredientModel extends ChangeNotifier {
   final MutableIngredientNote _note;
+  final String? sourceRecipe;
   bool _deleted = false;
   RecipeViewModel? _recipe;
   bool _supportsRecipeReference = true;
 
   RecipeIngredientModel.empty(this._supportsRecipeReference)
-      : this._note = MutableIngredientNote.empty();
+      : this._note = MutableIngredientNote.empty(),
+        this.sourceRecipe = null;
 
-  RecipeIngredientModel.of(IngredientNoteEntity note)
-      : this._note = MutableIngredientNote.of(note) {
+  RecipeIngredientModel.of(IngredientNoteEntity note, {String? sourceRecipe})
+      : this._note = MutableIngredientNote.of(note),
+        this.sourceRecipe = sourceRecipe {
     if (this._note.ingredient.isRecipeReference) {
       this.setRecipeReference(this._note.ingredient.recipeReference);
     }
@@ -27,6 +30,7 @@ class RecipeIngredientModel extends ChangeNotifier {
 
   RecipeIngredientModel.noteOnlyModelOf(IngredientNoteEntity note)
       : this._note = MutableIngredientNote.of(note),
+        this.sourceRecipe = null,
         this._supportsRecipeReference = false;
 
   bool get supportsRecipeReference => _supportsRecipeReference;

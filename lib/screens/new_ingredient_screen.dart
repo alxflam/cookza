@@ -216,9 +216,10 @@ class NewIngredientScreen extends StatelessWidget {
             // fetch all recipes the app currently stores
             var recipes = await sl.get<RecipeManager>().getAllRecipes();
             // create the view model with type reference ingredient
-            // TODO: add calling recipe id to model and pass it as list to factory to exclude it from the selection!
+            // and prevent referencing itself
             var selModel = RecipeSelectionModel.forReferenceIngredient(
-                recipes.map((e) => RecipeViewModel.of(e)).toList(), []);
+                recipes.map((e) => RecipeViewModel.of(e)).toList(),
+                [model.sourceRecipe ?? '']);
             // navigate to the selection screen
             var result = await Navigator.pushNamed(
                     context, RecipeSelectionScreen.id, arguments: selModel)
