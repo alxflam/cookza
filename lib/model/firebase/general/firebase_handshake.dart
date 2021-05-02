@@ -11,7 +11,7 @@ class FirebaseHandshake {
   @JsonKey()
   String requestor;
   @JsonKey()
-  String owner;
+  String? owner;
   @JsonKey(fromJson: kTimestampFromJson, toJson: kTimestampToJson)
   Timestamp creationTimestamp;
   @JsonKey()
@@ -27,10 +27,10 @@ class FirebaseHandshake {
 
   Map<String, dynamic> toJson() => _$FirebaseHandshakeToJson(this);
 
-  FirebaseHandshake(
-      {required this.requestor,
-      required this.owner,
-      required this.browser,
-      required this.operatingSystem})
-      : this.creationTimestamp = Timestamp.now();
+  FirebaseHandshake({
+    required this.requestor,
+    required this.browser,
+    required this.operatingSystem,
+    this.owner,
+  }) : this.creationTimestamp = Timestamp.now();
 }

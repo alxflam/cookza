@@ -29,6 +29,7 @@ import 'package:cookza/services/shopping_list/shopping_list_manager.dart';
 import 'package:cookza/services/shopping_list/shopping_list_text_generator.dart';
 import 'package:cookza/services/recipe/similarity_service.dart';
 import 'package:cookza/services/unit_of_measure.dart';
+import 'package:cookza/services/web/web_login_manager.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 
@@ -92,5 +93,9 @@ void setupServiceLocator() {
 
   sl.registerSingletonAsync<MealPlanManager>(
       () async => MealPlanManagerFirebase().init(),
+      dependsOn: [FirebaseProvider]);
+
+  sl.registerSingletonAsync<FirebaseWebLoginManager>(
+      () async => FirebaseWebLoginManager(),
       dependsOn: [FirebaseProvider]);
 }

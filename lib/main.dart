@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cookza/constants.dart';
 import 'package:cookza/routes.dart';
 import 'package:cookza/screens/settings/onboarding_screen.dart';
+import 'package:cookza/screens/web/web_landing_screen.dart';
 import 'package:cookza/services/flutter/exception_handler.dart';
 import 'package:cookza/services/flutter/navigator_service.dart';
 import 'package:cookza/services/shared_preferences_provider.dart';
@@ -25,7 +26,7 @@ void main() async {
 
   /// delegating flutter exceptions (usually widget errors) is disabled for debug mode
   /// as the flutter exception handler adds more verbose output for troubleshooting
-  if (kReleaseMode) {
+  if (kReleaseMode || kIsWeb) {
     setupFlutterErrorHandling();
   }
 
@@ -35,6 +36,7 @@ void main() async {
     () => runApp(
       ProviderChainApp(),
     ),
+    // TODO: remove for web or prevent log file usage
     (Object error, StackTrace stackTrace) => {
       // delegate exception to service
       GetIt.I
@@ -84,9 +86,9 @@ class CookzaMaterialApp extends StatelessWidget {
   }
 
   String getInitialRoute() {
-    // if (kIsWeb) {
-    //   return WebLandingPage.id;
-    // }
+    if (kIsWeb) {
+      return WebLandingPage.id;
+    }
 
     var prefs = sl.get<SharedPreferencesProvider>();
     if (!prefs.introductionShown() ||

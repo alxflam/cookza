@@ -7,6 +7,9 @@
 - [Bitbucket Repository](https://bitbucket.org/alex0711/cookly/src/master/)
 - [Bitrise CI Pipeline](https://app.bitrise.io/app/918ad19024d15f9e#/builds)
 
+Coverage before web enablement: 84.1%
+Coverage after web enablement: 
+
 ## Building the app
 
 Run the following command to built an apk for ARM64

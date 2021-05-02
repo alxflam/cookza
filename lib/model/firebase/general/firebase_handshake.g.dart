@@ -9,9 +9,9 @@ part of 'firebase_handshake.dart';
 FirebaseHandshake _$FirebaseHandshakeFromJson(Map<String, dynamic> json) {
   return FirebaseHandshake(
     requestor: json['requestor'] as String,
-    owner: json['owner'] as String,
     browser: json['browser'] as String,
     operatingSystem: json['operatingSystem'] as String,
+    owner: json['owner'] as String?,
   )..creationTimestamp = kTimestampFromJson(json['creationTimestamp']);
 }
 

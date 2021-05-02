@@ -893,6 +893,14 @@ class MockImageManager extends _i1.Mock implements _i37.ImageManager {
 /// See the documentation for Mockito's code generation for more information.
 class MockFirebaseProvider extends _i1.Mock implements _i16.FirebaseProvider {
   @override
+  set ownerUserId(String? _ownerUserId) =>
+      super.noSuchMethod(Invocation.setter(#ownerUserId, _ownerUserId),
+          returnValueForMissingStub: null);
+  @override
+  String get userUid =>
+      (super.noSuchMethod(Invocation.getter(#userUid), returnValue: '')
+          as String);
+  @override
   _i21.Stream<List<_i13.MealPlanCollectionEntity>> get mealPlanGroups =>
       (super.noSuchMethod(Invocation.getter(#mealPlanGroups),
               returnValue: Stream<List<_i13.MealPlanCollectionEntity>>.empty())
@@ -910,9 +918,13 @@ class MockFirebaseProvider extends _i1.Mock implements _i16.FirebaseProvider {
                   <_i13.MealPlanCollectionEntity>[]))
           as _i21.Future<List<_i13.MealPlanCollectionEntity>>);
   @override
-  String get userUid =>
-      (super.noSuchMethod(Invocation.getter(#userUid), returnValue: '')
-          as String);
+  bool isLoggedIn() => (super.noSuchMethod(Invocation.method(#isLoggedIn, []),
+      returnValue: false) as bool);
+  @override
+  _i21.Future<void> signOut() =>
+      (super.noSuchMethod(Invocation.method(#signOut, []),
+          returnValue: Future<void>.value(null),
+          returnValueForMissingStub: Future.value()) as _i21.Future<void>);
   @override
   _i21.Future<List<_i39.QueryDocumentSnapshot>> getShoppingListsByMealPlan(
           String? mealPlan) =>
@@ -948,6 +960,11 @@ class MockFirebaseProvider extends _i1.Mock implements _i16.FirebaseProvider {
               returnValue:
                   Future<_i16.FirebaseProvider>.value(_FakeFirebaseProvider()))
           as _i21.Future<_i16.FirebaseProvider>);
+  @override
+  _i21.Future<void> signInAnonymously() =>
+      (super.noSuchMethod(Invocation.method(#signInAnonymously, []),
+          returnValue: Future<void>.value(null),
+          returnValueForMissingStub: Future.value()) as _i21.Future<void>);
   @override
   _i21.Future<_i3.RecipeCollectionEntity> createRecipeCollection(
           String? name) =>

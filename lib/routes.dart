@@ -27,11 +27,14 @@ import 'package:cookza/screens/settings/theme_settings_screen.dart';
 import 'package:cookza/screens/settings/uom_visibility_settings_screen.dart';
 import 'package:cookza/screens/shopping_list/shopping_list_detail_screen.dart';
 import 'package:cookza/screens/shopping_list/shopping_list_overview_screen.dart';
+import 'package:cookza/screens/web/web_landing_screen.dart';
+import 'package:cookza/screens/web/web_login.dart';
+import 'package:cookza/screens/web_login_app.dart';
 import 'package:flutter/material.dart';
 
 Map<String, Widget Function(BuildContext)> kRoutes = {
   HomeScreen.id: (context) => HomeScreen(),
-  // WebLoginScreen.id: (context) => WebLoginScreen(),
+  WebLoginScreen.id: (context) => WebLoginScreen(),
   RecipeScreen.id: (context) => RecipeScreen(),
   NewRecipeScreen.id: (context) => NewRecipeScreen(),
   SettingsScreen.id: (context) => SettingsScreen(),
@@ -46,14 +49,14 @@ Map<String, Widget Function(BuildContext)> kRoutes = {
   SavedImagesScreen.id: (context) => SavedImagesScreen(),
   ExportSettingsScreen.id: (context) => ExportSettingsScreen(),
   LeftoversScreen.id: (context) => LeftoversScreen(),
-  // WebLoginOnAppScreen.id: (context) => WebLoginOnAppScreen(),
+  WebLoginOnAppScreen.id: (context) => WebLoginOnAppScreen(),
   ShoppingListOverviewScreen.id: (context) => ShoppingListOverviewScreen(),
   ShoppingListDetailScreen.id: (context) => ShoppingListDetailScreen(),
   RecipeGroupScreen.id: (context) => RecipeGroupScreen(),
   ShareAccountScreen.id: (context) => ShareAccountScreen(),
   MealPlanGroupScreen.id: (context) => MealPlanGroupScreen(),
   AboutScreen.id: (context) => AboutScreen(),
-  // WebLandingPage.id: (context) => WebLandingPage(),
+  WebLandingPage.id: (context) => WebLandingPage(),
   ChangelogScreen.id: (context) => ChangelogScreen(),
   OCROverviewImageScreen.id: (context) => OCROverviewImageScreen(),
   OCRIngredientsImageScreen.id: (context) => OCRIngredientsImageScreen(),

@@ -17,6 +17,7 @@ import 'package:cookza/model/entities/firebase/shopping_list_entity.dart';
 import 'package:cookza/model/entities/mutable/mutable_recipe.dart';
 import 'package:cookza/model/firebase/collections/firebase_meal_plan_collection.dart';
 import 'package:cookza/model/firebase/collections/firebase_recipe_collection.dart';
+import 'package:cookza/model/firebase/general/firebase_handshake.dart';
 import 'package:cookza/model/firebase/meal_plan/firebase_meal_plan.dart';
 import 'package:cookza/model/firebase/recipe/firebase_ingredient.dart';
 import 'package:cookza/model/firebase/recipe/firebase_instruction.dart';
@@ -25,6 +26,7 @@ import 'package:cookza/model/firebase/recipe/firebase_recipe.dart';
 import 'package:cookza/model/firebase/shopping_list/firebase_shopping_list.dart';
 import 'package:cookza/services/recipe/image_manager.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
+import 'package:cookza/services/web/web_login_manager.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 
@@ -43,7 +45,22 @@ class FirebaseProvider {
   final FirebaseFirestore _firestore = sl.get<FirebaseFirestore>();
 
   User? _currentUser;
-  String? _ownerUserID;
+  String? ownerUserId;
+
+  bool isLoggedIn() {
+    return _currentUser != null;
+  }
+
+  /// returns the UID assigned to the currently logged in user
+  String get userUid {
+    return _currentUser!.uid;
+  }
+
+  Future<void> signOut() async {
+    ownerUserId = null;
+    _currentUser = null;
+    await this._auth.signOut();
+  }
 
   Stream<List<MealPlanCollectionEntity>> get mealPlanGroups {
     return _mealPlanGroupsQuery().snapshots().map((e) => e.docs
@@ -142,28 +159,24 @@ class FirebaseProvider {
       if (user != null) {
         await _auth.signOut();
       }
+      return this;
     }
 
     _currentUser = _auth.currentUser;
     if (_currentUser == null) {
       // TODO catch FirebaseException if device is offline, better check for connection beforehand!
-      await _signInAnonymously();
+      await signInAnonymously();
     }
-    _ownerUserID = _currentUser?.uid;
+    ownerUserId = _currentUser?.uid;
 
     print('logged in anonymously using token ${_currentUser?.uid}');
 
     return this;
   }
 
-  Future _signInAnonymously() async {
+  Future<void> signInAnonymously() async {
     var result = await _auth.signInAnonymously();
     _currentUser = result.user;
-  }
-
-  /// returns the UID assigned to the currently logged in user
-  String get userUid {
-    return _currentUser!.uid;
   }
 
   /// create a new recipe collection
@@ -608,20 +621,21 @@ class FirebaseProvider {
   Future<Map<String, String>> _getCreationUsersMap() async {
     Map<String, String> result = {};
 
-// TODO: enabled for web
-    // if (kIsWeb) {
-    //   var handshakes = await _getAllExistingWebHandshakes();
+    if (kIsWeb) {
+      var handshakes = await sl
+          .get<FirebaseWebLoginManager>()
+          .getAllExistingWebHandshakes(userUid);
 
-    //   for (var item in handshakes.docs) {
-    //     var model = FirebaseHandshake.fromJson(item.data(), item.id);
-    //     result.putIfAbsent(model.requestor, () => 'Web Session');
-    //   }
-    // }
+      for (var item in handshakes.docs) {
+        var model = FirebaseHandshake.fromJson(item.data(), item.id);
+        result.putIfAbsent(model.requestor, () => 'Web Session');
+      }
+    }
 
-    if (this.userUid == this._ownerUserID) {
+    if (this.userUid == this.ownerUserId) {
       result.putIfAbsent(userUid, () => 'owner');
     } else {
-      result.putIfAbsent(_ownerUserID!, () => 'owner');
+      result.putIfAbsent(ownerUserId!, () => 'owner');
       result.putIfAbsent(userUid, () => 'Web Session');
     }
 

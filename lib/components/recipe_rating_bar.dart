@@ -12,7 +12,6 @@ class RecipeRatingBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    assert(!kIsWeb); // not supported on web
     return RatingBar.builder(
       initialRating: initialRating.toDouble(),
       minRating: 0,
