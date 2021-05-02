@@ -85,11 +85,6 @@ class CustomizedRatingBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (kIsWeb) {
-      // currently not supported by web
-      return Container();
-    }
-
     return FutureBuilder<int>(
       future: sl.get<RecipeManager>().getRating(_model.recipe),
       builder: (context, snapshot) {
