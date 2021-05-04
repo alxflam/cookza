@@ -2,78 +2,96 @@ import 'package:cookza/constants.dart';
 import 'package:cookza/screens/web/web_login.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+const kGreyColor = Color.fromARGB(255, 51, 52, 55);
 
 class WebLandingPage extends StatelessWidget {
   static final String id = 'landingPage';
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-            gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [Colors.black, Colors.grey.shade900],
-        )),
-        child: Padding(
-          padding: EdgeInsets.all(50),
-          child: SizedBox(
-            height: 600,
-            child: Stack(
-              fit: StackFit.expand,
-              children: <Widget>[
-                addBackground(context),
-                addWelcomeText(context)
-              ],
+    return Material(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(
+            child: Container(
+              color: kGreyColor,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Cookza Web App',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 60,
+                    ),
+                  ),
+                  Text(
+                    kAppVersion,
+                    style: TextStyle(fontStyle: FontStyle.italic),
+                  ),
+                ],
+              ),
             ),
+          ),
+          Container(
+            color: Theme.of(context).colorScheme.primary,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: addBackground(context),
+            ),
+          ),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 10),
+              child: Container(
+                child: addWelcomeText(context),
+              ),
+            ),
+          ),
+          Expanded(
+            child: Container(
+              color: kGreyColor,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Impressum'),
+                ],
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget addBackground(BuildContext context) {
+    return Hero(
+      tag: 'appIcon',
+      child: CircleAvatar(
+        radius: 70,
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        child: ConstrainedBox(
+          constraints: BoxConstraints.tightFor(width: 180),
+          child: Image(
+            image: AssetImage(kIconTransparent),
           ),
         ),
       ),
     );
   }
 
-  Widget addBackground(BuildContext context) {
-    var tileColor = Theme.of(context).primaryColor;
-
-    return FractionallySizedBox(
-        alignment: Alignment.centerRight, //to keep images aligned to right
-        widthFactor: .4, //covers about 60% of the screen width
-        child: Hero(
-          tag: 'appIcon',
-          child: CircleAvatar(
-            backgroundColor: tileColor,
-            child: ConstrainedBox(
-              constraints: BoxConstraints.tightFor(width: 400),
-              child: Image(
-                image: AssetImage(kIconTransparent),
-              ),
-            ),
-          ),
-        ));
-  }
-
   Widget addWelcomeText(BuildContext context) {
-    return FractionallySizedBox(
-      alignment: Alignment.centerLeft, //text aligned to left side
-      widthFactor: .6, //covers about half of the screen
+    return Center(
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 50),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              'Welcome to Cookza',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 60,
-              ),
-            ),
-            Text(
-              kAppVersion,
-              style: TextStyle(fontStyle: FontStyle.italic),
-            ),
             _getConsentWidget(context),
           ],
         ),
@@ -101,32 +119,33 @@ class WebLandingPage extends StatelessWidget {
                     });
                   },
                   title: RichText(
-                      text: TextSpan(children: [
-                    TextSpan(
-                        text: 'I have read the ',
-                        style: TextStyle(color: Colors.white)),
-                    TextSpan(
-                      text: 'Terms of Use',
-                      style: TextStyle(color: Colors.blueAccent),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          kNotImplementedDialog(context);
-                        },
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                            text: AppLocalizations.of(context)!.readAndAccept,
+                            style: TextStyle(color: Colors.white)),
+                        TextSpan(
+                          text: AppLocalizations.of(context)!.termsOfUse,
+                          style: TextStyle(color: Colors.blueAccent),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              kNotImplementedDialog(context);
+                            },
+                        ),
+                        TextSpan(
+                            text: ' and ',
+                            style: TextStyle(color: Colors.white)),
+                        TextSpan(
+                          text: AppLocalizations.of(context)!.privacyStatement,
+                          style: TextStyle(color: Colors.blueAccent),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              kNotImplementedDialog(context);
+                            },
+                        ),
+                      ],
                     ),
-                    TextSpan(
-                        text: ' and ', style: TextStyle(color: Colors.white)),
-                    TextSpan(
-                      text: 'Data Privacy Statement ',
-                      style: TextStyle(color: Colors.blueAccent),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          kNotImplementedDialog(context);
-                        },
-                    ),
-                    TextSpan(
-                        text: 'and accept these conditions',
-                        style: TextStyle(color: Colors.white)),
-                  ])),
+                  ),
                   controlAffinity: ListTileControlAffinity.trailing,
                 ),
                 ElevatedButton(
@@ -135,7 +154,7 @@ class WebLandingPage extends StatelessWidget {
                       ? () => Navigator.pushReplacementNamed(
                           context, WebLoginScreen.id)
                       : null,
-                  child: Text('§Proceed'),
+                  child: Text(AppLocalizations.of(context)!.accept),
                 )
               ],
             );
