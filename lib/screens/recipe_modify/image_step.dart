@@ -21,15 +21,14 @@ Step getImageStep(BuildContext context) {
         builder: (context, model, child) {
           Future<void> getImage(ImageSource source) async {
             var picker = ImagePicker();
-            final image = await picker.getImage(source: source);
+            final image = await picker.getImage(
+                source: source,
+                imageQuality: RecipeEditModel.kImageQuality,
+                maxWidth: RecipeEditModel.kImageMaxWidth);
             if (image != null) {
               model.image = File(image.path);
             } else {
               print('picked image is null');
-            }
-            final LostData response = await picker.getLostData();
-            if (!response.isEmpty) {
-              print('lost data');
             }
           }
 

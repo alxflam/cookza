@@ -10,6 +10,9 @@ import 'package:flutter/material.dart';
 enum MODE { CREATE, MODIFY }
 
 class RecipeEditModel extends ChangeNotifier {
+  static const kImageQuality = 70;
+  static const kImageMaxWidth = 1000.0;
+
   final MutableRecipe _targetRecipe;
   final MODE _mode;
   final List<RecipeEditStep> _stepModels = [
