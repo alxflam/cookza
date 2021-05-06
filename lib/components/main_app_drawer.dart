@@ -18,44 +18,54 @@ import '../constants.dart';
 class MainAppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final items = <Widget>[];
+
+    final genericItems = [
+      ListTile(
+        title: Text(AppLocalizations.of(context)!.export),
+        leading: FaIcon(FontAwesomeIcons.fileExport),
+        onTap: () => Navigator.pushNamed(context, ExportSettingsScreen.id),
+      ),
+      ListTile(
+        title: Text(AppLocalizations.of(context)!.import),
+        leading: FaIcon(FontAwesomeIcons.fileImport),
+        onTap: () {
+          sl.get<RecipeFileImport>().parseAndImport(context);
+        },
+      ),
+      _getWebAppListTile(context),
+      ListTile(
+        title: Text(AppLocalizations.of(context)!.settings),
+        leading: FaIcon(kSettingsIcon),
+        onTap: () => Navigator.pushNamed(context, SettingsScreen.id),
+      ),
+    ];
+
+    items.add(
+      DrawerHeader(
+        decoration: BoxDecoration(
+          color: Theme.of(context).cardColor,
+        ),
+        child: AppIconTextWidget(),
+      ),
+    );
+
+    if (!kIsWeb) {
+      items.add(ListTile(
+        title: Text(AppLocalizations.of(context)!.shareAccount),
+        leading: FaIcon(kShareAccountIcon),
+        onTap: () => Navigator.pushNamed(context, ShareAccountScreen.id),
+      ));
+    }
+
+    items.addAll(genericItems);
+
     return Drawer(
       child: Column(
         children: [
           SingleChildScrollView(
             child: Column(
-              children: [
-                DrawerHeader(
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).cardColor,
-                  ),
-                  child: AppIconTextWidget(),
-                ),
-                ListTile(
-                  title: Text(AppLocalizations.of(context)!.shareAccount),
-                  leading: FaIcon(kShareAccountIcon),
-                  onTap: () =>
-                      Navigator.pushNamed(context, ShareAccountScreen.id),
-                ),
-                ListTile(
-                  title: Text(AppLocalizations.of(context)!.export),
-                  leading: FaIcon(FontAwesomeIcons.fileExport),
-                  onTap: () =>
-                      Navigator.pushNamed(context, ExportSettingsScreen.id),
-                ),
-                ListTile(
-                  title: Text(AppLocalizations.of(context)!.import),
-                  leading: FaIcon(FontAwesomeIcons.fileImport),
-                  onTap: () {
-                    sl.get<RecipeFileImport>().parseAndImport(context);
-                  },
-                ),
-                _getWebAppListTile(context),
-                ListTile(
-                  title: Text(AppLocalizations.of(context)!.settings),
-                  leading: FaIcon(kSettingsIcon),
-                  onTap: () => Navigator.pushNamed(context, SettingsScreen.id),
-                ),
-              ],
+              children: items,
             ),
           ),
           Expanded(
