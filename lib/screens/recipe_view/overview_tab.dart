@@ -4,7 +4,6 @@ import 'package:cookza/services/recipe/image_manager.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:cookza/services/recipe/recipe_manager.dart';
 import 'package:cookza/viewmodel/recipe_view/recipe_view_model.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
