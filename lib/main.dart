@@ -77,7 +77,7 @@ class CookzaMaterialApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
       ],
       supportedLocales: AppLocalizations.supportedLocales,
-      debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: kDebugMode,
       theme: Provider.of<ThemeModel>(context).current,
       navigatorKey: sl.get<NavigatorService>().navigatorKey,
       initialRoute: getInitialRoute(),

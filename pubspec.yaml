@@ -1,7 +1,7 @@
 name: cookza
 description: Organize and share your favorite recipes.
 
-version: 0.0.11+1
+version: 0.0.12+1
 
 publish_to: none
 
@@ -46,10 +46,7 @@ dev_dependencies:
   mockito: ^5.0.0
   pedantic: ^1.11.0
   cloud_firestore_mocks: ^0.8.2
-  # firebase_storage_mocks:
-  #   git:
-  #     url: git://github.com/GabrielIneichen/firebase_storage_mocks.git
-  #     ref: update_to_storage8.0.0
+  firebase_storage_mocks: ^0.3.0
 
 flutter:
   generate: true
