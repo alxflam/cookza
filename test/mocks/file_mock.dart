@@ -13,7 +13,10 @@ class FakeFile extends Fake implements File {
 
   void stubByteContent(Uint8List value) => this._byteContent = value;
 
-  void stubContent(String value) => this._content = value;
+  void stubContent(String value) {
+    this._content = value;
+    this._byteContent = latin1.encode(this._content);
+  }
 
   @override
   Uint8List readAsBytesSync() => this._byteContent;

@@ -31,6 +31,7 @@ import 'package:cookza/services/recipe/similarity_service.dart';
 import 'package:cookza/services/unit_of_measure.dart';
 import 'package:cookza/services/web/web_login_manager.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
 
 /// recipe import: use file_picker (mobile) or open a explorer window (web)
@@ -97,5 +98,9 @@ void setupServiceLocator() {
 
   sl.registerSingletonAsync<FirebaseWebLoginManager>(
       () async => FirebaseWebLoginManager(),
+      dependsOn: [FirebaseProvider]);
+
+  sl.registerSingletonAsync<FirebaseStorage>(
+      () async => FirebaseStorage.instance,
       dependsOn: [FirebaseProvider]);
 }

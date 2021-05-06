@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:cookza/model/entities/abstract/recipe_entity.dart';
+import 'package:cookza/services/flutter/exception_handler.dart';
 import 'package:cookza/services/local_storage.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -17,7 +18,7 @@ abstract class ImageManager {
 }
 
 class ImageManagerFirebase implements ImageManager {
-  final FirebaseStorage _storage = FirebaseStorage.instance;
+  final FirebaseStorage _storage = sl.get<FirebaseStorage>();
 
   @override
   Future<void> deleteRecipeImage(RecipeEntity entity) async {
@@ -73,11 +74,11 @@ class ImageManagerFirebase implements ImageManager {
       try {
         Reference reference =
             _storage.ref().child(getRecipeImagePath(entity.id!));
-        var task = reference.writeToFile(cacheFile);
-        var taskSnapshot = await task;
-        var bytes = taskSnapshot.bytesTransferred;
-        print('$bytes downloaded');
-      } catch (StorageException) {
+        await reference.writeToFile(cacheFile);
+      } on Exception catch (e) {
+        await sl
+            .get<ExceptionHandler>()
+            .reportException(e, StackTrace.empty, DateTime.now());
         // the image for the given recipe does not exist
         return null;
       }
@@ -117,8 +118,7 @@ class ImageManagerFirebase implements ImageManager {
           'recipe': recipeId,
         }));
 
-    var result = await uploadTask;
-    print(
-        'upload completed: ${result.state}, bytes: ${result.bytesTransferred}');
+    await uploadTask;
+    print('upload completed');
   }
 }
