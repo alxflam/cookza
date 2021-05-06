@@ -67,7 +67,6 @@ void setupServiceLocator() {
   sl.registerSingleton<IngredientsCalculator>(IngredientsCalculatorImpl());
   sl.registerSingleton<PlatformInfo>(PlatformInfoImpl());
   sl.registerSingleton<PDFExporter>(PDFExporterImpl());
-  sl.registerSingletonAsync<ImageManager>(() async => ImageManagerFirebase());
   sl.registerSingleton<NavigatorService>(NavigatorService());
   sl.registerSingleton<ImageTextExtractor>(ImageTextExtractorImpl());
   sl.registerSingleton<RecipeTextGenerator>(RecipeTextGeneratorImpl());
@@ -103,4 +102,7 @@ void setupServiceLocator() {
   sl.registerSingletonAsync<FirebaseStorage>(
       () async => FirebaseStorage.instance,
       dependsOn: [FirebaseProvider]);
+
+  sl.registerSingletonAsync<ImageManager>(() async => ImageManagerFirebase(),
+      dependsOn: [FirebaseStorage]);
 }
