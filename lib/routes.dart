@@ -28,13 +28,11 @@ import 'package:cookza/screens/settings/uom_visibility_settings_screen.dart';
 import 'package:cookza/screens/shopping_list/shopping_list_detail_screen.dart';
 import 'package:cookza/screens/shopping_list/shopping_list_overview_screen.dart';
 import 'package:cookza/screens/web/web_landing_screen.dart';
-import 'package:cookza/screens/web/web_login.dart';
 import 'package:cookza/screens/web_login_app.dart';
 import 'package:flutter/material.dart';
 
 Map<String, Widget Function(BuildContext)> kRoutes = {
   HomeScreen.id: (context) => HomeScreen(),
-  WebLoginScreen.id: (context) => WebLoginScreen(),
   RecipeScreen.id: (context) => RecipeScreen(),
   NewRecipeScreen.id: (context) => NewRecipeScreen(),
   SettingsScreen.id: (context) => SettingsScreen(),
