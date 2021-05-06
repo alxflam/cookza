@@ -58,7 +58,9 @@ void main() {
     var model = RecipeInstructionEditStep();
     model.addInstruction('Do Something');
 
-    when(mock.processInstructionsImage(file))
+    when(mock.processInstructionsImage(file,
+            recipeDescription: anyNamed('recipeDescription'),
+            recipeTitle: anyNamed('recipeTitle')))
         .thenAnswer((_) => Future.value(model));
 
     await cut.setImage(file);

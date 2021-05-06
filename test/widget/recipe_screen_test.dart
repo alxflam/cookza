@@ -6,6 +6,7 @@ import 'package:cookza/screens/meal_plan/meal_plan_screen.dart';
 import 'package:cookza/screens/recipe_view/recipe_screen.dart';
 import 'package:cookza/services/abstract/receive_intent_handler.dart';
 import 'package:cookza/services/flutter/navigator_service.dart';
+import 'package:cookza/services/meal_plan_manager.dart';
 import 'package:cookza/services/recipe/image_manager.dart';
 import 'package:cookza/services/recipe/recipe_manager.dart';
 import 'package:cookza/services/shared_preferences_provider.dart';
@@ -46,6 +47,7 @@ void main() {
     GetIt.I.registerSingleton<ReceiveIntentHandler>(ReceiveIntentHandlerMock());
     GetIt.I.registerSingleton<UnitOfMeasureProvider>(UoMMock());
     GetIt.I.registerSingleton<NavigatorService>(NavigatorService());
+    GetIt.I.registerSingleton<MealPlanManager>(MockMealPlanManager());
   });
 
   testWidgets('Share recipe dialog', (WidgetTester tester) async {
@@ -129,6 +131,7 @@ void main() {
 
     /// navigated to meal plan
     verify(mockObserver.didPush(any, any));
+    await tester.pumpAndSettle();
     expect(find.byType(MealPlanScreen), findsOneWidget);
 
     // TODO: then select a day and add to meal plan
@@ -165,15 +168,21 @@ Future<void> setupWidget(
       routes: kRoutes,
       home: ChangeNotifierProvider<ThemeModel>(
         create: (context) => ThemeModel(),
-        child: Navigator(
-          onGenerateRoute: (_) {
-            return MaterialPageRoute<Widget>(
-              builder: (_) => RecipeScreen(),
-              settings: RouteSettings(arguments: arg),
+        child: Builder(
+          builder: (context) {
+            return Container(
+              child: ElevatedButton(
+                onPressed: () => Navigator.pushNamed(context, RecipeScreen.id,
+                    arguments: arg),
+                child: Text('DUMMY'),
+              ),
             );
           },
         ),
       ),
     ),
   );
+
+  await tester.tap(find.byType(ElevatedButton));
+  await tester.pumpAndSettle();
 }
