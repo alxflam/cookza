@@ -8,7 +8,7 @@ import 'package:cookza/screens/web/responsive_widget.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:cookza/services/web/web_login_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+// import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class WebLandingPage extends StatelessWidget {
   static final String id = 'landingPage';

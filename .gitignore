@@ -50,3 +50,6 @@ generated_plugin_registrant.dart
 
 # Flutter version manager
 .fvm
+
+# firebase hosting
+.firebase
