@@ -27,9 +27,7 @@ class RecipeListTile extends StatelessWidget {
       leading: Builder(
         builder: (context) {
           if (item.image == null || item.image == null) {
-            return Container(
-              child: Icon(Icons.photo),
-            );
+            return ImagePlaceholder();
           }
           return FutureBuilder(
             future: sl.get<ImageManager>().getRecipeImageFile(item),
@@ -49,9 +47,7 @@ class RecipeListTile extends StatelessWidget {
                   ),
                 );
               } else {
-                return Container(
-                  child: Icon(Icons.photo),
-                );
+                return ImagePlaceholder();
               }
             },
           );
@@ -129,6 +125,22 @@ class RecipeListTile extends StatelessWidget {
 
     return Row(
       children: widgets,
+    );
+  }
+}
+
+class ImagePlaceholder extends StatelessWidget {
+  const ImagePlaceholder({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AspectRatio(
+      aspectRatio: 2 / 1,
+      child: Container(
+        child: Icon(Icons.photo),
+      ),
     );
   }
 }
