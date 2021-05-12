@@ -1,5 +1,8 @@
 import 'package:cookza/components/round_icon_button.dart';
 import 'package:cookza/constants.dart';
+import 'package:cookza/screens/recipe_view/recipe_screen.dart';
+import 'package:cookza/services/flutter/service_locator.dart';
+import 'package:cookza/services/recipe/recipe_manager.dart';
 import 'package:cookza/viewmodel/recipe_view/recipe_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -16,6 +19,7 @@ class IngredientsTab extends StatelessWidget {
             children: <Widget>[
               ListOfIngredientsHeader(),
               DataTable(
+                showCheckboxColumn: false,
                 columns: [
                   DataColumn(
                     numeric: true,
@@ -42,6 +46,17 @@ class IngredientsTab extends StatelessWidget {
     var widgets = model.ingredients
         .map(
           (item) => DataRow(
+            onSelectChanged: (bool? value) async {
+              if ((value ?? false) && item.isRecipeReference) {
+                final recipes = await sl
+                    .get<RecipeManager>()
+                    .getRecipeById([item.ingredient.recipeReference!]);
+                if (recipes.isNotEmpty) {
+                  await Navigator.pushNamed(context, RecipeScreen.id,
+                      arguments: recipes.first);
+                }
+              }
+            },
             cells: [
               DataCell(
                 Text(kFormatAmount(item.amount)),
