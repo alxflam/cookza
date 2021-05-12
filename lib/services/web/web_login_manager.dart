@@ -15,7 +15,8 @@ class FirebaseWebLoginManager {
   final FirebaseFirestore _firestore = sl.get<FirebaseFirestore>();
   final FirebaseProvider _firebaseProvider = sl.get<FirebaseProvider>();
 
-  Future<QuerySnapshot> getAllExistingWebHandshakes(String userUid) async {
+  Future<QuerySnapshot<Map<String, dynamic>>> getAllExistingWebHandshakes(
+      String userUid) async {
     var handshakeSnapshots = await _firestore
         .collection(HANDSHAKES)
         .where('owner', isEqualTo: userUid)
@@ -190,8 +191,7 @@ class FirebaseWebLoginManager {
   /// log off from all web client sessions
   Future<int> logOffAllWebClient() async {
     final userUid = _firebaseProvider.userUid;
-    QuerySnapshot handshakeSnapshots =
-        await getAllExistingWebHandshakes(userUid);
+    final handshakeSnapshots = await getAllExistingWebHandshakes(userUid);
 
     var recipeGroupSnapshot = await _firestore
         .collection(RECIPE_GROUPS)
@@ -234,8 +234,8 @@ class FirebaseWebLoginManager {
     });
   }
 
-  void _handleWebReceivedLogIn(
-      BuildContext context, DocumentSnapshot event, OnAcceptWebLogin callback) {
+  void _handleWebReceivedLogIn(BuildContext context,
+      DocumentSnapshot<Map<String, dynamic>> event, OnAcceptWebLogin callback) {
     var target = FirebaseHandshake.fromJson(event.data()!, event.id);
     // wait until somebody accepts the offer
     if (target.owner != null && target.owner!.isNotEmpty) {

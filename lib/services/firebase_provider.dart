@@ -93,13 +93,13 @@ class FirebaseProvider {
     return docs.docs;
   }
 
-  Query _mealPlanGroupsQuery() {
+  Query<Map<String, dynamic>> _mealPlanGroupsQuery() {
     return _firestore
         .collection(MEAL_PLAN_GROUPS)
         .where('users.$userUid', isGreaterThan: '');
   }
 
-  Query _shoppingListsQuery(List<String> groups) {
+  Query<Map<String, dynamic>> _shoppingListsQuery(List<String> groups) {
     return _firestore
         .collection(SHOPPING_LISTS)
         .where('groupID', whereIn: groups);
@@ -669,7 +669,7 @@ class FirebaseProvider {
     }
 
     var json = FirebaseShoppingListDocument.from(entity).toJson();
-    DocumentReference document;
+    DocumentReference<Map<String, dynamic>> document;
 
     if (entity.id != null && entity.id!.isNotEmpty) {
       document = _firestore.collection(SHOPPING_LISTS).doc(entity.id);
