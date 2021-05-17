@@ -8,10 +8,6 @@ publish_to: none
 environment:
   sdk: ">=2.12.0 <3.0.0"
 
-dependency_overrides:
-  cloud_firestore: ^2.1.0
-  cloud_firestore_platform_interface: ^5.0.1
-
 dependencies:
   flutter:
     sdk: flutter
@@ -49,7 +45,7 @@ dev_dependencies:
   json_serializable: ^4.0.2
   mockito: ^5.0.0
   pedantic: ^1.11.0
-  cloud_firestore_mocks: ^0.8.2
+  cloud_firestore_mocks: ^0.9.0
   firebase_storage_mocks: ^0.3.0
 
 flutter:
