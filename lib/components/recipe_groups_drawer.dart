@@ -50,7 +50,7 @@ class RecipeGroupsTiles extends StatelessWidget {
                         context, RecipeListScreen.id);
                   }
                 },
-                child: Text(AppLocalizations.of(context)!.createGroup),
+                child: Text(AppLocalizations.of(context).createGroup),
               )
             ],
           ),
@@ -96,7 +96,7 @@ class RecipeGroupsTiles extends StatelessWidget {
           // builder is needed to get a new context for the Provider
           builder: (context) {
             return SimpleDialog(
-              title: Text(AppLocalizations.of(context)!.createGroup),
+              title: Text(AppLocalizations.of(context).createGroup),
               children: [
                 SingleChildScrollView(
                   child: Column(
@@ -115,8 +115,8 @@ class RecipeGroupsTiles extends StatelessWidget {
                                 maxLines: 1,
                                 autofocus: true,
                                 decoration: InputDecoration(
-                                    hintText: AppLocalizations.of(context)!
-                                        .groupName),
+                                    hintText:
+                                        AppLocalizations.of(context).groupName),
                               ),
                             )
                           ],

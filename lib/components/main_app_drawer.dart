@@ -22,12 +22,12 @@ class MainAppDrawer extends StatelessWidget {
 
     final genericItems = [
       ListTile(
-        title: Text(AppLocalizations.of(context)!.export),
+        title: Text(AppLocalizations.of(context).export),
         leading: FaIcon(FontAwesomeIcons.fileExport),
         onTap: () => Navigator.pushNamed(context, ExportSettingsScreen.id),
       ),
       ListTile(
-        title: Text(AppLocalizations.of(context)!.import),
+        title: Text(AppLocalizations.of(context).import),
         leading: FaIcon(FontAwesomeIcons.fileImport),
         onTap: () {
           sl.get<RecipeFileImport>().parseAndImport(context);
@@ -35,7 +35,7 @@ class MainAppDrawer extends StatelessWidget {
       ),
       _getWebAppListTile(context),
       ListTile(
-        title: Text(AppLocalizations.of(context)!.settings),
+        title: Text(AppLocalizations.of(context).settings),
         leading: FaIcon(kSettingsIcon),
         onTap: () => Navigator.pushNamed(context, SettingsScreen.id),
       ),
@@ -52,7 +52,7 @@ class MainAppDrawer extends StatelessWidget {
 
     if (!kIsWeb) {
       items.add(ListTile(
-        title: Text(AppLocalizations.of(context)!.shareAccount),
+        title: Text(AppLocalizations.of(context).shareAccount),
         leading: FaIcon(kShareAccountIcon),
         onTap: () => Navigator.pushNamed(context, ShareAccountScreen.id),
       ));
@@ -86,7 +86,7 @@ class MainAppDrawer extends StatelessWidget {
   ListTile _getWebAppListTile(BuildContext context) {
     if (kIsWeb) {
       return ListTile(
-        title: Text(AppLocalizations.of(context)!.logout),
+        title: Text(AppLocalizations.of(context).logout),
         leading: Icon(Icons.power_settings_new),
         onTap: () async {
           var util = sl.get<FirebaseWebLoginManager>();
@@ -96,7 +96,7 @@ class MainAppDrawer extends StatelessWidget {
       );
     }
     return ListTile(
-      title: Text('$kAppName ${AppLocalizations.of(context)!.web}'),
+      title: Text('$kAppName ${AppLocalizations.of(context).web}'),
       leading: FaIcon(kWebAppData),
       onTap: () => Navigator.pushNamed(context, WebLoginOnAppScreen.id),
     );

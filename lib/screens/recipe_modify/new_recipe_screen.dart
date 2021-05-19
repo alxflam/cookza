@@ -51,7 +51,7 @@ Future<void> saveModel(BuildContext context, RecipeEditModel model) async {
     // close progress dialog
     Navigator.pop(context);
     // show errors and exit
-    kErrorDialog(context, AppLocalizations.of(context)!.saveRecipeValidation,
+    kErrorDialog(context, AppLocalizations.of(context).saveRecipeValidation,
         e.toString());
     return;
   }
@@ -86,8 +86,8 @@ class NewRecipeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: model.isCreate
-            ? Text(AppLocalizations.of(context)!.createRecipe)
-            : Text(AppLocalizations.of(context)!.editRecipe),
+            ? Text(AppLocalizations.of(context).createRecipe)
+            : Text(AppLocalizations.of(context).editRecipe),
         actions: <Widget>[
           IconButton(
             icon: FaIcon(FontAwesomeIcons.save),

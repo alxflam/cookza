@@ -926,13 +926,12 @@ class MockFirebaseProvider extends _i1.Mock implements _i16.FirebaseProvider {
           returnValue: Future<void>.value(null),
           returnValueForMissingStub: Future.value()) as _i21.Future<void>);
   @override
-  _i21.Future<List<_i39.QueryDocumentSnapshot>> getShoppingListsByMealPlan(
-          String? mealPlan) =>
-      (super.noSuchMethod(
-              Invocation.method(#getShoppingListsByMealPlan, [mealPlan]),
-              returnValue: Future<List<_i39.QueryDocumentSnapshot>>.value(
-                  <_i39.QueryDocumentSnapshot>[]))
-          as _i21.Future<List<_i39.QueryDocumentSnapshot>>);
+  _i21.Future<List<_i39.QueryDocumentSnapshot<Object?>>>
+      getShoppingListsByMealPlan(String? mealPlan) => (super.noSuchMethod(
+          Invocation.method(#getShoppingListsByMealPlan, [mealPlan]),
+          returnValue: Future<List<_i39.QueryDocumentSnapshot<Object?>>>.value(
+              <_i39.QueryDocumentSnapshot<Object?>>[])) as _i21
+          .Future<List<_i39.QueryDocumentSnapshot<Object?>>>);
   @override
   _i21.Future<_i15.MealPlanCollectionEntityFirebase> createMealPlanGroup(
           String? name) =>

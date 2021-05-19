@@ -7,81 +7,81 @@ import 'package:collection/collection.dart';
 
 final uomDisplayTexts = {
   'MMT': (BuildContext context, int count) =>
-      AppLocalizations.of(context)!.uomMMT(count),
+      AppLocalizations.of(context).uomMMT(count),
   'CMT': (BuildContext context, int count) =>
-      AppLocalizations.of(context)!.uomCMT(count),
+      AppLocalizations.of(context).uomCMT(count),
   'MTR': (BuildContext context, int count) =>
-      AppLocalizations.of(context)!.uomMTR(count),
+      AppLocalizations.of(context).uomMTR(count),
   'GRM': (BuildContext context, int count) =>
-      AppLocalizations.of(context)!.uomGRM(count),
+      AppLocalizations.of(context).uomGRM(count),
   'KGM': (BuildContext context, int count) =>
-      AppLocalizations.of(context)!.uomKGM(count),
+      AppLocalizations.of(context).uomKGM(count),
   'MLT': (BuildContext context, int count) =>
-      AppLocalizations.of(context)!.uomMLT(count),
+      AppLocalizations.of(context).uomMLT(count),
   'CLT': (BuildContext context, int count) =>
-      AppLocalizations.of(context)!.uomCLT(count),
+      AppLocalizations.of(context).uomCLT(count),
   'DLT': (BuildContext context, int count) =>
-      AppLocalizations.of(context)!.uomDLT(count),
+      AppLocalizations.of(context).uomDLT(count),
   'LTR': (BuildContext context, int count) =>
-      AppLocalizations.of(context)!.uomLTR(count),
+      AppLocalizations.of(context).uomLTR(count),
   'H87': (BuildContext context, int count) =>
-      AppLocalizations.of(context)!.uomH87(count),
+      AppLocalizations.of(context).uomH87(count),
   'G21': (BuildContext context, int count) =>
-      AppLocalizations.of(context)!.uomG21(count),
+      AppLocalizations.of(context).uomG21(count),
   'G24': (BuildContext context, int count) =>
-      AppLocalizations.of(context)!.uomG24(count),
+      AppLocalizations.of(context).uomG24(count),
   'G25': (BuildContext context, int count) =>
-      AppLocalizations.of(context)!.uomG25(count),
+      AppLocalizations.of(context).uomG25(count),
   'BG': (BuildContext context, int count) =>
-      AppLocalizations.of(context)!.uomBG(count),
+      AppLocalizations.of(context).uomBG(count),
   'LEF': (BuildContext context, int count) =>
-      AppLocalizations.of(context)!.uomLEF(count),
+      AppLocalizations.of(context).uomLEF(count),
   'X2': (BuildContext context, int count) =>
-      AppLocalizations.of(context)!.uomX2(count),
+      AppLocalizations.of(context).uomX2(count),
   'X4': (BuildContext context, int count) =>
-      AppLocalizations.of(context)!.uomX4(count),
+      AppLocalizations.of(context).uomX4(count),
   'CA': (BuildContext context, int count) =>
-      AppLocalizations.of(context)!.uomCA(count),
+      AppLocalizations.of(context).uomCA(count),
   'BO': (BuildContext context, int count) =>
-      AppLocalizations.of(context)!.uomBO(count),
+      AppLocalizations.of(context).uomBO(count),
   'STC': (BuildContext context, int count) =>
-      AppLocalizations.of(context)!.uomSTC(count),
+      AppLocalizations.of(context).uomSTC(count),
   'PR': (BuildContext context, int count) =>
-      AppLocalizations.of(context)!.uomPR(count),
+      AppLocalizations.of(context).uomPR(count),
   'PA': (BuildContext context, int count) =>
-      AppLocalizations.of(context)!.uomPA(count),
+      AppLocalizations.of(context).uomPA(count),
   'PTN': (BuildContext context, int count) =>
-      AppLocalizations.of(context)!.uomPTN(count),
+      AppLocalizations.of(context).uomPTN(count),
   'BR': (BuildContext context, int count) =>
-      AppLocalizations.of(context)!.uomBR(count),
+      AppLocalizations.of(context).uomBR(count),
   'RO': (BuildContext context, int count) =>
-      AppLocalizations.of(context)!.uomRO(count),
+      AppLocalizations.of(context).uomRO(count),
   '14': (BuildContext context, int count) =>
-      AppLocalizations.of(context)!.uom14(count),
+      AppLocalizations.of(context).uom14(count),
   'SR': (BuildContext context, int count) =>
-      AppLocalizations.of(context)!.uomSR(count),
+      AppLocalizations.of(context).uomSR(count),
   'TU': (BuildContext context, int count) =>
-      AppLocalizations.of(context)!.uomTU(count),
+      AppLocalizations.of(context).uomTU(count),
   'SLI': (BuildContext context, int count) =>
-      AppLocalizations.of(context)!.uomSLI(count),
+      AppLocalizations.of(context).uomSLI(count),
   'GLA': (BuildContext context, int count) =>
-      AppLocalizations.of(context)!.uomGLA(count),
+      AppLocalizations.of(context).uomGLA(count),
   'HAN': (BuildContext context, int count) =>
-      AppLocalizations.of(context)!.uomHAN(count),
+      AppLocalizations.of(context).uomHAN(count),
   'PIN': (BuildContext context, int count) =>
-      AppLocalizations.of(context)!.uomPIN(count),
+      AppLocalizations.of(context).uomPIN(count),
   'BOW': (BuildContext context, int count) =>
-      AppLocalizations.of(context)!.uomBOW(count),
+      AppLocalizations.of(context).uomBOW(count),
   'STE': (BuildContext context, int count) =>
-      AppLocalizations.of(context)!.uomSTE(count),
+      AppLocalizations.of(context).uomSTE(count),
   'CUB': (BuildContext context, int count) =>
-      AppLocalizations.of(context)!.uomCUB(count),
+      AppLocalizations.of(context).uomCUB(count),
   'CLO': (BuildContext context, int count) =>
-      AppLocalizations.of(context)!.uomCLO(count),
+      AppLocalizations.of(context).uomCLO(count),
   'ROT': (BuildContext context, int count) =>
-      AppLocalizations.of(context)!.uomROT(count),
+      AppLocalizations.of(context).uomROT(count),
   'TWG': (BuildContext context, int count) =>
-      AppLocalizations.of(context)!.uomTWG(count),
+      AppLocalizations.of(context).uomTWG(count),
 };
 
 /// metric unit of measures supporting conversion

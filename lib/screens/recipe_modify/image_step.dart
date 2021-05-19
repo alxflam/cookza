@@ -58,7 +58,7 @@ class SelectImageWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Text(AppLocalizations.of(context)!.addImageLong),
+        Text(AppLocalizations.of(context).addImageLong),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[

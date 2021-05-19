@@ -17,7 +17,7 @@ class SimilarRecipesScreen extends StatelessWidget {
             if (snapshot.hasData) {
               if (snapshot.data.length == 0) {
                 return NothingFound(
-                    AppLocalizations.of(context)!.noSimilarRecipes);
+                    AppLocalizations.of(context).noSimilarRecipes);
               }
 
               return ListView.builder(

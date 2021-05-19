@@ -38,7 +38,7 @@ class MealPlanScreen extends StatelessWidget {
           drawer: MealPlanGroupsDrawer(),
           appBar: AppBar(
             title: snapshot.data == null
-                ? Text(AppLocalizations.of(context)!.functionsMealPlanner)
+                ? Text(AppLocalizations.of(context).functionsMealPlanner)
                 : Text(snapshot.data!.name),
             actions: [
               IconButton(
@@ -54,7 +54,7 @@ class MealPlanScreen extends StatelessWidget {
               if (snapshot.data == null &&
                   snapshot.connectionState == ConnectionState.done) {
                 return OpenDrawerButton(
-                    AppLocalizations.of(context)!.mealPlanSelect);
+                    AppLocalizations.of(context).mealPlanSelect);
               }
 
               if (snapshot.connectionState == ConnectionState.waiting) {
@@ -203,7 +203,7 @@ class MealPlanScreen extends StatelessWidget {
                 },
                 subtitle: !recipeModel.isNote
                     ? Text(
-                        '${recipeModel.servings.toString()} ${AppLocalizations.of(context)!.servings(recipeModel.servings!)}')
+                        '${recipeModel.servings.toString()} ${AppLocalizations.of(context).servings(recipeModel.servings!)}')
                     : null,
                 trailing: IconButton(
                   icon: Icon(Icons.edit),
@@ -260,7 +260,7 @@ class MealPlanScreen extends StatelessWidget {
       );
 
       var draggable = LongPressDraggable<MealDragModel>(
-        dragAnchor: DragAnchor.child,
+        dragAnchorStrategy: childDragAnchorStrategy,
         maxSimultaneousDrags: 1,
         feedback: feedback,
         childWhenDragging: Container(),
@@ -298,7 +298,7 @@ class MealPlanScreen extends StatelessWidget {
                           _showAddNoteDialog(context, model, index);
                         },
                         child:
-                            Text(AppLocalizations.of(context)!.mealPlanAddNote),
+                            Text(AppLocalizations.of(context).mealPlanAddNote),
                       ),
                     ),
                     Padding(
@@ -325,7 +325,7 @@ class MealPlanScreen extends StatelessWidget {
                           Navigator.pop(context);
                         },
                         child: Text(
-                            AppLocalizations.of(context)!.mealPlanAddRecipe),
+                            AppLocalizations.of(context).mealPlanAddRecipe),
                       ),
                     ),
                   ],
@@ -413,7 +413,7 @@ class DragFeedbackTile extends StatelessWidget {
         subtitle: model.isNote || model.servings == null
             ? null
             : Text(
-                '${model.servings} ${AppLocalizations.of(context)!.servings(model.servings!)}'),
+                '${model.servings} ${AppLocalizations.of(context).servings(model.servings!)}'),
       ),
     );
   }

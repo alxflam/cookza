@@ -107,7 +107,7 @@ class RecipeIngredientModel extends ChangeNotifier {
   void validate(BuildContext context) {
     var noNameGiven = this.name.isEmpty;
     if (noNameGiven && !this.isRecipeReference) {
-      throw AppLocalizations.of(context)!.missingIngredientName;
+      throw AppLocalizations.of(context).missingIngredientName;
     }
   }
 }

@@ -19,7 +19,7 @@ class WebLoginOnAppScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('$kAppName ${AppLocalizations.of(context)!.web}'),
+        title: Text('$kAppName ${AppLocalizations.of(context).web}'),
         actions: [
           IconButton(
             icon: Icon(Icons.add),
@@ -117,7 +117,7 @@ class LogIns extends StatelessWidget {
                 SizedBox(
                   width: 20,
                 ),
-                Text(AppLocalizations.of(context)!.logoutAllDevices),
+                Text(AppLocalizations.of(context).logoutAllDevices),
               ],
             ),
           ),

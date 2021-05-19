@@ -23,13 +23,13 @@ class IngredientsTab extends StatelessWidget {
                 columns: [
                   DataColumn(
                     numeric: true,
-                    label: Text(AppLocalizations.of(context)!.amount),
+                    label: Text(AppLocalizations.of(context).amount),
                   ),
                   DataColumn(
-                    label: Text(AppLocalizations.of(context)!.unit),
+                    label: Text(AppLocalizations.of(context).unit),
                   ),
                   DataColumn(
-                    label: Text(AppLocalizations.of(context)!.ingredient(1)),
+                    label: Text(AppLocalizations.of(context).ingredient(1)),
                   ),
                 ],
                 rows: _buildIngredientRows(context, model),
@@ -89,7 +89,7 @@ class ListOfIngredientsHeader extends StatelessWidget {
             },
           ),
           Text(
-              '${model.servings} ${AppLocalizations.of(context)!.servings(model.servings)}'),
+              '${model.servings} ${AppLocalizations.of(context).servings(model.servings)}'),
           RoundIconButton(
             icon: FontAwesomeIcons.plus,
             onPress: () {

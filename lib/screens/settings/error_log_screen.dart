@@ -25,7 +25,7 @@ class ErrorLogScreen extends StatelessWidget {
       value: _model,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(AppLocalizations.of(context)!.errorLog),
+          title: Text(AppLocalizations.of(context).errorLog),
           actions: [
             PopupMenuButton(itemBuilder: (context) {
               return [
@@ -35,7 +35,7 @@ class ErrorLogScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Icon(PopupMenuButtonChoices.SHARE.icon),
-                      Text(AppLocalizations.of(context)!.share),
+                      Text(AppLocalizations.of(context).share),
                     ],
                   ),
                 ),
@@ -45,7 +45,7 @@ class ErrorLogScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Icon(PopupMenuButtonChoices.DELETE.icon),
-                      Text(AppLocalizations.of(context)!.delete)
+                      Text(AppLocalizations.of(context).delete)
                     ],
                   ),
                 ),
@@ -84,8 +84,7 @@ class ErrorLogScreen extends StatelessWidget {
                 } else {
                   return Container(
                     child: Center(
-                      child:
-                          Text(AppLocalizations.of(context)!.noErrorLogEntry),
+                      child: Text(AppLocalizations.of(context).noErrorLogEntry),
                     ),
                   );
                 }
@@ -122,7 +121,7 @@ class ExceptionEntry extends StatelessWidget {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text(AppLocalizations.of(context)!.errorLog),
+              title: Text(AppLocalizations.of(context).errorLog),
               content: Padding(
                 padding: EdgeInsets.only(top: 10),
                 child: SingleChildScrollView(

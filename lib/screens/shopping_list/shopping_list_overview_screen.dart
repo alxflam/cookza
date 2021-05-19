@@ -20,7 +20,7 @@ class ShoppingListOverviewScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          AppLocalizations.of(context)!.functionsShoppingList,
+          AppLocalizations.of(context).functionsShoppingList,
         ),
         actions: [
           IconButton(
@@ -51,8 +51,7 @@ class ShoppingListOverviewScreen extends StatelessWidget {
             }
 
             if (snapshot.data == null || snapshot.data!.isEmpty) {
-              return NothingFound(
-                  AppLocalizations.of(context)!.noShoppingLists);
+              return NothingFound(AppLocalizations.of(context).noShoppingLists);
             }
 
             return ListView.builder(
@@ -79,7 +78,7 @@ class ShoppingListOverviewScreen extends StatelessWidget {
                     ),
                     onPressed: () async {
                       var msg =
-                          AppLocalizations.of(context)!.functionsShoppingList +
+                          AppLocalizations.of(context).functionsShoppingList +
                               ' (' +
                               date +
                               ')';
@@ -91,12 +90,12 @@ class ShoppingListOverviewScreen extends StatelessWidget {
                         builder: (BuildContext context) {
                           return AlertDialog(
                             title: AlertDialogTitle(
-                                title: AppLocalizations.of(context)!.delete),
+                                title: AppLocalizations.of(context).delete),
                             content: SingleChildScrollView(
                               child: ListBody(
                                 children: <Widget>[
                                   Text(
-                                    AppLocalizations.of(context)!
+                                    AppLocalizations.of(context)
                                         .confirmDelete(msg),
                                   ),
                                 ],
@@ -109,7 +108,7 @@ class ShoppingListOverviewScreen extends StatelessWidget {
                                   Navigator.pop(context, false);
                                 },
                                 child: Text(
-                                  AppLocalizations.of(context)!.cancel,
+                                  AppLocalizations.of(context).cancel,
                                 ),
                               ),
                               ElevatedButton(
@@ -119,7 +118,7 @@ class ShoppingListOverviewScreen extends StatelessWidget {
                                   Navigator.pop(context, true);
                                 },
                                 child: Text(
-                                  AppLocalizations.of(context)!.delete,
+                                  AppLocalizations.of(context).delete,
                                 ),
                               ),
                             ],

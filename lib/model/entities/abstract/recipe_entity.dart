@@ -1,6 +1,7 @@
 import 'dart:collection';
 import 'dart:typed_data';
 
+import 'package:cookza/model/entities/abstract/ingredient_group_entity.dart';
 import 'package:cookza/model/entities/abstract/ingredient_note_entity.dart';
 import 'package:cookza/model/entities/abstract/instruction_entity.dart';
 
@@ -25,7 +26,15 @@ abstract class RecipeEntity {
 
   DIFFICULTY get difficulty;
 
+  /// returns all ingredients
   Future<UnmodifiableListView<IngredientNoteEntity>> get ingredients;
+
+  /// returns the grouped ingredients
+  Future<UnmodifiableListView<IngredientGroupEntity>> get ingredientGroups;
+
+  /// returns all instructions
   Future<UnmodifiableListView<InstructionEntity>> get instructions;
+
+  /// returns all tags
   UnmodifiableListView<String> get tags;
 }

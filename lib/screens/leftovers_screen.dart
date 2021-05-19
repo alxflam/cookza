@@ -13,7 +13,7 @@ class LeftoversScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.functionsLeftovers),
+        title: Text(AppLocalizations.of(context).functionsLeftovers),
       ),
       body: LeftoversBody(),
     );
@@ -53,7 +53,7 @@ class _LeftoversBodyState extends State<LeftoversBody> {
                   controller: _ingredientController,
                   autofocus: true,
                   decoration: InputDecoration(
-                    labelText: AppLocalizations.of(context)!.ingredient(1),
+                    labelText: AppLocalizations.of(context).ingredient(1),
                     prefixIcon: Icon(Icons.search),
                   ),
                   keyboardType: TextInputType.text,
@@ -96,7 +96,7 @@ class _LeftoversBodyState extends State<LeftoversBody> {
                 );
               } else if (snapshot.hasData && snapshot.data!.isEmpty) {
                 return NothingFound(
-                    AppLocalizations.of(context)!.noRecipesFound);
+                    AppLocalizations.of(context).noRecipesFound);
               } else {
                 return Center(
                   child: CircularProgressIndicator(),

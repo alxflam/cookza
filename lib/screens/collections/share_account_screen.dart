@@ -35,7 +35,7 @@ class ShareAccountScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.shareAccount),
+        title: Text(AppLocalizations.of(context).shareAccount),
         actions: [
           IconButton(
             icon: Icon(Icons.share),
@@ -46,8 +46,8 @@ class ShareAccountScreen extends StatelessWidget {
               var file = File('$directory/${_model.userName}.png');
               await file.writeAsBytes(bytes);
               await Share.shareFiles([file.path],
-                  text: AppLocalizations.of(context)!.addMeToGroup,
-                  subject: AppLocalizations.of(context)!.shareQRCodeSubject);
+                  text: AppLocalizations.of(context).addMeToGroup,
+                  subject: AppLocalizations.of(context).shareQRCodeSubject);
             },
           ),
           IconButton(
@@ -128,7 +128,7 @@ class ShareAccountScreen extends StatelessWidget {
           barrierDismissible: false,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text(AppLocalizations.of(context)!.enterUsername),
+              title: Text(AppLocalizations.of(context).enterUsername),
               content: Builder(
                 builder: (context) {
                   final nameController =

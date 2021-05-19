@@ -31,7 +31,7 @@ class InstructionsStepContent extends StatelessWidget {
                 onPressed: () {
                   model.addEmptyInstruction();
                 },
-                child: Text(AppLocalizations.of(context)!.addRow),
+                child: Text(AppLocalizations.of(context).addRow),
               ),
               _getInstructionRows(context, model),
             ],

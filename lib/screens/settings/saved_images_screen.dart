@@ -14,7 +14,7 @@ class SavedImagesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.localImages),
+        title: Text(AppLocalizations.of(context).localImages),
       ),
       body: FutureBuilder<List<File>>(
         future: _getImageFiles(),
@@ -52,8 +52,8 @@ class SavedImagesScreen extends StatelessWidget {
                             .deleteLocalImage(file.path.split('/').last);
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
-                            content: Text(
-                                AppLocalizations.of(context)!.imageDeleted),
+                            content:
+                                Text(AppLocalizations.of(context).imageDeleted),
                           ),
                         );
                       },

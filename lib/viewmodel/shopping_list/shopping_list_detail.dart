@@ -69,12 +69,12 @@ class ShoppingListModel extends ChangeNotifier {
       var context = sl.get<NavigatorService>().currentContext;
       // make sure that case is logged
       await sl.get<ExceptionHandler>().reportException(
-          '${AppLocalizations.of(context!)!.missingRecipeAccess}: ${e.toString()}',
+          '${AppLocalizations.of(context!).missingRecipeAccess}: ${e.toString()}',
           StackTrace.current,
           DateTime.now());
       // may happen if the shopping list contains a recipe from a group the current user does not have read access to
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(AppLocalizations.of(context)!.missingRecipeAccess)));
+          content: Text(AppLocalizations.of(context).missingRecipeAccess)));
     }
 
     // processed generated already bought and/or reordered items

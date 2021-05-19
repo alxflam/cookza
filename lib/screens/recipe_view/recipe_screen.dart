@@ -67,7 +67,7 @@ class RecipeScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Icon(PopupMenuButtonChoices.SHARE.icon),
-                              Text(AppLocalizations.of(context)!.share)
+                              Text(AppLocalizations.of(context).share)
                             ],
                           ),
                         ),
@@ -77,7 +77,7 @@ class RecipeScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Icon(PopupMenuButtonChoices.EDIT.icon),
-                              Text(AppLocalizations.of(context)!.edit)
+                              Text(AppLocalizations.of(context).edit)
                             ],
                           ),
                         ),
@@ -87,7 +87,7 @@ class RecipeScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Icon(PopupMenuButtonChoices.ADD_MEAL_PLAN.icon),
-                              Text(AppLocalizations.of(context)!
+                              Text(AppLocalizations.of(context)
                                   .functionsMealPlanner)
                             ],
                           ),
@@ -98,7 +98,7 @@ class RecipeScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Icon(PopupMenuButtonChoices.DELETE.icon),
-                              Text(AppLocalizations.of(context)!.delete)
+                              Text(AppLocalizations.of(context).delete)
                             ],
                           ),
                         ),
@@ -130,12 +130,11 @@ class RecipeScreen extends StatelessWidget {
                             builder: (BuildContext context) {
                               return AlertDialog(
                                 title: AlertDialogTitle(
-                                    title:
-                                        AppLocalizations.of(context)!.delete),
+                                    title: AppLocalizations.of(context).delete),
                                 content: SingleChildScrollView(
                                   child: ListBody(
                                     children: <Widget>[
-                                      Text(AppLocalizations.of(context)!
+                                      Text(AppLocalizations.of(context)
                                           .confirmDelete(model.name)),
                                     ],
                                   ),
@@ -147,7 +146,7 @@ class RecipeScreen extends StatelessWidget {
                                       Navigator.of(context).pop();
                                     },
                                     child: Text(
-                                      AppLocalizations.of(context)!.cancel,
+                                      AppLocalizations.of(context).cancel,
                                     ),
                                   ),
                                   ElevatedButton(
@@ -161,7 +160,7 @@ class RecipeScreen extends StatelessWidget {
                                           ModalRoute.withName(HomeScreen.id));
                                     },
                                     child: Text(
-                                      AppLocalizations.of(context)!.delete,
+                                      AppLocalizations.of(context).delete,
                                     ),
                                   ),
                                 ],
@@ -224,7 +223,7 @@ class RecipeScreen extends StatelessWidget {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(AppLocalizations.of(context)!.shareAs),
+          title: Text(AppLocalizations.of(context).shareAs),
           actions: <Widget>[
             ElevatedButton(
               onPressed: () async {
@@ -233,7 +232,7 @@ class RecipeScreen extends StatelessWidget {
                 Navigator.pop(context);
               },
               child: Text(
-                AppLocalizations.of(context)!.pdf,
+                AppLocalizations.of(context).pdf,
               ),
             ),
             ElevatedButton(
@@ -243,7 +242,7 @@ class RecipeScreen extends StatelessWidget {
                     .exportRecipesFromEntity([model.recipe]);
                 Navigator.pop(context);
               },
-              child: Text(AppLocalizations.of(context)!.json),
+              child: Text(AppLocalizations.of(context).json),
             ),
             ElevatedButton(
               onPressed: () {
@@ -253,7 +252,7 @@ class RecipeScreen extends StatelessWidget {
                 Navigator.pop(context);
               },
               child: Text(
-                AppLocalizations.of(context)!.text,
+                AppLocalizations.of(context).text,
               ),
             ),
           ],

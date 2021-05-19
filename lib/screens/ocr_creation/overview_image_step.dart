@@ -12,6 +12,6 @@ class OCROverviewImageScreen extends StatelessWidget {
     return ChangeNotifierProvider<RecipeOCRStep>.value(
         value: RecipeOverviewOCRStep(),
         child: OCRImageStep(
-            AppLocalizations.of(context)!.functionsTextRecognition));
+            AppLocalizations.of(context).functionsTextRecognition));
   }
 }

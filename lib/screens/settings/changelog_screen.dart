@@ -9,19 +9,19 @@ class ChangelogScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.changelog),
+        title: Text(AppLocalizations.of(context).changelog),
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
             ChangelogEntry(
-                version: '0.0.1-alpha2',
-                date: kDateFormatter.parse('20.07.2020'),
-                changes: ['alpha2 Test']),
-            ChangelogEntry(
-                version: '0.0.1-alpha1',
-                date: kDateFormatter.parse('19.07.2020'),
-                changes: ['alpha1 Test']),
+              version: '0.0.13',
+              date: kDateFormatter.parse('16.05.2021'),
+              changes: [
+                'Neu: Zutaten gruppieren in Zutatenliste',
+                'Fixes: Kleinere Bugfixes und Verbesserungen'
+              ],
+            ),
           ],
         ),
       ),
@@ -68,6 +68,8 @@ class ChangelogEntry extends StatelessWidget {
             return Padding(
               padding: EdgeInsets.only(top: 10),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: bulletPoints,
               ),
             );

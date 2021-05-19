@@ -11,7 +11,7 @@ class ShoppingListSettingsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          AppLocalizations.of(context)!.functionsShoppingList,
+          AppLocalizations.of(context).functionsShoppingList,
         ),
       ),
       body: ChangeNotifierProvider<ShoppingListSettingsModel>.value(

@@ -2,6 +2,7 @@ import 'dart:collection';
 import 'dart:typed_data';
 
 import 'package:cookza/constants.dart';
+import 'package:cookza/model/entities/abstract/ingredient_group_entity.dart';
 import 'package:cookza/model/entities/abstract/ingredient_note_entity.dart';
 import 'package:cookza/model/entities/abstract/instruction_entity.dart';
 import 'package:cookza/model/entities/abstract/recipe_entity.dart';
@@ -88,4 +89,9 @@ class RecipeEntityFirebase implements RecipeEntity {
 
   @override
   Uint8List? get inMemoryImage => null;
+
+  @override
+  Future<UnmodifiableListView<IngredientGroupEntity>> get ingredientGroups {
+    return Future.value(UnmodifiableListView([]));
+  }
 }

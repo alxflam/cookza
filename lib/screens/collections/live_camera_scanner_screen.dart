@@ -156,7 +156,7 @@ class _LiveCameraScannerScreenState extends State<LiveCameraScannerScreen> {
   Widget _buildImage() {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.scanQRCode),
+        title: Text(AppLocalizations.of(context).scanQRCode),
         actions: [
           IconButton(
               icon: Icon(Icons.photo_library),
@@ -244,10 +244,9 @@ class _LiveCameraScannerScreenState extends State<LiveCameraScannerScreen> {
             child: Wrap(
               children: [
                 Center(
-                    child:
-                        Text(AppLocalizations.of(context)!.noQRCodeDetected)),
+                    child: Text(AppLocalizations.of(context).noQRCodeDetected)),
                 Center(
-                    child: Text(AppLocalizations.of(context)!.tryAnotherImage)),
+                    child: Text(AppLocalizations.of(context).tryAnotherImage)),
               ],
             ),
           )

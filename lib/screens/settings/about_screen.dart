@@ -57,7 +57,7 @@ class AboutScreen extends StatelessWidget {
               return VersionText();
             }),
             Text(
-              AppLocalizations.of(context)!.copyright,
+              AppLocalizations.of(context).copyright,
               style: TextStyle(fontStyle: FontStyle.italic),
             ),
             Padding(
@@ -67,7 +67,7 @@ class AboutScreen extends StatelessWidget {
                   children: <TextSpan>[
                     TextSpan(
                         style: subtitle,
-                        text: AppLocalizations.of(context)!.appDescription),
+                        text: AppLocalizations.of(context).appDescription),
                   ],
                 ),
               ),
@@ -75,18 +75,18 @@ class AboutScreen extends StatelessWidget {
             AboutScreenDivider(),
             ListTile(
               leading: FaIcon(FontAwesomeIcons.map),
-              title: Text(AppLocalizations.of(context)!.getStarted),
+              title: Text(AppLocalizations.of(context).getStarted),
               onTap: () => Navigator.pushNamed(context, OnBoardingScreen.id),
             ),
             AboutScreenDivider(),
             ListTile(
               leading: FaIcon(FontAwesomeIcons.diceD20),
-              title: Text(AppLocalizations.of(context)!.changelog),
+              title: Text(AppLocalizations.of(context).changelog),
               onTap: () => Navigator.pushNamed(context, ChangelogScreen.id),
             ),
             AboutScreenDivider(),
             ListTile(
-              title: Text(AppLocalizations.of(context)!.localImages),
+              title: Text(AppLocalizations.of(context).localImages),
               leading: FaIcon(FontAwesomeIcons.image),
               onTap: () {
                 Navigator.pushNamed(context, SavedImagesScreen.id);
@@ -94,8 +94,8 @@ class AboutScreen extends StatelessWidget {
             ),
             AboutScreenDivider(),
             ListTile(
-              title: Text(AppLocalizations.of(context)!.support),
-              subtitle: Text(AppLocalizations.of(context)!.supportSubtitle),
+              title: Text(AppLocalizations.of(context).support),
+              subtitle: Text(AppLocalizations.of(context).supportSubtitle),
               leading: FaIcon(FontAwesomeIcons.questionCircle),
               onTap: () {
                 launch(kPlayStoreLink);
@@ -103,7 +103,7 @@ class AboutScreen extends StatelessWidget {
             ),
             AboutScreenDivider(),
             ListTile(
-              title: Text(AppLocalizations.of(context)!.deleteAllData),
+              title: Text(AppLocalizations.of(context).deleteAllData),
               leading: FaIcon(FontAwesomeIcons.eraser),
               onTap: () async {
                 // open confirmation dialog
@@ -118,13 +118,13 @@ class AboutScreen extends StatelessWidget {
             ),
             AboutScreenDivider(),
             ListTile(
-              title: Text(AppLocalizations.of(context)!.errorLog),
+              title: Text(AppLocalizations.of(context).errorLog),
               leading: FaIcon(FontAwesomeIcons.bug),
               onTap: () {
                 Navigator.pushNamed(context, ErrorLogScreen.id);
               },
             ),
-            SettingSectionHeader(AppLocalizations.of(context)!.legal),
+            SettingSectionHeader(AppLocalizations.of(context).legal),
             ListTile(
               leading: FaIcon(FontAwesomeIcons.fileAlt),
               title: Text(MaterialLocalizations.of(context).licensesPageTitle),
@@ -144,7 +144,7 @@ class AboutScreen extends StatelessWidget {
             ),
             AboutScreenDivider(),
             ListTile(
-              title: Text(AppLocalizations.of(context)!.privacyStatement),
+              title: Text(AppLocalizations.of(context).privacyStatement),
               leading: FaIcon(FontAwesomeIcons.userSecret),
               onTap: () {
                 kNotImplementedDialog(context);
@@ -152,7 +152,7 @@ class AboutScreen extends StatelessWidget {
             ),
             AboutScreenDivider(),
             ListTile(
-              title: Text(AppLocalizations.of(context)!.termsOfUse),
+              title: Text(AppLocalizations.of(context).termsOfUse),
               leading: FaIcon(FontAwesomeIcons.envelopeOpenText),
               onTap: () {
                 kNotImplementedDialog(context);
@@ -172,11 +172,11 @@ class DeleteAllDataDialog extends StatelessWidget {
       builder: (context, setState) {
         return AlertDialog(
           title: AlertDialogTitle(
-              title: AppLocalizations.of(context)!.deleteAllData),
+              title: AppLocalizations.of(context).deleteAllData),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text(AppLocalizations.of(context)!.confirmDeleteAll),
+                Text(AppLocalizations.of(context).confirmDeleteAll),
               ],
             ),
           ),
@@ -187,7 +187,7 @@ class DeleteAllDataDialog extends StatelessWidget {
                 Navigator.of(context).pop();
               },
               child: Text(
-                AppLocalizations.of(context)!.cancel,
+                AppLocalizations.of(context).cancel,
               ),
             ),
             ElevatedButton(
@@ -199,7 +199,7 @@ class DeleteAllDataDialog extends StatelessWidget {
                       barrierDismissible: false,
                       builder: (context) => SimpleDialog(
                             title: Center(
-                                child: Text(AppLocalizations.of(context)!
+                                child: Text(AppLocalizations.of(context)
                                     .deleteAllData)),
                             children: [
                               FutureProgressDialog(
@@ -210,7 +210,7 @@ class DeleteAllDataDialog extends StatelessWidget {
                   Navigator.pop(context);
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: Text(
-                          AppLocalizations.of(context)!.deleteAllDataSuccess)));
+                          AppLocalizations.of(context).deleteAllDataSuccess)));
                 } catch (e) {
                   Navigator.pop(context);
                   ScaffoldMessenger.of(context)
@@ -218,7 +218,7 @@ class DeleteAllDataDialog extends StatelessWidget {
                 }
               },
               child: Text(
-                AppLocalizations.of(context)!.delete,
+                AppLocalizations.of(context).delete,
               ),
             ),
           ],

@@ -66,7 +66,7 @@ class HomeScreen extends StatelessWidget {
                     color: tileColor,
                     cardChild: IconContent(
                       icon: kNewRecipe,
-                      label: AppLocalizations.of(context)!.functionsAddRecipe,
+                      label: AppLocalizations.of(context).functionsAddRecipe,
                     ),
                   ),
                 ),
@@ -77,7 +77,7 @@ class HomeScreen extends StatelessWidget {
                     color: tileColor,
                     cardChild: IconContent(
                       icon: kFavoriteRecipes,
-                      label: AppLocalizations.of(context)!.functionsFavorites,
+                      label: AppLocalizations.of(context).functionsFavorites,
                     ),
                   ),
                 ),
@@ -94,7 +94,7 @@ class HomeScreen extends StatelessWidget {
                     color: tileColor,
                     cardChild: IconContent(
                       icon: kLeftoversIconData,
-                      label: AppLocalizations.of(context)!.functionsLeftovers,
+                      label: AppLocalizations.of(context).functionsLeftovers,
                     ),
                   ),
                 ),
@@ -105,7 +105,7 @@ class HomeScreen extends StatelessWidget {
                     color: tileColor,
                     cardChild: IconContent(
                       icon: kRecipesIconData,
-                      label: AppLocalizations.of(context)!.functionsListRecipes,
+                      label: AppLocalizations.of(context).functionsListRecipes,
                     ),
                   ),
                 ),
@@ -122,8 +122,7 @@ class HomeScreen extends StatelessWidget {
                     color: tileColor,
                     cardChild: IconContent(
                       icon: kShoppingListIconData,
-                      label:
-                          AppLocalizations.of(context)!.functionsShoppingList,
+                      label: AppLocalizations.of(context).functionsShoppingList,
                     ),
                   ),
                 ),
@@ -134,7 +133,7 @@ class HomeScreen extends StatelessWidget {
                     color: tileColor,
                     cardChild: IconContent(
                       icon: kMealPlannerIconData,
-                      label: AppLocalizations.of(context)!.functionsMealPlanner,
+                      label: AppLocalizations.of(context).functionsMealPlanner,
                     ),
                   ),
                 ),

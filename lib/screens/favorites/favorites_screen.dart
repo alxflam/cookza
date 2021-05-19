@@ -34,7 +34,7 @@ class FavoriteRecipesScreen extends StatelessWidget {
                         listen: false)
                     .minRating;
 
-                return NothingFound(AppLocalizations.of(context)!
+                return NothingFound(AppLocalizations.of(context)
                     .favoriteNotExisting(minRating));
               }
 

@@ -19,7 +19,7 @@ Future<void> openShoppingListDialog(BuildContext context) async {
 
   if (collections.isEmpty) {
     ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(AppLocalizations.of(context)!.noMealPlan)));
+        SnackBar(content: Text(AppLocalizations.of(context).noMealPlan)));
     return;
   }
 
@@ -181,7 +181,7 @@ Widget _getMealPlanGroupDropDown(
               items: items,
               decoration: InputDecoration(
                 isDense: true,
-                labelText: AppLocalizations.of(context)!.functionsMealPlanner,
+                labelText: AppLocalizations.of(context).functionsMealPlanner,
               ),
               onChanged: (MealPlanCollectionEntity? value) {
                 model.groupID = value!.id!;

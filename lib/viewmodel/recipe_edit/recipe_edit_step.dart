@@ -1,10 +1,12 @@
 import 'dart:io';
 
 import 'package:cookza/model/entities/abstract/ingredient_entity.dart';
+import 'package:cookza/model/entities/abstract/ingredient_group_entity.dart';
 import 'package:cookza/model/entities/abstract/instruction_entity.dart';
 import 'package:cookza/model/entities/abstract/recipe_collection_entity.dart';
 import 'package:cookza/model/entities/abstract/recipe_entity.dart';
 import 'package:cookza/model/entities/mutable/mutable_ingredient.dart';
+import 'package:cookza/model/entities/mutable/mutable_ingredient_group.dart';
 import 'package:cookza/model/entities/mutable/mutable_ingredient_note.dart';
 import 'package:cookza/model/entities/mutable/mutable_instruction.dart';
 import 'package:cookza/model/entities/mutable/mutable_recipe.dart';
@@ -70,13 +72,13 @@ class RecipeOverviewEditStep extends RecipeEditStep {
   @override
   void validate(BuildContext context) {
     if (name.isEmpty) {
-      throw AppLocalizations.of(context)!.assignRecipeName;
+      throw AppLocalizations.of(context).assignRecipeName;
     }
     if (duration <= 0) {
-      throw AppLocalizations.of(context)!.assignRecipeDuration;
+      throw AppLocalizations.of(context).assignRecipeDuration;
     }
     if (this.collection == null) {
-      throw AppLocalizations.of(context)!.assignRecipeGroup;
+      throw AppLocalizations.of(context).assignRecipeGroup;
     }
   }
 
@@ -199,8 +201,18 @@ class RecipeTagEditStep extends RecipeEditStep {
 class RecipeIngredientEditStep extends RecipeEditStep {
   int _servings = 1;
   List<MutableIngredientNote> _ingredients = [];
+  List<IngredientGroupEntity> _groups = [];
 
   int get servings => _servings;
+
+  List<IngredientGroupEntity> get groups => this._groups;
+
+  void addGroup(String name) {
+    this
+        ._groups
+        .add(MutableIngredientGroup.forValues(this.groups.length, name, []));
+    notifyListeners();
+  }
 
   set servings(int value) {
     _servings = value;
@@ -253,11 +265,11 @@ class RecipeIngredientEditStep extends RecipeEditStep {
   @override
   void validate(BuildContext context) {
     if (_ingredients.isEmpty) {
-      throw AppLocalizations.of(context)!.assignIngredients;
+      throw AppLocalizations.of(context).assignIngredients;
     }
 
     if (_servings <= 0) {
-      throw AppLocalizations.of(context)!.assignServings;
+      throw AppLocalizations.of(context).assignServings;
     }
   }
 
@@ -322,10 +334,10 @@ class RecipeInstructionEditStep extends RecipeEditStep {
   void validate(BuildContext context) {
     // there are instructions and there's no empty instruction
     if (_instructions.isEmpty) {
-      throw AppLocalizations.of(context)!.assignInstructions;
+      throw AppLocalizations.of(context).assignInstructions;
     }
     if (_instructions.where((f) => f.text.isEmpty).isNotEmpty) {
-      throw AppLocalizations.of(context)!.assignEmptyInstructions;
+      throw AppLocalizations.of(context).assignEmptyInstructions;
     }
   }
 

@@ -2,6 +2,7 @@ import 'dart:collection';
 import 'dart:typed_data';
 
 import 'package:cookza/constants.dart';
+import 'package:cookza/model/entities/abstract/ingredient_group_entity.dart';
 import 'package:cookza/model/entities/abstract/ingredient_note_entity.dart';
 import 'package:cookza/model/entities/abstract/instruction_entity.dart';
 import 'package:cookza/model/entities/abstract/recipe_entity.dart';
@@ -183,5 +184,10 @@ class MutableRecipe implements RecipeEntity {
       throw 'Recipe has no in memory image';
     }
     return this._inMemoryImage!;
+  }
+
+  @override
+  Future<UnmodifiableListView<IngredientGroupEntity>> get ingredientGroups {
+    return Future.value(UnmodifiableListView([]));
   }
 }

@@ -63,7 +63,7 @@ class ShoppingListDetailScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        NothingFound(AppLocalizations.of(context)!.noItems),
+                        NothingFound(AppLocalizations.of(context).noItems),
                       ],
                     ),
                   );

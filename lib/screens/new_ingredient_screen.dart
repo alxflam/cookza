@@ -49,18 +49,18 @@ class NewIngredientScreen extends StatelessWidget {
                         child: TextFormField(
                           decoration: InputDecoration(
                               isDense: true,
-                              labelText: AppLocalizations.of(context)!.amount),
+                              labelText: AppLocalizations.of(context).amount),
                           controller: amountController,
                           keyboardType: TextInputType.number,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return AppLocalizations.of(context)!
+                              return AppLocalizations.of(context)
                                   .validationEnterNumber;
                             }
 
                             var numValue = double.tryParse(value);
                             if (numValue == 0) {
-                              return AppLocalizations.of(context)!
+                              return AppLocalizations.of(context)
                                   .validationEnterNumber;
                             }
                             return '';
@@ -78,7 +78,7 @@ class NewIngredientScreen extends StatelessWidget {
                                 decoration: InputDecoration(
                                     isDense: true,
                                     labelText:
-                                        AppLocalizations.of(context)!.unit),
+                                        AppLocalizations.of(context).unit),
                                 keyboardType: TextInputType.number,
                                 initialValue: model.uomDisplayText,
                                 enabled: false,
@@ -110,7 +110,7 @@ class NewIngredientScreen extends StatelessWidget {
                                   decoration: InputDecoration(
                                     isDense: true,
                                     labelText:
-                                        AppLocalizations.of(context)!.unit,
+                                        AppLocalizations.of(context).unit,
                                   ),
                                   onChanged: (UnitOfMeasure? value) {
                                     model.uom = value!;
@@ -143,8 +143,7 @@ class NewIngredientScreen extends StatelessWidget {
                                 builder: (context) {
                                   return AlertDialog(
                                     title: AlertDialogTitle(
-                                      title:
-                                          AppLocalizations.of(context)!.error,
+                                      title: AppLocalizations.of(context).error,
                                     ),
                                     content: Text(e.toString()),
                                   );
@@ -232,8 +231,8 @@ class NewIngredientScreen extends StatelessWidget {
         icon:
             model.isRecipeReference ? Icon(Icons.delete) : Icon(Icons.note_add),
         label: model.isRecipeReference
-            ? Text(AppLocalizations.of(context)!.removeRecipe)
-            : Text(AppLocalizations.of(context)!.referToRecipe),
+            ? Text(AppLocalizations.of(context).removeRecipe)
+            : Text(AppLocalizations.of(context).referToRecipe),
       );
     }
     return Container();
@@ -252,7 +251,7 @@ class IngredientNameTextInput extends StatelessWidget {
     return TextFormField(
       textCapitalization: TextCapitalization.sentences,
       decoration: InputDecoration(
-          labelText: AppLocalizations.of(context)!.ingredient(1)),
+          labelText: AppLocalizations.of(context).ingredient(1)),
       controller: ingredientController,
       keyboardType: TextInputType.text,
     );
