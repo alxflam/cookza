@@ -12,11 +12,16 @@ Coverage after web enablement:
 
 ## Building the app
 
+SEE ML_VISION REMOVED: https://firebase.google.com/support/release-notes/android#mlkit-self-serve-fixes
+
 Run the following command to built an apk for ARM64
 * flutter build apk --target-platform android-arm64 --split-per-abi
 * flutter run --release to run the release build
 * Applied iterim patch due to ML Vision dependency issue: https://github.com/google/play-services-plugins/issues/153
 Remove this once the dependency issue got fixed by the Firebase team.
+
+# Deploy web app
+* firebase hosting:channel:deploy ftr_web
 
 ## Run test coverage
 
@@ -55,6 +60,54 @@ views are being fed by streams of data so they directly react to changes occurri
 * operatingSystem: The operating system of the web app
 * browser: The browser being used by the web app
 * repositoryID: The repositoryID the web app got permissions granted to
+
+    // read is allowed if 
+    // the user is signed in
+    // and the handshake is not yet taken or taken by the current user or it is the web user reading it
+    match /handshakes/{handshakeID} {
+      allow read: if request.auth != null && (request.resource.data.owner == null || request.resource.data.owner == userId() || resource.data.requestor == userId());
+    }
+    
+    // handshake updates
+    match /handshakes/{handshakeID} {
+      // allow create by any user who creates the handshake for himself and does not set an owner
+      allow create: if signedIn() && userId() == request.resource.data.requestor && request.resource.data.owner == null;
+      // allow update only to set the owned by field
+      // and if the handshake has not expired: not un-owned for more than 5 minutes
+      allow update: if signedIn() && resource.data.owner == null && request.resource.data.owner == userId() && request.time < (resource.data.creationTimestamp + duration.time(0, 5, 0, 0));
+      // allow delete only by owner or requestor
+      allow delete: if signedIn() && (resource.data.owner == userId() || resource.data.requestor == userId());
+    }   
+
+Then allow all reads, creates updates instead of only by userId() also by webSessionId()
+
+have a new collection webSessions:
+userId: abc
+sessionId: xyz
+Maybe even restrict to a single web session
+Then in the rule query by docId => webSessions docs are only managed by owner, doc id is same as owner/userId
+
+  function getWebSession(userId) {
+  	return get(/databases/$(database)/documents/webSession/$(userId)).sessionId;
+  }
+
+   // recipe reads
+    match /recipes/{recipeID} {
+    	// allow read only by group member
+      allow read: if userId() in readRecipeGroup(resource.data.recipeGroupID).data.users || getWebSession() in readRecipeGroup(resource.data.recipeGroupID).data.users;
+      allow list: if userId() in readRecipeGroup(resource.data.recipeGroupID).data.users || getWebSession() in readRecipeGroup(resource.data.recipeGroupID).data.users;  
+		}
+    
+    // recipe updates
+    match /recipes/{recipeID} {
+      // allow create only by group member
+    	allow create, write: if userId() in readRecipeGroup(request.resource.data.recipeGroupID).data.users || getWebSession() in readRecipeGroup(resource.data.recipeGroupID).data.users;
+      // allow update only by group member
+      allow update: if userId() in readRecipeGroup(resource.data.recipeGroupID).data.users || getWebSession() in readRecipeGroup(resource.data.recipeGroupID).data.users;
+      // delete only by group member
+      allow delete: if userId() in readRecipeGroup(resource.data.recipeGroupID).data.users || getWebSession() in readRecipeGroup(resource.data.recipeGroupID).data.users;
+    }
+
 
 ### RecipeCollection
 * top level collection
