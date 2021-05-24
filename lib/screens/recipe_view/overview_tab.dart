@@ -1,5 +1,6 @@
 import 'package:cookza/components/recipe_rating_bar.dart';
 import 'package:cookza/constants.dart';
+import 'package:cookza/screens/recipe_view/image_view.dart';
 import 'package:cookza/services/recipe/image_manager.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:cookza/services/recipe/recipe_manager.dart';
@@ -11,69 +12,85 @@ import 'package:provider/provider.dart';
 class OverviewTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Consumer<RecipeViewModel>(builder: (context, model, child) {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          FutureBuilder(
-            future: sl.get<ImageManager>().getRecipeImageFile(model.recipe),
-            builder: (BuildContext context, AsyncSnapshot snapshot) {
-              if (snapshot.hasData) {
-                return Expanded(
-                  flex: 1,
-                  child: Container(
-                    height: 400,
-                    alignment: Alignment.bottomCenter,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        fit: BoxFit.fitWidth,
-                        alignment: FractionalOffset.center,
-                        image: FileImage(snapshot.data),
-                      ),
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(5),
+    return Consumer<RecipeViewModel>(
+      builder: (context, model, child) {
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            FutureBuilder(
+              future: sl.get<ImageManager>().getRecipeImageFile(model.recipe),
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                if (snapshot.hasData) {
+                  return Expanded(
+                    flex: 1,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return ImageView(
+                                imageProvider: FileImage(snapshot.data),
+                              );
+                            },
+                          ),
+                        );
+                      },
                       child: Container(
-                        color: Colors.grey.withAlpha(200),
-                        child: CustomizedRatingBar(model),
+                        height: 400,
+                        alignment: Alignment.bottomCenter,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            fit: BoxFit.fitWidth,
+                            alignment: FractionalOffset.center,
+                            image: FileImage(snapshot.data),
+                          ),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(5),
+                          child: Container(
+                            color: Colors.grey.withAlpha(200),
+                            child: CustomizedRatingBar(model),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                );
-              } else {
-                return Expanded(
-                  flex: 1,
-                  child: Container(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Spacer(),
-                        Align(
-                            alignment: Alignment.center,
-                            child: Icon(
-                              Icons.image,
-                              size: 100,
-                              color: Theme.of(context).colorScheme.primary,
-                            )),
-                        Spacer(),
-                        Align(
-                            alignment: FractionalOffset.bottomCenter,
-                            child: CustomizedRatingBar(model)),
-                      ],
+                  );
+                } else {
+                  return Expanded(
+                    flex: 1,
+                    child: Container(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Spacer(),
+                          Align(
+                              alignment: Alignment.center,
+                              child: Icon(
+                                Icons.image,
+                                size: 100,
+                                color: Theme.of(context).colorScheme.primary,
+                              )),
+                          Spacer(),
+                          Align(
+                              alignment: FractionalOffset.bottomCenter,
+                              child: CustomizedRatingBar(model)),
+                        ],
+                      ),
                     ),
-                  ),
-                );
-              }
-            },
-          ),
-          Expanded(
-            flex: 1,
-            child: SubImageRow(),
-          ),
-        ],
-      );
-    });
+                  );
+                }
+              },
+            ),
+            Expanded(
+              flex: 1,
+              child: SubImageRow(),
+            ),
+          ],
+        );
+      },
+    );
   }
 }
 
