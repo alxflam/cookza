@@ -15,11 +15,13 @@ class ChangelogScreen extends StatelessWidget {
         child: Column(
           children: [
             ChangelogEntry(
-              version: '0.0.13',
-              date: kDateFormatter.parse('16.05.2021'),
+              version: '0.0.14',
+              date: kDateFormatter.parse('30.05.2021'),
               changes: [
                 'Neu: Zutaten gruppieren in Zutatenliste',
-                'Fixes: Kleinere Bugfixes und Verbesserungen'
+                'Neu: Rezeptbild anzeigen',
+                'Fixes: Kleinere Bugfixes und Verbesserungen',
+                'Updates: Flutter 2.2, Google ML Kit statt Firebase ML'
               ],
             ),
           ],
