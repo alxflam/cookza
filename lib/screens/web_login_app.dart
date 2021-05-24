@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:cookza/constants.dart';
 import 'package:cookza/model/firebase/general/firebase_handshake.dart';
 import 'package:cookza/model/json/user.dart';
-import 'package:cookza/screens/collections/live_camera_scanner_screen.dart';
+import 'package:cookza/screens/collections/qr_scanner.dart';
 import 'package:cookza/services/abstract/platform_info.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:cookza/services/web/web_login_manager.dart';
@@ -24,8 +24,7 @@ class WebLoginOnAppScreen extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.add),
             onPressed: () async {
-              var json = await Navigator.pushNamed(
-                  context, LiveCameraScannerScreen.id);
+              var json = await Navigator.pushNamed(context, QrScannerScreen.id);
               if (json == null || (!(json is String))) {
                 return;
               }

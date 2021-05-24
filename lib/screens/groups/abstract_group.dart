@@ -2,7 +2,7 @@ import 'package:cookza/components/alert_dialog_title.dart';
 import 'package:cookza/components/future_progress_dialog.dart';
 import 'package:cookza/constants.dart';
 import 'package:cookza/model/entities/abstract/user_entity.dart';
-import 'package:cookza/screens/collections/live_camera_scanner_screen.dart';
+import 'package:cookza/screens/collections/qr_scanner.dart';
 import 'package:cookza/services/firebase_provider.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:cookza/viewmodel/groups/abstract_group_model.dart';
@@ -286,7 +286,7 @@ abstract class AbstractGroupScreen extends StatelessWidget {
   }
 
   void _addUser(BuildContext context, GroupViewModel model) async {
-    var result = await Navigator.pushNamed(context, LiveCameraScannerScreen.id);
+    var result = await Navigator.pushNamed(context, QrScannerScreen.id);
     if (result == null || (!(result is String))) {
       return;
     }

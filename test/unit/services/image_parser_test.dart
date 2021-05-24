@@ -1,23 +1,23 @@
 import 'package:cookza/services/image_parser.dart';
 import 'package:cookza/services/unit_of_measure.dart';
-import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
+import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:mockito/mockito.dart';
 
 import '../../mocks/unit_of_measure_provider_mock.dart';
 
-class VisionTextFake extends Fake implements VisionText {
+class VisionTextFake extends Fake implements RecognisedText {
   final String _text;
   final List<TextBlock> _blocks;
 
   VisionTextFake(this._text, this._blocks);
 
   @override
-  String? get text => this._text;
+  String get text => this._text;
 
   @override
-  List<TextBlock> get blocks => this._blocks;
+  List<TextBlock> get textBlocks => this._blocks;
 }
 
 class TextBlockMock extends Mock implements TextBlock {}

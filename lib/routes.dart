@@ -1,4 +1,4 @@
-import 'package:cookza/screens/collections/live_camera_scanner_screen.dart';
+import 'package:cookza/screens/collections/qr_scanner.dart';
 import 'package:cookza/screens/collections/share_account_screen.dart';
 import 'package:cookza/screens/favorites/favorites_screen.dart';
 import 'package:cookza/screens/groups/recipe_group.dart';
@@ -61,6 +61,6 @@ Map<String, Widget Function(BuildContext)> kRoutes = {
   OCRInstructionsImageScreen.id: (context) => OCRInstructionsImageScreen(),
   ShoppingListSettingsScreen.id: (context) => ShoppingListSettingsScreen(),
   ErrorLogScreen.id: (context) => ErrorLogScreen(),
-  LiveCameraScannerScreen.id: (context) => LiveCameraScannerScreen(),
+  QrScannerScreen.id: (context) => QrScannerScreen(),
   FavoriteRecipesScreen.id: (context) => FavoriteRecipesScreen()
 };
