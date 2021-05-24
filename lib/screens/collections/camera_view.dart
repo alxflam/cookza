@@ -149,7 +149,7 @@ class _CameraViewState extends State<CameraView> {
   Future _startLiveFeed() async {
     CameraLensDirection _direction = CameraLensDirection.back;
     _cameraDescription = await getCamera(_direction);
-    _controller = CameraController(_cameraDescription!, ResolutionPreset.low,
+    _controller = CameraController(_cameraDescription!, ResolutionPreset.medium,
         enableAudio: false);
 
     // ignore: unawaited_futures
