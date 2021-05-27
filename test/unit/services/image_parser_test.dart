@@ -17,7 +17,7 @@ class VisionTextFake extends Fake implements RecognisedText {
   String get text => this._text;
 
   @override
-  List<TextBlock> get textBlocks => this._blocks;
+  List<TextBlock> get blocks => this._blocks;
 }
 
 class TextBlockMock extends Mock implements TextBlock {}

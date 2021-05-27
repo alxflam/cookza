@@ -63,14 +63,14 @@ class ImageTextExtractorImpl implements ImageTextExtractor {
 
     var startIndex = 0;
     var headerBlock =
-        text.textBlocks.firstWhereOrNull((e) => isIngredientHeader(e));
+        text.blocks.firstWhereOrNull((e) => isIngredientHeader(e));
     if (headerBlock != null) {
-      startIndex = text.textBlocks.indexOf(headerBlock) + 1;
+      startIndex = text.blocks.indexOf(headerBlock) + 1;
     }
 
-    for (var i = startIndex; i < text.textBlocks.length; i++) {
-      var block = text.textBlocks[i];
-      var textItems = block.blockText.split(',');
+    for (var i = startIndex; i < text.blocks.length; i++) {
+      var block = text.blocks[i];
+      var textItems = block.text.split(',');
       for (var textItem in textItems) {
         var ingredient = parseIngredient(textItem);
         if (ingredient != null) {
@@ -95,21 +95,21 @@ class ImageTextExtractorImpl implements ImageTextExtractor {
     List<String> instructions = [];
 
     // a block may be only a single line (an incomplete sentence to be continued in the next line)
-    for (var i = 0; i < text.textBlocks.length; i++) {
-      var block = text.textBlocks[i];
-      if (block.blockText.trim().isEmpty) {
+    for (var i = 0; i < text.blocks.length; i++) {
+      var block = text.blocks[i];
+      if (block.text.trim().isEmpty) {
         continue;
       }
 
       // skip recipe name and description
-      final distTitle = levenshtein(block.blockText, recipeTitle ?? '');
-      final distDesc = levenshtein(block.blockText, recipeDescription ?? '');
-      final maxDist = block.blockText.length / 3;
+      final distTitle = levenshtein(block.text, recipeTitle ?? '');
+      final distDesc = levenshtein(block.text, recipeDescription ?? '');
+      final maxDist = block.text.length / 3;
       if (distTitle < maxDist || distDesc < maxDist) {
         continue;
       }
 
-      var lines = block.blockText.split('. ');
+      var lines = block.text.split('. ');
 
       for (var j = 0; j < lines.length; j++) {
         var line = lines[j];
@@ -124,7 +124,7 @@ class ImageTextExtractorImpl implements ImageTextExtractor {
       }
 
       possiblyIncompleteSentence =
-          !block.textLines.last.lineText.trimRight().endsWith('.');
+          !block.lines.last.text.trimRight().endsWith('.');
     }
 
     for (var line in instructions) {
@@ -138,29 +138,28 @@ class ImageTextExtractorImpl implements ImageTextExtractor {
   RecipeOverviewEditStep processOverviewImageFromText(RecognisedText text) {
     var model = RecipeOverviewEditStep();
 
-    var heights = text.textBlocks
-        .where((e) => e.blockText.isNotEmpty)
-        .map((e) => e.blockRect.height)
+    var heights = text.blocks
+        .where((e) => e.text.isNotEmpty)
+        .map((e) => e.rect.height)
         .toList();
 
     var avgHeight = heights.isNotEmpty
-        ? heights.reduce((a, b) => a + b) / text.textBlocks.length
+        ? heights.reduce((a, b) => a + b) / text.blocks.length
         : 0;
     var maxHeight = heights.isNotEmpty ? heights.reduce(max) : 0;
 
     TextBlock? recipeNameBlock;
     TextBlock? recipeDescriptionBlock;
 
-    for (var block in text.textBlocks) {
-      var height = block.blockRect.height;
-      var text = block.blockText;
-      var currentNameHeight = recipeNameBlock?.blockRect.height ?? 0;
-      var currentDescriptionBlock =
-          recipeDescriptionBlock?.blockRect.height ?? 0;
+    for (var block in text.blocks) {
+      var height = block.rect.height;
+      var text = block.text;
+      var currentNameHeight = recipeNameBlock?.rect.height ?? 0;
+      var currentDescriptionBlock = recipeDescriptionBlock?.rect.height ?? 0;
       print('height: $height, text: $text');
 
       // recipe title: bigger size and rather short text
-      if (block.textLines.length == 1 &&
+      if (block.lines.length == 1 &&
           text.length > 10 &&
           text.length < 50 &&
           height > avgHeight &&
@@ -170,7 +169,7 @@ class ImageTextExtractorImpl implements ImageTextExtractor {
       }
 
       // description: rather short text in a single line (or at least two words) and more than average height but not max height
-      if (block.textLines.length == 1 &&
+      if (block.lines.length == 1 &&
           (text.length > 10 || text.split(' ').length > 1) &&
           text.length < 150 &&
           height > avgHeight &&
@@ -188,19 +187,19 @@ class ImageTextExtractorImpl implements ImageTextExtractor {
     }
 
     if (recipeNameBlock != null) {
-      model.name = recipeNameBlock.blockText;
+      model.name = recipeNameBlock.text;
     }
 
     if (recipeDescriptionBlock != null) {
-      model.description = recipeDescriptionBlock.blockText;
+      model.description = recipeDescriptionBlock.text;
     }
 
     return model;
   }
 
   bool isIngredientHeader(TextBlock e) {
-    return e.blockText.trim().toLowerCase() == 'ingredients' ||
-        e.blockText.trim().toLowerCase() == 'zutaten';
+    return e.text.trim().toLowerCase() == 'ingredients' ||
+        e.text.trim().toLowerCase() == 'zutaten';
   }
 
   RecipeIngredientModel? parseIngredient(String textItem) {
