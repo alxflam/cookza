@@ -78,6 +78,7 @@ android {
         exclude 'lib/**/libface_detector_v2_jni.so'
         exclude 'lib/**/libtensorflowlite_jni.so'
         exclude 'lib/**/liblanguage_id_jni.so' 
+        exclude 'lib/**/libpredictor_jni.so' 
         exclude 'assets/**/fssd_100_8bit_v1.tflite'
         exclude 'assets/**/fssd_100_8bit_gray_v1.tflite'
     }
@@ -92,5 +93,4 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
-    implementation "com.google.firebase:firebase-ml-vision:24.1.0"
 }
