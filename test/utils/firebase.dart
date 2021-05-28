@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cloud_firestore_mocks/cloud_firestore_mocks.dart';
+import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:cookza/services/firebase_provider.dart';
 import 'package:cookza/services/meal_plan_manager.dart';
 import 'package:cookza/services/recipe/recipe_manager.dart';
@@ -21,7 +21,7 @@ Future<void> mockFirestore() async {
   GetIt.I.registerSingleton<SharedPreferencesProvider>(prefProvider);
 
   var auth = MockFirebaseAuth();
-  final instance = MockFirestoreInstance();
+  final instance = FakeFirebaseFirestore();
 
   GetIt.I.registerSingleton<FirebaseFirestore>(instance);
 
