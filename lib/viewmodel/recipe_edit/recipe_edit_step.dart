@@ -214,6 +214,11 @@ class RecipeIngredientEditStep extends RecipeEditStep {
     notifyListeners();
   }
 
+  void removeGroup(IngredientGroupEntity group) {
+    this._groups.remove(group);
+    notifyListeners();
+  }
+
   set servings(int value) {
     _servings = value;
     notifyListeners();

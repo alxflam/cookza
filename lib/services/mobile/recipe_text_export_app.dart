@@ -4,7 +4,7 @@ import 'package:cookza/services/flutter/navigator_service.dart';
 import 'package:cookza/services/recipe/recipe_text_generator.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:share/share.dart';
+import 'package:share_plus/share_plus.dart';
 
 class RecipeTextExporterApp implements RecipeTextExporter {
   @override

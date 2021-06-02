@@ -4,7 +4,7 @@ import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:cookza/services/shopping_list/shopping_list_text_generator.dart';
 import 'package:cookza/viewmodel/shopping_list/shopping_list_detail.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:share/share.dart';
+import 'package:share_plus/share_plus.dart';
 
 class ShoppingListTextExporterApp implements ShoppingListTextExporter {
   @override

@@ -4,7 +4,7 @@ import 'package:cookza/services/abstract/pdf_export.dart';
 import 'package:cookza/services/local_storage.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:pdf/widgets.dart';
-import 'package:share/share.dart';
+import 'package:share_plus/share_plus.dart';
 
 class PDFExporterImpl extends PDFExporter {
   @override

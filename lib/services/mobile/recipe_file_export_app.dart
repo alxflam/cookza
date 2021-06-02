@@ -6,7 +6,7 @@ import 'package:cookza/model/json/recipe_list.dart';
 import 'package:cookza/services/abstract/recipe_file_export.dart';
 import 'package:cookza/services/local_storage.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
-import 'package:share/share.dart';
+import 'package:share_plus/share_plus.dart';
 
 class RecipeFileExportImpl extends RecipeFileExport {
   @override

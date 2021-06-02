@@ -94,10 +94,20 @@ class IngredientGroupCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(group.name),
-              IconButton(icon: Icon(Icons.edit), onPressed: () {}),
-              IconButton(icon: Icon(Icons.swap_vert), onPressed: () {}),
-              IconButton(icon: Icon(Icons.add), onPressed: () {}),
-              IconButton(icon: Icon(Icons.delete), onPressed: () {}),
+              IconButton(
+                icon: Icon(Icons.edit),
+                onPressed: () {},
+              ),
+              IconButton(
+                icon: Icon(Icons.add),
+                onPressed: () async {
+                  await _addNewIngredient(context, model, group);
+                },
+              ),
+              IconButton(
+                icon: Icon(Icons.delete),
+                onPressed: () => model.removeGroup(group),
+              ),
             ],
           ),
           DataTable(
@@ -114,33 +124,11 @@ class IngredientGroupCard extends StatelessWidget {
               DataColumn(
                 label: Text(AppLocalizations.of(context).ingredient(1)),
               ),
-              DataColumn(label: Text('')),
             ],
             rows: _getIngredientRows(context, model),
           ),
         ],
       ),
-    );
-  }
-}
-
-Widget _getTableHeaderButtons(
-    BuildContext context, RecipeIngredientEditStep model) {
-  if (MediaQuery.of(context).orientation == Orientation.portrait) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        _getServingsRow(model, context),
-        _getAddRowButton(context, model),
-      ],
-    );
-  } else {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        _getServingsRow(model, context),
-        _getAddRowButton(context, model),
-      ],
     );
   }
 }
@@ -173,29 +161,23 @@ Widget _getAddGroupButton(
     onPressed: () {
       model.addGroup(AppLocalizations.of(context).ingredient(2));
     },
-    child: Text(AppLocalizations.of(context).groupName),
+    child: Text(AppLocalizations.of(context).createGroup),
   );
 }
 
-Widget _getAddRowButton(BuildContext context, RecipeIngredientEditStep model) {
-  return ElevatedButton(
-    style: ElevatedButton.styleFrom(
-        primary: Theme.of(context).colorScheme.primary),
-    onPressed: () async {
-      final rootModel = Provider.of<RecipeEditModel>(context, listen: false);
-      RecipeIngredientModel ingModel = RecipeIngredientModel.of(
-          MutableIngredientNote.empty(),
-          sourceRecipe: rootModel.targetEntity.id);
+Future<void> _addNewIngredient(BuildContext context,
+    RecipeIngredientEditStep model, IngredientGroupEntity group) async {
+  final rootModel = Provider.of<RecipeEditModel>(context, listen: false);
+  RecipeIngredientModel ingModel = RecipeIngredientModel.of(
+      MutableIngredientNote.empty(),
+      sourceRecipe: rootModel.targetEntity.id);
 
-      var result = await Navigator.pushNamed(context, NewIngredientScreen.id,
-          arguments: ingModel) as RecipeIngredientModel?;
+  var result = await Navigator.pushNamed(context, NewIngredientScreen.id,
+      arguments: ingModel) as RecipeIngredientModel?;
 
-      if (result != null && !result.isDeleted) {
-        model.addNewIngredient(result);
-      }
-    },
-    child: Text(AppLocalizations.of(context).addIngredient),
-  );
+  if (result != null && !result.isDeleted) {
+    model.addNewIngredient(result);
+  }
 }
 
 List<DataRow> _getIngredientRows(
@@ -230,24 +212,6 @@ List<DataRow> _getIngredientRows(
           ),
           DataCell(
             Text(item.name),
-          ),
-          DataCell(
-            Text(''),
-            // IconButton(
-            //   icon: Icon(Icons.edit),
-            //   onPressed: () async {
-            //     var result = await Navigator.pushNamed(
-            //             context, NewIngredientScreen.id, arguments: item)
-            //         as RecipeIngredientModel?;
-            //     if (result != null && !result.isDeleted) {
-            //       model.setAmount(i, result.amount);
-            //       model.setIngredient(i, result.ingredient);
-            //       model.setScale(i, result.unitOfMeasure);
-            //     } else {
-            //       model.removeIngredient(i);
-            //     }
-            //   },
-            // ),
           ),
         ],
       ),
