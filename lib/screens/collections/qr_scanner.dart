@@ -13,7 +13,7 @@ class QrScannerScreen extends StatefulWidget {
 
 class _QrScannerScreenState extends State<QrScannerScreen> {
   BarcodeScanner barcodeScanner =
-      GoogleMlKit.vision.barcodeScanner([BarcodeFormat.QR_Code]);
+      GoogleMlKit.vision.barcodeScanner([BarcodeFormat.qrCode]);
   bool isBusy = false;
 
   @override
@@ -38,7 +38,7 @@ class _QrScannerScreenState extends State<QrScannerScreen> {
     await Future.delayed(Duration(milliseconds: 50));
     final codes = await barcodeScanner.processImage(inputImage);
     if (codes.isNotEmpty) {
-      final qrCodeValue = codes.first.info?.displayValue;
+      final qrCodeValue = codes.first.value.displayValue;
 
       /// wait until we can navigate
       SchedulerBinding.instance!.addPostFrameCallback((_) async {
