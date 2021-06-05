@@ -45,7 +45,7 @@ class IngredientsTab extends StatelessWidget {
   List<DataRow> _buildIngredientRows(
       BuildContext context, RecipeViewModel model) {
     final groups = model.ingredientGroups;
-
+// TODO: refactor into common component to be reused in ingredient step...
     final result = <DataRow>[];
 
     /// iterate over every group

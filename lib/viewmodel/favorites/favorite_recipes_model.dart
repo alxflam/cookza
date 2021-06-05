@@ -11,7 +11,7 @@ class FavoriteRecipesViewModel with ChangeNotifier {
 
   final recipeManager = sl.get<RecipeManager>();
 
-  List<RecipeEntity> favorites = [];
+  List<RecipeEntity> _favorites = [];
 
   bool _initialized = false;
 
@@ -19,10 +19,10 @@ class FavoriteRecipesViewModel with ChangeNotifier {
     /// only load the favorites once and cache them
     /// to prevent loading them again when the user changes the rating filter
     if (!_initialized) {
-      favorites = await recipeManager.getFavoriteRecipes();
+      _favorites = await recipeManager.getFavoriteRecipes();
       _initialized = true;
     }
-    return favorites.where((e) => shouldAdd(e)).toList();
+    return _favorites.where((e) => shouldAdd(e)).toList();
   }
 
   set minRating(int value) {
