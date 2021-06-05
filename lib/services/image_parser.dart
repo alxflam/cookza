@@ -74,7 +74,8 @@ class ImageTextExtractorImpl implements ImageTextExtractor {
       for (var textItem in textItems) {
         var ingredient = parseIngredient(textItem);
         if (ingredient != null) {
-          model.addNewIngredient(ingredient);
+          // TODO: which group...
+          // model.addNewIngredient(ingredient);
         }
       }
     }

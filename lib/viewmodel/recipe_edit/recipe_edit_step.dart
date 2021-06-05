@@ -10,6 +10,7 @@ import 'package:cookza/model/entities/mutable/mutable_ingredient_group.dart';
 import 'package:cookza/model/entities/mutable/mutable_ingredient_note.dart';
 import 'package:cookza/model/entities/mutable/mutable_instruction.dart';
 import 'package:cookza/model/entities/mutable/mutable_recipe.dart';
+import 'package:cookza/services/flutter/navigator_service.dart';
 import 'package:cookza/services/recipe/image_manager.dart';
 import 'package:cookza/services/recipe/recipe_manager.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
@@ -199,7 +200,11 @@ class RecipeTagEditStep extends RecipeEditStep {
 }
 
 class RecipeIngredientEditStep extends RecipeEditStep {
-  int _servings = 1;
+  /// initial servings
+  int _servings = 1; // TODO: preference!
+
+  /// use groups instead
+  @deprecated
   List<MutableIngredientNote> _ingredients = [];
   List<IngredientGroupEntity> _groups = [];
 
@@ -207,11 +212,12 @@ class RecipeIngredientEditStep extends RecipeEditStep {
 
   List<IngredientGroupEntity> get groups => this._groups;
 
-  void addGroup(String name) {
-    this
-        ._groups
-        .add(MutableIngredientGroup.forValues(this.groups.length, name, []));
+  MutableIngredientGroup addGroup(String name) {
+    final group =
+        MutableIngredientGroup.forValues(this.groups.length, name, []);
+    this._groups.add(group);
     notifyListeners();
+    return group;
   }
 
   void removeGroup(IngredientGroupEntity group) {
@@ -224,26 +230,35 @@ class RecipeIngredientEditStep extends RecipeEditStep {
     notifyListeners();
   }
 
-  void addNewIngredient(RecipeIngredientModel item) {
-    this._ingredients.add(MutableIngredientNote.of(item.toIngredientNote()));
+  void addNewIngredient(
+      RecipeIngredientModel item, IngredientGroupEntity group) {
+    if (!this.groups.contains(group)) {
+      this.groups.add(group);
+    }
+    group.ingredients.add(MutableIngredientNote.of(item.toIngredientNote()));
+    // this._ingredients.add(MutableIngredientNote.of(item.toIngredientNote()));
     notifyListeners();
   }
 
-  void setAmount(int index, double? amount) {
-    this._ingredients[index].amount = amount;
+  void setAmount(int index, double? amount, IngredientGroupEntity group) {
+    final note = group.ingredients[index] as MutableIngredientNote;
+    note.amount = amount;
   }
 
-  void setScale(int index, String? scale) {
-    this._ingredients[index].unitOfMeasure = scale;
+  void setScale(int index, String? scale, IngredientGroupEntity group) {
+    final note = group.ingredients[index] as MutableIngredientNote;
+    note.unitOfMeasure = scale;
     notifyListeners();
   }
 
-  void setIngredient(int index, IngredientEntity ingredient) {
-    this._ingredients[index].ingredient = MutableIngredient.of(ingredient);
+  void setIngredient(
+      int index, IngredientEntity ingredient, IngredientGroupEntity group) {
+    final note = group.ingredients[index] as MutableIngredientNote;
+    note.ingredient = MutableIngredient.of(ingredient);
   }
 
-  void removeIngredient(int index) {
-    this._ingredients.removeAt(index);
+  void removeIngredient(int index, IngredientGroupEntity group) {
+    group.ingredients.removeAt(index);
     notifyListeners();
   }
 
@@ -253,9 +268,20 @@ class RecipeIngredientEditStep extends RecipeEditStep {
 
   @override
   void applyFrom(RecipeEntity recipe) {
+// TODO await these setters...apply needs to be async!
+
+    // create artificial group if model is not yet group based
     recipe.ingredients.then((value) {
-      var ing = value.map((e) => MutableIngredientNote.of(e)).toList();
-      this._ingredients = ing;
+      // transform into default group
+      final context = sl.get<NavigatorService>().currentContext;
+      final group = this.addGroup(AppLocalizations.of(context!).groupName);
+      group.ingredients
+          .addAll(value.map((e) => MutableIngredientNote.of(e)).toList());
+    });
+
+// TODO: restore groups for view
+    recipe.ingredientGroups.then((value) {
+      this._groups = [...value];
     });
 
     this._servings = recipe.servings;
@@ -263,13 +289,15 @@ class RecipeIngredientEditStep extends RecipeEditStep {
 
   @override
   void applyTo(MutableRecipe recipe) {
-    recipe.ingredientList = this._ingredients;
+    // TODO: no longer store plain ingredients list
+    // recipe.ingredientList = this._ingredients;
     recipe.servings = this._servings;
+    recipe.ingredientGroupList = this._groups;
   }
 
   @override
   void validate(BuildContext context) {
-    if (_ingredients.isEmpty) {
+    if (_groups.isEmpty) {
       throw AppLocalizations.of(context).assignIngredients;
     }
 
@@ -280,6 +308,13 @@ class RecipeIngredientEditStep extends RecipeEditStep {
 
   @override
   bool get hasOCR => true;
+}
+
+// TODO: viewmodel for group and for ingredient notes
+class RecipeIngredientGroupViewModel with ChangeNotifier {
+  final MutableIngredientGroup _group;
+
+  RecipeIngredientGroupViewModel(this._group);
 }
 
 class RecipeInstructionEditStep extends RecipeEditStep {

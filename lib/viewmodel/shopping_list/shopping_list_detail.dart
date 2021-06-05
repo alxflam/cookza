@@ -119,11 +119,11 @@ class ShoppingListModel extends ChangeNotifier {
       if (a.index >= 0) {
         return a.index.compareTo(b.index);
       }
-      if (a.isBought && !b.isBought) {
-        return 1;
-      }
       if (b.index >= 0) {
         return a.index.compareTo(b.index);
+      }
+      if (a.isBought && !b.isBought) {
+        return 1;
       }
       if (b.isBought && !a.isBought) {
         return -1;
@@ -170,10 +170,10 @@ class ShoppingListModel extends ChangeNotifier {
   void reorder(int newIndex, int oldIndex) {
     // get the item to be reordered
     var item = _items.removeAt(oldIndex);
-    // set the desired index for persistence
-    item.index = newIndex;
     // reorder in list
     var targetIndex = newIndex > _items.length ? newIndex - 1 : newIndex;
+    // set the desired index for persistence
+    item.index = targetIndex;
     this._items.insert(targetIndex, item);
     // persist changes
     this._save();

@@ -3,6 +3,7 @@ import 'package:cookza/constants.dart';
 import 'package:cookza/model/entities/abstract/ingredient_group_entity.dart';
 import 'package:cookza/model/entities/mutable/mutable_ingredient_note.dart';
 import 'package:cookza/screens/new_ingredient_screen.dart';
+import 'package:cookza/viewmodel/ingredient_screen_model.dart';
 import 'package:cookza/viewmodel/recipe_edit/recipe_edit_model.dart';
 import 'package:cookza/viewmodel/recipe_edit/recipe_edit_step.dart';
 import 'package:cookza/viewmodel/recipe_edit/recipe_ingredient_model.dart';
@@ -26,108 +27,42 @@ Step getIngredientsStep(BuildContext context) {
 class IngredientStepContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    /// create an initial group if there not yet any groups
+    final model = context.read<RecipeEditModel>().ingredientStepModel;
+    if (model.groups.isEmpty) {
+      final defaultName = AppLocalizations.of(context).ingredient(2);
+      model.addGroup(defaultName);
+    }
+
     return ChangeNotifierProvider.value(
       value: Provider.of<RecipeEditModel>(context, listen: false)
           .ingredientStepModel,
       child: Consumer<RecipeIngredientEditStep>(
         builder: (context, model, child) {
-          final groups = model.groups
-              .map((e) => IngredientGroupCard(group: e, model: model))
-              .toList();
-
           return Column(
-            // TODO: each ingredient group has a single table
-            // header of group has add / delete / rename buttons
-            // make ingredients reorderable / reorderable list view or still use data table?
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // _getTableHeaderButtons(context, model),
-              // DataTable(
-              //   columnSpacing: 5,
-              //   horizontalMargin: 0,
-              //   showCheckboxColumn: false,
-              //   columns: [
-              //     DataColumn(
-              //       label: Text(AppLocalizations.of(context)!.amount),
-              //     ),
-              //     DataColumn(
-              //       label: Text(AppLocalizations.of(context)!.unit),
-              //     ),
-              //     DataColumn(
-              //       label: Text(AppLocalizations.of(context)!.ingredient(1)),
-              //     ),
-              //     DataColumn(label: Text('')),
-              //   ],
-              //   rows: _getIngredientRows(context, model),
-              // ),
-
               _getServingsRow(model, context),
-
-              // all groups
-              ...groups,
-
-              // trailing add group button
-              _getAddGroupButton(context, model),
+              DataTable(
+                columnSpacing: 5,
+                horizontalMargin: 0,
+                showCheckboxColumn: false,
+                columns: [
+                  DataColumn(
+                    label: Text(AppLocalizations.of(context).amount),
+                  ),
+                  DataColumn(
+                    label: Text(AppLocalizations.of(context).unit),
+                  ),
+                  DataColumn(
+                    label: Text(AppLocalizations.of(context).ingredient(1)),
+                  ),
+                ],
+                rows: _getIngredientRows(context, model),
+              ),
             ],
           );
         },
-      ),
-    );
-  }
-}
-
-class IngredientGroupCard extends StatelessWidget {
-  final IngredientGroupEntity group;
-  final RecipeIngredientEditStep model;
-
-  const IngredientGroupCard(
-      {Key? key, required this.group, required this.model})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(group.name),
-              IconButton(
-                icon: Icon(Icons.edit),
-                onPressed: () {},
-              ),
-              IconButton(
-                icon: Icon(Icons.add),
-                onPressed: () async {
-                  await _addNewIngredient(context, model, group);
-                },
-              ),
-              IconButton(
-                icon: Icon(Icons.delete),
-                onPressed: () => model.removeGroup(group),
-              ),
-            ],
-          ),
-          DataTable(
-            columnSpacing: 5,
-            horizontalMargin: 0,
-            showCheckboxColumn: false,
-            columns: [
-              DataColumn(
-                label: Text(AppLocalizations.of(context).amount),
-              ),
-              DataColumn(
-                label: Text(AppLocalizations.of(context).unit),
-              ),
-              DataColumn(
-                label: Text(AppLocalizations.of(context).ingredient(1)),
-              ),
-            ],
-            rows: _getIngredientRows(context, model),
-          ),
-        ],
       ),
     );
   }
@@ -149,73 +84,117 @@ Widget _getServingsRow(RecipeIngredientEditStep model, BuildContext context) {
         icon: FontAwesomeIcons.plus,
         onPress: () => model.servings = model.servings + 1,
       ),
+      _getAddRowButton(context, model),
+      // IconButton(
+      //   icon: Icon(Icons.add),
+      //   onPressed: () async => await _addNewIngredient(context, model),
+      // ),
     ],
   );
 }
 
-Widget _getAddGroupButton(
-    BuildContext context, RecipeIngredientEditStep model) {
+Widget _getAddRowButton(BuildContext context, RecipeIngredientEditStep model) {
   return ElevatedButton(
     style: ElevatedButton.styleFrom(
         primary: Theme.of(context).colorScheme.primary),
-    onPressed: () {
-      model.addGroup(AppLocalizations.of(context).ingredient(2));
-    },
-    child: Text(AppLocalizations.of(context).createGroup),
+    onPressed: () async => await _addNewIngredient(context, model),
+    child: Text(AppLocalizations.of(context).addIngredient),
   );
 }
 
-Future<void> _addNewIngredient(BuildContext context,
-    RecipeIngredientEditStep model, IngredientGroupEntity group) async {
+Future<void> _addNewIngredient(
+    BuildContext context, RecipeIngredientEditStep model) async {
   final rootModel = Provider.of<RecipeEditModel>(context, listen: false);
   RecipeIngredientModel ingModel = RecipeIngredientModel.of(
       MutableIngredientNote.empty(),
       sourceRecipe: rootModel.targetEntity.id);
 
-  var result = await Navigator.pushNamed(context, NewIngredientScreen.id,
-      arguments: ingModel) as RecipeIngredientModel?;
+  var result = await Navigator.pushNamed(
+    context,
+    NewIngredientScreen.id,
+    arguments: IngredientScreenModel(
+        model: ingModel,
+        supportsRecipeReference: true,
+        requiresIngredientGroup: true,
+        groups: model.groups,
+        group: model.groups.isNotEmpty ? model.groups.first : null),
+  ) as IngredientScreenModel?;
 
-  if (result != null && !result.isDeleted) {
-    model.addNewIngredient(result);
+  if (result != null && !result.model.isDeleted) {
+    model.addNewIngredient(result.model, result.group!);
   }
 }
 
 List<DataRow> _getIngredientRows(
     BuildContext context, RecipeIngredientEditStep model) {
   List<DataRow> widgets = [];
-  for (var i = 0; i < model.ingredients.length; i++) {
-    var item = model.ingredients[i];
-    widgets.add(
-      DataRow(
-        onSelectChanged: (selected) async {
-          if (selected ?? false) {
-            var result = await Navigator.pushNamed(
-                    context, NewIngredientScreen.id, arguments: item)
-                as RecipeIngredientModel?;
-            if (result == null) {
-              return;
-            } else if (!result.isDeleted) {
-              model.setAmount(i, result.amount);
-              model.setIngredient(i, result.ingredient);
-              model.setScale(i, result.unitOfMeasure);
-            } else if (result.isDeleted) {
-              model.removeIngredient(i);
+
+  /// iterate over every group
+  for (var group in model.groups) {
+    /// if there's more than one group print a header line with the groups name
+    /// but only print groups with ingredients (while editing there may exist a group without assigned ingredients)
+    if (model.groups.length > 1 && group.ingredients.isNotEmpty) {
+      widgets.add(
+        DataRow(
+          cells: [
+            DataCell(
+              Text(
+                group.name,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ),
+            // data table does not support spanned cells, hence two dummy cells are needed
+            DataCell(Container()),
+            DataCell(Container()),
+          ],
+        ),
+      );
+    }
+
+    for (var i = 0; i < group.ingredients.length; i++) {
+      var item = RecipeIngredientModel.of(group.ingredients[i]);
+      widgets.add(
+        DataRow(
+          onSelectChanged: (selected) async {
+            if (selected ?? false) {
+              var result = await Navigator.pushNamed(
+                context,
+                NewIngredientScreen.id,
+                arguments: IngredientScreenModel(
+                    model: item,
+                    supportsRecipeReference: true,
+                    requiresIngredientGroup: true,
+                    groups: model.groups,
+                    group: group),
+              ) as IngredientScreenModel?;
+
+              if (result == null) {
+                return;
+              } else if (!result.model.isDeleted) {
+                // TODO: what if group assignment changed!
+                model.setAmount(i, result.model.amount, group);
+                model.setIngredient(i, result.model.ingredient, group);
+                model.setScale(i, result.model.unitOfMeasure, group);
+              } else if (result.model.isDeleted) {
+                model.removeIngredient(i, group);
+              }
             }
-          }
-        },
-        cells: [
-          DataCell(
-            Text(kFormatAmount(item.amount)),
-          ),
-          DataCell(
-            Text(item.uomDisplayText),
-          ),
-          DataCell(
-            Text(item.name),
-          ),
-        ],
-      ),
-    );
+          },
+          cells: [
+            DataCell(
+              Text(kFormatAmount(item.amount)),
+            ),
+            DataCell(
+              Text(item.uomDisplayText),
+            ),
+            DataCell(
+              Text(item.name),
+            ),
+          ],
+        ),
+      );
+    }
   }
+
   return widgets;
 }

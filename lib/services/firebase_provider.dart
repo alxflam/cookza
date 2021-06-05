@@ -6,6 +6,7 @@ import 'package:cookza/model/entities/abstract/recipe_collection_entity.dart';
 import 'package:cookza/model/entities/abstract/recipe_entity.dart';
 import 'package:cookza/model/entities/abstract/shopping_list_entity.dart';
 import 'package:cookza/model/entities/abstract/user_entity.dart';
+import 'package:cookza/model/entities/firebase/ingredient_group_entity.dart';
 import 'package:cookza/model/entities/firebase/ingredient_note_entity.dart';
 import 'package:cookza/model/entities/firebase/instruction_entity.dart';
 import 'package:cookza/model/entities/firebase/meal_plan_collection_entity.dart';
@@ -249,7 +250,10 @@ class FirebaseProvider {
 
   Future<String> _createRecipe(RecipeEntity recipe) async {
     var baseRecipe = FirebaseRecipe.from(recipe);
-    var ingredients = await FirebaseIngredient.from(recipe);
+    // TODO: don't create plain ing list anymore: await FirebaseIngredient.from(recipe);
+    // var ingredients = <FirebaseIngredient>[];
+    var ingredientGroups = await FirebaseIngredientGroup.from(recipe);
+
     var instructions = await FirebaseInstruction.from(recipe);
 
     // using batch instead of transaction as it should be possible to create recipes in offline mode
@@ -269,7 +273,7 @@ class FirebaseProvider {
     batch.set(recipeDocRef, baseRecipe.toJson());
 
     var ingredientsDoc =
-        FirebaseIngredientDocument.from(ingredients, recipeDocRef.id);
+        FirebaseIngredientDocument.from([], recipeDocRef.id, ingredientGroups);
 
     batch.set(ingredientsDocRef, ingredientsDoc.toJson());
 
@@ -285,8 +289,9 @@ class FirebaseProvider {
 
   Future<String> _updateRecipe(RecipeEntity recipe) async {
     var baseRecipe = FirebaseRecipe.from(recipe);
-    var ingredients = await FirebaseIngredient.from(recipe);
+    // var ingredients = await FirebaseIngredient.from(recipe);
     var instructions = await FirebaseInstruction.from(recipe);
+    var ingredientGroups = await FirebaseIngredientGroup.from(recipe);
 
     var recipeDocRef = _firestore.collection(RECIPES).doc(recipe.id);
 
@@ -294,7 +299,7 @@ class FirebaseProvider {
     batch.set(recipeDocRef, baseRecipe.toJson());
 
     var ingredientsDoc =
-        FirebaseIngredientDocument.from(ingredients, recipeDocRef.id);
+        FirebaseIngredientDocument.from([], recipeDocRef.id, ingredientGroups);
 
     var ingredientsDocRef =
         _firestore.collection(INGREDIENTS).doc(recipeDocRef.id);
@@ -411,6 +416,23 @@ class FirebaseProvider {
 
     return docData.ingredients
         .map((e) => IngredientNoteEntityFirebase.of(e))
+        .toList();
+  }
+
+  Future<List<IngredientGroupEntityFirebase>> recipeIngredientGroups(
+      String recipeGroup, String recipeID) async {
+    var doc = await _firestore.collection(INGREDIENTS).doc(recipeID).get();
+
+    var docData = FirebaseIngredientDocument.fromJson(doc.data()!, doc.id);
+
+    /// if it's a legacy recipe, wrap the legacy ingredient list inside a group
+    if (docData.groups?.isEmpty ?? true) {
+      return [IngredientGroupEntityFirebase(docData.ingredients, name: '')];
+    }
+
+    /// otherwise return the actual ingredient groups
+    return docData.groups!
+        .map((e) => IngredientGroupEntityFirebase(e.ingredients, name: e.name))
         .toList();
   }
 

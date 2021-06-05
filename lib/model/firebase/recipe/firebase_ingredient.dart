@@ -49,16 +49,65 @@ class FirebaseIngredient {
 }
 
 @JsonSerializable(includeIfNull: false)
+class FirebaseIngredientGroup {
+  @JsonKey(toJson: kListToJson)
+  List<FirebaseIngredient> ingredients;
+  @JsonKey()
+  String name;
+
+  FirebaseIngredientGroup({required this.name, required this.ingredients});
+
+  factory FirebaseIngredientGroup.fromJson(Map<String, dynamic> json) {
+    return _$FirebaseIngredientGroupFromJson(json);
+  }
+
+  Map<String, dynamic> toJson() => _$FirebaseIngredientGroupToJson(this);
+
+  static Future<List<FirebaseIngredientGroup>> from(RecipeEntity recipe) async {
+    List<FirebaseIngredientGroup> result = [];
+    var groups = await recipe.ingredientGroups;
+    for (var group in groups) {
+      if (group.ingredients.isEmpty) {
+        // skip empty groups
+        continue;
+      }
+      result.add(FirebaseIngredientGroup(
+        name: group.name,
+        ingredients: group.ingredients
+            .map(
+              (e) => FirebaseIngredient(
+                  ingredient: Ingredient(
+                      name: e.ingredient.name,
+                      recipeReference: e.ingredient.recipeReference),
+                  amount: e.amount,
+                  unitOfMeasure: e.unitOfMeasure),
+            )
+            .toList(),
+      ));
+    }
+    return result;
+  }
+}
+
+@JsonSerializable(includeIfNull: false)
 class FirebaseIngredientDocument {
+// TODO serialization now also needs group info, keep old ingredients member for backwards compatibility
+
   @JsonKey(ignore: true)
   String? documentID;
   @JsonKey()
   String recipeID;
+  @deprecated
   @JsonKey(toJson: kListToJson)
   List<FirebaseIngredient> ingredients;
+  @JsonKey(toJson: kListToJson)
+  List<FirebaseIngredientGroup>? groups;
 
   FirebaseIngredientDocument(
-      {this.documentID, required this.recipeID, required this.ingredients});
+      {this.documentID,
+      required this.recipeID,
+      required this.ingredients,
+      required this.groups});
 
   factory FirebaseIngredientDocument.fromJson(
       Map<String, dynamic> json, String id) {
@@ -69,9 +118,9 @@ class FirebaseIngredientDocument {
 
   Map<String, dynamic> toJson() => _$FirebaseIngredientDocumentToJson(this);
 
-  static FirebaseIngredientDocument from(
-      List<FirebaseIngredient> ingredients, String recipeID) {
+  static FirebaseIngredientDocument from(List<FirebaseIngredient> ingredients,
+      String recipeID, List<FirebaseIngredientGroup> groups) {
     return FirebaseIngredientDocument(
-        ingredients: ingredients, recipeID: recipeID);
+        ingredients: ingredients, recipeID: recipeID, groups: groups);
   }
 }

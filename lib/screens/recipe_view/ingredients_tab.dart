@@ -3,6 +3,7 @@ import 'package:cookza/constants.dart';
 import 'package:cookza/screens/recipe_view/recipe_screen.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:cookza/services/recipe/recipe_manager.dart';
+import 'package:cookza/viewmodel/recipe_edit/recipe_ingredient_model.dart';
 import 'package:cookza/viewmodel/recipe_view/recipe_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -43,35 +44,64 @@ class IngredientsTab extends StatelessWidget {
 
   List<DataRow> _buildIngredientRows(
       BuildContext context, RecipeViewModel model) {
-    var widgets = model.ingredients
-        .map(
-          (item) => DataRow(
-            onSelectChanged: (bool? value) async {
-              if ((value ?? false) && item.isRecipeReference) {
-                final recipes = await sl
-                    .get<RecipeManager>()
-                    .getRecipeById([item.ingredient.recipeReference!]);
-                if (recipes.isNotEmpty) {
-                  await Navigator.pushNamed(context, RecipeScreen.id,
-                      arguments: recipes.first);
-                }
-              }
-            },
+    final groups = model.ingredientGroups;
+
+    final result = <DataRow>[];
+
+    /// iterate over every group
+    for (var group in groups) {
+      /// if there's more than one group print a header line with the groups name
+      if (groups.length > 1) {
+        result.add(
+          DataRow(
             cells: [
               DataCell(
-                Text(kFormatAmount(item.amount)),
+                Text(
+                  group.name,
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
               ),
-              DataCell(
-                Text(item.uomDisplayText),
-              ),
-              DataCell(
-                Text(item.ingredient.name),
-              ),
+              // data table does not support spanned cells, hence two dummy cells are needed
+              DataCell(Container()),
+              DataCell(Container()),
             ],
           ),
-        )
-        .toList();
-    return widgets;
+        );
+      }
+
+      for (var i = 0; i < group.ingredients.length; i++) {
+        var ingModel = RecipeIngredientModel.of(group.ingredients[i]);
+
+        final row = DataRow(
+          onSelectChanged: (bool? value) async {
+            if ((value ?? false) && ingModel.isRecipeReference) {
+              final recipes = await sl
+                  .get<RecipeManager>()
+                  .getRecipeById([ingModel.ingredient.recipeReference!]);
+              if (recipes.isNotEmpty) {
+                await Navigator.pushNamed(context, RecipeScreen.id,
+                    arguments: recipes.first);
+              }
+            }
+          },
+          cells: [
+            DataCell(
+              Text(kFormatAmount(ingModel.amount)),
+            ),
+            DataCell(
+              Text(ingModel.uomDisplayText),
+            ),
+            DataCell(
+              Text(ingModel.name),
+            ),
+          ],
+        );
+
+        result.add(row);
+      }
+    }
+
+    return result;
   }
 }
 

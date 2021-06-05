@@ -1,8 +1,11 @@
 import 'package:cookza/components/alert_dialog_title.dart';
 import 'package:cookza/components/recipe_list_tile.dart';
 import 'package:cookza/constants.dart';
+import 'package:cookza/model/entities/abstract/ingredient_group_entity.dart';
 import 'package:cookza/model/entities/abstract/recipe_entity.dart';
+import 'package:cookza/model/entities/mutable/mutable_ingredient_group.dart';
 import 'package:cookza/services/recipe/recipe_manager.dart';
+import 'package:cookza/viewmodel/ingredient_screen_model.dart';
 import 'package:cookza/viewmodel/recipe_edit/recipe_ingredient_model.dart';
 import 'package:cookza/viewmodel/recipe_selection_model.dart';
 import 'package:cookza/screens/recipe_selection_screen.dart';
@@ -18,11 +21,11 @@ class NewIngredientScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _model =
-        ModalRoute.of(context)!.settings.arguments as RecipeIngredientModel;
+    final screenModel =
+        ModalRoute.of(context)!.settings.arguments as IngredientScreenModel;
 
     return ChangeNotifierProvider<RecipeIngredientModel>.value(
-      value: _model,
+      value: screenModel.model,
       child: Consumer<RecipeIngredientModel>(builder: (context, model, child) {
         var amountController =
             TextEditingController(text: kFormatAmount(model.amount));
@@ -30,6 +33,208 @@ class NewIngredientScreen extends StatelessWidget {
           var parsedAmount = double.tryParse(amountController.text);
           model.amount = parsedAmount ?? 0;
         });
+
+        var inputWidgets = <Widget>[];
+        if (screenModel.requiresIngredientGroup) {
+          final groups =
+              ValueNotifier<List<IngredientGroupEntity>>(screenModel.groups);
+          // initially either the given group is selected or the first of all available groups
+          final initialSelection = screenModel.group ??
+              (groups.value.isNotEmpty ? groups.value.first : null);
+          inputWidgets.add(
+            ValueListenableBuilder<List<IngredientGroupEntity>>(
+              valueListenable: groups,
+              builder: (context, value, child) {
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: <Widget>[
+                    Expanded(
+                      child: DropdownButtonFormField<IngredientGroupEntity>(
+                        value: initialSelection,
+                        items: value
+                            .map(
+                              (e) => DropdownMenuItem<IngredientGroupEntity>(
+                                value: e,
+                                child: Text(e.name),
+                              ),
+                            )
+                            .toList(),
+                        decoration: InputDecoration(
+                          isDense: true,
+                          labelText: AppLocalizations.of(context).groupName,
+                        ),
+                        onChanged: (IngredientGroupEntity? value) {
+                          screenModel.group = value!;
+                        },
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () async {
+                        final group = await _createOrRenameGroup(
+                            context, screenModel, null);
+                        if (group != null) {
+                          final newList = [...groups.value, group];
+                          // select the created group
+                          screenModel.group = group;
+                          // and update the value listenable
+                          groups.value = newList;
+                        }
+                      },
+                      icon: Icon(Icons.add),
+                    ),
+                    IconButton(
+                      onPressed: () => _createOrRenameGroup(
+                          context, screenModel, screenModel.group),
+                      icon: Icon(Icons.edit),
+                    ),
+                  ],
+                );
+              },
+            ),
+          );
+        }
+
+        inputWidgets.addAll(
+          <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: <Widget>[
+                Expanded(
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                        isDense: true,
+                        labelText: AppLocalizations.of(context).amount),
+                    controller: amountController,
+                    keyboardType: TextInputType.number,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return AppLocalizations.of(context)
+                            .validationEnterNumber;
+                      }
+
+                      var numValue = double.tryParse(value);
+                      if (numValue == 0) {
+                        return AppLocalizations.of(context)
+                            .validationEnterNumber;
+                      }
+                      return '';
+                    },
+                  ),
+                ),
+                SizedBox(
+                  width: 16,
+                ),
+                Builder(
+                  builder: (context) {
+                    if (model.isRecipeReference) {
+                      return Expanded(
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                              isDense: true,
+                              labelText: AppLocalizations.of(context).unit),
+                          keyboardType: TextInputType.number,
+                          initialValue: model.uomDisplayText,
+                          enabled: false,
+                        ),
+                      );
+                    } else {
+                      List<UnitOfMeasure> uoms =
+                          sl.get<UnitOfMeasureProvider>().getVisible();
+                      List<DropdownMenuItem<UnitOfMeasure>> items = uoms
+                          // todo null check on uom
+                          // let it not be null, but have an empty uom instead
+                          // which returns an empty string instead of trying to translate the id
+                          .map((uom) => DropdownMenuItem<UnitOfMeasure>(
+                                value: uom,
+                                child: Text(uom.getDisplayName(
+                                    amountController.text.isNotEmpty
+                                        ? double.parse(amountController.text)
+                                            .toInt()
+                                        : 0)),
+                              ))
+                          .toList();
+                      return Expanded(
+                        child: DropdownButtonFormField<UnitOfMeasure>(
+                          value: uoms.contains(model.uom) ? model.uom : null,
+                          items: items,
+                          decoration: InputDecoration(
+                            isDense: true,
+                            labelText: AppLocalizations.of(context).unit,
+                          ),
+                          onChanged: (UnitOfMeasure? value) {
+                            model.uom = value!;
+                          },
+                        ),
+                      );
+                    }
+                  },
+                ),
+              ],
+            ),
+            _getRecipeWidget(model, context),
+            SizedBox(
+              height: 8,
+            ),
+            _getRecipeRefButton(context, model),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Expanded(
+                  child: ElevatedButton(
+                    style: kRaisedGreenButtonStyle,
+                    onPressed: () {
+                      // check whether either a recipe ref is selected or the ingredient name is given
+                      try {
+                        model.validate(context);
+                        Navigator.pop(context, screenModel);
+                      } catch (e) {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: AlertDialogTitle(
+                                title: AppLocalizations.of(context).error,
+                              ),
+                              content: Text(e.toString()),
+                            );
+                          },
+                        );
+                      }
+                    },
+                    child: Icon(Icons.save),
+                  ),
+                ),
+                SizedBox(
+                  width: 16,
+                ),
+                Expanded(
+                  child: ElevatedButton(
+                    style: kRaisedGreyButtonStyle,
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Icon(Icons.cancel),
+                  ),
+                ),
+                SizedBox(
+                  width: 16,
+                ),
+                Expanded(
+                  child: ElevatedButton(
+                    style: kRaisedRedButtonStyle,
+                    onPressed: () {
+                      model.setDeleted();
+                      Navigator.pop(context, screenModel);
+                    },
+                    child: Icon(Icons.delete),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        );
 
         return Scaffold(
           appBar: AppBar(
@@ -40,148 +245,7 @@ class NewIngredientScreen extends StatelessWidget {
               padding: EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: <Widget>[
-                      Expanded(
-                        child: TextFormField(
-                          decoration: InputDecoration(
-                              isDense: true,
-                              labelText: AppLocalizations.of(context).amount),
-                          controller: amountController,
-                          keyboardType: TextInputType.number,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return AppLocalizations.of(context)
-                                  .validationEnterNumber;
-                            }
-
-                            var numValue = double.tryParse(value);
-                            if (numValue == 0) {
-                              return AppLocalizations.of(context)
-                                  .validationEnterNumber;
-                            }
-                            return '';
-                          },
-                        ),
-                      ),
-                      SizedBox(
-                        width: 16,
-                      ),
-                      Builder(
-                        builder: (context) {
-                          if (model.isRecipeReference) {
-                            return Expanded(
-                              child: TextFormField(
-                                decoration: InputDecoration(
-                                    isDense: true,
-                                    labelText:
-                                        AppLocalizations.of(context).unit),
-                                keyboardType: TextInputType.number,
-                                initialValue: model.uomDisplayText,
-                                enabled: false,
-                              ),
-                            );
-                          } else {
-                            List<UnitOfMeasure> uoms =
-                                sl.get<UnitOfMeasureProvider>().getVisible();
-                            List<DropdownMenuItem<UnitOfMeasure>> items = uoms
-                                // todo null check on uom
-                                // let it not be null, but have an empty uom instead
-                                // which returns an empty string instead of trying to translate the id
-                                .map((uom) => DropdownMenuItem<UnitOfMeasure>(
-                                      value: uom,
-                                      child: Text(uom.getDisplayName(
-                                          amountController.text.isNotEmpty
-                                              ? double.parse(
-                                                      amountController.text)
-                                                  .toInt()
-                                              : 0)),
-                                    ))
-                                .toList();
-                            return Expanded(
-                              child: DropdownButtonFormField<UnitOfMeasure>(
-                                  value: uoms.contains(model.uom)
-                                      ? model.uom
-                                      : null,
-                                  items: items,
-                                  decoration: InputDecoration(
-                                    isDense: true,
-                                    labelText:
-                                        AppLocalizations.of(context).unit,
-                                  ),
-                                  onChanged: (UnitOfMeasure? value) {
-                                    model.uom = value!;
-                                  }),
-                            );
-                          }
-                        },
-                      ),
-                    ],
-                  ),
-                  _getRecipeWidget(model, context),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  _getRecipeRefButton(context, model),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Expanded(
-                        child: ElevatedButton(
-                          style: kRaisedGreenButtonStyle,
-                          onPressed: () {
-                            // check whether either a recipe ref is selected or the ingredient name is given
-                            try {
-                              model.validate(context);
-                              Navigator.pop(context, model);
-                            } catch (e) {
-                              showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return AlertDialog(
-                                    title: AlertDialogTitle(
-                                      title: AppLocalizations.of(context).error,
-                                    ),
-                                    content: Text(e.toString()),
-                                  );
-                                },
-                              );
-                            }
-                          },
-                          child: Icon(Icons.save),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 16,
-                      ),
-                      Expanded(
-                        child: ElevatedButton(
-                          style: kRaisedGreyButtonStyle,
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: Icon(Icons.cancel),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 16,
-                      ),
-                      Expanded(
-                        child: ElevatedButton(
-                          style: kRaisedRedButtonStyle,
-                          onPressed: () {
-                            model.setDeleted();
-                            Navigator.pop(context, model);
-                          },
-                          child: Icon(Icons.delete),
-                        ),
-                      ),
-                    ],
-                  )
-                ],
+                children: inputWidgets,
               ),
             ),
           ),
@@ -256,4 +320,51 @@ class IngredientNameTextInput extends StatelessWidget {
       keyboardType: TextInputType.text,
     );
   }
+}
+
+Future<IngredientGroupEntity?> _createOrRenameGroup(BuildContext context,
+    IngredientScreenModel model, IngredientGroupEntity? group) {
+  return showDialog<IngredientGroupEntity?>(
+    context: context,
+    builder: (context) {
+      final nameController = TextEditingController(
+          text: group?.name ?? AppLocalizations.of(context).groupName);
+
+      return SimpleDialog(
+        children: [
+          Column(
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: TextFormField(
+                  textCapitalization: TextCapitalization.sentences,
+                  controller: nameController,
+                  style: TextStyle(fontSize: 20),
+                  autofocus: true,
+                ),
+              ),
+            ],
+          ),
+          Padding(
+            padding: EdgeInsets.all(10),
+            child: ElevatedButton(
+              onPressed: () {
+                // TODO: needs a new mutable entity...
+                IngredientGroupEntity adaptedGroup;
+                if (group != null) {
+                  // TODO: rename existing group
+                  adaptedGroup = group;
+                } else {
+                  adaptedGroup = MutableIngredientGroup.forValues(
+                      1, nameController.text, []);
+                }
+                Navigator.pop(context, adaptedGroup);
+              },
+              child: Icon(Icons.save),
+            ),
+          ),
+        ],
+      );
+    },
+  );
 }

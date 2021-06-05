@@ -1,5 +1,6 @@
 import 'dart:collection';
 
+import 'package:cookza/model/entities/abstract/ingredient_group_entity.dart';
 import 'package:cookza/model/entities/abstract/instruction_entity.dart';
 import 'package:cookza/model/entities/abstract/recipe_entity.dart';
 import 'package:cookza/model/entities/mutable/mutable_ingredient_note.dart';
@@ -12,8 +13,10 @@ class RecipeViewModel extends ChangeNotifier {
   RecipeEntity _recipe;
   late int _servings;
   int _rating = 0;
+  @deprecated
   final List<MutableIngredientNote> _ingredients = [];
   final List<InstructionEntity> _instructions = [];
+  final List<IngredientGroupEntity> _ingredientGroups = [];
 
   RecipeViewModel.of(this._recipe) {
     _copyValues();
@@ -28,6 +31,12 @@ class RecipeViewModel extends ChangeNotifier {
     this._recipe.ingredients.then((value) {
       for (var note in value) {
         this._ingredients.add(MutableIngredientNote.of(note));
+      }
+    });
+
+    this._recipe.ingredientGroups.then((value) {
+      for (var group in value) {
+        this._ingredientGroups.add(group);
       }
     });
 
@@ -70,8 +79,16 @@ class RecipeViewModel extends ChangeNotifier {
     }
   }
 
+  @deprecated
   List<RecipeIngredientModel> get ingredients {
     return this._ingredients.map((e) => RecipeIngredientModel.of(e)).toList();
+  }
+
+  List<IngredientGroupEntity> get ingredientGroups {
+    if (this._ingredients.isNotEmpty && this._ingredientGroups.isEmpty) {
+      // create an anonymous group => should not be necessary ...
+    }
+    return UnmodifiableListView(_ingredientGroups);
   }
 
   void decreaseServings() {
@@ -88,6 +105,8 @@ class RecipeViewModel extends ChangeNotifier {
     var baseServings = _recipe.servings;
     var ratio = servings / baseServings;
     print('ratio for ing is $ratio');
+
+// TODO update according to groups
 
     _recipe.ingredients.then((value) {
       for (var i = 0; i < value.length; i++) {

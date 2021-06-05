@@ -18,7 +18,9 @@ class MutableRecipe implements RecipeEntity {
   int _duration = 20;
   String? _id;
   String? _recipeCollectionId;
+  @deprecated
   List<IngredientNoteEntity>? _ingredients;
+  List<IngredientGroupEntity> _ingredientGroups = [];
   List<InstructionEntity>? _instructions;
   Future<List<IngredientNoteEntity>>? _origIngredients;
   Future<List<InstructionEntity>>? _origInstructions;
@@ -32,6 +34,7 @@ class MutableRecipe implements RecipeEntity {
         this._modificationDate = DateTime.now(),
         this._difficulty = DIFFICULTY.EASY,
         this._ingredients = [],
+        this._ingredientGroups = [],
         this._instructions = [],
         this._tags = <String>{},
         this._servings = 2;
@@ -55,6 +58,10 @@ class MutableRecipe implements RecipeEntity {
     entity.ingredients.then((value) {
       var list = value.map((e) => MutableIngredientNote.of(e)).toList();
       this._ingredients = list;
+    });
+
+    entity.ingredientGroups.then((value) {
+      this._ingredientGroups = [...value];
     });
 
     entity.instructions.then((value) {
@@ -107,6 +114,10 @@ class MutableRecipe implements RecipeEntity {
 
   set ingredientList(List<IngredientNoteEntity> value) {
     this._ingredients = value;
+  }
+
+  set ingredientGroupList(List<IngredientGroupEntity> value) {
+    this._ingredientGroups = value;
   }
 
   @override
@@ -188,6 +199,6 @@ class MutableRecipe implements RecipeEntity {
 
   @override
   Future<UnmodifiableListView<IngredientGroupEntity>> get ingredientGroups {
-    return Future.value(UnmodifiableListView([]));
+    return Future.value(UnmodifiableListView(this._ingredientGroups));
   }
 }

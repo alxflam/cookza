@@ -29,12 +29,41 @@ Map<String, dynamic> _$FirebaseIngredientToJson(FirebaseIngredient instance) {
   return val;
 }
 
+FirebaseIngredientGroup _$FirebaseIngredientGroupFromJson(
+    Map<String, dynamic> json) {
+  return FirebaseIngredientGroup(
+    name: json['name'] as String,
+    ingredients: (json['ingredients'] as List<dynamic>)
+        .map((e) => FirebaseIngredient.fromJson(e as Map<String, dynamic>))
+        .toList(),
+  );
+}
+
+Map<String, dynamic> _$FirebaseIngredientGroupToJson(
+    FirebaseIngredientGroup instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('ingredients', kListToJson(instance.ingredients));
+  val['name'] = instance.name;
+  return val;
+}
+
 FirebaseIngredientDocument _$FirebaseIngredientDocumentFromJson(
     Map<String, dynamic> json) {
   return FirebaseIngredientDocument(
     recipeID: json['recipeID'] as String,
     ingredients: (json['ingredients'] as List<dynamic>)
         .map((e) => FirebaseIngredient.fromJson(e as Map<String, dynamic>))
+        .toList(),
+    groups: (json['groups'] as List<dynamic>?)
+        ?.map(
+            (e) => FirebaseIngredientGroup.fromJson(e as Map<String, dynamic>))
         .toList(),
   );
 }
@@ -52,5 +81,6 @@ Map<String, dynamic> _$FirebaseIngredientDocumentToJson(
   }
 
   writeNotNull('ingredients', kListToJson(instance.ingredients));
+  writeNotNull('groups', kListToJson(instance.groups));
   return val;
 }

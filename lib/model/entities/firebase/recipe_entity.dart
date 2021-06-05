@@ -6,6 +6,7 @@ import 'package:cookza/model/entities/abstract/ingredient_group_entity.dart';
 import 'package:cookza/model/entities/abstract/ingredient_note_entity.dart';
 import 'package:cookza/model/entities/abstract/instruction_entity.dart';
 import 'package:cookza/model/entities/abstract/recipe_entity.dart';
+import 'package:cookza/model/entities/firebase/ingredient_group_entity.dart';
 import 'package:cookza/model/entities/firebase/ingredient_note_entity.dart';
 import 'package:cookza/model/entities/firebase/instruction_entity.dart';
 import 'package:cookza/model/firebase/recipe/firebase_recipe.dart';
@@ -15,7 +16,10 @@ import 'package:cookza/services/flutter/service_locator.dart';
 class RecipeEntityFirebase implements RecipeEntity {
   final FirebaseRecipe _recipe;
 
+  @deprecated
   List<IngredientNoteEntityFirebase> _ingredients = [];
+
+  List<IngredientGroupEntityFirebase> _ingredientGroups = [];
 
   List<InstructionEntityFirebase> _instructions = [];
 
@@ -91,7 +95,14 @@ class RecipeEntityFirebase implements RecipeEntity {
   Uint8List? get inMemoryImage => null;
 
   @override
-  Future<UnmodifiableListView<IngredientGroupEntity>> get ingredientGroups {
-    return Future.value(UnmodifiableListView([]));
+  Future<UnmodifiableListView<IngredientGroupEntity>>
+      get ingredientGroups async {
+    if (this._ingredientGroups.isEmpty) {
+      this._ingredientGroups = await sl
+          .get<FirebaseProvider>()
+          .recipeIngredientGroups(
+              this._recipe.recipeGroupID, this._recipe.documentID!);
+    }
+    return Future.value(UnmodifiableListView(this._ingredientGroups));
   }
 }
