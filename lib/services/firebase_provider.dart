@@ -488,14 +488,15 @@ class FirebaseProvider {
   }
 
   Future<List<RecipeEntity>> getRecipeById(List<String> ids) async {
-    var docs = await _firestore
-        .collection(RECIPES)
-        .where(FieldPath.documentId, whereIn: ids)
-        .get();
+    final collection = _firestore.collection(RECIPES);
+    final docRefs = ids.map((e) => collection.doc(e)).toList();
+    // instead of a whereIn clause resolve documents individually as the in clause can only handle up to max. 10 items
+    final snapshots = await Future.wait(docRefs.map((e) => e.get()));
 
-    return docs.docs
+    return snapshots
+        .where((e) => e.exists)
         .map((e) => RecipeEntityFirebase.of(
-            FirebaseRecipe.fromJson(e.data(), id: e.id)))
+            FirebaseRecipe.fromJson(e.data() ?? {}, id: e.id)))
         .toList();
   }
 

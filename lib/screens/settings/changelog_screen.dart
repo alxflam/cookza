@@ -15,11 +15,12 @@ class ChangelogScreen extends StatelessWidget {
         child: Column(
           children: [
             ChangelogEntry(
-              version: '0.0.14',
+              version: '0.0.17',
               date: kDateFormatter.parse('30.05.2021'),
               changes: [
                 'Neu: Zutaten gruppieren in Zutatenliste',
-                'Neu: Rezeptbild anzeigen',
+                'Neu: Rezeptbild anzeigen (Tap auf Bild)',
+                'Fix: Bei mehr als 10 bewerteten Rezepten wird die Favoriten Ansicht nicht mehr geladen',
                 'Fixes: Kleinere Bugfixes und Verbesserungen',
                 'Updates: Flutter 2.2, Google ML Kit statt Firebase ML'
               ],
