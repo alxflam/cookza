@@ -79,9 +79,11 @@ class FirebaseProvider {
     if (groups.isEmpty) {
       return Future.value([]);
     }
-    var docs = await _shoppingListsQuery(groups).get();
+    var docs = await _shoppingListsSnapshots(groups);
 
-    return docs.docs
+    return docs
+        .map((e) => e.docs)
+        .expand((e) => e)
         .map((e) => ShoppingListEntityFirebase.of(
             FirebaseShoppingListDocument.fromJson(e.data(), e.id)))
         .toList();
@@ -89,9 +91,8 @@ class FirebaseProvider {
 
   Future<List<QueryDocumentSnapshot>> getShoppingListsByMealPlan(
       String mealPlan) async {
-    var docs = await _shoppingListsQuery([mealPlan]).get();
-
-    return docs.docs;
+    var docs = await _shoppingListsSnapshots([mealPlan]);
+    return docs.map((e) => e.docs).expand((e) => e).toList();
   }
 
   Query<Map<String, dynamic>> _mealPlanGroupsQuery() {
@@ -100,10 +101,15 @@ class FirebaseProvider {
         .where('users.$userUid', isGreaterThan: '');
   }
 
-  Query<Map<String, dynamic>> _shoppingListsQuery(List<String> groups) {
-    return _firestore
-        .collection(SHOPPING_LISTS)
-        .where('groupID', whereIn: groups);
+  Future<List<QuerySnapshot<Map<String, dynamic>>>> _shoppingListsSnapshots(
+      List<String> groups) async {
+    final collection = _firestore.collection(SHOPPING_LISTS);
+    final docRefs =
+        groups.map((e) => collection..where('groupID', isEqualTo: e)).toList();
+    // instead of a whereIn clause resolve documents individually as the in clause can only handle up to max. 10 items
+    final snapshots = await Future.wait(docRefs.map((e) => e.get()));
+
+    return snapshots;
   }
 
   Future<List<MealPlanCollectionEntity>> get mealPlanGroupsAsList async {
@@ -250,8 +256,6 @@ class FirebaseProvider {
 
   Future<String> _createRecipe(RecipeEntity recipe) async {
     var baseRecipe = FirebaseRecipe.from(recipe);
-    // TODO: don't create plain ing list anymore: await FirebaseIngredient.from(recipe);
-    // var ingredients = <FirebaseIngredient>[];
     var ingredientGroups = await FirebaseIngredientGroup.from(recipe);
 
     var instructions = await FirebaseInstruction.from(recipe);
@@ -289,7 +293,6 @@ class FirebaseProvider {
 
   Future<String> _updateRecipe(RecipeEntity recipe) async {
     var baseRecipe = FirebaseRecipe.from(recipe);
-    // var ingredients = await FirebaseIngredient.from(recipe);
     var instructions = await FirebaseInstruction.from(recipe);
     var ingredientGroups = await FirebaseIngredientGroup.from(recipe);
 
@@ -441,6 +444,14 @@ class FirebaseProvider {
     if (collections.isEmpty) {
       return Future.value([]);
     }
+
+// TODO: how to deal with max 10 whereIn items!? => sort order currently done by server query
+// see getRecipesById => resolve each collection individually...
+
+    // final collection = _firestore.collection(RECIPES);
+    // final docRefs = collections.map((e) => collection.where('recipeGroupID', isEqualTo: e.id)).toList();
+    // // instead of a whereIn clause resolve documents individually as the in clause can only handle up to max. 10 items
+    // final snapshots = await Future.wait(docRefs.map((e) => e.get()));
 
     var docs = await _firestore
         .collection(RECIPES)

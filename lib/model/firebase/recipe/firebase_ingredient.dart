@@ -66,24 +66,29 @@ class FirebaseIngredientGroup {
   static Future<List<FirebaseIngredientGroup>> from(RecipeEntity recipe) async {
     List<FirebaseIngredientGroup> result = [];
     var groups = await recipe.ingredientGroups;
+
+    // TODO: if it's a legacy recipe, do we have to transform here or is that handled by the modification...
+
     for (var group in groups) {
       if (group.ingredients.isEmpty) {
         // skip empty groups
         continue;
       }
-      result.add(FirebaseIngredientGroup(
-        name: group.name,
-        ingredients: group.ingredients
-            .map(
-              (e) => FirebaseIngredient(
-                  ingredient: Ingredient(
-                      name: e.ingredient.name,
-                      recipeReference: e.ingredient.recipeReference),
-                  amount: e.amount,
-                  unitOfMeasure: e.unitOfMeasure),
-            )
-            .toList(),
-      ));
+      result.add(
+        FirebaseIngredientGroup(
+          name: group.name,
+          ingredients: group.ingredients
+              .map(
+                (e) => FirebaseIngredient(
+                    ingredient: Ingredient(
+                        name: e.ingredient.name,
+                        recipeReference: e.ingredient.recipeReference),
+                    amount: e.amount,
+                    unitOfMeasure: e.unitOfMeasure),
+              )
+              .toList(),
+        ),
+      );
     }
     return result;
   }
