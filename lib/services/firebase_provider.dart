@@ -105,7 +105,7 @@ class FirebaseProvider {
       List<String> groups) async {
     final collection = _firestore.collection(SHOPPING_LISTS);
     final docRefs =
-        groups.map((e) => collection..where('groupID', isEqualTo: e)).toList();
+        groups.map((e) => collection.where('groupID', isEqualTo: e)).toList();
     // instead of a whereIn clause resolve documents individually as the in clause can only handle up to max. 10 items
     final snapshots = await Future.wait(docRefs.map((e) => e.get()));
 
@@ -416,10 +416,8 @@ class FirebaseProvider {
     var doc = await _firestore.collection(INGREDIENTS).doc(recipeID).get();
 
     var docData = FirebaseIngredientDocument.fromJson(doc.data()!, doc.id);
-
-    return docData.ingredients
-        .map((e) => IngredientNoteEntityFirebase.of(e))
-        .toList();
+    final data = docData.ingredients ?? <FirebaseIngredient>[];
+    return data.map((e) => IngredientNoteEntityFirebase.of(e)).toList();
   }
 
   Future<List<IngredientGroupEntityFirebase>> recipeIngredientGroups(
@@ -430,7 +428,9 @@ class FirebaseProvider {
 
     /// if it's a legacy recipe, wrap the legacy ingredient list inside a group
     if (docData.groups?.isEmpty ?? true) {
-      return [IngredientGroupEntityFirebase(docData.ingredients, name: '')];
+      return [
+        IngredientGroupEntityFirebase(docData.ingredients ?? [], name: '')
+      ];
     }
 
     /// otherwise return the actual ingredient groups
