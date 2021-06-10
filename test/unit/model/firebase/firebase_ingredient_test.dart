@@ -112,9 +112,9 @@ void main() {
 
       expect(cut.documentID, '4567');
       expect(cut.recipeID, '1234');
-      expect(cut.ingredients.length, 2);
-      expect(cut.ingredients.first.ingredient.name, 'Pasta');
-      expect(cut.ingredients.last.ingredient.name, 'Pepper');
+      expect(cut.ingredients!.length, 2);
+      expect(cut.ingredients!.first.ingredient.name, 'Pasta');
+      expect(cut.ingredients!.last.ingredient.name, 'Pepper');
     },
   );
 

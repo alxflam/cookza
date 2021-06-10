@@ -104,7 +104,7 @@ class FirebaseIngredientDocument {
   String recipeID;
   @deprecated
   @JsonKey(toJson: kListToJson)
-  List<FirebaseIngredient> ingredients;
+  List<FirebaseIngredient>? ingredients;
   @JsonKey(toJson: kListToJson)
   List<FirebaseIngredientGroup>? groups;
 

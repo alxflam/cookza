@@ -20,7 +20,9 @@ class ChangelogScreen extends StatelessWidget {
               changes: [
                 'Neu: Zutaten gruppieren in Zutatenliste',
                 'Neu: Rezeptbild anzeigen (Tap auf Bild)',
+                'Neu: Anpassungen für Android 11 (Splash Screen und Icon)',
                 'Fix: Bei mehr als 10 bewerteten Rezepten wird die Favoriten Ansicht nicht mehr geladen',
+                'Fix: Einträge in Einkaufsliste werden nicht korrekt sortiert',
                 'Fixes: Kleinere Bugfixes und Verbesserungen',
                 'Updates: Flutter 2.2, Google ML Kit statt Firebase ML'
               ],

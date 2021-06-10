@@ -58,8 +58,8 @@ FirebaseIngredientDocument _$FirebaseIngredientDocumentFromJson(
     Map<String, dynamic> json) {
   return FirebaseIngredientDocument(
     recipeID: json['recipeID'] as String,
-    ingredients: (json['ingredients'] as List<dynamic>)
-        .map((e) => FirebaseIngredient.fromJson(e as Map<String, dynamic>))
+    ingredients: (json['ingredients'] as List<dynamic>?)
+        ?.map((e) => FirebaseIngredient.fromJson(e as Map<String, dynamic>))
         .toList(),
     groups: (json['groups'] as List<dynamic>?)
         ?.map(
