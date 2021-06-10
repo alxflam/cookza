@@ -117,10 +117,10 @@ class ShoppingListModel extends ChangeNotifier {
   }
 
   void _sortItems() {
-    // TODO: sort by name only initially..but there sort only by name!?
     const kMaxIndex = 1000;
     this._items.sort((a, b) {
       if (a.index >= 0 || b.index >= 0) {
+        // do not sort -1 (index not set) at the beginning
         int firstIndex = a.index < 0 ? kMaxIndex : a.index;
         int secondIndex = b.index < 0 ? kMaxIndex : b.index;
 

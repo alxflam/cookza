@@ -3,6 +3,7 @@ import 'package:cookza/services/abstract/pdf_generator.dart';
 import 'package:cookza/services/flutter/navigator_service.dart';
 import 'package:cookza/services/recipe/image_manager.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
+import 'package:cookza/viewmodel/recipe_edit/recipe_ingredient_model.dart';
 import 'package:cookza/viewmodel/recipe_view/recipe_view_model.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -10,7 +11,7 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 class PDFGeneratorImpl implements PDFGenerator {
-  List<List<String>> _getIngredientList(RecipeViewModel recipe) {
+  Future<List<List<String>>> _getIngredientList(RecipeViewModel recipe) async {
     List<List<String>> result = [];
     var context = sl.get<NavigatorService>().currentContext;
 
@@ -20,12 +21,20 @@ class PDFGeneratorImpl implements PDFGenerator {
       AppLocalizations.of(context).ingredient(1)
     ]);
 
-    for (var ingredient in recipe.ingredients) {
-      result.add([
-        kFormatAmount(ingredient.amount),
-        ingredient.uomDisplayText,
-        ingredient.name
-      ]);
+    final groups = recipe.ingredientGroups;
+    for (var group in groups) {
+      if (groups.length > 1) {
+        result.add([group.name, '', '']);
+      }
+      for (var ingredient in group.ingredients) {
+        var ingModel = RecipeIngredientModel.of(ingredient);
+
+        result.add([
+          kFormatAmount(ingModel.amount),
+          ingModel.uomDisplayText,
+          ingModel.name
+        ]);
+      }
     }
 
     return result;
@@ -56,6 +65,8 @@ class PDFGeneratorImpl implements PDFGenerator {
           bytes: imageFile.readAsBytesSync(),
         );
       }
+
+      final ingredientList = await _getIngredientList(recipeViewModel);
 
       doc.addPage(
         pw.MultiPage(
@@ -128,7 +139,7 @@ class PDFGeneratorImpl implements PDFGenerator {
               border: pw.TableBorder(),
               headerAlignment: pw.Alignment.center,
               cellAlignment: pw.Alignment.center,
-              data: _getIngredientList(recipeViewModel),
+              data: ingredientList,
             ),
             pw.Header(
                 level: 1, text: AppLocalizations.of(buildContext).instructions),

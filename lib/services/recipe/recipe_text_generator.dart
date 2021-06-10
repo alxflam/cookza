@@ -30,26 +30,37 @@ class RecipeTextGeneratorImpl implements RecipeTextGenerator {
       buffer.write(ingredientsTitle);
       buffer.write('*');
       buffer.writeln();
-      for (var ingredient in await entity.ingredients) {
-        buffer.write(kBulletCharacter);
-        buffer.write(' ');
-        buffer.write(ingredient.ingredient.name);
-        buffer.write(' ');
 
-        if ((ingredient.amount ?? 0) > 0) {
-          buffer.write('(');
-          buffer.write(kFormatAmount(ingredient.amount));
-
-          if (ingredient.unitOfMeasure != null) {
-            buffer.write(' '); // space between amount and unit
-            var uom =
-                uomProvider.getUnitOfMeasureById(ingredient.unitOfMeasure!);
-            buffer.write(uom.displayName);
-          }
-          buffer.write(')');
+      final groups = await entity.ingredientGroups;
+      for (var group in groups) {
+        if (groups.length > 1) {
+          buffer.write('*');
+          buffer.write(group.name);
+          buffer.write('*');
+          buffer.writeln();
         }
+        for (var ingredient in group.ingredients) {
+          buffer.write(kBulletCharacter);
+          buffer.write(' ');
+          buffer.write(ingredient.ingredient.name);
+          buffer.write(' ');
 
-        buffer.writeln();
+          if ((ingredient.amount ?? 0) > 0) {
+            buffer.write('(');
+            buffer.write(kFormatAmount(ingredient.amount));
+
+            if (ingredient.unitOfMeasure != null &&
+                ingredient.unitOfMeasure!.isNotEmpty) {
+              buffer.write(' '); // space between amount and unit
+              var uom =
+                  uomProvider.getUnitOfMeasureById(ingredient.unitOfMeasure!);
+              buffer.write(uom.displayName);
+            }
+            buffer.write(')');
+          }
+
+          buffer.writeln();
+        }
       }
 
       buffer.writeln();
