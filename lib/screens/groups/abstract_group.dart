@@ -5,11 +5,13 @@ import 'package:cookza/model/entities/abstract/user_entity.dart';
 import 'package:cookza/screens/collections/qr_scanner.dart';
 import 'package:cookza/services/firebase_provider.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
+import 'package:cookza/services/shared_preferences_provider.dart';
 import 'package:cookza/viewmodel/groups/abstract_group_model.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PopupMenuButtonChoices {
   final _icon;
@@ -125,11 +127,15 @@ abstract class AbstractGroupScreen extends StatelessWidget {
                         var user = snapshot.data![index];
                         var isCurrentUser = fb.userUid == user.id;
 
+                        final name = isCurrentUser
+                            ? sl.get<SharedPreferencesProvider>().getUserName()
+                            : user.name.isNotEmpty
+                                ? user.name
+                                : AppLocalizations.of(context).unknownUser;
+
                         return ListTile(
                           leading: _getLeadingUserIcon(user, isCurrentUser),
-                          title: Text(user.name.isNotEmpty
-                              ? user.name
-                              : AppLocalizations.of(context).unknownUser),
+                          title: Text(name),
                           subtitle: isCurrentUser
                               ? Text(AppLocalizations.of(context).selfUser)
                               : Text(''),
