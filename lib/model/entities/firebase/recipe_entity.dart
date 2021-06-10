@@ -103,6 +103,7 @@ class RecipeEntityFirebase implements RecipeEntity {
           .recipeIngredientGroups(
               this._recipe.recipeGroupID, this._recipe.documentID!);
     }
+    // TODO: if groups is empty but deprecated ingredients member is not empty, then create a dummy group!?
     return Future.value(UnmodifiableListView(this._ingredientGroups));
   }
 }

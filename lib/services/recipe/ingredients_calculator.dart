@@ -39,59 +39,61 @@ class IngredientsCalculatorImpl implements IngredientsCalculator {
       List<MutableIngredientNote> result) async {
     var baseServings = recipe.servings;
 
-    for (var note in await recipe.ingredients) {
-      var ratio = entry.value / baseServings;
+    for (var group in await recipe.ingredientGroups) {
+      for (var note in group.ingredients) {
+        var ratio = entry.value / baseServings;
 
-      // if a recipe reference is given, resolve it's ingredients
-      if (note.ingredient.isRecipeReference) {
-        // read the recipe
-        var targetRecipe = await sl
-            .get<RecipeManager>()
-            .getRecipeById([note.ingredient.recipeReference!]);
-        if (targetRecipe.length == 1) {
-          var ing = await targetRecipe.first.ingredients;
-          var circularDependency = ing.firstWhereOrNull(
-              (e) => e.ingredient.recipeReference == recipe.id);
-          if (circularDependency == null) {
-            //recurse
-            await _processRecipe(targetRecipe.first, entry, result);
+        // if a recipe reference is given, resolve it's ingredients
+        if (note.ingredient.isRecipeReference) {
+          // read the recipe
+          var targetRecipe = await sl
+              .get<RecipeManager>()
+              .getRecipeById([note.ingredient.recipeReference!]);
+          if (targetRecipe.length == 1) {
+            var ing = await targetRecipe.first.ingredients;
+            var circularDependency = ing.firstWhereOrNull(
+                (e) => e.ingredient.recipeReference == recipe.id);
+            if (circularDependency == null) {
+              //recurse
+              await _processRecipe(targetRecipe.first, entry, result);
+            }
           }
+          // and don't process the recipe reference itself as an ingredient
+          continue;
         }
-        // and don't process the recipe reference itself as an ingredient
-        continue;
-      }
 
-      // check if ingredient already exists
-      var sameIngredient = result
-          .where((e) => e.ingredient.name == note.ingredient.name)
-          .toList();
+        // check if ingredient already exists
+        var sameIngredient = result
+            .where((e) => e.ingredient.name == note.ingredient.name)
+            .toList();
 
-      // if it does not exist yet, directly add it
-      if (sameIngredient.isEmpty) {
-        var targetNote = MutableIngredientNote.of(note);
-        var amount = (note.amount ?? 1) * ratio;
-        targetNote.amount = amount;
-        result.add(targetNote);
-        continue;
-      }
+        // if it does not exist yet, directly add it
+        if (sameIngredient.isEmpty) {
+          var targetNote = MutableIngredientNote.of(note);
+          var amount = (note.amount ?? 1) * ratio;
+          targetNote.amount = amount;
+          result.add(targetNote);
+          continue;
+        }
 
-      // else if it exists with same uom, add the new amount
-      var sameUoM = sameIngredient
-          .firstWhereOrNull((e) => e.unitOfMeasure == note.unitOfMeasure);
-      if (sameUoM != null) {
-        sameUoM.amount = (sameUoM.amount ?? 1) + (note.amount ?? 1) * ratio;
-        continue;
-      }
+        // else if it exists with same uom, add the new amount
+        var sameUoM = sameIngredient
+            .firstWhereOrNull((e) => e.unitOfMeasure == note.unitOfMeasure);
+        if (sameUoM != null) {
+          sameUoM.amount = (sameUoM.amount ?? 1) + (note.amount ?? 1) * ratio;
+          continue;
+        }
 
-      // if it has a different uom
-      var uomProvider = sl.get<UnitOfMeasureProvider>();
-      bool updated = _convertUnit(sameIngredient, uomProvider, note, ratio);
-      if (!updated) {
-        // if the unit could not be coonverted, add the ingredient
-        var targetNote = MutableIngredientNote.of(note);
-        var amount = (note.amount ?? 1) * ratio;
-        targetNote.amount = amount;
-        result.add(targetNote);
+        // if it has a different uom
+        var uomProvider = sl.get<UnitOfMeasureProvider>();
+        bool updated = _convertUnit(sameIngredient, uomProvider, note, ratio);
+        if (!updated) {
+          // if the unit could not be coonverted, add the ingredient
+          var targetNote = MutableIngredientNote.of(note);
+          var amount = (note.amount ?? 1) * ratio;
+          targetNote.amount = amount;
+          result.add(targetNote);
+        }
       }
     }
   }

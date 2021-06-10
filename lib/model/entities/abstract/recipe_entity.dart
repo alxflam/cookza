@@ -27,6 +27,7 @@ abstract class RecipeEntity {
   DIFFICULTY get difficulty;
 
   /// returns all ingredients
+  @deprecated
   Future<UnmodifiableListView<IngredientNoteEntity>> get ingredients;
 
   /// returns the grouped ingredients

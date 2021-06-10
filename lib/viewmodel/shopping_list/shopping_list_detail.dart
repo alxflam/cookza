@@ -43,7 +43,8 @@ class ShoppingListModel extends ChangeNotifier {
     // lazy initialize on first get call
     if (this.initialized) {
       // sort items
-      this._sortItems();
+      // TODO: should be added again?
+      // this._sortItems();
       // create the viewmodels
       var viewModels =
           this._items.map((e) => ShoppingListItemModel.ofEntity(e)).toList();
@@ -84,6 +85,7 @@ class ShoppingListModel extends ChangeNotifier {
         .where((e) => !e.isCustom && (e.isBought || e.index != null))
         .toList();
     for (var item in persisted) {
+      // TODO: keep item even if amount changed! => less changes
       var generatedItem = generatedItems.firstWhereOrNull((e) =>
           e.ingredientNote.amount == item.ingredientNote.amount &&
           e.ingredientNote.ingredient.name ==
@@ -115,12 +117,14 @@ class ShoppingListModel extends ChangeNotifier {
   }
 
   void _sortItems() {
+    // TODO: sort by name only initially..but there sort only by name!?
+    const kMaxIndex = 1000;
     this._items.sort((a, b) {
-      if (a.index >= 0) {
-        return a.index.compareTo(b.index);
-      }
-      if (b.index >= 0) {
-        return a.index.compareTo(b.index);
+      if (a.index >= 0 || b.index >= 0) {
+        int firstIndex = a.index < 0 ? kMaxIndex : a.index;
+        int secondIndex = b.index < 0 ? kMaxIndex : b.index;
+
+        return firstIndex.compareTo(secondIndex);
       }
       if (a.isBought && !b.isBought) {
         return 1;
