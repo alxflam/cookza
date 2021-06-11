@@ -20,6 +20,9 @@ Run the following command to built an apk for ARM64
 * Applied iterim patch due to ML Vision dependency issue: https://github.com/google/play-services-plugins/issues/153
 Remove this once the dependency issue got fixed by the Firebase team.
 
+# Generate icons
+* flutter pub run flutter_launcher_icons:main -f flutter_launcher_icons.yaml
+
 # Deploy web app
 * firebase hosting:channel:deploy ftr_web
 

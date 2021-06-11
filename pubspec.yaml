@@ -1,7 +1,7 @@
 name: cookza
 description: Organize and share your favorite recipes.
 
-version: 0.0.17+1
+version: 0.0.19+1
 
 publish_to: none
 
@@ -48,6 +48,7 @@ dev_dependencies:
   pedantic: ^1.11.0
   fake_cloud_firestore: ^1.1.0
   firebase_storage_mocks: ^0.3.0
+  flutter_launcher_icons: ^0.9.0
 
 flutter:
   generate: true
