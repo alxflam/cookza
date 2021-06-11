@@ -9,7 +9,7 @@ final kAllThemes = {
 };
 
 /// light theme app icon color
-const kBlueAppIconColor = Color(0xFF021B2E);
+final kTealAppIconColor = Colors.tealAccent.shade700;
 
 abstract class CustomTheme {
   ThemeData get themeData;
@@ -20,13 +20,13 @@ abstract class CustomTheme {
 }
 
 final kBrightColorScheme = ColorScheme.light().copyWith(
-  primary: kBlueAppIconColor,
+  primary: kTealAppIconColor,
 );
 
 final kBrightTheme = ThemeData.from(colorScheme: kBrightColorScheme).copyWith(
   cardColor: Colors.grey.shade300,
   accentColor: kBrightColorScheme.primary,
-  appBarTheme: AppBarTheme(color: kBlueAppIconColor),
+  appBarTheme: AppBarTheme(color: kTealAppIconColor),
 );
 
 class LightTheme extends CustomTheme {
@@ -51,8 +51,8 @@ class LightTheme extends CustomTheme {
 
 final kDarkColorScheme = ColorScheme.dark().copyWith(
   background: Color(0xFF121212),
-  primary: Colors.tealAccent.shade700,
-  primaryVariant: Colors.tealAccent.shade700,
+  primary: kTealAppIconColor,
+  primaryVariant: kTealAppIconColor,
 );
 
 final kDarkTheme = ThemeData.from(colorScheme: kDarkColorScheme).copyWith(
