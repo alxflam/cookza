@@ -309,7 +309,7 @@ class ShoppingListItemModel extends ChangeNotifier {
   void updateFrom(RecipeIngredientModel entity) {
     var uomProvider = sl.get<UnitOfMeasureProvider>();
     this._uom = null;
-    if (entity.unitOfMeasure != null) {
+    if (entity.unitOfMeasure != null && entity.unitOfMeasure!.isNotEmpty) {
       var uom = uomProvider.getUnitOfMeasureById(entity.unitOfMeasure!);
       this._uom = uom;
     }

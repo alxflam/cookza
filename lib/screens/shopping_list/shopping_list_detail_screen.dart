@@ -2,6 +2,7 @@ import 'package:cookza/components/nothing_found.dart';
 import 'package:cookza/screens/new_ingredient_screen.dart';
 import 'package:cookza/services/abstract/shopping_list_text_export.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
+import 'package:cookza/viewmodel/ingredient_screen_model.dart';
 import 'package:cookza/viewmodel/recipe_edit/recipe_ingredient_model.dart';
 import 'package:cookza/viewmodel/shopping_list/shopping_list_detail.dart';
 import 'package:flutter/material.dart';
@@ -36,12 +37,19 @@ class ShoppingListDetailScreen extends StatelessWidget {
                   icon: Icon(Icons.add),
                   onPressed: () async {
                     // open ingredient screen
+                    final ingScreenModel = IngredientScreenModel(
+                        model: RecipeIngredientModel.empty(false),
+                        supportsRecipeReference: false,
+                        requiresIngredientGroup: false,
+                        groups: [],
+                        group: null);
                     var result = await Navigator.pushNamed(
                         context, NewIngredientScreen.id,
-                        arguments: RecipeIngredientModel.empty(false));
+                        arguments: ingScreenModel) as IngredientScreenModel?;
 
-                    if (result != null && result is RecipeIngredientModel) {
-                      model.addCustomItem(result.toIngredientNote());
+                    if (result != null) {
+                      model.addCustomItem(
+                          ingScreenModel.model.toIngredientNote());
                     }
                   },
                 )
@@ -109,17 +117,25 @@ class ShoppingListDetailScreen extends StatelessWidget {
                                     icon: Icon(Icons.edit),
                                     onPressed: () async {
                                       // edit the custom item
+                                      final ingScreenModel =
+                                          IngredientScreenModel(
+                                              model: RecipeIngredientModel
+                                                  .noteOnlyModelOf(itemModel
+                                                      .toIngredientNoteEntity()),
+                                              supportsRecipeReference: false,
+                                              requiresIngredientGroup: false,
+                                              groups: [],
+                                              group: null);
+
                                       var result = await Navigator.pushNamed(
-                                          context, NewIngredientScreen.id,
-                                          arguments: RecipeIngredientModel
-                                              .noteOnlyModelOf(itemModel
-                                                  .toIngredientNoteEntity()));
-                                      if (result != null &&
-                                          result is RecipeIngredientModel) {
-                                        if (result.isDeleted) {
+                                              context, NewIngredientScreen.id,
+                                              arguments: ingScreenModel)
+                                          as IngredientScreenModel?;
+                                      if (result != null) {
+                                        if (result.model.isDeleted) {
                                           model.removeItem(index, itemModel);
                                         } else {
-                                          itemModel.updateFrom(result);
+                                          itemModel.updateFrom(result.model);
                                         }
                                       }
                                     })
