@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 import 'package:cookza/model/entities/abstract/ingredient_note_entity.dart';
 import 'package:cookza/model/entities/abstract/recipe_entity.dart';
 import 'package:cookza/services/util/levenshtein.dart';
