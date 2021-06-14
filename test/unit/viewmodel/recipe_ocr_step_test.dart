@@ -2,6 +2,7 @@ import 'package:cookza/model/entities/mutable/mutable_ingredient_note.dart';
 import 'package:cookza/services/image_parser.dart';
 import 'package:cookza/viewmodel/ocr_creation/recipe_ocr_step.dart';
 import 'package:cookza/viewmodel/recipe_edit/recipe_edit_step.dart';
+import 'package:cookza/viewmodel/recipe_edit/recipe_ingredient_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mockito/mockito.dart';
@@ -38,8 +39,8 @@ void main() {
     var model = RecipeIngredientEditStep();
     var ingredient = MutableIngredientNote.empty();
     ingredient.name = 'Pepper';
-    // TODO: adapt test for groupo
-    // model.addNewIngredient(RecipeIngredientModel.of(ingredient));
+    final group = model.addGroup('');
+    model.addNewIngredient(RecipeIngredientModel.of(ingredient), group);
 
     when(mock.processIngredientsImage(file))
         .thenAnswer((_) => Future.value(model));

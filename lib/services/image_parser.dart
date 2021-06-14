@@ -68,14 +68,15 @@ class ImageTextExtractorImpl implements ImageTextExtractor {
       startIndex = text.blocks.indexOf(headerBlock) + 1;
     }
 
+    final group = model.addGroup('');
+
     for (var i = startIndex; i < text.blocks.length; i++) {
       var block = text.blocks[i];
       var textItems = block.text.split(',');
       for (var textItem in textItems) {
         var ingredient = parseIngredient(textItem);
         if (ingredient != null) {
-          // TODO: which group...
-          // model.addNewIngredient(ingredient);
+          model.addNewIngredient(ingredient, group);
         }
       }
     }

@@ -56,7 +56,8 @@ class RecipeIngredientOCRStep extends RecipeOCRStep<RecipeIngredientEditStep> {
 
   @override
   bool get isValid {
-    return this._model.ingredients.isNotEmpty;
+    return this._model.groups.isNotEmpty &&
+        this._model.groups.first.ingredients.isNotEmpty;
   }
 
   @override

@@ -262,10 +262,6 @@ class RecipeIngredientEditStep extends RecipeEditStep {
     notifyListeners();
   }
 
-  List<RecipeIngredientModel> get ingredients {
-    return this._ingredients.map((i) => RecipeIngredientModel.of(i)).toList();
-  }
-
   @override
   void applyFrom(RecipeEntity recipe) {
 // TODO await these setters...apply needs to be async!
