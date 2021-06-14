@@ -23,16 +23,17 @@ class RecipeViewModel extends ChangeNotifier {
   }
 
   void _copyValues() {
-    this._ingredients.clear();
+    // this._ingredients.clear();
     this._instructions.clear();
 
     this._servings = this._recipe.servings;
 
-    this._recipe.ingredients.then((value) {
-      for (var note in value) {
-        this._ingredients.add(MutableIngredientNote.of(note));
-      }
-    });
+// TODO can be commented out??
+    // this._recipe.ingredients.then((value) {
+    //   for (var note in value) {
+    //     this._ingredients.add(MutableIngredientNote.of(note));
+    //   }
+    // });
 
     this._recipe.ingredientGroups.then((value) {
       for (var group in value) {

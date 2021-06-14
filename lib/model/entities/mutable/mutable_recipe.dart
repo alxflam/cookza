@@ -52,13 +52,7 @@ class MutableRecipe implements RecipeEntity {
       this._inMemoryImage = entity.inMemoryImage;
     }
 
-    _origIngredients = entity.ingredients;
     _origInstructions = entity.instructions;
-
-    entity.ingredients.then((value) {
-      var list = value.map((e) => MutableIngredientNote.of(e)).toList();
-      this._ingredients = list;
-    });
 
     entity.ingredientGroups.then((value) {
       this._ingredientGroups = [...value];

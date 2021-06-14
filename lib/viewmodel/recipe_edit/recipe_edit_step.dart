@@ -270,7 +270,7 @@ class RecipeIngredientEditStep extends RecipeEditStep {
   void applyFrom(RecipeEntity recipe) {
 // TODO await these setters...apply needs to be async!
 
-    // create artificial group if model is not yet group based
+    // TODO create artificial group if model is not yet group based
     recipe.ingredients.then((value) {
       // transform into default group
       final context = sl.get<NavigatorService>().currentContext;

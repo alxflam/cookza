@@ -19,24 +19,27 @@ class Recipe {
 
   static Future<Recipe> applyFrom(RecipeEntity entity) async {
     var instance = Recipe(
-        name: entity.name,
-        shortDescription: entity.description,
-        recipeCollection: entity.recipeCollectionId,
-        creationDate: entity.creationDate,
-        modificationDate: entity.modificationDate,
-        duration: entity.duration,
-        servings: entity.servings,
-        diff: entity.difficulty,
-        tags: entity.tags,
-        id: '',
-        instructions: [],
-        ingredients: []);
+      name: entity.name,
+      shortDescription: entity.description,
+      recipeCollection: entity.recipeCollectionId,
+      creationDate: entity.creationDate,
+      modificationDate: entity.modificationDate,
+      duration: entity.duration,
+      servings: entity.servings,
+      diff: entity.difficulty,
+      tags: entity.tags,
+      id: '',
+      instructions: [],
+      ingredients: [],
+    );
 
     var ins = await entity.instructions;
     instance.instructions = ins.map((e) => e.text).toList();
-    var ing = await entity.ingredients;
-    instance.ingredients =
-        ing.map((e) => IngredientNote.fromEntity(e)).toList();
+    // TODO: adapt to groups ! to make sure old imports work, first try ingredients accesor
+
+    // var ing = await entity.ingredients;
+    // instance.ingredients =
+    //     ing.map((e) => IngredientNote.fromEntity(e)).toList();
     if (entity.image != null && entity.image!.isNotEmpty) {
       var imageFile = await sl.get<ImageManager>().getRecipeImageFile(entity);
       if (imageFile != null) {

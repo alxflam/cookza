@@ -50,7 +50,10 @@ class IngredientsCalculatorImpl implements IngredientsCalculator {
               .get<RecipeManager>()
               .getRecipeById([note.ingredient.recipeReference!]);
           if (targetRecipe.length == 1) {
-            var ing = await targetRecipe.first.ingredients;
+            var ing = (await targetRecipe.first.ingredientGroups)
+                .map((e) => e.ingredients)
+                .expand((e) => e)
+                .toSet();
             var circularDependency = ing.firstWhereOrNull(
                 (e) => e.ingredient.recipeReference == recipe.id);
             if (circularDependency == null) {
