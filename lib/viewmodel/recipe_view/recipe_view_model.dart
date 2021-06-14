@@ -13,7 +13,6 @@ class RecipeViewModel extends ChangeNotifier {
   RecipeEntity _recipe;
   late int _servings;
   int _rating = 0;
-  @deprecated
   final List<InstructionEntity> _instructions = [];
   final List<MutableIngredientGroup> _ingredientGroups = [];
 

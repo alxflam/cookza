@@ -3,17 +3,16 @@
 // Do not manually edit this file.
 
 import 'dart:async' as _i20;
-import 'dart:collection' as _i26;
 import 'dart:io' as _i2;
-import 'dart:typed_data' as _i37;
+import 'dart:typed_data' as _i36;
 
-import 'package:cloud_firestore/cloud_firestore.dart' as _i38;
+import 'package:cloud_firestore/cloud_firestore.dart' as _i37;
 import 'package:cookza/model/entities/abstract/ingredient_note_entity.dart'
-    as _i27;
+    as _i26;
 import 'package:cookza/model/entities/abstract/meal_plan_collection_entity.dart'
     as _i12;
 import 'package:cookza/model/entities/abstract/meal_plan_entity.dart' as _i16;
-import 'package:cookza/model/entities/abstract/rating_entity.dart' as _i41;
+import 'package:cookza/model/entities/abstract/rating_entity.dart' as _i40;
 import 'package:cookza/model/entities/abstract/recipe_collection_entity.dart'
     as _i3;
 import 'package:cookza/model/entities/abstract/recipe_entity.dart' as _i11;
@@ -21,21 +20,21 @@ import 'package:cookza/model/entities/abstract/shopping_list_entity.dart'
     as _i5;
 import 'package:cookza/model/entities/abstract/user_entity.dart' as _i23;
 import 'package:cookza/model/entities/firebase/ingredient_group_entity.dart'
-    as _i40;
-import 'package:cookza/model/entities/firebase/ingredient_note_entity.dart'
     as _i39;
-import 'package:cookza/model/entities/firebase/instruction_entity.dart' as _i42;
+import 'package:cookza/model/entities/firebase/ingredient_note_entity.dart'
+    as _i38;
+import 'package:cookza/model/entities/firebase/instruction_entity.dart' as _i41;
 import 'package:cookza/model/entities/firebase/meal_plan_collection_entity.dart'
     as _i14;
 import 'package:cookza/model/entities/mutable/mutable_shopping_list_item.dart'
     as _i21;
-import 'package:cookza/services/api/chefkoch.dart' as _i34;
+import 'package:cookza/services/api/chefkoch.dart' as _i33;
 import 'package:cookza/services/firebase_provider.dart' as _i15;
-import 'package:cookza/services/flutter/navigator_service.dart' as _i45;
-import 'package:cookza/services/image_parser.dart' as _i43;
+import 'package:cookza/services/flutter/navigator_service.dart' as _i44;
+import 'package:cookza/services/image_parser.dart' as _i42;
 import 'package:cookza/services/local_storage.dart' as _i22;
 import 'package:cookza/services/meal_plan_manager.dart' as _i13;
-import 'package:cookza/services/recipe/image_manager.dart' as _i36;
+import 'package:cookza/services/recipe/image_manager.dart' as _i35;
 import 'package:cookza/services/recipe/recipe_manager.dart' as _i4;
 import 'package:cookza/services/recipe/similarity_service.dart' as _i25;
 import 'package:cookza/services/shopping_list/shopping_list_items_generator.dart'
@@ -47,22 +46,22 @@ import 'package:firebase_auth/firebase_auth.dart' as _i8;
 import 'package:firebase_auth_platform_interface/src/action_code_info.dart'
     as _i7;
 import 'package:firebase_auth_platform_interface/src/action_code_settings.dart'
-    as _i28;
+    as _i27;
 import 'package:firebase_auth_platform_interface/src/auth_credential.dart'
-    as _i30;
+    as _i29;
 import 'package:firebase_auth_platform_interface/src/auth_provider.dart'
-    as _i31;
+    as _i30;
 import 'package:firebase_auth_platform_interface/src/id_token_result.dart'
     as _i10;
 import 'package:firebase_auth_platform_interface/src/providers/phone_auth.dart'
-    as _i33;
-import 'package:firebase_auth_platform_interface/src/types.dart' as _i29;
-import 'package:firebase_auth_platform_interface/src/user_info.dart' as _i32;
+    as _i32;
+import 'package:firebase_auth_platform_interface/src/types.dart' as _i28;
+import 'package:firebase_auth_platform_interface/src/user_info.dart' as _i31;
 import 'package:firebase_auth_platform_interface/src/user_metadata.dart' as _i9;
 import 'package:firebase_core/firebase_core.dart' as _i6;
 import 'package:flutter/src/widgets/framework.dart' as _i18;
-import 'package:flutter/src/widgets/navigator.dart' as _i35;
-import 'package:google_ml_kit/src/vision/vision.dart' as _i44;
+import 'package:flutter/src/widgets/navigator.dart' as _i34;
+import 'package:google_ml_kit/src/vision/vision.dart' as _i43;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: avoid_redundant_argument_values
@@ -375,8 +374,7 @@ class MockSimilarityService extends _i1.Mock implements _i25.SimilarityService {
                   Future<List<_i11.RecipeEntity>>.value(<_i11.RecipeEntity>[]))
           as _i20.Future<List<_i11.RecipeEntity>>);
   @override
-  bool containsIngredient(
-          _i26.UnmodifiableListView<_i27.IngredientNoteEntity>? ingredients,
+  bool containsIngredient(Set<_i26.IngredientNoteEntity>? ingredients,
           String? targetIngredient) =>
       (super.noSuchMethod(
           Invocation.method(
@@ -406,6 +404,10 @@ class MockFirebaseAuth extends _i1.Mock implements _i8.FirebaseAuth {
   @override
   set app(_i6.FirebaseApp? _app) =>
       super.noSuchMethod(Invocation.setter(#app, _app),
+          returnValueForMissingStub: null);
+  @override
+  set tenantId(String? tenantId) =>
+      super.noSuchMethod(Invocation.setter(#tenantId, tenantId),
           returnValueForMissingStub: null);
   @override
   Map<dynamic, dynamic> get pluginConstants =>
@@ -471,7 +473,7 @@ class MockFirebaseAuth extends _i1.Mock implements _i8.FirebaseAuth {
           returnValue: Stream<_i8.User?>.empty()) as _i20.Stream<_i8.User?>);
   @override
   _i20.Future<void> sendPasswordResetEmail(
-          {String? email, _i28.ActionCodeSettings? actionCodeSettings}) =>
+          {String? email, _i27.ActionCodeSettings? actionCodeSettings}) =>
       (super.noSuchMethod(
           Invocation.method(#sendPasswordResetEmail, [],
               {#email: email, #actionCodeSettings: actionCodeSettings}),
@@ -479,7 +481,7 @@ class MockFirebaseAuth extends _i1.Mock implements _i8.FirebaseAuth {
           returnValueForMissingStub: Future.value()) as _i20.Future<void>);
   @override
   _i20.Future<void> sendSignInLinkToEmail(
-          {String? email, _i28.ActionCodeSettings? actionCodeSettings}) =>
+          {String? email, _i27.ActionCodeSettings? actionCodeSettings}) =>
       (super.noSuchMethod(
           Invocation.method(#sendSignInLinkToEmail, [],
               {#email: email, #actionCodeSettings: actionCodeSettings}),
@@ -502,7 +504,7 @@ class MockFirebaseAuth extends _i1.Mock implements _i8.FirebaseAuth {
           returnValue: Future<void>.value(),
           returnValueForMissingStub: Future.value()) as _i20.Future<void>);
   @override
-  _i20.Future<void> setPersistence(_i29.Persistence? persistence) =>
+  _i20.Future<void> setPersistence(_i28.Persistence? persistence) =>
       (super.noSuchMethod(Invocation.method(#setPersistence, [persistence]),
           returnValue: Future<void>.value(),
           returnValueForMissingStub: Future.value()) as _i20.Future<void>);
@@ -513,7 +515,7 @@ class MockFirebaseAuth extends _i1.Mock implements _i8.FirebaseAuth {
       as _i20.Future<_i8.UserCredential>);
   @override
   _i20.Future<_i8.UserCredential> signInWithCredential(
-          _i30.AuthCredential? credential) =>
+          _i29.AuthCredential? credential) =>
       (super.noSuchMethod(
               Invocation.method(#signInWithCredential, [credential]),
               returnValue:
@@ -553,13 +555,13 @@ class MockFirebaseAuth extends _i1.Mock implements _i8.FirebaseAuth {
           .Future<_i8.ConfirmationResult>);
   @override
   _i20.Future<_i8.UserCredential> signInWithPopup(
-          _i31.AuthProvider? provider) =>
+          _i30.AuthProvider? provider) =>
       (super.noSuchMethod(Invocation.method(#signInWithPopup, [provider]),
               returnValue:
                   Future<_i8.UserCredential>.value(_FakeUserCredential()))
           as _i20.Future<_i8.UserCredential>);
   @override
-  _i20.Future<void> signInWithRedirect(_i31.AuthProvider? provider) =>
+  _i20.Future<void> signInWithRedirect(_i30.AuthProvider? provider) =>
       (super.noSuchMethod(Invocation.method(#signInWithRedirect, [provider]),
           returnValue: Future<void>.value(),
           returnValueForMissingStub: Future.value()) as _i20.Future<void>);
@@ -575,10 +577,10 @@ class MockFirebaseAuth extends _i1.Mock implements _i8.FirebaseAuth {
   @override
   _i20.Future<void> verifyPhoneNumber(
           {String? phoneNumber,
-          _i29.PhoneVerificationCompleted? verificationCompleted,
-          _i29.PhoneVerificationFailed? verificationFailed,
-          _i29.PhoneCodeSent? codeSent,
-          _i29.PhoneCodeAutoRetrievalTimeout? codeAutoRetrievalTimeout,
+          _i28.PhoneVerificationCompleted? verificationCompleted,
+          _i28.PhoneVerificationFailed? verificationFailed,
+          _i28.PhoneCodeSent? codeSent,
+          _i28.PhoneCodeAutoRetrievalTimeout? codeAutoRetrievalTimeout,
           String? autoRetrievedSmsCodeForTesting,
           Duration? timeout = const Duration(seconds: 30),
           int? forceResendingToken}) =>
@@ -620,9 +622,9 @@ class MockUser extends _i1.Mock implements _i8.User {
       (super.noSuchMethod(Invocation.getter(#metadata),
           returnValue: _FakeUserMetadata()) as _i9.UserMetadata);
   @override
-  List<_i32.UserInfo> get providerData =>
+  List<_i31.UserInfo> get providerData =>
       (super.noSuchMethod(Invocation.getter(#providerData),
-          returnValue: <_i32.UserInfo>[]) as List<_i32.UserInfo>);
+          returnValue: <_i31.UserInfo>[]) as List<_i31.UserInfo>);
   @override
   String get uid =>
       (super.noSuchMethod(Invocation.getter(#uid), returnValue: '') as String);
@@ -644,7 +646,7 @@ class MockUser extends _i1.Mock implements _i8.User {
           as _i20.Future<_i10.IdTokenResult>);
   @override
   _i20.Future<_i8.UserCredential> linkWithCredential(
-          _i30.AuthCredential? credential) =>
+          _i29.AuthCredential? credential) =>
       (super.noSuchMethod(Invocation.method(#linkWithCredential, [credential]),
               returnValue:
                   Future<_i8.UserCredential>.value(_FakeUserCredential()))
@@ -659,7 +661,7 @@ class MockUser extends _i1.Mock implements _i8.User {
           as _i20.Future<_i8.ConfirmationResult>);
   @override
   _i20.Future<_i8.UserCredential> reauthenticateWithCredential(
-          _i30.AuthCredential? credential) =>
+          _i29.AuthCredential? credential) =>
       (super.noSuchMethod(
               Invocation.method(#reauthenticateWithCredential, [credential]),
               returnValue:
@@ -672,7 +674,7 @@ class MockUser extends _i1.Mock implements _i8.User {
           returnValueForMissingStub: Future.value()) as _i20.Future<void>);
   @override
   _i20.Future<void> sendEmailVerification(
-          [_i28.ActionCodeSettings? actionCodeSettings]) =>
+          [_i27.ActionCodeSettings? actionCodeSettings]) =>
       (super.noSuchMethod(
           Invocation.method(#sendEmailVerification, [actionCodeSettings]),
           returnValue: Future<void>.value(),
@@ -694,7 +696,7 @@ class MockUser extends _i1.Mock implements _i8.User {
           returnValueForMissingStub: Future.value()) as _i20.Future<void>);
   @override
   _i20.Future<void> updatePhoneNumber(
-          _i33.PhoneAuthCredential? phoneCredential) =>
+          _i32.PhoneAuthCredential? phoneCredential) =>
       (super.noSuchMethod(
           Invocation.method(#updatePhoneNumber, [phoneCredential]),
           returnValue: Future<void>.value(),
@@ -718,7 +720,7 @@ class MockUser extends _i1.Mock implements _i8.User {
           returnValueForMissingStub: Future.value()) as _i20.Future<void>);
   @override
   _i20.Future<void> verifyBeforeUpdateEmail(String? newEmail,
-          [_i28.ActionCodeSettings? actionCodeSettings]) =>
+          [_i27.ActionCodeSettings? actionCodeSettings]) =>
       (super.noSuchMethod(
           Invocation.method(
               #verifyBeforeUpdateEmail, [newEmail, actionCodeSettings]),
@@ -731,7 +733,7 @@ class MockUser extends _i1.Mock implements _i8.User {
 /// A class which mocks [ChefkochAccessor].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockChefkochAccessor extends _i1.Mock implements _i34.ChefkochAccessor {
+class MockChefkochAccessor extends _i1.Mock implements _i33.ChefkochAccessor {
   MockChefkochAccessor() {
     _i1.throwOnMissingStub(this);
   }
@@ -746,31 +748,31 @@ class MockChefkochAccessor extends _i1.Mock implements _i34.ChefkochAccessor {
 /// A class which mocks [NavigatorObserver].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockNavigatorObserver extends _i1.Mock implements _i35.NavigatorObserver {
+class MockNavigatorObserver extends _i1.Mock implements _i34.NavigatorObserver {
   @override
   void didPush(
-          _i35.Route<dynamic>? route, _i35.Route<dynamic>? previousRoute) =>
+          _i34.Route<dynamic>? route, _i34.Route<dynamic>? previousRoute) =>
       super.noSuchMethod(Invocation.method(#didPush, [route, previousRoute]),
           returnValueForMissingStub: null);
   @override
-  void didPop(_i35.Route<dynamic>? route, _i35.Route<dynamic>? previousRoute) =>
+  void didPop(_i34.Route<dynamic>? route, _i34.Route<dynamic>? previousRoute) =>
       super.noSuchMethod(Invocation.method(#didPop, [route, previousRoute]),
           returnValueForMissingStub: null);
   @override
   void didRemove(
-          _i35.Route<dynamic>? route, _i35.Route<dynamic>? previousRoute) =>
+          _i34.Route<dynamic>? route, _i34.Route<dynamic>? previousRoute) =>
       super.noSuchMethod(Invocation.method(#didRemove, [route, previousRoute]),
           returnValueForMissingStub: null);
   @override
   void didReplace(
-          {_i35.Route<dynamic>? newRoute, _i35.Route<dynamic>? oldRoute}) =>
+          {_i34.Route<dynamic>? newRoute, _i34.Route<dynamic>? oldRoute}) =>
       super.noSuchMethod(
           Invocation.method(
               #didReplace, [], {#newRoute: newRoute, #oldRoute: oldRoute}),
           returnValueForMissingStub: null);
   @override
   void didStartUserGesture(
-          _i35.Route<dynamic>? route, _i35.Route<dynamic>? previousRoute) =>
+          _i34.Route<dynamic>? route, _i34.Route<dynamic>? previousRoute) =>
       super.noSuchMethod(
           Invocation.method(#didStartUserGesture, [route, previousRoute]),
           returnValueForMissingStub: null);
@@ -865,7 +867,7 @@ class MockMealPlanManager extends _i1.Mock implements _i13.MealPlanManager {
 /// A class which mocks [ImageManager].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockImageManager extends _i1.Mock implements _i36.ImageManager {
+class MockImageManager extends _i1.Mock implements _i35.ImageManager {
   @override
   _i20.Future<void> uploadRecipeImage(String? recipeId, _i2.File? file) =>
       (super.noSuchMethod(
@@ -874,7 +876,7 @@ class MockImageManager extends _i1.Mock implements _i36.ImageManager {
           returnValueForMissingStub: Future.value()) as _i20.Future<void>);
   @override
   _i20.Future<void> uploadRecipeImageFromBytes(
-          String? recipeId, _i37.Uint8List? bytes) =>
+          String? recipeId, _i36.Uint8List? bytes) =>
       (super.noSuchMethod(
           Invocation.method(#uploadRecipeImageFromBytes, [recipeId, bytes]),
           returnValue: Future<void>.value(),
@@ -941,12 +943,12 @@ class MockFirebaseProvider extends _i1.Mock implements _i15.FirebaseProvider {
           returnValue: Future<void>.value(),
           returnValueForMissingStub: Future.value()) as _i20.Future<void>);
   @override
-  _i20.Future<List<_i38.QueryDocumentSnapshot<Object?>>>
+  _i20.Future<List<_i37.QueryDocumentSnapshot<Object?>>>
       getShoppingListsByMealPlan(String? mealPlan) => (super.noSuchMethod(
           Invocation.method(#getShoppingListsByMealPlan, [mealPlan]),
-          returnValue: Future<List<_i38.QueryDocumentSnapshot<Object?>>>.value(
-              <_i38.QueryDocumentSnapshot<Object?>>[])) as _i20
-          .Future<List<_i38.QueryDocumentSnapshot<Object?>>>);
+          returnValue: Future<List<_i37.QueryDocumentSnapshot<Object?>>>.value(
+              <_i37.QueryDocumentSnapshot<Object?>>[])) as _i20
+          .Future<List<_i37.QueryDocumentSnapshot<Object?>>>);
   @override
   _i20.Future<_i14.MealPlanCollectionEntityFirebase> createMealPlanGroup(
           String? name) =>
@@ -1061,21 +1063,21 @@ class MockFirebaseProvider extends _i1.Mock implements _i15.FirebaseProvider {
       Invocation.method(#getNextRecipeDocumentId, [recipeGroup]),
       returnValue: '') as String);
   @override
-  _i20.Future<List<_i39.IngredientNoteEntityFirebase>> recipeIngredients(
+  _i20.Future<List<_i38.IngredientNoteEntityFirebase>> recipeIngredients(
           String? recipeGroup, String? recipeID) =>
       (super.noSuchMethod(
           Invocation.method(#recipeIngredients, [recipeGroup, recipeID]),
-          returnValue: Future<List<_i39.IngredientNoteEntityFirebase>>.value(
-              <_i39.IngredientNoteEntityFirebase>[])) as _i20
-          .Future<List<_i39.IngredientNoteEntityFirebase>>);
+          returnValue: Future<List<_i38.IngredientNoteEntityFirebase>>.value(
+              <_i38.IngredientNoteEntityFirebase>[])) as _i20
+          .Future<List<_i38.IngredientNoteEntityFirebase>>);
   @override
-  _i20.Future<List<_i40.IngredientGroupEntityFirebase>> recipeIngredientGroups(
+  _i20.Future<List<_i39.IngredientGroupEntityFirebase>> recipeIngredientGroups(
           String? recipeGroup, String? recipeID) =>
       (super.noSuchMethod(
           Invocation.method(#recipeIngredientGroups, [recipeGroup, recipeID]),
-          returnValue: Future<List<_i40.IngredientGroupEntityFirebase>>.value(
-              <_i40.IngredientGroupEntityFirebase>[])) as _i20
-          .Future<List<_i40.IngredientGroupEntityFirebase>>);
+          returnValue: Future<List<_i39.IngredientGroupEntityFirebase>>.value(
+              <_i39.IngredientGroupEntityFirebase>[])) as _i20
+          .Future<List<_i39.IngredientGroupEntityFirebase>>);
   @override
   _i20.Future<List<_i11.RecipeEntity>> getAllRecipes() =>
       (super.noSuchMethod(Invocation.method(#getAllRecipes, []),
@@ -1083,16 +1085,16 @@ class MockFirebaseProvider extends _i1.Mock implements _i15.FirebaseProvider {
                   Future<List<_i11.RecipeEntity>>.value(<_i11.RecipeEntity>[]))
           as _i20.Future<List<_i11.RecipeEntity>>);
   @override
-  _i20.Future<List<_i41.RatingEntity>> getRatings() =>
+  _i20.Future<List<_i40.RatingEntity>> getRatings() =>
       (super.noSuchMethod(Invocation.method(#getRatings, []),
               returnValue:
-                  Future<List<_i41.RatingEntity>>.value(<_i41.RatingEntity>[]))
-          as _i20.Future<List<_i41.RatingEntity>>);
+                  Future<List<_i40.RatingEntity>>.value(<_i40.RatingEntity>[]))
+          as _i20.Future<List<_i40.RatingEntity>>);
   @override
-  _i20.Future<_i41.RatingEntity?> getRatingById(String? recipeId) =>
+  _i20.Future<_i40.RatingEntity?> getRatingById(String? recipeId) =>
       (super.noSuchMethod(Invocation.method(#getRatingById, [recipeId]),
-              returnValue: Future<_i41.RatingEntity?>.value())
-          as _i20.Future<_i41.RatingEntity?>);
+              returnValue: Future<_i40.RatingEntity?>.value())
+          as _i20.Future<_i40.RatingEntity?>);
   @override
   _i20.Future<List<_i11.RecipeEntity>> getRecipeById(List<String>? ids) =>
       (super.noSuchMethod(Invocation.method(#getRecipeById, [ids]),
@@ -1100,13 +1102,13 @@ class MockFirebaseProvider extends _i1.Mock implements _i15.FirebaseProvider {
                   Future<List<_i11.RecipeEntity>>.value(<_i11.RecipeEntity>[]))
           as _i20.Future<List<_i11.RecipeEntity>>);
   @override
-  _i20.Future<List<_i42.InstructionEntityFirebase>> recipeInstructions(
+  _i20.Future<List<_i41.InstructionEntityFirebase>> recipeInstructions(
           String? recipeGroup, String? recipeID) =>
       (super.noSuchMethod(
               Invocation.method(#recipeInstructions, [recipeGroup, recipeID]),
-              returnValue: Future<List<_i42.InstructionEntityFirebase>>.value(
-                  <_i42.InstructionEntityFirebase>[]))
-          as _i20.Future<List<_i42.InstructionEntityFirebase>>);
+              returnValue: Future<List<_i41.InstructionEntityFirebase>>.value(
+                  <_i41.InstructionEntityFirebase>[]))
+          as _i20.Future<List<_i41.InstructionEntityFirebase>>);
   @override
   _i20.Future<void> updateRating(_i11.RecipeEntity? recipe, int? rating) =>
       (super.noSuchMethod(Invocation.method(#updateRating, [recipe, rating]),
@@ -1183,7 +1185,7 @@ class MockFirebaseProvider extends _i1.Mock implements _i15.FirebaseProvider {
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockImageTextExtractor extends _i1.Mock
-    implements _i43.ImageTextExtractor {
+    implements _i42.ImageTextExtractor {
   @override
   _i20.Future<_i17.RecipeOverviewEditStep> processOverviewImage(
           _i2.File? file) =>
@@ -1215,21 +1217,21 @@ class MockImageTextExtractor extends _i1.Mock
           as _i20.Future<_i17.RecipeInstructionEditStep>);
   @override
   _i17.RecipeOverviewEditStep processOverviewImageFromText(
-          _i44.RecognisedText? text) =>
+          _i43.RecognisedText? text) =>
       (super.noSuchMethod(
               Invocation.method(#processOverviewImageFromText, [text]),
               returnValue: _FakeRecipeOverviewEditStep())
           as _i17.RecipeOverviewEditStep);
   @override
   _i17.RecipeIngredientEditStep processIngredientsImageFromText(
-          _i44.RecognisedText? text) =>
+          _i43.RecognisedText? text) =>
       (super.noSuchMethod(
               Invocation.method(#processIngredientsImageFromText, [text]),
               returnValue: _FakeRecipeIngredientEditStep())
           as _i17.RecipeIngredientEditStep);
   @override
   _i17.RecipeInstructionEditStep processInstructionsImageFromText(
-          _i44.RecognisedText? text,
+          _i43.RecognisedText? text,
           {String? recipeTitle,
           String? recipeDescription}) =>
       (super.noSuchMethod(
@@ -1246,10 +1248,10 @@ class MockImageTextExtractor extends _i1.Mock
 /// A class which mocks [NavigatorService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockNavigatorService extends _i1.Mock implements _i45.NavigatorService {
+class MockNavigatorService extends _i1.Mock implements _i44.NavigatorService {
   @override
-  _i18.GlobalKey<_i35.NavigatorState> get navigatorKey =>
+  _i18.GlobalKey<_i34.NavigatorState> get navigatorKey =>
       (super.noSuchMethod(Invocation.getter(#navigatorKey),
-              returnValue: _FakeGlobalKey<_i35.NavigatorState>())
-          as _i18.GlobalKey<_i35.NavigatorState>);
+              returnValue: _FakeGlobalKey<_i34.NavigatorState>())
+          as _i18.GlobalKey<_i34.NavigatorState>);
 }

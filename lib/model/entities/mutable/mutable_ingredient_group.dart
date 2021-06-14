@@ -1,5 +1,4 @@
 import 'package:cookza/model/entities/abstract/ingredient_group_entity.dart';
-import 'package:cookza/model/entities/abstract/ingredient_note_entity.dart';
 import 'package:cookza/model/entities/mutable/mutable_ingredient_note.dart';
 
 class MutableIngredientGroup implements IngredientGroupEntity {

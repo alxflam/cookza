@@ -1,6 +1,5 @@
 import 'package:cookza/components/round_icon_button.dart';
 import 'package:cookza/constants.dart';
-import 'package:cookza/model/entities/abstract/ingredient_group_entity.dart';
 import 'package:cookza/model/entities/mutable/mutable_ingredient_note.dart';
 import 'package:cookza/screens/new_ingredient_screen.dart';
 import 'package:cookza/viewmodel/ingredient_screen_model.dart';
@@ -11,8 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
-// TODO: see https://foodnotify.kayako.com/de/article/17-rezept-strukturieren
 
 Step getIngredientsStep(BuildContext context) {
   return Step(

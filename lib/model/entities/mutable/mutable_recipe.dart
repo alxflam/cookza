@@ -6,7 +6,6 @@ import 'package:cookza/model/entities/abstract/ingredient_group_entity.dart';
 import 'package:cookza/model/entities/abstract/ingredient_note_entity.dart';
 import 'package:cookza/model/entities/abstract/instruction_entity.dart';
 import 'package:cookza/model/entities/abstract/recipe_entity.dart';
-import 'package:cookza/model/entities/mutable/mutable_ingredient_note.dart';
 import 'package:cookza/model/entities/mutable/mutable_instruction.dart';
 
 class MutableRecipe implements RecipeEntity {

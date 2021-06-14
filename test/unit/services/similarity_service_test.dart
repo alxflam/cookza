@@ -51,7 +51,7 @@ void main() {
     var onion = RecipeCreator.createIngredient('Onion');
     var tomato = RecipeCreator.createIngredient('Tomato');
 
-    var ingredientList = UnmodifiableListView([pepper, onion, tomato]);
+    var ingredientList = {pepper, onion, tomato};
 
     var result = cut.containsIngredient(ingredientList, 'onion');
 
@@ -63,7 +63,7 @@ void main() {
     var onion = RecipeCreator.createIngredient('Onion');
     var tomato = RecipeCreator.createIngredient('Tomato');
 
-    var ingredientList = UnmodifiableListView([pepper, onion, tomato]);
+    var ingredientList = {pepper, onion, tomato};
     var result = cut.containsIngredient(ingredientList, 'salt');
 
     expect(result, false);
