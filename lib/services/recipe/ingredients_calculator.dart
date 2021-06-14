@@ -91,7 +91,7 @@ class IngredientsCalculatorImpl implements IngredientsCalculator {
         var uomProvider = sl.get<UnitOfMeasureProvider>();
         bool updated = _convertUnit(sameIngredient, uomProvider, note, ratio);
         if (!updated) {
-          // if the unit could not be coonverted, add the ingredient
+          // if the unit could not be converted, add the ingredient
           var targetNote = MutableIngredientNote.of(note);
           var amount = (note.amount ?? 1) * ratio;
           targetNote.amount = amount;
