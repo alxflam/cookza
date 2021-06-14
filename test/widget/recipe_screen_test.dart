@@ -1,4 +1,5 @@
 import 'package:cookza/components/alert_dialog_title.dart';
+import 'package:cookza/model/entities/mutable/mutable_ingredient_group.dart';
 import 'package:cookza/model/entities/mutable/mutable_instruction.dart';
 import 'package:cookza/model/entities/mutable/mutable_recipe.dart';
 import 'package:cookza/routes.dart';
@@ -147,7 +148,10 @@ Future<MutableRecipe> _createRecipe(
   recipe.duration = 20;
   var onion = RecipeCreator.createIngredient('Onion', amount: 2, uom: 'GRM');
   var pepper = RecipeCreator.createIngredient('Pepper', amount: 2, uom: 'PCS');
-  recipe.ingredientList = [onion, pepper];
+  recipe.ingredientGroupList = [
+    MutableIngredientGroup.forValues(1, 'Test', [onion, pepper])
+  ];
+
   recipe.instructionList = [
     MutableInstruction.withValues(text: 'First step'),
     MutableInstruction.withValues(text: 'Second step')

@@ -144,8 +144,7 @@ void main() {
     expect(find.text('Onions'), findsOneWidget);
 
     /// then edit it
-    var editButton = find.byIcon(Icons.edit);
-    await tester.tap(editButton);
+    await tester.tap(find.text('Onions'));
     await tester.pumpAndSettle();
 
     /// verify we navigated
@@ -201,13 +200,14 @@ void main() {
     expect(recipes.first.tags.contains('vegetarian'), true);
 
     /// verify ingredients and instructions
-    var ingredients = await recipes.first.ingredients;
+    var ingGroups = await recipes.first.ingredientGroups;
     var instructions = await recipes.first.instructions;
     expect(instructions.length, 1);
     expect(instructions.first.text, 'Do the first step');
-    expect(ingredients.length, 1);
-    expect(ingredients.first.ingredient.name, 'Mushrooms');
-    expect(ingredients.first.amount, 12);
+    expect(ingGroups.length, 1);
+    expect(ingGroups.first.ingredients.length, 1);
+    expect(ingGroups.first.ingredients.first.ingredient.name, 'Mushrooms');
+    expect(ingGroups.first.ingredients.first.amount, 12);
   });
 
   testWidgets('Verify OCR buttons available', (WidgetTester tester) async {

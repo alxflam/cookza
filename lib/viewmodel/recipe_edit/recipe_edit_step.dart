@@ -266,16 +266,18 @@ class RecipeIngredientEditStep extends RecipeEditStep {
   void applyFrom(RecipeEntity recipe) {
 // TODO await these setters...apply needs to be async!
 
-    // TODO create artificial group if model is not yet group based
     recipe.ingredients.then((value) {
       // transform into default group
-      final context = sl.get<NavigatorService>().currentContext;
-      final group = this.addGroup(AppLocalizations.of(context!).groupName);
-      group.ingredients
-          .addAll(value.map((e) => MutableIngredientNote.of(e)).toList());
+      if (value.isNotEmpty) {
+        final context = sl.get<NavigatorService>().currentContext;
+        final defaultName =
+            context != null ? AppLocalizations.of(context).groupName : '';
+        final group = this.addGroup(defaultName);
+        group.ingredients
+            .addAll(value.map((e) => MutableIngredientNote.of(e)).toList());
+      }
     });
 
-// TODO: restore groups for view
     recipe.ingredientGroups.then((value) {
       this._groups = [...value];
     });
@@ -304,13 +306,6 @@ class RecipeIngredientEditStep extends RecipeEditStep {
 
   @override
   bool get hasOCR => true;
-}
-
-// TODO: viewmodel for group and for ingredient notes
-class RecipeIngredientGroupViewModel with ChangeNotifier {
-  final MutableIngredientGroup _group;
-
-  RecipeIngredientGroupViewModel(this._group);
 }
 
 class RecipeInstructionEditStep extends RecipeEditStep {

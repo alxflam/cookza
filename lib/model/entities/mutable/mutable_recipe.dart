@@ -52,7 +52,7 @@ class MutableRecipe implements RecipeEntity {
     }
 
     _origInstructions = entity.instructions;
-
+// TODO create async factory function...
     entity.ingredientGroups.then((value) {
       this._ingredientGroups = [...value];
     });
@@ -101,12 +101,8 @@ class MutableRecipe implements RecipeEntity {
 
   @override
   Future<UnmodifiableListView<IngredientNoteEntity>> get ingredients async {
-    var original = await this._origIngredients;
-    return Future.value(UnmodifiableListView(this._ingredients ?? original!));
-  }
-
-  set ingredientList(List<IngredientNoteEntity> value) {
-    this._ingredients = value;
+    var original = (await this._origIngredients) ?? [];
+    return Future.value(UnmodifiableListView(this._ingredients ?? original));
   }
 
   set ingredientGroupList(List<IngredientGroupEntity> value) {

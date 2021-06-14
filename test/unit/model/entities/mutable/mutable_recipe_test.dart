@@ -1,10 +1,10 @@
 import 'package:cookza/constants.dart';
 import 'package:cookza/model/entities/abstract/recipe_entity.dart';
 import 'package:cookza/model/entities/json/recipe_entity.dart';
+import 'package:cookza/model/entities/mutable/mutable_ingredient_group.dart';
 import 'package:cookza/model/entities/mutable/mutable_ingredient_note.dart';
 import 'package:cookza/model/entities/mutable/mutable_instruction.dart';
 import 'package:cookza/model/entities/mutable/mutable_recipe.dart';
-import 'package:cookza/model/json/ingredient_note.dart';
 import 'package:cookza/model/json/recipe.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -37,10 +37,13 @@ void main() {
       expect(cut.tags.contains('vegetarian'), true);
       var onion = MutableIngredientNote.empty();
       onion.name = 'Onion';
-      cut.ingredientList = [onion];
-      var ingredients = await cut.ingredients;
-      expect(ingredients.length, 1);
-      expect(ingredients.first.ingredient.name, 'Onion');
+      cut.ingredientGroupList = [
+        MutableIngredientGroup.forValues(1, 'Test', [onion])
+      ];
+
+      var ingGroups = await cut.ingredientGroups;
+      expect(ingGroups.length, 1);
+      expect(ingGroups.first.ingredients.first.ingredient.name, 'Onion');
       var ins = MutableInstruction.empty();
       ins.text = 'Do this';
       ins.step = 1;
@@ -58,35 +61,42 @@ void main() {
       var onion = MutableIngredientNote.empty();
       onion.name = 'Onion';
 
-      var cut = MutableRecipe.of(RecipeEntityJson.of(Recipe(
-        name: 'My name',
-        shortDescription: 'My desc',
-        duration: 50,
-        diff: DIFFICULTY.HARD,
-        id: 'ID',
-        recipeCollection: 'collectionID',
-        instructions: ['First one'],
-        ingredients: [IngredientNote.fromEntity(onion)],
-        servings: 3,
-        tags: ['delicious'],
-        creationDate: DateTime.now(),
-        modificationDate: DateTime.now(),
-      )));
-
-      expect(cut.hasInMemoryImage, false);
+      var cut = MutableRecipe.empty();
+      cut.id = 'ID';
+      cut.name = 'My name';
       expect(cut.name, 'My name');
+      cut.description = 'My desc';
       expect(cut.description, 'My desc');
-      expect(cut.id, 'ID');
+      cut.recipeCollectionId = 'collectionID';
       expect(cut.recipeCollectionId, 'collectionID');
-      var instructions = await cut.instructions;
+      cut.addTag('delicious');
+      expect(cut.tags.contains('delicious'), true);
+      cut.ingredientGroupList = [
+        MutableIngredientGroup.forValues(1, 'Test', [onion])
+      ];
+      var ins = MutableInstruction.empty();
+      ins.text = 'First one';
+      ins.step = 1;
+      cut.instructionList = [ins];
+      cut.servings = 3;
+      cut.duration = 50;
+
+      var copy = MutableRecipe.of(cut);
+
+      expect(copy.hasInMemoryImage, false);
+      expect(copy.name, 'My name');
+      expect(copy.description, 'My desc');
+      expect(copy.id, 'ID');
+      expect(copy.recipeCollectionId, 'collectionID');
+      var instructions = await copy.instructions;
       expect(instructions.length, 1);
       expect(instructions.first.text, 'First one');
-      var ingredients = await cut.ingredients;
-      expect(ingredients.length, 1);
-      expect(ingredients.first.ingredient.name, 'Onion');
-      expect(cut.servings, 3);
-      expect(cut.tags, ['delicious']);
-      expect(cut.duration, 50);
+      var ingGroups = await copy.ingredientGroups;
+      expect(ingGroups.length, 1);
+      expect(ingGroups.first.ingredients.first.ingredient.name, 'Onion');
+      expect(copy.servings, 3);
+      expect(copy.tags, ['delicious']);
+      expect(copy.duration, 50);
     },
   );
 
@@ -109,10 +119,13 @@ void main() {
       var instructions = await cut.instructions;
       expect(instructions.length, 1);
       expect(instructions.first.text, 'First one');
-      cut.ingredientList = [onion];
-      var ingredients = await cut.ingredients;
-      expect(ingredients.length, 1);
-      expect(ingredients.first.ingredient.name, 'Onion');
+      cut.ingredientGroupList = [
+        MutableIngredientGroup.forValues(1, 'Test', [onion])
+      ];
+
+      var ingGroups = await cut.ingredientGroups;
+      expect(ingGroups.length, 1);
+      expect(ingGroups.first.ingredients.first.ingredient.name, 'Onion');
       cut.servings = 3;
       expect(cut.servings, 3);
       cut.addTag('delicious');

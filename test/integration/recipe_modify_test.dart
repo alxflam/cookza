@@ -1,4 +1,5 @@
 import 'package:cookza/components/recipe_list_tile.dart';
+import 'package:cookza/model/entities/mutable/mutable_ingredient_group.dart';
 import 'package:cookza/model/entities/mutable/mutable_instruction.dart';
 import 'package:cookza/screens/home_screen.dart';
 import 'package:cookza/screens/new_ingredient_screen.dart';
@@ -63,7 +64,10 @@ void main() {
     var onion = RecipeCreator.createIngredient('Onion', amount: 2, uom: 'GRM');
     var pepper =
         RecipeCreator.createIngredient('Pepper', amount: 2, uom: 'PCS');
-    recipe.ingredientList = [onion, pepper];
+    recipe.ingredientGroupList = [
+      MutableIngredientGroup.forValues(1, 'Test', [onion, pepper])
+    ];
+
     recipe.instructionList = [
       MutableInstruction.withValues(text: 'First step'),
       MutableInstruction.withValues(text: 'Second step')
@@ -161,9 +165,8 @@ void main() {
     expect(find.text('10'), findsOneWidget);
     expect(find.text('Flour'), findsOneWidget);
 
-    /// then edit a already existing ingredient
-    var editButton = find.byIcon(Icons.edit);
-    await tester.tap(editButton.first);
+    /// then edit a already existing ingredient by tapping it
+    await tester.tap(find.text('Onion'));
     await tester.pumpAndSettle();
 
     /// verify we navigated
@@ -189,7 +192,7 @@ void main() {
     expect(find.text('Onion'), findsOneWidget);
 
     /// then delete the pepper ingredient
-    await tester.tap(editButton.at(1));
+    await tester.tap(find.text('Pepper'));
     await tester.pumpAndSettle();
 
     expect(find.text('Pepper'), findsWidgets);
@@ -228,15 +231,16 @@ void main() {
     expect(recipes.first.tags.contains('vegetarian'), true);
 
     /// verify ingredients and instructions
-    var ingredients = await recipes.first.ingredients;
+    var ingGroups = await recipes.first.ingredientGroups;
     var instructions = await recipes.first.instructions;
     expect(instructions.length, 2);
     expect(instructions.first.text, 'First step');
-    expect(ingredients.length, 2);
-    expect(ingredients.first.ingredient.name, 'Onion');
-    expect(ingredients.first.amount, 12);
-    expect(ingredients.last.ingredient.name, 'Flour');
-    expect(ingredients.last.amount, 10);
+    expect(ingGroups.length, 1);
+    expect(ingGroups.first.ingredients.length, 2);
+    expect(ingGroups.first.ingredients.first.ingredient.name, 'Onion');
+    expect(ingGroups.first.ingredients.first.amount, 12);
+    expect(ingGroups.first.ingredients.last.ingredient.name, 'Flour');
+    expect(ingGroups.first.ingredients.last.amount, 10);
   });
 }
 

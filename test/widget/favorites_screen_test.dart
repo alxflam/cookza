@@ -1,5 +1,6 @@
 import 'package:cookza/components/recipe_list_tile.dart';
 import 'package:cookza/components/recipe_rating_bar.dart';
+import 'package:cookza/model/entities/mutable/mutable_ingredient_group.dart';
 import 'package:cookza/model/entities/mutable/mutable_ingredient_note.dart';
 import 'package:cookza/model/entities/mutable/mutable_instruction.dart';
 import 'package:cookza/model/entities/mutable/mutable_recipe.dart';
@@ -97,6 +98,10 @@ MutableRecipe createMutableRecipe(String name, String group) {
   recipe.instructionList = [
     MutableInstruction.withValues(text: 'Some instruction')
   ];
-  recipe.ingredientList = [MutableIngredientNote.empty()..name = 'Onions'];
+  recipe.ingredientGroupList = [
+    MutableIngredientGroup.forValues(
+        1, 'Test', [MutableIngredientNote.empty()..name = 'Onions'])
+  ];
+
   return recipe;
 }

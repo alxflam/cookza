@@ -35,7 +35,7 @@ void main() {
     // open fake app
     final observer = MockNavigatorObserver();
     RecipeCollectionEntityFirebase group = _createGroupModel();
-
+    GetIt.I.get<SharedPreferencesProvider>().setUserName('Tux');
     await _initApp(tester, observer, group);
     await tester.pumpAndSettle();
 

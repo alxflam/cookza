@@ -1,3 +1,4 @@
+import 'package:cookza/model/entities/mutable/mutable_ingredient_group.dart';
 import 'package:cookza/services/recipe/ingredients_calculator.dart';
 import 'package:cookza/services/recipe/recipe_manager.dart';
 import 'package:cookza/services/unit_of_measure.dart';
@@ -22,7 +23,10 @@ void main() {
         RecipeCreator.createIngredient('Pepper', amount: 100, uom: 'H87');
     var flour =
         RecipeCreator.createIngredient('Flour', amount: 750, uom: 'GRM');
-    recipe.ingredientList = [flour, pepper];
+
+    recipe.ingredientGroupList = [
+      MutableIngredientGroup.forValues(1, 'Test', [flour, pepper])
+    ];
 
     await rm.createOrUpdate(recipe);
 
@@ -34,7 +38,10 @@ void main() {
     var pepper2 =
         RecipeCreator.createIngredient('Pepper', amount: 300, uom: 'H87');
 
-    recipe2.ingredientList = [flour2, pepper2, onion];
+    recipe2.ingredientGroupList = [
+      MutableIngredientGroup.forValues(1, 'Test', [flour2, pepper2, onion])
+    ];
+
     await rm.createOrUpdate(recipe2);
 
     var cut = IngredientsCalculatorImpl();
@@ -53,7 +60,9 @@ void main() {
     recipe.servings = 2;
     var flour =
         RecipeCreator.createIngredient('Flour', amount: 750, uom: 'GRM');
-    recipe.ingredientList = [flour];
+    recipe.ingredientGroupList = [
+      MutableIngredientGroup.forValues(1, 'Test', [flour])
+    ];
 
     await rm.createOrUpdate(recipe);
 
@@ -61,7 +70,10 @@ void main() {
     recipe2.servings = 1;
     var flour2 =
         RecipeCreator.createIngredient('Flour', amount: 1.2, uom: 'KGM');
-    recipe2.ingredientList = [flour2];
+    recipe2.ingredientGroupList = [
+      MutableIngredientGroup.forValues(1, 'Test', [flour2])
+    ];
+
     await rm.createOrUpdate(recipe2);
 
     var cut = IngredientsCalculatorImpl();
@@ -79,7 +91,9 @@ void main() {
     recipe.servings = 2;
     var flour =
         RecipeCreator.createIngredient('Flour', amount: 750, uom: 'H87');
-    recipe.ingredientList = [flour];
+    recipe.ingredientGroupList = [
+      MutableIngredientGroup.forValues(1, 'Test', [flour])
+    ];
 
     await rm.createOrUpdate(recipe);
 
@@ -87,7 +101,10 @@ void main() {
     recipe2.servings = 1;
     var flour2 =
         RecipeCreator.createIngredient('Flour', amount: 1.2, uom: 'KGM');
-    recipe2.ingredientList = [flour2];
+    recipe2.ingredientGroupList = [
+      MutableIngredientGroup.forValues(1, 'Test', [flour2])
+    ];
+
     await rm.createOrUpdate(recipe2);
 
     var cut = IngredientsCalculatorImpl();

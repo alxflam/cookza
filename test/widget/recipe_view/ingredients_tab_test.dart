@@ -1,4 +1,5 @@
 import 'package:cookza/components/round_icon_button.dart';
+import 'package:cookza/model/entities/mutable/mutable_ingredient_group.dart';
 import 'package:cookza/screens/recipe_view/ingredients_tab.dart';
 import 'package:cookza/services/recipe/image_manager.dart';
 import 'package:cookza/services/shared_preferences_provider.dart';
@@ -29,7 +30,10 @@ void main() {
       (WidgetTester tester) async {
     var recipe = RecipeCreator.createRecipe('My Recipe');
     var onion = RecipeCreator.createIngredient('Onion', amount: 3);
-    recipe.ingredientList = [onion];
+    recipe.ingredientGroupList = [
+      MutableIngredientGroup.forValues(1, 'Test', [onion])
+    ];
+
     var viewModel = RecipeViewModel.of(recipe);
 
     await _startWidget(tester, viewModel);
@@ -53,7 +57,10 @@ void main() {
     var recipe = RecipeCreator.createRecipe('My Recipe');
     recipe.servings = 2;
     var onion = RecipeCreator.createIngredient('Onion', amount: 2);
-    recipe.ingredientList = [onion];
+    recipe.ingredientGroupList = [
+      MutableIngredientGroup.forValues(1, 'Test', [onion])
+    ];
+
     var viewModel = RecipeViewModel.of(recipe);
 
     await _startWidget(tester, viewModel);
@@ -75,7 +82,10 @@ void main() {
     var recipe = RecipeCreator.createRecipe('My Recipe');
     recipe.servings = 2;
     var onion = RecipeCreator.createIngredient('Onion', amount: 2);
-    recipe.ingredientList = [onion];
+    recipe.ingredientGroupList = [
+      MutableIngredientGroup.forValues(1, 'Test', [onion])
+    ];
+
     var viewModel = RecipeViewModel.of(recipe);
 
     await _startWidget(tester, viewModel);

@@ -1,5 +1,3 @@
-import 'package:cookza/model/entities/mutable/mutable_ingredient_note.dart';
-import 'package:cookza/model/entities/mutable/mutable_recipe.dart';
 import 'package:cookza/model/firebase/recipe/firebase_ingredient.dart';
 import 'package:cookza/model/json/ingredient.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -53,38 +51,6 @@ void main() {
       expect(cut.unitOfMeasure, 'KGM');
       expect(cut.ingredient.name, 'Pasta');
       expect(cut.ingredient.recipeReference, '1234');
-    },
-  );
-
-  test(
-    'Create from Recipe',
-    () async {
-      var recipe = MutableRecipe.empty();
-
-      var pepper = MutableIngredientNote.empty();
-      pepper.name = 'Pepper';
-      pepper.amount = 3;
-      pepper.unitOfMeasure = 'KGM';
-
-      var onion = MutableIngredientNote.empty();
-      onion.name = 'Onion';
-      onion.amount = 300;
-      onion.unitOfMeasure = 'GRM';
-      onion.recipeReference = '1234';
-
-      recipe.ingredientList = [pepper, onion];
-      var cut = await FirebaseIngredient.from(recipe);
-
-      expect(cut.length, 2);
-      expect(cut.first.ingredient.name, 'Pepper');
-      expect(cut.first.amount, 3);
-      expect(cut.first.unitOfMeasure, 'KGM');
-      expect(cut.first.ingredient.recipeReference, null);
-
-      expect(cut.last.ingredient.name, 'Onion');
-      expect(cut.last.ingredient.recipeReference, '1234');
-      expect(cut.last.amount, 300);
-      expect(cut.last.unitOfMeasure, 'GRM');
     },
   );
 

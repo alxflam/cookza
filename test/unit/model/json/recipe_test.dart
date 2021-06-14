@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:cookza/model/entities/abstract/recipe_entity.dart';
+import 'package:cookza/model/entities/mutable/mutable_ingredient_group.dart';
 import 'package:cookza/model/entities/mutable/mutable_ingredient_note.dart';
 import 'package:cookza/model/entities/mutable/mutable_instruction.dart';
 import 'package:cookza/model/entities/mutable/mutable_recipe.dart';
@@ -33,7 +34,9 @@ void main() {
     instruction.text = 'Something 2';
 
     recipe.instructionList = [instruction];
-    recipe.ingredientList = [pepper];
+    recipe.ingredientGroupList = [
+      MutableIngredientGroup.forValues(1, 'Test', [pepper])
+    ];
 
     recipe.name = 'Test';
     recipe.description = 'Desc';
@@ -57,6 +60,7 @@ void main() {
     expect(cut.tags.length, 1);
     expect(cut.tags.first, 'veggie');
     expect(cut.servings, 2);
+    // TODO: remove ing member and replace with ing group!?
     expect(cut.ingredients.length, 1);
     expect(cut.instructions.length, 1);
     expect(cut.ingredients.first.ingredient.name, 'Pepper');

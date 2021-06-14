@@ -17,13 +17,14 @@ void main() {
 
       var cut = ChefkochAccessorImpl();
 
-      var result = await cut.getRecipe(id);
+      final result = await cut.getRecipe(id);
 
       expect(result.name, 'Philadelphia-Hähnchen');
       var ins = await result.instructions;
       expect(ins.length, 9);
-      var ing = await result.ingredients;
-      expect(ing.length, 9);
+      var group = await result.ingredientGroups;
+      expect(group.length, 1);
+      expect(group.first.ingredients.length, 1);
     },
   );
 }

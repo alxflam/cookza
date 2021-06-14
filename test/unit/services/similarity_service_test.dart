@@ -1,5 +1,4 @@
-import 'dart:collection';
-
+import 'package:cookza/model/entities/mutable/mutable_ingredient_group.dart';
 import 'package:cookza/model/entities/mutable/mutable_recipe.dart';
 import 'package:cookza/services/recipe/recipe_manager.dart';
 import 'package:cookza/services/recipe/similarity_service.dart';
@@ -22,7 +21,9 @@ void main() {
     var recipe = RecipeCreator.createRecipe('dummy');
     var pepper = RecipeCreator.createIngredient('Pepper');
 
-    recipe.ingredientList = [pepper];
+    recipe.ingredientGroupList = [
+      MutableIngredientGroup.forValues(1, 'Test', [pepper])
+    ];
 
     await GetIt.I.get<RecipeManager>().createOrUpdate(recipe);
 
@@ -37,7 +38,9 @@ void main() {
     var onion = RecipeCreator.createIngredient('Onion');
     var tomato = RecipeCreator.createIngredient('Tomato');
 
-    recipe.ingredientList = [pepper, onion, tomato];
+    recipe.ingredientGroupList = [
+      MutableIngredientGroup.forValues(1, 'Test', [pepper, onion, tomato])
+    ];
 
     await GetIt.I.get<RecipeManager>().createOrUpdate(recipe);
 
@@ -76,7 +79,9 @@ void main() {
     var onion = RecipeCreator.createIngredient('Onion');
     var tomato = RecipeCreator.createIngredient('Tomato');
 
-    recipe.ingredientList = [pepper, onion, tomato];
+    recipe.ingredientGroupList = [
+      MutableIngredientGroup.forValues(1, 'Test', [pepper, onion, tomato])
+    ];
 
     await GetIt.I.get<RecipeManager>().createOrUpdate(recipe);
 
@@ -91,12 +96,17 @@ void main() {
     var onion = RecipeCreator.createIngredient('Onion');
     var tomato = RecipeCreator.createIngredient('Tomato');
     var salad = RecipeCreator.createIngredient('Salad');
-    recipe.ingredientList = [pepper, onion, tomato, salad];
+    recipe.ingredientGroupList = [
+      MutableIngredientGroup.forValues(
+          1, 'Test', [pepper, onion, tomato, salad])
+    ];
 
     await GetIt.I.get<RecipeManager>().createOrUpdate(recipe);
 
     var secondRecipe = RecipeCreator.createRecipe('dummy 2');
-    secondRecipe.ingredientList = [pepper];
+    secondRecipe.ingredientGroupList = [
+      MutableIngredientGroup.forValues(1, 'Test', [pepper])
+    ];
 
     await GetIt.I.get<RecipeManager>().createOrUpdate(secondRecipe);
 
@@ -111,13 +121,18 @@ void main() {
     var onion = RecipeCreator.createIngredient('Onion');
     var tomato = RecipeCreator.createIngredient('Tomato');
     var salad = RecipeCreator.createIngredient('Salad');
-    recipe.ingredientList = [pepper, onion, tomato, salad];
+    recipe.ingredientGroupList = [
+      MutableIngredientGroup.forValues(
+          1, 'Test', [pepper, onion, tomato, salad])
+    ];
 
     await GetIt.I.get<RecipeManager>().createOrUpdate(recipe);
     var goatCheese = RecipeCreator.createIngredient('Goat Cheese');
     var secondRecipe = RecipeCreator.createRecipe('dummy 2');
 
-    secondRecipe.ingredientList = [pepper, salad, goatCheese];
+    secondRecipe.ingredientGroupList = [
+      MutableIngredientGroup.forValues(1, 'Test', [pepper, salad, goatCheese])
+    ];
 
     await GetIt.I.get<RecipeManager>().createOrUpdate(secondRecipe);
 

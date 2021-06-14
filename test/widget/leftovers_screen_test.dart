@@ -1,4 +1,5 @@
 import 'package:cookza/components/recipe_list_tile.dart';
+import 'package:cookza/model/entities/mutable/mutable_ingredient_group.dart';
 import 'package:cookza/screens/leftovers_screen.dart';
 import 'package:cookza/services/abstract/receive_intent_handler.dart';
 import 'package:cookza/services/recipe/recipe_manager.dart';
@@ -38,7 +39,9 @@ void main() {
     var recipe = RecipeCreator.createRecipe('dummy');
     var pepper = RecipeCreator.createIngredient('Pepper');
 
-    recipe.ingredientList = [pepper];
+    recipe.ingredientGroupList = [
+      MutableIngredientGroup.forValues(1, 'Test', [pepper])
+    ];
 
     await GetIt.I.get<RecipeManager>().createOrUpdate(recipe);
 
@@ -65,7 +68,9 @@ void main() {
     var recipe = RecipeCreator.createRecipe('dummy');
     var pepper = RecipeCreator.createIngredient('Pepper');
 
-    recipe.ingredientList = [pepper];
+    recipe.ingredientGroupList = [
+      MutableIngredientGroup.forValues(1, 'Test', [pepper])
+    ];
 
     await GetIt.I.get<RecipeManager>().createOrUpdate(recipe);
 
@@ -92,7 +97,9 @@ void main() {
     var pepper = RecipeCreator.createIngredient('Pepper');
     var onion = RecipeCreator.createIngredient('onion');
 
-    recipe.ingredientList = [pepper, onion];
+    recipe.ingredientGroupList = [
+      MutableIngredientGroup.forValues(1, 'Test', [pepper, onion])
+    ];
 
     await GetIt.I.get<RecipeManager>().createOrUpdate(recipe);
 
@@ -122,7 +129,9 @@ void main() {
     var pepper = RecipeCreator.createIngredient('Pepper');
     var onion = RecipeCreator.createIngredient('onion');
 
-    recipe.ingredientList = [pepper, onion];
+    recipe.ingredientGroupList = [
+      MutableIngredientGroup.forValues(1, 'Test', [pepper, onion])
+    ];
 
     await GetIt.I.get<RecipeManager>().createOrUpdate(recipe);
 

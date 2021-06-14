@@ -32,20 +32,6 @@ class FirebaseIngredient {
   }
 
   Map<String, dynamic> toJson() => _$FirebaseIngredientToJson(this);
-
-  static Future<List<FirebaseIngredient>> from(RecipeEntity recipe) async {
-    List<FirebaseIngredient> result = [];
-    var ing = await recipe.ingredients;
-    for (var item in ing) {
-      result.add(FirebaseIngredient(
-          ingredient: Ingredient(
-              name: item.ingredient.name,
-              recipeReference: item.ingredient.recipeReference),
-          amount: item.amount,
-          unitOfMeasure: item.unitOfMeasure));
-    }
-    return result;
-  }
 }
 
 @JsonSerializable(includeIfNull: false)

@@ -1,3 +1,4 @@
+import 'package:cookza/model/entities/mutable/mutable_ingredient_group.dart';
 import 'package:cookza/model/entities/mutable/mutable_meal_plan.dart';
 import 'package:cookza/model/entities/mutable/mutable_shopping_list.dart';
 import 'package:cookza/services/recipe/ingredients_calculator.dart';
@@ -50,7 +51,9 @@ void main() {
           RecipeCreator.createIngredient('Onion', amount: 2, uom: 'PCS');
       var pepper =
           RecipeCreator.createIngredient('Pepper', amount: 100, uom: 'GRM');
-      recipe.ingredientList = [onion, pepper];
+      recipe.ingredientGroupList = [
+        MutableIngredientGroup.forValues(1, 'Test', [onion, pepper])
+      ];
 
       await recipeManager.createOrUpdate(recipe);
 
@@ -96,7 +99,9 @@ void main() {
           RecipeCreator.createIngredient('Onion', amount: 2, uom: 'PCS');
       var pepper =
           RecipeCreator.createIngredient('Pepper', amount: 100, uom: 'GRM');
-      recipe.ingredientList = [onion, pepper];
+      recipe.ingredientGroupList = [
+        MutableIngredientGroup.forValues(1, 'Test', [onion, pepper])
+      ];
 
       await recipeManager.createOrUpdate(recipe);
 
@@ -128,7 +133,9 @@ void main() {
           RecipeCreator.createIngredient('Onion', amount: 2, uom: 'PCS');
       var pepper =
           RecipeCreator.createIngredient('Pepper', amount: 100, uom: 'GRM');
-      recipe.ingredientList = [onion, pepper];
+      recipe.ingredientGroupList = [
+        MutableIngredientGroup.forValues(1, 'Test', [onion, pepper])
+      ];
 
       await recipeManager.createOrUpdate(recipe);
 
@@ -162,7 +169,9 @@ void main() {
 
       var dressing = RecipeCreator.createRecipe('Dressing');
       dressing.servings = 2;
-      dressing.ingredientList = [oil, pepper];
+      dressing.ingredientGroupList = [
+        MutableIngredientGroup.forValues(1, 'Test', [oil, pepper])
+      ];
 
       await recipeManager.createOrUpdate(dressing);
 
@@ -173,7 +182,10 @@ void main() {
 
       var salad = RecipeCreator.createRecipe('Salad');
       salad.servings = 2;
-      salad.ingredientList = [onion, pepper, dressingIngredient];
+      salad.ingredientGroupList = [
+        MutableIngredientGroup.forValues(
+            1, 'Test', [onion, pepper, dressingIngredient])
+      ];
 
       await recipeManager.createOrUpdate(salad);
 

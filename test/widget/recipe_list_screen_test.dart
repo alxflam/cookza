@@ -1,5 +1,6 @@
 import 'package:cookza/components/recipe_groups_drawer.dart';
 import 'package:cookza/components/recipe_list_tile.dart';
+import 'package:cookza/model/entities/mutable/mutable_ingredient_group.dart';
 import 'package:cookza/routes.dart';
 import 'package:cookza/screens/recipe_list_screen.dart';
 import 'package:cookza/screens/recipe_view/recipe_screen.dart';
@@ -57,7 +58,10 @@ void main() {
     var group = await recipeManager.createCollection('Some Group');
     var recipe = RecipeCreator.createRecipe('some Recipe');
     var pepper = RecipeCreator.createIngredient('Pepper');
-    recipe.ingredientList = [pepper];
+    recipe.ingredientGroupList = [
+      MutableIngredientGroup.forValues(1, 'Test', [pepper])
+    ];
+
     recipe.recipeCollectionId = group.id!;
 
     await recipeManager.createOrUpdate(recipe);
@@ -91,7 +95,10 @@ void main() {
     var group = await recipeManager.createCollection('Some Group');
     var recipe = RecipeCreator.createRecipe('some Recipe');
     var pepper = RecipeCreator.createIngredient('Pepper');
-    recipe.ingredientList = [pepper];
+    recipe.ingredientGroupList = [
+      MutableIngredientGroup.forValues(1, 'Test', [pepper])
+    ];
+
     recipe.recipeCollectionId = group.id!;
 
     await recipeManager.createOrUpdate(recipe);
@@ -116,7 +123,10 @@ void main() {
     var group = await recipeManager.createCollection('Some Group');
     var recipe = RecipeCreator.createRecipe('Käsespätzle');
     var pepper = RecipeCreator.createIngredient('Pepper');
-    recipe.ingredientList = [pepper];
+    recipe.ingredientGroupList = [
+      MutableIngredientGroup.forValues(1, 'Test', [pepper])
+    ];
+
     recipe.recipeCollectionId = group.id!;
 
     await recipeManager.createOrUpdate(recipe);
