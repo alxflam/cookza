@@ -12,8 +12,8 @@ class SimilarityService {
     List<RecipeEntity> result = [];
 
     // immediately return if the recipe does not contain any ingredients
-    var sourceIngredients = await sourceRecipe.ingredients;
-    if (sourceIngredients.isEmpty) {
+    var sourceGroups = await sourceRecipe.ingredientGroups;
+    if (sourceGroups.isEmpty) {
       return result;
     }
 
@@ -25,7 +25,7 @@ class SimilarityService {
     var recipes = await sl.get<RecipeManager>().getAllRecipes();
 
     var ingredients =
-        sourceIngredients.map((element) => element.ingredient).toSet();
+        sourceGroups.map((e) => e.ingredients).expand((e) => e).toSet();
     var count = 0;
     for (var item in recipes) {
       if (item.id == sourceRecipe.id) {
@@ -33,18 +33,21 @@ class SimilarityService {
       }
       count = 0;
 
-      var ing = await item.ingredients;
+      var refRecipeGroups = await item.ingredientGroups;
+      final refRecipeIngredients =
+          refRecipeGroups.map((e) => e.ingredients).expand((e) => e).toSet();
 
       for (var origIng in ingredients) {
-        if (this.containsIngredient(ing, origIng.name)) {
+        if (this.containsIngredient(
+            refRecipeIngredients, origIng.ingredient.name)) {
           count++;
         }
       }
 
       // recipes are similar if more than one third of the similar recipe's ingredients are also contained in the source recipe
       // and also at least one third of the ingredients of the source recipe are contained in the similar recipe's ingredients
-
-      if (count > ing.length / 3 && count > ingredients.length / 3) {
+      if (count > refRecipeIngredients.length / 3 &&
+          count > ingredients.length / 3) {
         result.add(item);
       }
     }
@@ -53,8 +56,7 @@ class SimilarityService {
   }
 
   bool containsIngredient(
-      UnmodifiableListView<IngredientNoteEntity> ingredients,
-      String targetIngredient) {
+      Set<IngredientNoteEntity> ingredients, String targetIngredient) {
     for (var ing in ingredients) {
       var res = levenshtein(ing.ingredient.name, targetIngredient);
       if (res < (ing.ingredient.name.length / 2)) {
@@ -71,9 +73,12 @@ class SimilarityService {
 
     for (var recipe in recipes) {
       var containsAll = true;
-      var ing = await recipe.ingredients;
+      var refRecipeGroups = await recipe.ingredientGroups;
+      final refRecipeIngredients =
+          refRecipeGroups.map((e) => e.ingredients).expand((e) => e).toSet();
+
       for (var ingredient in targetIngredients) {
-        if (!this.containsIngredient(ing, ingredient)) {
+        if (!this.containsIngredient(refRecipeIngredients, ingredient)) {
           containsAll = false;
           break;
         }
