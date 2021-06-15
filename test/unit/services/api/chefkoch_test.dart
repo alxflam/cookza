@@ -21,10 +21,10 @@ void main() {
 
       expect(result.name, 'Philadelphia-Hähnchen');
       var ins = await result.instructions;
-      expect(ins.length, 9);
+      expect(ins.length, 5);
       var group = await result.ingredientGroups;
       expect(group.length, 1);
-      expect(group.first.ingredients.length, 1);
+      expect(group.first.ingredients.length, 9);
     },
   );
 }

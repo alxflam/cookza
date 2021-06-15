@@ -60,7 +60,7 @@ class ChefkochAccessorImpl implements ChefkochAccessor {
       id: '',
     );
 
-    final result = MutableRecipe.of(RecipeEntityJson.of(recipe));
+    final result = await MutableRecipe.createFrom(RecipeEntityJson.of(recipe));
 
     var instructions = LineSplitter.split(json['instructions']);
     result.instructionList = instructions

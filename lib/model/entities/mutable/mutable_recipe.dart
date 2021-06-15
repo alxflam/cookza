@@ -28,17 +28,7 @@ class MutableRecipe implements RecipeEntity {
   String? _image;
   Uint8List? _inMemoryImage;
 
-  MutableRecipe.empty()
-      : this._creationDate = DateTime.now(),
-        this._modificationDate = DateTime.now(),
-        this._difficulty = DIFFICULTY.EASY,
-        this._ingredients = [],
-        this._ingredientGroups = [],
-        this._instructions = [],
-        this._tags = <String>{},
-        this._servings = 2;
-
-  MutableRecipe.of(RecipeEntity entity)
+  MutableRecipe._copy(RecipeEntity entity)
       : this._creationDate = entity.creationDate,
         this._modificationDate = entity.modificationDate,
         this._description = entity.description,
@@ -50,21 +40,34 @@ class MutableRecipe implements RecipeEntity {
     if (entity.hasInMemoryImage) {
       this._inMemoryImage = entity.inMemoryImage;
     }
-
     _origInstructions = entity.instructions;
-// TODO create async factory function...
-    entity.ingredientGroups.then((value) {
-      this._ingredientGroups = [...value];
-    });
-
-    entity.instructions.then((value) {
-      var list = value.map((e) => MutableInstruction.of(e)).toList();
-      this._instructions = list;
-    });
 
     this._tags = Set.of(entity.tags);
     this._servings = entity.servings;
     this._image = entity.image;
+  }
+
+  MutableRecipe.empty()
+      : this._creationDate = DateTime.now(),
+        this._modificationDate = DateTime.now(),
+        this._difficulty = DIFFICULTY.EASY,
+        this._ingredients = [],
+        this._ingredientGroups = [],
+        this._instructions = [],
+        this._tags = <String>{},
+        this._servings = 2;
+
+  static Future<MutableRecipe> createFrom(RecipeEntity entity) async {
+    final result = MutableRecipe._copy(entity);
+
+    final groups = await entity.ingredientGroups;
+    result.ingredientGroupList = [...groups];
+
+    final instructions = await entity.instructions;
+    result.instructionList =
+        instructions.map((e) => MutableInstruction.of(e)).toList();
+
+    return result;
   }
 
   @override

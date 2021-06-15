@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:cookza/constants.dart';
 import 'package:cookza/model/entities/json/recipe_entity.dart';
+import 'package:cookza/model/entities/mutable/mutable_recipe.dart';
 import 'package:cookza/model/json/recipe_list.dart';
 import 'package:cookza/viewmodel/recipe_edit/recipe_edit_model.dart';
 import 'package:cookza/viewmodel/recipe_selection_model.dart';
@@ -34,8 +35,9 @@ class ShareReceiveHandler {
         var id = text.substring(match.start + 8, match.end - 1);
         chefkoch.getRecipe(id).then(
           (recipe) {
-            Navigator.pushNamed(context, NewRecipeScreen.id,
-                arguments: RecipeEditModel.modify(recipe));
+            MutableRecipe.createFrom(recipe).then((mutableRecipe) =>
+                Navigator.pushNamed(context, NewRecipeScreen.id,
+                    arguments: RecipeEditModel.modify(mutableRecipe)));
           },
         );
       },

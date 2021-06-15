@@ -81,7 +81,7 @@ void main() {
       cut.servings = 3;
       cut.duration = 50;
 
-      var copy = MutableRecipe.of(cut);
+      var copy = await MutableRecipe.createFrom(cut);
 
       expect(copy.hasInMemoryImage, false);
       expect(copy.name, 'My name');
@@ -155,7 +155,7 @@ void main() {
     var onion = MutableIngredientNote.empty();
     onion.name = 'Onion';
 
-    var cut = MutableRecipe.of(RecipeEntityJson.of(Recipe(
+    var cut = await MutableRecipe.createFrom(RecipeEntityJson.of(Recipe(
       serializedImage: '1010',
       id: '1234',
       creationDate: DateTime.now(),
@@ -177,7 +177,7 @@ void main() {
 
   test('Dates are formatted', () async {
     var now = DateTime.now();
-    var cut = MutableRecipe.of(RecipeEntityJson.of(Recipe(
+    var cut = await MutableRecipe.createFrom(RecipeEntityJson.of(Recipe(
       serializedImage: '1010',
       id: '1234',
       creationDate: DateTime.now(),

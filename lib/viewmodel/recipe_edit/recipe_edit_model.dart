@@ -49,9 +49,9 @@ class RecipeEditModel extends ChangeNotifier {
     }
   }
 
-  RecipeEditModel.modify(RecipeEntity recipe)
+  RecipeEditModel.modify(MutableRecipe recipe)
       : _mode = MODE.MODIFY,
-        _targetRecipe = MutableRecipe.of(recipe) {
+        _targetRecipe = recipe {
     for (var model in _stepModels) {
       model.applyFrom(recipe);
     }

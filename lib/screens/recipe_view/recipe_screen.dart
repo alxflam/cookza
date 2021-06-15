@@ -1,6 +1,7 @@
 import 'package:cookza/components/alert_dialog_title.dart';
 import 'package:cookza/constants.dart';
 import 'package:cookza/model/entities/abstract/recipe_entity.dart';
+import 'package:cookza/model/entities/mutable/mutable_recipe.dart';
 import 'package:cookza/screens/home_screen.dart';
 import 'package:cookza/screens/meal_plan/meal_plan_screen.dart';
 import 'package:cookza/screens/recipe_modify/new_recipe_screen.dart';
@@ -112,7 +113,9 @@ class RecipeScreen extends StatelessWidget {
                         case PopupMenuButtonChoices.EDIT:
                           var result = await Navigator.pushNamed(
                               context, NewRecipeScreen.id,
-                              arguments: RecipeEditModel.modify(model.recipe));
+                              arguments: RecipeEditModel.modify(
+                                  await MutableRecipe.createFrom(
+                                      model.recipe)));
                           // refresh the current model as it now show stale data that got updated by editing the recipe
                           if (result != null && result is RecipeEntity) {
                             model.refreshFrom(result);

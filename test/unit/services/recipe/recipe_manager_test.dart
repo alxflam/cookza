@@ -163,7 +163,9 @@ void main() {
     expect(id, isNotEmpty);
     recipe.id = id;
 
-    await cut.createOrUpdate(MutableRecipe.of(recipe)..name = 'Cheese');
+    final mutableRecipe = await MutableRecipe.createFrom(recipe);
+    mutableRecipe.name = 'Cheese';
+    await cut.createOrUpdate(mutableRecipe);
 
     var recipes = await cut.getRecipeById([id]);
     expect(recipes.first.name, 'Cheese');

@@ -589,11 +589,11 @@ class FirebaseProvider {
       List<RecipeEntity> recipes, String groupId) async {
     List<RecipeEntity> ids = [];
     for (var recipe in recipes) {
-      var target = MutableRecipe.of(recipe);
+      var target = await MutableRecipe.createFrom(recipe);
       target.id = null;
       target.recipeCollectionId = groupId;
       var id = await _createRecipe(target);
-      var mutableRecipe = MutableRecipe.of(recipe);
+      var mutableRecipe = await MutableRecipe.createFrom(recipe);
       mutableRecipe.id = id;
       ids.add(mutableRecipe);
     }

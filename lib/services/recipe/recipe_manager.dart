@@ -218,7 +218,7 @@ class RecipeManagerFirebase implements RecipeManager {
 
     for (var recipe in recipes) {
       // first create the recipe
-      MutableRecipe entity = MutableRecipe.of(recipe);
+      MutableRecipe entity = await MutableRecipe.createFrom(recipe);
       if (entity.hasInMemoryImage) {
         entity.image = 'true';
       }
