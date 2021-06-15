@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:cookza/constants.dart';
 import 'package:cookza/model/entities/abstract/recipe_entity.dart';
+import 'package:cookza/model/json/ingredient_group.dart';
 import 'package:cookza/model/json/ingredient_note.dart';
 import 'package:cookza/services/recipe/image_manager.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
@@ -30,16 +31,21 @@ class Recipe {
       tags: entity.tags,
       id: '',
       instructions: [],
-      ingredients: [],
+      ingredientGroups: [],
     );
 
     var ins = await entity.instructions;
     instance.instructions = ins.map((e) => e.text).toList();
-    // TODO: adapt to groups ! to make sure old imports work, first try ingredients accesor
 
-    // var ing = await entity.ingredients;
-    // instance.ingredients =
-    //     ing.map((e) => IngredientNote.fromEntity(e)).toList();
+    var ing = await entity.ingredientGroups;
+    instance.ingredientGroups = ing
+        .map((e) => IngredientGroup(
+            name: e.name,
+            ingredients: e.ingredients
+                .map((e) => IngredientNote.fromEntity(e))
+                .toList()))
+        .toList();
+
     if (entity.image != null && entity.image!.isNotEmpty) {
       var imageFile = await sl.get<ImageManager>().getRecipeImageFile(entity);
       if (imageFile != null) {
@@ -81,7 +87,7 @@ class Recipe {
   @JsonKey()
   List<String> tags;
   @JsonKey(toJson: kListToJson)
-  List<IngredientNote> ingredients;
+  List<IngredientGroup> ingredientGroups;
   @JsonKey()
   List<String> instructions;
 
@@ -95,7 +101,7 @@ class Recipe {
       required this.duration,
       required this.diff,
       required this.tags,
-      required this.ingredients,
+      required this.ingredientGroups,
       required this.instructions,
       required this.servings,
       this.serializedImage}) {

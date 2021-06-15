@@ -18,8 +18,8 @@ Recipe _$RecipeFromJson(Map<String, dynamic> json) {
     diff: _$enumDecodeNullable(_$DIFFICULTYEnumMap, json['diff']) ??
         DIFFICULTY.MEDIUM,
     tags: (json['tags'] as List<dynamic>).map((e) => e as String).toList(),
-    ingredients: (json['ingredients'] as List<dynamic>)
-        .map((e) => IngredientNote.fromJson(e as Map<String, dynamic>))
+    ingredientGroups: (json['ingredientGroups'] as List<dynamic>)
+        .map((e) => IngredientGroup.fromJson(e as Map<String, dynamic>))
         .toList(),
     instructions: (json['instructions'] as List<dynamic>)
         .map((e) => e as String)
@@ -50,7 +50,7 @@ Map<String, dynamic> _$RecipeToJson(Recipe instance) {
   writeNotNull('serializedImage', instance.serializedImage);
   val['diff'] = _$DIFFICULTYEnumMap[instance.diff];
   val['tags'] = instance.tags;
-  writeNotNull('ingredients', kListToJson(instance.ingredients));
+  writeNotNull('ingredientGroups', kListToJson(instance.ingredientGroups));
   val['instructions'] = instance.instructions;
   return val;
 }

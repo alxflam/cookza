@@ -60,12 +60,12 @@ void main() {
     expect(cut.tags.length, 1);
     expect(cut.tags.first, 'veggie');
     expect(cut.servings, 2);
-    // TODO: remove ing member and replace with ing group!?
-    expect(cut.ingredients.length, 1);
+    expect(cut.ingredientGroups.length, 1);
     expect(cut.instructions.length, 1);
-    expect(cut.ingredients.first.ingredient.name, 'Pepper');
-    expect(cut.ingredients.first.amount, 3);
-    expect(cut.ingredients.first.unitOfMeasure, 'KGM');
+    expect(
+        cut.ingredientGroups.first.ingredients.first.ingredient.name, 'Pepper');
+    expect(cut.ingredientGroups.first.ingredients.first.amount, 3);
+    expect(cut.ingredientGroups.first.ingredients.first.unitOfMeasure, 'KGM');
     expect(cut.instructions.length, 1);
     expect(cut.instructions.first, 'Something 2');
     expect(cut.serializedImage, null);

@@ -2,6 +2,7 @@ import 'package:cookza/constants.dart';
 import 'package:cookza/model/entities/abstract/recipe_entity.dart';
 import 'package:cookza/model/entities/json/recipe_entity.dart';
 import 'package:cookza/model/entities/mutable/mutable_ingredient_note.dart';
+import 'package:cookza/model/json/ingredient_group.dart';
 import 'package:cookza/model/json/ingredient_note.dart';
 import 'package:cookza/model/json/recipe.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -23,7 +24,14 @@ void main() {
         id: 'ID',
         recipeCollection: 'collectionID',
         instructions: ['First one'],
-        ingredients: [IngredientNote.fromEntity(onion)],
+        ingredientGroups: [
+          IngredientGroup(
+            name: 'Test',
+            ingredients: [
+              IngredientNote.fromEntity(onion),
+            ],
+          )
+        ],
         servings: 3,
         tags: ['delicious'],
         serializedImage: '1010',
@@ -49,7 +57,8 @@ void main() {
       var instructions = await cut.instructions;
       expect(instructions.length, 1);
       expect(instructions.first.text, 'First one');
-      var ingredients = await cut.ingredients;
+      var ingGroups = await cut.ingredientGroups;
+      var ingredients = ingGroups.first.ingredients;
       expect(ingredients.length, 1);
       expect(ingredients.first.ingredient.name, 'Onion');
       expect(cut.servings, 3);

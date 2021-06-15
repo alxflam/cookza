@@ -9,6 +9,8 @@ import 'package:cookza/model/entities/abstract/instruction_entity.dart';
 import 'package:cookza/model/entities/abstract/recipe_entity.dart';
 import 'package:cookza/model/entities/json/ingredient_note_entity.dart';
 import 'package:cookza/model/entities/json/instruction_entity.dart';
+import 'package:cookza/model/entities/mutable/mutable_ingredient_group.dart';
+import 'package:cookza/model/entities/mutable/mutable_ingredient_note.dart';
 import 'package:cookza/model/json/recipe.dart';
 
 class RecipeEntityJson implements RecipeEntity {
@@ -30,9 +32,7 @@ class RecipeEntityJson implements RecipeEntity {
 
   @override
   Future<UnmodifiableListView<IngredientNoteEntity>> get ingredients =>
-      Future.value(UnmodifiableListView(_recipe.ingredients
-          .map((e) => IngredientNoteEntityJson.of(e))
-          .toList()));
+      Future.value(UnmodifiableListView([]));
 
   @override
   Future<UnmodifiableListView<InstructionEntity>> get instructions {
@@ -90,6 +90,16 @@ class RecipeEntityJson implements RecipeEntity {
 
   @override
   Future<UnmodifiableListView<IngredientGroupEntity>> get ingredientGroups {
-    return Future.value(UnmodifiableListView([]));
+    final result = _recipe.ingredientGroups.map(
+      (e) => MutableIngredientGroup.forValues(
+        1,
+        e.name,
+        e.ingredients
+            .map(
+                (e) => MutableIngredientNote.of(IngredientNoteEntityJson.of(e)))
+            .toList(),
+      ),
+    );
+    return Future.value(UnmodifiableListView(result));
   }
 }

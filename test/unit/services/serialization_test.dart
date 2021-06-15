@@ -1,5 +1,6 @@
 import 'package:cookza/model/entities/abstract/recipe_entity.dart';
 import 'package:cookza/model/json/ingredient.dart';
+import 'package:cookza/model/json/ingredient_group.dart';
 import 'package:cookza/model/json/ingredient_note.dart';
 import 'package:cookza/model/json/recipe.dart';
 import 'package:cookza/model/json/recipe_list.dart';
@@ -9,7 +10,7 @@ void main() {
   test(
     'Serialize',
     () async {
-      var list = [
+      var ingredients = [
         IngredientNote(
             ingredient: Ingredient(name: 'Onion'),
             amount: 2,
@@ -19,6 +20,7 @@ void main() {
             amount: 250,
             unitOfMeasure: 'g'),
       ];
+      var ingGroup = IngredientGroup(name: 'Test', ingredients: ingredients);
 
       var recipe = Recipe(
         creationDate: DateTime.now(),
@@ -28,7 +30,7 @@ void main() {
         name: 'A sample recipe',
         shortDescription: 'easy but tasty',
         tags: ['vegan'],
-        ingredients: list,
+        ingredientGroups: [ingGroup],
         instructions: [
           'First step',
           'Second step',
@@ -40,14 +42,13 @@ void main() {
       );
 
       var cut = RecipeList(recipes: [recipe]);
-
-      // IngredientNoteToJson => instance to json!
-
       var json = cut.toJson();
       RecipeList deserialized = RecipeList.fromJson(json);
 
       expect(deserialized.recipes.first.name, 'A sample recipe');
-      expect(deserialized.recipes.first.ingredients.first.ingredient.name,
+      expect(
+          deserialized.recipes.first.ingredientGroups.first.ingredients.first
+              .ingredient.name,
           'Onion');
     },
   );

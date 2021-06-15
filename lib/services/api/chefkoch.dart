@@ -52,7 +52,7 @@ class ChefkochAccessorImpl implements ChefkochAccessor {
       servings: (json['servings']),
       duration: (json['totalTime']),
       instructions: [],
-      ingredients: [],
+      ingredientGroups: [],
       tags: [],
       recipeCollection: '',
       creationDate: DateTime.now(),
