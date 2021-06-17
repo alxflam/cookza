@@ -72,6 +72,10 @@ class ChefkochAccessorImpl implements ChefkochAccessor {
     final ingGroupList = <IngredientGroupEntity>[];
     for (var group in json['ingredientGroups']) {
       groupCounter++;
+      var groupName = group['header']?.toString().trim();
+      groupName = (groupName == null || groupName.isEmpty)
+          ? 'Group $groupCounter'
+          : groupName;
 
       final groupIngredients = <MutableIngredientNote>[];
       for (var ingredient in group['ingredients']) {
@@ -90,7 +94,7 @@ class ChefkochAccessorImpl implements ChefkochAccessor {
       }
 
       final ingGroup = MutableIngredientGroup.forValues(
-          groupCounter, 'TODO', groupIngredients);
+          groupCounter, groupName, groupIngredients);
       ingGroupList.add(ingGroup);
     }
 
