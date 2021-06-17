@@ -4,7 +4,7 @@ import 'package:cookza/model/entities/mutable/mutable_ingredient_note.dart';
 class MutableIngredientGroup implements IngredientGroupEntity {
   int _index = 0;
   String _name = '';
-  List<MutableIngredientNote> _ingredients = [];
+  final List<MutableIngredientNote> _ingredients;
 
   MutableIngredientGroup.forValues(this._index, this._name, this._ingredients);
 

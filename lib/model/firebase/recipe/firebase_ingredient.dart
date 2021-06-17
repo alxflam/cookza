@@ -53,8 +53,6 @@ class FirebaseIngredientGroup {
     List<FirebaseIngredientGroup> result = [];
     var groups = await recipe.ingredientGroups;
 
-    // TODO: if it's a legacy recipe, do we have to transform here or is that handled by the modification...
-
     for (var group in groups) {
       if (group.ingredients.isEmpty) {
         // skip empty groups
@@ -82,8 +80,6 @@ class FirebaseIngredientGroup {
 
 @JsonSerializable(includeIfNull: false)
 class FirebaseIngredientDocument {
-// TODO serialization now also needs group info, keep old ingredients member for backwards compatibility
-
   @JsonKey(ignore: true)
   String? documentID;
   @JsonKey()

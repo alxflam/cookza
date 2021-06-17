@@ -164,10 +164,13 @@ List<DataRow> _getIngredientRows(
               if (result == null) {
                 return;
               } else if (!result.model.isDeleted) {
-                // TODO: what if group assignment changed!
                 model.setAmount(i, result.model.amount, group);
                 model.setIngredient(i, result.model.ingredient, group);
                 model.setScale(i, result.model.unitOfMeasure, group);
+                if (group != result.group && result.group != null) {
+                  // group assignment changed
+                  model.changeGroup(i, group, result.group!);
+                }
               } else if (result.model.isDeleted) {
                 model.removeIngredient(i, group);
               }

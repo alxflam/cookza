@@ -209,10 +209,15 @@ class RecipeIngredientEditStep extends RecipeEditStep {
   List<IngredientGroupEntity> get groups => this._groups;
 
   MutableIngredientGroup addGroup(String name) {
+    MutableIngredientGroup group = _createAndAddGroup(name);
+    notifyListeners();
+    return group;
+  }
+
+  MutableIngredientGroup _createAndAddGroup(String name) {
     final group =
         MutableIngredientGroup.forValues(this.groups.length, name, []);
     this._groups.add(group);
-    notifyListeners();
     return group;
   }
 
@@ -246,6 +251,20 @@ class RecipeIngredientEditStep extends RecipeEditStep {
     notifyListeners();
   }
 
+  void changeGroup(
+      int index, IngredientGroupEntity current, IngredientGroupEntity target) {
+    final note = current.ingredients.removeAt(index);
+    IngredientGroupEntity _targetGroup;
+    if (!this._groups.contains(target)) {
+      _targetGroup = _createAndAddGroup(target.name);
+    } else {
+      _targetGroup = this._groups[this._groups.indexOf(target)];
+    }
+    _targetGroup.ingredients.add(note);
+
+    notifyListeners();
+  }
+
   void setIngredient(
       int index, IngredientEntity ingredient, IngredientGroupEntity group) {
     final note = group.ingredients[index] as MutableIngredientNote;
@@ -271,6 +290,8 @@ class RecipeIngredientEditStep extends RecipeEditStep {
   @override
   void applyTo(MutableRecipe recipe) {
     recipe.servings = this._servings;
+    // remove empty groups - there may be empty groups due to group assignment changes
+    this._groups.removeWhere((e) => e.ingredients.isEmpty);
     recipe.ingredientGroupList = this._groups;
   }
 
