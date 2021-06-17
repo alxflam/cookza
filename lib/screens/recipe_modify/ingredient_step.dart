@@ -82,10 +82,6 @@ Widget _getServingsRow(RecipeIngredientEditStep model, BuildContext context) {
         onPress: () => model.servings = model.servings + 1,
       ),
       _getAddRowButton(context, model),
-      // IconButton(
-      //   icon: Icon(Icons.add),
-      //   onPressed: () async => await _addNewIngredient(context, model),
-      // ),
     ],
   );
 }

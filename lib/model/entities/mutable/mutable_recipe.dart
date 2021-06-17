@@ -3,9 +3,10 @@ import 'dart:typed_data';
 
 import 'package:cookza/constants.dart';
 import 'package:cookza/model/entities/abstract/ingredient_group_entity.dart';
-import 'package:cookza/model/entities/abstract/ingredient_note_entity.dart';
 import 'package:cookza/model/entities/abstract/instruction_entity.dart';
 import 'package:cookza/model/entities/abstract/recipe_entity.dart';
+import 'package:cookza/model/entities/mutable/mutable_ingredient_group.dart';
+import 'package:cookza/model/entities/mutable/mutable_ingredient_note.dart';
 import 'package:cookza/model/entities/mutable/mutable_instruction.dart';
 
 class MutableRecipe implements RecipeEntity {
@@ -17,11 +18,8 @@ class MutableRecipe implements RecipeEntity {
   int _duration = 20;
   String? _id;
   String? _recipeCollectionId;
-  @deprecated
-  List<IngredientNoteEntity>? _ingredients;
   List<IngredientGroupEntity> _ingredientGroups = [];
   List<InstructionEntity>? _instructions;
-  Future<List<IngredientNoteEntity>>? _origIngredients;
   Future<List<InstructionEntity>>? _origInstructions;
   Set<String> _tags = {};
   int _servings = 2;
@@ -51,7 +49,6 @@ class MutableRecipe implements RecipeEntity {
       : this._creationDate = DateTime.now(),
         this._modificationDate = DateTime.now(),
         this._difficulty = DIFFICULTY.EASY,
-        this._ingredients = [],
         this._ingredientGroups = [],
         this._instructions = [],
         this._tags = <String>{},
@@ -61,7 +58,10 @@ class MutableRecipe implements RecipeEntity {
     final result = MutableRecipe._copy(entity);
 
     final groups = await entity.ingredientGroups;
-    result.ingredientGroupList = [...groups];
+    result.ingredientGroupList = [
+      ...groups.map((e) => MutableIngredientGroup.forValues(e.index, e.name,
+          e.ingredients.map((e) => MutableIngredientNote.of(e)).toList()))
+    ];
 
     final instructions = await entity.instructions;
     result.instructionList =
@@ -101,12 +101,6 @@ class MutableRecipe implements RecipeEntity {
 
   @override
   String? get id => this._id;
-
-  @override
-  Future<UnmodifiableListView<IngredientNoteEntity>> get ingredients async {
-    var original = (await this._origIngredients) ?? [];
-    return Future.value(UnmodifiableListView(this._ingredients ?? original));
-  }
 
   set ingredientGroupList(List<IngredientGroupEntity> value) {
     this._ingredientGroups = value;

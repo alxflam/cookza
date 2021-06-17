@@ -22,6 +22,7 @@ class RecipeViewModel extends ChangeNotifier {
 
   void _copyValues() {
     this._instructions.clear();
+    this._ingredientGroups.clear();
 
     this._servings = this._recipe.servings;
 

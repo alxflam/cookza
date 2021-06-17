@@ -71,8 +71,8 @@ class NewIngredientScreen extends StatelessWidget {
                     ),
                     IconButton(
                       onPressed: () async {
-                        final group = await _createOrRenameGroup(
-                            context, screenModel, null);
+                        final group =
+                            await _createGroup(context, screenModel, null);
                         if (group != null) {
                           final newList = [...groups.value, group];
                           // select the created group
@@ -82,11 +82,6 @@ class NewIngredientScreen extends StatelessWidget {
                         }
                       },
                       icon: Icon(Icons.add),
-                    ),
-                    IconButton(
-                      onPressed: () => _createOrRenameGroup(
-                          context, screenModel, screenModel.group),
-                      icon: Icon(Icons.edit),
                     ),
                   ],
                 );
@@ -322,13 +317,12 @@ class IngredientNameTextInput extends StatelessWidget {
   }
 }
 
-Future<IngredientGroupEntity?> _createOrRenameGroup(BuildContext context,
+Future<IngredientGroupEntity?> _createGroup(BuildContext context,
     IngredientScreenModel model, IngredientGroupEntity? group) {
   return showDialog<IngredientGroupEntity?>(
     context: context,
     builder: (context) {
-      final nameController = TextEditingController(
-          text: group?.name ?? AppLocalizations.of(context).groupName);
+      final nameController = TextEditingController(text: group?.name ?? '');
 
       return SimpleDialog(
         children: [
@@ -341,6 +335,9 @@ Future<IngredientGroupEntity?> _createOrRenameGroup(BuildContext context,
                   controller: nameController,
                   style: TextStyle(fontSize: 20),
                   autofocus: true,
+                  maxLines: 1,
+                  decoration: InputDecoration(
+                      hintText: AppLocalizations.of(context).groupName),
                 ),
               ),
             ],
@@ -349,15 +346,9 @@ Future<IngredientGroupEntity?> _createOrRenameGroup(BuildContext context,
             padding: EdgeInsets.all(10),
             child: ElevatedButton(
               onPressed: () {
-                // TODO: needs a new mutable entity...
-                IngredientGroupEntity adaptedGroup;
-                if (group != null) {
-                  // TODO: rename existing group
-                  adaptedGroup = group;
-                } else {
-                  adaptedGroup = MutableIngredientGroup.forValues(
-                      1, nameController.text, []);
-                }
+                final adaptedGroup = MutableIngredientGroup.forValues(
+                    1, nameController.text, []);
+
                 Navigator.pop(context, adaptedGroup);
               },
               child: Icon(Icons.save),
