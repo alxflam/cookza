@@ -4,7 +4,6 @@ import 'dart:typed_data';
 
 import 'package:cookza/constants.dart';
 import 'package:cookza/model/entities/abstract/ingredient_group_entity.dart';
-import 'package:cookza/model/entities/abstract/ingredient_note_entity.dart';
 import 'package:cookza/model/entities/abstract/instruction_entity.dart';
 import 'package:cookza/model/entities/abstract/recipe_entity.dart';
 import 'package:cookza/model/entities/json/ingredient_note_entity.dart';
@@ -29,10 +28,6 @@ class RecipeEntityJson implements RecipeEntity {
 
   @override
   String get id => _recipe.id;
-
-  @override
-  Future<UnmodifiableListView<IngredientNoteEntity>> get ingredients =>
-      Future.value(UnmodifiableListView([]));
 
   @override
   Future<UnmodifiableListView<InstructionEntity>> get instructions {

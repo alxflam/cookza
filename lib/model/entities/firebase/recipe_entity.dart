@@ -3,11 +3,9 @@ import 'dart:typed_data';
 
 import 'package:cookza/constants.dart';
 import 'package:cookza/model/entities/abstract/ingredient_group_entity.dart';
-import 'package:cookza/model/entities/abstract/ingredient_note_entity.dart';
 import 'package:cookza/model/entities/abstract/instruction_entity.dart';
 import 'package:cookza/model/entities/abstract/recipe_entity.dart';
 import 'package:cookza/model/entities/firebase/ingredient_group_entity.dart';
-import 'package:cookza/model/entities/firebase/ingredient_note_entity.dart';
 import 'package:cookza/model/entities/firebase/instruction_entity.dart';
 import 'package:cookza/model/firebase/recipe/firebase_recipe.dart';
 import 'package:cookza/services/firebase_provider.dart';
@@ -15,9 +13,6 @@ import 'package:cookza/services/flutter/service_locator.dart';
 
 class RecipeEntityFirebase implements RecipeEntity {
   final FirebaseRecipe _recipe;
-
-  @deprecated
-  List<IngredientNoteEntityFirebase> _ingredients = [];
 
   List<IngredientGroupEntityFirebase> _ingredientGroups = [];
 
@@ -40,15 +35,6 @@ class RecipeEntityFirebase implements RecipeEntity {
 
   @override
   String? get id => this._recipe.documentID;
-
-  @override
-  Future<UnmodifiableListView<IngredientNoteEntity>> get ingredients async {
-    if (this._ingredients.isEmpty) {
-      this._ingredients = await sl.get<FirebaseProvider>().recipeIngredients(
-          this._recipe.recipeGroupID, this._recipe.documentID!);
-    }
-    return Future.value(UnmodifiableListView(this._ingredients));
-  }
 
   @override
   Future<UnmodifiableListView<InstructionEntity>> get instructions async {

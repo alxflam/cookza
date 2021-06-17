@@ -10,7 +10,6 @@ import 'package:cookza/model/entities/mutable/mutable_ingredient_group.dart';
 import 'package:cookza/model/entities/mutable/mutable_ingredient_note.dart';
 import 'package:cookza/model/entities/mutable/mutable_instruction.dart';
 import 'package:cookza/model/entities/mutable/mutable_recipe.dart';
-import 'package:cookza/services/flutter/navigator_service.dart';
 import 'package:cookza/services/recipe/image_manager.dart';
 import 'package:cookza/services/recipe/recipe_manager.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
@@ -203,9 +202,6 @@ class RecipeIngredientEditStep extends RecipeEditStep {
   /// initial servings
   int _servings = 1; // TODO: preference!
 
-  /// use groups instead
-  @deprecated
-  List<MutableIngredientNote> _ingredients = [];
   List<IngredientGroupEntity> _groups = [];
 
   int get servings => _servings;
@@ -236,7 +232,6 @@ class RecipeIngredientEditStep extends RecipeEditStep {
       this.groups.add(group);
     }
     group.ingredients.add(MutableIngredientNote.of(item.toIngredientNote()));
-    // this._ingredients.add(MutableIngredientNote.of(item.toIngredientNote()));
     notifyListeners();
   }
 
@@ -266,18 +261,6 @@ class RecipeIngredientEditStep extends RecipeEditStep {
   void applyFrom(RecipeEntity recipe) {
 // TODO await these setters...apply needs to be async!
 
-    recipe.ingredients.then((value) {
-      // transform into default group
-      if (value.isNotEmpty) {
-        final context = sl.get<NavigatorService>().currentContext;
-        final defaultName =
-            context != null ? AppLocalizations.of(context).groupName : '';
-        final group = this.addGroup(defaultName);
-        group.ingredients
-            .addAll(value.map((e) => MutableIngredientNote.of(e)).toList());
-      }
-    });
-
     recipe.ingredientGroups.then((value) {
       this._groups = [...value];
     });
@@ -287,8 +270,6 @@ class RecipeIngredientEditStep extends RecipeEditStep {
 
   @override
   void applyTo(MutableRecipe recipe) {
-    // TODO: no longer store plain ingredients list
-    // recipe.ingredientList = this._ingredients;
     recipe.servings = this._servings;
     recipe.ingredientGroupList = this._groups;
   }

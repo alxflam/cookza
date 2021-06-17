@@ -2,7 +2,6 @@ import 'dart:collection';
 import 'dart:typed_data';
 
 import 'package:cookza/model/entities/abstract/ingredient_group_entity.dart';
-import 'package:cookza/model/entities/abstract/ingredient_note_entity.dart';
 import 'package:cookza/model/entities/abstract/instruction_entity.dart';
 
 enum DIFFICULTY { EASY, MEDIUM, HARD }
@@ -25,10 +24,6 @@ abstract class RecipeEntity {
   Uint8List? get inMemoryImage;
 
   DIFFICULTY get difficulty;
-
-  /// returns all ingredients
-  @deprecated
-  Future<UnmodifiableListView<IngredientNoteEntity>> get ingredients;
 
   /// returns the grouped ingredients
   Future<UnmodifiableListView<IngredientGroupEntity>> get ingredientGroups;

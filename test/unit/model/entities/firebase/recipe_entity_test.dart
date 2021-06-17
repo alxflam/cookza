@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cookza/constants.dart';
 import 'package:cookza/model/entities/abstract/recipe_entity.dart';
-import 'package:cookza/model/entities/firebase/ingredient_note_entity.dart';
+import 'package:cookza/model/entities/firebase/ingredient_group_entity.dart';
 import 'package:cookza/model/entities/firebase/instruction_entity.dart';
 import 'package:cookza/model/entities/firebase/recipe_entity.dart';
 import 'package:cookza/model/firebase/recipe/firebase_ingredient.dart';
@@ -59,23 +59,24 @@ void main() {
       recipe.recipeGroupID = 'GROUPID';
       var cut = RecipeEntityFirebase.of(recipe);
 
-      List<IngredientNoteEntityFirebase> ingredients = [];
-      ingredients.add(IngredientNoteEntityFirebase.of(FirebaseIngredient(
+      List<FirebaseIngredient> ingredients = [];
+      ingredients.add(FirebaseIngredient(
           amount: 2,
           unitOfMeasure: 'KGM',
-          ingredient: Ingredient(name: 'Onion'))));
+          ingredient: Ingredient(name: 'Onion')));
+      final ingGroup = IngredientGroupEntityFirebase(ingredients, name: 'Test');
 
-      when(fbMock.recipeIngredients('GROUPID', 'DOCID'))
-          .thenAnswer((_) => Future.value(ingredients));
+      when(fbMock.recipeIngredientGroups('GROUPID', 'DOCID'))
+          .thenAnswer((_) => Future.value([ingGroup]));
 
-      var result = await cut.ingredients;
+      var result = await cut.ingredientGroups;
       expect(result.length, 1);
-      verify(fbMock.recipeIngredients('GROUPID', 'DOCID')).called(1);
+      verify(fbMock.recipeIngredientGroups('GROUPID', 'DOCID')).called(1);
 
       // second invocation won't call firebase provider again
-      result = await cut.ingredients;
+      result = await cut.ingredientGroups;
       expect(result.length, 1);
-      verifyNever(fbMock.recipeIngredients('GROUPID', 'DOCID'));
+      verifyNever(fbMock.recipeIngredientGroups('GROUPID', 'DOCID'));
     },
   );
 

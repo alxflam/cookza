@@ -7,7 +7,6 @@ import 'package:cookza/model/entities/abstract/recipe_entity.dart';
 import 'package:cookza/model/entities/abstract/shopping_list_entity.dart';
 import 'package:cookza/model/entities/abstract/user_entity.dart';
 import 'package:cookza/model/entities/firebase/ingredient_group_entity.dart';
-import 'package:cookza/model/entities/firebase/ingredient_note_entity.dart';
 import 'package:cookza/model/entities/firebase/instruction_entity.dart';
 import 'package:cookza/model/entities/firebase/meal_plan_collection_entity.dart';
 import 'package:cookza/model/entities/firebase/meal_plan_entity.dart';
@@ -411,15 +410,6 @@ class FirebaseProvider {
     return recipeDocRef.id;
   }
 
-  Future<List<IngredientNoteEntityFirebase>> recipeIngredients(
-      String recipeGroup, String recipeID) async {
-    var doc = await _firestore.collection(INGREDIENTS).doc(recipeID).get();
-
-    var docData = FirebaseIngredientDocument.fromJson(doc.data()!, doc.id);
-    final data = docData.ingredients ?? <FirebaseIngredient>[];
-    return data.map((e) => IngredientNoteEntityFirebase.of(e)).toList();
-  }
-
   Future<List<IngredientGroupEntityFirebase>> recipeIngredientGroups(
       String recipeGroup, String recipeID) async {
     var doc = await _firestore.collection(INGREDIENTS).doc(recipeID).get();
@@ -428,9 +418,12 @@ class FirebaseProvider {
 
     /// if it's a legacy recipe, wrap the legacy ingredient list inside a group
     if (docData.groups?.isEmpty ?? true) {
-      return [
-        IngredientGroupEntityFirebase(docData.ingredients ?? [], name: '')
-      ];
+      if (docData.ingredients?.isNotEmpty ?? false) {
+        return [
+          IngredientGroupEntityFirebase(docData.ingredients ?? [], name: '')
+        ];
+      }
+      return [];
     }
 
     /// otherwise return the actual ingredient groups
