@@ -78,8 +78,11 @@ void main() {
 
       expect(cut.documentID, '4567');
       expect(cut.recipeID, '1234');
+      // ignore: deprecated_member_use_from_same_package
       expect(cut.ingredients!.length, 2);
+      // ignore: deprecated_member_use_from_same_package
       expect(cut.ingredients!.first.ingredient.name, 'Pasta');
+      // ignore: deprecated_member_use_from_same_package
       expect(cut.ingredients!.last.ingredient.name, 'Pepper');
     },
   );

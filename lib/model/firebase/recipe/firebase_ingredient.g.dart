@@ -80,6 +80,7 @@ Map<String, dynamic> _$FirebaseIngredientDocumentToJson(
     }
   }
 
+  // ignore: deprecated_member_use_from_same_package
   writeNotNull('ingredients', kListToJson(instance.ingredients));
   writeNotNull('groups', kListToJson(instance.groups));
   return val;

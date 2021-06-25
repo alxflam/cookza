@@ -418,8 +418,10 @@ class FirebaseProvider {
 
     /// if it's a legacy recipe, wrap the legacy ingredient list inside a group
     if (docData.groups?.isEmpty ?? true) {
+      // ignore: deprecated_member_use_from_same_package
       if (docData.ingredients?.isNotEmpty ?? false) {
         return [
+          // ignore: deprecated_member_use_from_same_package
           IngredientGroupEntityFirebase(docData.ingredients ?? [], name: '')
         ];
       }
