@@ -39,7 +39,8 @@ class OverviewTab extends StatelessWidget {
                         );
                       },
                       child: Container(
-                        key: ValueKey(snapshot.data!.lastModifiedSync()),
+                        key: ValueKey(
+                            '${model.recipe.id}-${model.recipe.modificationDate.toIso8601String()}'),
                         height: 400,
                         alignment: Alignment.bottomCenter,
                         decoration: BoxDecoration(
