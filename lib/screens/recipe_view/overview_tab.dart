@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cookza/components/recipe_rating_bar.dart';
 import 'package:cookza/constants.dart';
 import 'package:cookza/screens/recipe_view/image_view.dart';
@@ -17,9 +19,9 @@ class OverviewTab extends StatelessWidget {
         return Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            FutureBuilder(
+            FutureBuilder<File?>(
               future: sl.get<ImageManager>().getRecipeImageFile(model.recipe),
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
+              builder: (BuildContext context, AsyncSnapshot<File?> snapshot) {
                 if (snapshot.hasData) {
                   return Expanded(
                     flex: 1,
@@ -30,20 +32,21 @@ class OverviewTab extends StatelessWidget {
                           MaterialPageRoute(
                             builder: (context) {
                               return ImageView(
-                                imageProvider: FileImage(snapshot.data),
+                                imageProvider: FileImage(snapshot.data!),
                               );
                             },
                           ),
                         );
                       },
                       child: Container(
+                        key: ValueKey(snapshot.data!.lastModifiedSync()),
                         height: 400,
                         alignment: Alignment.bottomCenter,
                         decoration: BoxDecoration(
                           image: DecorationImage(
                             fit: BoxFit.fitWidth,
                             alignment: FractionalOffset.center,
-                            image: FileImage(snapshot.data),
+                            image: FileImage(snapshot.data!),
                           ),
                         ),
                         child: ClipRRect(

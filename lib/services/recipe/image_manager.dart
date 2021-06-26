@@ -6,11 +6,12 @@ import 'package:cookza/services/flutter/exception_handler.dart';
 import 'package:cookza/services/local_storage.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 
 abstract class ImageManager {
   Future<void> uploadRecipeImage(String recipeId, File file);
   Future<void> uploadRecipeImageFromBytes(String recipeId, Uint8List bytes);
-  Future<void> deleteRecipeImage(RecipeEntity entity);
+  Future<void> deleteRecipeImage(String recipeId);
   Future<String> getRecipeImageURL(String recipeId);
   String getRecipeImagePath(String recipeId);
   Future<File?> getRecipeImageFile(RecipeEntity entity);
@@ -21,22 +22,22 @@ class ImageManagerFirebase implements ImageManager {
   final FirebaseStorage _storage = sl.get<FirebaseStorage>();
 
   @override
-  Future<void> deleteRecipeImage(RecipeEntity entity) async {
+  Future<void> deleteRecipeImage(String recipeId) async {
     // delete local image file
     var imageDirectory = await sl.get<StorageProvider>().getImageDirectory();
-    var cacheFile = File('$imageDirectory/${entity.id}.jpg');
+    File cacheFile = cacheFilePath(imageDirectory, recipeId);
     if (cacheFile.existsSync()) {
-      cacheFile.deleteSync();
-    }
-
-    // return if the image does not have an image at all
-    if (entity.image == null || entity.image!.isEmpty) {
-      return;
+      await cacheFile.delete();
+      print('deleted file: ${cacheFile.path}');
     }
 
     // delete the cloud image
-    Reference reference = _storage.ref().child(getRecipeImagePath(entity.id!));
+    Reference reference = _storage.ref().child(getRecipeImagePath(recipeId));
     await reference.delete();
+  }
+
+  File cacheFilePath(String imageDirectory, String id) {
+    return File('$imageDirectory/$id.jpg');
   }
 
   @override
@@ -58,13 +59,13 @@ class ImageManagerFirebase implements ImageManager {
   @override
   Future<File?> getRecipeImageFile(RecipeEntity entity) async {
     var imageDirectory = await sl.get<StorageProvider>().getImageDirectory();
-    var cacheFile = File('$imageDirectory/${entity.id}.jpg');
+    var cacheFile = cacheFilePath(imageDirectory, entity.id!);
 
     if (cacheFile.existsSync()) {
-      var imgDate = cacheFile.lastModifiedSync();
+      var imgDate = await cacheFile.lastModified();
       var isBefore = imgDate.isBefore(entity.modificationDate);
       if (isBefore) {
-        cacheFile.deleteSync();
+        await cacheFile.delete();
       } else {
         return cacheFile;
       }
@@ -95,22 +96,24 @@ class ImageManagerFirebase implements ImageManager {
     var cacheFile = File('$imageDirectory/$fileName');
 
     if (cacheFile.existsSync()) {
-      cacheFile.deleteSync();
+      await cacheFile.delete();
     }
   }
 
   @override
   Future<void> uploadRecipeImageFromBytes(
       String recipeId, Uint8List bytes) async {
-    Reference reference = _storage.ref().child(getRecipeImagePath(recipeId));
-
-    // save local cache
+    // save or update the local cache
     var imageDirectory = await sl.get<StorageProvider>().getImageDirectory();
-    var cacheFile = File('$imageDirectory/$recipeId.jpg');
+    var cacheFile = cacheFilePath(imageDirectory, recipeId);
+    await FileImage(cacheFile).evict(); // clear the image cache
 
-    cacheFile.writeAsBytesSync(bytes);
+    // flush to be sure wqe don't still show outdated data
+    await cacheFile.writeAsBytes(bytes, flush: true);
+    print('saved local file: ${cacheFile.path}');
 
     // upload the file
+    Reference reference = _storage.ref().child(getRecipeImagePath(recipeId));
     print('start upload');
     UploadTask uploadTask = reference.putFile(
         cacheFile,

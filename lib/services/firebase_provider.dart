@@ -344,7 +344,7 @@ class FirebaseProvider {
     for (var recipe in recipes.docs) {
       var entity = RecipeEntityFirebase.of(
           FirebaseRecipe.fromJson(recipe.data(), id: recipe.id));
-      await sl.get<ImageManager>().deleteRecipeImage(entity);
+      await sl.get<ImageManager>().deleteRecipeImage(entity.id!);
     }
 
     await _firestore.runTransaction<int>((transaction) {

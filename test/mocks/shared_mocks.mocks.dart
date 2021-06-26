@@ -880,8 +880,8 @@ class MockImageManager extends _i1.Mock implements _i35.ImageManager {
           returnValue: Future<void>.value(),
           returnValueForMissingStub: Future.value()) as _i20.Future<void>);
   @override
-  _i20.Future<void> deleteRecipeImage(_i11.RecipeEntity? entity) =>
-      (super.noSuchMethod(Invocation.method(#deleteRecipeImage, [entity]),
+  _i20.Future<void> deleteRecipeImage(String? recipeId) =>
+      (super.noSuchMethod(Invocation.method(#deleteRecipeImage, [recipeId]),
           returnValue: Future<void>.value(),
           returnValueForMissingStub: Future.value()) as _i20.Future<void>);
   @override

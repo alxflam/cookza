@@ -81,11 +81,12 @@ class RecipeEditModel extends ChangeNotifier {
       print('getNextRecipeDocumentId returned: ' + _targetRecipe.id!);
     }
 
+    // then adapt the image
     if (imageStepModel.imageChanged) {
       // upload the image for the given recipe
       if (imageStepModel.image == null) {
         // delete the image if exists
-        await sl.get<ImageManager>().deleteRecipeImage(_targetRecipe);
+        await sl.get<ImageManager>().deleteRecipeImage(_targetRecipe.id!);
       } else {
         // upload the image
         await sl
@@ -96,7 +97,7 @@ class RecipeEditModel extends ChangeNotifier {
       }
     }
 
-    // then save the recipe
+    // save the recipe
     return await sl.get<RecipeManager>().createOrUpdate(_targetRecipe);
   }
 
