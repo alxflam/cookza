@@ -15,8 +15,15 @@ class ChangelogScreen extends StatelessWidget {
         child: Column(
           children: [
             ChangelogEntry(
-              version: '0.0.17',
-              date: kDateFormatter.parse('30.05.2021'),
+              version: '0.0.23',
+              date: kDateFormatter.parse('26.06.2021'),
+              changes: [
+                'Fix: Rezeptkachel wird nach Bearbeitung nicht sofort aktualisiert',
+              ],
+            ),
+            ChangelogEntry(
+              version: '0.0.22',
+              date: kDateFormatter.parse('17.06.2021'),
               changes: [
                 'Neu: Zutaten gruppieren in Zutatenliste',
                 'Neu: Rezeptbild anzeigen (Tap auf Bild)',
