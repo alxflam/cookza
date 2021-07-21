@@ -21,7 +21,7 @@ Step getImageStep(BuildContext context) {
         builder: (context, model, child) {
           Future<void> getImage(ImageSource source) async {
             var picker = ImagePicker();
-            final image = await picker.getImage(
+            final image = await picker.pickImage(
                 source: source,
                 imageQuality: RecipeEditModel.kImageQuality,
                 maxWidth: RecipeEditModel.kImageMaxWidth);

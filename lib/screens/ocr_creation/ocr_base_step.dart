@@ -22,7 +22,7 @@ class OCRImageStep extends StatelessWidget {
           builder: (context, model, child) {
             Future<void> getImage(ImageSource source) async {
               var picker = ImagePicker();
-              var image = await picker.getImage(
+              var image = await picker.pickImage(
                   source: source, imageQuality: 100, maxWidth: 1000);
               if (image != null) {
                 await model.setImage(File(image.path));

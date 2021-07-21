@@ -117,7 +117,8 @@ class _CameraViewState extends State<CameraView> {
   }
 
   Future _getImage() async {
-    final pickedFile = await _imagePicker.getImage(source: ImageSource.gallery);
+    final pickedFile =
+        await _imagePicker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       return _processPickedFile(pickedFile);
     } else {
@@ -170,7 +171,7 @@ class _CameraViewState extends State<CameraView> {
     this._image = null;
   }
 
-  Future _processPickedFile(PickedFile pickedFile) async {
+  Future _processPickedFile(XFile pickedFile) async {
     setState(() {
       _image = File(pickedFile.path);
     });
