@@ -54,7 +54,7 @@ android {
             signingConfig signingConfigs.debug
 
             aaptOptions {
-                ignoreAssetsPattern '!mlkit_pose:!mlkit_label_default_model:'
+                ignoreAssetsPattern '!mlkit_pose:!mlkit_label_default_model:!hobbes.tflite:'
             }
         }
 
@@ -62,7 +62,7 @@ android {
             applicationIdSuffix = ".debug"
 
             aaptOptions {
-                ignoreAssetsPattern '!mlkit_pose:!mlkit_label_default_model:'
+                ignoreAssetsPattern '!mlkit_pose:!mlkit_label_default_model:!hobbes.tflite:'
             }
         }
     }
