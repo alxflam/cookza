@@ -30,3 +30,6 @@ Run the following command to built an APK for ARM64
 ## Running tests
 * flutter test --coverage
 * genhtml coverage/lcov.info --output-directory coverage
+
+# Creating your own Cookza app
+Create a Firebase project and add the google-services.json to the android/app directory.
