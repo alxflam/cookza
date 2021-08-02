@@ -55,6 +55,7 @@ generated_plugin_registrant.dart
 # firebase hosting
 .firebase
 .firebaserc
+.metadata
 # Web app index.html
 index.html 
 
