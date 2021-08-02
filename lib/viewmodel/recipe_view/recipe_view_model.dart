@@ -101,7 +101,7 @@ class RecipeViewModel extends ChangeNotifier {
         for (var j = 0; j < group.ingredients.length; j++) {
           var baseAmount = group.ingredients[j].amount;
           _ingredientGroups[i].ingredients[j].amount =
-              (baseAmount ?? 1) * ratio;
+              (baseAmount ?? 0) * ratio;
         }
       }
 
