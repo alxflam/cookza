@@ -1,7 +1,9 @@
 import 'package:cookza/components/round_icon_button.dart';
 import 'package:cookza/constants.dart';
+import 'package:cookza/model/entities/abstract/ingredient_group_entity.dart';
 import 'package:cookza/model/entities/mutable/mutable_ingredient_note.dart';
 import 'package:cookza/screens/new_ingredient_screen.dart';
+import 'package:cookza/screens/util/wrapper.dart';
 import 'package:cookza/viewmodel/ingredient_screen_model.dart';
 import 'package:cookza/viewmodel/recipe_edit/recipe_edit_model.dart';
 import 'package:cookza/viewmodel/recipe_edit/recipe_edit_step.dart';
@@ -22,6 +24,8 @@ Step getIngredientsStep(BuildContext context) {
 }
 
 class IngredientStepContent extends StatelessWidget {
+  final _leastRecentlyUsedGroup = Wrapper<IngredientGroupEntity>(null);
+
   @override
   Widget build(BuildContext context) {
     /// create an initial group if there not yet any groups
@@ -63,58 +67,61 @@ class IngredientStepContent extends StatelessWidget {
       ),
     );
   }
-}
 
-Widget _getServingsRow(RecipeIngredientEditStep model, BuildContext context) {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-    children: <Widget>[
-      RoundIconButton(
-        icon: FontAwesomeIcons.minus,
-        onPress: () => model.servings > 1
-            ? model.servings = model.servings - 1
-            : model.servings,
-      ),
-      Text(
-          '${model.servings} ${AppLocalizations.of(context).servings(model.servings)}'),
-      RoundIconButton(
-        icon: FontAwesomeIcons.plus,
-        onPress: () => model.servings = model.servings + 1,
-      ),
-      _getAddRowButton(context, model),
-    ],
-  );
-}
+  Future<void> _addNewIngredient(
+      BuildContext context, RecipeIngredientEditStep model) async {
+    final rootModel = Provider.of<RecipeEditModel>(context, listen: false);
+    RecipeIngredientModel ingModel = RecipeIngredientModel.of(
+        MutableIngredientNote.empty(),
+        sourceRecipe: rootModel.targetEntity.id);
 
-Widget _getAddRowButton(BuildContext context, RecipeIngredientEditStep model) {
-  return ElevatedButton(
-    style: ElevatedButton.styleFrom(
-        primary: Theme.of(context).colorScheme.primary),
-    onPressed: () async => await _addNewIngredient(context, model),
-    child: Text(AppLocalizations.of(context).addIngredient),
-  );
-}
+    var result = await Navigator.pushNamed(
+      context,
+      NewIngredientScreen.id,
+      arguments: IngredientScreenModel(
+          model: ingModel,
+          supportsRecipeReference: true,
+          requiresIngredientGroup: true,
+          groups: model.groups,
+          group: _leastRecentlyUsedGroup.value ??
+              (model.groups.isNotEmpty ? model.groups.first : null)),
+    ) as IngredientScreenModel?;
 
-Future<void> _addNewIngredient(
-    BuildContext context, RecipeIngredientEditStep model) async {
-  final rootModel = Provider.of<RecipeEditModel>(context, listen: false);
-  RecipeIngredientModel ingModel = RecipeIngredientModel.of(
-      MutableIngredientNote.empty(),
-      sourceRecipe: rootModel.targetEntity.id);
+    if (result != null && !result.model.isDeleted) {
+      model.addNewIngredient(result.model, result.group!);
+      _leastRecentlyUsedGroup.value = result.group!;
+    }
+  }
 
-  var result = await Navigator.pushNamed(
-    context,
-    NewIngredientScreen.id,
-    arguments: IngredientScreenModel(
-        model: ingModel,
-        supportsRecipeReference: true,
-        requiresIngredientGroup: true,
-        groups: model.groups,
-        group: model.groups.isNotEmpty ? model.groups.first : null),
-  ) as IngredientScreenModel?;
+  Widget _getServingsRow(RecipeIngredientEditStep model, BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: <Widget>[
+        RoundIconButton(
+          icon: FontAwesomeIcons.minus,
+          onPress: () => model.servings > 1
+              ? model.servings = model.servings - 1
+              : model.servings,
+        ),
+        Text(
+            '${model.servings} ${AppLocalizations.of(context).servings(model.servings)}'),
+        RoundIconButton(
+          icon: FontAwesomeIcons.plus,
+          onPress: () => model.servings = model.servings + 1,
+        ),
+        _getAddRowButton(context, model),
+      ],
+    );
+  }
 
-  if (result != null && !result.model.isDeleted) {
-    model.addNewIngredient(result.model, result.group!);
+  Widget _getAddRowButton(
+      BuildContext context, RecipeIngredientEditStep model) {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+          primary: Theme.of(context).colorScheme.primary),
+      onPressed: () async => await _addNewIngredient(context, model),
+      child: Text(AppLocalizations.of(context).addIngredient),
+    );
   }
 }
 
