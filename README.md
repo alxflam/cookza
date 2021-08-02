@@ -3,191 +3,30 @@
 [![Analyzer](https://github.com/alex0711/cookza/actions/workflows/analyzer.yml/badge.svg)](https://github.com/alex0711/cookza/actions/workflows/analyzer.yml)
 [![Tests](https://github.com/alex0711/cookza/actions/workflows/tests.yml/badge.svg)](https://github.com/alex0711/cookza/actions/workflows/tests.yml)
 
-## Links
-- [Bitbucket Repository](https://bitbucket.org/alex0711/cookly/src/master/)
-- [Bitrise CI Pipeline](https://app.bitrise.io/app/918ad19024d15f9e#/builds)
+Cookza is a flutter app which let's you store and share your favorite recipes.
 
-Coverage before web enablement: 84.1%
-Coverage after web enablement: 
+![Home Screen](img/home_screen.jpg)
 
 ## Building the app
 
-SEE ML_VISION REMOVED: https://firebase.google.com/support/release-notes/android#mlkit-self-serve-fixes
-
-Run the following command to built an apk for ARM64
-* flutter build apk --target-platform android-arm64 --split-per-abi
-* flutter run --release to run the release build
-* Applied iterim patch due to ML Vision dependency issue: https://github.com/google/play-services-plugins/issues/153
-Remove this once the dependency issue got fixed by the Firebase team.
-
-# Generate icons
-* flutter pub run flutter_launcher_icons:main -f flutter_launcher_icons.yaml
-
-# Deploy web app
-* firebase hosting:channel:deploy ftr_web
-
-## Run test coverage
-
-* flutter test --coverage
-* genhtml coverage/lcov.info --output-directory coverage
-
-## Generating models
-
-The following command generates models (annoted with @JsonSerializable) and internationalization (see lib/localization) constants.
-* flutter pub run build_runner build --delete-conflicting-outputs
-
-## Generating translations
-
+### Generating translations
 Needed to generate for first run after checkout as the generated classes are not checked in.
 * flutter gen-l10n
 
-## Cloud Firestore Scheme
+### Generating models
+* flutter pub run build_runner build --delete-conflicting-outputs
 
-* don't directly use the DataProvider
-* hide it behind a profile service
-* which uses the data provider
-* only return immutable model classes
+### Building Android APK
+Run the following command to built an APK for ARM64
+* flutter build apk --target-platform android-arm64 --split-per-abi
+* flutter run --release to run the release build on a device
 
-abstract DataProvider
-* FirebaseDataProvider
-* LocalStorageDataProvider => don't implement, even for web view the firebase is needed hence, probably not really desired
+### Generate icons
+* flutter pub run flutter_launcher_icons:main -f flutter_launcher_icons.yaml
 
-views are being fed by streams of data so they directly react to changes occurring to the data
-* then refactor all model names (e.g. no firebase prefix)
+### Deploy web app
+* firebase hosting:channel:deploy <channel>
 
-### Handshakes
-* top level collection
-* webClientUserID: The user ID of the browser app requesting a connection
-* owner: user ID of the accepted owner
-* creationTimestamp: Creation timestamp of this entry
-* operatingSystem: The operating system of the web app
-* browser: The browser being used by the web app
-* repositoryID: The repositoryID the web app got permissions granted to
-
-    // read is allowed if 
-    // the user is signed in
-    // and the handshake is not yet taken or taken by the current user or it is the web user reading it
-    match /handshakes/{handshakeID} {
-      allow read: if request.auth != null && (request.resource.data.owner == null || request.resource.data.owner == userId() || resource.data.requestor == userId());
-    }
-    
-    // handshake updates
-    match /handshakes/{handshakeID} {
-      // allow create by any user who creates the handshake for himself and does not set an owner
-      allow create: if signedIn() && userId() == request.resource.data.requestor && request.resource.data.owner == null;
-      // allow update only to set the owned by field
-      // and if the handshake has not expired: not un-owned for more than 5 minutes
-      allow update: if signedIn() && resource.data.owner == null && request.resource.data.owner == userId() && request.time < (resource.data.creationTimestamp + duration.time(0, 5, 0, 0));
-      // allow delete only by owner or requestor
-      allow delete: if signedIn() && (resource.data.owner == userId() || resource.data.requestor == userId());
-    }   
-
-Then allow all reads, creates updates instead of only by userId() also by webSessionId()
-
-have a new collection webSessions:
-userId: abc
-sessionId: xyz
-Maybe even restrict to a single web session
-Then in the rule query by docId => webSessions docs are only managed by owner, doc id is same as owner/userId
-
-  function getWebSession(userId) {
-  	return get(/databases/$(database)/documents/webSession/$(userId)).sessionId;
-  }
-
-   // recipe reads
-    match /recipes/{recipeID} {
-    	// allow read only by group member
-      allow read: if userId() in readRecipeGroup(resource.data.recipeGroupID).data.users || getWebSession() in readRecipeGroup(resource.data.recipeGroupID).data.users;
-      allow list: if userId() in readRecipeGroup(resource.data.recipeGroupID).data.users || getWebSession() in readRecipeGroup(resource.data.recipeGroupID).data.users;  
-		}
-    
-    // recipe updates
-    match /recipes/{recipeID} {
-      // allow create only by group member
-    	allow create, write: if userId() in readRecipeGroup(request.resource.data.recipeGroupID).data.users || getWebSession() in readRecipeGroup(resource.data.recipeGroupID).data.users;
-      // allow update only by group member
-      allow update: if userId() in readRecipeGroup(resource.data.recipeGroupID).data.users || getWebSession() in readRecipeGroup(resource.data.recipeGroupID).data.users;
-      // delete only by group member
-      allow delete: if userId() in readRecipeGroup(resource.data.recipeGroupID).data.users || getWebSession() in readRecipeGroup(resource.data.recipeGroupID).data.users;
-    }
-
-
-### RecipeCollection
-* top level collection
-* has an ID
-* has a map of string <> userID, storing access details for users, e.g. member - 123, readonly - 1234, owner - 33456
-* allows a user to be part of multiple recipe collections in the future
-
-### Recipes
-* top level collection
-* each recipe has a reference to a recipe collection => enables access control based on the referenced document controls map
-* stores details in subcollections => shallow requests don't read the subcollections, e.g. ingredients and instructions
-* details: doc for instr and doc for ingredients => different subcollections due to subgoup queries!
-
-
-### MealPlanCollection
-* top level collection
-* has an ID
-* has a map of string <> userID, storing access details for users, e.g. member - 123, readonly - 1234, owner - 33456
-* TODO: the meal plan should also sync the shopping list (e.g. crossed off items)
-
-### MealPlans
-* top level collection
-* has an ID
-* contains a subcollection mealPlanDateItems with the meal plan for specific dates
-* has an array of used recipes
-* each meal plan has a reference to a meal plan collection => access control
-
-* if a user always has only a single meal plan...
-* then A invites B
-* the former meal plan of B would need to be deleted 
-* B requires offer from A to delete it's own meal plan, but A needs to add B to it's meal plan..
-* hence easier to have multiple meal plans and let the user delete the unused ones...?
-* or a cloud function makes sure adding the user and deleting a meal plan is handled in a transaction?
-
-// TODO:
-recipes nicht als subcollection => sonst muss bei move von einer group in andere immer 3x delete + 3x add ausgeführt werden
-=> als main collection wird nur das referenzfeld geändert mit einem merge update
-
-## Web App Login
-
-Anonymous user stays the same on same device and app => then use the user.id !
-
-App:
-* User is logged in anonymously with a generated id
-
-Web:
-* A new anonymous user is being generated
-* listen on a new record with the content: web app user id, web app platform, initialization date
-* QR code sends the document id the web app listens on
-
-App:
-* Scans QR code, reads the document id 
-* on special collection add a reference to the handshake document (so we can display the current logins)
-* if own repository is not yet online, upload it
-* add an entry to the web app record with the repository id
-
-Web:
-* web app receives the record, and can then listen on the repository
-
-App:
-* on logoff, the web user id is being deleted from the authorized users list
-* the handshake document is being deleted
-
-Collection of Recipes:
-* Identified by a generated ID
-* app created firebase collection
-
-
-
-anonymous login: on each exit, delete the anonymous user => check if locally cached data stays, otherwise not feasible
-first web login: encrypt a repositoryToken and store it. store the key locally
-
-web login: app uploads encrypted key - web app sends key to encrypt in qr code and can therefore decrypt and then read the repositoryToken
-
-- WebApp generates Session Token
-- WebApp opens Socket with Session 
-- WebApp displays QR Code with encoded Session Token
-- Client Scans QR code
-- Client connects to same Socket using the Session Token
-- Client sends the profile data
+## Running tests
+* flutter test --coverage
+* genhtml coverage/lcov.info --output-directory coverage
