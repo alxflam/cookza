@@ -55,6 +55,8 @@ generated_plugin_registrant.dart
 # firebase hosting
 .firebase
 .firebaserc
+# Web app index.html
+index.html 
 
 # Firebase config
 google-services.json
