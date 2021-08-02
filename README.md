@@ -2,6 +2,7 @@
 
 [![Analyzer](https://github.com/alex0711/cookza/actions/workflows/analyzer.yml/badge.svg)](https://github.com/alex0711/cookza/actions/workflows/analyzer.yml)
 [![Tests](https://github.com/alex0711/cookza/actions/workflows/tests.yml/badge.svg)](https://github.com/alex0711/cookza/actions/workflows/tests.yml)
+[![Format](https://github.com/alxflam/cookza/actions/workflows/format.yml/badge.svg)](https://github.com/alxflam/cookza/actions/workflows/format.yml)
 
 Cookza is a flutter app which let's you store and share your favorite recipes.
 
