@@ -361,6 +361,8 @@
 			}
 		}
 	},
+	"sourceCode": "Source Code",
+	"@sourceCode": {},
 	"uomMMT": "{count,plural, =1{mm}other{mm}}",
 	"@uomMMT": {
 		"description": "uom plural",

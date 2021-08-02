@@ -146,6 +146,7 @@
   "accept": "Akzeptieren",
   "readAndAccept": "Ich akzeptiere die ",
   "favoriteNotExisting": "{count,plural, =1{Keine Rezepte mit mind. {count} Stern bewertet} other{Keine Rezepte mit mind. {count} Sternen bewertet}}",
+  "sourceCode": "Source Code",
   "uomMMT": "{count,plural, =1{mm}other{mm}}",
 	"uomCMT": "{count,plural, =1{cm}other{cm}}",
 	"uomMTR": "{count,plural, =1{m}other{m}}",

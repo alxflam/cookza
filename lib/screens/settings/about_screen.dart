@@ -101,6 +101,13 @@ class AboutScreen extends StatelessWidget {
                 launch(kPlayStoreLink);
               },
             ),
+            ListTile(
+              title: Text(AppLocalizations.of(context).sourceCode),
+              leading: FaIcon(FontAwesomeIcons.code),
+              onTap: () {
+                launch(kRepositoryLink);
+              },
+            ),
             AboutScreenDivider(),
             ListTile(
               title: Text(AppLocalizations.of(context).deleteAllData),
