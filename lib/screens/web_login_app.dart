@@ -5,6 +5,7 @@ import 'package:cookza/model/firebase/general/firebase_handshake.dart';
 import 'package:cookza/model/json/user.dart';
 import 'package:cookza/screens/collections/qr_scanner.dart';
 import 'package:cookza/services/abstract/platform_info.dart';
+import 'package:cookza/services/flutter/exception_handler.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:cookza/services/web/web_login_manager.dart';
 import 'package:flutter/material.dart';
@@ -29,10 +30,22 @@ class WebLoginOnAppScreen extends StatelessWidget {
                 return;
               }
 
-              var user = JsonUser.fromJson(jsonDecode(json));
-
-              if (user.id.isNotEmpty) {
-                sl.get<FirebaseWebLoginManager>().enableWebLoginFor(user.id);
+              try {
+                var user = JsonUser.fromJson(jsonDecode(json));
+                if (user.id.isNotEmpty) {
+                  sl.get<FirebaseWebLoginManager>().enableWebLoginFor(user.id);
+                }
+              } on FormatException catch (e) {
+                // ignore: unawaited_futures
+                sl
+                    .get<ExceptionHandler>()
+                    .reportException(e, StackTrace.empty, DateTime.now());
+                // show error to user
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(AppLocalizations.of(context).invalidQRCode),
+                  ),
+                );
               }
             },
           ),

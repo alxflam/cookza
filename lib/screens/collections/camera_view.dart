@@ -186,8 +186,11 @@ class _CameraViewState extends State<CameraView> {
     }
     final bytes = allBytes.done().buffer.asUint8List();
 
-    final Size imageSize =
-        Size(image.width.toDouble(), image.height.toDouble());
+    /**
+     * The bytesPerRow may be greater than the actual image width, therefore use it instead
+     */
+    final width = image.planes.first.bytesPerRow;
+    final Size imageSize = Size(width.toDouble(), image.height.toDouble());
 
     final imageRotation = InputImageRotationMethods.fromRawValue(
             _cameraDescription!.sensorOrientation) ??
@@ -201,8 +204,9 @@ class _CameraViewState extends State<CameraView> {
       (Plane plane) {
         return InputImagePlaneMetadata(
           bytesPerRow: plane.bytesPerRow,
+          // bytesPerRow may not be equal to the planes width, hence use bytesPerRow
+          width: plane.bytesPerRow,
           height: plane.height,
-          width: plane.width,
         );
       },
     ).toList();

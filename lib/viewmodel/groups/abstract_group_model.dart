@@ -21,6 +21,7 @@ abstract class GroupViewModel with ChangeNotifier {
   /// add the given user from the json content
   Future<UserEntity?> addUserFromJson(String json) async {
     if (json.isNotEmpty) {
+      // TODO: add FormatException handling
       var user = JsonUser.fromJson(jsonDecode(json));
       if (user.id.isEmpty || user.name.isEmpty) {
         throw 'QR-Code does not contain a valid user ID and name';
