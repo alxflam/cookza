@@ -6,7 +6,6 @@ import 'package:intl/intl.dart';
 
 /// App name
 const kAppName = 'Cookza';
-const kAppVersion = '2021-08-alpha';
 const kPlayStoreLink = 'market://details?id=com.flammer.cookza';
 const kRepositoryLink = 'https://github.com/alxflam/cookza';
 

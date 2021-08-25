@@ -12,6 +12,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AboutScreen extends StatelessWidget {
@@ -45,10 +46,6 @@ class AboutScreen extends StatelessWidget {
             Text(
               kAppName,
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
-            ),
-            Text(
-              kAppVersion,
-              style: TextStyle(fontStyle: FontStyle.italic),
             ),
             Builder(builder: (context) {
               if (kIsWeb) {
@@ -135,10 +132,12 @@ class AboutScreen extends StatelessWidget {
             ListTile(
               leading: FaIcon(FontAwesomeIcons.fileAlt),
               title: Text(MaterialLocalizations.of(context).licensesPageTitle),
-              onTap: () {
+              onTap: () async {
+                final platformInfo = await PackageInfo.fromPlatform();
+
                 showLicensePage(
                   context: context,
-                  applicationVersion: kAppVersion,
+                  applicationVersion: platformInfo.version,
                   applicationIcon: ConstrainedBox(
                     constraints: BoxConstraints.tightFor(width: 40),
                     child: Image(
