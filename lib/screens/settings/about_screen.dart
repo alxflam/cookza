@@ -2,7 +2,6 @@ import 'package:cookza/components/alert_dialog_title.dart';
 import 'package:cookza/components/future_progress_dialog.dart';
 import 'package:cookza/components/version_text.dart';
 import 'package:cookza/constants.dart';
-import 'package:cookza/screens/settings/changelog_screen.dart';
 import 'package:cookza/screens/settings/error_log_screen.dart';
 import 'package:cookza/screens/settings/onboarding_screen.dart';
 import 'package:cookza/screens/settings/saved_images_screen.dart';
@@ -79,7 +78,7 @@ class AboutScreen extends StatelessWidget {
             ListTile(
               leading: FaIcon(FontAwesomeIcons.diceD20),
               title: Text(AppLocalizations.of(context).changelog),
-              onTap: () => Navigator.pushNamed(context, ChangelogScreen.id),
+              onTap: () => launch(kChangelogLink),
             ),
             AboutScreenDivider(),
             ListTile(

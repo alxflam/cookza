@@ -8,6 +8,8 @@ import 'package:intl/intl.dart';
 const kAppName = 'Cookza';
 const kPlayStoreLink = 'market://details?id=com.flammer.cookza';
 const kRepositoryLink = 'https://github.com/alxflam/cookza';
+const kChangelogLink =
+    'https://github.com/alxflam/cookza/blob/master/CHANGELOG.md';
 
 /// Icons
 const kWebAppData = FontAwesomeIcons.desktop;

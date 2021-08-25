@@ -15,7 +15,6 @@ import 'package:cookza/screens/recipe_modify/new_recipe_screen.dart';
 import 'package:cookza/screens/recipe_selection_screen.dart';
 import 'package:cookza/screens/recipe_view/recipe_screen.dart';
 import 'package:cookza/screens/settings/about_screen.dart';
-import 'package:cookza/screens/settings/changelog_screen.dart';
 import 'package:cookza/screens/settings/error_log_screen.dart';
 import 'package:cookza/screens/settings/export_settings_screen.dart';
 import 'package:cookza/screens/settings/meal_plan_settings_screen.dart';
@@ -55,7 +54,6 @@ Map<String, Widget Function(BuildContext)> kRoutes = {
   MealPlanGroupScreen.id: (context) => MealPlanGroupScreen(),
   AboutScreen.id: (context) => AboutScreen(),
   WebLandingPage.id: (context) => WebLandingPage(),
-  ChangelogScreen.id: (context) => ChangelogScreen(),
   OCROverviewImageScreen.id: (context) => OCROverviewImageScreen(),
   OCRIngredientsImageScreen.id: (context) => OCRIngredientsImageScreen(),
   OCRInstructionsImageScreen.id: (context) => OCRInstructionsImageScreen(),

@@ -2,7 +2,6 @@ import 'package:cookza/components/version_text.dart';
 import 'package:cookza/constants.dart';
 import 'package:cookza/routes.dart';
 import 'package:cookza/screens/settings/about_screen.dart';
-import 'package:cookza/screens/settings/changelog_screen.dart';
 import 'package:cookza/screens/settings/error_log_screen.dart';
 import 'package:cookza/screens/settings/onboarding_screen.dart';
 import 'package:cookza/screens/settings/saved_images_screen.dart';
@@ -70,12 +69,6 @@ void main() {
 
     var tile = find.text('Changelog');
     expect(tile, findsOneWidget);
-
-    await tester.tap(tile);
-    verify(observer.didPush(any, any));
-    await tester.pumpAndSettle();
-
-    expect(find.byType(ChangelogScreen), findsOneWidget);
   });
 
   testWidgets('Saved Images tile exists', (WidgetTester tester) async {
