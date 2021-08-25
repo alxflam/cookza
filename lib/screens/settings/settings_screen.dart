@@ -23,7 +23,7 @@ class SettingsScreen extends StatelessWidget {
             children: <Widget>[
               ListTile(
                 title: Text(AppLocalizations.of(context).unitLongPlural),
-                leading: FaIcon(FontAwesomeIcons.unity),
+                leading: FaIcon(FontAwesomeIcons.weightHanging),
                 onTap: () {
                   Navigator.pushNamed(context, UoMVisibilityScreen.id);
                 },
