@@ -9,6 +9,7 @@
 .history
 .svn/
 .local
+todo.md
 
 # code coverage
 /coverage/
