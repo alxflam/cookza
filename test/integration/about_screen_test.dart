@@ -59,7 +59,7 @@ void main() {
     final observer = MockNavigatorObserver();
     await _initApp(tester, observer);
 
-    var tile = find.text('© 2020 The Great Cookza Foundation');
+    var tile = find.text('© 2021 Alexander Flammer');
     expect(tile, findsOneWidget);
   });
 
