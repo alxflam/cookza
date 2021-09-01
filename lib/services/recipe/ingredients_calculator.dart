@@ -5,6 +5,7 @@ import 'package:cookza/services/recipe/recipe_manager.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:cookza/services/unit_of_measure.dart';
 import 'package:collection/collection.dart';
+import 'package:cookza/services/util/is_plural.dart';
 
 abstract class IngredientsCalculator {
   Future<List<IngredientNoteEntity>> getIngredients(Map<String, int> ids);
@@ -65,9 +66,12 @@ class IngredientsCalculatorImpl implements IngredientsCalculator {
           continue;
         }
 
-        // check if ingredient already exists
+        // check if ingredient already exists as exactly the same string
+        // or maybe plural
         var sameIngredient = result
-            .where((e) => e.ingredient.name == note.ingredient.name)
+            .where((e) =>
+                e.ingredient.name == note.ingredient.name ||
+                isPlural(e.ingredient.name, note.ingredient.name))
             .toList();
 
         // if it does not exist yet, directly add it
