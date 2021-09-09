@@ -1,10 +1,10 @@
 import 'dart:collection';
 
 /// german umlauts
-const germanDiacritics = 'ÄÖÜäöü';
+const germanDiacritics = ['Ä', 'Ö', 'Ü', 'ä', 'ö', 'ü'];
 
 /// replacement characters for german umlauts
-const germanNonDiacritics = 'AOUaou';
+const germanNonDiacritics = ['A', 'O', 'U', 'a', 'o', 'u'];
 
 /// suffixes used for plural nouns
 final knownPluralSuffixes = HashSet.of([
@@ -52,7 +52,11 @@ bool isSamePrefixAndSuffix(String long, String prefix) {
   return false;
 }
 
-String removeDiacritics(String value) => value.splitMapJoin('',
-    onNonMatch: (char) => germanDiacritics.contains(char)
-        ? germanNonDiacritics[germanDiacritics.indexOf(char)]
-        : char);
+String removeDiacritics(String value) =>
+    value.splitMapJoin('', onNonMatch: (char) {
+      final contains = germanDiacritics.contains(char);
+      final res =
+          contains ? germanNonDiacritics[germanDiacritics.indexOf(char)] : char;
+
+      return res;
+    });
