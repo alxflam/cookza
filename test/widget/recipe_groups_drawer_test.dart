@@ -74,7 +74,7 @@ Future<void> _initApp(WidgetTester tester, NavigatorObserver observer) async {
   await tester.pumpWidget(MaterialApp(
     routes: kRoutes,
     navigatorObservers: [observer],
-    localizationsDelegates: [
+    localizationsDelegates: const [
       AppLocalizations.delegate,
     ],
     home: ChangeNotifierProvider<ThemeModel>(

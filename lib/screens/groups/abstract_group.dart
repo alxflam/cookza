@@ -292,7 +292,7 @@ abstract class AbstractGroupScreen extends StatelessWidget {
 
   void _addUser(BuildContext context, GroupViewModel model) async {
     var result = await Navigator.pushNamed(context, QrScannerScreen.id);
-    if (result == null || (!(result is String))) {
+    if (result == null || (result is! String)) {
       return;
     }
 

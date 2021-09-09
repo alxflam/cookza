@@ -22,7 +22,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MealPlanScreen extends StatelessWidget {
-  static final String id = 'mealPlan';
+  static const String id = 'mealPlan';
 
   @override
   Widget build(BuildContext context) {

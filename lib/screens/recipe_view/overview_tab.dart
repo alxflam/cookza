@@ -101,7 +101,7 @@ class OverviewTab extends StatelessWidget {
 class CustomizedRatingBar extends StatelessWidget {
   final RecipeViewModel _model;
 
-  CustomizedRatingBar(this._model);
+  const CustomizedRatingBar(this._model);
 
   @override
   Widget build(BuildContext context) {
@@ -184,7 +184,7 @@ class SubImageRow extends StatelessWidget {
           Icons.add,
           size: 20,
         ),
-        Text('${model.creationDate}'),
+        Text(model.creationDate),
       ],
     );
 
@@ -194,7 +194,7 @@ class SubImageRow extends StatelessWidget {
           Icons.edit,
           size: 20,
         ),
-        Text('${model.modificationDate}'),
+        Text(model.modificationDate),
       ],
     );
 

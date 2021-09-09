@@ -15,7 +15,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AboutScreen extends StatelessWidget {
-  static final String id = 'about';
+  static const String id = 'about';
   @override
   Widget build(BuildContext context) {
     final subtitle = Theme.of(context).textTheme.subtitle1;
@@ -248,7 +248,7 @@ class AboutScreenDivider extends StatelessWidget {
 class SettingSectionHeader extends StatelessWidget {
   final String _title;
 
-  SettingSectionHeader(this._title);
+  const SettingSectionHeader(this._title);
 
   @override
   Widget build(BuildContext context) {

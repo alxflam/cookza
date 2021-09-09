@@ -188,7 +188,7 @@ Future<void> _initApp(
     MaterialApp(
       routes: kRoutes,
       navigatorObservers: [observer],
-      localizationsDelegates: [
+      localizationsDelegates: const [
         AppLocalizations.delegate,
       ],
       home: ChangeNotifierProvider<ThemeModel>(

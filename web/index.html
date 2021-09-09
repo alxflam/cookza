@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <!--
     If you are serving your web app in a path other than the root, change the
@@ -31,16 +32,23 @@
 
   <link rel="manifest" href="manifest.json">
 </head>
+
 <body>
   <!-- Use firebase 
   see https://firebase.google.com/docs/web/setup#available-libraries -->
   <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-firestore.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-auth.js"></script>
-  
+
   <!-- Firebase Configuration -->
   <script>
-    
+    var firebaseConfig = {
+      apiKey: "AIzaSyA-upqgtFAuQZ2nzpboYY4M-BAxpE_7nTA",
+      authDomain: "cookly-f0c99.firebaseapp.com",
+      databaseURL: "https://cookly-f0c99.firebaseio.com",
+      projectId: "cookly-f0c99",
+      storageBucket: "cookly-f0c99.appspot.com",
+    };
 
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
@@ -114,4 +122,5 @@
     }
   </script>
 </body>
+
 </html>

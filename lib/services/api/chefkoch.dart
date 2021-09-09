@@ -21,7 +21,7 @@ abstract class ChefkochAccessor {
 }
 
 class ChefkochAccessorImpl implements ChefkochAccessor {
-  static final String url = 'https://api.chefkoch.de/v2/recipes/';
+  static const String url = 'https://api.chefkoch.de/v2/recipes/';
 
   @override
   Future<RecipeEntity> getRecipe(String id) async {

@@ -95,7 +95,7 @@ Future<void> _initApp(WidgetTester tester, NavigatorObserver observer) async {
         return MaterialApp(
           routes: kRoutes,
           navigatorObservers: [observer],
-          localizationsDelegates: [
+          localizationsDelegates: const [
             AppLocalizations.delegate,
           ],
           home: ErrorLogScreen(),

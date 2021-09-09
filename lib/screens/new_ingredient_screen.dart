@@ -17,7 +17,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 class NewIngredientScreen extends StatelessWidget {
-  static final String id = 'ingredient';
+  static const String id = 'ingredient';
 
   @override
   Widget build(BuildContext context) {

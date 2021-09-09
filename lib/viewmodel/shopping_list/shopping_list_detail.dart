@@ -248,11 +248,11 @@ class ShoppingListModel extends ChangeNotifier {
 
   void _registerListeners(List<ShoppingListItemModel> viewModels) {
     // register a listener to each of the viewmodels
-    viewModels.forEach((e) {
+    for (var e in viewModels) {
       e.addListener(() {
         this.itemGotEdited(e);
       });
-    });
+    }
   }
 }
 

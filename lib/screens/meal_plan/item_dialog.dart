@@ -8,7 +8,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MealPlanItemDialog extends StatelessWidget {
   final MealPlanItemDialogModel _model;
-  MealPlanItemDialog(this._model);
+  const MealPlanItemDialog(this._model);
 
   @override
   Widget build(BuildContext context) {

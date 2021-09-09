@@ -12,7 +12,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OnBoardingScreen extends StatelessWidget {
-  static final String id = 'onBoarding';
+  static const String id = 'onBoarding';
 
   void _onIntroEnd(context) {
     // proceed to app and don't show onboarding anymore

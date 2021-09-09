@@ -40,21 +40,27 @@ class RecipeSelectionModel extends ChangeNotifier {
   RecipeSelectionModel.forExport(this._recipes)
       : this._mode = SELECTION_MODE.EXPORT,
         this._allowMultiSelection = true {
-    _recipes.forEach((item) => _selected.add(item.id));
+    for (var item in _recipes) {
+      _selected.add(item.id);
+    }
     _init();
   }
 
   RecipeSelectionModel.forExportPDF(this._recipes)
       : this._mode = SELECTION_MODE.EXPORT_PDF,
         this._allowMultiSelection = true {
-    _recipes.forEach((item) => _selected.add(item.id));
+    for (var item in _recipes) {
+      _selected.add(item.id);
+    }
     _init();
   }
 
   RecipeSelectionModel.forImport(this._recipes)
       : this._mode = SELECTION_MODE.IMPORT,
         this._allowMultiSelection = true {
-    _recipes.forEach((item) => _selected.add(item.id));
+    for (var item in _recipes) {
+      _selected.add(item.id);
+    }
     _init();
   }
 

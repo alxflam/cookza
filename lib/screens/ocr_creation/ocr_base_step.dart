@@ -9,7 +9,7 @@ import 'package:cookza/constants.dart';
 class OCRImageStep extends StatelessWidget {
   final String title;
 
-  OCRImageStep(this.title);
+  const OCRImageStep(this.title);
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +46,7 @@ class OCRImageStep extends StatelessWidget {
 class SelectImageWidget extends StatelessWidget {
   final Function onSelect;
 
-  SelectImageWidget({required this.onSelect});
+  const SelectImageWidget({required this.onSelect});
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +76,7 @@ class SelectImageWidget extends StatelessWidget {
 }
 
 class ImageSelectedWidget extends StatelessWidget {
-  ImageSelectedWidget({required this.image, required this.onDelete});
+  const ImageSelectedWidget({required this.image, required this.onDelete});
 
   final File image;
   final Function onDelete;

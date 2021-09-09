@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class FutureProgressDialog extends StatelessWidget {
   final Future _future;
 
-  FutureProgressDialog(this._future);
+  const FutureProgressDialog(this._future);
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +14,7 @@ class FutureProgressDialog extends StatelessWidget {
     });
 
     return Column(
-      children: [CircularProgressIndicator()],
+      children: const [CircularProgressIndicator()],
     );
   }
 }

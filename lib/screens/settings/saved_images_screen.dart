@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SavedImagesScreen extends StatelessWidget {
-  static final String id = 'savedImages';
+  static const String id = 'savedImages';
 
   @override
   Widget build(BuildContext context) {

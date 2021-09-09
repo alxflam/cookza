@@ -214,13 +214,13 @@ class ImageTextExtractorImpl implements ImageTextExtractor {
     String? ingredient;
 
     var doubleExp =
-        RegExp('[0-9]*[\.,]?[0-9]+', caseSensitive: false, multiLine: false);
+        RegExp('[0-9]*[.,]?[0-9]+', caseSensitive: false, multiLine: false);
     var doubleMatch = doubleExp.firstMatch(textItem);
     if (doubleMatch != null) {
       amount = double.parse(doubleMatch.group(0)!);
     }
 
-    final nounsExp = RegExp('([A-ZÄÖÜ][\-\_]?[a-zäöü]*){1,}');
+    final nounsExp = RegExp('([A-ZÄÖÜ][-_]?[a-zäöü]*){1,}');
     final nounsMatch = nounsExp.firstMatch(textItem);
     if (nounsMatch != null) {
       ingredient = nounsMatch.group(0)!;

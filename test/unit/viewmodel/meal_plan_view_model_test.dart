@@ -28,7 +28,7 @@ class MealPlanEntityMock extends Mock implements MealPlanEntity {
 }
 
 void main() {
-  final int weeks = 2;
+  const int weeks = 2;
   TestWidgetsFlutterBinding.ensureInitialized();
   SharedPreferences.setMockInitialValues({'mealPlanWeeks': weeks});
 

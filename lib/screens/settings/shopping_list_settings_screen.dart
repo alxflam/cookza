@@ -4,7 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 class ShoppingListSettingsScreen extends StatelessWidget {
-  static final String id = 'shoppingListSettings';
+  static const String id = 'shoppingListSettings';
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class ShoppingListSettingsScreen extends StatelessWidget {
             child: Consumer<ShoppingListSettingsModel>(
               builder: (context, model, widget) {
                 var column = Column(
-                  children: [],
+                  children: const [],
                 );
                 // var tile = SwitchListTile(
                 //     title: Text('§Group items'),

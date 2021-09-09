@@ -109,7 +109,7 @@ class MockApplication extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       navigatorObservers: [mockObserver],
-      localizationsDelegates: [
+      localizationsDelegates: const [
         AppLocalizations.delegate,
       ],
       routes: kRoutes,

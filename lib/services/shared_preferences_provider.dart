@@ -39,24 +39,24 @@ abstract class SharedPreferencesProvider {
 class SharedPreferencesProviderImpl implements SharedPreferencesProvider {
   late SharedPreferences _prefs;
 
-  static final String themeKey = 'theme';
+  static const String themeKey = 'theme';
 
-  static final String showShoppingListCategoriesKey =
+  static const String showShoppingListCategoriesKey =
       'showShoppingListCategories';
 
-  static final String mealPlanServingsSizeKey = 'mealPlanServingsSize';
-  static final String mealPlanWeeksKey = 'mealPlanWeeks';
-  static final String mealPlanCollection = 'mealPlanCollection';
+  static const String mealPlanServingsSizeKey = 'mealPlanServingsSize';
+  static const String mealPlanWeeksKey = 'mealPlanWeeks';
+  static const String mealPlanCollection = 'mealPlanCollection';
 
-  static final String uomVisibilityKeySuffix = '.vis';
-  static final String userName = 'userName';
+  static const String uomVisibilityKeySuffix = '.vis';
+  static const String userName = 'userName';
 
-  static final String introductionShownKey = 'introShown';
-  static final String acceptedDataPrivacyStatementKey =
+  static const String introductionShownKey = 'introShown';
+  static const String acceptedDataPrivacyStatementKey =
       'privacyStatementAccepted';
-  static final String acceptedTermsOfUseKey = 'termsOfUseAccepted';
+  static const String acceptedTermsOfUseKey = 'termsOfUseAccepted';
 
-  static final String leastRecentlyUsedRecipeGroupKey = 'lruRecipeGroup';
+  static const String leastRecentlyUsedRecipeGroupKey = 'lruRecipeGroup';
 
   String getUomVisibilityKey(String uom) => '$uom$uomVisibilityKeySuffix';
 

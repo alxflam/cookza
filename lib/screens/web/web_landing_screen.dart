@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 // import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class WebLandingPage extends StatelessWidget {
-  static final String id = 'landingPage';
+  static const String id = 'landingPage';
 
   @override
   Widget build(BuildContext context) {
@@ -178,7 +178,7 @@ class FloatingBar extends StatelessWidget {
                   padding: EdgeInsets.all(10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
+                    children: const [
                       InstructionText('1. Open Cookza on your phone'),
                       InstructionText(
                         '2. Select Cookza Web',
@@ -241,7 +241,7 @@ class TopBar extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [
+            children: const [
               // top bar entries if any needed
             ],
           ),

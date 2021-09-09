@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class UoMVisibilityScreen extends StatelessWidget {
-  static final String id = 'uomVisibility';
+  static const String id = 'uomVisibility';
 
   @override
   Widget build(BuildContext context) {

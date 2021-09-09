@@ -324,7 +324,9 @@ class StaticUnitOfMeasure implements UnitOfMeasureProvider {
   @override
   List<UnitOfMeasure> getAll() {
     List<UnitOfMeasure> uoms = [];
-    metricUoM.forEach((i) => uoms.add(i));
+    for (var i in metricUoM) {
+      uoms.add(i);
+    }
     uoms.addAll(nonMetricUoM.toList());
     return uoms;
   }

@@ -16,7 +16,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomeScreen extends StatelessWidget {
-  static final id = 'home';
+  static const id = 'home';
 
   void init(BuildContext context) async {
     // check for shared content on mobile platforms
@@ -147,7 +147,7 @@ class HomeScreen extends StatelessWidget {
 }
 
 class MainFunctionCard extends StatelessWidget {
-  MainFunctionCard(
+  const MainFunctionCard(
       {required this.color, required this.cardChild, required this.onPress});
 
   final Color color;
@@ -171,7 +171,7 @@ class MainFunctionCard extends StatelessWidget {
 }
 
 class IconContent extends StatelessWidget {
-  IconContent({required this.icon, required this.label});
+  const IconContent({required this.icon, required this.label});
 
   final IconData icon;
   final String label;

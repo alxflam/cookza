@@ -13,7 +13,7 @@ class RecipeGroupsDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       child: StreamProvider<List<RecipeCollectionEntity>>.value(
-        initialData: [],
+        initialData: const [],
         value: sl.get<RecipeManager>().collectionsAsStream,
         child: RecipeGroupsTiles(),
       ),

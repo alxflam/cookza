@@ -10,7 +10,7 @@ class LocalizationParent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Localizations(
-      delegates: [
+      delegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate

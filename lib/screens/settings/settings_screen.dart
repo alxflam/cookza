@@ -9,7 +9,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class SettingsScreen extends StatelessWidget {
-  static final String id = 'settings';
+  static const String id = 'settings';
 
   @override
   Widget build(BuildContext context) {

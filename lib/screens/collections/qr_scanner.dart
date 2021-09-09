@@ -5,7 +5,7 @@ import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class QrScannerScreen extends StatefulWidget {
-  static final String id = 'liveCameraScanner';
+  static const String id = 'liveCameraScanner';
 
   @override
   _QrScannerScreenState createState() => _QrScannerScreenState();

@@ -9,7 +9,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ExportSettingsScreen extends StatelessWidget {
-  static final String id = 'exportSettings';
+  static const String id = 'exportSettings';
 
   @override
   Widget build(BuildContext context) {

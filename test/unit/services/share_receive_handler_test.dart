@@ -44,7 +44,7 @@ void main() {
   });
 
   testWidgets('handle shared text', (WidgetTester tester) async {
-    final url =
+    const url =
         'https://www.chefkoch.de/rezepte/922651197624364/Philadelphia-Haehnchen.html';
     final observer = MockNavigatorObserver();
 
@@ -92,7 +92,7 @@ Future<void> _initApp(WidgetTester tester, GlobalKey<NavigatorState> navKey,
     NavigatorObserver observer) async {
   await tester.pumpWidget(MaterialApp(
     navigatorObservers: [observer],
-    localizationsDelegates: [
+    localizationsDelegates: const [
       AppLocalizations.delegate,
     ],
     navigatorKey: navKey,

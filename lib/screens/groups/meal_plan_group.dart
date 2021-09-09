@@ -4,7 +4,7 @@ import 'package:cookza/viewmodel/groups/abstract_group_model.dart';
 import 'package:cookza/viewmodel/groups/meal_plan_group_model.dart';
 
 class MealPlanGroupScreen extends AbstractGroupScreen {
-  static final String id = 'mealPlanGroup';
+  static const String id = 'mealPlanGroup';
 
   @override
   GroupViewModel buildGroupViewModel(Object arguments) {

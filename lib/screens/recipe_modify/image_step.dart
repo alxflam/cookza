@@ -52,7 +52,7 @@ Step getImageStep(BuildContext context) {
 class SelectImageWidget extends StatelessWidget {
   final Function onSelect;
 
-  SelectImageWidget({required this.onSelect});
+  const SelectImageWidget({required this.onSelect});
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +82,7 @@ class SelectImageWidget extends StatelessWidget {
 }
 
 class ImageSelectedWidget extends StatelessWidget {
-  ImageSelectedWidget({required this.image, required this.onDelete});
+  const ImageSelectedWidget({required this.image, required this.onDelete});
 
   final File image;
   final Function onDelete;

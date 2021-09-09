@@ -4,7 +4,7 @@ import 'package:cookza/viewmodel/groups/abstract_group_model.dart';
 import 'package:cookza/viewmodel/groups/recipe_group_model.dart';
 
 class RecipeGroupScreen extends AbstractGroupScreen {
-  static final String id = 'recipeGroup';
+  static const String id = 'recipeGroup';
 
   @override
   GroupViewModel buildGroupViewModel(Object arguments) {

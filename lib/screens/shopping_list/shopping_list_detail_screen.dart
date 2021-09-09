@@ -10,7 +10,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 class ShoppingListDetailScreen extends StatelessWidget {
-  static final String id = 'shoppingListDetail';
+  static const String id = 'shoppingListDetail';
 
   @override
   Widget build(BuildContext context) {

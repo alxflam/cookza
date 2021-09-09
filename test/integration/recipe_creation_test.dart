@@ -289,7 +289,7 @@ Future<void> _navigateToNewRecipeScreen(WidgetTester tester) async {
 Future<void> setupApplication(WidgetTester tester) async {
   await tester.pumpWidget(MaterialApp(
     routes: kRoutes,
-    localizationsDelegates: [
+    localizationsDelegates: const [
       AppLocalizations.delegate,
     ],
     home: ChangeNotifierProvider<ThemeModel>(

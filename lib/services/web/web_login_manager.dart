@@ -181,11 +181,9 @@ class FirebaseWebLoginManager {
         .limit(1)
         .get();
 
-    handshakes.docs.forEach(
-      (element) {
+    for (var element in handshakes.docs) {
         element.reference.delete();
-      },
-    );
+      }
   }
 
   /// log off from all web client sessions

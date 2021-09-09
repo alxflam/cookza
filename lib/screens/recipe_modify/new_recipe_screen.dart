@@ -31,7 +31,7 @@ Future<void> saveModel(BuildContext context, RecipeEditModel model) async {
         children: [
           Center(
             child: Column(
-              children: [
+              children: const [
                 Padding(
                   padding: EdgeInsets.all(25),
                   child: CircularProgressIndicator(),
@@ -77,7 +77,7 @@ Future<void> saveModel(BuildContext context, RecipeEditModel model) async {
 }
 
 class NewRecipeScreen extends StatelessWidget {
-  static final String id = 'newRecipe';
+  static const String id = 'newRecipe';
 
   @override
   Widget build(BuildContext context) {
@@ -204,7 +204,7 @@ class NewRecipeStepper extends StatelessWidget {
 
       var buttonRow = Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[],
+        children: const <Widget>[],
       );
 
       var model = Provider.of<RecipeEditModel>(context);

@@ -14,7 +14,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 class WebLoginOnAppScreen extends StatelessWidget {
-  static final String id = 'webLoginOnApp';
+  static const String id = 'webLoginOnApp';
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class WebLoginOnAppScreen extends StatelessWidget {
             icon: Icon(Icons.add),
             onPressed: () async {
               var json = await Navigator.pushNamed(context, QrScannerScreen.id);
-              if (json == null || (!(json is String))) {
+              if (json == null || (json is! String)) {
                 return;
               }
 
@@ -66,7 +66,7 @@ class WebLoginOnAppScreen extends StatelessWidget {
               ),
             ),
             StreamProvider<List<FirebaseHandshake>>.value(
-              initialData: [],
+              initialData: const [],
               value: sl.get<FirebaseWebLoginManager>().webAppSessions(),
               child: LogIns(),
             ),
@@ -94,7 +94,7 @@ class LogIns extends StatelessWidget {
           Builder(
             builder: (context) {
               var col = Column(
-                children: [],
+                children: const [],
               );
               for (var hs in handshakes) {
                 var date = kDateFormatter.format(hs.creationTimestamp.toDate());
@@ -102,7 +102,7 @@ class LogIns extends StatelessWidget {
                 col.children.add(Card(
                   child: ListTile(
                     leading: FaIcon(platformInfo.getOSIcon(hs.operatingSystem)),
-                    title: Text('$date'),
+                    title: Text(date),
                     subtitle: Text(hs.browser),
                     trailing: IconButton(
                       icon: Icon(Icons.delete),

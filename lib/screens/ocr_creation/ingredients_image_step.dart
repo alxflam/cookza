@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OCRIngredientsImageScreen extends StatelessWidget {
-  static final String id = 'ingredientsImage';
+  static const String id = 'ingredientsImage';
 
   @override
   Widget build(BuildContext context) {

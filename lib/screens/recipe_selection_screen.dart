@@ -14,7 +14,7 @@ typedef OnActionButtonPressed = void Function(
     BuildContext context, RecipeSelectionModel model);
 
 class RecipeSelectionScreen extends StatelessWidget {
-  static final String id = 'selection';
+  static const String id = 'selection';
 
   Text _getTitle(RecipeSelectionModel model, BuildContext context) {
     return model.countSelected == 0

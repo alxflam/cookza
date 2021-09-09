@@ -15,7 +15,7 @@ class PopupMenuButtonChoices {
 }
 
 class ErrorLogScreen extends StatelessWidget {
-  static final String id = 'errorLog';
+  static const String id = 'errorLog';
 
   @override
   Widget build(BuildContext context) {

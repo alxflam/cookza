@@ -30,8 +30,7 @@ class ShareReceiveHandler {
     }
 
     final chefkoch = sl.get<ChefkochAccessor>();
-    matches.forEach(
-      (match) {
+    for (var match in matches) {
         var id = text.substring(match.start + 8, match.end - 1);
         chefkoch.getRecipe(id).then(
           (recipe) {
@@ -40,8 +39,7 @@ class ShareReceiveHandler {
                     arguments: RecipeEditModel.modify(mutableRecipe)));
           },
         );
-      },
-    );
+      }
   }
 
   void handleReceivedJson(String? text, BuildContext context) {

@@ -35,7 +35,7 @@ class PopupMenuButtonChoices {
 }
 
 class RecipeScreen extends StatelessWidget {
-  static final String id = 'recipe';
+  static const String id = 'recipe';
 
   @override
   Widget build(BuildContext context) {
@@ -192,7 +192,7 @@ class RecipeScreen extends StatelessWidget {
                     indicatorColor: color,
                     labelColor: color,
                     unselectedLabelColor: color,
-                    tabs: [
+                    tabs: const [
                       Tab(
                         icon: FaIcon(kInfoIconData),
                       ),

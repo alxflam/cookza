@@ -166,7 +166,7 @@ Future<void> setupWidget(
   await tester.pumpWidget(
     MaterialApp(
       navigatorObservers: [mockObserver],
-      localizationsDelegates: [
+      localizationsDelegates: const [
         AppLocalizations.delegate,
       ],
       routes: kRoutes,

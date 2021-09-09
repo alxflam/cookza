@@ -125,8 +125,6 @@ class MockShoppingListItemsGenerator extends _i1.Mock
               returnValue: Future<List<_i19.MutableShoppingListItem>>.value(
                   <_i19.MutableShoppingListItem>[]))
           as _i18.Future<List<_i19.MutableShoppingListItem>>);
-  @override
-  String toString() => super.toString();
 }
 
 /// A class which mocks [StorageProvider].
@@ -161,8 +159,6 @@ class MockStorageProvider extends _i1.Mock implements _i20.StorageProvider {
       Invocation.method(#clearExceptionLogFile, []),
       returnValue: Future<void>.value(),
       returnValueForMissingStub: Future<void>.value()) as _i18.Future<void>);
-  @override
-  String toString() => super.toString();
 }
 
 /// A class which mocks [RecipeManager].
@@ -301,8 +297,6 @@ class MockRecipeManager extends _i1.Mock implements _i4.RecipeManager {
           Invocation.method(#init, []),
           returnValue: Future<_i4.RecipeManager>.value(_FakeRecipeManager_2()))
       as _i18.Future<_i4.RecipeManager>);
-  @override
-  String toString() => super.toString();
 }
 
 /// A class which mocks [ShoppingListManager].
@@ -333,8 +327,6 @@ class MockShoppingListManager extends _i1.Mock
               returnValue: Future<void>.value(),
               returnValueForMissingStub: Future<void>.value())
           as _i18.Future<void>);
-  @override
-  String toString() => super.toString();
 }
 
 /// A class which mocks [StackTrace].
@@ -345,8 +337,6 @@ class MockStackTrace extends _i1.Mock implements StackTrace {
     _i1.throwOnMissingStub(this);
   }
 
-  @override
-  String toString() => super.toString();
 }
 
 /// A class which mocks [SimilarityService].
@@ -379,8 +369,6 @@ class MockSimilarityService extends _i1.Mock implements _i23.SimilarityService {
               returnValue:
                   Future<List<_i9.RecipeEntity>>.value(<_i9.RecipeEntity>[]))
           as _i18.Future<List<_i9.RecipeEntity>>);
-  @override
-  String toString() => super.toString();
 }
 
 /// A class which mocks [FirebaseAuth].
@@ -612,8 +600,6 @@ class MockFirebaseAuth extends _i1.Mock implements _i8.FirebaseAuth {
               returnValue: Future<void>.value(),
               returnValueForMissingStub: Future<void>.value())
           as _i18.Future<void>);
-  @override
-  String toString() => super.toString();
 }
 
 /// A class which mocks [User].
@@ -746,8 +732,6 @@ class MockUser extends _i1.Mock implements _i8.User {
               returnValue: Future<void>.value(),
               returnValueForMissingStub: Future<void>.value())
           as _i18.Future<void>);
-  @override
-  String toString() => super.toString();
 }
 
 /// A class which mocks [ChefkochAccessor].
@@ -763,8 +747,6 @@ class MockChefkochAccessor extends _i1.Mock implements _i25.ChefkochAccessor {
           Invocation.method(#getRecipe, [id]),
           returnValue: Future<_i9.RecipeEntity>.value(_FakeRecipeEntity_11()))
       as _i18.Future<_i9.RecipeEntity>);
-  @override
-  String toString() => super.toString();
 }
 
 /// A class which mocks [NavigatorObserver].
@@ -802,8 +784,6 @@ class MockNavigatorObserver extends _i1.Mock implements _i16.NavigatorObserver {
   void didStopUserGesture() =>
       super.noSuchMethod(Invocation.method(#didStopUserGesture, []),
           returnValueForMissingStub: null);
-  @override
-  String toString() => super.toString();
 }
 
 /// A class which mocks [MealPlanManager].
@@ -892,8 +872,6 @@ class MockMealPlanManager extends _i1.Mock implements _i11.MealPlanManager {
               returnValue: Future<void>.value(),
               returnValueForMissingStub: Future<void>.value())
           as _i18.Future<void>);
-  @override
-  String toString() => super.toString();
 }
 
 /// A class which mocks [ImageManager].
@@ -937,8 +915,6 @@ class MockImageManager extends _i1.Mock implements _i26.ImageManager {
       Invocation.method(#deleteLocalImage, [fileName]),
       returnValue: Future<void>.value(),
       returnValueForMissingStub: Future<void>.value()) as _i18.Future<void>);
-  @override
-  String toString() => super.toString();
 }
 
 /// A class which mocks [FirebaseProvider].
@@ -1217,8 +1193,6 @@ class MockFirebaseProvider extends _i1.Mock implements _i13.FirebaseProvider {
               returnValue: Future<void>.value(),
               returnValueForMissingStub: Future<void>.value())
           as _i18.Future<void>);
-  @override
-  String toString() => super.toString();
 }
 
 /// A class which mocks [ImageTextExtractor].
@@ -1283,8 +1257,6 @@ class MockImageTextExtractor extends _i1.Mock
               }),
               returnValue: _FakeRecipeInstructionEditStep_19())
           as _i15.RecipeInstructionEditStep);
-  @override
-  String toString() => super.toString();
 }
 
 /// A class which mocks [NavigatorService].
@@ -1296,6 +1268,4 @@ class MockNavigatorService extends _i1.Mock implements _i34.NavigatorService {
       (super.noSuchMethod(Invocation.getter(#navigatorKey),
               returnValue: _FakeGlobalKey_20<_i16.NavigatorState>())
           as _i16.GlobalKey<_i16.NavigatorState>);
-  @override
-  String toString() => super.toString();
 }

@@ -16,7 +16,7 @@ import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
 class ShareAccountScreen extends StatelessWidget {
-  static final String id = 'shareAccount';
+  static const String id = 'shareAccount';
   final GlobalKey _globalKey = GlobalKey();
 
   Future<Uint8List> _widgetToImageBytes() async {

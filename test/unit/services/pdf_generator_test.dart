@@ -46,7 +46,7 @@ void main() {
 Future<void> _initApp(
     WidgetTester tester, GlobalKey<NavigatorState> navKey) async {
   await tester.pumpWidget(MaterialApp(
-    localizationsDelegates: [
+    localizationsDelegates: const [
       AppLocalizations.delegate,
     ],
     navigatorKey: navKey,

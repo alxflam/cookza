@@ -12,7 +12,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 class RecipeListScreen extends StatelessWidget {
-  static final String id = 'recipes';
+  static const String id = 'recipes';
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +35,7 @@ class RecipeListScreen extends StatelessWidget {
 
                   /// read recipes for selected recipe
                   return StreamProvider<List<RecipeEntity>>.value(
-                    initialData: [],
+                    initialData: const [],
                     value:
                         Provider.of<RecipeListViewModel>(context, listen: false)
                             .getRecipes(),
@@ -126,7 +126,7 @@ class RecipeListScreen extends StatelessWidget {
       );
     }
     return AppBar(
-      title: Text('${AppLocalizations.of(context).recipe(2)}'),
+      title: Text(AppLocalizations.of(context).recipe(2)),
       actions: [
         IconButton(
             icon: Icon(Icons.search),

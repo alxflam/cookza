@@ -8,7 +8,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 class FavoriteRecipesScreen extends StatelessWidget {
-  static final String id = 'favorites';
+  static const String id = 'favorites';
 
   @override
   Widget build(BuildContext context) {
