@@ -19,13 +19,11 @@ abstract class CustomTheme {
   String get displayName;
 }
 
-final kBrightColorScheme = ColorScheme.light().copyWith(
-  primary: kTealAppIconColor,
-);
+final kBrightColorScheme = ColorScheme.light()
+    .copyWith(primary: kTealAppIconColor, secondary: kTealAppIconColor);
 
 final kBrightTheme = ThemeData.from(colorScheme: kBrightColorScheme).copyWith(
   cardColor: Colors.grey.shade300,
-  accentColor: kBrightColorScheme.primary,
   appBarTheme: AppBarTheme(color: kTealAppIconColor),
 );
 
@@ -50,14 +48,13 @@ class LightTheme extends CustomTheme {
 }
 
 final kDarkColorScheme = ColorScheme.dark().copyWith(
-  background: Color(0xFF121212),
-  primary: kTealAppIconColor,
-  primaryVariant: kTealAppIconColor,
-);
+    background: Color(0xFF121212),
+    primary: kTealAppIconColor,
+    primaryVariant: kTealAppIconColor,
+    secondary: kTealAppIconColor);
 
 final kDarkTheme = ThemeData.from(colorScheme: kDarkColorScheme).copyWith(
   cardColor: Colors.grey.shade900,
-  accentColor: kDarkColorScheme.primary,
   appBarTheme: AppBarTheme(
     color: Colors.grey.shade900,
   ),
