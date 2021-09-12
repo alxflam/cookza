@@ -31,15 +31,15 @@ class ShareReceiveHandler {
 
     final chefkoch = sl.get<ChefkochAccessor>();
     for (var match in matches) {
-        var id = text.substring(match.start + 8, match.end - 1);
-        chefkoch.getRecipe(id).then(
-          (recipe) {
-            MutableRecipe.createFrom(recipe).then((mutableRecipe) =>
-                Navigator.pushNamed(context, NewRecipeScreen.id,
-                    arguments: RecipeEditModel.modify(mutableRecipe)));
-          },
-        );
-      }
+      var id = text.substring(match.start + 8, match.end - 1);
+      chefkoch.getRecipe(id).then(
+        (recipe) {
+          MutableRecipe.createFrom(recipe).then((mutableRecipe) =>
+              Navigator.pushNamed(context, NewRecipeScreen.id,
+                  arguments: RecipeEditModel.modify(mutableRecipe)));
+        },
+      );
+    }
   }
 
   void handleReceivedJson(String? text, BuildContext context) {

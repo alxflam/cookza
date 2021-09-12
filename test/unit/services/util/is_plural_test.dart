@@ -21,8 +21,7 @@ void main() {
     'Plural test',
     () async {
       for (var plural in plurals.entries) {
-        expect(isPlural(plural.key, plural.value), true,
-            reason: plural.key);
+        expect(isPlural(plural.key, plural.value), true, reason: plural.key);
         expect(isPlural(plural.value, plural.key), true);
       }
     },
