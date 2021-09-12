@@ -24,7 +24,7 @@ class ShoppingListOverviewScreen extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            icon: Icon(kShoppingListIconData),
+            icon: const Icon(kShoppingListIconData),
             onPressed: () async {
               await openShoppingListDialog(context);
             },
@@ -45,7 +45,7 @@ class ShoppingListOverviewScreen extends StatelessWidget {
           future: model.getLists(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(
+              return const Center(
                 child: CircularProgressIndicator(),
               );
             }

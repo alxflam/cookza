@@ -23,28 +23,28 @@ class SettingsScreen extends StatelessWidget {
             children: <Widget>[
               ListTile(
                 title: Text(AppLocalizations.of(context).unitLongPlural),
-                leading: FaIcon(FontAwesomeIcons.weightHanging),
+                leading: const FaIcon(FontAwesomeIcons.weightHanging),
                 onTap: () {
                   Navigator.pushNamed(context, UoMVisibilityScreen.id);
                 },
               ),
               ListTile(
                 title: Text(AppLocalizations.of(context).themeTitle),
-                leading: FaIcon(FontAwesomeIcons.paintBrush),
+                leading: const FaIcon(FontAwesomeIcons.paintBrush),
                 onTap: () {
                   Navigator.pushNamed(context, ThemeSettingsScreen.id);
                 },
               ),
               ListTile(
                 title: Text(AppLocalizations.of(context).functionsMealPlanner),
-                leading: FaIcon(kMealPlannerIconData),
+                leading: const FaIcon(kMealPlannerIconData),
                 onTap: () {
                   Navigator.pushNamed(context, MealPlanSettingsScreen.id);
                 },
               ),
               ListTile(
                 title: Text(AppLocalizations.of(context).functionsShoppingList),
-                leading: FaIcon(kShoppingListIconData),
+                leading: const FaIcon(kShoppingListIconData),
                 onTap: () {
                   Navigator.pushNamed(context, ShoppingListSettingsScreen.id);
                 },
@@ -52,7 +52,7 @@ class SettingsScreen extends StatelessWidget {
               ListTile(
                 title: Text(MaterialLocalizations.of(context)
                     .aboutListTileTitle(kAppName)),
-                leading: FaIcon(Icons.info),
+                leading: const FaIcon(Icons.info),
                 onTap: () {
                   Navigator.pushNamed(context, AboutScreen.id);
                 },

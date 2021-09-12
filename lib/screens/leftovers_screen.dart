@@ -54,7 +54,7 @@ class _LeftoversBodyState extends State<LeftoversBody> {
                   autofocus: true,
                   decoration: InputDecoration(
                     labelText: AppLocalizations.of(context).ingredient(1),
-                    prefixIcon: Icon(Icons.search),
+                    prefixIcon: const Icon(Icons.search),
                   ),
                   keyboardType: TextInputType.text,
                   onSubmitted: (value) {
@@ -68,7 +68,7 @@ class _LeftoversBodyState extends State<LeftoversBody> {
         ),
         // chips
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Wrap(
             spacing: 10,
             children: this._buildChips(),
@@ -98,7 +98,7 @@ class _LeftoversBodyState extends State<LeftoversBody> {
                 return NothingFound(
                     AppLocalizations.of(context).noRecipesFound);
               } else {
-                return Center(
+                return const Center(
                   child: CircularProgressIndicator(),
                 );
               }

@@ -90,7 +90,7 @@ class NewRecipeScreen extends StatelessWidget {
             : Text(AppLocalizations.of(context).editRecipe),
         actions: <Widget>[
           IconButton(
-            icon: FaIcon(FontAwesomeIcons.save),
+            icon: const FaIcon(FontAwesomeIcons.save),
             onPressed: () async {
               await saveModel(context, model);
             },
@@ -170,7 +170,7 @@ class NewRecipeStepper extends StatelessWidget {
       );
 
       var ocrButton = Container(
-        margin: EdgeInsetsDirectional.only(start: 8.0),
+        margin: const EdgeInsetsDirectional.only(start: 8.0),
         child: TextButton(
             onPressed: () async {
               var model = Provider.of<RecipeEditModel>(context, listen: false);
@@ -199,7 +199,7 @@ class NewRecipeStepper extends StatelessWidget {
             },
             // textColor: cancelColor,
             // textTheme: ButtonTextTheme.normal,
-            child: Icon(Icons.image)),
+            child: const Icon(Icons.image)),
       );
 
       var buttonRow = Row(
@@ -217,9 +217,9 @@ class NewRecipeStepper extends StatelessWidget {
       }
 
       return Container(
-        margin: EdgeInsets.only(top: 16.0),
+        margin: const EdgeInsets.only(top: 16.0),
         child: ConstrainedBox(
-          constraints: BoxConstraints.tightFor(height: 48.0),
+          constraints: const BoxConstraints.tightFor(height: 48.0),
           child: buttonRow,
         ),
       );

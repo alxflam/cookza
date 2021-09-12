@@ -104,7 +104,7 @@ class RecipeManagerFirebase implements RecipeManager {
   @override
   Stream<List<RecipeEntity>> get recipes {
     if (this.currentCollection == null) {
-      return Stream.empty();
+      return const Stream.empty();
     }
 
     return sl.get<FirebaseProvider>().recipes(this.currentCollection!);

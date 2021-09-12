@@ -64,9 +64,9 @@ class RecipeGroupsTiles extends StatelessWidget {
               var isActive = recipeManager.currentCollection == item.id;
               return ListTile(
                   title: Text(item.name),
-                  leading: isActive ? Icon(Icons.check) : Text(''),
+                  leading: isActive ? const Icon(Icons.check) : const Text(''),
                   trailing: IconButton(
-                    icon: Icon(Icons.info),
+                    icon: const Icon(Icons.info),
                     onPressed: () {
                       Navigator.pushNamed(context, RecipeGroupScreen.id,
                           arguments: item);
@@ -103,7 +103,7 @@ class RecipeGroupsTiles extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
                       Padding(
-                        padding: EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(10),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
@@ -133,14 +133,14 @@ class RecipeGroupsTiles extends StatelessWidget {
                                   .createCollection(controller.text);
                               Navigator.pop(context, entity);
                             },
-                            child: Icon(Icons.save),
+                            child: const Icon(Icons.save),
                           ),
                           ElevatedButton(
                             style: kRaisedRedButtonStyle,
                             onPressed: () {
                               Navigator.pop(context);
                             },
-                            child: Icon(Icons.cancel),
+                            child: const Icon(Icons.cancel),
                           ),
                         ],
                       )

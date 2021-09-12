@@ -70,8 +70,8 @@ void main() {
 }
 
 Future<void> _openFavoritesScreen(WidgetTester tester) async {
-  await tester.pumpWidget(MaterialApp(
-    localizationsDelegates: const [
+  await tester.pumpWidget(const MaterialApp(
+    localizationsDelegates: [
       AppLocalizations.delegate,
     ],
     home: Material(

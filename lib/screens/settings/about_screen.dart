@@ -30,19 +30,19 @@ class AboutScreen extends StatelessWidget {
         child: Column(
           children: [
             Padding(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               child: Center(
                 child: CircleAvatar(
                   backgroundColor: Theme.of(context).colorScheme.primary,
                   radius: 45,
-                  child: Image(
+                  child: const Image(
                     width: 45,
                     image: AssetImage(kIconTransparent),
                   ),
                 ),
               ),
             ),
-            Text(
+            const Text(
               kAppName,
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
             ),
@@ -50,14 +50,14 @@ class AboutScreen extends StatelessWidget {
               if (kIsWeb) {
                 return Container();
               }
-              return VersionText();
+              return const VersionText();
             }),
             Text(
               AppLocalizations.of(context).copyright,
-              style: TextStyle(fontStyle: FontStyle.italic),
+              style: const TextStyle(fontStyle: FontStyle.italic),
             ),
             Padding(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               child: RichText(
                 text: TextSpan(
                   children: <TextSpan>[
@@ -70,20 +70,20 @@ class AboutScreen extends StatelessWidget {
             ),
             AboutScreenDivider(),
             ListTile(
-              leading: FaIcon(FontAwesomeIcons.map),
+              leading: const FaIcon(FontAwesomeIcons.map),
               title: Text(AppLocalizations.of(context).getStarted),
               onTap: () => Navigator.pushNamed(context, OnBoardingScreen.id),
             ),
             AboutScreenDivider(),
             ListTile(
-              leading: FaIcon(FontAwesomeIcons.diceD20),
+              leading: const FaIcon(FontAwesomeIcons.diceD20),
               title: Text(AppLocalizations.of(context).changelog),
               onTap: () => launch(kChangelogLink),
             ),
             AboutScreenDivider(),
             ListTile(
               title: Text(AppLocalizations.of(context).localImages),
-              leading: FaIcon(FontAwesomeIcons.image),
+              leading: const FaIcon(FontAwesomeIcons.image),
               onTap: () {
                 Navigator.pushNamed(context, SavedImagesScreen.id);
               },
@@ -92,14 +92,14 @@ class AboutScreen extends StatelessWidget {
             ListTile(
               title: Text(AppLocalizations.of(context).support),
               subtitle: Text(AppLocalizations.of(context).supportSubtitle),
-              leading: FaIcon(FontAwesomeIcons.questionCircle),
+              leading: const FaIcon(FontAwesomeIcons.questionCircle),
               onTap: () {
                 launch(kPlayStoreLink);
               },
             ),
             ListTile(
               title: Text(AppLocalizations.of(context).sourceCode),
-              leading: FaIcon(FontAwesomeIcons.code),
+              leading: const FaIcon(FontAwesomeIcons.code),
               onTap: () {
                 launch(kRepositoryLink);
               },
@@ -107,7 +107,7 @@ class AboutScreen extends StatelessWidget {
             AboutScreenDivider(),
             ListTile(
               title: Text(AppLocalizations.of(context).deleteAllData),
-              leading: FaIcon(FontAwesomeIcons.eraser),
+              leading: const FaIcon(FontAwesomeIcons.eraser),
               onTap: () async {
                 // open confirmation dialog
                 await showDialog(
@@ -122,14 +122,14 @@ class AboutScreen extends StatelessWidget {
             AboutScreenDivider(),
             ListTile(
               title: Text(AppLocalizations.of(context).errorLog),
-              leading: FaIcon(FontAwesomeIcons.bug),
+              leading: const FaIcon(FontAwesomeIcons.bug),
               onTap: () {
                 Navigator.pushNamed(context, ErrorLogScreen.id);
               },
             ),
             SettingSectionHeader(AppLocalizations.of(context).legal),
             ListTile(
-              leading: FaIcon(FontAwesomeIcons.fileAlt),
+              leading: const FaIcon(FontAwesomeIcons.fileAlt),
               title: Text(MaterialLocalizations.of(context).licensesPageTitle),
               onTap: () async {
                 final platformInfo = await PackageInfo.fromPlatform();
@@ -138,8 +138,8 @@ class AboutScreen extends StatelessWidget {
                   context: context,
                   applicationVersion: platformInfo.version,
                   applicationIcon: ConstrainedBox(
-                    constraints: BoxConstraints.tightFor(width: 40),
-                    child: Image(
+                    constraints: const BoxConstraints.tightFor(width: 40),
+                    child: const Image(
                       image: AssetImage(kIconTransparent),
                     ),
                   ),
@@ -150,7 +150,7 @@ class AboutScreen extends StatelessWidget {
             AboutScreenDivider(),
             ListTile(
               title: Text(AppLocalizations.of(context).privacyStatement),
-              leading: FaIcon(FontAwesomeIcons.userSecret),
+              leading: const FaIcon(FontAwesomeIcons.userSecret),
               onTap: () {
                 kNotImplementedDialog(context);
               },
@@ -158,7 +158,7 @@ class AboutScreen extends StatelessWidget {
             AboutScreenDivider(),
             ListTile(
               title: Text(AppLocalizations.of(context).termsOfUse),
-              leading: FaIcon(FontAwesomeIcons.envelopeOpenText),
+              leading: const FaIcon(FontAwesomeIcons.envelopeOpenText),
               onTap: () {
                 kNotImplementedDialog(context);
               },
@@ -236,7 +236,7 @@ class DeleteAllDataDialog extends StatelessWidget {
 class AboutScreenDivider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return const Padding(
       padding: EdgeInsets.symmetric(horizontal: 20),
       child: Divider(
         height: 1,
@@ -253,7 +253,7 @@ class SettingSectionHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       child: Text(
         _title,
         style: TextStyle(

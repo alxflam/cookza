@@ -102,17 +102,17 @@ class MultipeGroupSelectionDialog extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   Padding(
-                    padding: EdgeInsets.all(18),
+                    padding: const EdgeInsets.all(18),
                     child: Column(
                       children: [
                         Text(formatDate(model.dateFrom, context)),
-                        Text(' - '),
+                        const Text(' - '),
                         Text(formatDate(model.dateEnd, context)),
                       ],
                     ),
                   ),
                   IconButton(
-                    icon: FaIcon(FontAwesomeIcons.edit),
+                    icon: const FaIcon(FontAwesomeIcons.edit),
                     onPressed: () async {
                       var dateRange = await showDateRangePicker(
                           context: context,
@@ -133,13 +133,13 @@ class MultipeGroupSelectionDialog extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   Padding(
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                     child: ElevatedButton(
                       style: kRaisedGreenButtonStyle,
                       onPressed: () async {
                         Navigator.pop(context, model);
                       },
-                      child: Icon(Icons.check),
+                      child: const Icon(Icons.check),
                     ),
                   ),
                 ],
@@ -163,7 +163,7 @@ Widget _getMealPlanGroupDropDown(
     BuildContext context, ShoppingListModel model) {
   return Expanded(
     child: Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: FutureBuilder<List<MealPlanCollectionEntity>>(
         future: sl.get<MealPlanManager>().collections,
         builder: (context, snapshot) {

@@ -23,7 +23,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 class PopupMenuButtonChoices {
-  final _icon;
+  final IconData _icon;
   const PopupMenuButtonChoices._internal(this._icon);
   IconData get icon => this._icon;
 

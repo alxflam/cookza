@@ -15,7 +15,7 @@ class LocalizationParent extends StatelessWidget {
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate
       ],
-      locale: Locale('en'),
+      locale: const Locale('en'),
       child: Builder(
         builder: (context) {
           return _child;

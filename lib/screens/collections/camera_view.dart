@@ -89,30 +89,25 @@ class _CameraViewState extends State<CameraView> {
 
   Widget _galleryBody() {
     if (_image == null) {
-      return Container(
-        child: Center(
-          child: ElevatedButton(
-            onPressed: () {},
-            child: Icon(Icons.photo_library_outlined),
-          ),
+      return Center(
+        child: ElevatedButton(
+          onPressed: () {},
+          child: const Icon(Icons.photo_library_outlined),
         ),
       );
     }
 
-    return Container(
-      // constraints: const BoxConstraints.expand(),
-      child: Stack(
-        fit: StackFit.expand,
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: FileImage(_image!), fit: BoxFit.contain),
-            ),
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            image:
+                DecorationImage(image: FileImage(_image!), fit: BoxFit.contain),
           ),
-          _checkQrCodeExistence(context),
-        ],
-      ),
+        ),
+        _checkQrCodeExistence(context),
+      ],
     );
   }
 
@@ -228,7 +223,7 @@ class _CameraViewState extends State<CameraView> {
     return Opacity(
       opacity: 0.9,
       child: SimpleDialog(
-        title: Icon(
+        title: const Icon(
           Icons.error,
           size: 50,
         ),

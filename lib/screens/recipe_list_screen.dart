@@ -44,32 +44,30 @@ class RecipeListScreen extends StatelessWidget {
                         var recipes = Provider.of<List<RecipeEntity>>(context);
 
                         if (recipes.isEmpty) {
-                          return Container(
-                            child: Center(
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 16),
-                                child: Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.stretch,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    ElevatedButton(
-                                      onPressed: () async {
-                                        var collection = await sl
-                                            .get<RecipeManager>()
-                                            .collectionByID(collectionID);
-                                        await Navigator.pushNamed(
-                                          context,
-                                          NewRecipeScreen.id,
-                                          arguments: RecipeEditModel.create(
-                                              collection: collection),
-                                        );
-                                      },
-                                      child: Text(AppLocalizations.of(context)
-                                          .createRecipe),
-                                    )
-                                  ],
-                                ),
+                          return Center(
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  ElevatedButton(
+                                    onPressed: () async {
+                                      var collection = await sl
+                                          .get<RecipeManager>()
+                                          .collectionByID(collectionID);
+                                      await Navigator.pushNamed(
+                                        context,
+                                        NewRecipeScreen.id,
+                                        arguments: RecipeEditModel.create(
+                                            collection: collection),
+                                      );
+                                    },
+                                    child: Text(AppLocalizations.of(context)
+                                        .createRecipe),
+                                  )
+                                ],
                               ),
                             ),
                           );
@@ -77,7 +75,7 @@ class RecipeListScreen extends StatelessWidget {
 
                         return ListView.separated(
                           separatorBuilder: (context, index) => Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
                             child: Divider(
                               color: Theme.of(context).primaryColorLight,
                             ),
@@ -110,7 +108,7 @@ class RecipeListScreen extends StatelessWidget {
           onChanged: (value) {
             model.filterString = value;
           },
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             prefixIcon: Icon(Icons.search),
           ),
           style: TextStyle(color: Theme.of(context).colorScheme.onBackground),
@@ -129,7 +127,7 @@ class RecipeListScreen extends StatelessWidget {
       title: Text(AppLocalizations.of(context).recipe(2)),
       actions: [
         IconButton(
-            icon: Icon(Icons.search),
+            icon: const Icon(Icons.search),
             onPressed: () {
               Provider.of<RecipeListViewModel>(context, listen: false)
                   .isSearchEnabled = true;

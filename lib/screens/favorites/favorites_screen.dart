@@ -10,6 +10,8 @@ import 'package:provider/provider.dart';
 class FavoriteRecipesScreen extends StatelessWidget {
   static const String id = 'favorites';
 
+  const FavoriteRecipesScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(
@@ -22,7 +24,7 @@ class FavoriteRecipesScreen extends StatelessWidget {
                 .getFavoriteRecipes(),
             builder: (context, snapshot) {
               if (snapshot.connectionState != ConnectionState.done) {
-                return Center(
+                return const Center(
                   child: CircularProgressIndicator(),
                 );
               }
@@ -40,7 +42,7 @@ class FavoriteRecipesScreen extends StatelessWidget {
 
               return ListView.separated(
                 separatorBuilder: (context, index) => Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Divider(
                     color: Theme.of(context).primaryColorLight,
                   ),

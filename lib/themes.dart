@@ -19,7 +19,7 @@ abstract class CustomTheme {
   String get displayName;
 }
 
-final kBrightColorScheme = ColorScheme.light()
+final kBrightColorScheme = const ColorScheme.light()
     .copyWith(primary: kTealAppIconColor, secondary: kTealAppIconColor);
 
 final kBrightTheme = ThemeData.from(colorScheme: kBrightColorScheme).copyWith(
@@ -47,8 +47,8 @@ class LightTheme extends CustomTheme {
   }
 }
 
-final kDarkColorScheme = ColorScheme.dark().copyWith(
-    background: Color(0xFF121212),
+final kDarkColorScheme = const ColorScheme.dark().copyWith(
+    background: const Color(0xFF121212),
     primary: kTealAppIconColor,
     primaryVariant: kTealAppIconColor,
     secondary: kTealAppIconColor);

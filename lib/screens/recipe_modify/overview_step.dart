@@ -19,7 +19,7 @@ Step getOverviewStep(BuildContext context) {
       builder: (context, snapshot) {
         if (snapshot.connectionState != ConnectionState.done) {
           // return progress indicator until the future has finished
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(),
           );
         }
@@ -29,7 +29,7 @@ Step getOverviewStep(BuildContext context) {
             (!snapshot.hasData || snapshot.data!.isEmpty)) {
           return Card(
             child: ListTile(
-              leading: Icon(
+              leading: const Icon(
                 Icons.error,
                 color: Colors.red,
               ),
@@ -182,7 +182,7 @@ class DifficultyChip extends StatelessWidget {
       case DIFFICULTY.HARD:
         return Text(AppLocalizations.of(context).difficultyHard);
       default:
-        return Text('unknown');
+        return const Text('unknown');
     }
   }
 }

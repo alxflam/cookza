@@ -85,7 +85,7 @@ class FirebaseIngredientDocument {
   @JsonKey()
   String recipeID;
   // TODO remove once all recipes are migrated to groups
-  @deprecated
+  @Deprecated("will be removed")
   @JsonKey(toJson: kListToJson)
   List<FirebaseIngredient>? ingredients;
   @JsonKey(toJson: kListToJson)

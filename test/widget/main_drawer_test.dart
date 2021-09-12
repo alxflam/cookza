@@ -115,7 +115,7 @@ class MockApplication extends StatelessWidget {
       routes: kRoutes,
       home: ChangeNotifierProvider<ThemeModel>(
         create: (context) => ThemeModel(),
-        child: MainAppDrawer(),
+        child: const MainAppDrawer(),
       ),
     );
   }

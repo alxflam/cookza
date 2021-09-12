@@ -60,7 +60,7 @@ void main() {
 
     tile = find.byIcon(Icons.arrow_forward);
     await tester.tap(tile);
-    await tester.pump(Duration(seconds: 1));
+    await tester.pump(const Duration(seconds: 1));
     await tester.pumpAndSettle();
 
     expect(find.text('Accept'), findsOneWidget);
@@ -103,13 +103,11 @@ Future<void> _initApp(WidgetTester tester, NavigatorObserver observer) async {
 class TestHomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: ElevatedButton(
-        onPressed: () {
-          Navigator.pushNamed(context, OnBoardingScreen.id);
-        },
-        child: Container(),
-      ),
+    return ElevatedButton(
+      onPressed: () {
+        Navigator.pushNamed(context, OnBoardingScreen.id);
+      },
+      child: Container(),
     );
   }
 }

@@ -81,7 +81,7 @@ class NewIngredientScreen extends StatelessWidget {
                           groups.value = newList;
                         }
                       },
-                      icon: Icon(Icons.add),
+                      icon: const Icon(Icons.add),
                     ),
                   ],
                 );
@@ -118,7 +118,7 @@ class NewIngredientScreen extends StatelessWidget {
                     },
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 16,
                 ),
                 Builder(
@@ -169,7 +169,7 @@ class NewIngredientScreen extends StatelessWidget {
               ],
             ),
             _getRecipeWidget(model, context),
-            SizedBox(
+            const SizedBox(
               height: 8,
             ),
             _getRecipeRefButton(context, model),
@@ -198,10 +198,10 @@ class NewIngredientScreen extends StatelessWidget {
                         );
                       }
                     },
-                    child: Icon(Icons.save),
+                    child: const Icon(Icons.save),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 16,
                 ),
                 Expanded(
@@ -210,10 +210,10 @@ class NewIngredientScreen extends StatelessWidget {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: Icon(Icons.cancel),
+                    child: const Icon(Icons.cancel),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 16,
                 ),
                 Expanded(
@@ -223,7 +223,7 @@ class NewIngredientScreen extends StatelessWidget {
                       model.setDeleted();
                       Navigator.pop(context, screenModel);
                     },
-                    child: Icon(Icons.delete),
+                    child: const Icon(Icons.delete),
                   ),
                 ),
               ],
@@ -237,7 +237,7 @@ class NewIngredientScreen extends StatelessWidget {
           ),
           body: SingleChildScrollView(
             child: Padding(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: inputWidgets,
@@ -287,8 +287,9 @@ class NewIngredientScreen extends StatelessWidget {
             }
           }
         },
-        icon:
-            model.isRecipeReference ? Icon(Icons.delete) : Icon(Icons.note_add),
+        icon: model.isRecipeReference
+            ? const Icon(Icons.delete)
+            : const Icon(Icons.note_add),
         label: model.isRecipeReference
             ? Text(AppLocalizations.of(context).removeRecipe)
             : Text(AppLocalizations.of(context).referToRecipe),
@@ -329,11 +330,11 @@ Future<IngredientGroupEntity?> _createGroup(BuildContext context,
           Column(
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: TextFormField(
                   textCapitalization: TextCapitalization.sentences,
                   controller: nameController,
-                  style: TextStyle(fontSize: 20),
+                  style: const TextStyle(fontSize: 20),
                   autofocus: true,
                   maxLines: 1,
                   decoration: InputDecoration(
@@ -343,7 +344,7 @@ Future<IngredientGroupEntity?> _createGroup(BuildContext context,
             ],
           ),
           Padding(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             child: ElevatedButton(
               onPressed: () {
                 final adaptedGroup = MutableIngredientGroup.forValues(
@@ -351,7 +352,7 @@ Future<IngredientGroupEntity?> _createGroup(BuildContext context,
 
                 Navigator.pop(context, adaptedGroup);
               },
-              child: Icon(Icons.save),
+              child: const Icon(Icons.save),
             ),
           ),
         ],

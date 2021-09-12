@@ -15,7 +15,7 @@ class VersionText extends StatelessWidget {
           var info = snapshot.data as PackageInfo;
           return Text(
             'v${info.version}',
-            style: TextStyle(fontStyle: FontStyle.italic),
+            style: const TextStyle(fontStyle: FontStyle.italic),
           );
         }
         return Container();

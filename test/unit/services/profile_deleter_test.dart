@@ -40,7 +40,7 @@ void main() {
     var item = MutableShoppingListItem.ofIngredientNote(
         MutableIngredientNote.empty()..name = 'Test', false, true);
     var list = MutableShoppingList.ofValues(DateTime.now(),
-        DateTime.now().add(Duration(days: 2)), group.id!, [item]);
+        DateTime.now().add(const Duration(days: 2)), group.id!, [item]);
     var createdList = await shoppingListManager.createOrUpdate(list);
     expect(createdList, isNotNull);
 

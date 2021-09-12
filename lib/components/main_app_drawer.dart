@@ -16,6 +16,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../constants.dart';
 
 class MainAppDrawer extends StatelessWidget {
+  const MainAppDrawer({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final items = <Widget>[];
@@ -23,12 +25,12 @@ class MainAppDrawer extends StatelessWidget {
     final genericItems = [
       ListTile(
         title: Text(AppLocalizations.of(context).export),
-        leading: FaIcon(FontAwesomeIcons.fileExport),
+        leading: const FaIcon(FontAwesomeIcons.fileExport),
         onTap: () => Navigator.pushNamed(context, ExportSettingsScreen.id),
       ),
       ListTile(
         title: Text(AppLocalizations.of(context).import),
-        leading: FaIcon(FontAwesomeIcons.fileImport),
+        leading: const FaIcon(FontAwesomeIcons.fileImport),
         onTap: () {
           sl.get<RecipeFileImport>().parseAndImport(context);
         },
@@ -36,7 +38,7 @@ class MainAppDrawer extends StatelessWidget {
       _getWebAppListTile(context),
       ListTile(
         title: Text(AppLocalizations.of(context).settings),
-        leading: FaIcon(kSettingsIcon),
+        leading: const FaIcon(kSettingsIcon),
         onTap: () => Navigator.pushNamed(context, SettingsScreen.id),
       ),
     ];
@@ -46,14 +48,14 @@ class MainAppDrawer extends StatelessWidget {
         decoration: BoxDecoration(
           color: Theme.of(context).cardColor,
         ),
-        child: AppIconTextWidget(),
+        child: const AppIconTextWidget(),
       ),
     );
 
     if (!kIsWeb) {
       items.add(ListTile(
         title: Text(AppLocalizations.of(context).shareAccount),
-        leading: FaIcon(kShareAccountIcon),
+        leading: const FaIcon(kShareAccountIcon),
         onTap: () => Navigator.pushNamed(context, ShareAccountScreen.id),
       ));
     }
@@ -68,7 +70,7 @@ class MainAppDrawer extends StatelessWidget {
               children: items,
             ),
           ),
-          Expanded(
+          const Expanded(
             child: Align(
               alignment: FractionalOffset.bottomCenter,
               child: SafeArea(
@@ -87,7 +89,7 @@ class MainAppDrawer extends StatelessWidget {
     if (kIsWeb) {
       return ListTile(
         title: Text(AppLocalizations.of(context).logout),
-        leading: Icon(Icons.power_settings_new),
+        leading: const Icon(Icons.power_settings_new),
         onTap: () async {
           var util = sl.get<FirebaseWebLoginManager>();
           var user = sl.get<FirebaseProvider>().userUid;
@@ -97,7 +99,7 @@ class MainAppDrawer extends StatelessWidget {
     }
     return ListTile(
       title: Text('$kAppName ${AppLocalizations.of(context).web}'),
-      leading: FaIcon(kWebAppData),
+      leading: const FaIcon(kWebAppData),
       onTap: () => Navigator.pushNamed(context, WebLoginOnAppScreen.id),
     );
   }

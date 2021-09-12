@@ -81,8 +81,9 @@ void main() {
 
     // change selected date
     await tester.tap(find.text(DateTime.now().day.toString()).first);
-    await tester.tap(
-        find.text(DateTime.now().add(Duration(days: 2)).day.toString()).first);
+    await tester.tap(find
+        .text(DateTime.now().add(const Duration(days: 2)).day.toString())
+        .first);
 
     expect(find.text('SAVE'), findsOneWidget);
     expect(find.byType(Semantics), findsWidgets);
@@ -123,8 +124,8 @@ void main() {
 
     MutableShoppingList list = MutableShoppingList.newList(
         plan.id!,
-        DateTime.now().add(Duration(days: 1)),
-        DateTime.now().add(Duration(days: 6)));
+        DateTime.now().add(const Duration(days: 1)),
+        DateTime.now().add(const Duration(days: 6)));
     list.id = plan.id!;
 
     var item = MutableIngredientNote.empty();
@@ -167,8 +168,8 @@ void main() {
 
     MutableShoppingList list = MutableShoppingList.newList(
         plan.id!,
-        DateTime.now().subtract(Duration(days: 3)),
-        DateTime.now().add(Duration(days: 6)));
+        DateTime.now().subtract(const Duration(days: 3)),
+        DateTime.now().add(const Duration(days: 6)));
     list.id = plan.id!;
 
     var item = MutableIngredientNote.empty();

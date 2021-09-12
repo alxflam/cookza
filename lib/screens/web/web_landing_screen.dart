@@ -28,28 +28,24 @@ class WebLandingPage extends StatelessWidget {
           children: [
             Stack(
               children: [
-                Container(
-                  child: SizedBox(
-                    height: size.height * 0.4,
-                    width: size.width,
-                    child: Container(
-                      color: Theme.of(context).colorScheme.primary,
-                      child: Column(
-                        children: [
-                          MainInfoBar(),
-                        ],
-                      ),
+                SizedBox(
+                  height: size.height * 0.4,
+                  width: size.width,
+                  child: Container(
+                    color: Theme.of(context).colorScheme.primary,
+                    child: Column(
+                      children: [
+                        MainInfoBar(),
+                      ],
                     ),
                   ),
                 ),
                 Column(
                   children: [
-                    Container(
-                      child: Column(
-                        children: [
-                          FloatingBar(size: size),
-                        ],
-                      ),
+                    Column(
+                      children: [
+                        FloatingBar(size: size),
+                      ],
                     ),
                   ],
                 )
@@ -67,7 +63,7 @@ class BottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(30),
+      padding: const EdgeInsets.all(30),
       color: Theme.of(context).bottomAppBarColor,
       child: ResponsiveWidget.isSmallScreen(context)
           ? Column(
@@ -119,7 +115,7 @@ class MainInfoBar extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: EdgeInsets.all(15),
+          padding: const EdgeInsets.all(15),
           child: Text(
             'Cookza',
             style: Theme.of(context)
@@ -170,12 +166,12 @@ class FloatingBar extends StatelessWidget {
         color: Theme.of(context).cardColor,
         elevation: 4,
         child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Padding(
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: const [
@@ -193,7 +189,7 @@ class FloatingBar extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   child: Column(
                     children: [
                       barcode(context),
@@ -218,10 +214,10 @@ class InstructionText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 10),
+      padding: const EdgeInsets.symmetric(vertical: 10),
       child: Text(
         text,
-        style: TextStyle(fontSize: 18),
+        style: const TextStyle(fontSize: 18),
       ),
     );
   }
@@ -237,7 +233,7 @@ class TopBar extends StatelessWidget {
       child: Container(
         color: Theme.of(context).colorScheme.background,
         child: Padding(
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -272,7 +268,7 @@ Widget barcode(BuildContext context) {
 
         return PaddedQRCode(data, 300, 300);
       }
-      return CircularProgressIndicator();
+      return const CircularProgressIndicator();
     },
   );
 }

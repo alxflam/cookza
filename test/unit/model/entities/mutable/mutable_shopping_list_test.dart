@@ -7,7 +7,7 @@ import '../../../../utils/recipe_creator.dart';
 void main() {
   test('Add item', () async {
     var startDate = DateTime.now();
-    var endDate = startDate.add(Duration(days: 7));
+    var endDate = startDate.add(const Duration(days: 7));
     var cut = MutableShoppingList.ofValues(startDate, endDate, 'id', []);
 
     var onion = RecipeCreator.createIngredient('Onion', amount: 2, uom: 'PCS');
@@ -21,7 +21,7 @@ void main() {
 
   test('Clear items', () async {
     var startDate = DateTime.now();
-    var endDate = startDate.add(Duration(days: 7));
+    var endDate = startDate.add(const Duration(days: 7));
     var cut = MutableShoppingList.ofValues(startDate, endDate, 'id', []);
 
     var onion = RecipeCreator.createIngredient('Onion', amount: 2, uom: 'PCS');
@@ -38,7 +38,7 @@ void main() {
 
   test('Remove bought item', () async {
     var startDate = DateTime.now();
-    var endDate = startDate.add(Duration(days: 7));
+    var endDate = startDate.add(const Duration(days: 7));
     var cut = MutableShoppingList.ofValues(startDate, endDate, 'id', []);
 
     var onion = RecipeCreator.createIngredient('Onion', amount: 2, uom: 'PCS');
@@ -56,7 +56,7 @@ void main() {
 
   test('Remove item', () async {
     var startDate = DateTime.now();
-    var endDate = startDate.add(Duration(days: 7));
+    var endDate = startDate.add(const Duration(days: 7));
     var cut = MutableShoppingList.ofValues(startDate, endDate, 'id', []);
 
     var onion = RecipeCreator.createIngredient('Onion', amount: 2, uom: 'PCS');

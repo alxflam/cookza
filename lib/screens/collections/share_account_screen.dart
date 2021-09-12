@@ -38,7 +38,7 @@ class ShareAccountScreen extends StatelessWidget {
         title: Text(AppLocalizations.of(context).shareAccount),
         actions: [
           IconButton(
-            icon: Icon(Icons.share),
+            icon: const Icon(Icons.share),
             onPressed: () async {
               var bytes = await _widgetToImageBytes();
               String directory =
@@ -51,7 +51,7 @@ class ShareAccountScreen extends StatelessWidget {
             },
           ),
           IconButton(
-            icon: Icon(Icons.edit),
+            icon: const Icon(Icons.edit),
             onPressed: () {
               _openNameDialog(context, _model);
             },
@@ -81,7 +81,8 @@ class ShareAccountScreen extends StatelessWidget {
                         children: [
                           Builder(builder: (context) {
                             return Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20),
                               child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -94,12 +95,12 @@ class ShareAccountScreen extends StatelessWidget {
                             var data = jsonEncode(json);
                             return Card(
                               child: Padding(
-                                padding: EdgeInsets.all(10),
+                                padding: const EdgeInsets.all(10),
                                 child: Column(
                                   children: [
                                     Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(horizontal: 20),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 20),
                                       child: PaddedQRCode(data, 300, 300),
                                     ),
                                   ],
@@ -142,11 +143,11 @@ class ShareAccountScreen extends StatelessWidget {
                   return Column(
                     children: <Widget>[
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: TextFormField(
                           textCapitalization: TextCapitalization.sentences,
                           controller: nameController,
-                          style: TextStyle(fontSize: 20),
+                          style: const TextStyle(fontSize: 20),
                           autofocus: true,
                         ),
                       ),
@@ -158,7 +159,7 @@ class ShareAccountScreen extends StatelessWidget {
                             onPressed: () {
                               Navigator.pop(context, model);
                             },
-                            child: Icon(Icons.check),
+                            child: const Icon(Icons.check),
                           ),
                         ],
                       ),
@@ -183,25 +184,26 @@ class ShareAccountScreen extends StatelessWidget {
 
     return Expanded(
       child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 10),
+        padding: const EdgeInsets.symmetric(vertical: 10),
         child: Column(
           children: [
             CircleAvatar(
               backgroundColor: Theme.of(context).colorScheme.primary,
               radius: 35,
-              child: Image(
+              child: const Image(
                 width: 35,
                 image: AssetImage(kIconTransparent),
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(top: 10),
+              padding: const EdgeInsets.only(top: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     userName,
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 18),
                   ),
                 ],
               ),

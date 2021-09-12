@@ -174,12 +174,10 @@ Future<void> setupWidget(
         create: (context) => ThemeModel(),
         child: Builder(
           builder: (context) {
-            return Container(
-              child: ElevatedButton(
-                onPressed: () => Navigator.pushNamed(context, RecipeScreen.id,
-                    arguments: arg),
-                child: Text('DUMMY'),
-              ),
+            return ElevatedButton(
+              onPressed: () =>
+                  Navigator.pushNamed(context, RecipeScreen.id, arguments: arg),
+              child: const Text('DUMMY'),
             );
           },
         ),

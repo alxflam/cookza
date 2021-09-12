@@ -74,7 +74,7 @@ class RecipeSelectionScreen extends StatelessWidget {
                     },
                     decoration: InputDecoration(
                       labelText: AppLocalizations.of(context).search,
-                      prefixIcon: Icon(Icons.search),
+                      prefixIcon: const Icon(Icons.search),
                     ),
                   ),
                 ),
@@ -110,14 +110,14 @@ class RecipeSelectionScreen extends StatelessWidget {
               Icons.check_box,
               color: Theme.of(context).colorScheme.primary,
             )
-          : Icon(Icons.check_box_outline_blank);
+          : const Icon(Icons.check_box_outline_blank);
     } else {
       return model.isSelected(index)
           ? Icon(
               Icons.radio_button_checked,
               color: Theme.of(context).colorScheme.primary,
             )
-          : Icon(Icons.radio_button_unchecked);
+          : const Icon(Icons.radio_button_unchecked);
     }
   }
 
@@ -191,13 +191,13 @@ class SelectButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Padding(
-        padding: EdgeInsets.all(8),
+        padding: const EdgeInsets.all(8),
         child: ElevatedButton(
           onPressed: this.onTap,
           child: Row(
             children: [
               Icon(this.icon),
-              SizedBox(
+              const SizedBox(
                 width: 8,
               ),
               Text(this.text)

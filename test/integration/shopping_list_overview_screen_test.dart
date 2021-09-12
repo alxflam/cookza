@@ -49,8 +49,8 @@ void main() {
       (WidgetTester tester) async {
     MutableShoppingList list = MutableShoppingList.newList(
         '1',
-        DateTime.now().subtract(Duration(days: 7)),
-        DateTime.now().subtract(Duration(days: 1)));
+        DateTime.now().subtract(const Duration(days: 7)),
+        DateTime.now().subtract(const Duration(days: 1)));
     list.id = '1';
 
     await shoppingListManager.createOrUpdate(list);
@@ -65,7 +65,7 @@ void main() {
 
   testWidgets('Delete shopping list', (WidgetTester tester) async {
     MutableShoppingList list = MutableShoppingList.newList(
-        '1', DateTime.now(), DateTime.now().add(Duration(days: 7)));
+        '1', DateTime.now(), DateTime.now().add(const Duration(days: 7)));
     list.id = '1';
 
     await shoppingListManager.createOrUpdate(list);
@@ -92,7 +92,7 @@ void main() {
   testWidgets('Shopping list entry navigates to detail screen on tap',
       (WidgetTester tester) async {
     MutableShoppingList list = MutableShoppingList.newList(
-        '1', DateTime.now(), DateTime.now().add(Duration(days: 7)));
+        '1', DateTime.now(), DateTime.now().add(const Duration(days: 7)));
     list.id = '1';
 
     await shoppingListManager.createOrUpdate(list);

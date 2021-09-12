@@ -41,7 +41,7 @@ void main() {
     'Include items in date range - including start and end date',
     () async {
       var startDate = DateTime.now();
-      var endDate = startDate.add(Duration(days: 7));
+      var endDate = startDate.add(const Duration(days: 7));
       var shoppingList =
           MutableShoppingList.ofValues(startDate, endDate, 'id', []);
 
@@ -61,8 +61,8 @@ void main() {
       firstDateItem.addRecipe(
           MutableMealPlanRecipeEntity.fromValues(recipe.id, recipe.name, 2));
 
-      var midDateItem =
-          MutableMealPlanDateEntity.empty(startDate.add(Duration(days: 2)));
+      var midDateItem = MutableMealPlanDateEntity.empty(
+          startDate.add(const Duration(days: 2)));
       midDateItem.addRecipe(
           MutableMealPlanRecipeEntity.fromValues(recipe.id, recipe.name, 2));
 
@@ -89,7 +89,7 @@ void main() {
     'Skip items before list start date',
     () async {
       var startDate = DateTime.now();
-      var endDate = startDate.add(Duration(days: 7));
+      var endDate = startDate.add(const Duration(days: 7));
       var shoppingList =
           MutableShoppingList.ofValues(startDate, endDate, 'id', []);
 
@@ -106,7 +106,7 @@ void main() {
       await recipeManager.createOrUpdate(recipe);
 
       var firstDate = MutableMealPlanDateEntity.empty(
-          startDate.subtract(Duration(days: 1)));
+          startDate.subtract(const Duration(days: 1)));
       firstDate.addRecipe(
           MutableMealPlanRecipeEntity.fromValues(recipe.id, recipe.name, 2));
 
@@ -123,7 +123,7 @@ void main() {
     'Skip items after list end date',
     () async {
       var startDate = DateTime.now();
-      var endDate = startDate.add(Duration(days: 7));
+      var endDate = startDate.add(const Duration(days: 7));
       var shoppingList =
           MutableShoppingList.ofValues(startDate, endDate, 'id', []);
 
@@ -140,7 +140,7 @@ void main() {
       await recipeManager.createOrUpdate(recipe);
 
       var firstDate =
-          MutableMealPlanDateEntity.empty(endDate.add(Duration(days: 1)));
+          MutableMealPlanDateEntity.empty(endDate.add(const Duration(days: 1)));
       firstDate.addRecipe(
           MutableMealPlanRecipeEntity.fromValues(recipe.id, recipe.name, 2));
 
@@ -157,7 +157,7 @@ void main() {
     'Resolve inner recipes',
     () async {
       var startDate = DateTime.now();
-      var endDate = startDate.add(Duration(days: 7));
+      var endDate = startDate.add(const Duration(days: 7));
       var shoppingList =
           MutableShoppingList.ofValues(startDate, endDate, 'id', []);
 
@@ -189,8 +189,8 @@ void main() {
 
       await recipeManager.createOrUpdate(salad);
 
-      var midDateItem =
-          MutableMealPlanDateEntity.empty(startDate.add(Duration(days: 2)));
+      var midDateItem = MutableMealPlanDateEntity.empty(
+          startDate.add(const Duration(days: 2)));
       midDateItem.addRecipe(
           MutableMealPlanRecipeEntity.fromValues(salad.id, salad.name, 2));
 

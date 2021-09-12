@@ -144,7 +144,7 @@ void main() {
     'formatted date getters',
     () async {
       var creationDate = DateTime.now();
-      var modDate = creationDate.add(Duration(days: 1));
+      var modDate = creationDate.add(const Duration(days: 1));
       var recipe = FirebaseRecipe(
         name: 'name',
         creationDate: Timestamp.now(),

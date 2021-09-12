@@ -60,5 +60,5 @@ Map<String, Widget Function(BuildContext)> kRoutes = {
   ShoppingListSettingsScreen.id: (context) => ShoppingListSettingsScreen(),
   ErrorLogScreen.id: (context) => ErrorLogScreen(),
   QrScannerScreen.id: (context) => QrScannerScreen(),
-  FavoriteRecipesScreen.id: (context) => FavoriteRecipesScreen()
+  FavoriteRecipesScreen.id: (context) => const FavoriteRecipesScreen()
 };

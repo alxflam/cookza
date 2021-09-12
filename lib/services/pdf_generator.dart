@@ -136,7 +136,7 @@ class PDFGeneratorImpl implements PDFGenerator {
                     '${AppLocalizations.of(buildContext!).ingredient(2)} (${recipeViewModel.servings} ${AppLocalizations.of(buildContext).servings(recipeViewModel.servings)})'),
             pw.Table.fromTextArray(
               context: context,
-              border: pw.TableBorder(),
+              border: const pw.TableBorder(),
               headerAlignment: pw.Alignment.center,
               cellAlignment: pw.Alignment.center,
               data: ingredientList,

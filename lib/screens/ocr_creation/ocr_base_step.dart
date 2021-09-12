@@ -57,7 +57,7 @@ class SelectImageWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             IconButton(
-              icon: Icon(Icons.photo_library),
+              icon: const Icon(Icons.photo_library),
               onPressed: () {
                 onSelect(ImageSource.gallery);
               },
@@ -66,7 +66,7 @@ class SelectImageWidget extends StatelessWidget {
               onPressed: () {
                 onSelect(ImageSource.camera);
               },
-              icon: Icon(Icons.camera_alt),
+              icon: const Icon(Icons.camera_alt),
             )
           ],
         ),
@@ -86,10 +86,10 @@ class ImageSelectedWidget extends StatelessWidget {
     return Column(
       children: [
         Container(
-          constraints: BoxConstraints.expand(
+          constraints: const BoxConstraints.expand(
             height: 300.0,
           ),
-          padding: EdgeInsets.only(left: 16.0, bottom: 8.0, right: 16.0),
+          padding: const EdgeInsets.only(left: 16.0, bottom: 8.0, right: 16.0),
           decoration: BoxDecoration(
             image: DecorationImage(
               image: FileImage(image),
@@ -106,7 +106,7 @@ class ImageSelectedWidget extends StatelessWidget {
                   onPressed: () {
                     this.onDelete();
                   },
-                  child: Icon(Icons.delete, color: Colors.black),
+                  child: const Icon(Icons.delete, color: Colors.black),
                 ),
               ),
               Positioned(
@@ -126,7 +126,7 @@ class ImageSelectedWidget extends StatelessWidget {
     return Consumer<RecipeOCRStep>(
       builder: (context, model, _) {
         if (model.isPending) {
-          return CircularProgressIndicator();
+          return const CircularProgressIndicator();
         }
 
         return ElevatedButton(
@@ -135,11 +135,11 @@ class ImageSelectedWidget extends StatelessWidget {
           child: Builder(
             builder: (context) {
               return model.isValid
-                  ? Icon(
+                  ? const Icon(
                       Icons.check,
                       color: Colors.green,
                     )
-                  : Icon(
+                  : const Icon(
                       Icons.error,
                       color: Colors.red,
                     );

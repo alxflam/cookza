@@ -23,7 +23,7 @@ class WebLoginOnAppScreen extends StatelessWidget {
         title: Text('$kAppName ${AppLocalizations.of(context).web}'),
         actions: [
           IconButton(
-            icon: Icon(Icons.add),
+            icon: const Icon(Icons.add),
             onPressed: () async {
               var json = await Navigator.pushNamed(context, QrScannerScreen.id);
               if (json == null || (json is! String)) {
@@ -52,7 +52,7 @@ class WebLoginOnAppScreen extends StatelessWidget {
         ],
       ),
       body: Padding(
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -60,7 +60,7 @@ class WebLoginOnAppScreen extends StatelessWidget {
             CircleAvatar(
               backgroundColor: Colors.transparent.withAlpha(40),
               radius: 45,
-              child: FaIcon(
+              child: const FaIcon(
                 FontAwesomeIcons.desktop,
                 size: 40,
               ),
@@ -88,7 +88,7 @@ class LogIns extends StatelessWidget {
     }
 
     return Padding(
-      padding: EdgeInsets.only(top: 20),
+      padding: const EdgeInsets.only(top: 20),
       child: Column(
         children: [
           Builder(
@@ -105,7 +105,7 @@ class LogIns extends StatelessWidget {
                     title: Text(date),
                     subtitle: Text(hs.browser),
                     trailing: IconButton(
-                      icon: Icon(Icons.delete),
+                      icon: const Icon(Icons.delete),
                       onPressed: () {
                         sl
                             .get<FirebaseWebLoginManager>()
@@ -125,8 +125,8 @@ class LogIns extends StatelessWidget {
             },
             child: Row(
               children: [
-                Icon(FontAwesomeIcons.signOutAlt),
-                SizedBox(
+                const Icon(FontAwesomeIcons.signOutAlt),
+                const SizedBox(
                   width: 20,
                 ),
                 Text(AppLocalizations.of(context).logoutAllDevices),

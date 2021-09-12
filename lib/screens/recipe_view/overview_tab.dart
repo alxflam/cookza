@@ -63,25 +63,23 @@ class OverviewTab extends StatelessWidget {
                 } else {
                   return Expanded(
                     flex: 1,
-                    child: Container(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Spacer(),
-                          Align(
-                              alignment: Alignment.center,
-                              child: Icon(
-                                Icons.image,
-                                size: 100,
-                                color: Theme.of(context).colorScheme.primary,
-                              )),
-                          Spacer(),
-                          Align(
-                              alignment: FractionalOffset.bottomCenter,
-                              child: CustomizedRatingBar(model)),
-                        ],
-                      ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Spacer(),
+                        Align(
+                            alignment: Alignment.center,
+                            child: Icon(
+                              Icons.image,
+                              size: 100,
+                              color: Theme.of(context).colorScheme.primary,
+                            )),
+                        const Spacer(),
+                        Align(
+                            alignment: FractionalOffset.bottomCenter,
+                            child: CustomizedRatingBar(model)),
+                      ],
                     ),
                   );
                 }
@@ -131,14 +129,14 @@ class SubImageRow extends StatelessWidget {
         return Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Wrap(
               children: <Widget>[
                 Text(
                   model.name,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                   ),
                   textAlign: TextAlign.center,
@@ -153,11 +151,11 @@ class SubImageRow extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             _buildDateRow(model),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             _buildTagWidget(model),
@@ -170,7 +168,7 @@ class SubImageRow extends StatelessWidget {
   Row _buildDateRow(RecipeViewModel model) {
     var duration = Row(
       children: <Widget>[
-        Icon(
+        const Icon(
           Icons.timer,
           size: 20,
         ),
@@ -180,7 +178,7 @@ class SubImageRow extends StatelessWidget {
 
     var created = Row(
       children: <Widget>[
-        Icon(
+        const Icon(
           Icons.add,
           size: 20,
         ),
@@ -190,7 +188,7 @@ class SubImageRow extends StatelessWidget {
 
     var modified = Row(
       children: <Widget>[
-        Icon(
+        const Icon(
           Icons.edit,
           size: 20,
         ),

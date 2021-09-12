@@ -35,14 +35,14 @@ class MealPlanScreen extends StatelessWidget {
           : sl.get<MealPlanManager>().getCollectionByID(currentGroup),
       builder: (context, snapshot) {
         return Scaffold(
-          drawer: MealPlanGroupsDrawer(),
+          drawer: const MealPlanGroupsDrawer(),
           appBar: AppBar(
             title: snapshot.data == null
                 ? Text(AppLocalizations.of(context).functionsMealPlanner)
                 : Text(snapshot.data!.name),
             actions: [
               IconButton(
-                icon: Icon(kShoppingListIconData),
+                icon: const Icon(kShoppingListIconData),
                 onPressed: () {
                   openShoppingListDialog(context);
                 },
@@ -58,7 +58,7 @@ class MealPlanScreen extends StatelessWidget {
               }
 
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(
+                return const Center(
                   child: CircularProgressIndicator(),
                 );
               }
@@ -67,7 +67,7 @@ class MealPlanScreen extends StatelessWidget {
                 future: sl.get<MealPlanManager>().mealPlan,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(child: CircularProgressIndicator());
+                    return const Center(child: CircularProgressIndicator());
                   }
                   if (snapshot.hasData) {
                     MealPlanViewModel _model =
@@ -131,7 +131,7 @@ class MealPlanScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -139,7 +139,7 @@ class MealPlanScreen extends StatelessWidget {
                       entry: model.entries[i],
                     ),
                     IconButton(
-                      icon: Icon(Icons.add),
+                      icon: const Icon(Icons.add),
                       onPressed: () async {
                         // if moved here by navigaton
                         if (model.addByNavigationRequired) {
@@ -188,7 +188,7 @@ class MealPlanScreen extends StatelessWidget {
                 dense: true,
                 title: Text(
                   recipeModel.name,
-                  style: TextStyle(fontSize: 14),
+                  style: const TextStyle(fontSize: 14),
                 ),
                 onTap: () async {
                   if (recipeModel.id != null) {
@@ -206,7 +206,7 @@ class MealPlanScreen extends StatelessWidget {
                         '${recipeModel.servings.toString()} ${AppLocalizations.of(context).servings(recipeModel.servings!)}')
                     : null,
                 trailing: IconButton(
-                  icon: Icon(Icons.edit),
+                  icon: const Icon(Icons.edit),
                   onPressed: () async {
                     var mealPlanViewModel =
                         Provider.of<MealPlanViewModel>(context, listen: false);
@@ -242,10 +242,10 @@ class MealPlanScreen extends StatelessWidget {
           opacity: 0.9,
           child: ConstrainedBox(
             constraints: BoxConstraints.loose(
-              Size.fromWidth(200),
+              const Size.fromWidth(200),
             ),
             child: Container(
-              padding: EdgeInsets.only(bottom: 100),
+              padding: const EdgeInsets.only(bottom: 100),
               child: Material(
                 color: Colors.transparent,
                 child: Transform.scale(
@@ -288,7 +288,7 @@ class MealPlanScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     Padding(
-                      padding: EdgeInsets.all(10),
+                      padding: const EdgeInsets.all(10),
                       child: ElevatedButton(
                         onPressed: () {
                           // close dialog
@@ -302,7 +302,7 @@ class MealPlanScreen extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.all(10),
+                      padding: const EdgeInsets.all(10),
                       child: ElevatedButton(
                         onPressed: () async {
                           // fetch all recipes the app currently stores
@@ -386,7 +386,7 @@ class WeekdayHeaderTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       _getWeekDayHeaderText(context, entry),
-      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
     );
   }
 

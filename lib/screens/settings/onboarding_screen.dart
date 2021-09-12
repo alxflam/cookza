@@ -52,16 +52,16 @@ class OnBoardingScreen extends StatelessWidget {
       showSkipButton: false,
       dotsFlex: 2,
       nextFlex: 1,
-      next: Icon(Icons.arrow_forward),
+      next: const Icon(Icons.arrow_forward),
       done: showDoneButton
           ? Text(MaterialLocalizations.of(context).closeButtonLabel,
-              style: TextStyle(fontWeight: FontWeight.w600))
+              style: const TextStyle(fontWeight: FontWeight.w600))
           : Container(),
       dotsDecorator: DotsDecorator(
-        size: Size(5.0, 5.0),
+        size: const Size(5.0, 5.0),
         activeColor: Theme.of(context).colorScheme.primary,
-        activeSize: Size(20.0, 10.0),
-        activeShape: RoundedRectangleBorder(
+        activeSize: const Size(20.0, 10.0),
+        activeShape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(25.0)),
         ),
       ),
@@ -86,7 +86,7 @@ class OnBoardingScreen extends StatelessWidget {
           child: CircleAvatar(
             backgroundColor: Theme.of(context).colorScheme.primary,
             radius: 100,
-            child: Image(
+            child: const Image(
               width: 100,
               image: AssetImage(kIconTransparent),
             ),
@@ -147,7 +147,7 @@ class OnBoardingScreen extends StatelessWidget {
 
   PageViewModel _getAcceptTermsPage(BuildContext context) {
     return PageViewModel(
-      titleWidget: SafeArea(
+      titleWidget: const SafeArea(
         child: Padding(
           padding: EdgeInsets.only(top: 30),
           child: Center(
@@ -161,55 +161,52 @@ class OnBoardingScreen extends StatelessWidget {
         value: OnboardingModel(),
         child: SafeArea(
           child: Padding(
-            padding: EdgeInsets.all(20),
-            child: Container(
-              child: Consumer<OnboardingModel>(
-                builder: (context, model, child) {
-                  return SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        Text(AppLocalizations.of(context).onboardingAcceptData),
-                        Text(''),
-                        Text(AppLocalizations.of(context)
-                            .onboardingAcceptAuthentication),
-                        TextCheckbox(
-                            AppLocalizations.of(context).termsOfUse,
-                            () => kNotImplementedDialog(context),
-                            () => model.termsOfUse,
-                            (bool value) => model.termsOfUse = value),
-                        TextCheckbox(
-                            AppLocalizations.of(context).privacyStatement,
-                            () => kNotImplementedDialog(context),
-                            () => model.privacyStatement,
-                            (bool value) => model.privacyStatement = value),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: ElevatedButton(
-                                style: kRaisedGreenButtonStyle,
-                                onPressed: model.acceptedAll
-                                    ? () {
-                                        sl
-                                            .get<SharedPreferencesProvider>()
-                                            .setAcceptedTermsOfUse(true);
-                                        sl
-                                            .get<SharedPreferencesProvider>()
-                                            .setAcceptedDataPrivacyStatement(
-                                                true);
-                                        this._onIntroEnd(context);
-                                      }
-                                    : null,
-                                child:
-                                    Text(AppLocalizations.of(context).accept),
-                              ),
+            padding: const EdgeInsets.all(20),
+            child: Consumer<OnboardingModel>(
+              builder: (context, model, child) {
+                return SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Text(AppLocalizations.of(context).onboardingAcceptData),
+                      const Text(''),
+                      Text(AppLocalizations.of(context)
+                          .onboardingAcceptAuthentication),
+                      TextCheckbox(
+                          AppLocalizations.of(context).termsOfUse,
+                          () => kNotImplementedDialog(context),
+                          () => model.termsOfUse,
+                          (bool value) => model.termsOfUse = value),
+                      TextCheckbox(
+                          AppLocalizations.of(context).privacyStatement,
+                          () => kNotImplementedDialog(context),
+                          () => model.privacyStatement,
+                          (bool value) => model.privacyStatement = value),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: ElevatedButton(
+                              style: kRaisedGreenButtonStyle,
+                              onPressed: model.acceptedAll
+                                  ? () {
+                                      sl
+                                          .get<SharedPreferencesProvider>()
+                                          .setAcceptedTermsOfUse(true);
+                                      sl
+                                          .get<SharedPreferencesProvider>()
+                                          .setAcceptedDataPrivacyStatement(
+                                              true);
+                                      this._onIntroEnd(context);
+                                    }
+                                  : null,
+                              child: Text(AppLocalizations.of(context).accept),
                             ),
-                          ],
-                        )
-                      ],
-                    ),
-                  );
-                },
-              ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                );
+              },
             ),
           ),
         ),
@@ -243,10 +240,10 @@ class TextCheckbox extends StatelessWidget {
               children: [
                 TextSpan(
                     text: AppLocalizations.of(context).readAndAccept,
-                    style: TextStyle(color: Colors.white)),
+                    style: const TextStyle(color: Colors.white)),
                 TextSpan(
                   text: title,
-                  style: TextStyle(color: Colors.blueAccent),
+                  style: const TextStyle(color: Colors.blueAccent),
                   recognizer: TapGestureRecognizer()..onTap = this.onTap,
                 ),
               ],

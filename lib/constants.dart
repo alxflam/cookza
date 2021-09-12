@@ -129,7 +129,7 @@ String kFormatAmount(double? amount) {
 void kNotImplementedDialog(BuildContext context) {
   showDialog(
     context: context,
-    builder: (context) => SimpleDialog(
+    builder: (context) => const SimpleDialog(
       title: Text('Not implemented'),
       titlePadding: EdgeInsets.all(20),
     ),
@@ -142,7 +142,7 @@ void kErrorDialog(BuildContext context, String title, String message) {
     builder: (context) => AlertDialog(
       title: AlertDialogTitle(title: title),
       content: Text(message),
-      titlePadding: EdgeInsets.all(20),
+      titlePadding: const EdgeInsets.all(20),
     ),
   );
 }

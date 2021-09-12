@@ -8,10 +8,8 @@ class ImageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: PhotoView(
-        imageProvider: this.imageProvider,
-      ),
+    return PhotoView(
+      imageProvider: this.imageProvider,
     );
   }
 }

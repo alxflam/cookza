@@ -22,13 +22,14 @@ class SavedImagesScreen extends StatelessWidget {
           if (snapshot.hasData) {
             List<File> files = snapshot.data!;
             return ListView.separated(
-              separatorBuilder: (BuildContext context, int index) => Divider(),
+              separatorBuilder: (BuildContext context, int index) =>
+                  const Divider(),
               itemCount: files.length,
               itemBuilder: (context, index) {
                 var file = files[index];
 
                 return Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10),
+                  padding: const EdgeInsets.symmetric(vertical: 10),
                   child: ListTile(
                     leading: AspectRatio(
                       aspectRatio: 2 / 1,
@@ -45,7 +46,7 @@ class SavedImagesScreen extends StatelessWidget {
                     ),
                     title: Text(kDateFormatter.format(file.lastModifiedSync())),
                     trailing: IconButton(
-                      icon: Icon(Icons.delete),
+                      icon: const Icon(Icons.delete),
                       onPressed: () async {
                         await sl
                             .get<ImageManager>()

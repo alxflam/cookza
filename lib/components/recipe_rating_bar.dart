@@ -21,8 +21,8 @@ class RecipeRatingBar extends StatelessWidget {
       unratedColor: Colors.amber.withAlpha(50),
       itemCount: 5,
       itemSize: 20.0,
-      itemPadding: EdgeInsets.symmetric(horizontal: 5.0),
-      itemBuilder: (context, _) => Icon(
+      itemPadding: const EdgeInsets.symmetric(horizontal: 5.0),
+      itemBuilder: (context, _) => const Icon(
         Icons.star,
         color: Colors.amberAccent,
       ),

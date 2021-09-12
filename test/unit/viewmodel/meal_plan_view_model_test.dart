@@ -76,8 +76,8 @@ void main() {
       var today = DateTime.now();
 
       var mock = MealPlanEntityMock();
-      var item =
-          MutableMealPlanDateEntity.empty(today.subtract(Duration(days: 1)));
+      var item = MutableMealPlanDateEntity.empty(
+          today.subtract(const Duration(days: 1)));
       item.addRecipe(MutableMealPlanRecipeEntity.fromValues('', 'test', 2));
       mock.items = [item];
 
@@ -93,7 +93,7 @@ void main() {
     'End on last day of persistent data if this exceeds the configured timeline',
     () async {
       var today = DateTime.now();
-      var endDate = today.add(Duration(days: 20));
+      var endDate = today.add(const Duration(days: 20));
 
       var mock = MealPlanEntityMock();
       var item = MutableMealPlanDateEntity.empty(endDate);
@@ -110,8 +110,8 @@ void main() {
     'Use values from persisted data',
     () async {
       var today = DateTime.now();
-      var firstPersistedDate = today.add(Duration(days: 3));
-      var secondPersistedDate = today.add(Duration(days: 6));
+      var firstPersistedDate = today.add(const Duration(days: 3));
+      var secondPersistedDate = today.add(const Duration(days: 6));
 
       var mock = MealPlanEntityMock();
       var item = MutableMealPlanDateEntity.empty(firstPersistedDate);
@@ -126,23 +126,23 @@ void main() {
 
       expect(
           isSameDay(model.entries[2].date,
-              firstPersistedDate.subtract(Duration(days: 1))),
+              firstPersistedDate.subtract(const Duration(days: 1))),
           true);
       expect(isSameDay(model.entries[3].date, firstPersistedDate), true);
 
       expect(model.entries[3].recipes.length, 1);
       expect(
-          isSameDay(
-              model.entries[4].date, firstPersistedDate.add(Duration(days: 1))),
+          isSameDay(model.entries[4].date,
+              firstPersistedDate.add(const Duration(days: 1))),
           true);
       expect(
-          isSameDay(
-              model.entries[5].date, firstPersistedDate.add(Duration(days: 2))),
+          isSameDay(model.entries[5].date,
+              firstPersistedDate.add(const Duration(days: 2))),
           true);
       expect(isSameDay(model.entries[6].date, secondPersistedDate), true);
       expect(
           isSameDay(model.entries[7].date,
-              secondPersistedDate.add(Duration(days: 1))),
+              secondPersistedDate.add(const Duration(days: 1))),
           true);
     },
   );
@@ -153,10 +153,11 @@ void main() {
       var today = DateTime.now();
 
       var mock = MealPlanEntityMock();
-      var item = MutableMealPlanDateEntity.empty(today.add(Duration(days: 3)));
+      var item =
+          MutableMealPlanDateEntity.empty(today.add(const Duration(days: 3)));
       item.addRecipe(MutableMealPlanRecipeEntity.fromValues('', 'test', 2));
       var secondItem =
-          MutableMealPlanDateEntity.empty(today.add(Duration(days: 6)));
+          MutableMealPlanDateEntity.empty(today.add(const Duration(days: 6)));
       secondItem
           .addRecipe(MutableMealPlanRecipeEntity.fromValues('', 'test', 2));
 
@@ -194,7 +195,8 @@ void main() {
       var today = DateTime.now();
 
       var mock = MealPlanEntityMock();
-      var item = MutableMealPlanDateEntity.empty(today.add(Duration(days: 3)));
+      var item =
+          MutableMealPlanDateEntity.empty(today.add(const Duration(days: 3)));
       item.addRecipe(
           MutableMealPlanRecipeEntity.fromValues('', 'TestRecipe', 2));
       mock.items = [item];
@@ -219,7 +221,8 @@ void main() {
       var today = DateTime.now();
 
       var mock = MealPlanEntityMock();
-      var item = MutableMealPlanDateEntity.empty(today.add(Duration(days: 3)));
+      var item =
+          MutableMealPlanDateEntity.empty(today.add(const Duration(days: 3)));
       item.addRecipe(
           MutableMealPlanRecipeEntity.fromValues('A', 'TestRecipe', 2));
       mock.items = [item];

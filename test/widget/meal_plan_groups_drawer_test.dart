@@ -64,7 +64,7 @@ void main() {
 
     // open the drawer
     await tester.dragFrom(
-        tester.getTopLeft(find.byType(MaterialApp)), Offset(300, 0));
+        tester.getTopLeft(find.byType(MaterialApp)), const Offset(300, 0));
     await tester.pumpAndSettle();
 
     // the drawer opened
@@ -83,7 +83,7 @@ Future<void> _initApp(WidgetTester tester, NavigatorObserver observer) async {
     ],
     home: ChangeNotifierProvider<ThemeModel>(
       create: (context) => ThemeModel(),
-      child: MealPlanGroupsDrawer(),
+      child: const MealPlanGroupsDrawer(),
     ),
   ));
 }

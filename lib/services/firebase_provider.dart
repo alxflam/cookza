@@ -549,7 +549,7 @@ class FirebaseProvider {
         .limit(1)
         .get();
 
-    var parsedDoc;
+    FirebaseMealPlanDocument parsedDoc;
 
     if (snapshot.docs.isEmpty) {
       parsedDoc = FirebaseMealPlanDocument.empty(this.userUid, groupID);
@@ -603,7 +603,7 @@ class FirebaseProvider {
       String mealPlanID, String userID) async {
     var docRef = _firestore.collection(MEAL_PLAN_GROUPS).doc(mealPlanID);
 
-    var doc = await docRef.get(GetOptions(source: Source.server));
+    var doc = await docRef.get(const GetOptions(source: Source.server));
     var mealPlan = FirebaseMealPlanCollection.fromJson(doc.data()!, doc.id);
     var deleteMealPlan =
         mealPlan.users.entries.where((a) => a.key != userID).isEmpty;
@@ -625,7 +625,7 @@ class FirebaseProvider {
   Future<void> _removeMemberFromRecipeGroup(String groupID, userID) async {
     var docRef = _firestore.collection(RECIPE_GROUPS).doc(groupID);
 
-    var doc = await docRef.get(GetOptions(source: Source.server));
+    var doc = await docRef.get(const GetOptions(source: Source.server));
     var recipeGroup = FirebaseRecipeCollection.fromJson(doc.data()!, doc.id);
     var deleteGroup =
         recipeGroup.users.entries.where((a) => a.key != userID).isEmpty;

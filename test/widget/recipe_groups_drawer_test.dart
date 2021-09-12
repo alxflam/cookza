@@ -60,7 +60,7 @@ void main() {
 
     // open the drawer
     await tester.dragFrom(
-        tester.getTopLeft(find.byType(MaterialApp)), Offset(300, 0));
+        tester.getTopLeft(find.byType(MaterialApp)), const Offset(300, 0));
     await tester.pumpAndSettle();
 
     // the drawer opened

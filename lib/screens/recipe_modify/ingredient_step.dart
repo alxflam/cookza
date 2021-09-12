@@ -140,7 +140,7 @@ List<DataRow> _getIngredientRows(
             DataCell(
               Text(
                 group.name,
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: const TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
             // data table does not support spanned cells, hence two dummy cells are needed

@@ -53,7 +53,7 @@ class ShoppingListItemsGeneratorImpl implements ShoppingListItemsGenerator {
   }
 
   bool _dateIsMatching(MealPlanDateEntity item, ShoppingListEntity entity) {
-    return item.date.isBefore(entity.dateUntil.add(Duration(days: 1))) &&
-        item.date.isAfter(entity.dateFrom.subtract(Duration(days: 1)));
+    return item.date.isBefore(entity.dateUntil.add(const Duration(days: 1))) &&
+        item.date.isAfter(entity.dateFrom.subtract(const Duration(days: 1)));
   }
 }

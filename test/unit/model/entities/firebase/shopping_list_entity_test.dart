@@ -24,7 +24,7 @@ void main() {
     'create a shopping list',
     () async {
       var from = DateTime.now();
-      var until = from.add(Duration(days: 7));
+      var until = from.add(const Duration(days: 7));
       List<FirebaseShoppingListItem> items = [];
       FirebaseShoppingListItem pepper = createPepperItem();
       items.add(pepper);

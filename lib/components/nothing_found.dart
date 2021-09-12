@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class NothingFound extends StatelessWidget {
   final String _text;
 
-  const NothingFound(this._text);
+  const NothingFound(this._text, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +12,7 @@ class NothingFound extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Padding(
+          const Padding(
             padding: EdgeInsets.all(20),
             child: FaIcon(
               FontAwesomeIcons.search,

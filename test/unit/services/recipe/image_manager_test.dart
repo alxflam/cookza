@@ -32,7 +32,7 @@ void main() {
 
     final recipe = RecipeCreator.createRecipe('Test');
     recipe.image = 'true';
-    recipe.modificationDate = DateTime.now().subtract(Duration(days: 1));
+    recipe.modificationDate = DateTime.now().subtract(const Duration(days: 1));
 
     await cut.uploadRecipeImage(recipe.id!, file);
 

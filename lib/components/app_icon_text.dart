@@ -6,7 +6,8 @@ class AppIconTextWidget extends StatelessWidget {
   final double size;
 
   const AppIconTextWidget(
-      {this.alignment = MainAxisAlignment.start, this.size = 24});
+      {this.alignment = MainAxisAlignment.start, this.size = 24, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,7 @@ class AppIconTextWidget extends StatelessWidget {
         ConstrainedBox(
           constraints: BoxConstraints.tightFor(width: size + 16),
           child: Image(
-            image: AssetImage(kIconTransparent),
+            image: const AssetImage(kIconTransparent),
             color: Theme.of(context).colorScheme.primary,
           ),
         ),

@@ -20,8 +20,10 @@ void main() {
   test('Get persisted lists - do not show data from the past', () async {
     var cut = ShoppingListOverviewModel();
     var now = DateTime.now();
-    var entity = MutableShoppingList.newList('1234',
-        now.subtract(Duration(days: 10)), now.subtract(Duration(days: 1)));
+    var entity = MutableShoppingList.newList(
+        '1234',
+        now.subtract(const Duration(days: 10)),
+        now.subtract(const Duration(days: 1)));
     when(mock.shoppingListsAsList)
         .thenAnswer((realInvocation) => Future.value([entity]));
     var lists = await cut.getLists();
@@ -31,8 +33,8 @@ void main() {
   test('Get persisted lists - show current data', () async {
     var cut = ShoppingListOverviewModel();
     var now = DateTime.now();
-    var entity =
-        MutableShoppingList.newList('1234', now, now.add(Duration(days: 6)));
+    var entity = MutableShoppingList.newList(
+        '1234', now, now.add(const Duration(days: 6)));
     when(mock.shoppingListsAsList)
         .thenAnswer((realInvocation) => Future.value([entity]));
     var lists = await cut.getLists();

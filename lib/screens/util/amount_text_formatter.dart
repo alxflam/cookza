@@ -8,7 +8,7 @@ class AmountNumberFormatter extends TextInputFormatter {
 
     // don't display the initial '0.0' as this means extra effort for the user (needs to clear the default input before entering values)
     if (length == 0 || newValue.text == '0') {
-      return TextEditingValue(
+      return const TextEditingValue(
         text: '',
         selection: TextSelection.collapsed(offset: 0),
       );

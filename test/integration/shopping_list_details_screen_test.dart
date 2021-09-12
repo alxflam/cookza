@@ -249,14 +249,12 @@ Future<void> _initApp(WidgetTester tester, NavigatorObserver observer,
         create: (context) => ThemeModel(),
         child: Builder(
           builder: (context) {
-            return Container(
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, ShoppingListDetailScreen.id,
-                      arguments: model);
-                },
-                child: Container(),
-              ),
+            return ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, ShoppingListDetailScreen.id,
+                    arguments: model);
+              },
+              child: Container(),
             );
           },
         ),

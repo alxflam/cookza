@@ -45,9 +45,9 @@ class HomeScreen extends StatelessWidget {
     var tileColor = Theme.of(context).cardColor;
 
     return Scaffold(
-      drawer: MainAppDrawer(),
+      drawer: const MainAppDrawer(),
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           kAppName,
           style: TextStyle(),
         ),
@@ -159,7 +159,7 @@ class MainFunctionCard extends StatelessWidget {
     return GestureDetector(
       onTap: onPress,
       child: Container(
-        margin: EdgeInsets.all(15),
+        margin: const EdgeInsets.all(15),
         decoration: BoxDecoration(
           color: this.color,
           borderRadius: BorderRadius.circular(10),
@@ -186,7 +186,7 @@ class IconContent extends StatelessWidget {
           color: Theme.of(context).colorScheme.primary,
           size: 70,
         ),
-        SizedBox(
+        const SizedBox(
           height: 15,
         ),
         Text(

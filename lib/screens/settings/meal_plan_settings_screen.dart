@@ -42,7 +42,7 @@ class MealPlanSettingsScreen extends StatelessWidget {
                     model.setWeeks(2);
                   },
                 ),
-                Divider(),
+                const Divider(),
                 ListTile(
                   title: Text(AppLocalizations.of(context).stdServingsDesc),
                 ),
@@ -52,7 +52,7 @@ class MealPlanSettingsScreen extends StatelessWidget {
                       '${model.standardServingsSize} ${AppLocalizations.of(context).servings(model.standardServingsSize)}'),
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Slider(
                     value: model.standardServingsSize.toDouble(),
                     max: 10,

@@ -64,7 +64,7 @@ void main() {
     'Shopping list document static factory method',
     () async {
       var startDate = DateTime.now();
-      var endDate = startDate.add(Duration(days: 7));
+      var endDate = startDate.add(const Duration(days: 7));
       var entity = MutableShoppingList.ofValues(startDate, endDate, 'id', []);
 
       var onion =

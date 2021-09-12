@@ -23,7 +23,7 @@ class ExportSettingsScreen extends StatelessWidget {
         children: <Widget>[
           ListTile(
             title: Text(AppLocalizations.of(context).json),
-            leading: FaIcon(FontAwesomeIcons.fileExport),
+            leading: const FaIcon(FontAwesomeIcons.fileExport),
             onTap: () async {
               // fetch all recipes the app currently stores
               var recipes = await sl.get<RecipeManager>().getAllRecipes();
@@ -37,7 +37,7 @@ class ExportSettingsScreen extends StatelessWidget {
           ),
           ListTile(
             title: Text(AppLocalizations.of(context).pdf),
-            leading: FaIcon(FontAwesomeIcons.filePdf),
+            leading: const FaIcon(FontAwesomeIcons.filePdf),
             onTap: () async {
               // fetch all recipes the app currently stores
               var recipes = await sl.get<RecipeManager>().getAllRecipes();
@@ -52,7 +52,7 @@ class ExportSettingsScreen extends StatelessWidget {
           ),
           ListTile(
             title: Text(AppLocalizations.of(context).backup),
-            leading: FaIcon(FontAwesomeIcons.fileArchive),
+            leading: const FaIcon(FontAwesomeIcons.fileArchive),
             onTap: () async {
               // fetch all recipes the app currently stores
               var recipes = await sl.get<RecipeManager>().getAllRecipes();

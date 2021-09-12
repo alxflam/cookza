@@ -8,7 +8,7 @@ class InstructionsTab extends StatelessWidget {
     return Consumer<RecipeViewModel>(
       builder: (context, model, child) {
         return Padding(
-          padding: EdgeInsets.symmetric(vertical: 20),
+          padding: const EdgeInsets.symmetric(vertical: 20),
           child: Builder(
             builder: (context) {
               List<Widget> instructions = [];
@@ -46,7 +46,7 @@ class InstructionRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         LeadingStepNumber(num),
-        SizedBox(
+        const SizedBox(
           width: 16.0,
         ),
         InstructionText(content)
@@ -64,7 +64,7 @@ class InstructionText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Padding(
-        padding: EdgeInsets.only(top: 10),
+        padding: const EdgeInsets.only(top: 10),
         child: Text(content),
       ),
     );
@@ -79,14 +79,14 @@ class LeadingStepNumber extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: 10, top: 10),
+      padding: const EdgeInsets.only(left: 10, top: 10),
       child: Material(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
         color: Colors.grey,
         child: Container(
-          padding: EdgeInsets.all(5.0),
+          padding: const EdgeInsets.all(5.0),
           child: Text(num.toString(),
-              style: TextStyle(
+              style: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
                   fontSize: 18.0)),

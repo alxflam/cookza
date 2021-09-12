@@ -28,13 +28,13 @@ class ShoppingListDetailScreen extends StatelessWidget {
                     .get<ShoppingListTextExporter>()
                     .exportShoppingListAsText(model);
               },
-              child: Icon(Icons.share),
+              child: const Icon(Icons.share),
             ),
             appBar: AppBar(
               title: Text(model.shortTitle),
               actions: [
                 IconButton(
-                  icon: Icon(Icons.add),
+                  icon: const Icon(Icons.add),
                   onPressed: () async {
                     // open ingredient screen
                     final ingScreenModel = IngredientScreenModel(
@@ -60,20 +60,18 @@ class ShoppingListDetailScreen extends StatelessWidget {
               builder: (context, snapshot) {
                 if (snapshot.connectionState != ConnectionState.done &&
                     !model.initialized) {
-                  return Center(
+                  return const Center(
                     child: CircularProgressIndicator(),
                   );
                 }
 
                 if (snapshot.data == null || snapshot.data!.isEmpty) {
-                  return Container(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        NothingFound(AppLocalizations.of(context).noItems),
-                      ],
-                    ),
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      NothingFound(AppLocalizations.of(context).noItems),
+                    ],
                   );
                 }
 
@@ -114,7 +112,7 @@ class ShoppingListDetailScreen extends StatelessWidget {
                             ),
                             secondary: itemModel.isCustomItem
                                 ? IconButton(
-                                    icon: Icon(Icons.edit),
+                                    icon: const Icon(Icons.edit),
                                     onPressed: () async {
                                       // edit the custom item
                                       final ingScreenModel =

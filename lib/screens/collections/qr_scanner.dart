@@ -35,7 +35,7 @@ class _QrScannerScreenState extends State<QrScannerScreen> {
   Future<void> processImage(InputImage inputImage) async {
     if (isBusy) return;
     isBusy = true;
-    await Future.delayed(Duration(milliseconds: 50));
+    await Future.delayed(const Duration(milliseconds: 50));
     final codes = await barcodeScanner.processImage(inputImage);
     if (codes.isNotEmpty) {
       final qrCodeValue = codes.first.value.displayValue;
@@ -43,7 +43,7 @@ class _QrScannerScreenState extends State<QrScannerScreen> {
       /// wait until we can navigate
       SchedulerBinding.instance!.addPostFrameCallback((_) async {
         /// make sure the image is at least shown and can be seen
-        await Future.delayed(Duration(seconds: 1));
+        await Future.delayed(const Duration(seconds: 1));
 
         /// then return to previous page with the scanned result
         Navigator.pop(context, qrCodeValue);

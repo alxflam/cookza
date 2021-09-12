@@ -15,28 +15,26 @@ class IngredientsTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<RecipeViewModel>(
       builder: (context, model, child) {
-        return Container(
-          child: Column(
-            children: <Widget>[
-              ListOfIngredientsHeader(),
-              DataTable(
-                showCheckboxColumn: false,
-                columns: [
-                  DataColumn(
-                    numeric: true,
-                    label: Text(AppLocalizations.of(context).amount),
-                  ),
-                  DataColumn(
-                    label: Text(AppLocalizations.of(context).unit),
-                  ),
-                  DataColumn(
-                    label: Text(AppLocalizations.of(context).ingredient(1)),
-                  ),
-                ],
-                rows: _buildIngredientRows(context, model),
-              )
-            ],
-          ),
+        return Column(
+          children: <Widget>[
+            ListOfIngredientsHeader(),
+            DataTable(
+              showCheckboxColumn: false,
+              columns: [
+                DataColumn(
+                  numeric: true,
+                  label: Text(AppLocalizations.of(context).amount),
+                ),
+                DataColumn(
+                  label: Text(AppLocalizations.of(context).unit),
+                ),
+                DataColumn(
+                  label: Text(AppLocalizations.of(context).ingredient(1)),
+                ),
+              ],
+              rows: _buildIngredientRows(context, model),
+            )
+          ],
         );
       },
     );
@@ -58,7 +56,7 @@ class IngredientsTab extends StatelessWidget {
               DataCell(
                 Text(
                   group.name,
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
               ),
               // data table does not support spanned cells, hence two dummy cells are needed

@@ -6,7 +6,7 @@ void main() {
   test(
     'skip items in the past',
     () async {
-      var yesterday = DateTime.now().subtract(Duration(days: 1));
+      var yesterday = DateTime.now().subtract(const Duration(days: 1));
 
       var mealPlanDate = MutableMealPlanDateEntity.empty(yesterday);
       mealPlanDate.addRecipe(
@@ -22,7 +22,7 @@ void main() {
   test(
     'items too far in the future should not be skipped',
     () async {
-      var twoWeeksAhead = DateTime.now().add(Duration(days: 14));
+      var twoWeeksAhead = DateTime.now().add(const Duration(days: 14));
 
       var mealPlanDate = MutableMealPlanDateEntity.empty(twoWeeksAhead);
       mealPlanDate.addRecipe(
@@ -38,7 +38,7 @@ void main() {
   test(
     'item gaps are filled',
     () async {
-      var threeDaysAhead = DateTime.now().add(Duration(days: 3));
+      var threeDaysAhead = DateTime.now().add(const Duration(days: 3));
 
       var mealPlanDate = MutableMealPlanDateEntity.empty(threeDaysAhead);
       mealPlanDate.addRecipe(
@@ -61,8 +61,8 @@ void main() {
   test(
     'items are sorted',
     () async {
-      var threeDaysAhead = DateTime.now().add(Duration(days: 3));
-      var twoDaysAhead = DateTime.now().add(Duration(days: 2));
+      var threeDaysAhead = DateTime.now().add(const Duration(days: 3));
+      var twoDaysAhead = DateTime.now().add(const Duration(days: 2));
 
       var mealPlanDate = MutableMealPlanDateEntity.empty(threeDaysAhead);
       mealPlanDate.addRecipe(

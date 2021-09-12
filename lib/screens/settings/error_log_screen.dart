@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
 class PopupMenuButtonChoices {
-  final _icon;
+  final IconData _icon;
   const PopupMenuButtonChoices._internal(this._icon);
   IconData get icon => this._icon;
 
@@ -73,7 +73,7 @@ class ErrorLogScreen extends StatelessWidget {
                   return ListView.separated(
                     shrinkWrap: true,
                     separatorBuilder: (BuildContext context, int index) =>
-                        Divider(),
+                        const Divider(),
                     itemCount: files.length,
                     itemBuilder: (context, index) {
                       var logEntry = files[index];
@@ -82,10 +82,8 @@ class ErrorLogScreen extends StatelessWidget {
                     },
                   );
                 } else {
-                  return Container(
-                    child: Center(
-                      child: Text(AppLocalizations.of(context).noErrorLogEntry),
-                    ),
+                  return Center(
+                    child: Text(AppLocalizations.of(context).noErrorLogEntry),
                   );
                 }
               },
@@ -100,7 +98,7 @@ class ErrorLogScreen extends StatelessWidget {
 class ExceptionEntry extends StatelessWidget {
   final ExceptionItem exception;
 
-  static final kTitleStyle =
+  static const kTitleStyle =
       TextStyle(fontWeight: FontWeight.bold, fontStyle: FontStyle.italic);
 
   const ExceptionEntry(this.exception);
@@ -123,7 +121,7 @@ class ExceptionEntry extends StatelessWidget {
             return AlertDialog(
               title: Text(AppLocalizations.of(context).errorLog),
               content: Padding(
-                padding: EdgeInsets.only(top: 10),
+                padding: const EdgeInsets.only(top: 10),
                 child: SingleChildScrollView(
                   child: Text(exception.stackTrace),
                 ),

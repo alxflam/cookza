@@ -129,7 +129,7 @@ void main() {
     await tester.tap(moreFinder);
     await tester.pumpAndSettle();
     await tester.tap(find.text('Add User'));
-    await tester.pump(Duration(seconds: 1));
+    await tester.pump(const Duration(seconds: 1));
 
     verify(observer.didPush(any, any));
   });
@@ -208,13 +208,11 @@ class TestHomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: ElevatedButton(
-        onPressed: () {
-          Navigator.pushNamed(context, RecipeGroupScreen.id, arguments: args);
-        },
-        child: Container(),
-      ),
+    return ElevatedButton(
+      onPressed: () {
+        Navigator.pushNamed(context, RecipeGroupScreen.id, arguments: args);
+      },
+      child: Container(),
     );
   }
 }

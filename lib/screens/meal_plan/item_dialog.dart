@@ -35,10 +35,10 @@ class RecipeItemDialog extends StatelessWidget {
       return Column(
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Text(
               model.name,
-              style: TextStyle(fontSize: 20),
+              style: const TextStyle(fontSize: 20),
             ),
           ),
           Row(
@@ -80,11 +80,11 @@ class NoteItemDialog extends StatelessWidget {
 
       return Column(children: <Widget>[
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           child: TextFormField(
             textCapitalization: TextCapitalization.sentences,
             controller: nameController,
-            style: TextStyle(fontSize: 20),
+            style: const TextStyle(fontSize: 20),
             autofocus: true,
           ),
         ),
@@ -107,7 +107,7 @@ class DialogButtonRow extends StatelessWidget {
               model.applyChanges();
               Navigator.pop(context, model);
             },
-            child: Icon(Icons.check),
+            child: const Icon(Icons.check),
           ),
           ElevatedButton(
             style: kRaisedRedButtonStyle,
@@ -115,7 +115,7 @@ class DialogButtonRow extends StatelessWidget {
               model.setDeleted(true);
               Navigator.pop(context, model);
             },
-            child: Icon(Icons.delete),
+            child: const Icon(Icons.delete),
           ),
         ],
       );

@@ -59,7 +59,7 @@ class ProviderChainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<ThemeModel>(
       create: (context) => ThemeModel(),
-      child: CookzaMaterialApp(),
+      child: const CookzaMaterialApp(),
     );
   }
 }

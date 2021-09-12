@@ -13,7 +13,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PopupMenuButtonChoices {
-  final _icon;
+  final IconData _icon;
   const PopupMenuButtonChoices._internal(this._icon);
   IconData get icon => this._icon;
 
@@ -137,10 +137,10 @@ abstract class AbstractGroupScreen extends StatelessWidget {
                           title: Text(name),
                           subtitle: isCurrentUser
                               ? Text(AppLocalizations.of(context).selfUser)
-                              : Text(''),
+                              : const Text(''),
                           trailing: !isCurrentUser
                               ? IconButton(
-                                  icon: Icon(Icons.delete),
+                                  icon: const Icon(Icons.delete),
                                   onPressed: () async =>
                                       await model.removeMember(user))
                               : null,
@@ -159,12 +159,12 @@ abstract class AbstractGroupScreen extends StatelessWidget {
 
   Widget _getLeadingUserIcon(UserEntity user, bool isCurrentUser) {
     if (user.type == USER_TYPE.WEB_SESSION) {
-      return FaIcon(FontAwesomeIcons.desktop);
+      return const FaIcon(FontAwesomeIcons.desktop);
     }
     if (isCurrentUser) {
-      return FaIcon(FontAwesomeIcons.userCheck);
+      return const FaIcon(FontAwesomeIcons.userCheck);
     }
-    return FaIcon(FontAwesomeIcons.user);
+    return const FaIcon(FontAwesomeIcons.user);
   }
 
   void _renameCollection(BuildContext _context, GroupViewModel model) {
@@ -186,7 +186,7 @@ abstract class AbstractGroupScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
                       Padding(
-                        padding: EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(10),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
@@ -214,14 +214,14 @@ abstract class AbstractGroupScreen extends StatelessWidget {
                               model.rename(controller.text);
                               Navigator.pop(context);
                             },
-                            child: Icon(Icons.save),
+                            child: const Icon(Icons.save),
                           ),
                           ElevatedButton(
                             style: kRaisedRedButtonStyle,
                             onPressed: () {
                               Navigator.pop(context);
                             },
-                            child: Icon(Icons.cancel),
+                            child: const Icon(Icons.cancel),
                           ),
                         ],
                       )
@@ -305,7 +305,7 @@ abstract class AbstractGroupScreen extends StatelessWidget {
         context: context,
         builder: (context) => SimpleDialog(
           title: Text(AppLocalizations.of(context).addUser),
-          contentPadding: EdgeInsets.all(20),
+          contentPadding: const EdgeInsets.all(20),
           children: [Text(AppLocalizations.of(context).addedUser(user.name))],
         ),
       );

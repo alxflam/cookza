@@ -39,7 +39,7 @@ class RecipeListTile extends StatelessWidget {
           leading: Builder(
             builder: (context) {
               if (entity.image == null || entity.image == null) {
-                return ImagePlaceholder();
+                return const ImagePlaceholder();
               }
               return FutureBuilder(
                 future: sl.get<ImageManager>().getRecipeImageFile(entity),
@@ -59,7 +59,7 @@ class RecipeListTile extends StatelessWidget {
                       ),
                     );
                   } else {
-                    return ImagePlaceholder();
+                    return const ImagePlaceholder();
                   }
                 },
               );
@@ -71,14 +71,14 @@ class RecipeListTile extends StatelessWidget {
             children: <Widget>[
               Row(
                 children: <Widget>[
-                  Icon(
+                  const Icon(
                     Icons.timer,
                     size: 15,
                   ),
                   Text('${entity.duration}min'),
                 ],
               ),
-              VerticalDivider(),
+              const VerticalDivider(),
               _buildTileIcons(entity),
             ],
           ),
@@ -86,14 +86,14 @@ class RecipeListTile extends StatelessWidget {
             future: sl.get<RecipeManager>().getRating(entity),
             builder: (context, snapshot) {
               if (snapshot.connectionState != ConnectionState.done) {
-                return SizedBox(
+                return const SizedBox(
                   width: 0,
                   height: 0,
                 ); // no trailing widget
               }
               final rating = snapshot.data;
               return rating == null
-                  ? FaIcon(FontAwesomeIcons.questionCircle)
+                  ? const FaIcon(FontAwesomeIcons.questionCircle)
                   : Icon(rating < 2
                       ? Icons.star_border
                       : rating < 4
@@ -128,7 +128,7 @@ class RecipeListTile extends StatelessWidget {
     List<Widget> widgets = icons
         .map(
           (element) => Padding(
-            padding: EdgeInsets.symmetric(horizontal: 5),
+            padding: const EdgeInsets.symmetric(horizontal: 5),
             child: FaIcon(
               element,
               size: 15,
@@ -150,11 +150,9 @@ class ImagePlaceholder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
+    return const AspectRatio(
       aspectRatio: 2 / 1,
-      child: Container(
-        child: Icon(Icons.photo),
-      ),
+      child: Icon(Icons.photo),
     );
   }
 }

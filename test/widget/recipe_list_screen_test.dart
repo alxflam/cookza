@@ -84,7 +84,7 @@ void main() {
 
     /// swipe right
     await tester.dragFrom(
-        tester.getTopLeft(find.byType(RecipeListScreen)), Offset(300, 0));
+        tester.getTopLeft(find.byType(RecipeListScreen)), const Offset(300, 0));
     await tester.pumpAndSettle();
 
     /// drawer is open
