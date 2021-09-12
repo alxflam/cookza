@@ -20,9 +20,8 @@ class RecipeIngredientModel extends ChangeNotifier {
       : this._note = MutableIngredientNote.empty(),
         this.sourceRecipe = null;
 
-  RecipeIngredientModel.of(IngredientNoteEntity note, {String? sourceRecipe})
-      : this._note = MutableIngredientNote.of(note),
-        this.sourceRecipe = sourceRecipe {
+  RecipeIngredientModel.of(IngredientNoteEntity note, {this.sourceRecipe})
+      : this._note = MutableIngredientNote.of(note) {
     if (this._note.ingredient.isRecipeReference) {
       this.setRecipeReference(this._note.ingredient.recipeReference);
     }

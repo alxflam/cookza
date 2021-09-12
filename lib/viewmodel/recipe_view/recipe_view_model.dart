@@ -8,8 +8,10 @@ import 'package:cookza/model/entities/mutable/mutable_ingredient_note.dart';
 import 'package:cookza/services/recipe/recipe_manager.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:flutter/material.dart';
+import 'package:logging/logging.dart';
 
 class RecipeViewModel extends ChangeNotifier {
+  static final log = Logger('RecipeViewModel');
   RecipeEntity _recipe;
   late int _servings;
   int _rating = 0;
@@ -93,7 +95,7 @@ class RecipeViewModel extends ChangeNotifier {
   void _updateIngredients(int servings) {
     var baseServings = _recipe.servings;
     var ratio = servings / baseServings;
-    print('ratio for ing is $ratio');
+    log.info('ratio for ing is $ratio');
 
     _recipe.ingredientGroups.then((groups) {
       for (var i = 0; i < groups.length; i++) {

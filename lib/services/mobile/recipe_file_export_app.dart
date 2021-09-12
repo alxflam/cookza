@@ -6,9 +6,12 @@ import 'package:cookza/model/json/recipe_list.dart';
 import 'package:cookza/services/abstract/recipe_file_export.dart';
 import 'package:cookza/services/local_storage.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
+import 'package:logging/logging.dart';
 import 'package:share_plus/share_plus.dart';
 
 class RecipeFileExportImpl extends RecipeFileExport {
+  final log = Logger('RecipeFileExportImpl');
+
   @override
   void exportRecipes(List<String> ids) async {
     String directory = await sl.get<StorageProvider>().getTempDirectory();
@@ -22,7 +25,7 @@ class RecipeFileExportImpl extends RecipeFileExport {
     var json = model.toJson();
 
     await file.writeAsString(jsonEncode(json));
-    print('profile saved at ${file.path}');
+    log.info('profile saved at ${file.path}');
 
     await Share.shareFiles([file.path]);
   }

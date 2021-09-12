@@ -7,6 +7,7 @@ import 'package:cookza/services/local_storage.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:logging/logging.dart';
 
 abstract class ImageManager {
   Future<void> uploadRecipeImage(String recipeId, File file);
@@ -20,6 +21,7 @@ abstract class ImageManager {
 
 class ImageManagerFirebase implements ImageManager {
   final FirebaseStorage _storage = sl.get<FirebaseStorage>();
+  final log = Logger('ImageManagerFirebase');
 
   @override
   Future<void> deleteRecipeImage(String recipeId) async {
@@ -28,7 +30,7 @@ class ImageManagerFirebase implements ImageManager {
     File cacheFile = cacheFilePath(imageDirectory, recipeId);
     if (cacheFile.existsSync()) {
       await cacheFile.delete();
-      print('deleted file: ${cacheFile.path}');
+      log.info('deleted file: ${cacheFile.path}');
     }
 
     // delete the cloud image
@@ -110,11 +112,11 @@ class ImageManagerFirebase implements ImageManager {
 
     // flush to be sure wqe don't still show outdated data
     await cacheFile.writeAsBytes(bytes, flush: true);
-    print('saved local file: ${cacheFile.path}');
+    log.info('saved local file: ${cacheFile.path}');
 
     // upload the file
     Reference reference = _storage.ref().child(getRecipeImagePath(recipeId));
-    print('start upload');
+    log.info('start upload');
     UploadTask uploadTask = reference.putFile(
         cacheFile,
         SettableMetadata(customMetadata: {
@@ -122,6 +124,6 @@ class ImageManagerFirebase implements ImageManager {
         }));
 
     await uploadTask;
-    print('upload completed');
+    log.info('upload completed');
   }
 }

@@ -28,11 +28,8 @@ class RecipeGroupViewModel extends GroupViewModel {
   }
 
   @override
-  Future<void> addUser(String userID, String name) async {
-    await sl
-        .get<RecipeManager>()
-        .addUserToCollection(this.entity, userID, name);
-
+  Future<void> addUser(String id, String name) async {
+    await sl.get<RecipeManager>().addUserToCollection(this.entity, id, name);
     notifyListeners();
   }
 

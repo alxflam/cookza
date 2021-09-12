@@ -6,12 +6,14 @@ import 'package:cookza/services/recipe/recipe_manager.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:cookza/viewmodel/recipe_edit/recipe_edit_step.dart';
 import 'package:flutter/material.dart';
+import 'package:logging/logging.dart';
 
 enum MODE { CREATE, MODIFY }
 
 class RecipeEditModel extends ChangeNotifier {
   static const kImageQuality = 70;
   static const kImageMaxWidth = 1000.0;
+  static final log = Logger('RecipeEditModel');
 
   final MutableRecipe _targetRecipe;
   final MODE _mode;
@@ -65,12 +67,12 @@ class RecipeEditModel extends ChangeNotifier {
 
   Future<String> save(BuildContext context) async {
     _validate(context);
-    print('validation succeeded');
+    log.info('validation succeeded');
 
     for (var model in _stepModels) {
       model.applyTo(_targetRecipe);
     }
-    print('model prepared for save');
+    log.info('model prepared for save');
 
     // retrieve the next document id if a new recipe is being created with an image
     // then we need to know the recipe id in advance to upload the image
@@ -78,7 +80,7 @@ class RecipeEditModel extends ChangeNotifier {
       _targetRecipe.id = sl
           .get<RecipeManager>()
           .getNextRecipeDocumentId(_targetRecipe.recipeCollectionId);
-      print('getNextRecipeDocumentId returned: ' + _targetRecipe.id!);
+      log.info('getNextRecipeDocumentId returned: ' + _targetRecipe.id!);
     }
 
     // then adapt the image
@@ -103,13 +105,13 @@ class RecipeEditModel extends ChangeNotifier {
 
   void nextStep() {
     _currentStep++;
-    print('model step increased to $_currentStep');
+    log.info('model step increased to $_currentStep');
     notifyListeners();
   }
 
   void previousStep() {
     _currentStep--;
-    print('model step decreased to $_currentStep');
+    log.info('model step decreased to $_currentStep');
     notifyListeners();
   }
 

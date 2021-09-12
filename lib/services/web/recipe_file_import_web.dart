@@ -9,9 +9,14 @@ import 'package:cookza/services/abstract/recipe_file_import.dart';
 import 'package:cookza/viewmodel/recipe_view/recipe_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+// ignore: avoid_web_libraries_in_flutter
 import 'dart:html' as html;
 
+import 'package:logging/logging.dart';
+
 class RecipeFileImportImpl extends RecipeFileImport {
+  final log = Logger('RecipeFileImportImpl');
+
   @override
   void parseAndImport(BuildContext context) {
     // configure file selection dialog
@@ -29,7 +34,7 @@ class RecipeFileImportImpl extends RecipeFileImport {
         // if reading selected file succeeds
         reader.onLoadEnd.listen((e) {
           String data = reader.result?.toString() ?? '';
-          print('Read from file load up: $data');
+          log.info('Read from file load up: $data');
           List<Recipe> result = [];
 
           var json = jsonDecode(data);

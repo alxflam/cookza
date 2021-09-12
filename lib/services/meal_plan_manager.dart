@@ -96,7 +96,7 @@ class MealPlanManagerFirebase implements MealPlanManager {
     if (currentCollection == entity.id) {
       currentCollection = null;
     }
-    return firebase.deleteMealPlanCollection(entity.id!);
+    await firebase.deleteMealPlanCollection(entity.id!);
   }
 
   @override

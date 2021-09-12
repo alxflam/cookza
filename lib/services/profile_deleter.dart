@@ -23,7 +23,7 @@ class ProfileDeleterImpl implements ProfileDeleter {
     var mealPlanGroups = await firebase.mealPlanCollectionsAsList();
     for (var mealPlanGroup in mealPlanGroups) {
       List<UserEntity> users = List.of(mealPlanGroup.users);
-      users.remove(firebase.userUid);
+      users.removeWhere((element) => element.id == firebase.userUid);
       bool otherOwners = hasOtherUsers(users);
       if (otherOwners) {
         // only leave group
@@ -45,7 +45,7 @@ class ProfileDeleterImpl implements ProfileDeleter {
     var recipeGroups = await firebase.recipeCollectionsAsList();
     for (var recipeGroup in recipeGroups) {
       List<UserEntity> users = List.of(recipeGroup.users);
-      users.remove(firebase.userUid);
+      users.removeWhere((e) => e.id == firebase.userUid);
       if (hasOtherUsers(users)) {
         // leave group
         await firebase.leaveRecipeGroup(recipeGroup.id!);

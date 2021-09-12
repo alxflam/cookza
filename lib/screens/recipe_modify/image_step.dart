@@ -5,6 +5,7 @@ import 'package:cookza/viewmodel/recipe_edit/recipe_edit_model.dart';
 import 'package:cookza/viewmodel/recipe_edit/recipe_edit_step.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -28,7 +29,8 @@ Step getImageStep(BuildContext context) {
             if (image != null) {
               model.image = File(image.path);
             } else {
-              print('picked image is null');
+              final log = Logger('getImageStep');
+              log.info('picked image is null');
             }
           }
 

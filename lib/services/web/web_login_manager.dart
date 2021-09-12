@@ -68,7 +68,6 @@ class FirebaseWebLoginManager {
     var handshake = FirebaseHandshake.fromJson(document.data()!, document.id);
 
     if (handshake.requestor.isEmpty) {
-      print('no webclient ID');
       return;
     }
 
@@ -182,8 +181,8 @@ class FirebaseWebLoginManager {
         .get();
 
     for (var element in handshakes.docs) {
-        element.reference.delete();
-      }
+      element.reference.delete();
+    }
   }
 
   /// log off from all web client sessions

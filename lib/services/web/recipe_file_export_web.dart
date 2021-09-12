@@ -1,4 +1,5 @@
 import 'dart:convert';
+// ignore: avoid_web_libraries_in_flutter
 import 'dart:html' as html;
 import 'package:cookza/model/entities/abstract/recipe_entity.dart';
 import 'package:cookza/services/abstract/recipe_file_export.dart';

@@ -8,6 +8,7 @@ import 'package:cookza/screens/web/responsive_widget.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:cookza/services/web/web_login_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:logging/logging.dart';
 // import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class WebLandingPage extends StatelessWidget {
@@ -259,7 +260,8 @@ Widget barcode(BuildContext context) {
   return FutureBuilder(
     future: sl.get<FirebaseWebLoginManager>().initializeWebLogin(
       (BuildContext context) {
-        print('navigating to home screen as it seems a login was granted');
+        final log = Logger('WebLandingPage');
+        log.info('navigating to home screen as it seems a login was granted');
         Navigator.pushReplacementNamed(context, HomeScreen.id);
       },
       context,

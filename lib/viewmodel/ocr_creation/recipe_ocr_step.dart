@@ -79,8 +79,7 @@ class RecipeInstructionOCRStep
 
   final RecipeEditModel? editModel;
 
-  RecipeInstructionOCRStep({RecipeEditModel? editModel})
-      : this.editModel = editModel;
+  RecipeInstructionOCRStep({this.editModel});
 
   @override
   bool get isValid {

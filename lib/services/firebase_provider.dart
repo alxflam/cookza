@@ -29,6 +29,7 @@ import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:cookza/services/web/web_login_manager.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:logging/logging.dart';
 
 const RECIPE_GROUPS = 'recipeGroups';
 const INGREDIENTS = 'ingredients';
@@ -43,6 +44,7 @@ const HANDSHAKES = 'handshakes';
 class FirebaseProvider {
   final FirebaseAuth _auth = sl.get<FirebaseAuth>();
   final FirebaseFirestore _firestore = sl.get<FirebaseFirestore>();
+  final log = Logger('FirebaseProvider');
 
   User? _currentUser;
   String? ownerUserId;
@@ -130,7 +132,7 @@ class FirebaseProvider {
           ).toJson(),
         );
     var model = await document.get();
-    print('created meal plan collection ${document.id}');
+    log.info('created meal plan collection ${document.id}');
 
     return MealPlanCollectionEntityFirebase.of(
         FirebaseMealPlanCollection.fromJson(model.data()!, model.id));
@@ -175,7 +177,7 @@ class FirebaseProvider {
     }
     ownerUserId = _currentUser?.uid;
 
-    print('logged in anonymously using token ${_currentUser?.uid}');
+    log.info('logged in anonymously using token ${_currentUser?.uid}');
 
     return this;
   }
@@ -195,7 +197,7 @@ class FirebaseProvider {
           ).toJson(),
         );
     var model = await document.get();
-    print('created recipe collection ${document.id}');
+    log.info('created recipe collection ${document.id}');
 
     return RecipeCollectionEntityFirebase.of(
         FirebaseRecipeCollection.fromJson(model.data()!, model.id));
@@ -316,14 +318,14 @@ class FirebaseProvider {
 
     await batch.commit();
 
-    print('updated recipe ${recipe.id}');
+    log.info('updated recipe ${recipe.id}');
 
     return recipe.id!;
   }
 
   Future<void> deleteRecipe(RecipeEntity recipe) async {
     await _firestore.collection(RECIPES).doc(recipe.id).delete();
-    print('deleted recipe ${recipe.id}');
+    log.info('deleted recipe ${recipe.id}');
   }
 
   Future<RecipeCollectionEntity> recipeCollectionByID(String id) async {
@@ -359,7 +361,7 @@ class FirebaseProvider {
     });
   }
 
-  Future<void> deleteMealPlanCollection(String id) async {
+  Future<int> deleteMealPlanCollection(String id) async {
     var reference = _firestore.collection(MEAL_PLAN_GROUPS).doc(id);
 
     var snapshot = await _firestore
@@ -370,7 +372,7 @@ class FirebaseProvider {
 
     var shoppingLists = await getShoppingListsByMealPlan(id);
 
-    return _firestore.runTransaction((transaction) {
+    return _firestore.runTransaction<int>((transaction) {
       int updates = snapshot.docs.length + shoppingLists.length + 1;
       // delete the meal plan
       for (var mealPlanDoc in snapshot.docs) {
@@ -454,7 +456,7 @@ class FirebaseProvider {
         .orderBy('name')
         .get();
 
-    print('all documents retrieved ${docs.docs.length} results');
+    log.info('all documents retrieved ${docs.docs.length} results');
 
     return docs.docs
         .map((e) => RecipeEntityFirebase.of(
@@ -512,7 +514,7 @@ class FirebaseProvider {
 
     var data = FirebaseInstructionDocument.fromJson(doc.data()!, doc.id);
 
-    print('instructions received: ${data.instructions.length}');
+    log.info('instructions received: ${data.instructions.length}');
 
     var result =
         data.instructions.map((e) => InstructionEntityFirebase.of(e)).toList();
@@ -595,11 +597,11 @@ class FirebaseProvider {
     return ids;
   }
 
-  Future<void> leaveMealPlanGroup(String id) async {
+  Future<int> leaveMealPlanGroup(String id) async {
     return await _removeMemberFromMealPlanGroup(id, this.userUid);
   }
 
-  Future<void> _removeMemberFromMealPlanGroup(
+  Future<int> _removeMemberFromMealPlanGroup(
       String mealPlanID, String userID) async {
     var docRef = _firestore.collection(MEAL_PLAN_GROUPS).doc(mealPlanID);
 
@@ -635,7 +637,7 @@ class FirebaseProvider {
     } else {
       return _firestore.runTransaction((transaction) {
         transaction.update(docRef, {'users.$userID': FieldValue.delete()});
-        return Future.value(1);
+        return Future.value();
       });
     }
   }

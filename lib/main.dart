@@ -13,6 +13,7 @@ import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -28,6 +29,15 @@ void main() async {
   /// as the flutter exception handler adds more verbose output for troubleshooting
   if (kReleaseMode || kIsWeb) {
     setupFlutterErrorHandling();
+    Logger.root.level = Level.OFF; // disable logging
+  } else {
+    /// enable logging for development builds
+    Logger.root.level = Level.ALL; // log all severities
+    Logger.root.onRecord.listen((record) {
+      // print logs to console
+      // ignore: avoid_print
+      print('${record.level.name}: ${record.time}: ${record.message}');
+    });
   }
 
   /// use a custom guarded zone to run the app

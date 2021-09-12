@@ -199,10 +199,6 @@ void main() {
 
       var result = await cut.generateItems(shoppingList);
 
-      var resultIngredients =
-          result.map((e) => e.ingredientNote.ingredient.name).toList();
-      print(resultIngredients);
-
       expect(result.length, 3);
       expect(result[0].ingredientNote.ingredient.name, 'Onion');
       expect(result[0].ingredientNote.amount, 2);

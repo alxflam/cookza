@@ -8,6 +8,7 @@ import 'package:cookza/viewmodel/recipe_edit/recipe_edit_step.dart';
 import 'package:cookza/viewmodel/recipe_edit/recipe_ingredient_model.dart';
 import 'package:collection/collection.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
+import 'package:logging/logging.dart';
 
 abstract class ImageTextExtractor {
   Future<RecipeOverviewEditStep> processOverviewImage(File file);
@@ -24,7 +25,8 @@ abstract class ImageTextExtractor {
 }
 
 class ImageTextExtractorImpl implements ImageTextExtractor {
-  List<UnitOfMeasure> uoms = sl.get<UnitOfMeasureProvider>().getAll();
+  final List<UnitOfMeasure> uoms = sl.get<UnitOfMeasureProvider>().getAll();
+  final log = Logger('ImageTextExtractorImpl');
 
   Future<RecognisedText> analyse(File image) async {
     var visionImage = InputImage.fromFile(image);
@@ -158,7 +160,7 @@ class ImageTextExtractorImpl implements ImageTextExtractor {
       var text = block.text;
       var currentNameHeight = recipeNameBlock?.rect.height ?? 0;
       var currentDescriptionBlock = recipeDescriptionBlock?.rect.height ?? 0;
-      print('height: $height, text: $text');
+      log.info('height: $height, text: $text');
 
       // recipe title: bigger size and rather short text
       if (block.lines.length == 1 &&

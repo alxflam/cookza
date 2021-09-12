@@ -19,8 +19,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 Future<void> saveModel(BuildContext context, RecipeEditModel model) async {
-  print('show progress indicator before save');
-
   // never await this future because whilst showing the dialog we want to perform the
   // ignore: unawaited_futures
   showDialog(
@@ -162,12 +160,12 @@ class NewRecipeStepper extends StatelessWidget {
       final MaterialLocalizations localizations =
           MaterialLocalizations.of(context);
 
-      var nextButton = ElevatedButton(
+      final nextButton = ElevatedButton(
         onPressed: () => nextButtonPressed(context),
         child: Text(localizations.continueButtonLabel),
       );
 
-      var cancelButton = ElevatedButton(
+      final cancelButton = ElevatedButton(
         onPressed: () => cancelButtonPressed(context),
         style: kRaisedGreyButtonStyle,
         child: Text(localizations.cancelButtonLabel),
@@ -208,13 +206,10 @@ class NewRecipeStepper extends StatelessWidget {
 
       var buttonRow = Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: const <Widget>[],
+        children: <Widget>[nextButton, cancelButton],
       );
 
       var model = Provider.of<RecipeEditModel>(context);
-
-      buttonRow.children.add(nextButton);
-      buttonRow.children.add(cancelButton);
 
       if (model.hasCurrentStepOCR()) {
         buttonRow.children.add(ocrButton);
