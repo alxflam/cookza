@@ -6,6 +6,8 @@ import 'package:provider/provider.dart';
 class ShoppingListSettingsScreen extends StatelessWidget {
   static const String id = 'shoppingListSettings';
 
+  const ShoppingListSettingsScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

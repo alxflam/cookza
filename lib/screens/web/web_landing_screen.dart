@@ -13,6 +13,8 @@ import 'package:flutter/material.dart';
 class WebLandingPage extends StatelessWidget {
   static const String id = 'landingPage';
 
+  const WebLandingPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -21,7 +23,7 @@ class WebLandingPage extends StatelessWidget {
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: PreferredSize(
         preferredSize: Size(size.width, 1000),
-        child: TopBar(),
+        child: const TopBar(),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -34,7 +36,7 @@ class WebLandingPage extends StatelessWidget {
                   child: Container(
                     color: Theme.of(context).colorScheme.primary,
                     child: Column(
-                      children: [
+                      children: const [
                         MainInfoBar(),
                       ],
                     ),
@@ -51,7 +53,7 @@ class WebLandingPage extends StatelessWidget {
                 )
               ],
             ),
-            BottomBar(),
+            const BottomBar(),
           ],
         ),
       ),
@@ -60,6 +62,8 @@ class WebLandingPage extends StatelessWidget {
 }
 
 class BottomBar extends StatelessWidget {
+  const BottomBar({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -110,6 +114,8 @@ class BottomBar extends StatelessWidget {
 }
 
 class MainInfoBar extends StatelessWidget {
+  const MainInfoBar({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -224,6 +230,8 @@ class InstructionText extends StatelessWidget {
 }
 
 class TopBar extends StatelessWidget {
+  const TopBar({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;

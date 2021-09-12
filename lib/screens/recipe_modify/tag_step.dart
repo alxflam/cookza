@@ -12,11 +12,13 @@ Step getTagStep(BuildContext context) {
     isActive:
         Provider.of<RecipeEditModel>(context, listen: false).currentStep == 2,
     state: StepState.indexed,
-    content: TagColumn(),
+    content: const TagColumn(),
   );
 }
 
 class TagColumn extends StatelessWidget {
+  const TagColumn({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(

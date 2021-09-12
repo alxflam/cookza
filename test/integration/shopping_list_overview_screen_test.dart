@@ -120,7 +120,7 @@ Future<void> _initApp(WidgetTester tester, NavigatorObserver observer) async {
       navigatorKey: navigatorService.navigatorKey,
       home: ChangeNotifierProvider<ThemeModel>(
         create: (context) => ThemeModel(),
-        child: ShoppingListOverviewScreen(),
+        child: const ShoppingListOverviewScreen(),
       ),
     ),
   );

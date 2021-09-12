@@ -10,6 +10,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class SavedImagesScreen extends StatelessWidget {
   static const String id = 'savedImages';
 
+  const SavedImagesScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

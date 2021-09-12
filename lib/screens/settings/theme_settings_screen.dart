@@ -5,6 +5,9 @@ import 'package:provider/provider.dart';
 
 class ThemeSettingsScreen extends StatelessWidget {
   static const String id = 'theme';
+
+  const ThemeSettingsScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

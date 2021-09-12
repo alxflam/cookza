@@ -19,6 +19,8 @@ import 'package:provider/provider.dart';
 class NewIngredientScreen extends StatelessWidget {
   static const String id = 'ingredient';
 
+  const NewIngredientScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final screenModel =
@@ -300,9 +302,8 @@ class NewIngredientScreen extends StatelessWidget {
 }
 
 class IngredientNameTextInput extends StatelessWidget {
-  const IngredientNameTextInput({
-    required this.ingredientController,
-  });
+  const IngredientNameTextInput({required this.ingredientController, Key? key})
+      : super(key: key);
 
   final TextEditingController ingredientController;
 

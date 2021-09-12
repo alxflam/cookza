@@ -204,7 +204,7 @@ Future<void> _initApp(
 class TestHomeScreen extends StatelessWidget {
   final Object args;
 
-  const TestHomeScreen(this.args);
+  const TestHomeScreen(this.args, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

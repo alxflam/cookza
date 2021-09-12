@@ -12,7 +12,9 @@ class RecipeListTile extends StatelessWidget {
   final RecipeEntity item;
   final bool replaceRoute;
 
-  const RecipeListTile({required this.item, this.replaceRoute = false});
+  const RecipeListTile(
+      {required this.item, this.replaceRoute = false, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

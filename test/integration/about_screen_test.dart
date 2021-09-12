@@ -185,7 +185,7 @@ Future<void> _initApp(WidgetTester tester, NavigatorObserver observer) async {
             localizationsDelegates: const [
               AppLocalizations.delegate,
             ],
-            home: AboutScreen());
+            home: const AboutScreen());
       },
     ),
   );

@@ -168,7 +168,7 @@ Future setupScreen(WidgetTester tester) async {
   await tester.pumpWidget(MaterialApp(
     home: ChangeNotifierProvider<ThemeModel>(
       create: (context) => ThemeModel(),
-      child: LocalizationParent(LeftoversScreen()),
+      child: const LocalizationParent(LeftoversScreen()),
     ),
   ));
 }

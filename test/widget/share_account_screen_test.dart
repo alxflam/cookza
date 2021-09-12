@@ -48,9 +48,8 @@ void main() {
 }
 
 class MockApplication extends StatelessWidget {
-  const MockApplication({
-    required this.mockObserver,
-  });
+  const MockApplication({required this.mockObserver, Key? key})
+      : super(key: key);
 
   final MockNavigatorObserver mockObserver;
 

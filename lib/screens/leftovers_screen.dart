@@ -9,18 +9,22 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class LeftoversScreen extends StatelessWidget {
   static const String id = 'leftovers';
 
+  const LeftoversScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context).functionsLeftovers),
       ),
-      body: LeftoversBody(),
+      body: const LeftoversBody(),
     );
   }
 }
 
 class LeftoversBody extends StatefulWidget {
+  const LeftoversBody({Key? key}) : super(key: key);
+
   @override
   _LeftoversBodyState createState() => _LeftoversBodyState();
 }

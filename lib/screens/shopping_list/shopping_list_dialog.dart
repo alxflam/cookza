@@ -84,7 +84,7 @@ Future<ShoppingListModel>? _showMultipleGroupsDialog(BuildContext context,
 class MultipeGroupSelectionDialog extends StatelessWidget {
   final ShoppingListModel model;
 
-  const MultipeGroupSelectionDialog(this.model);
+  const MultipeGroupSelectionDialog(this.model, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

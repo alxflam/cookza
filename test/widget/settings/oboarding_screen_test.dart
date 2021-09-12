@@ -93,7 +93,7 @@ Future<void> _initApp(WidgetTester tester, NavigatorObserver observer) async {
       home: ChangeNotifierProvider<ThemeModel>(
         create: (context) => ThemeModel(),
         child: Builder(
-          builder: (context) => TestHomeScreen(),
+          builder: (context) => const TestHomeScreen(),
         ),
       ),
     ),
@@ -101,6 +101,8 @@ Future<void> _initApp(WidgetTester tester, NavigatorObserver observer) async {
 }
 
 class TestHomeScreen extends StatelessWidget {
+  const TestHomeScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(

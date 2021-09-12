@@ -12,6 +12,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 class OverviewTab extends StatelessWidget {
+  const OverviewTab({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Consumer<RecipeViewModel>(
@@ -85,7 +87,7 @@ class OverviewTab extends StatelessWidget {
                 }
               },
             ),
-            Expanded(
+            const Expanded(
               flex: 1,
               child: SubImageRow(),
             ),
@@ -99,7 +101,7 @@ class OverviewTab extends StatelessWidget {
 class CustomizedRatingBar extends StatelessWidget {
   final RecipeViewModel _model;
 
-  const CustomizedRatingBar(this._model);
+  const CustomizedRatingBar(this._model, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -122,6 +124,8 @@ class CustomizedRatingBar extends StatelessWidget {
 }
 
 class SubImageRow extends StatelessWidget {
+  const SubImageRow({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Consumer<RecipeViewModel>(

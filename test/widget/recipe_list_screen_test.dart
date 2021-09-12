@@ -157,9 +157,8 @@ void main() {
 }
 
 class MockApplication extends StatelessWidget {
-  const MockApplication({
-    required this.mockObserver,
-  });
+  const MockApplication({required this.mockObserver, Key? key})
+      : super(key: key);
 
   final MockNavigatorObserver mockObserver;
 
@@ -173,7 +172,7 @@ class MockApplication extends StatelessWidget {
       routes: kRoutes,
       home: ChangeNotifierProvider<ThemeModel>(
         create: (context) => ThemeModel(),
-        child: RecipeListScreen(),
+        child: const RecipeListScreen(),
       ),
     );
   }

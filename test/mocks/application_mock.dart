@@ -8,9 +8,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'shared_mocks.mocks.dart';
 
 class MockApplication extends StatelessWidget {
-  const MockApplication({
-    required this.mockObserver,
-  });
+  const MockApplication({required this.mockObserver, Key? key})
+      : super(key: key);
 
   final MockNavigatorObserver mockObserver;
 
@@ -24,7 +23,7 @@ class MockApplication extends StatelessWidget {
       routes: kRoutes,
       home: ChangeNotifierProvider<ThemeModel>(
         create: (context) => ThemeModel(),
-        child: HomeScreen(),
+        child: const HomeScreen(),
       ),
     );
   }

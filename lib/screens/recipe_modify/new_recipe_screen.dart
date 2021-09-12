@@ -79,6 +79,8 @@ Future<void> saveModel(BuildContext context, RecipeEditModel model) async {
 class NewRecipeScreen extends StatelessWidget {
   static const String id = 'newRecipe';
 
+  const NewRecipeScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     var model = ModalRoute.of(context)!.settings.arguments as RecipeEditModel;
@@ -100,7 +102,7 @@ class NewRecipeScreen extends StatelessWidget {
       body: ChangeNotifierProvider(
         create: (context) => model,
         child: Column(
-          children: <Widget>[
+          children: const <Widget>[
             NewRecipeStepper(),
           ],
         ),
@@ -110,6 +112,8 @@ class NewRecipeScreen extends StatelessWidget {
 }
 
 class NewRecipeStepper extends StatelessWidget {
+  const NewRecipeStepper({Key? key}) : super(key: key);
+
   void nextButtonPressed(BuildContext context) async {
     RecipeEditModel model =
         Provider.of<RecipeEditModel>(context, listen: false);

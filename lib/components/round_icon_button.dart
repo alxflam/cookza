@@ -5,7 +5,8 @@ class RoundIconButton extends StatelessWidget {
   final IconData icon;
   final VoidCallback onPress;
 
-  const RoundIconButton({required this.icon, required this.onPress});
+  const RoundIconButton({required this.icon, required this.onPress, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

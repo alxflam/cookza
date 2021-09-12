@@ -14,6 +14,8 @@ import 'package:provider/provider.dart';
 class RecipeListScreen extends StatelessWidget {
   static const String id = 'recipes';
 
+  const RecipeListScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(
@@ -22,7 +24,7 @@ class RecipeListScreen extends StatelessWidget {
         return Builder(
           builder: (context) {
             return Scaffold(
-              drawer: RecipeGroupsDrawer(),
+              drawer: const RecipeGroupsDrawer(),
               appBar: _buildAppBar(context),
               body: Builder(
                 builder: (context) {

@@ -34,7 +34,7 @@ void main() async {
   /// this enables custom handling of uncatched exceptions
   runZonedGuarded(
     () => runApp(
-      ProviderChainApp(),
+      const ProviderChainApp(),
     ),
     // TODO: remove for web or prevent log file usage
     (Object error, StackTrace stackTrace) => {
@@ -55,6 +55,8 @@ void setupFlutterErrorHandling() {
 }
 
 class ProviderChainApp extends StatelessWidget {
+  const ProviderChainApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<ThemeModel>(
@@ -65,7 +67,7 @@ class ProviderChainApp extends StatelessWidget {
 }
 
 class CookzaMaterialApp extends StatelessWidget {
-  const CookzaMaterialApp();
+  const CookzaMaterialApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -16,6 +16,9 @@ import 'package:url_launcher/url_launcher.dart';
 
 class AboutScreen extends StatelessWidget {
   static const String id = 'about';
+
+  const AboutScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final subtitle = Theme.of(context).textTheme.subtitle1;
@@ -68,19 +71,19 @@ class AboutScreen extends StatelessWidget {
                 ),
               ),
             ),
-            AboutScreenDivider(),
+            const AboutScreenDivider(),
             ListTile(
               leading: const FaIcon(FontAwesomeIcons.map),
               title: Text(AppLocalizations.of(context).getStarted),
               onTap: () => Navigator.pushNamed(context, OnBoardingScreen.id),
             ),
-            AboutScreenDivider(),
+            const AboutScreenDivider(),
             ListTile(
               leading: const FaIcon(FontAwesomeIcons.diceD20),
               title: Text(AppLocalizations.of(context).changelog),
               onTap: () => launch(kChangelogLink),
             ),
-            AboutScreenDivider(),
+            const AboutScreenDivider(),
             ListTile(
               title: Text(AppLocalizations.of(context).localImages),
               leading: const FaIcon(FontAwesomeIcons.image),
@@ -88,7 +91,7 @@ class AboutScreen extends StatelessWidget {
                 Navigator.pushNamed(context, SavedImagesScreen.id);
               },
             ),
-            AboutScreenDivider(),
+            const AboutScreenDivider(),
             ListTile(
               title: Text(AppLocalizations.of(context).support),
               subtitle: Text(AppLocalizations.of(context).supportSubtitle),
@@ -104,7 +107,7 @@ class AboutScreen extends StatelessWidget {
                 launch(kRepositoryLink);
               },
             ),
-            AboutScreenDivider(),
+            const AboutScreenDivider(),
             ListTile(
               title: Text(AppLocalizations.of(context).deleteAllData),
               leading: const FaIcon(FontAwesomeIcons.eraser),
@@ -114,12 +117,12 @@ class AboutScreen extends StatelessWidget {
                   context: context,
                   barrierDismissible: false, // user must tap button!
                   builder: (BuildContext context) {
-                    return DeleteAllDataDialog();
+                    return const DeleteAllDataDialog();
                   },
                 );
               },
             ),
-            AboutScreenDivider(),
+            const AboutScreenDivider(),
             ListTile(
               title: Text(AppLocalizations.of(context).errorLog),
               leading: const FaIcon(FontAwesomeIcons.bug),
@@ -147,7 +150,7 @@ class AboutScreen extends StatelessWidget {
                 );
               },
             ),
-            AboutScreenDivider(),
+            const AboutScreenDivider(),
             ListTile(
               title: Text(AppLocalizations.of(context).privacyStatement),
               leading: const FaIcon(FontAwesomeIcons.userSecret),
@@ -155,7 +158,7 @@ class AboutScreen extends StatelessWidget {
                 kNotImplementedDialog(context);
               },
             ),
-            AboutScreenDivider(),
+            const AboutScreenDivider(),
             ListTile(
               title: Text(AppLocalizations.of(context).termsOfUse),
               leading: const FaIcon(FontAwesomeIcons.envelopeOpenText),
@@ -171,6 +174,8 @@ class AboutScreen extends StatelessWidget {
 }
 
 class DeleteAllDataDialog extends StatelessWidget {
+  const DeleteAllDataDialog({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return StatefulBuilder(
@@ -234,6 +239,8 @@ class DeleteAllDataDialog extends StatelessWidget {
 }
 
 class AboutScreenDivider extends StatelessWidget {
+  const AboutScreenDivider({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return const Padding(
@@ -248,7 +255,7 @@ class AboutScreenDivider extends StatelessWidget {
 class SettingSectionHeader extends StatelessWidget {
   final String _title;
 
-  const SettingSectionHeader(this._title);
+  const SettingSectionHeader(this._title, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

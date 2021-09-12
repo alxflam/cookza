@@ -18,6 +18,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class HomeScreen extends StatelessWidget {
   static const id = 'home';
 
+  const HomeScreen({Key? key}) : super(key: key);
+
   void init(BuildContext context) async {
     // check for shared content on mobile platforms
     if (!kIsWeb) {
@@ -148,7 +150,11 @@ class HomeScreen extends StatelessWidget {
 
 class MainFunctionCard extends StatelessWidget {
   const MainFunctionCard(
-      {required this.color, required this.cardChild, required this.onPress});
+      {required this.color,
+      required this.cardChild,
+      required this.onPress,
+      Key? key})
+      : super(key: key);
 
   final Color color;
   final Widget cardChild;
@@ -171,7 +177,8 @@ class MainFunctionCard extends StatelessWidget {
 }
 
 class IconContent extends StatelessWidget {
-  const IconContent({required this.icon, required this.label});
+  const IconContent({required this.icon, required this.label, Key? key})
+      : super(key: key);
 
   final IconData icon;
   final String label;

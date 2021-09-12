@@ -24,7 +24,7 @@ void main() {
     await tester.pumpWidget(MaterialApp(
       home: ChangeNotifierProvider<ThemeModel>(
         create: (context) => ThemeModel(),
-        child: LocalizationParent(HomeScreen()),
+        child: const LocalizationParent(HomeScreen()),
       ),
     ));
 

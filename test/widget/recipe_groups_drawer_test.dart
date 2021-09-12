@@ -79,7 +79,7 @@ Future<void> _initApp(WidgetTester tester, NavigatorObserver observer) async {
     ],
     home: ChangeNotifierProvider<ThemeModel>(
       create: (context) => ThemeModel(),
-      child: RecipeGroupsDrawer(),
+      child: const RecipeGroupsDrawer(),
     ),
   ));
 }

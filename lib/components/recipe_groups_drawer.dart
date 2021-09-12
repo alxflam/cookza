@@ -9,19 +9,23 @@ import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class RecipeGroupsDrawer extends StatelessWidget {
+  const RecipeGroupsDrawer({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
       child: StreamProvider<List<RecipeCollectionEntity>>.value(
         initialData: const [],
         value: sl.get<RecipeManager>().collectionsAsStream,
-        child: RecipeGroupsTiles(),
+        child: const RecipeGroupsTiles(),
       ),
     );
   }
 }
 
 class RecipeGroupsTiles extends StatelessWidget {
+  const RecipeGroupsTiles({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     var groups = Provider.of<List<RecipeCollectionEntity>>(context);

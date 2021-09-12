@@ -19,6 +19,8 @@ class ShareAccountScreen extends StatelessWidget {
   static const String id = 'shareAccount';
   final GlobalKey _globalKey = GlobalKey();
 
+  ShareAccountScreen({Key? key}) : super(key: key);
+
   Future<Uint8List> _widgetToImageBytes() async {
     final boundary = this._globalKey.currentContext!.findRenderObject();
     if (boundary is RenderRepaintBoundary) {

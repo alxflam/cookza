@@ -219,7 +219,7 @@ Future<void> _initApp(WidgetTester tester, NavigatorObserver observer) async {
       home: ChangeNotifierProvider<ThemeModel>(
         create: (context) => ThemeModel(),
         child: Builder(builder: (context) {
-          return DummyScreen();
+          return const DummyScreen();
         }),
       ),
     ),
@@ -227,6 +227,8 @@ Future<void> _initApp(WidgetTester tester, NavigatorObserver observer) async {
 }
 
 class DummyScreen extends StatelessWidget {
+  const DummyScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -109,7 +109,7 @@ Future _startWidget(WidgetTester tester, RecipeViewModel viewModel) async {
     home: Material(
       child: ChangeNotifierProvider<RecipeViewModel>.value(
         value: viewModel,
-        child: LocalizationParent(IngredientsTab()),
+        child: const LocalizationParent(IngredientsTab()),
       ),
     ),
   ));

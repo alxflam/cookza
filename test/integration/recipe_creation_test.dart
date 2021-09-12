@@ -294,7 +294,7 @@ Future<void> setupApplication(WidgetTester tester) async {
     ],
     home: ChangeNotifierProvider<ThemeModel>(
       create: (context) => ThemeModel(),
-      child: HomeScreen(),
+      child: const HomeScreen(),
     ),
   ));
 }

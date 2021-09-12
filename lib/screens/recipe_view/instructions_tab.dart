@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class InstructionsTab extends StatelessWidget {
+  const InstructionsTab({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Consumer<RecipeViewModel>(
@@ -35,7 +37,7 @@ class InstructionsTab extends StatelessWidget {
 }
 
 class InstructionRow extends StatelessWidget {
-  const InstructionRow(this.num, this.content);
+  const InstructionRow(this.num, this.content, {Key? key}) : super(key: key);
 
   final int num;
   final String content;
@@ -56,7 +58,7 @@ class InstructionRow extends StatelessWidget {
 }
 
 class InstructionText extends StatelessWidget {
-  const InstructionText(this.content);
+  const InstructionText(this.content, {Key? key}) : super(key: key);
 
   final String content;
 
@@ -72,7 +74,7 @@ class InstructionText extends StatelessWidget {
 }
 
 class LeadingStepNumber extends StatelessWidget {
-  const LeadingStepNumber(this.num);
+  const LeadingStepNumber(this.num, {Key? key}) : super(key: key);
 
   final int num;
 

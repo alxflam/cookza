@@ -159,7 +159,8 @@ class DifficultyChip extends StatelessWidget {
   final DIFFICULTY _difficulty;
   final RecipeOverviewEditStep _model;
 
-  const DifficultyChip(this._difficulty, this._model);
+  const DifficultyChip(this._difficulty, this._model, {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

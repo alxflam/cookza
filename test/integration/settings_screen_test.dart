@@ -118,7 +118,7 @@ Future<void> _initApp(WidgetTester tester, NavigatorObserver observer) async {
               AppLocalizations.delegate,
             ],
             navigatorObservers: [observer],
-            home: SettingsScreen());
+            home: const SettingsScreen());
       },
     ),
   );

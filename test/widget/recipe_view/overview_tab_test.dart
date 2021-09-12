@@ -41,7 +41,7 @@ void main() {
       home: Material(
         child: ChangeNotifierProvider<RecipeViewModel>(
           create: (context) => RecipeViewModel.of(recipe),
-          child: OverviewTab(),
+          child: const OverviewTab(),
         ),
       ),
     ));

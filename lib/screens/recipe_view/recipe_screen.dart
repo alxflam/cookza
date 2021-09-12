@@ -37,6 +37,8 @@ class PopupMenuButtonChoices {
 class RecipeScreen extends StatelessWidget {
   static const String id = 'recipe';
 
+  const RecipeScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final recipe = ModalRoute.of(context)!.settings.arguments as RecipeEntity;
@@ -210,18 +212,18 @@ class RecipeScreen extends StatelessWidget {
                 ),
                 body: TabBarView(
                   children: <Widget>[
-                    OverviewTab(),
+                    const OverviewTab(),
                     ListView(
-                      children: <Widget>[
+                      children: const <Widget>[
                         IngredientsTab(),
                       ],
                     ),
                     ListView(
-                      children: <Widget>[
+                      children: const <Widget>[
                         InstructionsTab(),
                       ],
                     ),
-                    SimilarRecipesScreen(),
+                    const SimilarRecipesScreen(),
                   ],
                 ),
               );

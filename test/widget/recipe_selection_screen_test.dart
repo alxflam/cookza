@@ -181,7 +181,7 @@ Future<void> _initApp(WidgetTester tester, NavigatorObserver observer,
             child: Navigator(
               onGenerateRoute: (_) {
                 return MaterialPageRoute<Widget>(
-                  builder: (_) => RecipeSelectionScreen(),
+                  builder: (_) => const RecipeSelectionScreen(),
                   settings: RouteSettings(arguments: arg),
                 );
               },

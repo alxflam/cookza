@@ -8,6 +8,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 class SimilarRecipesScreen extends StatelessWidget {
+  const SimilarRecipesScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Consumer<RecipeViewModel>(builder: (context, model, child) {

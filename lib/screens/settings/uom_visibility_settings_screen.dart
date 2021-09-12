@@ -6,6 +6,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class UoMVisibilityScreen extends StatelessWidget {
   static const String id = 'uomVisibility';
 
+  const UoMVisibilityScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     var _model = UoMVisibilitySettingsModel.create();

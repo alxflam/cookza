@@ -24,6 +24,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class MealPlanScreen extends StatelessWidget {
   static const String id = 'mealPlan';
 
+  const MealPlanScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     var _recipe = ModalRoute.of(context)!.settings.arguments as RecipeEntity?;
@@ -356,7 +358,8 @@ class MealPlanScreen extends StatelessWidget {
 class WeekNumber extends StatelessWidget {
   final int week;
   final Color backgroundColor;
-  const WeekNumber(this.week, this.backgroundColor);
+  const WeekNumber(this.week, this.backgroundColor, {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -380,7 +383,7 @@ class WeekNumber extends StatelessWidget {
 class WeekdayHeaderTitle extends StatelessWidget {
   final MealPlanDateEntry entry;
 
-  const WeekdayHeaderTitle({required this.entry});
+  const WeekdayHeaderTitle({required this.entry, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -402,7 +405,9 @@ class DragFeedbackTile extends StatelessWidget {
   final Color accentColor;
   final MealPlanRecipeModel model;
 
-  const DragFeedbackTile({required this.accentColor, required this.model});
+  const DragFeedbackTile(
+      {required this.accentColor, required this.model, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

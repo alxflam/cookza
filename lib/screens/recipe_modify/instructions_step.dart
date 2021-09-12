@@ -11,11 +11,13 @@ Step getInstructionsStep(BuildContext context) {
     isActive:
         Provider.of<RecipeEditModel>(context, listen: false).currentStep == 4,
     state: StepState.indexed,
-    content: InstructionsStepContent(),
+    content: const InstructionsStepContent(),
   );
 }
 
 class InstructionsStepContent extends StatelessWidget {
+  const InstructionsStepContent({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(

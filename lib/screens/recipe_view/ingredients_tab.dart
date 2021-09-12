@@ -11,13 +11,15 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 class IngredientsTab extends StatelessWidget {
+  const IngredientsTab({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Consumer<RecipeViewModel>(
       builder: (context, model, child) {
         return Column(
           children: <Widget>[
-            ListOfIngredientsHeader(),
+            const ListOfIngredientsHeader(),
             DataTable(
               showCheckboxColumn: false,
               columns: [
@@ -104,6 +106,8 @@ class IngredientsTab extends StatelessWidget {
 }
 
 class ListOfIngredientsHeader extends StatelessWidget {
+  const ListOfIngredientsHeader({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Consumer<RecipeViewModel>(builder: (context, model, child) {

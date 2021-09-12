@@ -8,7 +8,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MealPlanItemDialog extends StatelessWidget {
   final MealPlanItemDialogModel _model;
-  const MealPlanItemDialog(this._model);
+  const MealPlanItemDialog(this._model, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,9 +18,9 @@ class MealPlanItemDialog extends StatelessWidget {
         return Consumer<MealPlanItemDialogModel>(
           builder: (context, model, _) {
             if (model.isNote) {
-              return SimpleDialog(children: [NoteItemDialog()]);
+              return const SimpleDialog(children: [NoteItemDialog()]);
             }
-            return SimpleDialog(children: [RecipeItemDialog()]);
+            return const SimpleDialog(children: [RecipeItemDialog()]);
           },
         );
       },
@@ -29,6 +29,8 @@ class MealPlanItemDialog extends StatelessWidget {
 }
 
 class RecipeItemDialog extends StatelessWidget {
+  const RecipeItemDialog({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Consumer<MealPlanItemDialogModel>(builder: (context, model, _) {
@@ -60,7 +62,7 @@ class RecipeItemDialog extends StatelessWidget {
               ),
             ],
           ),
-          DialogButtonRow(),
+          const DialogButtonRow(),
         ],
       );
     });
@@ -68,6 +70,8 @@ class RecipeItemDialog extends StatelessWidget {
 }
 
 class NoteItemDialog extends StatelessWidget {
+  const NoteItemDialog({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Consumer<MealPlanItemDialogModel>(builder: (context, model, _) {
@@ -88,13 +92,15 @@ class NoteItemDialog extends StatelessWidget {
             autofocus: true,
           ),
         ),
-        DialogButtonRow()
+        const DialogButtonRow()
       ]);
     });
   }
 }
 
 class DialogButtonRow extends StatelessWidget {
+  const DialogButtonRow({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Consumer<MealPlanItemDialogModel>(builder: (context, model, _) {

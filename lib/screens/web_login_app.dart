@@ -16,6 +16,8 @@ import 'package:provider/provider.dart';
 class WebLoginOnAppScreen extends StatelessWidget {
   static const String id = 'webLoginOnApp';
 
+  const WebLoginOnAppScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,7 +70,7 @@ class WebLoginOnAppScreen extends StatelessWidget {
             StreamProvider<List<FirebaseHandshake>>.value(
               initialData: const [],
               value: sl.get<FirebaseWebLoginManager>().webAppSessions(),
-              child: LogIns(),
+              child: const LogIns(),
             ),
           ],
         ),
@@ -78,6 +80,8 @@ class WebLoginOnAppScreen extends StatelessWidget {
 }
 
 class LogIns extends StatelessWidget {
+  const LogIns({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     var handshakes = Provider.of<List<FirebaseHandshake>>(context);
