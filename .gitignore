@@ -62,3 +62,6 @@ index.html
 
 # Firebase config
 google-services.json
+
+# signing keys
+key.properties
