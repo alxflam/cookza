@@ -123,9 +123,10 @@ void main() {
     final plan = await mealPlanManager.createCollection('dummy1');
 
     MutableShoppingList list = MutableShoppingList.newList(
-        plan.id!,
-        DateTime.now().add(const Duration(days: 1)),
-        DateTime.now().add(const Duration(days: 6)));
+      plan.id!,
+      DateTime.now().add(const Duration(days: 1)),
+      DateTime.now().add(const Duration(days: 6)),
+    );
     list.id = plan.id!;
 
     var item = MutableIngredientNote.empty();
@@ -143,18 +144,29 @@ void main() {
     // date range dialog opened - has only private widgets
     // therefore check for semantics widget which is used there internally
 
-    await tester.tap(find.text(list.dateFrom.day.toString()).first);
-    var lastDayFinder = find.text(list.dateUntil.day.toString());
-    if (lastDayFinder.evaluate().length > 1) {
-      lastDayFinder = lastDayFinder.last;
-    }
-    await tester.tap(lastDayFinder);
+    var firstDayFinder = find.ancestor(
+        of: find.text(list.dateFrom.day.toString()),
+        matching: find.byType(GestureDetector));
+    await tester.tap(firstDayFinder.first);
 
+    var lastDayFinder = find.ancestor(
+        of: find.text(list.dateUntil.day.toString()),
+        matching: find.byType(GestureDetector));
+
+    if (lastDayFinder.evaluate().length > 1) {
+      // first if same month, last if next month...
+      lastDayFinder = list.dateUntil.day > list.dateFrom.day
+          ? lastDayFinder.first
+          : lastDayFinder.last;
+    }
+
+    await tester.tap(lastDayFinder);
     expect(find.text('SAVE'), findsOneWidget);
     expect(find.byType(Semantics), findsWidgets);
+
     // then press confirm
     await tester.tap(find.text('SAVE').first);
-    await tester.pumpAndSettle();
+    await tester.pump();
     verify(observer.didPush(any, any));
     await tester.pumpAndSettle();
 
@@ -187,18 +199,29 @@ void main() {
     // date range dialog opened - has only private widgets
     // therefore check for semantics widget which is used there internally
 
-    await tester.tap(find.text(DateTime.now().day.toString()).first);
-    var lastDayFinder = find.text(list.dateUntil.day.toString());
+    var firstDayFinder = find.ancestor(
+        of: find.text(DateTime.now().day.toString()),
+        matching: find.byType(GestureDetector));
+    await tester.tap(firstDayFinder.first);
+
+    var lastDayFinder = find.ancestor(
+        of: find.text(list.dateUntil.day.toString()),
+        matching: find.byType(GestureDetector));
+
     if (lastDayFinder.evaluate().length > 1) {
-      lastDayFinder = lastDayFinder.last;
+      // first if same month, last if next month...
+      lastDayFinder = list.dateUntil.day > list.dateFrom.day
+          ? lastDayFinder.first
+          : lastDayFinder.last;
     }
+
     await tester.tap(lastDayFinder);
 
     expect(find.text('SAVE'), findsOneWidget);
     expect(find.byType(Semantics), findsWidgets);
     // then press confirm
     await tester.tap(find.text('SAVE').first);
-    await tester.pumpAndSettle();
+    await tester.pump();
     verify(observer.didPush(any, any));
     await tester.pumpAndSettle();
 
