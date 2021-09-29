@@ -5,7 +5,7 @@ on:
     branches:
       - master
     tags:
-      - 'v*'
+      - "v*.*.*"
 
 jobs:
   release:
@@ -48,7 +48,6 @@ jobs:
       - name: GH Release
         uses: softprops/action-gh-release@v0.1.13
         with:
-          upload_url: ${{ steps.get_release.outputs.upload_url }}
           files: build/app/outputs/bundle/release/app-release.aab
           fail_on_unmatched_files: true
           draft: true      
