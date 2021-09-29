@@ -1,0 +1,63 @@
+name: android_release
+
+on: 
+  push:
+    tags:
+    - 'v.*'
+
+jobs:
+  release:
+    name: Release to GH assets
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v1
+        with:
+          flutter-version: '2.5.0'
+      
+      - name: Run pub get
+        run: flutter pub get
+
+      - name: Generate localization
+        run: flutter gen-l10n
+
+      - name: Download Android keystore
+        id: android_keystore
+        uses: timheuer/base64-to-file@v1.1
+        with:
+          fileName: key.jks
+          encodedString: ${{ secrets.KEYSTORE_BASE64 }}
+
+      - name: Create key.properties
+        run: |
+          echo "storeFile=${{ steps.android_keystore.outputs.filePath }}" > android/key.properties
+          echo "storePassword=${{ secrets.KEYSTORE_PASSWORD }}" >> android/key.properties
+          echo "keyPassword=${{ secrets.KEYSTORE_PASSWORD }}" >> android/key.properties
+          echo "keyAlias=${{ secrets.KEYSTORE_KEY_ALIAS }}" >> android/key.properties
+
+      - name: Build Android App Bundle
+        run: flutter build appbundle
+
+      - name: GH Release
+        uses: softprops/action-gh-release@v0.1.13
+          env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.get_release.outputs.upload_url }}
+          files: build/app/outputs/bundle/release/app-release.aab
+          fail_on_unmatched_files: true
+          draft: true      
+
+      # - name: Release to Google Play (production)
+      #   env:
+      #     SUPPLY_PACKAGE_NAME: ${{ secrets.ANDROID_PACKAGE_NAME }}
+      #     SUPPLY_JSON_KEY_DATA: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_KEY }}
+      #   run: |
+      #     bundle exec fastlane run supply \
+      #     aab:build/app/outputs/bundle/fullRelease/app-full-release.aab \
+      #     track:production
