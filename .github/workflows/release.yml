@@ -45,8 +45,6 @@ jobs:
 
       - name: GH Release
         uses: softprops/action-gh-release@v0.1.13
-          env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.get_release.outputs.upload_url }}
           files: build/app/outputs/bundle/release/app-release.aab
