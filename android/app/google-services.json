@@ -1,0 +1,83 @@
+{
+  "project_info": {
+    "project_number": "449167708954",
+    "firebase_url": "https://cookly-f0c99.firebaseio.com",
+    "project_id": "cookly-f0c99",
+    "storage_bucket": "cookly-f0c99.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:449167708954:android:fc364eeafccc5f793312a3",
+        "android_client_info": {
+          "package_name": "com.example.cookly"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "449167708954-gv4sd9s9a0n27v6p8bnlvg42n2v3tra6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-upqgtFAuQZ2nzpboYY4M-BAxpE_7nTA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "449167708954-gv4sd9s9a0n27v6p8bnlvg42n2v3tra6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "449167708954-76k1vc8b43kglrg1976chkmjn28ect7u.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.flammer.cookza"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:449167708954:android:ee00fb1309ac69db3312a3",
+        "android_client_info": {
+          "package_name": "com.flammer.cookza"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "449167708954-gv4sd9s9a0n27v6p8bnlvg42n2v3tra6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-upqgtFAuQZ2nzpboYY4M-BAxpE_7nTA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "449167708954-gv4sd9s9a0n27v6p8bnlvg42n2v3tra6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "449167708954-76k1vc8b43kglrg1976chkmjn28ect7u.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.flammer.cookza"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -60,8 +60,5 @@ generated_plugin_registrant.dart
 # Web app index.html
 index.html 
 
-# Firebase config
-google-services.json
-
 # signing keys
 key.properties
