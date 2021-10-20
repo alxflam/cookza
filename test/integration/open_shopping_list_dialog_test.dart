@@ -171,7 +171,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(ShoppingListDetailScreen), findsOneWidget);
-    expect(find.text('Cheese'), findsOneWidget);
+    expect(find.textContaining('Cheese'), findsOneWidget);
   });
 
   testWidgets('Single meal plan with existing list from the past',
@@ -226,7 +226,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(ShoppingListDetailScreen), findsOneWidget);
-    expect(find.text('Cheese'), findsOneWidget);
+    expect(find.textContaining('Cheese'), findsOneWidget);
   });
 }
 

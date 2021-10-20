@@ -71,7 +71,7 @@ void main() {
     model.addCustomItem(item);
     await tester.pumpAndSettle();
 
-    expect(find.text('Something important'), findsOneWidget);
+    expect(find.textContaining('Something important'), findsOneWidget);
     expect(find.byType(CheckboxListTile), findsOneWidget);
   });
 
@@ -139,7 +139,7 @@ void main() {
     model.addCustomItem(item);
     await tester.pumpAndSettle();
 
-    expect(find.text('Cheese'), findsOneWidget);
+    expect(find.textContaining('Cheese'), findsOneWidget);
     expect(find.byIcon(Icons.edit), findsOneWidget);
 
     await tester.tap(find.byIcon(Icons.edit));
@@ -150,7 +150,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(ShoppingListDetailScreen), findsOneWidget);
-    expect(find.text('Cheese'), findsNothing);
+    expect(find.textContaining('Cheese'), findsNothing);
   });
 
   testWidgets('Custom entries are editable', (WidgetTester tester) async {
@@ -169,7 +169,7 @@ void main() {
     model.addCustomItem(item);
     await tester.pumpAndSettle();
 
-    expect(find.text('Something important'), findsOneWidget);
+    expect(find.textContaining('Something important'), findsOneWidget);
     expect(find.byIcon(Icons.edit), findsOneWidget);
 
     await tester.tap(find.byIcon(Icons.edit));
@@ -178,14 +178,14 @@ void main() {
     expect(find.byType(NewIngredientScreen), findsOneWidget);
 
     var input = find.ancestor(
-        of: find.text('Something important'),
+        of: find.textContaining('Something important'),
         matching: find.byType(TextFormField));
     await inputFormField(tester, input, 'Cheese');
     await tester.tap(find.byType(ElevatedButton).first);
     await tester.pumpAndSettle();
 
     expect(find.byType(ShoppingListDetailScreen), findsOneWidget);
-    expect(find.text('Cheese'), findsOneWidget);
+    expect(find.textContaining('Cheese'), findsOneWidget);
   });
 
   testWidgets('Reorder entry', (WidgetTester tester) async {
@@ -215,22 +215,22 @@ void main() {
 
     expect(find.byType(CheckboxListTile), findsNWidgets(3));
 
-    var firstLoc = tester.getCenter(find.text('First'));
-    var secondLoc = tester.getCenter(find.text('Second'));
+    var firstLoc = tester.getCenter(find.textContaining('First'));
+    var secondLoc = tester.getCenter(find.textContaining('Second'));
     expect(firstLoc.dy < secondLoc.dy, true);
 
-    final Offset firstLocation = tester.getCenter(find.text('First'));
+    final Offset firstLocation = tester.getCenter(find.textContaining('First'));
     final TestGesture gesture =
         await tester.startGesture(firstLocation, pointer: 7);
     await tester.pump(kLongPressTimeout + kPressTimeout);
 
-    final Offset lastLocation = tester.getCenter(find.text('Third'));
+    final Offset lastLocation = tester.getCenter(find.textContaining('Third'));
     await gesture.moveTo(lastLocation);
     await tester.pumpAndSettle();
     await gesture.up();
     await tester.pumpAndSettle();
 
-    final afterMove = tester.getCenter(find.text('First'));
+    final afterMove = tester.getCenter(find.textContaining('First'));
     expect(firstLoc.dy < afterMove.dy, true);
   });
 }
