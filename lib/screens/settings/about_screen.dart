@@ -146,7 +146,7 @@ class AboutScreen extends StatelessWidget {
                       image: AssetImage(kIconTransparent),
                     ),
                   ),
-                  applicationLegalese: '© 2020',
+                  applicationLegalese: AppLocalizations.of(context).copyright,
                 );
               },
             ),
