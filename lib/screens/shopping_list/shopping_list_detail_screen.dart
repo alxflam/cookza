@@ -81,70 +81,71 @@ class ShoppingListDetailScreen extends StatelessWidget {
                   onReorder: (oldIndex, newIndex) {
                     model.reorder(newIndex, oldIndex);
                   },
-                  children: List.generate(snapshot.data!.length, (index) {
-                    var _item = snapshot.data![index];
+                  itemExtent: 43,
+                  children: List.generate(
+                    snapshot.data!.length,
+                    (index) {
+                      var _item = snapshot.data![index];
 
-                    return ChangeNotifierProvider<ShoppingListItemModel>.value(
-                      value: _item,
-                      key: ValueKey(_item.hashCode),
-                      child: Consumer<ShoppingListItemModel>(
-                        builder: (context, itemModel, _) {
-                          return CheckboxListTile(
-                            key: ValueKey(itemModel.name),
-                            value: itemModel.isNoLongerNeeded,
-                            controlAffinity: ListTileControlAffinity.leading,
-                            onChanged: (value) {
-                              itemModel.noLongerNeeded = value;
-                            },
-                            dense: true,
-                            activeColor: Colors.grey,
-                            title: Text(
-                              itemModel.name,
-                              style: TextStyle(
-                                  decoration: itemModel.isNoLongerNeeded
-                                      ? TextDecoration.lineThrough
-                                      : TextDecoration.none),
-                            ),
-                            subtitle: Text(
-                              '${itemModel.amount} ${itemModel.uom}',
-                              style: TextStyle(
-                                  decoration: itemModel.isNoLongerNeeded
-                                      ? TextDecoration.lineThrough
-                                      : TextDecoration.none),
-                            ),
-                            secondary: itemModel.isCustomItem
-                                ? IconButton(
-                                    icon: const Icon(Icons.edit),
-                                    onPressed: () async {
-                                      // edit the custom item
-                                      final ingScreenModel =
-                                          IngredientScreenModel(
-                                              model: RecipeIngredientModel
-                                                  .noteOnlyModelOf(itemModel
-                                                      .toIngredientNoteEntity()),
-                                              supportsRecipeReference: false,
-                                              requiresIngredientGroup: false,
-                                              groups: [],
-                                              group: null);
+                      return ChangeNotifierProvider<
+                          ShoppingListItemModel>.value(
+                        value: _item,
+                        key: ValueKey(_item.hashCode),
+                        child: Consumer<ShoppingListItemModel>(
+                          builder: (context, itemModel, _) {
+                            return CheckboxListTile(
+                              key: ValueKey(itemModel.name),
+                              value: itemModel.isNoLongerNeeded,
+                              controlAffinity: ListTileControlAffinity.leading,
+                              isThreeLine: false,
+                              dense: true,
+                              onChanged: (value) {
+                                itemModel.noLongerNeeded = value;
+                              },
+                              activeColor: Colors.grey,
+                              title: Text(
+                                _createTileText(itemModel),
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    decoration: itemModel.isNoLongerNeeded
+                                        ? TextDecoration.lineThrough
+                                        : TextDecoration.none),
+                              ),
+                              secondary: itemModel.isCustomItem
+                                  ? IconButton(
+                                      icon: const Icon(Icons.edit),
+                                      onPressed: () async {
+                                        // edit the custom item
+                                        final ingScreenModel =
+                                            IngredientScreenModel(
+                                                model: RecipeIngredientModel
+                                                    .noteOnlyModelOf(itemModel
+                                                        .toIngredientNoteEntity()),
+                                                supportsRecipeReference: false,
+                                                requiresIngredientGroup: false,
+                                                groups: [],
+                                                group: null);
 
-                                      var result = await Navigator.pushNamed(
-                                              context, NewIngredientScreen.id,
-                                              arguments: ingScreenModel)
-                                          as IngredientScreenModel?;
-                                      if (result != null) {
-                                        if (result.model.isDeleted) {
-                                          model.removeItem(index, itemModel);
-                                        } else {
-                                          itemModel.updateFrom(result.model);
+                                        var result = await Navigator.pushNamed(
+                                                context, NewIngredientScreen.id,
+                                                arguments: ingScreenModel)
+                                            as IngredientScreenModel?;
+                                        if (result != null) {
+                                          if (result.model.isDeleted) {
+                                            model.removeItem(index, itemModel);
+                                          } else {
+                                            itemModel.updateFrom(result.model);
+                                          }
                                         }
-                                      }
-                                    })
-                                : null,
-                          );
-                        },
-                      ),
-                    );
-                  }),
+                                      },
+                                    )
+                                  : null,
+                            );
+                          },
+                        ),
+                      );
+                    },
+                  ),
                 );
               },
             ),
@@ -152,5 +153,21 @@ class ShoppingListDetailScreen extends StatelessWidget {
         },
       ),
     );
+  }
+
+  String _createTileText(ShoppingListItemModel itemModel) {
+    final buffer = StringBuffer();
+    buffer.write(itemModel.amount.isNotEmpty ? itemModel.amount : '');
+    if (buffer.isNotEmpty && itemModel.uom.isNotEmpty) {
+      buffer.write(' ');
+    }
+    buffer.write(itemModel.uom.isNotEmpty ? itemModel.uom : '');
+    if (buffer.isNotEmpty) {
+      buffer.write(' ');
+    }
+
+    buffer.write(itemModel.name);
+
+    return buffer.toString();
   }
 }
