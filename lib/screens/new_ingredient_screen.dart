@@ -23,6 +23,8 @@ class NewIngredientScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
     final screenModel =
         ModalRoute.of(context)!.settings.arguments as IngredientScreenModel;
 
@@ -32,7 +34,7 @@ class NewIngredientScreen extends StatelessWidget {
         var amountController =
             TextEditingController(text: kFormatAmount(model.amount));
         amountController.addListener(() {
-          var parsedAmount = double.tryParse(amountController.text);
+          final parsedAmount = _stringToDouble(amountController.text);
           model.amount = parsedAmount ?? 0;
         });
 
@@ -111,12 +113,12 @@ class NewIngredientScreen extends StatelessWidget {
                             .validationEnterNumber;
                       }
 
-                      var numValue = double.tryParse(value);
-                      if (numValue == 0) {
+                      var numValue = _stringToDouble(value);
+                      if (numValue == null || numValue == 0) {
                         return AppLocalizations.of(context)
                             .validationEnterNumber;
                       }
-                      return '';
+                      return null;
                     },
                   ),
                 ),
@@ -184,8 +186,10 @@ class NewIngredientScreen extends StatelessWidget {
                     onPressed: () {
                       // check whether either a recipe ref is selected or the ingredient name is given
                       try {
-                        model.validate(context);
-                        Navigator.pop(context, screenModel);
+                        if (_formKey.currentState?.validate() ?? true) {
+                          model.validate(context);
+                          Navigator.pop(context, screenModel);
+                        }
                       } catch (e) {
                         showDialog(
                           context: context,
@@ -240,15 +244,29 @@ class NewIngredientScreen extends StatelessWidget {
           body: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: inputWidgets,
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: inputWidgets,
+                ),
               ),
             ),
           ),
         );
       }),
     );
+  }
+
+  /// Transforms a string to a double
+  double? _stringToDouble(final String text) {
+    var parsedAmount = double.tryParse(text);
+    // if the user used a comma as decimal separator tryParse will return null
+    if (parsedAmount == null && text.contains(',')) {
+      final adjustedText = text.replaceAll(',', '.');
+      parsedAmount = double.tryParse(adjustedText);
+    }
+    return parsedAmount;
   }
 
   Widget _getRecipeWidget(RecipeIngredientModel model, BuildContext context) {
