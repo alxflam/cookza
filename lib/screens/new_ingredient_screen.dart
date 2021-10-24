@@ -43,7 +43,7 @@ class NewIngredientScreen extends StatelessWidget {
           final groups =
               ValueNotifier<List<IngredientGroupEntity>>(screenModel.groups);
           // initially either the given group is selected or the first of all available groups
-          final initialSelection = screenModel.group ??
+          screenModel.group = screenModel.group ??
               (groups.value.isNotEmpty ? groups.value.first : null);
           inputWidgets.add(
             ValueListenableBuilder<List<IngredientGroupEntity>>(
@@ -55,7 +55,7 @@ class NewIngredientScreen extends StatelessWidget {
                   children: <Widget>[
                     Expanded(
                       child: DropdownButtonFormField<IngredientGroupEntity>(
-                        value: initialSelection,
+                        value: screenModel.group,
                         items: value
                             .map(
                               (e) => DropdownMenuItem<IngredientGroupEntity>(
