@@ -88,7 +88,9 @@ class _LeftoversBodyState extends State<LeftoversBody> {
                 .get<SimilarityService>()
                 .getRecipesContaining(this._ingredients),
             builder: (context, snapshot) {
-              if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+              if (snapshot.hasData &&
+                  snapshot.data!.isNotEmpty &&
+                  snapshot.connectionState == ConnectionState.done) {
                 var result = snapshot.data as List<RecipeEntity>;
                 return Expanded(
                   child: ListView.builder(
