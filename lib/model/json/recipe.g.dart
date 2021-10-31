@@ -6,28 +6,26 @@ part of 'recipe.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Recipe _$RecipeFromJson(Map<String, dynamic> json) {
-  return Recipe(
-    id: json['id'] as String,
-    recipeCollection: json['recipeCollection'] as String,
-    name: json['name'] as String,
-    shortDescription: json['shortDescription'] as String? ?? '',
-    creationDate: kDateFromJson(json['creationDate'] as String),
-    modificationDate: kDateFromJson(json['modificationDate'] as String),
-    duration: json['duration'] as int,
-    diff: _$enumDecodeNullable(_$DIFFICULTYEnumMap, json['diff']) ??
-        DIFFICULTY.MEDIUM,
-    tags: (json['tags'] as List<dynamic>).map((e) => e as String).toList(),
-    ingredientGroups: (json['ingredientGroups'] as List<dynamic>)
-        .map((e) => IngredientGroup.fromJson(e as Map<String, dynamic>))
-        .toList(),
-    instructions: (json['instructions'] as List<dynamic>)
-        .map((e) => e as String)
-        .toList(),
-    servings: json['servings'] as int? ?? 1,
-    serializedImage: json['serializedImage'] as String?,
-  );
-}
+Recipe _$RecipeFromJson(Map<String, dynamic> json) => Recipe(
+      id: json['id'] as String,
+      recipeCollection: json['recipeCollection'] as String,
+      name: json['name'] as String,
+      shortDescription: json['shortDescription'] as String? ?? '',
+      creationDate: kDateFromJson(json['creationDate'] as String),
+      modificationDate: kDateFromJson(json['modificationDate'] as String),
+      duration: json['duration'] as int,
+      diff: $enumDecodeNullable(_$DIFFICULTYEnumMap, json['diff']) ??
+          DIFFICULTY.MEDIUM,
+      tags: (json['tags'] as List<dynamic>).map((e) => e as String).toList(),
+      ingredientGroups: (json['ingredientGroups'] as List<dynamic>)
+          .map((e) => IngredientGroup.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      instructions: (json['instructions'] as List<dynamic>)
+          .map((e) => e as String)
+          .toList(),
+      servings: json['servings'] as int? ?? 1,
+      serializedImage: json['serializedImage'] as String?,
+    );
 
 Map<String, dynamic> _$RecipeToJson(Recipe instance) {
   final val = <String, dynamic>{
@@ -53,43 +51,6 @@ Map<String, dynamic> _$RecipeToJson(Recipe instance) {
   writeNotNull('ingredientGroups', kListToJson(instance.ingredientGroups));
   val['instructions'] = instance.instructions;
   return val;
-}
-
-K _$enumDecode<K, V>(
-  Map<K, V> enumValues,
-  Object? source, {
-  K? unknownValue,
-}) {
-  if (source == null) {
-    throw ArgumentError(
-      'A value must be provided. Supported values: '
-      '${enumValues.values.join(', ')}',
-    );
-  }
-
-  return enumValues.entries.singleWhere(
-    (e) => e.value == source,
-    orElse: () {
-      if (unknownValue == null) {
-        throw ArgumentError(
-          '`$source` is not one of the supported values: '
-          '${enumValues.values.join(', ')}',
-        );
-      }
-      return MapEntry(unknownValue, enumValues.values.first);
-    },
-  ).key;
-}
-
-K? _$enumDecodeNullable<K, V>(
-  Map<K, V> enumValues,
-  dynamic source, {
-  K? unknownValue,
-}) {
-  if (source == null) {
-    return null;
-  }
-  return _$enumDecode<K, V>(enumValues, source, unknownValue: unknownValue);
 }
 
 const _$DIFFICULTYEnumMap = {

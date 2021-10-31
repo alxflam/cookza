@@ -6,13 +6,12 @@ part of 'firebase_rating.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-FirebaseRating _$FirebaseRatingFromJson(Map<String, dynamic> json) {
-  return FirebaseRating(
-    userId: json['userId'] as String,
-    recipeId: json['recipeId'] as String,
-    rating: json['rating'] as int,
-  );
-}
+FirebaseRating _$FirebaseRatingFromJson(Map<String, dynamic> json) =>
+    FirebaseRating(
+      userId: json['userId'] as String,
+      recipeId: json['recipeId'] as String,
+      rating: json['rating'] as int,
+    );
 
 Map<String, dynamic> _$FirebaseRatingToJson(FirebaseRating instance) =>
     <String, dynamic>{

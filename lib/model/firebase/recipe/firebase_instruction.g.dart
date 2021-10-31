@@ -6,13 +6,12 @@ part of 'firebase_instruction.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-FirebaseInstruction _$FirebaseInstructionFromJson(Map<String, dynamic> json) {
-  return FirebaseInstruction(
-    step: json['step'] as int?,
-    text: json['text'] as String,
-    imagePath: json['imagePath'] as String?,
-  );
-}
+FirebaseInstruction _$FirebaseInstructionFromJson(Map<String, dynamic> json) =>
+    FirebaseInstruction(
+      step: json['step'] as int?,
+      text: json['text'] as String,
+      imagePath: json['imagePath'] as String?,
+    );
 
 Map<String, dynamic> _$FirebaseInstructionToJson(FirebaseInstruction instance) {
   final val = <String, dynamic>{};
@@ -30,14 +29,13 @@ Map<String, dynamic> _$FirebaseInstructionToJson(FirebaseInstruction instance) {
 }
 
 FirebaseInstructionDocument _$FirebaseInstructionDocumentFromJson(
-    Map<String, dynamic> json) {
-  return FirebaseInstructionDocument(
-    recipeID: json['recipeID'] as String,
-    instructions: (json['instructions'] as List<dynamic>)
-        .map((e) => FirebaseInstruction.fromJson(e as Map<String, dynamic>))
-        .toList(),
-  );
-}
+        Map<String, dynamic> json) =>
+    FirebaseInstructionDocument(
+      recipeID: json['recipeID'] as String,
+      instructions: (json['instructions'] as List<dynamic>)
+          .map((e) => FirebaseInstruction.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
 
 Map<String, dynamic> _$FirebaseInstructionDocumentToJson(
     FirebaseInstructionDocument instance) {

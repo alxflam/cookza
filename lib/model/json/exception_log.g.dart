@@ -6,13 +6,12 @@ part of 'exception_log.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-ExceptionItem _$ExceptionItemFromJson(Map<String, dynamic> json) {
-  return ExceptionItem(
-    error: json['error'] as String,
-    stackTrace: json['stackTrace'] as String,
-    date: kDateFromJson(json['date'] as String),
-  );
-}
+ExceptionItem _$ExceptionItemFromJson(Map<String, dynamic> json) =>
+    ExceptionItem(
+      error: json['error'] as String,
+      stackTrace: json['stackTrace'] as String,
+      date: kDateFromJson(json['date'] as String),
+    );
 
 Map<String, dynamic> _$ExceptionItemToJson(ExceptionItem instance) {
   final val = <String, dynamic>{
@@ -30,13 +29,11 @@ Map<String, dynamic> _$ExceptionItemToJson(ExceptionItem instance) {
   return val;
 }
 
-ExceptionLog _$ExceptionLogFromJson(Map<String, dynamic> json) {
-  return ExceptionLog(
-    errors: (json['errors'] as List<dynamic>)
-        .map((e) => ExceptionItem.fromJson(e as Map<String, dynamic>))
-        .toList(),
-  );
-}
+ExceptionLog _$ExceptionLogFromJson(Map<String, dynamic> json) => ExceptionLog(
+      errors: (json['errors'] as List<dynamic>)
+          .map((e) => ExceptionItem.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
 
 Map<String, dynamic> _$ExceptionLogToJson(ExceptionLog instance) {
   final val = <String, dynamic>{};

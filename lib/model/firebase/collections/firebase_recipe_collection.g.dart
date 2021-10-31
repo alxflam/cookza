@@ -7,13 +7,12 @@ part of 'firebase_recipe_collection.dart';
 // **************************************************************************
 
 FirebaseRecipeCollection _$FirebaseRecipeCollectionFromJson(
-    Map<String, dynamic> json) {
-  return FirebaseRecipeCollection(
-    name: json['name'] as String,
-    creationTimestamp: kTimestampFromJson(json['creationTimestamp']),
-    users: Map<String, String>.from(json['users'] as Map),
-  );
-}
+        Map<String, dynamic> json) =>
+    FirebaseRecipeCollection(
+      name: json['name'] as String,
+      creationTimestamp: kTimestampFromJson(json['creationTimestamp']),
+      users: Map<String, String>.from(json['users'] as Map),
+    );
 
 Map<String, dynamic> _$FirebaseRecipeCollectionToJson(
     FirebaseRecipeCollection instance) {

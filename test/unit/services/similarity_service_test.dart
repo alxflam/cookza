@@ -27,7 +27,7 @@ void main() {
 
     await GetIt.I.get<RecipeManager>().createOrUpdate(recipe);
 
-    var result = await cut.getRecipesContaining(['pEppER']);
+    var result = await cut.getRecipesContaining({'pEppER'});
 
     expect(result.length, 1);
   });
@@ -44,7 +44,7 @@ void main() {
 
     await GetIt.I.get<RecipeManager>().createOrUpdate(recipe);
 
-    var result = await cut.getRecipesContaining(['pEppER', 'tomato', 'ONION']);
+    var result = await cut.getRecipesContaining({'pEppER', 'tomato', 'ONION'});
 
     expect(result.length, 1);
   });

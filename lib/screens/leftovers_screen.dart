@@ -30,7 +30,7 @@ class LeftoversBody extends StatefulWidget {
 }
 
 class _LeftoversBodyState extends State<LeftoversBody> {
-  final List<String> _ingredients = [];
+  final Set<String> _ingredients = {};
 
   void _addIngredient(String ingredient) {
     if (ingredient.isNotEmpty && !_ingredients.contains(ingredient)) {

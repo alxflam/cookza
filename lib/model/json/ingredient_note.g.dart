@@ -6,13 +6,13 @@ part of 'ingredient_note.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-IngredientNote _$IngredientNoteFromJson(Map<String, dynamic> json) {
-  return IngredientNote(
-    ingredient: Ingredient.fromJson(json['ingredient'] as Map<String, dynamic>),
-    unitOfMeasure: json['unitOfMeasure'] as String? ?? '',
-    amount: (json['amount'] as num?)?.toDouble(),
-  );
-}
+IngredientNote _$IngredientNoteFromJson(Map<String, dynamic> json) =>
+    IngredientNote(
+      ingredient:
+          Ingredient.fromJson(json['ingredient'] as Map<String, dynamic>),
+      unitOfMeasure: json['unitOfMeasure'] as String? ?? '',
+      amount: (json['amount'] as num?)?.toDouble(),
+    );
 
 Map<String, dynamic> _$IngredientNoteToJson(IngredientNote instance) {
   final val = <String, dynamic>{};

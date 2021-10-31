@@ -7,12 +7,11 @@ part of 'firebase_meal_plan_collection.dart';
 // **************************************************************************
 
 FirebaseMealPlanCollection _$FirebaseMealPlanCollectionFromJson(
-    Map<String, dynamic> json) {
-  return FirebaseMealPlanCollection(
-    name: json['name'] as String,
-    users: Map<String, String>.from(json['users'] as Map),
-  )..creationTimestamp = kTimestampFromJson(json['creationTimestamp']);
-}
+        Map<String, dynamic> json) =>
+    FirebaseMealPlanCollection(
+      name: json['name'] as String,
+      users: Map<String, String>.from(json['users'] as Map),
+    )..creationTimestamp = kTimestampFromJson(json['creationTimestamp']);
 
 Map<String, dynamic> _$FirebaseMealPlanCollectionToJson(
     FirebaseMealPlanCollection instance) {

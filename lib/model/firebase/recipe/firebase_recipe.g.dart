@@ -6,23 +6,23 @@ part of 'firebase_recipe.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-FirebaseRecipe _$FirebaseRecipeFromJson(Map<String, dynamic> json) {
-  return FirebaseRecipe(
-    ingredientsID: json['ingredientsID'] as String?,
-    instructionsID: json['instructionsID'] as String?,
-    name: json['name'] as String,
-    description: json['description'] as String? ?? '',
-    creationDate: kTimestampFromJson(json['creationDate']),
-    modificationDate: kTimestampFromJson(json['modificationDate']),
-    duration: json['duration'] as int,
-    difficulty: _$enumDecodeNullable(_$DIFFICULTYEnumMap, json['difficulty']) ??
-        DIFFICULTY.MEDIUM,
-    tags: (json['tags'] as List<dynamic>).map((e) => e as String).toList(),
-    servings: json['servings'] as int? ?? 1,
-    image: json['image'] as String?,
-    recipeGroupID: json['recipeGroupID'] as String,
-  );
-}
+FirebaseRecipe _$FirebaseRecipeFromJson(Map<String, dynamic> json) =>
+    FirebaseRecipe(
+      ingredientsID: json['ingredientsID'] as String?,
+      instructionsID: json['instructionsID'] as String?,
+      name: json['name'] as String,
+      description: json['description'] as String? ?? '',
+      creationDate: kTimestampFromJson(json['creationDate']),
+      modificationDate: kTimestampFromJson(json['modificationDate']),
+      duration: json['duration'] as int,
+      difficulty:
+          $enumDecodeNullable(_$DIFFICULTYEnumMap, json['difficulty']) ??
+              DIFFICULTY.MEDIUM,
+      tags: (json['tags'] as List<dynamic>).map((e) => e as String).toList(),
+      servings: json['servings'] as int? ?? 1,
+      image: json['image'] as String?,
+      recipeGroupID: json['recipeGroupID'] as String,
+    );
 
 Map<String, dynamic> _$FirebaseRecipeToJson(FirebaseRecipe instance) {
   final val = <String, dynamic>{};
@@ -46,43 +46,6 @@ Map<String, dynamic> _$FirebaseRecipeToJson(FirebaseRecipe instance) {
   val['difficulty'] = _$DIFFICULTYEnumMap[instance.difficulty];
   val['tags'] = instance.tags;
   return val;
-}
-
-K _$enumDecode<K, V>(
-  Map<K, V> enumValues,
-  Object? source, {
-  K? unknownValue,
-}) {
-  if (source == null) {
-    throw ArgumentError(
-      'A value must be provided. Supported values: '
-      '${enumValues.values.join(', ')}',
-    );
-  }
-
-  return enumValues.entries.singleWhere(
-    (e) => e.value == source,
-    orElse: () {
-      if (unknownValue == null) {
-        throw ArgumentError(
-          '`$source` is not one of the supported values: '
-          '${enumValues.values.join(', ')}',
-        );
-      }
-      return MapEntry(unknownValue, enumValues.values.first);
-    },
-  ).key;
-}
-
-K? _$enumDecodeNullable<K, V>(
-  Map<K, V> enumValues,
-  dynamic source, {
-  K? unknownValue,
-}) {
-  if (source == null) {
-    return null;
-  }
-  return _$enumDecode<K, V>(enumValues, source, unknownValue: unknownValue);
 }
 
 const _$DIFFICULTYEnumMap = {

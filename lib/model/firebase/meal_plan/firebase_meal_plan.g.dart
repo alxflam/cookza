@@ -7,13 +7,12 @@ part of 'firebase_meal_plan.dart';
 // **************************************************************************
 
 FirebaseMealPlanRecipe _$FirebaseMealPlanRecipeFromJson(
-    Map<String, dynamic> json) {
-  return FirebaseMealPlanRecipe(
-    name: json['name'] as String,
-    id: json['id'] as String?,
-    servings: json['servings'] as int?,
-  );
-}
+        Map<String, dynamic> json) =>
+    FirebaseMealPlanRecipe(
+      name: json['name'] as String,
+      id: json['id'] as String?,
+      servings: json['servings'] as int?,
+    );
 
 Map<String, dynamic> _$FirebaseMealPlanRecipeToJson(
     FirebaseMealPlanRecipe instance) {
@@ -32,14 +31,15 @@ Map<String, dynamic> _$FirebaseMealPlanRecipeToJson(
   return val;
 }
 
-FirebaseMealPlanDate _$FirebaseMealPlanDateFromJson(Map<String, dynamic> json) {
-  return FirebaseMealPlanDate(
-    date: kDateFromJson(json['date'] as String),
-    recipes: (json['recipes'] as List<dynamic>)
-        .map((e) => FirebaseMealPlanRecipe.fromJson(e as Map<String, dynamic>))
-        .toList(),
-  );
-}
+FirebaseMealPlanDate _$FirebaseMealPlanDateFromJson(
+        Map<String, dynamic> json) =>
+    FirebaseMealPlanDate(
+      date: kDateFromJson(json['date'] as String),
+      recipes: (json['recipes'] as List<dynamic>)
+          .map(
+              (e) => FirebaseMealPlanRecipe.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
 
 Map<String, dynamic> _$FirebaseMealPlanDateToJson(
     FirebaseMealPlanDate instance) {
@@ -57,14 +57,13 @@ Map<String, dynamic> _$FirebaseMealPlanDateToJson(
 }
 
 FirebaseMealPlanDocument _$FirebaseMealPlanDocumentFromJson(
-    Map<String, dynamic> json) {
-  return FirebaseMealPlanDocument(
-    items: (json['items'] as List<dynamic>)
-        .map((e) => FirebaseMealPlanDate.fromJson(e as Map<String, dynamic>))
-        .toList(),
-    groupID: json['groupID'] as String,
-  );
-}
+        Map<String, dynamic> json) =>
+    FirebaseMealPlanDocument(
+      items: (json['items'] as List<dynamic>)
+          .map((e) => FirebaseMealPlanDate.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      groupID: json['groupID'] as String,
+    );
 
 Map<String, dynamic> _$FirebaseMealPlanDocumentToJson(
     FirebaseMealPlanDocument instance) {

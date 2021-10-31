@@ -6,13 +6,13 @@ part of 'firebase_ingredient.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-FirebaseIngredient _$FirebaseIngredientFromJson(Map<String, dynamic> json) {
-  return FirebaseIngredient(
-    ingredient: Ingredient.fromJson(json['ingredient'] as Map<String, dynamic>),
-    amount: (json['amount'] as num?)?.toDouble(),
-    unitOfMeasure: json['unitOfMeasure'] as String? ?? '',
-  );
-}
+FirebaseIngredient _$FirebaseIngredientFromJson(Map<String, dynamic> json) =>
+    FirebaseIngredient(
+      ingredient:
+          Ingredient.fromJson(json['ingredient'] as Map<String, dynamic>),
+      amount: (json['amount'] as num?)?.toDouble(),
+      unitOfMeasure: json['unitOfMeasure'] as String? ?? '',
+    );
 
 Map<String, dynamic> _$FirebaseIngredientToJson(FirebaseIngredient instance) {
   final val = <String, dynamic>{};
@@ -30,14 +30,13 @@ Map<String, dynamic> _$FirebaseIngredientToJson(FirebaseIngredient instance) {
 }
 
 FirebaseIngredientGroup _$FirebaseIngredientGroupFromJson(
-    Map<String, dynamic> json) {
-  return FirebaseIngredientGroup(
-    name: json['name'] as String,
-    ingredients: (json['ingredients'] as List<dynamic>)
-        .map((e) => FirebaseIngredient.fromJson(e as Map<String, dynamic>))
-        .toList(),
-  );
-}
+        Map<String, dynamic> json) =>
+    FirebaseIngredientGroup(
+      name: json['name'] as String,
+      ingredients: (json['ingredients'] as List<dynamic>)
+          .map((e) => FirebaseIngredient.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
 
 Map<String, dynamic> _$FirebaseIngredientGroupToJson(
     FirebaseIngredientGroup instance) {
@@ -55,18 +54,17 @@ Map<String, dynamic> _$FirebaseIngredientGroupToJson(
 }
 
 FirebaseIngredientDocument _$FirebaseIngredientDocumentFromJson(
-    Map<String, dynamic> json) {
-  return FirebaseIngredientDocument(
-    recipeID: json['recipeID'] as String,
-    ingredients: (json['ingredients'] as List<dynamic>?)
-        ?.map((e) => FirebaseIngredient.fromJson(e as Map<String, dynamic>))
-        .toList(),
-    groups: (json['groups'] as List<dynamic>?)
-        ?.map(
-            (e) => FirebaseIngredientGroup.fromJson(e as Map<String, dynamic>))
-        .toList(),
-  );
-}
+        Map<String, dynamic> json) =>
+    FirebaseIngredientDocument(
+      recipeID: json['recipeID'] as String,
+      ingredients: (json['ingredients'] as List<dynamic>?)
+          ?.map((e) => FirebaseIngredient.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      groups: (json['groups'] as List<dynamic>?)
+          ?.map((e) =>
+              FirebaseIngredientGroup.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
 
 Map<String, dynamic> _$FirebaseIngredientDocumentToJson(
     FirebaseIngredientDocument instance) {
@@ -80,7 +78,6 @@ Map<String, dynamic> _$FirebaseIngredientDocumentToJson(
     }
   }
 
-  // ignore: deprecated_member_use_from_same_package
   writeNotNull('ingredients', kListToJson(instance.ingredients));
   writeNotNull('groups', kListToJson(instance.groups));
   return val;

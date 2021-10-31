@@ -5,6 +5,9 @@ import 'package:cookza/services/recipe/recipe_manager.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
 
 class SimilarityService {
+  List<RecipeEntity> _lastResult = [];
+  Set<String> _lastSearch = {};
+
   Future<List<RecipeEntity>> getSimilarRecipes(
       RecipeEntity sourceRecipe) async {
     List<RecipeEntity> result = [];
@@ -29,12 +32,12 @@ class SimilarityService {
       if (item.id == sourceRecipe.id) {
         continue;
       }
-      count = 0;
 
       var refRecipeGroups = await item.ingredientGroups;
       final refRecipeIngredients =
           refRecipeGroups.map((e) => e.ingredients).expand((e) => e).toSet();
 
+      count = 0;
       for (var origIng in ingredients) {
         if (this.containsIngredient(
             refRecipeIngredients, origIng.ingredient.name)) {
@@ -65,8 +68,13 @@ class SimilarityService {
   }
 
   Future<List<RecipeEntity>> getRecipesContaining(
-      List<String> targetIngredients) async {
-    var recipes = await sl.get<RecipeManager>().getAllRecipes();
+      Set<String> targetIngredients) async {
+    // if only a single new ingredient got added,
+    // then fetch the last result and filter it
+    var recipes = _getCachedResult(targetIngredients);
+    // otherwise retrieve all ingredients
+    recipes ??= await sl.get<RecipeManager>().getAllRecipes();
+
     List<RecipeEntity> result = [];
 
     for (var recipe in recipes) {
@@ -87,6 +95,20 @@ class SimilarityService {
       }
     }
 
+    _lastResult = result;
+    _lastSearch = targetIngredients;
+
     return result;
+  }
+
+  List<RecipeEntity>? _getCachedResult(Set<String> targetIngredients) {
+    if (_lastResult.isNotEmpty) {
+      final diff = _lastSearch.difference(targetIngredients);
+      if (diff.length == 1 && !_lastSearch.contains(diff.first)) {
+        return _lastResult;
+      }
+    }
+    _lastResult = [];
+    _lastSearch = {};
   }
 }

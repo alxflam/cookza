@@ -6,14 +6,13 @@ part of 'ingredient_group.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-IngredientGroup _$IngredientGroupFromJson(Map<String, dynamic> json) {
-  return IngredientGroup(
-    name: json['name'] as String,
-    ingredients: (json['ingredients'] as List<dynamic>)
-        .map((e) => IngredientNote.fromJson(e as Map<String, dynamic>))
-        .toList(),
-  );
-}
+IngredientGroup _$IngredientGroupFromJson(Map<String, dynamic> json) =>
+    IngredientGroup(
+      name: json['name'] as String,
+      ingredients: (json['ingredients'] as List<dynamic>)
+          .map((e) => IngredientNote.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
 
 Map<String, dynamic> _$IngredientGroupToJson(IngredientGroup instance) {
   final val = <String, dynamic>{};
