@@ -27,7 +27,7 @@ class MutableMealPlan implements MealPlanEntity {
       List<MealPlanDateEntity> entityItems, int weeks, DateTime startDate) {
     // identify the start date
     var firstDateToBeShown =
-        DateTime(startDate.year, startDate.month, startDate.day);
+        DateTime.utc(startDate.year, startDate.month, startDate.day);
 
     // for each persisted item, use it if it is not in the past and contains any persisted state (recipes have been added)
     for (var item in entityItems) {
