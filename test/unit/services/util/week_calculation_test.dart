@@ -12,6 +12,24 @@ void main() {
   );
 
   test(
+    'Local date on time change',
+    () async {
+      int week = weekNumberOf(DateTime(2021, 10, 31));
+
+      expect(week, 43);
+    },
+  );
+
+  test(
+    'Local date after time change',
+    () async {
+      int week = weekNumberOf(DateTime(2021, 11, 1));
+
+      expect(week, 44);
+    },
+  );
+
+  test(
     'First monday in new year is a monday',
     () async {
       int week = weekNumberOf(DateTime(2021, 1, 4));
