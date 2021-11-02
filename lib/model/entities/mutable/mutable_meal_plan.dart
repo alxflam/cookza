@@ -57,7 +57,13 @@ class MutableMealPlan implements MealPlanEntity {
     var days = lastDate.difference(firstDateToBeShown).inDays;
     this._sort();
     for (var i = 0; i <= days; i++) {
-      var day = firstDateToBeShown.add(Duration(days: i));
+      // On the day when daylight savings time ends #add(Duration(days: 1))
+      // won't necessarily compute the next day
+      // (as it adds seconds but this special day has 25 hours),
+      // therefore use UTC date
+      var day = DateTime.utc(firstDateToBeShown.year, firstDateToBeShown.month,
+              firstDateToBeShown.day)
+          .add(Duration(days: i));
 
       if (items.length <= i || !isSameDay(items[i].date, day)) {
         _items.add(MutableMealPlanDateEntity.empty(day));
