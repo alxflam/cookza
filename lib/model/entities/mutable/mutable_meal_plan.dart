@@ -1,5 +1,6 @@
 import 'package:cookza/model/entities/abstract/meal_plan_entity.dart';
 import 'package:cookza/services/util/week_calculation.dart';
+import 'package:flutter/material.dart';
 
 class MutableMealPlan implements MealPlanEntity {
   final String? _id;
@@ -61,9 +62,7 @@ class MutableMealPlan implements MealPlanEntity {
       // won't necessarily compute the next day
       // (as it adds seconds but this special day has 25 hours),
       // therefore use UTC date
-      var day = DateTime.utc(firstDateToBeShown.year, firstDateToBeShown.month,
-              firstDateToBeShown.day)
-          .add(Duration(days: i));
+      var day = DateUtils.addDaysToDate(firstDateToBeShown, i);
 
       if (items.length <= i || !isSameDay(items[i].date, day)) {
         _items.add(MutableMealPlanDateEntity.empty(day));
