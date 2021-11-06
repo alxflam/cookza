@@ -109,8 +109,8 @@ class NewIngredientScreen extends StatelessWidget {
                     keyboardType: TextInputType.number,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return AppLocalizations.of(context)
-                            .validationEnterNumber;
+                        // it's fine to provide no amount
+                        return null;
                       }
 
                       var numValue = _stringToDouble(value);
