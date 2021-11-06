@@ -36,8 +36,7 @@ Future<void> openShoppingListDialog(BuildContext context) async {
     if (dateRange == null) {
       return;
     }
-    model.dateEnd = dateRange.end;
-    model.dateFrom = dateRange.start;
+    model.updateDateRange(dateRange.start, dateRange.end);
     model.groupID = collections.first.id!;
   } else {
     model = ShoppingListModel.empty();
@@ -122,8 +121,7 @@ class MultipeGroupSelectionDialog extends StatelessWidget {
                           initialDateRange: DateTimeRange(
                               start: model.dateFrom, end: model.dateEnd));
                       if (dateRange != null) {
-                        model.dateEnd = dateRange.end;
-                        model.dateFrom = dateRange.start;
+                        model.updateDateRange(dateRange.start, dateRange.end);
                       }
                     },
                   ),

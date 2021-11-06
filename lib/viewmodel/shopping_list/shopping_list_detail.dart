@@ -161,9 +161,15 @@ class ShoppingListModel extends ChangeNotifier {
     return startDate.add(Duration(days: days));
   }
 
-  set dateFrom(DateTime value) => _listEntity.dateFrom = value;
+  set _dateFrom(DateTime value) => _listEntity.dateFrom = value;
 
-  set dateEnd(DateTime value) => _listEntity.dateUntil = value;
+  set _dateEnd(DateTime value) => _listEntity.dateUntil = value;
+
+  void updateDateRange(DateTime start, DateTime end) {
+    this._dateFrom = start;
+    this._dateEnd = end;
+    notifyListeners();
+  }
 
   String get groupID => this._listEntity.groupID;
 
@@ -192,7 +198,9 @@ class ShoppingListModel extends ChangeNotifier {
     // add to entity
     this._listEntity.addItem(entity);
     // add to transient items list
-    this._items.add(entity);
+    // TODO at always on top?
+    this._items.insert(0, entity);
+    entity.index = 0;
     // save changes
     this._save();
     // update the view
