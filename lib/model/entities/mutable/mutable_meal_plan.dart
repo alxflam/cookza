@@ -31,7 +31,8 @@ class MutableMealPlan implements MealPlanEntity {
 
     // for each persisted item, use it if it is not in the past and contains any persisted state (recipes have been added)
     for (var item in entityItems) {
-      bool skip = item.date.isBefore(firstDateToBeShown);
+      bool skip = DateTime.utc(item.date.year, item.date.month, item.date.day)
+          .isBefore(firstDateToBeShown);
       if (!skip && item.recipes.isNotEmpty) {
         this._items.add(MutableMealPlanDateEntity.of(item));
       }
