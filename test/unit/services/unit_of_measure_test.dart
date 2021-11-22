@@ -28,6 +28,21 @@ void main() {
       expect(clt_01.uom.id, 'CLT');
     },
   );
+
+  test(
+    'Convert Volume next Bigger',
+    () {
+      var provider = StaticUnitOfMeasure();
+
+      var clt = provider.getUnitOfMeasureById('CLT');
+      var clt_10 = AmountedUnitOfMeasure(clt, 10);
+      var result = clt_10.nextBiggerUoM();
+
+      expect(result.uom.id, 'DLT');
+      expect(result.amount, 1);
+    },
+  );
+
   test(
     'Convert Length next Bigger',
     () {
@@ -65,8 +80,8 @@ void main() {
       var mtr_10 = AmountedUnitOfMeasure(mtr, 1);
       var cmt_01 = mtr_10.nextLowerUoM();
 
-      expect(cmt_01.amount, 100);
       expect(cmt_01.uom.id, 'CMT');
+      expect(cmt_01.amount, 100);
     },
   );
 

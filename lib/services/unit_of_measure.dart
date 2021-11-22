@@ -214,9 +214,17 @@ class AmountedUnitOfMeasure {
       if (uom.conversionFactor == 1) {
         return this;
       }
-      // retrieve next bigger uom => uom with same base unit but lower conversion factor
-      List<MetricUnitOfMeasure> sameBaseUnit = _getSameBaseUnit(uom);
-      var targetUoM = sameBaseUnit.first;
+      // retrieve next bigger uom => uom with same base unit but higher conversion factor
+      final targetUoM = metricUoM
+          .where((element) =>
+              element.baseUnit == uom.baseUnit &&
+              element._id != uom._id &&
+              element.conversionFactor > uom.conversionFactor)
+          .firstOrNull;
+      if (targetUoM == null) {
+        return this;
+      }
+
       // then convert to base unit
       var targetAmount = _amount * uom._conversionFactor;
 
@@ -228,33 +236,17 @@ class AmountedUnitOfMeasure {
     return this;
   }
 
-  List<MetricUnitOfMeasure> _getSameBaseUnit(MetricUnitOfMeasure uom,
-      {bool descending = false}) {
-    var sameBaseUnit = metricUoM
-        .where((element) =>
-            element.baseUnit == uom.baseUnit && element._id != uom._id)
-        .toList();
-    if (descending) {
-      sameBaseUnit
-          .sort((a, b) => b._conversionFactor.compareTo(a._conversionFactor));
-    } else {
-      sameBaseUnit
-          .sort((a, b) => a._conversionFactor.compareTo(b._conversionFactor));
-    }
-    return sameBaseUnit;
-  }
-
   AmountedUnitOfMeasure nextLowerUoM() {
     if (_uom is MetricUnitOfMeasure) {
       var uom = _uom as MetricUnitOfMeasure;
 
-      // retrieve next lower uom => uom with same base unit but higher conversion factor
-      List<MetricUnitOfMeasure> sameBaseUnit =
-          _getSameBaseUnit(uom, descending: true);
-
-      // get descending!
-      var targetUoM = sameBaseUnit
-          .firstWhereOrNull((e) => e.conversionFactor < uom.conversionFactor);
+      // retrieve next lower uom => uom with same base unit but lower conversion factor
+      final targetUoM = metricUoM
+          .where((element) =>
+              element.baseUnit == uom.baseUnit &&
+              element._id != uom._id &&
+              element.conversionFactor < uom.conversionFactor)
+          .lastOrNull;
 
       // directly return if there's no next lower dimension
       if (targetUoM == null) {
@@ -282,11 +274,15 @@ class AmountedUnitOfMeasure {
     var target = this;
     var amounted = sourceAmountedUoM;
     if (uom.id != uomSource.id) {
+      print('Current UOM: ${uom.id}');
       // convert to biggest uom
       while (uom.conversionFactor != 1) {
         target = target.nextBiggerUoM();
         uom = target.uom as MetricUnitOfMeasure;
+        print('Next bigger UOM: ${uom.id}');
       }
+
+      print('Loop ended');
 
       // convert also to biggest uom
       if (uom.conversionFactor == 1) {

@@ -115,4 +115,35 @@ void main() {
     expect(result.first.amount, 1500);
     expect(result.last.amount!.toStringAsPrecision(3), '3.60');
   });
+
+  test(
+      'Calculate amount for same ingredient with different metric unit with multiple units difference',
+      () async {
+    var recipe = RecipeCreator.createRecipe('First Recipe');
+    recipe.servings = 2;
+    var milk = RecipeCreator.createIngredient('Milk', amount: 150, uom: 'MLT');
+    recipe.ingredientGroupList = [
+      MutableIngredientGroup.forValues(1, 'Test', [milk])
+    ];
+
+    await rm.createOrUpdate(recipe);
+
+    var recipe2 = RecipeCreator.createRecipe('Second Recipe');
+    recipe2.servings = 1;
+    var milk2 = RecipeCreator.createIngredient('Milk', amount: 1.2, uom: 'LTR');
+    recipe2.ingredientGroupList = [
+      MutableIngredientGroup.forValues(1, 'Test', [milk2])
+    ];
+
+    await rm.createOrUpdate(recipe2);
+
+    var cut = IngredientsCalculatorImpl();
+
+    var result = await cut.getIngredients({recipe.id!: 4, recipe2.id!: 3});
+
+    expect(result.length, 1);
+    // 4 / 2 * 150 + 3 / 1 * 1.2 = 400 + 3.6 => 3.9
+    expect(result.first.amount!.toStringAsFixed(1), '3.9');
+    expect(result.first.unitOfMeasure, 'LTR');
+  });
 }
