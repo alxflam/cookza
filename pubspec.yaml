@@ -31,7 +31,7 @@ dependencies:
   pdf: ^3.1.0
   barcode_widget: ^2.0.1
   firebase_auth: ^3.0.0
-  cloud_firestore: ^2.1.0
+  cloud_firestore: ^2.5.4
   firebase_storage: ^10.0.1
   google_ml_kit: ^0.7.0
   package_info_plus: ^1.0.1
