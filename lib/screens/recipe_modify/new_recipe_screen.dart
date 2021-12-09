@@ -156,7 +156,7 @@ class NewRecipeStepper extends StatelessWidget {
   }
 
   ControlsWidgetBuilder getControlsBuilder() {
-    return (context, {onStepCancel, onStepContinue}) {
+    return (context, details) {
       final MaterialLocalizations localizations =
           MaterialLocalizations.of(context);
 
