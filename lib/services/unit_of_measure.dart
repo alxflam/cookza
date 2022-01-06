@@ -274,15 +274,11 @@ class AmountedUnitOfMeasure {
     var target = this;
     var amounted = sourceAmountedUoM;
     if (uom.id != uomSource.id) {
-      print('Current UOM: ${uom.id}');
       // convert to biggest uom
       while (uom.conversionFactor != 1) {
         target = target.nextBiggerUoM();
         uom = target.uom as MetricUnitOfMeasure;
-        print('Next bigger UOM: ${uom.id}');
       }
-
-      print('Loop ended');
 
       // convert also to biggest uom
       if (uom.conversionFactor == 1) {
