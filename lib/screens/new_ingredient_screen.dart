@@ -87,6 +87,24 @@ class NewIngredientScreen extends StatelessWidget {
                       },
                       icon: const Icon(Icons.add),
                     ),
+                    IconButton(
+                      onPressed: () async {
+                        final group = await _createGroup(
+                            context, screenModel, screenModel.group);
+                        if (group != null) {
+                          final t = screenModel.group;
+                          if (t is MutableIngredientGroup) {
+                            t.name = group.name;
+                            final newList = [...groups.value];
+                            // select the created group
+                            screenModel.group = t;
+                            // and update the value listenable
+                            groups.value = newList;
+                          }
+                        }
+                      },
+                      icon: const Icon(Icons.edit),
+                    ),
                   ],
                 );
               },

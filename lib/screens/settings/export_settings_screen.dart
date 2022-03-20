@@ -54,7 +54,7 @@ class ExportSettingsScreen extends StatelessWidget {
           ),
           ListTile(
             title: Text(AppLocalizations.of(context).backup),
-            leading: const FaIcon(FontAwesomeIcons.fileArchive),
+            leading: const FaIcon(FontAwesomeIcons.fileZipper),
             onTap: () async {
               // fetch all recipes the app currently stores
               var recipes = await sl.get<RecipeManager>().getAllRecipes();

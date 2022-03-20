@@ -111,7 +111,7 @@ class MultipeGroupSelectionDialog extends StatelessWidget {
                     ),
                   ),
                   IconButton(
-                    icon: const FaIcon(FontAwesomeIcons.edit),
+                    icon: const FaIcon(FontAwesomeIcons.penToSquare),
                     onPressed: () async {
                       var dateRange = await showDateRangePicker(
                           context: context,

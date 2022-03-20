@@ -50,7 +50,7 @@ class LightTheme extends CustomTheme {
 final kDarkColorScheme = const ColorScheme.dark().copyWith(
     background: const Color(0xFF121212),
     primary: kTealAppIconColor,
-    primaryVariant: kTealAppIconColor,
+    primaryContainer: kTealAppIconColor,
     secondary: kTealAppIconColor);
 
 final kDarkTheme = ThemeData.from(colorScheme: kDarkColorScheme).copyWith(

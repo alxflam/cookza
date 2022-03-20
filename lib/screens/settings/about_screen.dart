@@ -95,7 +95,7 @@ class AboutScreen extends StatelessWidget {
             ListTile(
               title: Text(AppLocalizations.of(context).support),
               subtitle: Text(AppLocalizations.of(context).supportSubtitle),
-              leading: const FaIcon(FontAwesomeIcons.questionCircle),
+              leading: const FaIcon(FontAwesomeIcons.circleQuestion),
               onTap: () {
                 launch(kPlayStoreLink);
               },
@@ -132,7 +132,7 @@ class AboutScreen extends StatelessWidget {
             ),
             SettingSectionHeader(AppLocalizations.of(context).legal),
             ListTile(
-              leading: const FaIcon(FontAwesomeIcons.fileAlt),
+              leading: const FaIcon(FontAwesomeIcons.fileLines),
               title: Text(MaterialLocalizations.of(context).licensesPageTitle),
               onTap: () async {
                 final platformInfo = await PackageInfo.fromPlatform();

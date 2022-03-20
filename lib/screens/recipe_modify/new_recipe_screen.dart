@@ -90,7 +90,7 @@ class NewRecipeScreen extends StatelessWidget {
             : Text(AppLocalizations.of(context).editRecipe),
         actions: <Widget>[
           IconButton(
-            icon: const FaIcon(FontAwesomeIcons.save),
+            icon: const FaIcon(FontAwesomeIcons.floppyDisk),
             onPressed: () async {
               await saveModel(context, model);
             },

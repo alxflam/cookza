@@ -13,16 +13,16 @@ const kChangelogLink =
 
 /// Icons
 const kWebAppData = FontAwesomeIcons.desktop;
-const kNewRecipe = FontAwesomeIcons.plusCircle;
+const kNewRecipe = FontAwesomeIcons.circlePlus;
 const kFavoriteRecipes = FontAwesomeIcons.star;
-const kSettingsIcon = FontAwesomeIcons.cog;
+const kSettingsIcon = FontAwesomeIcons.gear;
 const kShareAccountIcon = FontAwesomeIcons.handshake;
 const kRecipesIconData = FontAwesomeIcons.bookOpen;
 const kInstructionsIconData = FontAwesomeIcons.listOl;
 const kLeftoversIconData = FontAwesomeIcons.recycle;
 const kMarketplaceIconData = FontAwesomeIcons.globe;
-const kMealPlannerIconData = FontAwesomeIcons.calendarAlt;
-const kShoppingListIconData = FontAwesomeIcons.shoppingCart;
+const kMealPlannerIconData = FontAwesomeIcons.calendarDays;
+const kShoppingListIconData = FontAwesomeIcons.cartShopping;
 const kIngredientsIconData = FontAwesomeIcons.receipt;
 const kSimilarRecipesIconData = FontAwesomeIcons.layerGroup;
 const kInfoIconData = FontAwesomeIcons.info;
@@ -32,12 +32,12 @@ const kMeatIcon = FontAwesomeIcons.drumstickBite;
 const kFishIcon = FontAwesomeIcons.fish;
 const kSummerIcon = FontAwesomeIcons.sun;
 const kWinterIcon = FontAwesomeIcons.snowflake;
-const kPartyIcon = FontAwesomeIcons.glassCheers;
+const kPartyIcon = FontAwesomeIcons.champagneGlasses;
 const kCookieIcon = FontAwesomeIcons.cookie;
-const kCakeIcon = FontAwesomeIcons.birthdayCake;
+const kCakeIcon = FontAwesomeIcons.cakeCandles;
 const kSoupIcon = FontAwesomeIcons.mugHot;
 const kSweetsIcon = FontAwesomeIcons.iceCream;
-const kDrinkIcon = FontAwesomeIcons.cocktail;
+const kDrinkIcon = FontAwesomeIcons.martiniGlassCitrus;
 
 const kVeganTag = 'vegan';
 const kVegetarianTag = 'vegetarian';

@@ -129,7 +129,7 @@ class LogIns extends StatelessWidget {
             },
             child: Row(
               children: [
-                const Icon(FontAwesomeIcons.signOutAlt),
+                const Icon(FontAwesomeIcons.rightFromBracket),
                 const SizedBox(
                   width: 20,
                 ),

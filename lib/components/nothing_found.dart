@@ -15,7 +15,7 @@ class NothingFound extends StatelessWidget {
           const Padding(
             padding: EdgeInsets.all(20),
             child: FaIcon(
-              FontAwesomeIcons.search,
+              FontAwesomeIcons.magnifyingGlass,
               size: 60,
             ),
           ),

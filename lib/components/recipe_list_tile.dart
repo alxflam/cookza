@@ -95,7 +95,7 @@ class RecipeListTile extends StatelessWidget {
               }
               final rating = snapshot.data;
               return rating == null
-                  ? const FaIcon(FontAwesomeIcons.questionCircle)
+                  ? const FaIcon(FontAwesomeIcons.circleQuestion)
                   : Icon(rating < 2
                       ? Icons.star_border
                       : rating < 4

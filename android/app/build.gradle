@@ -33,7 +33,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    compileSdkVersion 30 // 30 = Android 11
+    compileSdkVersion 31 // 31 = Android 12
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
@@ -45,8 +45,8 @@ android {
 
     defaultConfig {
         applicationId "com.flammer.cookza"
-        minSdkVersion 21 // 21 = Android 5
-        targetSdkVersion 29 // 29 = Android 9, 26 = Android 8.0
+        minSdkVersion 28 // 28 = Android 9
+        targetSdkVersion 31 // 31 = Android 12
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

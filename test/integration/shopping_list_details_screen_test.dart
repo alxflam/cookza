@@ -217,7 +217,8 @@ void main() {
 
     var firstLoc = tester.getCenter(find.textContaining('First'));
     var secondLoc = tester.getCenter(find.textContaining('Second'));
-    expect(firstLoc.dy < secondLoc.dy, true);
+    // custom items are added on top
+    expect(firstLoc.dy > secondLoc.dy, true);
 
     final Offset firstLocation = tester.getCenter(find.textContaining('First'));
     final TestGesture gesture =
@@ -231,7 +232,7 @@ void main() {
     await tester.pumpAndSettle();
 
     final afterMove = tester.getCenter(find.textContaining('First'));
-    expect(firstLoc.dy < afterMove.dy, true);
+    expect(firstLoc.dy > afterMove.dy, true);
   });
 }
 
