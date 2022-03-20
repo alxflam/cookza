@@ -110,5 +110,6 @@ class SimilarityService {
     }
     _lastResult = [];
     _lastSearch = {};
+    return _lastResult;
   }
 }
