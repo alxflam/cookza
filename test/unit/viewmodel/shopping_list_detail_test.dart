@@ -113,14 +113,14 @@ void main() {
     cut.addCustomItem(boughtItem);
 
     var items = await cut.getItems();
-    expect(items.first.name, 'Something important');
-    expect(items.last.name, 'Something else');
+    expect(items.first.name, 'Something else');
+    expect(items.last.name, 'Something important');
 
     cut.reorder(1, 0);
 
     items = await cut.getItems();
-    expect(items.first.name, 'Something else');
-    expect(items.last.name, 'Something important');
+    expect(items.first.name, 'Something important');
+    expect(items.last.name, 'Something else');
   });
 
   test('Reorder items - middle to the top', () async {
@@ -145,14 +145,14 @@ void main() {
     cut.addCustomItem(fourth);
 
     var items = await cut.getItems();
-    expect(items.first.name, 'First');
-    expect(items.last.name, 'Fourth');
+    expect(items.first.name, 'Fourth');
+    expect(items.last.name, 'First');
 
     cut.reorder(0, 2);
 
     items = await cut.getItems();
-    expect(items.first.name, 'Third');
-    expect(items.last.name, 'Fourth');
+    expect(items.first.name, 'Second');
+    expect(items.last.name, 'First');
   });
 
   test('Reorder items - first to last', () async {
@@ -177,14 +177,14 @@ void main() {
     cut.addCustomItem(fourth);
 
     var items = await cut.getItems();
-    expect(items.first.name, 'First');
-    expect(items.last.name, 'Fourth');
+    expect(items.first.name, 'Fourth');
+    expect(items.last.name, 'First');
 
     cut.reorder(3, 0);
 
     items = await cut.getItems();
-    expect(items.first.name, 'Second');
-    expect(items.last.name, 'First');
+    expect(items.first.name, 'Third');
+    expect(items.last.name, 'Fourth');
   });
 
   test('Sort items - setting bought does not change order', () async {
@@ -202,17 +202,17 @@ void main() {
 
     var items = await cut.getItems();
     // items are sorted alphabetically
-    expect(items.map((e) => e.name).toList(), ['Onion', 'Cheese', 'Salt']);
+    expect(items.map((e) => e.name).toList(), ['Salt', 'Cheese', 'Onion']);
 
     items.first.noLongerNeeded = true;
     items = await cut.getItems();
     // setting an item bought moves it to the back
-    expect(items.map((e) => e.name).toList(), ['Cheese', 'Salt', 'Onion']);
+    expect(items.map((e) => e.name).toList(), ['Cheese', 'Onion', 'Salt']);
     items[0].noLongerNeeded = true;
 
     items = await cut.getItems();
     // setting an item bought moves it to the back and sorts it alphabetically
-    expect(items.map((e) => e.name).toList(), ['Salt', 'Cheese', 'Onion']);
+    expect(items.map((e) => e.name).toList(), ['Onion', 'Cheese', 'Salt']);
 
     var mushrooms = MutableIngredientNote.empty();
     mushrooms.name = 'Mushrooms';
@@ -220,6 +220,6 @@ void main() {
 
     items = await cut.getItems();
     expect(items.map((e) => e.name).toList(),
-        ['Salt', 'Cheese', 'Onion', 'Mushrooms']);
+        ['Mushrooms', 'Onion', 'Cheese', 'Salt']);
   });
 }

@@ -71,9 +71,11 @@ class SimilarityService {
       Set<String> targetIngredients) async {
     // if only a single new ingredient got added,
     // then fetch the last result and filter it
-    var recipes = _getCachedResult(targetIngredients);
+    var cachedRecipes = _getCachedResult(targetIngredients);
     // otherwise retrieve all ingredients
-    recipes ??= await sl.get<RecipeManager>().getAllRecipes();
+    var recipes = cachedRecipes.isEmpty
+        ? await sl.get<RecipeManager>().getAllRecipes()
+        : cachedRecipes;
 
     List<RecipeEntity> result = [];
 
@@ -101,7 +103,7 @@ class SimilarityService {
     return result;
   }
 
-  List<RecipeEntity>? _getCachedResult(Set<String> targetIngredients) {
+  List<RecipeEntity> _getCachedResult(Set<String> targetIngredients) {
     if (_lastResult.isNotEmpty) {
       final diff = _lastSearch.difference(targetIngredients);
       if (diff.length == 1 && !_lastSearch.contains(diff.first)) {
