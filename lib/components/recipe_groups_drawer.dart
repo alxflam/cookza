@@ -43,6 +43,7 @@ class RecipeGroupsTiles extends StatelessWidget {
             children: <Widget>[
               ElevatedButton(
                 onPressed: () async {
+                  final navigator = Navigator.of(context);
                   // await the creation or cancellation
                   var result = await this._createRecipeGroup(context);
                   // if a new group got created
@@ -50,8 +51,7 @@ class RecipeGroupsTiles extends StatelessWidget {
                     // then set the created group as the currently selected one
                     recipeManager.currentCollection = result.id;
                     // and make sure that the underlying view is updated
-                    await Navigator.pushReplacementNamed(
-                        context, RecipeListScreen.id);
+                    await navigator.pushReplacementNamed(RecipeListScreen.id);
                   }
                 },
                 child: Text(AppLocalizations.of(context).createGroup),
@@ -132,10 +132,11 @@ class RecipeGroupsTiles extends StatelessWidget {
                           ElevatedButton(
                             style: kRaisedGreenButtonStyle,
                             onPressed: () async {
+                              final navigator = Navigator.of(context);
                               var entity = await sl
                                   .get<RecipeManager>()
                                   .createCollection(controller.text);
-                              Navigator.pop(context, entity);
+                              navigator.pop(entity);
                             },
                             child: const Icon(Icons.save),
                           ),

@@ -29,7 +29,7 @@ List<RecipeViewModel> createRecipes() {
 void main() {
   test('Model for Import', () async {
     var cut = RecipeSelectionModel.forImport(createRecipes());
-    expect(cut.mode, SELECTION_MODE.IMPORT);
+    expect(cut.mode, SelectionMode.IMPORT);
     expect(cut.isMultiSelection, true);
     expect(cut.countSelected, 2);
     expect(cut.countAll, 2);
@@ -37,7 +37,7 @@ void main() {
 
   test('Model for Export', () async {
     var cut = RecipeSelectionModel.forExport(createRecipes());
-    expect(cut.mode, SELECTION_MODE.EXPORT);
+    expect(cut.mode, SelectionMode.EXPORT);
     expect(cut.isMultiSelection, true);
     expect(cut.countSelected, 2);
     expect(cut.countAll, 2);
@@ -45,7 +45,7 @@ void main() {
 
   test('Model for Export PDF', () async {
     var cut = RecipeSelectionModel.forExportPDF(createRecipes());
-    expect(cut.mode, SELECTION_MODE.EXPORT_PDF);
+    expect(cut.mode, SelectionMode.EXPORT_PDF);
     expect(cut.isMultiSelection, true);
     expect(cut.countSelected, 2);
     expect(cut.countAll, 2);
@@ -53,7 +53,7 @@ void main() {
 
   test('Model for Reference Ingredient', () async {
     var cut = RecipeSelectionModel.forReferenceIngredient(createRecipes(), []);
-    expect(cut.mode, SELECTION_MODE.REFERENCE_INGREDIENT);
+    expect(cut.mode, SelectionMode.REFERENCE_INGREDIENT);
     expect(cut.isMultiSelection, false);
     expect(cut.countSelected, 0);
     expect(cut.countAll, 2);
@@ -62,7 +62,7 @@ void main() {
   test('Model for Reference Ingredient - exclude recipe', () async {
     var cut =
         RecipeSelectionModel.forReferenceIngredient(createRecipes(), ['A']);
-    expect(cut.mode, SELECTION_MODE.REFERENCE_INGREDIENT);
+    expect(cut.mode, SelectionMode.REFERENCE_INGREDIENT);
     expect(cut.isMultiSelection, false);
     expect(cut.countSelected, 0);
     expect(cut.countAll, 1);
@@ -70,7 +70,7 @@ void main() {
 
   test('Model for add MealPlan', () async {
     var cut = RecipeSelectionModel.forAddMealPlan(createRecipes());
-    expect(cut.mode, SELECTION_MODE.ADD_TO_MEAL_PLAN);
+    expect(cut.mode, SelectionMode.ADD_TO_MEAL_PLAN);
     expect(cut.isMultiSelection, false);
     expect(cut.countSelected, 0);
     expect(cut.countAll, 2);
@@ -78,7 +78,7 @@ void main() {
 
   test('Set Selected  multi select', () async {
     var cut = RecipeSelectionModel.forExport(createRecipes());
-    expect(cut.mode, SELECTION_MODE.EXPORT);
+    expect(cut.mode, SelectionMode.EXPORT);
     expect(cut.isMultiSelection, true);
     expect(cut.countSelected, 2);
     expect(cut.countAll, 2);
@@ -104,7 +104,7 @@ void main() {
 
   test('Filter recipes by text', () async {
     var cut = RecipeSelectionModel.forExport(createRecipes());
-    expect(cut.mode, SELECTION_MODE.EXPORT);
+    expect(cut.mode, SelectionMode.EXPORT);
     expect(cut.isMultiSelection, true);
     expect(cut.countSelected, 2);
     expect(cut.countAll, 2);
@@ -127,7 +127,7 @@ void main() {
   test('Filtering does not reset previous selection of filtered recipes',
       () async {
     var cut = RecipeSelectionModel.forExport(createRecipes());
-    expect(cut.mode, SELECTION_MODE.EXPORT);
+    expect(cut.mode, SelectionMode.EXPORT);
     expect(cut.isMultiSelection, true);
     expect(cut.countSelected, 2);
     expect(cut.countAll, 2);

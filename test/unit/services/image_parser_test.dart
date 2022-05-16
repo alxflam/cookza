@@ -7,7 +7,7 @@ import 'package:mockito/mockito.dart';
 
 import '../../mocks/unit_of_measure_provider_mock.dart';
 
-class VisionTextFake extends Fake implements RecognisedText {
+class VisionTextFake extends Fake implements RecognizedText {
   final String _text;
   final List<TextBlock> _blocks;
 

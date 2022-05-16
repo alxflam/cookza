@@ -27,13 +27,14 @@ class ExportSettingsScreen extends StatelessWidget {
             title: Text(AppLocalizations.of(context).json),
             leading: const FaIcon(FontAwesomeIcons.fileExport),
             onTap: () async {
+              final navigator = Navigator.of(context);
               // fetch all recipes the app currently stores
               var recipes = await sl.get<RecipeManager>().getAllRecipes();
               // create the view model with type export
               var model = RecipeSelectionModel.forExport(
                   recipes.map((e) => RecipeViewModel.of(e)).toList());
               // navigate to the selection screen
-              await Navigator.pushNamed(context, RecipeSelectionScreen.id,
+              await navigator.pushNamed(RecipeSelectionScreen.id,
                   arguments: model);
             },
           ),
@@ -41,6 +42,7 @@ class ExportSettingsScreen extends StatelessWidget {
             title: Text(AppLocalizations.of(context).pdf),
             leading: const FaIcon(FontAwesomeIcons.filePdf),
             onTap: () async {
+              final navigator = Navigator.of(context);
               // fetch all recipes the app currently stores
               var recipes = await sl.get<RecipeManager>().getAllRecipes();
               //sl.get<ImageManager>().appProfile.recipes;
@@ -48,7 +50,7 @@ class ExportSettingsScreen extends StatelessWidget {
               var model = RecipeSelectionModel.forExportPDF(
                   recipes.map((e) => RecipeViewModel.of(e)).toList());
               // navigate to the selection screen
-              await Navigator.pushNamed(context, RecipeSelectionScreen.id,
+              await navigator.pushNamed(RecipeSelectionScreen.id,
                   arguments: model);
             },
           ),

@@ -22,10 +22,10 @@ class CameraView extends StatefulWidget {
   final Future<bool> Function(InputImage inputImage) hasQrCode;
 
   @override
-  _CameraViewState createState() => _CameraViewState();
+  CameraViewState createState() => CameraViewState();
 }
 
-class _CameraViewState extends State<CameraView> {
+class CameraViewState extends State<CameraView> {
   ScreenMode _mode = ScreenMode.liveFeed;
   CameraController? _controller;
   File? _image;
@@ -143,8 +143,8 @@ class _CameraViewState extends State<CameraView> {
   }
 
   Future _startLiveFeed() async {
-    CameraLensDirection _direction = CameraLensDirection.back;
-    _cameraDescription = await getCamera(_direction);
+    CameraLensDirection direction = CameraLensDirection.back;
+    _cameraDescription = await getCamera(direction);
     _controller = CameraController(_cameraDescription!, ResolutionPreset.medium,
         enableAudio: false);
 
@@ -187,13 +187,13 @@ class _CameraViewState extends State<CameraView> {
     final width = image.planes.first.bytesPerRow;
     final Size imageSize = Size(width.toDouble(), image.height.toDouble());
 
-    final imageRotation = InputImageRotationMethods.fromRawValue(
+    final imageRotation = InputImageRotationValue.fromRawValue(
             _cameraDescription!.sensorOrientation) ??
-        InputImageRotation.Rotation_0deg;
+        InputImageRotation.rotation0deg;
 
     final inputImageFormat =
-        InputImageFormatMethods.fromRawValue(image.format.raw) ??
-            InputImageFormat.NV21;
+        InputImageFormatValue.fromRawValue(image.format.raw) ??
+            InputImageFormat.nv21;
 
     final planeData = image.planes.map(
       (Plane plane) {

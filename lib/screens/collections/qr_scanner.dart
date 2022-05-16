@@ -10,10 +10,10 @@ class QrScannerScreen extends StatefulWidget {
   const QrScannerScreen({Key? key}) : super(key: key);
 
   @override
-  _QrScannerScreenState createState() => _QrScannerScreenState();
+  QrScannerScreenState createState() => QrScannerScreenState();
 }
 
-class _QrScannerScreenState extends State<QrScannerScreen> {
+class QrScannerScreenState extends State<QrScannerScreen> {
   BarcodeScanner barcodeScanner =
       GoogleMlKit.vision.barcodeScanner([BarcodeFormat.qrCode]);
   bool isBusy = false;
@@ -40,15 +40,17 @@ class _QrScannerScreenState extends State<QrScannerScreen> {
     await Future.delayed(const Duration(milliseconds: 50));
     final codes = await barcodeScanner.processImage(inputImage);
     if (codes.isNotEmpty) {
-      final qrCodeValue = codes.first.value.displayValue;
+      final qrCodeValue = codes.first.rawValue;
 
       /// wait until we can navigate
-      SchedulerBinding.instance!.addPostFrameCallback((_) async {
+      SchedulerBinding.instance.addPostFrameCallback((_) async {
+        final navigator = Navigator.of(context);
+
         /// make sure the image is at least shown and can be seen
         await Future.delayed(const Duration(seconds: 1));
 
         /// then return to previous page with the scanned result
-        Navigator.pop(context, qrCodeValue);
+        navigator.pop(qrCodeValue);
       });
     } else {
       isBusy = false;

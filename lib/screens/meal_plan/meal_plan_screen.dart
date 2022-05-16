@@ -28,7 +28,7 @@ class MealPlanScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _recipe = ModalRoute.of(context)!.settings.arguments as RecipeEntity?;
+    var recipe = ModalRoute.of(context)!.settings.arguments as RecipeEntity?;
     var currentGroup = sl.get<MealPlanManager>().currentCollection;
 
     return FutureBuilder<MealPlanCollectionEntity?>(
@@ -72,16 +72,16 @@ class MealPlanScreen extends StatelessWidget {
                     return const Center(child: CircularProgressIndicator());
                   }
                   if (snapshot.hasData) {
-                    MealPlanViewModel _model =
+                    MealPlanViewModel mealPlanViewModel =
                         MealPlanViewModel.of(snapshot.data!);
 
-                    if (_recipe != null && _recipe.id!.isNotEmpty) {
-                      _model.setRecipeForAddition(_recipe);
+                    if (recipe != null && recipe.id!.isNotEmpty) {
+                      mealPlanViewModel.setRecipeForAddition(recipe);
                     }
 
                     return SingleChildScrollView(
                       child: ChangeNotifierProvider<MealPlanViewModel>.value(
-                        value: _model,
+                        value: mealPlanViewModel,
                         child: Consumer<MealPlanViewModel>(
                           builder: (context, model, widget) {
                             return Column(
@@ -194,11 +194,12 @@ class MealPlanScreen extends StatelessWidget {
                 ),
                 onTap: () async {
                   if (recipeModel.id != null) {
+                    final navigator = Navigator.of(context);
                     var recipeEntity = await sl
                         .get<RecipeManager>()
                         .getRecipeById([recipeModel.id!]);
                     if (recipeEntity.length == 1) {
-                      await Navigator.pushNamed(context, RecipeScreen.id,
+                      await navigator.pushNamed(RecipeScreen.id,
                           arguments: recipeEntity.first);
                     }
                   }
@@ -307,6 +308,7 @@ class MealPlanScreen extends StatelessWidget {
                       padding: const EdgeInsets.all(10),
                       child: ElevatedButton(
                         onPressed: () async {
+                          final navigator = Navigator.of(context);
                           // fetch all recipes the app currently stores
                           var recipes =
                               await sl.get<RecipeManager>().getAllRecipes();
@@ -317,14 +319,14 @@ class MealPlanScreen extends StatelessWidget {
                                   .map((e) => RecipeViewModel.of(e))
                                   .toList());
                           // navigate to the selection screen
-                          var result = await Navigator.pushNamed(
-                              context, RecipeSelectionScreen.id,
+                          var result = await navigator.pushNamed(
+                              RecipeSelectionScreen.id,
                               arguments: selModel) as RecipeEntity?;
                           if (result != null && result.id!.isNotEmpty) {
                             model.addRecipeFromEntity(index, result);
                           }
 
-                          Navigator.pop(context);
+                          navigator.pop();
                         },
                         child: Text(
                             AppLocalizations.of(context).mealPlanAddRecipe),

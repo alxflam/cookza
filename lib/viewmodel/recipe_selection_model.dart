@@ -2,7 +2,7 @@ import 'package:cookza/model/entities/abstract/recipe_entity.dart';
 import 'package:cookza/viewmodel/recipe_view/recipe_view_model.dart';
 import 'package:flutter/cupertino.dart';
 
-enum SELECTION_MODE {
+enum SelectionMode {
   EXPORT,
   IMPORT,
   REFERENCE_INGREDIENT,
@@ -21,24 +21,24 @@ class RecipeSelectionModel extends ChangeNotifier {
 
   int _countAllRecipes = 0;
   int _countSelected = 0;
-  final SELECTION_MODE _mode;
-  SELECTION_MODE get mode => _mode;
+  final SelectionMode _mode;
+  SelectionMode get mode => _mode;
   final bool _allowMultiSelection;
 
   RecipeSelectionModel.forAddMealPlan(this._recipes)
-      : this._mode = SELECTION_MODE.ADD_TO_MEAL_PLAN,
+      : this._mode = SelectionMode.ADD_TO_MEAL_PLAN,
         this._allowMultiSelection = false {
     _init();
   }
 
   RecipeSelectionModel.forReferenceIngredient(this._recipes, this._excludes)
-      : this._mode = SELECTION_MODE.REFERENCE_INGREDIENT,
+      : this._mode = SelectionMode.REFERENCE_INGREDIENT,
         this._allowMultiSelection = false {
     _init();
   }
 
   RecipeSelectionModel.forExport(this._recipes)
-      : this._mode = SELECTION_MODE.EXPORT,
+      : this._mode = SelectionMode.EXPORT,
         this._allowMultiSelection = true {
     for (var item in _recipes) {
       _selected.add(item.id);
@@ -47,7 +47,7 @@ class RecipeSelectionModel extends ChangeNotifier {
   }
 
   RecipeSelectionModel.forExportPDF(this._recipes)
-      : this._mode = SELECTION_MODE.EXPORT_PDF,
+      : this._mode = SelectionMode.EXPORT_PDF,
         this._allowMultiSelection = true {
     for (var item in _recipes) {
       _selected.add(item.id);
@@ -56,7 +56,7 @@ class RecipeSelectionModel extends ChangeNotifier {
   }
 
   RecipeSelectionModel.forImport(this._recipes)
-      : this._mode = SELECTION_MODE.IMPORT,
+      : this._mode = SelectionMode.IMPORT,
         this._allowMultiSelection = true {
     for (var item in _recipes) {
       _selected.add(item.id);

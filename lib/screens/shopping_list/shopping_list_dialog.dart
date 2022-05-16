@@ -15,11 +15,15 @@ import 'package:provider/provider.dart';
 import 'package:collection/collection.dart';
 
 Future<void> openShoppingListDialog(BuildContext context) async {
+  final scaffoldMessenger = ScaffoldMessenger.of(context);
+  final localizations = AppLocalizations.of(context);
+  final navigator = Navigator.of(context);
+
   var collections = await sl.get<MealPlanManager>().collections;
 
   if (collections.isEmpty) {
-    ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(AppLocalizations.of(context).noMealPlan)));
+    scaffoldMessenger
+        .showSnackBar(SnackBar(content: Text(localizations.noMealPlan)));
     return;
   }
 
@@ -62,7 +66,7 @@ Future<void> openShoppingListDialog(BuildContext context) async {
 
   var newModel = ShoppingListModel.from(listEntity);
 
-  await Navigator.pushReplacementNamed(context, ShoppingListDetailScreen.id,
+  await navigator.pushReplacementNamed(ShoppingListDetailScreen.id,
       arguments: newModel);
 }
 
@@ -154,7 +158,7 @@ String formatDate(DateTime dateFrom, BuildContext context) {
   var locale = Localizations.localeOf(context);
   var day = DateFormat.E(locale.toLanguageTag()).format(dateFrom);
   var date = kDateFormatter.format(dateFrom);
-  return day + ', ' + date;
+  return '$day , $date';
 }
 
 Widget _getMealPlanGroupDropDown(

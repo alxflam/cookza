@@ -1,3 +1,4 @@
+// ignore: camel_case_types
 enum USER_TYPE { USER, WEB_SESSION }
 
 abstract class UserEntity {

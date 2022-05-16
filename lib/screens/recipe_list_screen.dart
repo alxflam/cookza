@@ -56,11 +56,11 @@ class RecipeListScreen extends StatelessWidget {
                                 children: [
                                   ElevatedButton(
                                     onPressed: () async {
+                                      final navigator = Navigator.of(context);
                                       var collection = await sl
                                           .get<RecipeManager>()
                                           .collectionByID(collectionID);
-                                      await Navigator.pushNamed(
-                                        context,
+                                      await navigator.pushNamed(
                                         NewRecipeScreen.id,
                                         arguments: RecipeEditModel.create(
                                             collection: collection),

@@ -17,7 +17,7 @@ class ShoppingListOverviewScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ShoppingListOverviewModel _model = ShoppingListOverviewModel();
+    ShoppingListOverviewModel overviewModel = ShoppingListOverviewModel();
 
     return Scaffold(
       appBar: AppBar(
@@ -34,7 +34,7 @@ class ShoppingListOverviewScreen extends StatelessWidget {
         ],
       ),
       body: ChangeNotifierProvider<ShoppingListOverviewModel>.value(
-        value: _model,
+        value: overviewModel,
         child: _getBody(),
       ),
     );
@@ -80,10 +80,7 @@ class ShoppingListOverviewScreen extends StatelessWidget {
                     ),
                     onPressed: () async {
                       var msg =
-                          AppLocalizations.of(context).functionsShoppingList +
-                              ' (' +
-                              date +
-                              ')';
+                          '${AppLocalizations.of(context).functionsShoppingList} ($date)';
 
                       /// as with all deletions, show a dialog whether we should really delete the data
                       await showDialog(
@@ -116,8 +113,9 @@ class ShoppingListOverviewScreen extends StatelessWidget {
                               ElevatedButton(
                                 style: kRaisedRedButtonStyle,
                                 onPressed: () async {
+                                  final navigator = Navigator.of(context);
                                   await model.deleteList(entry);
-                                  Navigator.pop(context, true);
+                                  navigator.pop(true);
                                 },
                                 child: Text(
                                   AppLocalizations.of(context).delete,

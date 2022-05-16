@@ -16,10 +16,10 @@ abstract class ImageTextExtractor {
   Future<RecipeInstructionEditStep> processInstructionsImage(File file,
       {String? recipeTitle, String? recipeDescription});
 
-  RecipeOverviewEditStep processOverviewImageFromText(RecognisedText text);
-  RecipeIngredientEditStep processIngredientsImageFromText(RecognisedText text);
+  RecipeOverviewEditStep processOverviewImageFromText(RecognizedText text);
+  RecipeIngredientEditStep processIngredientsImageFromText(RecognizedText text);
   RecipeInstructionEditStep processInstructionsImageFromText(
-      RecognisedText text,
+      RecognizedText text,
       {String? recipeTitle,
       String? recipeDescription});
 }
@@ -28,9 +28,9 @@ class ImageTextExtractorImpl implements ImageTextExtractor {
   final List<UnitOfMeasure> uoms = sl.get<UnitOfMeasureProvider>().getAll();
   final log = Logger('ImageTextExtractorImpl');
 
-  Future<RecognisedText> analyse(File image) async {
+  Future<RecognizedText> analyse(File image) async {
     var visionImage = InputImage.fromFile(image);
-    var textRecognizer = GoogleMlKit.vision.textDetector();
+    var textRecognizer = GoogleMlKit.vision.textRecognizer();
     var visionText = await textRecognizer.processImage(visionImage);
     await textRecognizer.close();
 
@@ -60,7 +60,7 @@ class ImageTextExtractorImpl implements ImageTextExtractor {
 
   @override
   RecipeIngredientEditStep processIngredientsImageFromText(
-      RecognisedText text) {
+      RecognizedText text) {
     var model = RecipeIngredientEditStep();
 
     var startIndex = 0;
@@ -88,7 +88,7 @@ class ImageTextExtractorImpl implements ImageTextExtractor {
 
   @override
   RecipeInstructionEditStep processInstructionsImageFromText(
-      RecognisedText text,
+      RecognizedText text,
       {String? recipeTitle,
       String? recipeDescription}) {
     var model = RecipeInstructionEditStep();
@@ -139,12 +139,12 @@ class ImageTextExtractorImpl implements ImageTextExtractor {
   }
 
   @override
-  RecipeOverviewEditStep processOverviewImageFromText(RecognisedText text) {
+  RecipeOverviewEditStep processOverviewImageFromText(RecognizedText text) {
     var model = RecipeOverviewEditStep();
 
     var heights = text.blocks
         .where((e) => e.text.isNotEmpty)
-        .map((e) => e.rect.height)
+        .map((e) => e.boundingBox.height)
         .toList();
 
     var avgHeight = heights.isNotEmpty
@@ -156,10 +156,11 @@ class ImageTextExtractorImpl implements ImageTextExtractor {
     TextBlock? recipeDescriptionBlock;
 
     for (var block in text.blocks) {
-      var height = block.rect.height;
+      var height = block.boundingBox.height;
       var text = block.text;
-      var currentNameHeight = recipeNameBlock?.rect.height ?? 0;
-      var currentDescriptionBlock = recipeDescriptionBlock?.rect.height ?? 0;
+      var currentNameHeight = recipeNameBlock?.boundingBox.height ?? 0;
+      var currentDescriptionBlock =
+          recipeDescriptionBlock?.boundingBox.height ?? 0;
       log.info('height: $height, text: $text');
 
       // recipe title: bigger size and rather short text

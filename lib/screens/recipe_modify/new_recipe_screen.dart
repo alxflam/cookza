@@ -43,6 +43,8 @@ Future<void> saveModel(BuildContext context, RecipeEditModel model) async {
   );
 
   String id;
+  final navigator = Navigator.of(context);
+
   try {
     id = await model.save(context);
   } catch (e) {
@@ -58,19 +60,19 @@ Future<void> saveModel(BuildContext context, RecipeEditModel model) async {
     // create: navigate to recipe view in case save was successful
     var result = await sl.get<RecipeManager>().getRecipeById([id]);
     if (result.length == 1) {
-      await Navigator.pushNamedAndRemoveUntil(
-          context, RecipeScreen.id, ModalRoute.withName(HomeScreen.id),
+      await navigator.pushNamedAndRemoveUntil(
+          RecipeScreen.id, ModalRoute.withName(HomeScreen.id),
           arguments: result.first);
     } else {
       kErrorDialog(context, 'Could not find created recipe',
           'Manually navigate to the recipe');
-      Navigator.pop(context);
+      navigator.pop();
     }
   } else {
     // update: just pop the screen off, user returns to recipe view and can update the view based on the returned model
     // needs to pop off two screens: progress dialog and wizard
-    Navigator.pop(context);
-    Navigator.pop(context, model.targetEntity);
+    navigator.pop();
+    navigator.pop(model.targetEntity);
   }
 }
 

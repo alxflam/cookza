@@ -42,27 +42,29 @@ Step getOverviewStep(BuildContext context) {
         }
 
         if (snapshot.connectionState == ConnectionState.done) {
-          var _model = Provider.of<RecipeEditModel>(context, listen: false)
-              .overviewStepModel;
+          var recipeEditModel =
+              Provider.of<RecipeEditModel>(context, listen: false)
+                  .overviewStepModel;
 
-          final nameController = TextEditingController(text: _model.name);
+          final nameController =
+              TextEditingController(text: recipeEditModel.name);
           final descController =
-              TextEditingController(text: _model.description);
+              TextEditingController(text: recipeEditModel.description);
 
           nameController.addListener(
             () {
-              _model.name = nameController.text;
+              recipeEditModel.name = nameController.text;
             },
           );
 
           descController.addListener(
             () {
-              _model.description = descController.text;
+              recipeEditModel.description = descController.text;
             },
           );
 
           return ChangeNotifierProvider.value(
-            value: _model,
+            value: recipeEditModel,
             child: Consumer<RecipeOverviewEditStep>(
               builder: (context, model, child) {
                 return Column(

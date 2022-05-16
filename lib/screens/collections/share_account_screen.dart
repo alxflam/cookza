@@ -33,7 +33,7 @@ class ShareAccountScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _model = ShareAccountScreenModel();
+    var shareModel = ShareAccountScreenModel();
 
     return Scaffold(
       appBar: AppBar(
@@ -42,26 +42,27 @@ class ShareAccountScreen extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.share),
             onPressed: () async {
+              final localizations = AppLocalizations.of(context);
               var bytes = await _widgetToImageBytes();
               String directory =
                   await sl.get<StorageProvider>().getTempDirectory();
-              var file = File('$directory/${_model.userName}.png');
+              var file = File('$directory/${shareModel.userName}.png');
               await file.writeAsBytes(bytes);
               await Share.shareFiles([file.path],
-                  text: AppLocalizations.of(context).addMeToGroup,
-                  subject: AppLocalizations.of(context).shareQRCodeSubject);
+                  text: localizations.addMeToGroup,
+                  subject: localizations.shareQRCodeSubject);
             },
           ),
           IconButton(
             icon: const Icon(Icons.edit),
             onPressed: () {
-              _openNameDialog(context, _model);
+              _openNameDialog(context, shareModel);
             },
           ),
         ],
       ),
       body: ChangeNotifierProvider.value(
-        value: _model,
+        value: shareModel,
         builder: (context, child) {
           return Consumer<ShareAccountScreenModel>(
             builder: (context, model, _) {

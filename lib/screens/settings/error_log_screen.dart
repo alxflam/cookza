@@ -21,10 +21,10 @@ class ErrorLogScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _model = ErrorScreenModel();
+    var model = ErrorScreenModel();
 
     return ChangeNotifierProvider.value(
-      value: _model,
+      value: model,
       child: Scaffold(
         appBar: AppBar(
           title: Text(AppLocalizations.of(context).errorLog),
@@ -55,11 +55,11 @@ class ErrorLogScreen extends StatelessWidget {
             }, onSelected: (value) async {
               switch (value) {
                 case PopupMenuButtonChoices.SHARE:
-                  var content = await _model.errorsAsText;
+                  var content = await model.errorsAsText;
                   await Share.share(content);
                   break;
                 case PopupMenuButtonChoices.DELETE:
-                  _model.clearLog();
+                  model.clearLog();
                   break;
               }
             }),

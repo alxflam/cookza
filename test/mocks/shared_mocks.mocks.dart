@@ -1242,21 +1242,21 @@ class MockImageTextExtractor extends _i1.Mock
           as _i19.Future<_i16.RecipeInstructionEditStep>);
   @override
   _i16.RecipeOverviewEditStep processOverviewImageFromText(
-          _i34.RecognisedText? text) =>
+          _i34.RecognizedText? text) =>
       (super.noSuchMethod(
               Invocation.method(#processOverviewImageFromText, [text]),
               returnValue: _FakeRecipeOverviewEditStep_18())
           as _i16.RecipeOverviewEditStep);
   @override
   _i16.RecipeIngredientEditStep processIngredientsImageFromText(
-          _i34.RecognisedText? text) =>
+          _i34.RecognizedText? text) =>
       (super.noSuchMethod(
               Invocation.method(#processIngredientsImageFromText, [text]),
               returnValue: _FakeRecipeIngredientEditStep_19())
           as _i16.RecipeIngredientEditStep);
   @override
   _i16.RecipeInstructionEditStep processInstructionsImageFromText(
-          _i34.RecognisedText? text,
+          _i34.RecognizedText? text,
           {String? recipeTitle,
           String? recipeDescription}) =>
       (super.noSuchMethod(

@@ -10,7 +10,7 @@ class UoMVisibilityScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _model = UoMVisibilitySettingsModel.create();
+    var uomVisibilityModel = UoMVisibilitySettingsModel.create();
 
     return Scaffold(
       appBar: AppBar(
@@ -19,7 +19,7 @@ class UoMVisibilityScreen extends StatelessWidget {
         ),
       ),
       body: ChangeNotifierProvider<UoMVisibilitySettingsModel>.value(
-        value: _model,
+        value: uomVisibilityModel,
         child: Consumer<UoMVisibilitySettingsModel>(
           builder: (context, model, widget) {
             return ListView.builder(

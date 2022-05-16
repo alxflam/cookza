@@ -80,7 +80,7 @@ class RecipeEditModel extends ChangeNotifier {
       _targetRecipe.id = sl
           .get<RecipeManager>()
           .getNextRecipeDocumentId(_targetRecipe.recipeCollectionId);
-      log.info('getNextRecipeDocumentId returned: ' + _targetRecipe.id!);
+      log.info('getNextRecipeDocumentId returned: ${_targetRecipe.id!}');
     }
 
     // then adapt the image

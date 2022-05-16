@@ -44,14 +44,14 @@ class MealPlanGroupsTiles extends StatelessWidget {
               ElevatedButton(
                 onPressed: () async {
                   // await the creation or cancellation
+                  final navigator = Navigator.of(context);
                   var result = await this._createMealPlanGroup(context);
                   // if a new group got created
                   if (result != null) {
                     // then set the created group as the currently selected one
                     mealPlanManager.currentCollection = result.id;
                     // and make sure that the underlying view is updated
-                    await Navigator.pushReplacementNamed(
-                        context, MealPlanScreen.id);
+                    await navigator.pushReplacementNamed(MealPlanScreen.id);
                   }
                 },
                 child: Text(AppLocalizations.of(context).createGroup),
@@ -131,10 +131,11 @@ class MealPlanGroupsTiles extends StatelessWidget {
                           ElevatedButton(
                             style: kRaisedGreenButtonStyle,
                             onPressed: () async {
+                              final navigator = Navigator.of(context);
                               var entity = await sl
                                   .get<MealPlanManager>()
                                   .createCollection(controller.text);
-                              Navigator.pop(context, entity);
+                              navigator.pop(entity);
                             },
                             child: const Icon(Icons.save),
                           ),

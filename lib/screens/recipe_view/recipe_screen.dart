@@ -168,11 +168,12 @@ class RecipeScreen extends StatelessWidget {
                                     ElevatedButton(
                                       style: kRaisedRedButtonStyle,
                                       onPressed: () async {
+                                        final navigator = Navigator.of(context);
                                         await sl
                                             .get<RecipeManager>()
                                             .deleteRecipe(model.recipe);
 
-                                        Navigator.popUntil(context,
+                                        navigator.popUntil(
                                             ModalRoute.withName(HomeScreen.id));
                                       },
                                       child: Text(
@@ -244,9 +245,10 @@ class RecipeScreen extends StatelessWidget {
           actions: <Widget>[
             ElevatedButton(
               onPressed: () async {
+                final navigator = Navigator.of(context);
                 var doc = await sl.get<PDFGenerator>().generatePDF([model]);
                 sl.get<PDFExporter>().export(doc);
-                Navigator.pop(context);
+                navigator.pop();
               },
               child: Text(
                 AppLocalizations.of(context).pdf,

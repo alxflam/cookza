@@ -75,11 +75,12 @@ class IngredientsTab extends StatelessWidget {
         final row = DataRow(
           onSelectChanged: (bool? value) async {
             if ((value ?? false) && ingModel.isRecipeReference) {
+              final navigator = Navigator.of(context);
               final recipes = await sl
                   .get<RecipeManager>()
                   .getRecipeById([ingModel.ingredient.recipeReference!]);
               if (recipes.isNotEmpty) {
-                await Navigator.pushNamed(context, RecipeScreen.id,
+                await navigator.pushNamed(RecipeScreen.id,
                     arguments: recipes.first);
               }
             }

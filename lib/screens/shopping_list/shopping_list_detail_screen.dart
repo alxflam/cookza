@@ -16,11 +16,11 @@ class ShoppingListDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _model =
+    var shoppingListModel =
         ModalRoute.of(context)!.settings.arguments as ShoppingListModel;
 
     return ChangeNotifierProvider.value(
-      value: _model,
+      value: shoppingListModel,
       child: Consumer<ShoppingListModel>(
         builder: (context, model, _) {
           return Scaffold(
@@ -85,12 +85,12 @@ class ShoppingListDetailScreen extends StatelessWidget {
                   children: List.generate(
                     snapshot.data!.length,
                     (index) {
-                      var _item = snapshot.data![index];
+                      var item = snapshot.data![index];
 
                       return ChangeNotifierProvider<
                           ShoppingListItemModel>.value(
-                        value: _item,
-                        key: ValueKey(_item.hashCode),
+                        value: item,
+                        key: ValueKey(item.hashCode),
                         child: Consumer<ShoppingListItemModel>(
                           builder: (context, itemModel, _) {
                             return CheckboxListTile(

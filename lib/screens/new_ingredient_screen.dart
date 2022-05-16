@@ -23,7 +23,7 @@ class NewIngredientScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
     final screenModel =
         ModalRoute.of(context)!.settings.arguments as IngredientScreenModel;
@@ -204,7 +204,7 @@ class NewIngredientScreen extends StatelessWidget {
                     onPressed: () {
                       // check whether either a recipe ref is selected or the ingredient name is given
                       try {
-                        if (_formKey.currentState?.validate() ?? true) {
+                        if (formKey.currentState?.validate() ?? true) {
                           model.validate(context);
                           Navigator.pop(context, screenModel);
                         }
@@ -263,7 +263,7 @@ class NewIngredientScreen extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(16),
               child: Form(
-                key: _formKey,
+                key: formKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: inputWidgets,
@@ -309,6 +309,7 @@ class NewIngredientScreen extends StatelessWidget {
             // remove reference
             model.removeRecipeReference();
           } else {
+            final navigator = Navigator.of(context);
             // fetch all recipes the app currently stores
             var recipes = await sl.get<RecipeManager>().getAllRecipes();
             // create the view model with type reference ingredient
@@ -317,9 +318,8 @@ class NewIngredientScreen extends StatelessWidget {
                 recipes.map((e) => RecipeViewModel.of(e)).toList(),
                 [model.sourceRecipe ?? '']);
             // navigate to the selection screen
-            var result = await Navigator.pushNamed(
-                    context, RecipeSelectionScreen.id, arguments: selModel)
-                as RecipeEntity?;
+            var result = await navigator.pushNamed(RecipeSelectionScreen.id,
+                arguments: selModel) as RecipeEntity?;
             if (result != null) {
               await model.setRecipeReference(result.id);
             }

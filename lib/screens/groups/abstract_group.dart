@@ -28,11 +28,11 @@ abstract class AbstractGroupScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final GroupViewModel _viewModel =
+    final GroupViewModel viewModel =
         buildGroupViewModel(ModalRoute.of(context)!.settings.arguments!);
 
     return ChangeNotifierProvider<GroupViewModel>.value(
-      value: _viewModel,
+      value: viewModel,
       child: Consumer<GroupViewModel>(
         builder: (context, model, _) {
           return Scaffold(
@@ -169,10 +169,10 @@ abstract class AbstractGroupScreen extends StatelessWidget {
     return const FaIcon(FontAwesomeIcons.user);
   }
 
-  void _renameCollection(BuildContext _context, GroupViewModel model) {
+  void _renameCollection(BuildContext sourceContext, GroupViewModel model) {
     // show a dialog to rename the collection
     showDialog(
-      context: _context,
+      context: sourceContext,
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         var controller = TextEditingController(text: model.name);
@@ -239,6 +239,8 @@ abstract class AbstractGroupScreen extends StatelessWidget {
   }
 
   void _deleteCollection(BuildContext context, GroupViewModel model) async {
+    final navigator = Navigator.of(context);
+
     var result = await showDialog(
       context: context,
       barrierDismissible: false,
@@ -267,6 +269,7 @@ abstract class AbstractGroupScreen extends StatelessWidget {
             ElevatedButton(
               style: kRaisedRedButtonStyle,
               onPressed: () async {
+                final navigator = Navigator.of(context);
                 var future = model.delete();
                 await showDialog(
                     context: context,
@@ -277,7 +280,7 @@ abstract class AbstractGroupScreen extends StatelessWidget {
                           children: [FutureProgressDialog(future)],
                         ));
 
-                Navigator.pop(context, true);
+                navigator.pop(true);
               },
               child: Text(
                 AppLocalizations.of(context).delete,
@@ -288,7 +291,7 @@ abstract class AbstractGroupScreen extends StatelessWidget {
       },
     );
     if (result) {
-      Navigator.pop(context);
+      navigator.pop();
     }
   }
 
@@ -324,6 +327,7 @@ abstract class AbstractGroupScreen extends StatelessWidget {
   }
 
   void _leaveGroup(BuildContext context, GroupViewModel model) async {
+    final navigator = Navigator.of(context);
     var result = await showDialog(
       context: context,
       barrierDismissible: false,
@@ -353,8 +357,9 @@ abstract class AbstractGroupScreen extends StatelessWidget {
             ElevatedButton(
               style: kRaisedRedButtonStyle,
               onPressed: () async {
+                final navigator = Navigator.of(context);
                 await model.leaveGroup();
-                Navigator.pop(context, true);
+                navigator.pop(true);
               },
               child: Text(
                 AppLocalizations.of(context).leaveGroup,
@@ -365,7 +370,7 @@ abstract class AbstractGroupScreen extends StatelessWidget {
       },
     );
     if (result) {
-      Navigator.pop(context);
+      navigator.pop();
     }
   }
 

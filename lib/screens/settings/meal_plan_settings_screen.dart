@@ -10,7 +10,7 @@ class MealPlanSettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _model = MealPlanSettingsModel.create();
+    var mealPlanSettingsModel = MealPlanSettingsModel.create();
 
     return Scaffold(
       appBar: AppBar(
@@ -19,7 +19,7 @@ class MealPlanSettingsScreen extends StatelessWidget {
         ),
       ),
       body: ChangeNotifierProvider<MealPlanSettingsModel>.value(
-        value: _model,
+        value: mealPlanSettingsModel,
         child: SafeArea(
           child: Consumer<MealPlanSettingsModel>(
               builder: (context, model, widget) {

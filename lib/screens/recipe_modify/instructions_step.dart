@@ -91,7 +91,7 @@ Column _getInstructionRows(
     );
 
     if (focusNode != null) {
-      SchedulerBinding.instance!.scheduleTask(() {
+      SchedulerBinding.instance.scheduleTask(() {
         focusNode?.requestFocus();
       }, Priority.animation);
     }

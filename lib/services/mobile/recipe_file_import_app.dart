@@ -15,22 +15,26 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class RecipeFileImportImpl extends RecipeFileImport {
   @override
   void parseAndImport(BuildContext context) async {
+    final scaffoldMessenger = ScaffoldMessenger.of(context);
+    final localizations = AppLocalizations.of(context);
+    final navigator = Navigator.of(context);
+
     var filePickerResult = await FilePicker.platform.pickFiles(
         allowMultiple: false,
         allowedExtensions: ['json'],
         type: FileType.custom,
         allowCompression: true);
     if (filePickerResult == null || filePickerResult.paths.length != 1) {
-      ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(AppLocalizations.of(context).noFileSelected)));
+      scaffoldMessenger
+          .showSnackBar(SnackBar(content: Text(localizations.noFileSelected)));
       return;
     }
     File file = File(filePickerResult.paths.first!);
 
     List<Recipe> result = [];
     if (!file.existsSync()) {
-      ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(AppLocalizations.of(context).fileNotFound)));
+      scaffoldMessenger
+          .showSnackBar(SnackBar(content: Text(localizations.fileNotFound)));
       return;
     }
 
@@ -46,7 +50,7 @@ class RecipeFileImportImpl extends RecipeFileImport {
     // create the view model with type import
     var selectionModel = RecipeSelectionModel.forImport(viewModel);
     // navigate to the selection screen
-    await Navigator.pushNamed(context, RecipeSelectionScreen.id,
+    await navigator.pushNamed(RecipeSelectionScreen.id,
         arguments: selectionModel);
   }
 }

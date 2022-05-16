@@ -26,10 +26,10 @@ class LeftoversBody extends StatefulWidget {
   const LeftoversBody({Key? key}) : super(key: key);
 
   @override
-  _LeftoversBodyState createState() => _LeftoversBodyState();
+  LeftoversBodyState createState() => LeftoversBodyState();
 }
 
-class _LeftoversBodyState extends State<LeftoversBody> {
+class LeftoversBodyState extends State<LeftoversBody> {
   final Set<String> _ingredients = {};
 
   void _addIngredient(String ingredient) {
@@ -42,7 +42,7 @@ class _LeftoversBodyState extends State<LeftoversBody> {
 
   @override
   Widget build(BuildContext context) {
-    var _ingredientController = TextEditingController();
+    var ingredientController = TextEditingController();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -54,7 +54,7 @@ class _LeftoversBodyState extends State<LeftoversBody> {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextField(
-                  controller: _ingredientController,
+                  controller: ingredientController,
                   autofocus: true,
                   decoration: InputDecoration(
                     labelText: AppLocalizations.of(context).ingredient(1),
@@ -63,7 +63,7 @@ class _LeftoversBodyState extends State<LeftoversBody> {
                   keyboardType: TextInputType.text,
                   onSubmitted: (value) {
                     this._addIngredient(value);
-                    _ingredientController.clear();
+                    ingredientController.clear();
                   },
                 ),
               ),

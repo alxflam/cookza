@@ -254,13 +254,13 @@ class RecipeIngredientEditStep extends RecipeEditStep {
   void changeGroup(
       int index, IngredientGroupEntity current, IngredientGroupEntity target) {
     final note = current.ingredients.removeAt(index);
-    IngredientGroupEntity _targetGroup;
+    IngredientGroupEntity targetGroup;
     if (!this._groups.contains(target)) {
-      _targetGroup = _createAndAddGroup(target.name);
+      targetGroup = _createAndAddGroup(target.name);
     } else {
-      _targetGroup = this._groups[this._groups.indexOf(target)];
+      targetGroup = this._groups[this._groups.indexOf(target)];
     }
-    _targetGroup.ingredients.add(note);
+    targetGroup.ingredients.add(note);
 
     notifyListeners();
   }

@@ -245,11 +245,13 @@ class FirebaseWebLoginManager {
 
   Future<void> _handleWebReceivedLogOff(BuildContext context) async {
     this._webSessionHandshake = null;
-    await _firebaseProvider.signOut();
 
     final context = sl.get<NavigatorService>().currentContext!;
+    final navigator = Navigator.of(context);
 
-    await Navigator.pushNamedAndRemoveUntil(
-        context, WebLandingPage.id, (route) => false);
+    await _firebaseProvider.signOut();
+
+    await navigator.pushNamedAndRemoveUntil(
+        WebLandingPage.id, (route) => false);
   }
 }

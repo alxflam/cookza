@@ -81,7 +81,7 @@ class AboutScreen extends StatelessWidget {
             ListTile(
               leading: const FaIcon(FontAwesomeIcons.diceD20),
               title: Text(AppLocalizations.of(context).changelog),
-              onTap: () => launch(kChangelogLink),
+              onTap: () => launchUrl(Uri.parse(kChangelogLink)),
             ),
             const AboutScreenDivider(),
             ListTile(
@@ -97,14 +97,14 @@ class AboutScreen extends StatelessWidget {
               subtitle: Text(AppLocalizations.of(context).supportSubtitle),
               leading: const FaIcon(FontAwesomeIcons.circleQuestion),
               onTap: () {
-                launch(kPlayStoreLink);
+                launchUrl(Uri.parse(kPlayStoreLink));
               },
             ),
             ListTile(
               title: Text(AppLocalizations.of(context).sourceCode),
               leading: const FaIcon(FontAwesomeIcons.code),
               onTap: () {
-                launch(kRepositoryLink);
+                launchUrl(Uri.parse(kRepositoryLink));
               },
             ),
             const AboutScreenDivider(),
@@ -135,8 +135,8 @@ class AboutScreen extends StatelessWidget {
               leading: const FaIcon(FontAwesomeIcons.fileLines),
               title: Text(MaterialLocalizations.of(context).licensesPageTitle),
               onTap: () async {
+                final localizations = AppLocalizations.of(context);
                 final platformInfo = await PackageInfo.fromPlatform();
-
                 showLicensePage(
                   context: context,
                   applicationVersion: platformInfo.version,
@@ -146,7 +146,7 @@ class AboutScreen extends StatelessWidget {
                       image: AssetImage(kIconTransparent),
                     ),
                   ),
-                  applicationLegalese: AppLocalizations.of(context).copyright,
+                  applicationLegalese: localizations.copyright,
                 );
               },
             ),
@@ -204,6 +204,10 @@ class DeleteAllDataDialog extends StatelessWidget {
               style: kRaisedRedButtonStyle,
               onPressed: () async {
                 try {
+                  final localizations = AppLocalizations.of(context);
+                  final scaffoldMessenger = ScaffoldMessenger.of(context);
+                  final navigator = Navigator.of(context);
+
                   await showDialog(
                       context: context,
                       barrierDismissible: false,
@@ -217,10 +221,9 @@ class DeleteAllDataDialog extends StatelessWidget {
                             ],
                           ));
 
-                  Navigator.pop(context);
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text(
-                          AppLocalizations.of(context).deleteAllDataSuccess)));
+                  navigator.pop();
+                  scaffoldMessenger.showSnackBar(SnackBar(
+                      content: Text(localizations.deleteAllDataSuccess)));
                 } catch (e) {
                   Navigator.pop(context);
                   ScaffoldMessenger.of(context)

@@ -27,6 +27,9 @@ class WebLoginOnAppScreen extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.add),
             onPressed: () async {
+              final scaffoldMessenger = ScaffoldMessenger.of(context);
+              final localizations = AppLocalizations.of(context);
+
               var json = await Navigator.pushNamed(context, QrScannerScreen.id);
               if (json == null || (json is! String)) {
                 return;
@@ -43,9 +46,9 @@ class WebLoginOnAppScreen extends StatelessWidget {
                     .get<ExceptionHandler>()
                     .reportException(e, StackTrace.empty, DateTime.now());
                 // show error to user
-                ScaffoldMessenger.of(context).showSnackBar(
+                scaffoldMessenger.showSnackBar(
                   SnackBar(
-                    content: Text(AppLocalizations.of(context).invalidQRCode),
+                    content: Text(localizations.invalidQRCode),
                   ),
                 );
               }

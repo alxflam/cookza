@@ -30,15 +30,15 @@ class RecipeSelectionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _model =
+    final selectionModel =
         ModalRoute.of(context)!.settings.arguments as RecipeSelectionModel;
 
-    final IconData _icon = _getIconForMode(_model.mode);
-    final OnActionButtonPressed _onPressed =
-        _getOnPressedCallbackForMode(_model.mode);
+    final IconData icon = _getIconForMode(selectionModel.mode);
+    final OnActionButtonPressed onPressed =
+        _getOnPressedCallbackForMode(selectionModel.mode);
 
     return ChangeNotifierProvider<RecipeSelectionModel>.value(
-      value: _model,
+      value: selectionModel,
       child: Consumer<RecipeSelectionModel>(
         builder: (context, model, child) {
           return Scaffold(
@@ -46,9 +46,9 @@ class RecipeSelectionScreen extends StatelessWidget {
               title: _getTitle(model, context),
               actions: <Widget>[
                 IconButton(
-                    icon: FaIcon(_icon),
+                    icon: FaIcon(icon),
                     onPressed: () {
-                      _onPressed(context, model);
+                      onPressed(context, model);
                     })
               ],
             ),
@@ -123,40 +123,42 @@ class RecipeSelectionScreen extends StatelessWidget {
     }
   }
 
-  IconData _getIconForMode(SELECTION_MODE mode) {
+  IconData _getIconForMode(SelectionMode mode) {
     switch (mode) {
-      case SELECTION_MODE.EXPORT_PDF:
-      case SELECTION_MODE.EXPORT:
+      case SelectionMode.EXPORT_PDF:
+      case SelectionMode.EXPORT:
         return FontAwesomeIcons.fileExport;
-      case SELECTION_MODE.IMPORT:
+      case SelectionMode.IMPORT:
         return FontAwesomeIcons.fileImport;
-      case SELECTION_MODE.REFERENCE_INGREDIENT:
-      case SELECTION_MODE.ADD_TO_MEAL_PLAN:
+      case SelectionMode.REFERENCE_INGREDIENT:
+      case SelectionMode.ADD_TO_MEAL_PLAN:
         return FontAwesomeIcons.check;
       default:
         return Icons.device_unknown;
     }
   }
 
-  OnActionButtonPressed _getOnPressedCallbackForMode(SELECTION_MODE mode) {
+  OnActionButtonPressed _getOnPressedCallbackForMode(SelectionMode mode) {
     switch (mode) {
-      case SELECTION_MODE.EXPORT:
+      case SelectionMode.EXPORT:
         return (context, model) async {
           sl
               .get<RecipeFileExport>()
               .exportRecipesFromEntity(model.selectedRecipeEntities);
           Navigator.pop(context);
         };
-      case SELECTION_MODE.EXPORT_PDF:
+      case SelectionMode.EXPORT_PDF:
         return (context, model) async {
+          final navigator = Navigator.of(context);
           var doc = await sl
               .get<PDFGenerator>()
               .generatePDF(model.selectedRecipeViewModels);
           sl.get<PDFExporter>().export(doc);
-          Navigator.pop(context);
+          navigator.pop();
         };
-      case SELECTION_MODE.IMPORT:
+      case SelectionMode.IMPORT:
         return (context, model) async {
+          final navigator = Navigator.of(context);
           var recipes = model.getSelectedRecipes();
           var future = sl.get<RecipeManager>().importRecipes(recipes);
           await showDialog(
@@ -168,10 +170,10 @@ class RecipeSelectionScreen extends StatelessWidget {
                             .importingRecipes(recipes.length))),
                     children: [FutureProgressDialog(future)],
                   ));
-          Navigator.pop(context);
+          navigator.pop();
         };
-      case SELECTION_MODE.REFERENCE_INGREDIENT:
-      case SELECTION_MODE.ADD_TO_MEAL_PLAN:
+      case SelectionMode.REFERENCE_INGREDIENT:
+      case SelectionMode.ADD_TO_MEAL_PLAN:
         return (context, model) async {
           if (model.selectedRecipes.isNotEmpty) {
             Navigator.pop(context, model.selectedRecipeEntities.first);
