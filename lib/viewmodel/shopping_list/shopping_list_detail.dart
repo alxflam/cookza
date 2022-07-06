@@ -141,13 +141,7 @@ class ShoppingListModel extends ChangeNotifier {
   }
 
   String get shortTitle {
-    return this._listEntity.dateFrom.day.toString() +
-        '.' +
-        this._listEntity.dateFrom.month.toString() +
-        ' - ' +
-        this._listEntity.dateUntil.day.toString() +
-        '.' +
-        this._listEntity.dateUntil.month.toString();
+    return '${this._listEntity.dateFrom.day.toString()}.${this._listEntity.dateFrom.month.toString()} - ${this._listEntity.dateUntil.day.toString()}.${this._listEntity.dateUntil.month.toString()}';
   }
 
   DateTime get dateFrom => _listEntity.dateFrom;
