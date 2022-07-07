@@ -58,7 +58,7 @@ void main() {
     await _initApp(tester, navigatorService.navigatorKey, observer);
     await tester.pumpAndSettle();
 
-    cut.handleReceivedText(url, navigatorService.currentContext!);
+    cut.handleReceivedText(url, Navigator.of(navigatorService.currentContext!));
     verify(observer.didPush(any, any));
     await tester.pumpAndSettle();
     expect(find.byType(NewRecipeScreen), findsOneWidget);
@@ -72,7 +72,8 @@ void main() {
     var list = RecipeList(recipes: [await Recipe.applyFrom(_fakeRecipe())]);
     var json = jsonEncode(list.toJson());
 
-    cut.handleReceivedJson(json, navigatorService.currentContext!);
+    cut.handleReceivedJson(
+        json, Navigator.of(navigatorService.currentContext!));
 
     await tester.pumpAndSettle();
     expect(find.byType(RecipeSelectionScreen), findsOneWidget);

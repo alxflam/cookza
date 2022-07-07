@@ -2,6 +2,7 @@ import 'package:cookza/constants.dart';
 import 'package:cookza/model/entities/abstract/meal_plan_collection_entity.dart';
 import 'package:cookza/model/entities/mutable/mutable_shopping_list.dart';
 import 'package:cookza/screens/shopping_list/shopping_list_detail_screen.dart';
+import 'package:cookza/services/flutter/navigator_service.dart';
 import 'package:cookza/services/meal_plan_manager.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:cookza/services/shopping_list/shopping_list_manager.dart';
@@ -44,7 +45,8 @@ Future<void> openShoppingListDialog(BuildContext context) async {
     model.groupID = collections.first.id!;
   } else {
     model = ShoppingListModel.empty();
-    model = await _showMultipleGroupsDialog(context, collections, model);
+    model = await _showMultipleGroupsDialog(
+        sl.get<NavigatorService>().currentContext!, collections, model);
   }
 
   // model is null if user cancelled multiple groups dialog

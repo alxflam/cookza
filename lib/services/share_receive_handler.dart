@@ -4,6 +4,7 @@ import 'package:cookza/constants.dart';
 import 'package:cookza/model/entities/json/recipe_entity.dart';
 import 'package:cookza/model/entities/mutable/mutable_recipe.dart';
 import 'package:cookza/model/json/recipe_list.dart';
+import 'package:cookza/services/flutter/navigator_service.dart';
 import 'package:cookza/viewmodel/recipe_edit/recipe_edit_model.dart';
 import 'package:cookza/viewmodel/recipe_selection_model.dart';
 import 'package:cookza/screens/recipe_modify/new_recipe_screen.dart';
@@ -15,7 +16,7 @@ import 'package:flutter/cupertino.dart';
 import 'flutter/service_locator.dart';
 
 class ShareReceiveHandler {
-  void handleReceivedText(String? text, BuildContext context) {
+  void handleReceivedText(String? text, NavigatorState navigator) {
     if (text == null || text.isEmpty) {
       return;
     }
@@ -25,7 +26,9 @@ class ShareReceiveHandler {
     var matches = exp.allMatches(text);
 
     if (matches.isEmpty) {
-      kErrorDialog(context, 'Could not import text',
+      kErrorDialog(
+          sl.get<NavigatorService>().currentContext!,
+          'Could not import text',
           'The text that got shared to Cookza could not be imported. There\'s no registered handler for the given text: $text.');
     }
 
@@ -35,14 +38,14 @@ class ShareReceiveHandler {
       chefkoch.getRecipe(id).then(
         (recipe) {
           MutableRecipe.createFrom(recipe).then((mutableRecipe) =>
-              Navigator.pushNamed(context, NewRecipeScreen.id,
+              navigator.pushNamed(NewRecipeScreen.id,
                   arguments: RecipeEditModel.modify(mutableRecipe)));
         },
       );
     }
   }
 
-  void handleReceivedJson(String? text, BuildContext context) {
+  void handleReceivedJson(String? text, NavigatorState navigator) {
     if (text == null || text.isEmpty) {
       return;
     }
@@ -56,7 +59,7 @@ class ShareReceiveHandler {
           .toList();
 
       var model = RecipeSelectionModel.forImport(viewModel);
-      Navigator.pushNamed(context, RecipeSelectionScreen.id, arguments: model);
+      navigator.pushNamed(RecipeSelectionScreen.id, arguments: model);
     }
   }
 }

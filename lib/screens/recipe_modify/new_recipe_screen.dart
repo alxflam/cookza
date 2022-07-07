@@ -9,6 +9,7 @@ import 'package:cookza/screens/recipe_modify/instructions_step.dart';
 import 'package:cookza/screens/recipe_modify/overview_step.dart';
 import 'package:cookza/screens/recipe_modify/tag_step.dart';
 import 'package:cookza/screens/recipe_view/recipe_screen.dart';
+import 'package:cookza/services/flutter/navigator_service.dart';
 import 'package:cookza/services/recipe/recipe_manager.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:cookza/viewmodel/recipe_edit/recipe_edit_model.dart';
@@ -64,8 +65,8 @@ Future<void> saveModel(BuildContext context, RecipeEditModel model) async {
           RecipeScreen.id, ModalRoute.withName(HomeScreen.id),
           arguments: result.first);
     } else {
-      kErrorDialog(context, 'Could not find created recipe',
-          'Manually navigate to the recipe');
+      kErrorDialog(sl.get<NavigatorService>().currentContext!,
+          'Could not find created recipe', 'Manually navigate to the recipe');
       navigator.pop();
     }
   } else {

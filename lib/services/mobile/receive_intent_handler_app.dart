@@ -19,13 +19,15 @@ class ReceiveIntentHandlerImpl implements ReceiveIntentHandler {
 
   @override
   void handleSharedJson(BuildContext context) async {
+    final navigator = Navigator.of(context);
     var jsonData = await _getSharedJson();
-    handler.handleReceivedJson(jsonData, context);
+    handler.handleReceivedJson(jsonData, navigator);
   }
 
   @override
   void handleSharedText(BuildContext context) async {
+    final navigator = Navigator.of(context);
     var data = await _getSharedText();
-    handler.handleReceivedText(data, context);
+    handler.handleReceivedText(data, navigator);
   }
 }
