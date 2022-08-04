@@ -15,7 +15,7 @@ JsonUser _$JsonUserFromJson(Map<String, dynamic> json) => JsonUser(
 Map<String, dynamic> _$JsonUserToJson(JsonUser instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
-      'type': _$USER_TYPEEnumMap[instance.type],
+      'type': _$USER_TYPEEnumMap[instance.type]!,
     };
 
 const _$USER_TYPEEnumMap = {

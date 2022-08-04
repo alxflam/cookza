@@ -22,14 +22,13 @@ import 'package:mockito/annotations.dart';
   SimilarityService,
   FirebaseAuth,
   User,
-  ChefkochAccessor
-], customMocks: [
-  MockSpec<NavigatorObserver>(returnNullOnMissingStub: true),
-  MockSpec<MealPlanManager>(returnNullOnMissingStub: true),
-  MockSpec<ImageManager>(returnNullOnMissingStub: true),
-  MockSpec<FirebaseProvider>(returnNullOnMissingStub: true),
-  MockSpec<ImageTextExtractor>(returnNullOnMissingStub: true),
-  MockSpec<NavigatorService>(returnNullOnMissingStub: true)
+  ChefkochAccessor,
+  NavigatorObserver,
+  MealPlanManager,
+  ImageManager,
+  FirebaseProvider,
+  ImageTextExtractor,
+  NavigatorService
 ])
 class Dummy {
   // just a dummy class to generate mocks

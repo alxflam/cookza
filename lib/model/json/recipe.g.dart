@@ -46,7 +46,7 @@ Map<String, dynamic> _$RecipeToJson(Recipe instance) {
   val['duration'] = instance.duration;
   val['servings'] = instance.servings;
   writeNotNull('serializedImage', instance.serializedImage);
-  val['diff'] = _$DIFFICULTYEnumMap[instance.diff];
+  val['diff'] = _$DIFFICULTYEnumMap[instance.diff]!;
   val['tags'] = instance.tags;
   writeNotNull('ingredientGroups', kListToJson(instance.ingredientGroups));
   val['instructions'] = instance.instructions;

@@ -43,7 +43,7 @@ Map<String, dynamic> _$FirebaseRecipeToJson(FirebaseRecipe instance) {
   val['servings'] = instance.servings;
   writeNotNull('image', instance.image);
   val['recipeGroupID'] = instance.recipeGroupID;
-  val['difficulty'] = _$DIFFICULTYEnumMap[instance.difficulty];
+  val['difficulty'] = _$DIFFICULTYEnumMap[instance.difficulty]!;
   val['tags'] = instance.tags;
   return val;
 }
