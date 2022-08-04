@@ -55,19 +55,21 @@ class RecipeSelectionScreen extends StatelessWidget {
             body: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SelectButton(
-                        icon: Icons.check_box_outlined,
-                        text: AppLocalizations.of(context).selectAll,
-                        onTap: () => model.selectAll()),
-                    SelectButton(
-                        icon: Icons.check_box_outline_blank,
-                        text: AppLocalizations.of(context).deselectAll,
-                        onTap: () => model.deselectAll()),
-                  ],
-                ),
+                if (model.isMultiSelection) ...[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SelectButton(
+                          icon: Icons.check_box_outlined,
+                          text: AppLocalizations.of(context).selectAll,
+                          onTap: () => model.selectAll()),
+                      SelectButton(
+                          icon: Icons.check_box_outline_blank,
+                          text: AppLocalizations.of(context).deselectAll,
+                          onTap: () => model.deselectAll()),
+                    ],
+                  ),
+                ],
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TextField(

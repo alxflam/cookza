@@ -10,6 +10,7 @@ import 'package:cookza/screens/recipe_view/recipe_screen.dart';
 import 'package:cookza/screens/shopping_list/shopping_list_dialog.dart';
 import 'package:cookza/services/meal_plan_manager.dart';
 import 'package:cookza/services/recipe/recipe_manager.dart';
+import 'package:cookza/services/util/week_calculation.dart';
 import 'package:cookza/viewmodel/meal_plan/meal_plan_item_dialog_model.dart';
 import 'package:cookza/viewmodel/meal_plan/recipe_meal_plan_model.dart';
 import 'package:cookza/viewmodel/recipe_selection_model.dart';
@@ -17,6 +18,7 @@ import 'package:cookza/screens/recipe_selection_screen.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:cookza/viewmodel/recipe_view/recipe_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -79,6 +81,13 @@ class MealPlanScreen extends StatelessWidget {
                       mealPlanViewModel.setRecipeForAddition(recipe);
                     }
 
+                    final firstVisibleEntry = GlobalKey();
+
+                    SchedulerBinding.instance.addPostFrameCallback((_) {
+                      Scrollable.ensureVisible(
+                          firstVisibleEntry.currentContext!);
+                    });
+
                     return SingleChildScrollView(
                       child: ChangeNotifierProvider<MealPlanViewModel>.value(
                         value: mealPlanViewModel,
@@ -86,7 +95,8 @@ class MealPlanScreen extends StatelessWidget {
                           builder: (context, model, widget) {
                             return Column(
                               crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: _buildMainLayout(context, model),
+                              children: _buildMainLayout(
+                                  context, model, firstVisibleEntry),
                             );
                           },
                         ),
@@ -103,15 +113,28 @@ class MealPlanScreen extends StatelessWidget {
     );
   }
 
-  List<Widget> _buildMainLayout(BuildContext context, MealPlanViewModel model) {
+  List<Widget> _buildMainLayout(BuildContext context, MealPlanViewModel model,
+      GlobalKey firstVisibleWidget) {
     var tileColor = Theme.of(context).colorScheme.primary;
 
     List<Widget> tiles = [];
     int? previousWeek;
+    final todaysWeek = weekNumberOf(DateTime.now());
     for (var i = 0; i < model.entries.length; i++) {
       var currentWeek = model.entries[i].week;
       if (currentWeek != previousWeek) {
-        tiles.add(WeekNumber(currentWeek, tileColor));
+        if (currentWeek == todaysWeek) {
+          tiles.add(WeekNumber(
+            currentWeek,
+            tileColor,
+            key: firstVisibleWidget,
+          ));
+        } else {
+          tiles.add(WeekNumber(
+            currentWeek,
+            tileColor,
+          ));
+        }
         previousWeek = currentWeek;
       }
 
