@@ -100,6 +100,15 @@ flutter {
     source '../..'
 }
 
+// temp fix, see https://github.com/firebase/flutterfire/issues/8501
+// for progress of upstream fix, see https://github.com/bharat-biradar/Google-Ml-Kit-plugin/issues/286
+configurations.all {
+    resolutionStrategy {
+        force 'com.squareup.okhttp:okhttp:2.7.5'
+        force 'com.squareup.okio:okio:1.17.5'
+    }
+}
+
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     testImplementation 'junit:junit:4.12'

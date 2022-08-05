@@ -2,7 +2,7 @@ import 'package:cookza/services/image_parser.dart';
 import 'package:cookza/services/unit_of_measure.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
-import 'package:google_ml_kit/google_ml_kit.dart';
+import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:mockito/mockito.dart';
 
 import '../../mocks/unit_of_measure_provider_mock.dart';

@@ -1,8 +1,8 @@
 import 'package:cookza/screens/collections/camera_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:google_mlkit_barcode_scanning/google_mlkit_barcode_scanning.dart';
 
 class QrScannerScreen extends StatefulWidget {
   static const String id = 'liveCameraScanner';
@@ -15,7 +15,7 @@ class QrScannerScreen extends StatefulWidget {
 
 class QrScannerScreenState extends State<QrScannerScreen> {
   BarcodeScanner barcodeScanner =
-      GoogleMlKit.vision.barcodeScanner([BarcodeFormat.qrCode]);
+      BarcodeScanner(formats: [BarcodeFormat.qrCode]);
   bool isBusy = false;
 
   @override
@@ -28,7 +28,7 @@ class QrScannerScreenState extends State<QrScannerScreen> {
   Widget build(BuildContext context) {
     return CameraView(
       title: AppLocalizations.of(context).scanQRCode,
-      onImage: processImage,
+      onImage: (inputImage) => processImage(inputImage),
       hasQrCode: (inputImage) async =>
           (await barcodeScanner.processImage(inputImage)).isEmpty,
     );

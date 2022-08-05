@@ -7,7 +7,7 @@ import 'package:cookza/services/util/levenshtein.dart';
 import 'package:cookza/viewmodel/recipe_edit/recipe_edit_step.dart';
 import 'package:cookza/viewmodel/recipe_edit/recipe_ingredient_model.dart';
 import 'package:collection/collection.dart';
-import 'package:google_ml_kit/google_ml_kit.dart';
+import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:logging/logging.dart';
 
 abstract class ImageTextExtractor {
@@ -30,7 +30,7 @@ class ImageTextExtractorImpl implements ImageTextExtractor {
 
   Future<RecognizedText> analyse(File image) async {
     var visionImage = InputImage.fromFile(image);
-    var textRecognizer = GoogleMlKit.vision.textRecognizer();
+    var textRecognizer = TextRecognizer();
     var visionText = await textRecognizer.processImage(visionImage);
     await textRecognizer.close();
 

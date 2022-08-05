@@ -47,7 +47,8 @@ import 'package:firebase_auth_platform_interface/firebase_auth_platform_interfac
 import 'package:firebase_core/firebase_core.dart' as _i6;
 import 'package:flutter/material.dart' as _i27;
 import 'package:flutter/src/widgets/framework.dart' as _i17;
-import 'package:google_ml_kit/google_ml_kit.dart' as _i35;
+import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart'
+    as _i35;
 import 'package:logging/logging.dart' as _i12;
 import 'package:mockito/mockito.dart' as _i1;
 
@@ -902,6 +903,10 @@ class MockChefkochAccessor extends _i1.Mock implements _i26.ChefkochAccessor {
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockNavigatorObserver extends _i1.Mock implements _i27.NavigatorObserver {
+  MockNavigatorObserver() {
+    _i1.throwOnMissingStub(this);
+  }
+
   @override
   void didPush(
           _i27.Route<dynamic>? route, _i27.Route<dynamic>? previousRoute) =>
@@ -939,6 +944,10 @@ class MockNavigatorObserver extends _i1.Mock implements _i27.NavigatorObserver {
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockMealPlanManager extends _i1.Mock implements _i11.MealPlanManager {
+  MockMealPlanManager() {
+    _i1.throwOnMissingStub(this);
+  }
+
   @override
   _i19.Future<_i15.MealPlanEntity?> get mealPlan =>
       (super.noSuchMethod(Invocation.getter(#mealPlan),
@@ -1030,6 +1039,10 @@ class MockMealPlanManager extends _i1.Mock implements _i11.MealPlanManager {
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockImageManager extends _i1.Mock implements _i28.ImageManager {
+  MockImageManager() {
+    _i1.throwOnMissingStub(this);
+  }
+
   @override
   _i19.Future<void> uploadRecipeImage(String? recipeId, _i2.File? file) =>
       (super.noSuchMethod(
@@ -1076,6 +1089,10 @@ class MockImageManager extends _i1.Mock implements _i28.ImageManager {
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockFirebaseProvider extends _i1.Mock implements _i14.FirebaseProvider {
+  MockFirebaseProvider() {
+    _i1.throwOnMissingStub(this);
+  }
+
   @override
   _i12.Logger get log => (super.noSuchMethod(Invocation.getter(#log),
           returnValue: _FakeLogger_15(this, Invocation.getter(#log)))
@@ -1372,6 +1389,10 @@ class MockFirebaseProvider extends _i1.Mock implements _i14.FirebaseProvider {
 /// See the documentation for Mockito's code generation for more information.
 class MockImageTextExtractor extends _i1.Mock
     implements _i34.ImageTextExtractor {
+  MockImageTextExtractor() {
+    _i1.throwOnMissingStub(this);
+  }
+
   @override
   _i19.Future<_i16.RecipeOverviewEditStep> processOverviewImage(
           _i2.File? file) =>
@@ -1442,6 +1463,10 @@ class MockImageTextExtractor extends _i1.Mock
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockNavigatorService extends _i1.Mock implements _i36.NavigatorService {
+  MockNavigatorService() {
+    _i1.throwOnMissingStub(this);
+  }
+
   @override
   _i17.GlobalKey<_i27.NavigatorState> get navigatorKey =>
       (super.noSuchMethod(Invocation.getter(#navigatorKey),
