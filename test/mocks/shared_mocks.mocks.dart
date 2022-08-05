@@ -198,16 +198,15 @@ class _FakeGlobalKey_22<T extends _i17.State<_i17.StatefulWidget>>
 /// See the documentation for Mockito's code generation for more information.
 class MockShoppingListItemsGenerator extends _i1.Mock
     implements _i18.ShoppingListItemsGenerator {
-  MockShoppingListItemsGenerator() {
-    _i1.throwOnMissingStub(this);
-  }
-
   @override
   _i19.Future<List<_i20.MutableShoppingListItem>> generateItems(
           _i5.ShoppingListEntity? entity) =>
       (super.noSuchMethod(Invocation.method(#generateItems, [entity]),
           returnValue: _i19.Future<List<_i20.MutableShoppingListItem>>.value(
-              <_i20.MutableShoppingListItem>[])) as _i19
+              <_i20.MutableShoppingListItem>[]),
+          returnValueForMissingStub:
+              _i19.Future<List<_i20.MutableShoppingListItem>>.value(
+                  <_i20.MutableShoppingListItem>[])) as _i19
           .Future<List<_i20.MutableShoppingListItem>>);
 }
 
@@ -215,22 +214,24 @@ class MockShoppingListItemsGenerator extends _i1.Mock
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockStorageProvider extends _i1.Mock implements _i21.StorageProvider {
-  MockStorageProvider() {
-    _i1.throwOnMissingStub(this);
-  }
-
   @override
   _i19.Future<String> getTempDirectory() =>
       (super.noSuchMethod(Invocation.method(#getTempDirectory, []),
-          returnValue: _i19.Future<String>.value('')) as _i19.Future<String>);
+              returnValue: _i19.Future<String>.value(''),
+              returnValueForMissingStub: _i19.Future<String>.value(''))
+          as _i19.Future<String>);
   @override
   _i19.Future<String> getImageDirectory() =>
       (super.noSuchMethod(Invocation.method(#getImageDirectory, []),
-          returnValue: _i19.Future<String>.value('')) as _i19.Future<String>);
+              returnValue: _i19.Future<String>.value(''),
+              returnValueForMissingStub: _i19.Future<String>.value(''))
+          as _i19.Future<String>);
   @override
   _i19.Future<_i2.File> getExeptionLogFile() => (super.noSuchMethod(
           Invocation.method(#getExeptionLogFile, []),
           returnValue: _i19.Future<_i2.File>.value(
+              _FakeFile_0(this, Invocation.method(#getExeptionLogFile, []))),
+          returnValueForMissingStub: _i19.Future<_i2.File>.value(
               _FakeFile_0(this, Invocation.method(#getExeptionLogFile, []))))
       as _i19.Future<_i2.File>);
   @override
@@ -251,26 +252,28 @@ class MockStorageProvider extends _i1.Mock implements _i21.StorageProvider {
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockRecipeManager extends _i1.Mock implements _i4.RecipeManager {
-  MockRecipeManager() {
-    _i1.throwOnMissingStub(this);
-  }
-
   @override
   _i19.Future<List<_i3.RecipeCollectionEntity>> get collections =>
       (super.noSuchMethod(Invocation.getter(#collections),
               returnValue: _i19.Future<List<_i3.RecipeCollectionEntity>>.value(
-                  <_i3.RecipeCollectionEntity>[]))
+                  <_i3.RecipeCollectionEntity>[]),
+              returnValueForMissingStub:
+                  _i19.Future<List<_i3.RecipeCollectionEntity>>.value(
+                      <_i3.RecipeCollectionEntity>[]))
           as _i19.Future<List<_i3.RecipeCollectionEntity>>);
   @override
   _i19.Stream<List<_i3.RecipeCollectionEntity>> get collectionsAsStream =>
       (super.noSuchMethod(Invocation.getter(#collectionsAsStream),
-              returnValue:
-                  _i19.Stream<List<_i3.RecipeCollectionEntity>>.empty())
-          as _i19.Stream<List<_i3.RecipeCollectionEntity>>);
+          returnValue: _i19.Stream<List<_i3.RecipeCollectionEntity>>.empty(),
+          returnValueForMissingStub:
+              _i19.Stream<List<_i3.RecipeCollectionEntity>>.empty()) as _i19
+          .Stream<List<_i3.RecipeCollectionEntity>>);
   @override
   _i19.Stream<List<_i9.RecipeEntity>> get recipes =>
       (super.noSuchMethod(Invocation.getter(#recipes),
-              returnValue: _i19.Stream<List<_i9.RecipeEntity>>.empty())
+              returnValue: _i19.Stream<List<_i9.RecipeEntity>>.empty(),
+              returnValueForMissingStub:
+                  _i19.Stream<List<_i9.RecipeEntity>>.empty())
           as _i19.Stream<List<_i9.RecipeEntity>>);
   @override
   set currentCollection(String? id) =>
@@ -281,19 +284,29 @@ class MockRecipeManager extends _i1.Mock implements _i4.RecipeManager {
       (super.noSuchMethod(Invocation.method(#collectionByID, [id]),
               returnValue: _i19.Future<_i3.RecipeCollectionEntity>.value(
                   _FakeRecipeCollectionEntity_1(
-                      this, Invocation.method(#collectionByID, [id]))))
+                      this, Invocation.method(#collectionByID, [id]))),
+              returnValueForMissingStub:
+                  _i19.Future<_i3.RecipeCollectionEntity>.value(
+                      _FakeRecipeCollectionEntity_1(
+                          this, Invocation.method(#collectionByID, [id]))))
           as _i19.Future<_i3.RecipeCollectionEntity>);
   @override
   _i19.Future<_i3.RecipeCollectionEntity> createCollection(String? name) =>
       (super.noSuchMethod(Invocation.method(#createCollection, [name]),
               returnValue: _i19.Future<_i3.RecipeCollectionEntity>.value(
                   _FakeRecipeCollectionEntity_1(
-                      this, Invocation.method(#createCollection, [name]))))
+                      this, Invocation.method(#createCollection, [name]))),
+              returnValueForMissingStub:
+                  _i19.Future<_i3.RecipeCollectionEntity>.value(
+                      _FakeRecipeCollectionEntity_1(
+                          this, Invocation.method(#createCollection, [name]))))
           as _i19.Future<_i3.RecipeCollectionEntity>);
   @override
   _i19.Future<String> createOrUpdate(_i9.RecipeEntity? recipe) =>
       (super.noSuchMethod(Invocation.method(#createOrUpdate, [recipe]),
-          returnValue: _i19.Future<String>.value('')) as _i19.Future<String>);
+              returnValue: _i19.Future<String>.value(''),
+              returnValueForMissingStub: _i19.Future<String>.value(''))
+          as _i19.Future<String>);
   @override
   _i19.Future<void> renameCollection(
           String? name, _i3.RecipeCollectionEntity? collection) =>
@@ -319,7 +332,8 @@ class MockRecipeManager extends _i1.Mock implements _i4.RecipeManager {
   @override
   String getNextRecipeDocumentId(String? recipeGroup) => (super.noSuchMethod(
       Invocation.method(#getNextRecipeDocumentId, [recipeGroup]),
-      returnValue: '') as String);
+      returnValue: '',
+      returnValueForMissingStub: '') as String);
   @override
   _i19.Future<void> deleteRecipe(_i9.RecipeEntity? recipe) =>
       (super.noSuchMethod(Invocation.method(#deleteRecipe, [recipe]),
@@ -330,17 +344,23 @@ class MockRecipeManager extends _i1.Mock implements _i4.RecipeManager {
   _i19.Future<List<_i9.RecipeEntity>> getAllRecipes() => (super.noSuchMethod(
           Invocation.method(#getAllRecipes, []),
           returnValue:
+              _i19.Future<List<_i9.RecipeEntity>>.value(<_i9.RecipeEntity>[]),
+          returnValueForMissingStub:
               _i19.Future<List<_i9.RecipeEntity>>.value(<_i9.RecipeEntity>[]))
       as _i19.Future<List<_i9.RecipeEntity>>);
   @override
   _i19.Future<List<_i9.RecipeEntity>> getRecipeById(List<String>? ids) =>
       (super.noSuchMethod(Invocation.method(#getRecipeById, [ids]),
-          returnValue: _i19.Future<List<_i9.RecipeEntity>>.value(
+          returnValue:
+              _i19.Future<List<_i9.RecipeEntity>>.value(<_i9.RecipeEntity>[]),
+          returnValueForMissingStub: _i19.Future<List<_i9.RecipeEntity>>.value(
               <_i9.RecipeEntity>[])) as _i19.Future<List<_i9.RecipeEntity>>);
   @override
   _i19.Future<List<_i9.RecipeEntity>> getFavoriteRecipes() =>
       (super.noSuchMethod(Invocation.method(#getFavoriteRecipes, []),
-          returnValue: _i19.Future<List<_i9.RecipeEntity>>.value(
+          returnValue:
+              _i19.Future<List<_i9.RecipeEntity>>.value(<_i9.RecipeEntity>[]),
+          returnValueForMissingStub: _i19.Future<List<_i9.RecipeEntity>>.value(
               <_i9.RecipeEntity>[])) as _i19.Future<List<_i9.RecipeEntity>>);
   @override
   _i19.Future<void> updateRating(_i9.RecipeEntity? recipe, int? rating) =>
@@ -351,16 +371,20 @@ class MockRecipeManager extends _i1.Mock implements _i4.RecipeManager {
   @override
   _i19.Future<Map<String, int>> getRatings() =>
       (super.noSuchMethod(Invocation.method(#getRatings, []),
-              returnValue: _i19.Future<Map<String, int>>.value(<String, int>{}))
+              returnValue: _i19.Future<Map<String, int>>.value(<String, int>{}),
+              returnValueForMissingStub:
+                  _i19.Future<Map<String, int>>.value(<String, int>{}))
           as _i19.Future<Map<String, int>>);
   @override
   _i19.Future<int> getRating(_i9.RecipeEntity? recipe) =>
       (super.noSuchMethod(Invocation.method(#getRating, [recipe]),
-          returnValue: _i19.Future<int>.value(0)) as _i19.Future<int>);
+              returnValue: _i19.Future<int>.value(0),
+              returnValueForMissingStub: _i19.Future<int>.value(0))
+          as _i19.Future<int>);
   @override
   int? getCachedRating(_i9.RecipeEntity? recipe) =>
-      (super.noSuchMethod(Invocation.method(#getCachedRating, [recipe]))
-          as int?);
+      (super.noSuchMethod(Invocation.method(#getCachedRating, [recipe]),
+          returnValueForMissingStub: null) as int?);
   @override
   _i19.Future<void> importRecipes(List<_i9.RecipeEntity>? recipes) =>
       (super.noSuchMethod(Invocation.method(#importRecipes, [recipes]),
@@ -383,6 +407,8 @@ class MockRecipeManager extends _i1.Mock implements _i4.RecipeManager {
   _i19.Future<_i4.RecipeManager> init() =>
       (super.noSuchMethod(Invocation.method(#init, []),
               returnValue: _i19.Future<_i4.RecipeManager>.value(
+                  _FakeRecipeManager_2(this, Invocation.method(#init, []))),
+              returnValueForMissingStub: _i19.Future<_i4.RecipeManager>.value(
                   _FakeRecipeManager_2(this, Invocation.method(#init, []))))
           as _i19.Future<_i4.RecipeManager>);
 }
@@ -392,21 +418,22 @@ class MockRecipeManager extends _i1.Mock implements _i4.RecipeManager {
 /// See the documentation for Mockito's code generation for more information.
 class MockShoppingListManager extends _i1.Mock
     implements _i23.ShoppingListManager {
-  MockShoppingListManager() {
-    _i1.throwOnMissingStub(this);
-  }
-
   @override
   _i19.Future<List<_i5.ShoppingListEntity>> get shoppingListsAsList =>
       (super.noSuchMethod(Invocation.getter(#shoppingListsAsList),
               returnValue: _i19.Future<List<_i5.ShoppingListEntity>>.value(
-                  <_i5.ShoppingListEntity>[]))
+                  <_i5.ShoppingListEntity>[]),
+              returnValueForMissingStub:
+                  _i19.Future<List<_i5.ShoppingListEntity>>.value(
+                      <_i5.ShoppingListEntity>[]))
           as _i19.Future<List<_i5.ShoppingListEntity>>);
   @override
-  _i19.Future<_i5.ShoppingListEntity> createOrUpdate(
-          _i5.ShoppingListEntity? entity) =>
+  _i19.Future<_i5.ShoppingListEntity> createOrUpdate(_i5.ShoppingListEntity? entity) =>
       (super.noSuchMethod(Invocation.method(#createOrUpdate, [entity]),
               returnValue: _i19.Future<_i5.ShoppingListEntity>.value(
+                  _FakeShoppingListEntity_3(
+                      this, Invocation.method(#createOrUpdate, [entity]))),
+              returnValueForMissingStub: _i19.Future<_i5.ShoppingListEntity>.value(
                   _FakeShoppingListEntity_3(
                       this, Invocation.method(#createOrUpdate, [entity]))))
           as _i19.Future<_i5.ShoppingListEntity>);
@@ -421,25 +448,19 @@ class MockShoppingListManager extends _i1.Mock
 /// A class which mocks [StackTrace].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockStackTrace extends _i1.Mock implements StackTrace {
-  MockStackTrace() {
-    _i1.throwOnMissingStub(this);
-  }
-}
+class MockStackTrace extends _i1.Mock implements StackTrace {}
 
 /// A class which mocks [SimilarityService].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockSimilarityService extends _i1.Mock implements _i24.SimilarityService {
-  MockSimilarityService() {
-    _i1.throwOnMissingStub(this);
-  }
-
   @override
   _i19.Future<List<_i9.RecipeEntity>> getSimilarRecipes(
           _i9.RecipeEntity? sourceRecipe) =>
       (super.noSuchMethod(Invocation.method(#getSimilarRecipes, [sourceRecipe]),
-          returnValue: _i19.Future<List<_i9.RecipeEntity>>.value(
+          returnValue:
+              _i19.Future<List<_i9.RecipeEntity>>.value(<_i9.RecipeEntity>[]),
+          returnValueForMissingStub: _i19.Future<List<_i9.RecipeEntity>>.value(
               <_i9.RecipeEntity>[])) as _i19.Future<List<_i9.RecipeEntity>>);
   @override
   bool containsIngredient(Set<_i25.IngredientNoteEntity>? ingredients,
@@ -447,13 +468,16 @@ class MockSimilarityService extends _i1.Mock implements _i24.SimilarityService {
       (super.noSuchMethod(
           Invocation.method(
               #containsIngredient, [ingredients, targetIngredient]),
-          returnValue: false) as bool);
+          returnValue: false,
+          returnValueForMissingStub: false) as bool);
   @override
   _i19.Future<List<_i9.RecipeEntity>> getRecipesContaining(
           Set<String>? targetIngredients) =>
       (super.noSuchMethod(
           Invocation.method(#getRecipesContaining, [targetIngredients]),
-          returnValue: _i19.Future<List<_i9.RecipeEntity>>.value(
+          returnValue:
+              _i19.Future<List<_i9.RecipeEntity>>.value(<_i9.RecipeEntity>[]),
+          returnValueForMissingStub: _i19.Future<List<_i9.RecipeEntity>>.value(
               <_i9.RecipeEntity>[])) as _i19.Future<List<_i9.RecipeEntity>>);
 }
 
@@ -461,13 +485,11 @@ class MockSimilarityService extends _i1.Mock implements _i24.SimilarityService {
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockFirebaseAuth extends _i1.Mock implements _i8.FirebaseAuth {
-  MockFirebaseAuth() {
-    _i1.throwOnMissingStub(this);
-  }
-
   @override
   _i6.FirebaseApp get app => (super.noSuchMethod(Invocation.getter(#app),
-          returnValue: _FakeFirebaseApp_4(this, Invocation.getter(#app)))
+          returnValue: _FakeFirebaseApp_4(this, Invocation.getter(#app)),
+          returnValueForMissingStub:
+              _FakeFirebaseApp_4(this, Invocation.getter(#app)))
       as _i6.FirebaseApp);
   @override
   set app(_i6.FirebaseApp? _app) =>
@@ -480,7 +502,9 @@ class MockFirebaseAuth extends _i1.Mock implements _i8.FirebaseAuth {
   @override
   Map<dynamic, dynamic> get pluginConstants =>
       (super.noSuchMethod(Invocation.getter(#pluginConstants),
-          returnValue: <dynamic, dynamic>{}) as Map<dynamic, dynamic>);
+              returnValue: <dynamic, dynamic>{},
+              returnValueForMissingStub: <dynamic, dynamic>{})
+          as Map<dynamic, dynamic>);
   @override
   _i19.Future<void> useEmulator(String? origin) =>
       (super.noSuchMethod(Invocation.method(#useEmulator, [origin]),
@@ -504,6 +528,9 @@ class MockFirebaseAuth extends _i1.Mock implements _i8.FirebaseAuth {
       (super.noSuchMethod(Invocation.method(#checkActionCode, [code]),
               returnValue: _i19.Future<_i7.ActionCodeInfo>.value(
                   _FakeActionCodeInfo_5(
+                      this, Invocation.method(#checkActionCode, [code]))),
+              returnValueForMissingStub: _i19.Future<_i7.ActionCodeInfo>.value(
+                  _FakeActionCodeInfo_5(
                       this, Invocation.method(#checkActionCode, [code]))))
           as _i19.Future<_i7.ActionCodeInfo>);
   @override
@@ -517,43 +544,55 @@ class MockFirebaseAuth extends _i1.Mock implements _i8.FirebaseAuth {
   @override
   _i19.Future<_i8.UserCredential> createUserWithEmailAndPassword(
           {String? email, String? password}) =>
-      (super
-          .noSuchMethod(Invocation.method(#createUserWithEmailAndPassword, [], {#email: email, #password: password}),
+      (super.noSuchMethod(Invocation.method(#createUserWithEmailAndPassword, [], {#email: email, #password: password}),
               returnValue: _i19.Future<_i8.UserCredential>.value(
                   _FakeUserCredential_6(
                       this,
-                      Invocation.method(#createUserWithEmailAndPassword, [], {
-                        #email: email,
-                        #password: password
-                      })))) as _i19.Future<_i8.UserCredential>);
+                      Invocation.method(#createUserWithEmailAndPassword, [],
+                          {#email: email, #password: password}))),
+              returnValueForMissingStub: _i19.Future<_i8.UserCredential>.value(
+                  _FakeUserCredential_6(this, Invocation.method(#createUserWithEmailAndPassword, [], {#email: email, #password: password}))))
+          as _i19.Future<_i8.UserCredential>);
   @override
   _i19.Future<List<String>> fetchSignInMethodsForEmail(String? email) => (super
           .noSuchMethod(Invocation.method(#fetchSignInMethodsForEmail, [email]),
-              returnValue: _i19.Future<List<String>>.value(<String>[]))
+              returnValue: _i19.Future<List<String>>.value(<String>[]),
+              returnValueForMissingStub:
+                  _i19.Future<List<String>>.value(<String>[]))
       as _i19.Future<List<String>>);
   @override
   _i19.Future<_i8.UserCredential> getRedirectResult() =>
       (super.noSuchMethod(Invocation.method(#getRedirectResult, []),
               returnValue: _i19.Future<_i8.UserCredential>.value(
                   _FakeUserCredential_6(
+                      this, Invocation.method(#getRedirectResult, []))),
+              returnValueForMissingStub: _i19.Future<_i8.UserCredential>.value(
+                  _FakeUserCredential_6(
                       this, Invocation.method(#getRedirectResult, []))))
           as _i19.Future<_i8.UserCredential>);
   @override
   bool isSignInWithEmailLink(String? emailLink) => (super.noSuchMethod(
       Invocation.method(#isSignInWithEmailLink, [emailLink]),
-      returnValue: false) as bool);
+      returnValue: false,
+      returnValueForMissingStub: false) as bool);
   @override
-  _i19.Stream<_i8.User?> authStateChanges() => (super.noSuchMethod(
-      Invocation.method(#authStateChanges, []),
-      returnValue: _i19.Stream<_i8.User?>.empty()) as _i19.Stream<_i8.User?>);
+  _i19.Stream<_i8.User?> authStateChanges() =>
+      (super.noSuchMethod(Invocation.method(#authStateChanges, []),
+              returnValue: _i19.Stream<_i8.User?>.empty(),
+              returnValueForMissingStub: _i19.Stream<_i8.User?>.empty())
+          as _i19.Stream<_i8.User?>);
   @override
-  _i19.Stream<_i8.User?> idTokenChanges() => (super.noSuchMethod(
-      Invocation.method(#idTokenChanges, []),
-      returnValue: _i19.Stream<_i8.User?>.empty()) as _i19.Stream<_i8.User?>);
+  _i19.Stream<_i8.User?> idTokenChanges() =>
+      (super.noSuchMethod(Invocation.method(#idTokenChanges, []),
+              returnValue: _i19.Stream<_i8.User?>.empty(),
+              returnValueForMissingStub: _i19.Stream<_i8.User?>.empty())
+          as _i19.Stream<_i8.User?>);
   @override
-  _i19.Stream<_i8.User?> userChanges() => (super.noSuchMethod(
-      Invocation.method(#userChanges, []),
-      returnValue: _i19.Stream<_i8.User?>.empty()) as _i19.Stream<_i8.User?>);
+  _i19.Stream<_i8.User?> userChanges() =>
+      (super.noSuchMethod(Invocation.method(#userChanges, []),
+              returnValue: _i19.Stream<_i8.User?>.empty(),
+              returnValueForMissingStub: _i19.Stream<_i8.User?>.empty())
+          as _i19.Stream<_i8.User?>);
   @override
   _i19.Future<void> sendPasswordResetEmail(
           {String? email, _i7.ActionCodeSettings? actionCodeSettings}) =>
@@ -608,72 +647,83 @@ class MockFirebaseAuth extends _i1.Mock implements _i8.FirebaseAuth {
       (super.noSuchMethod(Invocation.method(#signInAnonymously, []),
               returnValue: _i19.Future<_i8.UserCredential>.value(
                   _FakeUserCredential_6(
+                      this, Invocation.method(#signInAnonymously, []))),
+              returnValueForMissingStub: _i19.Future<_i8.UserCredential>.value(
+                  _FakeUserCredential_6(
                       this, Invocation.method(#signInAnonymously, []))))
           as _i19.Future<_i8.UserCredential>);
   @override
   _i19.Future<_i8.UserCredential> signInWithCredential(
           _i7.AuthCredential? credential) =>
-      (super.noSuchMethod(
-              Invocation.method(#signInWithCredential, [credential]),
-              returnValue: _i19.Future<_i8.UserCredential>.value(
-                  _FakeUserCredential_6(this,
-                      Invocation.method(#signInWithCredential, [credential]))))
-          as _i19.Future<_i8.UserCredential>);
+      (super.noSuchMethod(Invocation.method(#signInWithCredential, [credential]),
+          returnValue: _i19.Future<_i8.UserCredential>.value(_FakeUserCredential_6(
+              this, Invocation.method(#signInWithCredential, [credential]))),
+          returnValueForMissingStub: _i19.Future<_i8.UserCredential>.value(
+              _FakeUserCredential_6(
+                  this, Invocation.method(#signInWithCredential, [credential])))) as _i19
+          .Future<_i8.UserCredential>);
   @override
   _i19.Future<_i8.UserCredential> signInWithCustomToken(String? token) =>
       (super.noSuchMethod(Invocation.method(#signInWithCustomToken, [token]),
               returnValue: _i19.Future<_i8.UserCredential>.value(
+                  _FakeUserCredential_6(
+                      this, Invocation.method(#signInWithCustomToken, [token]))),
+              returnValueForMissingStub: _i19.Future<_i8.UserCredential>.value(
                   _FakeUserCredential_6(this,
                       Invocation.method(#signInWithCustomToken, [token]))))
           as _i19.Future<_i8.UserCredential>);
   @override
   _i19.Future<_i8.UserCredential> signInWithEmailAndPassword(
           {String? email, String? password}) =>
-      (super
-          .noSuchMethod(Invocation.method(#signInWithEmailAndPassword, [], {#email: email, #password: password}),
+      (super.noSuchMethod(Invocation.method(#signInWithEmailAndPassword, [], {#email: email, #password: password}),
               returnValue: _i19.Future<_i8.UserCredential>.value(
                   _FakeUserCredential_6(
                       this,
-                      Invocation.method(#signInWithEmailAndPassword, [], {
-                        #email: email,
-                        #password: password
-                      })))) as _i19.Future<_i8.UserCredential>);
+                      Invocation.method(#signInWithEmailAndPassword, [],
+                          {#email: email, #password: password}))),
+              returnValueForMissingStub: _i19.Future<_i8.UserCredential>.value(
+                  _FakeUserCredential_6(this, Invocation.method(#signInWithEmailAndPassword, [], {#email: email, #password: password}))))
+          as _i19.Future<_i8.UserCredential>);
   @override
   _i19.Future<_i8.UserCredential> signInWithEmailLink(
           {String? email, String? emailLink}) =>
-      (super
-          .noSuchMethod(Invocation.method(#signInWithEmailLink, [], {#email: email, #emailLink: emailLink}),
+      (super.noSuchMethod(Invocation.method(#signInWithEmailLink, [], {#email: email, #emailLink: emailLink}),
               returnValue: _i19.Future<_i8.UserCredential>.value(
                   _FakeUserCredential_6(
                       this,
-                      Invocation.method(#signInWithEmailLink, [], {
-                        #email: email,
-                        #emailLink: emailLink
-                      })))) as _i19.Future<_i8.UserCredential>);
+                      Invocation.method(#signInWithEmailLink, [],
+                          {#email: email, #emailLink: emailLink}))),
+              returnValueForMissingStub: _i19.Future<_i8.UserCredential>.value(
+                  _FakeUserCredential_6(this, Invocation.method(#signInWithEmailLink, [], {#email: email, #emailLink: emailLink}))))
+          as _i19.Future<_i8.UserCredential>);
   @override
   _i19.Future<_i8.UserCredential> signInWithAuthProvider(
           _i7.AuthProvider? provider) =>
-      (super.noSuchMethod(
-              Invocation.method(#signInWithAuthProvider, [provider]),
-              returnValue: _i19.Future<_i8.UserCredential>.value(
-                  _FakeUserCredential_6(this,
-                      Invocation.method(#signInWithAuthProvider, [provider]))))
-          as _i19.Future<_i8.UserCredential>);
+      (super.noSuchMethod(Invocation.method(#signInWithAuthProvider, [provider]),
+          returnValue: _i19.Future<_i8.UserCredential>.value(_FakeUserCredential_6(
+              this, Invocation.method(#signInWithAuthProvider, [provider]))),
+          returnValueForMissingStub: _i19.Future<_i8.UserCredential>.value(
+              _FakeUserCredential_6(
+                  this, Invocation.method(#signInWithAuthProvider, [provider])))) as _i19
+          .Future<_i8.UserCredential>);
   @override
   _i19.Future<_i8.ConfirmationResult> signInWithPhoneNumber(String? phoneNumber,
           [_i8.RecaptchaVerifier? verifier]) =>
-      (super.noSuchMethod(
-              Invocation.method(#signInWithPhoneNumber, [phoneNumber, verifier]),
-              returnValue: _i19.Future<_i8.ConfirmationResult>.value(
-                  _FakeConfirmationResult_7(
-                      this,
-                      Invocation.method(
-                          #signInWithPhoneNumber, [phoneNumber, verifier]))))
+      (super.noSuchMethod(Invocation.method(#signInWithPhoneNumber, [phoneNumber, verifier]),
+              returnValue: _i19.Future<_i8.ConfirmationResult>.value(_FakeConfirmationResult_7(
+                  this,
+                  Invocation.method(
+                      #signInWithPhoneNumber, [phoneNumber, verifier]))),
+              returnValueForMissingStub: _i19.Future<_i8.ConfirmationResult>.value(
+                  _FakeConfirmationResult_7(this, Invocation.method(#signInWithPhoneNumber, [phoneNumber, verifier]))))
           as _i19.Future<_i8.ConfirmationResult>);
   @override
   _i19.Future<_i8.UserCredential> signInWithPopup(_i7.AuthProvider? provider) =>
       (super.noSuchMethod(Invocation.method(#signInWithPopup, [provider]),
               returnValue: _i19.Future<_i8.UserCredential>.value(
+                  _FakeUserCredential_6(
+                      this, Invocation.method(#signInWithPopup, [provider]))),
+              returnValueForMissingStub: _i19.Future<_i8.UserCredential>.value(
                   _FakeUserCredential_6(
                       this, Invocation.method(#signInWithPopup, [provider]))))
           as _i19.Future<_i8.UserCredential>);
@@ -692,7 +742,9 @@ class MockFirebaseAuth extends _i1.Mock implements _i8.FirebaseAuth {
   @override
   _i19.Future<String> verifyPasswordResetCode(String? code) =>
       (super.noSuchMethod(Invocation.method(#verifyPasswordResetCode, [code]),
-          returnValue: _i19.Future<String>.value('')) as _i19.Future<String>);
+              returnValue: _i19.Future<String>.value(''),
+              returnValueForMissingStub: _i19.Future<String>.value(''))
+          as _i19.Future<String>);
   @override
   _i19.Future<void> verifyPhoneNumber(
           {String? phoneNumber,
@@ -727,36 +779,34 @@ class MockFirebaseAuth extends _i1.Mock implements _i8.FirebaseAuth {
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockUser extends _i1.Mock implements _i8.User {
-  MockUser() {
-    _i1.throwOnMissingStub(this);
-  }
-
   @override
   bool get emailVerified =>
-      (super.noSuchMethod(Invocation.getter(#emailVerified), returnValue: false)
-          as bool);
+      (super.noSuchMethod(Invocation.getter(#emailVerified),
+          returnValue: false, returnValueForMissingStub: false) as bool);
   @override
-  bool get isAnonymous =>
-      (super.noSuchMethod(Invocation.getter(#isAnonymous), returnValue: false)
-          as bool);
+  bool get isAnonymous => (super.noSuchMethod(Invocation.getter(#isAnonymous),
+      returnValue: false, returnValueForMissingStub: false) as bool);
   @override
   _i7.UserMetadata get metadata => (super.noSuchMethod(
           Invocation.getter(#metadata),
-          returnValue: _FakeUserMetadata_8(this, Invocation.getter(#metadata)))
+          returnValue: _FakeUserMetadata_8(this, Invocation.getter(#metadata)),
+          returnValueForMissingStub:
+              _FakeUserMetadata_8(this, Invocation.getter(#metadata)))
       as _i7.UserMetadata);
   @override
   List<_i7.UserInfo> get providerData =>
       (super.noSuchMethod(Invocation.getter(#providerData),
-          returnValue: <_i7.UserInfo>[]) as List<_i7.UserInfo>);
+          returnValue: <_i7.UserInfo>[],
+          returnValueForMissingStub: <_i7.UserInfo>[]) as List<_i7.UserInfo>);
   @override
-  String get uid =>
-      (super.noSuchMethod(Invocation.getter(#uid), returnValue: '') as String);
+  String get uid => (super.noSuchMethod(Invocation.getter(#uid),
+      returnValue: '', returnValueForMissingStub: '') as String);
   @override
-  _i8.MultiFactor get multiFactor =>
-      (super.noSuchMethod(Invocation.getter(#multiFactor),
-              returnValue:
-                  _FakeMultiFactor_9(this, Invocation.getter(#multiFactor)))
-          as _i8.MultiFactor);
+  _i8.MultiFactor get multiFactor => (super.noSuchMethod(
+      Invocation.getter(#multiFactor),
+      returnValue: _FakeMultiFactor_9(this, Invocation.getter(#multiFactor)),
+      returnValueForMissingStub: _FakeMultiFactor_9(
+          this, Invocation.getter(#multiFactor))) as _i8.MultiFactor);
   @override
   _i19.Future<void> delete() =>
       (super.noSuchMethod(Invocation.method(#delete, []),
@@ -766,40 +816,51 @@ class MockUser extends _i1.Mock implements _i8.User {
   @override
   _i19.Future<String> getIdToken([bool? forceRefresh = false]) =>
       (super.noSuchMethod(Invocation.method(#getIdToken, [forceRefresh]),
-          returnValue: _i19.Future<String>.value('')) as _i19.Future<String>);
+              returnValue: _i19.Future<String>.value(''),
+              returnValueForMissingStub: _i19.Future<String>.value(''))
+          as _i19.Future<String>);
   @override
   _i19.Future<_i7.IdTokenResult> getIdTokenResult(
           [bool? forceRefresh = false]) =>
       (super.noSuchMethod(Invocation.method(#getIdTokenResult, [forceRefresh]),
               returnValue: _i19.Future<_i7.IdTokenResult>.value(
-                  _FakeIdTokenResult_10(this,
-                      Invocation.method(#getIdTokenResult, [forceRefresh]))))
+                  _FakeIdTokenResult_10(
+                      this, Invocation.method(#getIdTokenResult, [forceRefresh]))),
+              returnValueForMissingStub: _i19.Future<_i7.IdTokenResult>.value(
+                  _FakeIdTokenResult_10(
+                      this, Invocation.method(#getIdTokenResult, [forceRefresh]))))
           as _i19.Future<_i7.IdTokenResult>);
   @override
   _i19.Future<_i8.UserCredential> linkWithCredential(
           _i7.AuthCredential? credential) =>
       (super.noSuchMethod(Invocation.method(#linkWithCredential, [credential]),
               returnValue: _i19.Future<_i8.UserCredential>.value(
-                  _FakeUserCredential_6(this,
-                      Invocation.method(#linkWithCredential, [credential]))))
+                  _FakeUserCredential_6(
+                      this, Invocation.method(#linkWithCredential, [credential]))),
+              returnValueForMissingStub: _i19.Future<_i8.UserCredential>.value(
+                  _FakeUserCredential_6(
+                      this, Invocation.method(#linkWithCredential, [credential]))))
           as _i19.Future<_i8.UserCredential>);
   @override
   _i19.Future<_i8.UserCredential> linkWithPopup(_i7.AuthProvider? provider) =>
       (super.noSuchMethod(Invocation.method(#linkWithPopup, [provider]),
               returnValue: _i19.Future<_i8.UserCredential>.value(
                   _FakeUserCredential_6(
+                      this, Invocation.method(#linkWithPopup, [provider]))),
+              returnValueForMissingStub: _i19.Future<_i8.UserCredential>.value(
+                  _FakeUserCredential_6(
                       this, Invocation.method(#linkWithPopup, [provider]))))
           as _i19.Future<_i8.UserCredential>);
   @override
   _i19.Future<_i8.ConfirmationResult> linkWithPhoneNumber(String? phoneNumber,
           [_i8.RecaptchaVerifier? verifier]) =>
-      (super.noSuchMethod(
-              Invocation.method(#linkWithPhoneNumber, [phoneNumber, verifier]),
-              returnValue: _i19.Future<_i8.ConfirmationResult>.value(
-                  _FakeConfirmationResult_7(
-                      this,
-                      Invocation.method(
-                          #linkWithPhoneNumber, [phoneNumber, verifier]))))
+      (super.noSuchMethod(Invocation.method(#linkWithPhoneNumber, [phoneNumber, verifier]),
+              returnValue: _i19.Future<_i8.ConfirmationResult>.value(_FakeConfirmationResult_7(
+                  this,
+                  Invocation.method(
+                      #linkWithPhoneNumber, [phoneNumber, verifier]))),
+              returnValueForMissingStub: _i19.Future<_i8.ConfirmationResult>.value(
+                  _FakeConfirmationResult_7(this, Invocation.method(#linkWithPhoneNumber, [phoneNumber, verifier]))))
           as _i19.Future<_i8.ConfirmationResult>);
   @override
   _i19.Future<_i8.UserCredential> reauthenticateWithCredential(
@@ -810,7 +871,9 @@ class MockUser extends _i1.Mock implements _i8.User {
                   _FakeUserCredential_6(
                       this,
                       Invocation.method(
-                          #reauthenticateWithCredential, [credential]))))
+                          #reauthenticateWithCredential, [credential]))),
+              returnValueForMissingStub: _i19.Future<_i8.UserCredential>.value(
+                  _FakeUserCredential_6(this, Invocation.method(#reauthenticateWithCredential, [credential]))))
           as _i19.Future<_i8.UserCredential>);
   @override
   _i19.Future<void> reload() =>
@@ -830,6 +893,8 @@ class MockUser extends _i1.Mock implements _i8.User {
   _i19.Future<_i8.User> unlink(String? providerId) =>
       (super.noSuchMethod(Invocation.method(#unlink, [providerId]),
               returnValue: _i19.Future<_i8.User>.value(
+                  _FakeUser_11(this, Invocation.method(#unlink, [providerId]))),
+              returnValueForMissingStub: _i19.Future<_i8.User>.value(
                   _FakeUser_11(this, Invocation.method(#unlink, [providerId]))))
           as _i19.Future<_i8.User>);
   @override
@@ -887,14 +952,12 @@ class MockUser extends _i1.Mock implements _i8.User {
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockChefkochAccessor extends _i1.Mock implements _i26.ChefkochAccessor {
-  MockChefkochAccessor() {
-    _i1.throwOnMissingStub(this);
-  }
-
   @override
   _i19.Future<_i9.RecipeEntity> getRecipe(String? id) => (super.noSuchMethod(
           Invocation.method(#getRecipe, [id]),
           returnValue: _i19.Future<_i9.RecipeEntity>.value(
+              _FakeRecipeEntity_12(this, Invocation.method(#getRecipe, [id]))),
+          returnValueForMissingStub: _i19.Future<_i9.RecipeEntity>.value(
               _FakeRecipeEntity_12(this, Invocation.method(#getRecipe, [id]))))
       as _i19.Future<_i9.RecipeEntity>);
 }
@@ -903,10 +966,6 @@ class MockChefkochAccessor extends _i1.Mock implements _i26.ChefkochAccessor {
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockNavigatorObserver extends _i1.Mock implements _i27.NavigatorObserver {
-  MockNavigatorObserver() {
-    _i1.throwOnMissingStub(this);
-  }
-
   @override
   void didPush(
           _i27.Route<dynamic>? route, _i27.Route<dynamic>? previousRoute) =>
@@ -944,15 +1003,12 @@ class MockNavigatorObserver extends _i1.Mock implements _i27.NavigatorObserver {
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockMealPlanManager extends _i1.Mock implements _i11.MealPlanManager {
-  MockMealPlanManager() {
-    _i1.throwOnMissingStub(this);
-  }
-
   @override
-  _i19.Future<_i15.MealPlanEntity?> get mealPlan =>
-      (super.noSuchMethod(Invocation.getter(#mealPlan),
-              returnValue: _i19.Future<_i15.MealPlanEntity?>.value())
-          as _i19.Future<_i15.MealPlanEntity?>);
+  _i19.Future<_i15.MealPlanEntity?> get mealPlan => (super.noSuchMethod(
+          Invocation.getter(#mealPlan),
+          returnValue: _i19.Future<_i15.MealPlanEntity?>.value(),
+          returnValueForMissingStub: _i19.Future<_i15.MealPlanEntity?>.value())
+      as _i19.Future<_i15.MealPlanEntity?>);
   @override
   set currentCollection(String? value) =>
       super.noSuchMethod(Invocation.setter(#currentCollection, value),
@@ -961,18 +1017,25 @@ class MockMealPlanManager extends _i1.Mock implements _i11.MealPlanManager {
   _i19.Future<List<_i10.MealPlanCollectionEntity>> get collections =>
       (super.noSuchMethod(Invocation.getter(#collections),
           returnValue: _i19.Future<List<_i10.MealPlanCollectionEntity>>.value(
-              <_i10.MealPlanCollectionEntity>[])) as _i19
+              <_i10.MealPlanCollectionEntity>[]),
+          returnValueForMissingStub:
+              _i19.Future<List<_i10.MealPlanCollectionEntity>>.value(
+                  <_i10.MealPlanCollectionEntity>[])) as _i19
           .Future<List<_i10.MealPlanCollectionEntity>>);
   @override
   _i19.Stream<List<_i10.MealPlanCollectionEntity>> get collectionsAsStream =>
       (super.noSuchMethod(Invocation.getter(#collectionsAsStream),
-              returnValue:
-                  _i19.Stream<List<_i10.MealPlanCollectionEntity>>.empty())
-          as _i19.Stream<List<_i10.MealPlanCollectionEntity>>);
+          returnValue: _i19.Stream<List<_i10.MealPlanCollectionEntity>>.empty(),
+          returnValueForMissingStub:
+              _i19.Stream<List<_i10.MealPlanCollectionEntity>>.empty()) as _i19
+          .Stream<List<_i10.MealPlanCollectionEntity>>);
   @override
   _i19.Future<_i10.MealPlanCollectionEntity> createCollection(String? name) =>
       (super.noSuchMethod(Invocation.method(#createCollection, [name]),
               returnValue: _i19.Future<_i10.MealPlanCollectionEntity>.value(
+                  _FakeMealPlanCollectionEntity_13(
+                      this, Invocation.method(#createCollection, [name]))),
+              returnValueForMissingStub: _i19.Future<_i10.MealPlanCollectionEntity>.value(
                   _FakeMealPlanCollectionEntity_13(
                       this, Invocation.method(#createCollection, [name]))))
           as _i19.Future<_i10.MealPlanCollectionEntity>);
@@ -988,7 +1051,11 @@ class MockMealPlanManager extends _i1.Mock implements _i11.MealPlanManager {
       (super.noSuchMethod(Invocation.method(#getCollectionByID, [id]),
               returnValue: _i19.Future<_i10.MealPlanCollectionEntity>.value(
                   _FakeMealPlanCollectionEntity_13(
-                      this, Invocation.method(#getCollectionByID, [id]))))
+                      this, Invocation.method(#getCollectionByID, [id]))),
+              returnValueForMissingStub:
+                  _i19.Future<_i10.MealPlanCollectionEntity>.value(
+                      _FakeMealPlanCollectionEntity_13(
+                          this, Invocation.method(#getCollectionByID, [id]))))
           as _i19.Future<_i10.MealPlanCollectionEntity>);
   @override
   _i19.Future<void> saveMealPlan(_i15.MealPlanEntity? entity) =>
@@ -1019,14 +1086,18 @@ class MockMealPlanManager extends _i1.Mock implements _i11.MealPlanManager {
   @override
   _i19.Future<_i15.MealPlanEntity?> getMealPlanByCollectionID(String? id) =>
       (super.noSuchMethod(Invocation.method(#getMealPlanByCollectionID, [id]),
-              returnValue: _i19.Future<_i15.MealPlanEntity?>.value())
+              returnValue: _i19.Future<_i15.MealPlanEntity?>.value(),
+              returnValueForMissingStub:
+                  _i19.Future<_i15.MealPlanEntity?>.value())
           as _i19.Future<_i15.MealPlanEntity?>);
   @override
-  _i19.Future<_i11.MealPlanManager> init() =>
-      (super.noSuchMethod(Invocation.method(#init, []),
-              returnValue: _i19.Future<_i11.MealPlanManager>.value(
-                  _FakeMealPlanManager_14(this, Invocation.method(#init, []))))
-          as _i19.Future<_i11.MealPlanManager>);
+  _i19.Future<_i11.MealPlanManager> init() => (super.noSuchMethod(
+          Invocation.method(#init, []),
+          returnValue: _i19.Future<_i11.MealPlanManager>.value(
+              _FakeMealPlanManager_14(this, Invocation.method(#init, []))),
+          returnValueForMissingStub: _i19.Future<_i11.MealPlanManager>.value(
+              _FakeMealPlanManager_14(this, Invocation.method(#init, []))))
+      as _i19.Future<_i11.MealPlanManager>);
   @override
   _i19.Future<void> removeMember(_i22.UserEntity? user, String? mealPlan) =>
       (super.noSuchMethod(Invocation.method(#removeMember, [user, mealPlan]),
@@ -1039,10 +1110,6 @@ class MockMealPlanManager extends _i1.Mock implements _i11.MealPlanManager {
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockImageManager extends _i1.Mock implements _i28.ImageManager {
-  MockImageManager() {
-    _i1.throwOnMissingStub(this);
-  }
-
   @override
   _i19.Future<void> uploadRecipeImage(String? recipeId, _i2.File? file) =>
       (super.noSuchMethod(
@@ -1067,15 +1134,18 @@ class MockImageManager extends _i1.Mock implements _i28.ImageManager {
   @override
   _i19.Future<String> getRecipeImageURL(String? recipeId) =>
       (super.noSuchMethod(Invocation.method(#getRecipeImageURL, [recipeId]),
-          returnValue: _i19.Future<String>.value('')) as _i19.Future<String>);
+              returnValue: _i19.Future<String>.value(''),
+              returnValueForMissingStub: _i19.Future<String>.value(''))
+          as _i19.Future<String>);
   @override
   String getRecipeImagePath(String? recipeId) =>
       (super.noSuchMethod(Invocation.method(#getRecipeImagePath, [recipeId]),
-          returnValue: '') as String);
+          returnValue: '', returnValueForMissingStub: '') as String);
   @override
   _i19.Future<_i2.File?> getRecipeImageFile(_i9.RecipeEntity? entity) =>
       (super.noSuchMethod(Invocation.method(#getRecipeImageFile, [entity]),
-              returnValue: _i19.Future<_i2.File?>.value())
+              returnValue: _i19.Future<_i2.File?>.value(),
+              returnValueForMissingStub: _i19.Future<_i2.File?>.value())
           as _i19.Future<_i2.File?>);
   @override
   _i19.Future<void> deleteLocalImage(String? fileName) =>
@@ -1089,43 +1159,46 @@ class MockImageManager extends _i1.Mock implements _i28.ImageManager {
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockFirebaseProvider extends _i1.Mock implements _i14.FirebaseProvider {
-  MockFirebaseProvider() {
-    _i1.throwOnMissingStub(this);
-  }
-
   @override
   _i12.Logger get log => (super.noSuchMethod(Invocation.getter(#log),
-          returnValue: _FakeLogger_15(this, Invocation.getter(#log)))
-      as _i12.Logger);
+      returnValue: _FakeLogger_15(this, Invocation.getter(#log)),
+      returnValueForMissingStub:
+          _FakeLogger_15(this, Invocation.getter(#log))) as _i12.Logger);
   @override
   set ownerUserId(String? _ownerUserId) =>
       super.noSuchMethod(Invocation.setter(#ownerUserId, _ownerUserId),
           returnValueForMissingStub: null);
   @override
-  String get userUid =>
-      (super.noSuchMethod(Invocation.getter(#userUid), returnValue: '')
-          as String);
+  String get userUid => (super.noSuchMethod(Invocation.getter(#userUid),
+      returnValue: '', returnValueForMissingStub: '') as String);
   @override
   _i19.Stream<List<_i10.MealPlanCollectionEntity>> get mealPlanGroups =>
       (super.noSuchMethod(Invocation.getter(#mealPlanGroups),
-              returnValue:
-                  _i19.Stream<List<_i10.MealPlanCollectionEntity>>.empty())
-          as _i19.Stream<List<_i10.MealPlanCollectionEntity>>);
+          returnValue: _i19.Stream<List<_i10.MealPlanCollectionEntity>>.empty(),
+          returnValueForMissingStub:
+              _i19.Stream<List<_i10.MealPlanCollectionEntity>>.empty()) as _i19
+          .Stream<List<_i10.MealPlanCollectionEntity>>);
   @override
   _i19.Future<List<_i5.ShoppingListEntity>> get shoppingListsAsList =>
       (super.noSuchMethod(Invocation.getter(#shoppingListsAsList),
               returnValue: _i19.Future<List<_i5.ShoppingListEntity>>.value(
-                  <_i5.ShoppingListEntity>[]))
+                  <_i5.ShoppingListEntity>[]),
+              returnValueForMissingStub:
+                  _i19.Future<List<_i5.ShoppingListEntity>>.value(
+                      <_i5.ShoppingListEntity>[]))
           as _i19.Future<List<_i5.ShoppingListEntity>>);
   @override
   _i19.Future<List<_i10.MealPlanCollectionEntity>> get mealPlanGroupsAsList =>
       (super.noSuchMethod(Invocation.getter(#mealPlanGroupsAsList),
           returnValue: _i19.Future<List<_i10.MealPlanCollectionEntity>>.value(
-              <_i10.MealPlanCollectionEntity>[])) as _i19
+              <_i10.MealPlanCollectionEntity>[]),
+          returnValueForMissingStub:
+              _i19.Future<List<_i10.MealPlanCollectionEntity>>.value(
+                  <_i10.MealPlanCollectionEntity>[])) as _i19
           .Future<List<_i10.MealPlanCollectionEntity>>);
   @override
   bool isLoggedIn() => (super.noSuchMethod(Invocation.method(#isLoggedIn, []),
-      returnValue: false) as bool);
+      returnValue: false, returnValueForMissingStub: false) as bool);
   @override
   _i19.Future<void> signOut() =>
       (super.noSuchMethod(Invocation.method(#signOut, []),
@@ -1138,16 +1211,21 @@ class MockFirebaseProvider extends _i1.Mock implements _i14.FirebaseProvider {
               Invocation.method(#getShoppingListsByMealPlan, [mealPlan]),
               returnValue:
                   _i19.Future<List<_i30.QueryDocumentSnapshot<Object?>>>.value(
+                      <_i30.QueryDocumentSnapshot<Object?>>[]),
+              returnValueForMissingStub:
+                  _i19.Future<List<_i30.QueryDocumentSnapshot<Object?>>>.value(
                       <_i30.QueryDocumentSnapshot<Object?>>[]))
           as _i19.Future<List<_i30.QueryDocumentSnapshot<Object?>>>);
   @override
-  _i19.Future<_i13.MealPlanCollectionEntityFirebase> createMealPlanGroup(
-          String? name) =>
+  _i19.Future<_i13.MealPlanCollectionEntityFirebase> createMealPlanGroup(String? name) =>
       (super.noSuchMethod(Invocation.method(#createMealPlanGroup, [name]),
-          returnValue: _i19.Future<_i13.MealPlanCollectionEntityFirebase>.value(
-              _FakeMealPlanCollectionEntityFirebase_16(this,
-                  Invocation.method(#createMealPlanGroup, [name])))) as _i19
-          .Future<_i13.MealPlanCollectionEntityFirebase>);
+              returnValue: _i19.Future<_i13.MealPlanCollectionEntityFirebase>.value(
+                  _FakeMealPlanCollectionEntityFirebase_16(
+                      this, Invocation.method(#createMealPlanGroup, [name]))),
+              returnValueForMissingStub: _i19.Future<_i13.MealPlanCollectionEntityFirebase>.value(
+                  _FakeMealPlanCollectionEntityFirebase_16(
+                      this, Invocation.method(#createMealPlanGroup, [name]))))
+          as _i19.Future<_i13.MealPlanCollectionEntityFirebase>);
   @override
   _i19.Future<void> renameMealPlanCollection(
           String? name, _i10.MealPlanCollectionEntity? entity) =>
@@ -1158,18 +1236,22 @@ class MockFirebaseProvider extends _i1.Mock implements _i14.FirebaseProvider {
           as _i19.Future<void>);
   @override
   _i19.Future<List<_i10.MealPlanCollectionEntity>>
-      mealPlanCollectionsAsList() =>
-          (super.noSuchMethod(Invocation.method(#mealPlanCollectionsAsList, []),
-                  returnValue:
-                      _i19.Future<List<_i10.MealPlanCollectionEntity>>.value(
-                          <_i10.MealPlanCollectionEntity>[]))
-              as _i19.Future<List<_i10.MealPlanCollectionEntity>>);
+      mealPlanCollectionsAsList() => (super.noSuchMethod(
+          Invocation.method(#mealPlanCollectionsAsList, []),
+          returnValue: _i19.Future<List<_i10.MealPlanCollectionEntity>>.value(
+              <_i10.MealPlanCollectionEntity>[]),
+          returnValueForMissingStub:
+              _i19.Future<List<_i10.MealPlanCollectionEntity>>.value(
+                  <_i10.MealPlanCollectionEntity>[])) as _i19
+          .Future<List<_i10.MealPlanCollectionEntity>>);
   @override
-  _i19.Future<_i14.FirebaseProvider> init() =>
-      (super.noSuchMethod(Invocation.method(#init, []),
-              returnValue: _i19.Future<_i14.FirebaseProvider>.value(
-                  _FakeFirebaseProvider_17(this, Invocation.method(#init, []))))
-          as _i19.Future<_i14.FirebaseProvider>);
+  _i19.Future<_i14.FirebaseProvider> init() => (super.noSuchMethod(
+          Invocation.method(#init, []),
+          returnValue: _i19.Future<_i14.FirebaseProvider>.value(
+              _FakeFirebaseProvider_17(this, Invocation.method(#init, []))),
+          returnValueForMissingStub: _i19.Future<_i14.FirebaseProvider>.value(
+              _FakeFirebaseProvider_17(this, Invocation.method(#init, []))))
+      as _i19.Future<_i14.FirebaseProvider>);
   @override
   _i19.Future<void> signInAnonymously() =>
       (super.noSuchMethod(Invocation.method(#signInAnonymously, []),
@@ -1177,12 +1259,14 @@ class MockFirebaseProvider extends _i1.Mock implements _i14.FirebaseProvider {
               returnValueForMissingStub: _i19.Future<void>.value())
           as _i19.Future<void>);
   @override
-  _i19.Future<_i3.RecipeCollectionEntity> createRecipeCollection(
-          String? name) =>
+  _i19.Future<_i3.RecipeCollectionEntity> createRecipeCollection(String? name) =>
       (super.noSuchMethod(Invocation.method(#createRecipeCollection, [name]),
               returnValue: _i19.Future<_i3.RecipeCollectionEntity>.value(
-                  _FakeRecipeCollectionEntity_1(this,
-                      Invocation.method(#createRecipeCollection, [name]))))
+                  _FakeRecipeCollectionEntity_1(
+                      this, Invocation.method(#createRecipeCollection, [name]))),
+              returnValueForMissingStub: _i19.Future<_i3.RecipeCollectionEntity>.value(
+                  _FakeRecipeCollectionEntity_1(
+                      this, Invocation.method(#createRecipeCollection, [name]))))
           as _i19.Future<_i3.RecipeCollectionEntity>);
   @override
   _i19.Future<void> renameRecipeCollection(
@@ -1196,23 +1280,31 @@ class MockFirebaseProvider extends _i1.Mock implements _i14.FirebaseProvider {
   _i19.Future<List<_i3.RecipeCollectionEntity>> recipeCollectionsAsList() =>
       (super.noSuchMethod(Invocation.method(#recipeCollectionsAsList, []),
               returnValue: _i19.Future<List<_i3.RecipeCollectionEntity>>.value(
-                  <_i3.RecipeCollectionEntity>[]))
+                  <_i3.RecipeCollectionEntity>[]),
+              returnValueForMissingStub:
+                  _i19.Future<List<_i3.RecipeCollectionEntity>>.value(
+                      <_i3.RecipeCollectionEntity>[]))
           as _i19.Future<List<_i3.RecipeCollectionEntity>>);
   @override
   _i19.Stream<List<_i3.RecipeCollectionEntity>> recipeCollectionsAsStream() =>
       (super.noSuchMethod(Invocation.method(#recipeCollectionsAsStream, []),
-              returnValue:
-                  _i19.Stream<List<_i3.RecipeCollectionEntity>>.empty())
-          as _i19.Stream<List<_i3.RecipeCollectionEntity>>);
+          returnValue: _i19.Stream<List<_i3.RecipeCollectionEntity>>.empty(),
+          returnValueForMissingStub:
+              _i19.Stream<List<_i3.RecipeCollectionEntity>>.empty()) as _i19
+          .Stream<List<_i3.RecipeCollectionEntity>>);
   @override
   _i19.Stream<List<_i9.RecipeEntity>> recipes(String? groupId) =>
       (super.noSuchMethod(Invocation.method(#recipes, [groupId]),
-              returnValue: _i19.Stream<List<_i9.RecipeEntity>>.empty())
+              returnValue: _i19.Stream<List<_i9.RecipeEntity>>.empty(),
+              returnValueForMissingStub:
+                  _i19.Stream<List<_i9.RecipeEntity>>.empty())
           as _i19.Stream<List<_i9.RecipeEntity>>);
   @override
   _i19.Future<String> createOrUpdateRecipe(_i9.RecipeEntity? recipe) =>
       (super.noSuchMethod(Invocation.method(#createOrUpdateRecipe, [recipe]),
-          returnValue: _i19.Future<String>.value('')) as _i19.Future<String>);
+              returnValue: _i19.Future<String>.value(''),
+              returnValueForMissingStub: _i19.Future<String>.value(''))
+          as _i19.Future<String>);
   @override
   _i19.Future<void> deleteRecipe(_i9.RecipeEntity? recipe) =>
       (super.noSuchMethod(Invocation.method(#deleteRecipe, [recipe]),
@@ -1224,7 +1316,11 @@ class MockFirebaseProvider extends _i1.Mock implements _i14.FirebaseProvider {
       (super.noSuchMethod(Invocation.method(#recipeCollectionByID, [id]),
               returnValue: _i19.Future<_i3.RecipeCollectionEntity>.value(
                   _FakeRecipeCollectionEntity_1(
-                      this, Invocation.method(#recipeCollectionByID, [id]))))
+                      this, Invocation.method(#recipeCollectionByID, [id]))),
+              returnValueForMissingStub:
+                  _i19.Future<_i3.RecipeCollectionEntity>.value(
+                      _FakeRecipeCollectionEntity_1(
+                          this, Invocation.method(#recipeCollectionByID, [id]))))
           as _i19.Future<_i3.RecipeCollectionEntity>);
   @override
   _i19.Future<void> deleteRecipeCollection(String? id) =>
@@ -1235,7 +1331,9 @@ class MockFirebaseProvider extends _i1.Mock implements _i14.FirebaseProvider {
   @override
   _i19.Future<int> deleteMealPlanCollection(String? id) =>
       (super.noSuchMethod(Invocation.method(#deleteMealPlanCollection, [id]),
-          returnValue: _i19.Future<int>.value(0)) as _i19.Future<int>);
+              returnValue: _i19.Future<int>.value(0),
+              returnValueForMissingStub: _i19.Future<int>.value(0))
+          as _i19.Future<int>);
   @override
   _i19.Future<void> deleteShoppingList(_i5.ShoppingListEntity? entity) =>
       (super.noSuchMethod(Invocation.method(#deleteShoppingList, [entity]),
@@ -1264,7 +1362,8 @@ class MockFirebaseProvider extends _i1.Mock implements _i14.FirebaseProvider {
   @override
   String getNextRecipeDocumentId(String? recipeGroup) => (super.noSuchMethod(
       Invocation.method(#getNextRecipeDocumentId, [recipeGroup]),
-      returnValue: '') as String);
+      returnValue: '',
+      returnValueForMissingStub: '') as String);
   @override
   _i19.Future<List<_i31.IngredientGroupEntityFirebase>> recipeIngredientGroups(
           String? recipeGroup, String? recipeID) =>
@@ -1272,29 +1371,40 @@ class MockFirebaseProvider extends _i1.Mock implements _i14.FirebaseProvider {
           Invocation.method(#recipeIngredientGroups, [recipeGroup, recipeID]),
           returnValue:
               _i19.Future<List<_i31.IngredientGroupEntityFirebase>>.value(
+                  <_i31.IngredientGroupEntityFirebase>[]),
+          returnValueForMissingStub:
+              _i19.Future<List<_i31.IngredientGroupEntityFirebase>>.value(
                   <_i31.IngredientGroupEntityFirebase>[])) as _i19
           .Future<List<_i31.IngredientGroupEntityFirebase>>);
   @override
   _i19.Future<List<_i9.RecipeEntity>> getAllRecipes() => (super.noSuchMethod(
           Invocation.method(#getAllRecipes, []),
           returnValue:
+              _i19.Future<List<_i9.RecipeEntity>>.value(<_i9.RecipeEntity>[]),
+          returnValueForMissingStub:
               _i19.Future<List<_i9.RecipeEntity>>.value(<_i9.RecipeEntity>[]))
       as _i19.Future<List<_i9.RecipeEntity>>);
   @override
   _i19.Future<List<_i32.RatingEntity>> getRatings() => (super.noSuchMethod(
           Invocation.method(#getRatings, []),
           returnValue:
+              _i19.Future<List<_i32.RatingEntity>>.value(<_i32.RatingEntity>[]),
+          returnValueForMissingStub:
               _i19.Future<List<_i32.RatingEntity>>.value(<_i32.RatingEntity>[]))
       as _i19.Future<List<_i32.RatingEntity>>);
   @override
   _i19.Future<_i32.RatingEntity?> getRatingById(String? recipeId) =>
       (super.noSuchMethod(Invocation.method(#getRatingById, [recipeId]),
-              returnValue: _i19.Future<_i32.RatingEntity?>.value())
+              returnValue: _i19.Future<_i32.RatingEntity?>.value(),
+              returnValueForMissingStub:
+                  _i19.Future<_i32.RatingEntity?>.value())
           as _i19.Future<_i32.RatingEntity?>);
   @override
   _i19.Future<List<_i9.RecipeEntity>> getRecipeById(List<String>? ids) =>
       (super.noSuchMethod(Invocation.method(#getRecipeById, [ids]),
-          returnValue: _i19.Future<List<_i9.RecipeEntity>>.value(
+          returnValue:
+              _i19.Future<List<_i9.RecipeEntity>>.value(<_i9.RecipeEntity>[]),
+          returnValueForMissingStub: _i19.Future<List<_i9.RecipeEntity>>.value(
               <_i9.RecipeEntity>[])) as _i19.Future<List<_i9.RecipeEntity>>);
   @override
   _i19.Future<List<_i33.InstructionEntityFirebase>> recipeInstructions(
@@ -1302,7 +1412,10 @@ class MockFirebaseProvider extends _i1.Mock implements _i14.FirebaseProvider {
       (super.noSuchMethod(
           Invocation.method(#recipeInstructions, [recipeGroup, recipeID]),
           returnValue: _i19.Future<List<_i33.InstructionEntityFirebase>>.value(
-              <_i33.InstructionEntityFirebase>[])) as _i19
+              <_i33.InstructionEntityFirebase>[]),
+          returnValueForMissingStub:
+              _i19.Future<List<_i33.InstructionEntityFirebase>>.value(
+                  <_i33.InstructionEntityFirebase>[])) as _i19
           .Future<List<_i33.InstructionEntityFirebase>>);
   @override
   _i19.Future<void> updateRating(_i9.RecipeEntity? recipe, int? rating) =>
@@ -1315,22 +1428,31 @@ class MockFirebaseProvider extends _i1.Mock implements _i14.FirebaseProvider {
       (super.noSuchMethod(Invocation.method(#mealPlan, [groupID]),
               returnValue: _i19.Future<_i15.MealPlanEntity>.value(
                   _FakeMealPlanEntity_18(
+                      this, Invocation.method(#mealPlan, [groupID]))),
+              returnValueForMissingStub: _i19.Future<_i15.MealPlanEntity>.value(
+                  _FakeMealPlanEntity_18(
                       this, Invocation.method(#mealPlan, [groupID]))))
           as _i19.Future<_i15.MealPlanEntity>);
   @override
   _i19.Future<String> saveMealPlan(_i15.MealPlanEntity? entity) =>
       (super.noSuchMethod(Invocation.method(#saveMealPlan, [entity]),
-          returnValue: _i19.Future<String>.value('')) as _i19.Future<String>);
+              returnValue: _i19.Future<String>.value(''),
+              returnValueForMissingStub: _i19.Future<String>.value(''))
+          as _i19.Future<String>);
   @override
   _i19.Future<List<_i9.RecipeEntity>> importRecipes(
           List<_i9.RecipeEntity>? recipes, String? groupId) =>
       (super.noSuchMethod(Invocation.method(#importRecipes, [recipes, groupId]),
-          returnValue: _i19.Future<List<_i9.RecipeEntity>>.value(
+          returnValue:
+              _i19.Future<List<_i9.RecipeEntity>>.value(<_i9.RecipeEntity>[]),
+          returnValueForMissingStub: _i19.Future<List<_i9.RecipeEntity>>.value(
               <_i9.RecipeEntity>[])) as _i19.Future<List<_i9.RecipeEntity>>);
   @override
   _i19.Future<int> leaveMealPlanGroup(String? id) =>
       (super.noSuchMethod(Invocation.method(#leaveMealPlanGroup, [id]),
-          returnValue: _i19.Future<int>.value(0)) as _i19.Future<int>);
+              returnValue: _i19.Future<int>.value(0),
+              returnValueForMissingStub: _i19.Future<int>.value(0))
+          as _i19.Future<int>);
   @override
   _i19.Future<void> leaveRecipeGroup(String? id) =>
       (super.noSuchMethod(Invocation.method(#leaveRecipeGroup, [id]),
@@ -1342,12 +1464,17 @@ class MockFirebaseProvider extends _i1.Mock implements _i14.FirebaseProvider {
       (super.noSuchMethod(Invocation.method(#getMealPlanGroupByID, [id]),
               returnValue: _i19.Future<_i10.MealPlanCollectionEntity>.value(
                   _FakeMealPlanCollectionEntity_13(
+                      this, Invocation.method(#getMealPlanGroupByID, [id]))),
+              returnValueForMissingStub: _i19.Future<_i10.MealPlanCollectionEntity>.value(
+                  _FakeMealPlanCollectionEntity_13(
                       this, Invocation.method(#getMealPlanGroupByID, [id]))))
           as _i19.Future<_i10.MealPlanCollectionEntity>);
   @override
   _i19.Future<_i15.MealPlanEntity?> getMealPlanByID(String? id) =>
       (super.noSuchMethod(Invocation.method(#getMealPlanByID, [id]),
-              returnValue: _i19.Future<_i15.MealPlanEntity?>.value())
+              returnValue: _i19.Future<_i15.MealPlanEntity?>.value(),
+              returnValueForMissingStub:
+                  _i19.Future<_i15.MealPlanEntity?>.value())
           as _i19.Future<_i15.MealPlanEntity?>);
   @override
   _i19.Future<void> updateImageReference(String? id, String? value) =>
@@ -1358,13 +1485,12 @@ class MockFirebaseProvider extends _i1.Mock implements _i14.FirebaseProvider {
   @override
   _i19.Future<_i5.ShoppingListEntity> createOrUpdateShoppingList(
           _i5.ShoppingListEntity? entity) =>
-      (super.noSuchMethod(
-              Invocation.method(#createOrUpdateShoppingList, [entity]),
-              returnValue: _i19.Future<_i5.ShoppingListEntity>.value(
+      (super.noSuchMethod(Invocation.method(#createOrUpdateShoppingList, [entity]),
+              returnValue: _i19.Future<_i5.ShoppingListEntity>.value(_FakeShoppingListEntity_3(
+                  this, Invocation.method(#createOrUpdateShoppingList, [entity]))),
+              returnValueForMissingStub: _i19.Future<_i5.ShoppingListEntity>.value(
                   _FakeShoppingListEntity_3(
-                      this,
-                      Invocation.method(
-                          #createOrUpdateShoppingList, [entity]))))
+                      this, Invocation.method(#createOrUpdateShoppingList, [entity]))))
           as _i19.Future<_i5.ShoppingListEntity>);
   @override
   _i19.Future<void> removeFromMealPlan(
@@ -1389,88 +1515,82 @@ class MockFirebaseProvider extends _i1.Mock implements _i14.FirebaseProvider {
 /// See the documentation for Mockito's code generation for more information.
 class MockImageTextExtractor extends _i1.Mock
     implements _i34.ImageTextExtractor {
-  MockImageTextExtractor() {
-    _i1.throwOnMissingStub(this);
-  }
-
   @override
-  _i19.Future<_i16.RecipeOverviewEditStep> processOverviewImage(
-          _i2.File? file) =>
+  _i19.Future<_i16.RecipeOverviewEditStep> processOverviewImage(_i2.File? file) =>
       (super.noSuchMethod(Invocation.method(#processOverviewImage, [file]),
               returnValue: _i19.Future<_i16.RecipeOverviewEditStep>.value(
+                  _FakeRecipeOverviewEditStep_19(
+                      this, Invocation.method(#processOverviewImage, [file]))),
+              returnValueForMissingStub: _i19.Future<_i16.RecipeOverviewEditStep>.value(
                   _FakeRecipeOverviewEditStep_19(
                       this, Invocation.method(#processOverviewImage, [file]))))
           as _i19.Future<_i16.RecipeOverviewEditStep>);
   @override
-  _i19.Future<_i16.RecipeIngredientEditStep> processIngredientsImage(
-          _i2.File? file) =>
+  _i19.Future<_i16.RecipeIngredientEditStep> processIngredientsImage(_i2.File? file) =>
       (super.noSuchMethod(Invocation.method(#processIngredientsImage, [file]),
               returnValue: _i19.Future<_i16.RecipeIngredientEditStep>.value(
-                  _FakeRecipeIngredientEditStep_20(this,
-                      Invocation.method(#processIngredientsImage, [file]))))
+                  _FakeRecipeIngredientEditStep_20(
+                      this, Invocation.method(#processIngredientsImage, [file]))),
+              returnValueForMissingStub: _i19.Future<_i16.RecipeIngredientEditStep>.value(
+                  _FakeRecipeIngredientEditStep_20(
+                      this, Invocation.method(#processIngredientsImage, [file]))))
           as _i19.Future<_i16.RecipeIngredientEditStep>);
   @override
   _i19.Future<_i16.RecipeInstructionEditStep> processInstructionsImage(_i2.File? file,
           {String? recipeTitle, String? recipeDescription}) =>
       (super.noSuchMethod(Invocation.method(#processInstructionsImage, [file], {#recipeTitle: recipeTitle, #recipeDescription: recipeDescription}),
-          returnValue: _i19.Future<_i16.RecipeInstructionEditStep>.value(_FakeRecipeInstructionEditStep_21(
-              this,
-              Invocation.method(#processInstructionsImage, [
-                file
-              ], {
-                #recipeTitle: recipeTitle,
-                #recipeDescription: recipeDescription
-              })))) as _i19.Future<_i16.RecipeInstructionEditStep>);
+              returnValue: _i19.Future<_i16.RecipeInstructionEditStep>.value(
+                  _FakeRecipeInstructionEditStep_21(
+                      this,
+                      Invocation.method(#processInstructionsImage, [file],
+                          {#recipeTitle: recipeTitle, #recipeDescription: recipeDescription}))),
+              returnValueForMissingStub:
+                  _i19.Future<_i16.RecipeInstructionEditStep>.value(_FakeRecipeInstructionEditStep_21(this, Invocation.method(#processInstructionsImage, [file], {#recipeTitle: recipeTitle, #recipeDescription: recipeDescription}))))
+          as _i19.Future<_i16.RecipeInstructionEditStep>);
   @override
   _i16.RecipeOverviewEditStep processOverviewImageFromText(
           _i35.RecognizedText? text) =>
       (super.noSuchMethod(
-              Invocation.method(#processOverviewImageFromText, [text]),
-              returnValue: _FakeRecipeOverviewEditStep_19(this,
-                  Invocation.method(#processOverviewImageFromText, [text])))
-          as _i16.RecipeOverviewEditStep);
+          Invocation.method(#processOverviewImageFromText, [text]),
+          returnValue: _FakeRecipeOverviewEditStep_19(
+              this, Invocation.method(#processOverviewImageFromText, [text])),
+          returnValueForMissingStub: _FakeRecipeOverviewEditStep_19(this,
+              Invocation.method(#processOverviewImageFromText, [text]))) as _i16
+          .RecipeOverviewEditStep);
   @override
   _i16.RecipeIngredientEditStep processIngredientsImageFromText(
           _i35.RecognizedText? text) =>
       (super.noSuchMethod(
               Invocation.method(#processIngredientsImageFromText, [text]),
               returnValue: _FakeRecipeIngredientEditStep_20(this,
+                  Invocation.method(#processIngredientsImageFromText, [text])),
+              returnValueForMissingStub: _FakeRecipeIngredientEditStep_20(this,
                   Invocation.method(#processIngredientsImageFromText, [text])))
           as _i16.RecipeIngredientEditStep);
   @override
-  _i16.RecipeInstructionEditStep processInstructionsImageFromText(
-          _i35.RecognizedText? text,
-          {String? recipeTitle,
-          String? recipeDescription}) =>
-      (super.noSuchMethod(
-          Invocation.method(#processInstructionsImageFromText, [
-            text
-          ], {
-            #recipeTitle: recipeTitle,
-            #recipeDescription: recipeDescription
-          }),
+  _i16.RecipeInstructionEditStep processInstructionsImageFromText(_i35.RecognizedText? text,
+          {String? recipeTitle, String? recipeDescription}) =>
+      (super.noSuchMethod(Invocation.method(#processInstructionsImageFromText, [text], {#recipeTitle: recipeTitle, #recipeDescription: recipeDescription}),
           returnValue: _FakeRecipeInstructionEditStep_21(
               this,
-              Invocation.method(#processInstructionsImageFromText, [
-                text
-              ], {
-                #recipeTitle: recipeTitle,
-                #recipeDescription: recipeDescription
-              }))) as _i16.RecipeInstructionEditStep);
+              Invocation.method(#processInstructionsImageFromText, [text],
+                  {#recipeTitle: recipeTitle, #recipeDescription: recipeDescription})),
+          returnValueForMissingStub: _FakeRecipeInstructionEditStep_21(
+              this,
+              Invocation.method(#processInstructionsImageFromText, [text],
+                  {#recipeTitle: recipeTitle, #recipeDescription: recipeDescription}))) as _i16.RecipeInstructionEditStep);
 }
 
 /// A class which mocks [NavigatorService].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockNavigatorService extends _i1.Mock implements _i36.NavigatorService {
-  MockNavigatorService() {
-    _i1.throwOnMissingStub(this);
-  }
-
   @override
   _i17.GlobalKey<_i27.NavigatorState> get navigatorKey =>
       (super.noSuchMethod(Invocation.getter(#navigatorKey),
               returnValue: _FakeGlobalKey_22<_i27.NavigatorState>(
+                  this, Invocation.getter(#navigatorKey)),
+              returnValueForMissingStub: _FakeGlobalKey_22<_i27.NavigatorState>(
                   this, Invocation.getter(#navigatorKey)))
           as _i17.GlobalKey<_i27.NavigatorState>);
 }

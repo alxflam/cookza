@@ -13,22 +13,22 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mockito/annotations.dart';
 
-@GenerateMocks([
-  ShoppingListItemsGenerator,
-  StorageProvider,
-  RecipeManager,
-  ShoppingListManager,
-  StackTrace,
-  SimilarityService,
-  FirebaseAuth,
-  User,
-  ChefkochAccessor,
-  NavigatorObserver,
-  MealPlanManager,
-  ImageManager,
-  FirebaseProvider,
-  ImageTextExtractor,
-  NavigatorService
+@GenerateNiceMocks([
+  MockSpec<ShoppingListItemsGenerator>(),
+  MockSpec<StorageProvider>(),
+  MockSpec<RecipeManager>(),
+  MockSpec<ShoppingListManager>(),
+  MockSpec<StackTrace>(),
+  MockSpec<SimilarityService>(),
+  MockSpec<FirebaseAuth>(),
+  MockSpec<User>(),
+  MockSpec<ChefkochAccessor>(),
+  MockSpec<NavigatorObserver>(),
+  MockSpec<MealPlanManager>(),
+  MockSpec<ImageManager>(),
+  MockSpec<FirebaseProvider>(),
+  MockSpec<ImageTextExtractor>(),
+  MockSpec<NavigatorService>()
 ])
 class Dummy {
   // just a dummy class to generate mocks
