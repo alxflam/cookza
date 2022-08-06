@@ -91,6 +91,7 @@ class IngredientsCalculatorImpl implements IngredientsCalculator {
           if (sameUoM.ingredient.name != note.ingredient.name) {
             if (isPlural(note.ingredient.name, sameUoM.ingredient.name)) {
               // then switch to plural..
+              // TODO PRIO1
             }
           }
           sameUoM.amount = (sameUoM.amount ?? 1) + (note.amount ?? 1) * ratio;

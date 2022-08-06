@@ -123,6 +123,7 @@ class MealPlanScreen extends StatelessWidget {
     for (var i = 0; i < model.entries.length; i++) {
       var currentWeek = model.entries[i].week;
       if (currentWeek != previousWeek) {
+        // TODO PRIO 1 show past weeks meal plan entries
         if (currentWeek == todaysWeek) {
           tiles.add(WeekNumber(
             currentWeek,

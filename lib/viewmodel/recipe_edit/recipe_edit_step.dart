@@ -13,6 +13,7 @@ import 'package:cookza/model/entities/mutable/mutable_recipe.dart';
 import 'package:cookza/services/recipe/image_manager.dart';
 import 'package:cookza/services/recipe/recipe_manager.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
+import 'package:cookza/services/shared_preferences_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -28,7 +29,9 @@ abstract class RecipeEditStep extends ChangeNotifier {
 class RecipeOverviewEditStep extends RecipeEditStep {
   String name = '';
   String? description = '';
+  // TODO PRIO2 default duration preference
   int _duration = 10;
+  // TODO PRIO2 default difficulty preference
   DIFFICULTY _difficulty = DIFFICULTY.EASY;
   DateTime creationDate = DateTime.now();
   final DateTime modificationDate = DateTime.now();
@@ -200,7 +203,8 @@ class RecipeTagEditStep extends RecipeEditStep {
 
 class RecipeIngredientEditStep extends RecipeEditStep {
   /// initial servings
-  int _servings = 1; // TODO: preference!
+  int _servings =
+      sl.get<SharedPreferencesProvider>().getNewRecipeServingsSize();
 
   List<IngredientGroupEntity> _groups = [];
 

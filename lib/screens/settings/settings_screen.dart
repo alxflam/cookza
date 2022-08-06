@@ -1,6 +1,7 @@
 import 'package:cookza/constants.dart';
 import 'package:cookza/screens/settings/about_screen.dart';
 import 'package:cookza/screens/settings/meal_plan_settings_screen.dart';
+import 'package:cookza/screens/settings/new_recipe_screen.dart';
 import 'package:cookza/screens/settings/shopping_list_settings_screen.dart';
 import 'package:cookza/screens/settings/theme_settings_screen.dart';
 import 'package:cookza/screens/settings/uom_visibility_settings_screen.dart';
@@ -35,6 +36,13 @@ class SettingsScreen extends StatelessWidget {
                 leading: const FaIcon(FontAwesomeIcons.paintbrush),
                 onTap: () {
                   Navigator.pushNamed(context, ThemeSettingsScreen.id);
+                },
+              ),
+              ListTile(
+                title: Text(AppLocalizations.of(context).functionsAddRecipe),
+                leading: const FaIcon(kNewRecipe),
+                onTap: () {
+                  Navigator.pushNamed(context, NewRecipeSettingsScreen.id);
                 },
               ),
               ListTile(

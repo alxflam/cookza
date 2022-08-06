@@ -34,6 +34,9 @@ abstract class SharedPreferencesProvider {
 
   String? getLeastRecentlyUsedRecipeGroup();
   set leastRecentlyUsedRecipeGroup(String value);
+
+  int getNewRecipeServingsSize();
+  set newRecipeServingsSize(int servings);
 }
 
 class SharedPreferencesProviderImpl implements SharedPreferencesProvider {
@@ -57,6 +60,10 @@ class SharedPreferencesProviderImpl implements SharedPreferencesProvider {
   static const String acceptedTermsOfUseKey = 'termsOfUseAccepted';
 
   static const String leastRecentlyUsedRecipeGroupKey = 'lruRecipeGroup';
+
+  static const String newRecipeServingsSizeKey = 'newRecipeServingsSize';
+  static const String newRecipeDurationKey = 'newRecipeDuration';
+  static const String newRecipeDifficultyKey = 'newRecipeDifficulty';
 
   String getUomVisibilityKey(String uom) => '$uom$uomVisibilityKeySuffix';
 
@@ -194,4 +201,17 @@ class SharedPreferencesProviderImpl implements SharedPreferencesProvider {
   String? get theme {
     return this._prefs.getString(themeKey);
   }
+
+  @override
+  int getNewRecipeServingsSize() {
+    var value = this._prefs.getInt(newRecipeServingsSizeKey);
+    if (value == null || value == 0) {
+      value = 2;
+    }
+    return value;
+  }
+
+  @override
+  set newRecipeServingsSize(int servings) =>
+      this._prefs.setInt(newRecipeServingsSizeKey, servings);
 }

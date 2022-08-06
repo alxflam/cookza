@@ -41,6 +41,7 @@ class ShoppingListModel extends ChangeNotifier {
 
   Future<List<ShoppingListItemModel>> getItems() async {
     // lazy initialize on first get call
+    // TODO PRIO1 stable sort order
     if (this.initialized) {
       // sort items
       // TODO: should be added again?
