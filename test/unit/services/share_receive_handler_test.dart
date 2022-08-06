@@ -14,6 +14,7 @@ import 'package:cookza/services/flutter/navigator_service.dart';
 import 'package:cookza/services/recipe/image_manager.dart';
 import 'package:cookza/services/recipe/recipe_manager.dart';
 import 'package:cookza/services/share_receive_handler.dart';
+import 'package:cookza/services/shared_preferences_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -34,6 +35,8 @@ void main() {
     GetIt.I.registerSingleton<ImageManager>(imageManager);
     GetIt.I.registerSingleton<ChefkochAccessor>(chefkoch);
     GetIt.I.registerSingleton<RecipeManager>(recipeManager);
+    GetIt.I.registerSingletonAsync<SharedPreferencesProvider>(
+        () async => SharedPreferencesProviderImpl().init());
   });
 
   setUp(() {

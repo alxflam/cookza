@@ -1,4 +1,5 @@
 import 'package:cookza/services/image_parser.dart';
+import 'package:cookza/services/shared_preferences_provider.dart';
 import 'package:cookza/services/unit_of_measure.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
@@ -28,6 +29,8 @@ void main() {
   setUpAll(() {
     GetIt.I
         .registerSingleton<UnitOfMeasureProvider>(UnitOfMeasureProviderMock());
+    GetIt.I.registerSingletonAsync<SharedPreferencesProvider>(
+        () async => SharedPreferencesProviderImpl().init());
   });
 
   test(

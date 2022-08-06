@@ -2,6 +2,7 @@ import 'package:cookza/model/entities/json/recipe_collection_entity.dart';
 import 'package:cookza/model/json/recipe_collection.dart';
 import 'package:cookza/services/flutter/navigator_service.dart';
 import 'package:cookza/services/recipe/recipe_manager.dart';
+import 'package:cookza/services/shared_preferences_provider.dart';
 import 'package:cookza/viewmodel/recipe_edit/recipe_edit_model.dart';
 import 'package:cookza/viewmodel/recipe_edit/recipe_edit_step.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -17,6 +18,8 @@ void main() {
   setUpAll(() {
     GetIt.I.registerSingleton<RecipeManager>(mock);
     GetIt.I.registerSingleton<NavigatorService>(MockNavigatorService());
+    GetIt.I.registerSingletonAsync<SharedPreferencesProvider>(
+        () async => SharedPreferencesProviderImpl().init());
   });
 
   test('Modify mode', () async {

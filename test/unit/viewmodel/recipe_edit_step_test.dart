@@ -1,8 +1,13 @@
+import 'package:cookza/services/shared_preferences_provider.dart';
 import 'package:cookza/viewmodel/recipe_edit/recipe_edit_step.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:get_it/get_it.dart';
 
 void main() {
-  setUpAll(() {});
+  setUpAll(() {
+    GetIt.I.registerSingletonAsync<SharedPreferencesProvider>(
+        () async => SharedPreferencesProviderImpl().init());
+  });
 
   test('Tag step - tag setters', () async {
     var cut = RecipeTagEditStep();
