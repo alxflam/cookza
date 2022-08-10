@@ -249,7 +249,7 @@ class FirebaseProvider {
   }
 
   Future<String> createOrUpdateRecipe(RecipeEntity recipe) async {
-    if (recipe.id != null) {
+    if ((recipe.id ?? '').isNotEmpty) {
       return _updateRecipe(recipe);
     }
     return _createRecipe(recipe);

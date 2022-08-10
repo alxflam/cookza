@@ -951,7 +951,7 @@ class MockUser extends _i1.Mock implements _i8.User {
 /// A class which mocks [ChefkochAccessor].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockChefkochAccessor extends _i1.Mock implements _i26.ChefkochAccessor {
+class MockChefkochAccessor extends _i1.Mock implements _i26.ChefkochImporter {
   @override
   _i19.Future<_i9.RecipeEntity> getRecipe(String? id) => (super.noSuchMethod(
           Invocation.method(#getRecipe, [id]),

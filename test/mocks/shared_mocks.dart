@@ -22,7 +22,7 @@ import 'package:mockito/annotations.dart';
   MockSpec<SimilarityService>(),
   MockSpec<FirebaseAuth>(),
   MockSpec<User>(),
-  MockSpec<ChefkochAccessor>(),
+  MockSpec<ChefkochImporter>(),
   MockSpec<NavigatorObserver>(),
   MockSpec<MealPlanManager>(),
   MockSpec<ImageManager>(),

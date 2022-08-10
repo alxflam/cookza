@@ -11,20 +11,30 @@ import 'package:cookza/model/entities/mutable/mutable_recipe.dart';
 import 'package:cookza/model/json/ingredient.dart';
 import 'package:cookza/model/json/ingredient_note.dart';
 import 'package:cookza/model/json/recipe.dart';
+import 'package:cookza/services/api/registry.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:cookza/services/unit_of_measure.dart';
 import 'package:http/http.dart' as http;
 import 'package:collection/collection.dart';
 
-abstract class ChefkochAccessor {
-  Future<RecipeEntity> getRecipe(String id);
-}
+abstract class ChefkochImporter extends RecipeIntentImporter {}
 
-class ChefkochAccessorImpl implements ChefkochAccessor {
+class ChefkochImporterImpl implements ChefkochImporter {
   static const String url = 'https://api.chefkoch.de/v2/recipes/';
+  static final exp = RegExp(r'rezepte\/([0-9]*)\/');
 
   @override
-  Future<RecipeEntity> getRecipe(String id) async {
+  bool canHandle(String intentData) {
+    var matches = exp.allMatches(intentData);
+    return matches.isNotEmpty;
+  }
+
+  @override
+  Future<RecipeEntity> getRecipe(String intentData) async {
+    var matches = exp.allMatches(intentData);
+    var match = matches.first;
+    var id = intentData.substring(match.start + 8, match.end - 1);
+
     final uri = Uri(
       scheme: 'https',
       host: 'api.chefkoch.de',

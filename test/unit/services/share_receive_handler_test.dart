@@ -33,7 +33,7 @@ void main() {
   setUpAll(() async {
     GetIt.I.registerSingleton<NavigatorService>(navigatorService);
     GetIt.I.registerSingleton<ImageManager>(imageManager);
-    GetIt.I.registerSingleton<ChefkochAccessor>(chefkoch);
+    GetIt.I.registerSingleton<ChefkochImporter>(chefkoch);
     GetIt.I.registerSingleton<RecipeManager>(recipeManager);
     GetIt.I.registerSingletonAsync<SharedPreferencesProvider>(
         () async => SharedPreferencesProviderImpl().init());

@@ -78,7 +78,7 @@ void setupServiceLocator() {
   sl.registerSingleton<ShoppingListItemsGenerator>(
       ShoppingListItemsGeneratorImpl());
   sl.registerSingleton<ExceptionHandler>(ExceptionHandlerImpl());
-  sl.registerSingleton<ChefkochAccessor>(ChefkochAccessorImpl());
+  sl.registerSingleton<ChefkochImporter>(ChefkochImporterImpl());
 
   sl.registerSingletonAsync<SharedPreferencesProvider>(
       () async => SharedPreferencesProviderImpl().init());

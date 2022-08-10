@@ -67,9 +67,12 @@ class RecipeOverviewEditStep extends RecipeEditStep {
     this.difficulty = recipe.difficulty;
     this.duration = recipe.duration;
     this.creationDate = recipe.creationDate;
-    var collection =
-        await sl.get<RecipeManager>().collectionByID(recipe.recipeCollectionId);
-    this.collection = collection;
+    if (recipe.recipeCollectionId.isNotEmpty) {
+      var collection = await sl
+          .get<RecipeManager>()
+          .collectionByID(recipe.recipeCollectionId);
+      this.collection = collection;
+    }
   }
 
   @override
