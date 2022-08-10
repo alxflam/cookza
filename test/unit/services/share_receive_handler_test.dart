@@ -25,7 +25,7 @@ import '../../mocks/shared_mocks.mocks.dart';
 
 var imageManager = MockImageManager();
 var navigatorService = NavigatorService();
-var chefkoch = MockChefkochAccessor();
+var chefkoch = MockChefkochImporter();
 var recipeManager = MockRecipeManager();
 final cut = ShareReceiveHandler();
 
@@ -42,6 +42,7 @@ void main() {
   setUp(() {
     when(imageManager.getRecipeImageFile(any))
         .thenAnswer((_) => Future.value(null));
+    when(chefkoch.canHandle(any)).thenReturn(true);
     when(chefkoch.getRecipe(any))
         .thenAnswer((_) => Future.value(_fakeRecipe()));
   });

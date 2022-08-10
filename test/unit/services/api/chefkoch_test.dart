@@ -14,10 +14,11 @@ void main() {
       sl.registerSingleton<UnitOfMeasureProvider>(UoMMock());
 
       var id = '922651197624364';
+      var url = 'https://www.chefkoch.de/rezepte/$id/xyz';
 
       var cut = ChefkochImporterImpl();
 
-      final result = await cut.getRecipe(id);
+      final result = await cut.getRecipe(url);
 
       expect(result.name, 'Philadelphia-Hähnchen');
       var ins = await result.instructions;

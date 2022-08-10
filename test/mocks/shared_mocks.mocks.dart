@@ -948,18 +948,23 @@ class MockUser extends _i1.Mock implements _i8.User {
           as _i19.Future<void>);
 }
 
-/// A class which mocks [ChefkochAccessor].
+/// A class which mocks [ChefkochImporter].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockChefkochAccessor extends _i1.Mock implements _i26.ChefkochImporter {
+class MockChefkochImporter extends _i1.Mock implements _i26.ChefkochImporter {
   @override
-  _i19.Future<_i9.RecipeEntity> getRecipe(String? id) => (super.noSuchMethod(
-          Invocation.method(#getRecipe, [id]),
-          returnValue: _i19.Future<_i9.RecipeEntity>.value(
-              _FakeRecipeEntity_12(this, Invocation.method(#getRecipe, [id]))),
+  bool canHandle(String? intentData) =>
+      (super.noSuchMethod(Invocation.method(#canHandle, [intentData]),
+          returnValue: false, returnValueForMissingStub: false) as bool);
+  @override
+  _i19.Future<_i9.RecipeEntity> getRecipe(String? intentData) =>
+      (super.noSuchMethod(Invocation.method(#getRecipe, [intentData]),
+          returnValue: _i19.Future<_i9.RecipeEntity>.value(_FakeRecipeEntity_12(
+              this, Invocation.method(#getRecipe, [intentData]))),
           returnValueForMissingStub: _i19.Future<_i9.RecipeEntity>.value(
-              _FakeRecipeEntity_12(this, Invocation.method(#getRecipe, [id]))))
-      as _i19.Future<_i9.RecipeEntity>);
+              _FakeRecipeEntity_12(
+                  this, Invocation.method(#getRecipe, [intentData])))) as _i19
+          .Future<_i9.RecipeEntity>);
 }
 
 /// A class which mocks [NavigatorObserver].
