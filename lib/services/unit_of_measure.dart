@@ -298,9 +298,6 @@ class AmountedUnitOfMeasure {
 class StaticUnitOfMeasure implements UnitOfMeasureProvider {
   @override
   UnitOfMeasure getUnitOfMeasureById(final String id) {
-    // if (id == null) {
-    //   return null; // call with null may occur from the UI if used inside a DropDown
-    // }
     var targetId = id.toUpperCase();
     var metric = metricUoM.firstWhereOrNull((e) => targetId == e._id);
     if (metric != null) {

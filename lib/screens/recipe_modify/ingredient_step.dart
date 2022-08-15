@@ -46,6 +46,8 @@ class IngredientStepContent extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               _getServingsRow(model, context),
+              // TODO Prio 2 separate table for every ingredient group
+              // then long group names can span horizontally
               DataTable(
                 columnSpacing: 5,
                 horizontalMargin: 0,
