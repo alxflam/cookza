@@ -29,7 +29,7 @@ class InstructionsStepContent extends StatelessWidget {
             children: <Widget>[
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                    primary: Theme.of(context).colorScheme.primary),
+                    backgroundColor: Theme.of(context).colorScheme.primary),
                 onPressed: () {
                   model.addEmptyInstruction();
                 },

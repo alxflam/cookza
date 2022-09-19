@@ -30,7 +30,7 @@ void main() {
     GetIt.I.registerSingleton<MealPlanManager>(MockMealPlanManager());
   });
 
-  void _verifyNavigation(WidgetTester tester, String button, Type type) async {
+  void verifyNavigation(WidgetTester tester, String button, Type type) async {
     final mockObserver = MockNavigatorObserver();
     await tester.pumpWidget(MockApplication(mockObserver: mockObserver));
 
@@ -46,22 +46,22 @@ void main() {
   }
 
   testWidgets('Navigate to add new recipe', (WidgetTester tester) async {
-    _verifyNavigation(tester, 'New Recipe', NewRecipeScreen);
+    verifyNavigation(tester, 'New Recipe', NewRecipeScreen);
   });
 
   testWidgets('Navigate to recipe list', (WidgetTester tester) async {
-    _verifyNavigation(tester, 'Recipes', RecipeListScreen);
+    verifyNavigation(tester, 'Recipes', RecipeListScreen);
   });
 
   testWidgets('Navigate to meal plan', (WidgetTester tester) async {
-    _verifyNavigation(tester, 'Meal Planner', MealPlanScreen);
+    verifyNavigation(tester, 'Meal Planner', MealPlanScreen);
   });
 
   testWidgets('Navigate to leftovers', (WidgetTester tester) async {
-    _verifyNavigation(tester, 'Leftover Reuse', LeftoversScreen);
+    verifyNavigation(tester, 'Leftover Reuse', LeftoversScreen);
   });
 
   testWidgets('Navigate to Favorites', (WidgetTester tester) async {
-    _verifyNavigation(tester, 'Favorites', FavoriteRecipesScreen);
+    verifyNavigation(tester, 'Favorites', FavoriteRecipesScreen);
   });
 }

@@ -160,13 +160,13 @@ dynamic kListToJson(List? list) {
 
 /// button styles
 final ButtonStyle kRaisedGreenButtonStyle =
-    ElevatedButton.styleFrom(primary: Colors.green);
+    ElevatedButton.styleFrom(backgroundColor: Colors.green);
 
 final ButtonStyle kRaisedRedButtonStyle =
-    ElevatedButton.styleFrom(primary: Colors.red);
+    ElevatedButton.styleFrom(backgroundColor: Colors.red);
 
 final ButtonStyle kRaisedGreyButtonStyle =
-    ElevatedButton.styleFrom(primary: Colors.grey);
+    ElevatedButton.styleFrom(backgroundColor: Colors.grey);
 
 final ButtonStyle kRaisedOrangeButtonStyle =
-    ElevatedButton.styleFrom(primary: Colors.orange);
+    ElevatedButton.styleFrom(backgroundColor: Colors.orange);
