@@ -15,11 +15,12 @@ import '../../utils/recipe_creator.dart';
 void main() {
   final mock = MockRecipeManager();
 
-  setUpAll(() {
+  setUpAll(() async {
     GetIt.I.registerSingleton<RecipeManager>(mock);
     GetIt.I.registerSingleton<NavigatorService>(MockNavigatorService());
     GetIt.I.registerSingletonAsync<SharedPreferencesProvider>(
         () async => SharedPreferencesProviderImpl().init());
+    await GetIt.I.allReady();
   });
 
   test('Modify mode', () async {
