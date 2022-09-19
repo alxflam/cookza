@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test(
-    'skip items in the past',
+    'add items in the past',
     () async {
       var yesterday = DateTime.now().subtract(const Duration(days: 1));
 
@@ -14,7 +14,7 @@ void main() {
 
       var cut = MutableMealPlan.of('id1', 'group1', [mealPlanDate], 1);
 
-      expect(cut.items.first.date.isAfter(yesterday), true);
+      expect(cut.items.first.date.isBefore(DateTime.now()), true);
       expect(cut.items.first.recipes.isEmpty, true);
     },
   );
@@ -36,21 +36,24 @@ void main() {
   );
 
   test(
-    'item gaps are filled',
+    'item gaps are filled and prefixed wit one week history',
     () async {
-      var threeDaysAhead = DateTime.now().add(const Duration(days: 3));
+      final startDate = DateTime(2022, 08, 15);
+      var threeDaysAhead = startDate.add(const Duration(days: 3));
 
       var mealPlanDate = MutableMealPlanDateEntity.empty(threeDaysAhead);
       mealPlanDate.addRecipe(
           MutableMealPlanRecipeEntity.fromValues('1234', 'A Recipe', 3));
 
-      var cut = MutableMealPlan.of('id1', 'group1', [mealPlanDate], 1);
+      var cut = MutableMealPlan.of('id1', 'group1', [mealPlanDate], 1,
+          startDate: startDate);
 
+      var calculatedStartDate = startDate.subtract(const Duration(days: 7));
       for (var i = 0; i < cut.items.length; i++) {
         var item = cut.items[i];
-        expect(
-            isSameDay(item.date, DateTime.now().add(Duration(days: i))), true);
-        if (i == 3) {
+        expect(isSameDay(item.date, calculatedStartDate.add(Duration(days: i))),
+            true);
+        if (i == 10) {
           expect(item.recipes.length, 1);
           expect(item.recipes.first.name, 'A Recipe');
         }

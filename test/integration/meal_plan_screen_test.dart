@@ -12,6 +12,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
+import 'package:intl/intl.dart';
 import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -102,10 +103,15 @@ void main() {
     var startLoc = tester.getCenter(find.text('Spätzle'));
 
     // move the recipe to the next day
+    var targetDate = DateTime.now().add(const Duration(days: 1));
+    var targetTileTitle = DateFormat('d.MM.yyyy').format(targetDate);
+    var targetTile = find.textContaining(targetTileTitle);
+    expect(targetTile, findsWidgets);
+
     final Offset firstLocation = tester.getCenter(find.text('Spätzle'));
     final TestGesture gesture = await tester.startGesture(firstLocation);
     await tester.pump(kLongPressTimeout + kPressTimeout);
-    await gesture.moveTo(tester.getCenter(cards.at(1)));
+    await gesture.moveTo(tester.getCenter(targetTile.first));
     await tester.pumpAndSettle();
     await gesture.up();
     await tester.pump(kLongPressTimeout + kPressTimeout);
@@ -330,16 +336,27 @@ void main() {
     mealPlanManager.addMealPlan(mealPlan.groupID, mealPlan);
 
     await _initApp(tester, mockObserver);
-
     await tester.pumpAndSettle();
+
+    var cards = find.byType(WeekdayHeaderTitle);
+    expect(cards, findsWidgets);
 
     // a meal plan is selected
     expect(find.byType(OpenDrawerButton), findsNothing);
 
     find.descendant(of: find.byType(Card), matching: find.text('Spätzle'));
     find.descendant(of: find.byType(Card), matching: find.text('2'));
-    var addIconButtonFinder = find.descendant(
-        of: find.byType(Card), matching: find.byIcon(Icons.add));
+
+    // press add button on next day (next enabled day, not in the past)
+    var targetDate = DateTime.now().add(const Duration(days: 1));
+    var targetTileTitle = DateFormat('d.MM.yyyy').format(targetDate);
+    var targetTile = find.textContaining(targetTileTitle, findRichText: true);
+    expect(targetTile, findsWidgets);
+
+    var ancestor = find.ancestor(of: targetTile, matching: find.byType(Card));
+    var addIconButtonFinder =
+        find.descendant(of: ancestor, matching: find.byIcon(Icons.add));
+    expect(addIconButtonFinder, findsWidgets);
 
     await tester.tap(addIconButtonFinder.first);
     await tester.pumpAndSettle();

@@ -72,7 +72,7 @@ Future<void> openShoppingListDialog(BuildContext context) async {
       arguments: newModel);
 }
 
-Future<ShoppingListModel>? _showMultipleGroupsDialog(BuildContext context,
+Future<ShoppingListModel?>? _showMultipleGroupsDialog(BuildContext context,
     List<MealPlanCollectionEntity> collections, ShoppingListModel model) async {
   return await showDialog(
       context: context,

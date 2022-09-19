@@ -116,6 +116,7 @@ class MealPlanScreen extends StatelessWidget {
   List<Widget> _buildMainLayout(BuildContext context, MealPlanViewModel model,
       GlobalKey firstVisibleWidget) {
     var tileColor = Theme.of(context).colorScheme.primary;
+    final now = DateUtils.dateOnly(DateTime.now());
 
     List<Widget> tiles = [];
     int? previousWeek;
@@ -123,7 +124,6 @@ class MealPlanScreen extends StatelessWidget {
     for (var i = 0; i < model.entries.length; i++) {
       var currentWeek = model.entries[i].week;
       if (currentWeek != previousWeek) {
-        // TODO PRIO 1 show past weeks meal plan entries
         if (currentWeek == todaysWeek) {
           tiles.add(WeekNumber(
             currentWeek,
@@ -138,15 +138,15 @@ class MealPlanScreen extends StatelessWidget {
         }
         previousWeek = currentWeek;
       }
-
-      var tile = _createTileForWeekDay(model, i, context, tileColor);
+      var isEnabled = !DateUtils.dateOnly(model.entries[i].date).isBefore(now);
+      var tile = _createTileForWeekDay(model, i, context, tileColor, isEnabled);
       tiles.add(tile);
     }
     return tiles;
   }
 
-  Widget _createTileForWeekDay(
-      MealPlanViewModel model, int i, BuildContext context, Color accentColor) {
+  Widget _createTileForWeekDay(MealPlanViewModel model, int i,
+      BuildContext context, Color accentColor, bool isEnabled) {
     var body = DragTarget<MealDragModel>(
       builder: (context, accepted, rejected) {
         // set different color to highlight where a drop would take place
@@ -166,30 +166,33 @@ class MealPlanScreen extends StatelessWidget {
                     ),
                     IconButton(
                       icon: const Icon(Icons.add),
-                      onPressed: () async {
-                        // if moved here by navigaton
-                        if (model.addByNavigationRequired) {
-                          model.addByNavigation(i);
-                          return;
-                        }
+                      onPressed: isEnabled
+                          ? () async {
+                              // if moved here by navigaton
+                              if (model.addByNavigationRequired) {
+                                model.addByNavigation(i);
+                                return;
+                              }
 
-                        // else open selection screen or add a note
-                        _showSelectAddModeDialog(context, model, i);
-                      },
+                              // else open selection screen or add a note
+                              _showSelectAddModeDialog(context, model, i);
+                            }
+                          : null,
                     ),
                   ],
                 ),
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: _createRecipeTiles(model, i, context, accentColor),
+                children: _createRecipeTiles(
+                    model, i, context, accentColor, isEnabled),
               ),
             ],
           ),
         );
       },
       onWillAccept: (data) {
-        return data is MealDragModel;
+        return data is MealDragModel && isEnabled;
       },
       onAccept: (data) {
         model.moveRecipe(data, i);
@@ -200,8 +203,8 @@ class MealPlanScreen extends StatelessWidget {
     return body;
   }
 
-  List<Widget> _createRecipeTiles(
-      MealPlanViewModel model, int i, BuildContext context, Color accentColor) {
+  List<Widget> _createRecipeTiles(MealPlanViewModel model, int i,
+      BuildContext context, Color accentColor, bool isEnabled) {
     List<Widget> tiles = [];
 
     for (var entry in model.entries[i].recipes) {
@@ -234,28 +237,32 @@ class MealPlanScreen extends StatelessWidget {
                     : null,
                 trailing: IconButton(
                   icon: const Icon(Icons.edit),
-                  onPressed: () async {
-                    var mealPlanViewModel =
-                        Provider.of<MealPlanViewModel>(context, listen: false);
+                  onPressed: isEnabled
+                      ? () async {
+                          var mealPlanViewModel =
+                              Provider.of<MealPlanViewModel>(context,
+                                  listen: false);
 
-                    var dialogResult = await showDialog(
-                      context: context,
-                      builder: (context) {
-                        return MealPlanItemDialog(
-                            MealPlanItemDialogModel.forItem(recipeModel));
-                      },
-                    ) as MealPlanItemDialogModel?;
+                          var dialogResult = await showDialog(
+                            context: context,
+                            builder: (context) {
+                              return MealPlanItemDialog(
+                                  MealPlanItemDialogModel.forItem(recipeModel));
+                            },
+                          ) as MealPlanItemDialogModel?;
 
-                    if (dialogResult != null) {
-                      if (dialogResult.isDeleted) {
-                        model.removeRecipe(
-                            recipeModel.entity as MutableMealPlanRecipeEntity,
-                            i);
-                      } else if (dialogResult.hasChanged) {
-                        mealPlanViewModel.recipeModelChanged(recipeModel);
-                      }
-                    }
-                  },
+                          if (dialogResult != null) {
+                            if (dialogResult.isDeleted) {
+                              model.removeRecipe(
+                                  recipeModel.entity
+                                      as MutableMealPlanRecipeEntity,
+                                  i);
+                            } else if (dialogResult.hasChanged) {
+                              mealPlanViewModel.recipeModelChanged(recipeModel);
+                            }
+                          }
+                        }
+                      : null,
                 ),
               );
             },
@@ -286,15 +293,19 @@ class MealPlanScreen extends StatelessWidget {
         ),
       );
 
-      var draggable = LongPressDraggable<MealDragModel>(
-        dragAnchorStrategy: childDragAnchorStrategy,
-        maxSimultaneousDrags: 1,
-        feedback: feedback,
-        childWhenDragging: Container(),
-        data: MealDragModel(entry, i),
-        child: tile,
-      );
-      tiles.add(draggable);
+      if (isEnabled) {
+        var draggable = LongPressDraggable<MealDragModel>(
+          dragAnchorStrategy: childDragAnchorStrategy,
+          maxSimultaneousDrags: 1,
+          feedback: feedback,
+          childWhenDragging: Container(),
+          data: MealDragModel(entry, i),
+          child: tile,
+        );
+        tiles.add(draggable);
+      } else {
+        tiles.add(tile);
+      }
     }
 
     return tiles;

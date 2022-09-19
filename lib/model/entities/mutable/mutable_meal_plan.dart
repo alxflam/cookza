@@ -25,9 +25,15 @@ class MutableMealPlan implements MealPlanEntity {
 
   void init(
       List<MealPlanDateEntity> entityItems, int weeks, DateTime startDate) {
-    // identify the start date
-    var firstDateToBeShown =
-        DateTime.utc(startDate.year, startDate.month, startDate.day);
+    // the current date
+    var currentDate = DateTime(startDate.year, startDate.month, startDate.day);
+    // offset of the start date (as we show the past week)
+    var startDateOffset = 7 + currentDate.weekday - 1;
+    // the actual start date
+    final firstDateToBeShown = DateTime(
+        currentDate.year, currentDate.month, currentDate.day - startDateOffset);
+    // start day should always be a monday
+    assert(firstDateToBeShown.weekday == DateTime.monday);
 
     // for each persisted item, use it if it is not in the past and contains any persisted state (recipes have been added)
     for (var item in entityItems) {
@@ -39,18 +45,19 @@ class MutableMealPlan implements MealPlanEntity {
     }
 
     // then identify the end date of the persisted state (if none is there - yesterdays date)
+    var mondayOffset =
+        currentDate.weekday == DateTime.monday ? -1 : 7 - currentDate.weekday;
     var lastDate = items.isNotEmpty
         ? items.last.date
-        : firstDateToBeShown.add(Duration(days: weeks * 7 - 1));
+        : currentDate.add(Duration(days: weeks * 7 + mondayOffset));
 
     // check if we start the period on a monday: we always want to show full weeks for the targetWeeks,
     // therefore if we open the meal plan on a wednesday and targetWeeks is two, we will have the rest of the week (5 days) + two weeks shown
-    var offset = DateTime.monday == firstDateToBeShown.weekday
-        ? -1
-        : 7 - firstDateToBeShown.weekday;
-    var minLastDate = firstDateToBeShown
+    var offset =
+        DateTime.monday == currentDate.weekday ? -1 : 7 - currentDate.weekday;
+    var minLastDate = currentDate
         .add(Duration(days: offset))
-        .add(Duration(days: weeks * 7));
+        .add(Duration(days: weeks * 7 - 1));
     if (minLastDate.isAfter(lastDate)) {
       lastDate = minLastDate;
     }
