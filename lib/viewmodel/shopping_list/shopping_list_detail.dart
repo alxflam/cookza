@@ -123,18 +123,18 @@ class ShoppingListModel extends ChangeNotifier {
   void _sortItems() {
     const kMaxIndex = 1000;
     this._items.sort((a, b) {
+      if (a.isBought && !b.isBought) {
+        return 1;
+      }
+      if (b.isBought && !a.isBought) {
+        return -1;
+      }
       if (a.index >= 0 || b.index >= 0) {
         // do not sort -1 (index not set) at the beginning
         int firstIndex = a.index < 0 ? kMaxIndex : a.index;
         int secondIndex = b.index < 0 ? kMaxIndex : b.index;
 
         return firstIndex.compareTo(secondIndex);
-      }
-      if (a.isBought && !b.isBought) {
-        return 1;
-      }
-      if (b.isBought && !a.isBought) {
-        return -1;
       }
       return a.ingredientNote.ingredient.name
           .compareTo(b.ingredientNote.ingredient.name);
@@ -208,9 +208,9 @@ class ShoppingListModel extends ChangeNotifier {
   void _save() async {
     // set the  index for every element
     // as we have to save the index of every element to make sure the same order can be restored later on
-    // for (var i = 0; i < this._items.length; i++) {
-    //   this._items[i].index = i;
-    // }
+    for (var i = 0; i < this._items.length; i++) {
+      this._items[i].index = i;
+    }
 
     // only save custom items, bought items and items with an explicit index (hence has been moved manually)
     var customItems = this
