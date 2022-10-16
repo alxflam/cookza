@@ -87,10 +87,12 @@ class IngredientsCalculatorImpl implements IngredientsCalculator {
         var sameUoM = sameIngredient
             .firstWhereOrNull((e) => e.unitOfMeasure == note.unitOfMeasure);
         if (sameUoM != null) {
-          // TODO check which one is plural and use plural one...
           if (sameUoM.ingredient.name != note.ingredient.name) {
-            if (isPlural(note.ingredient.name, sameUoM.ingredient.name)) {
-              // TODO PRIO1 then switch to plural..
+            // then use the plural name instead now, for now only check by
+            // length as plural is usually longer, diacritics not taken into
+            // account like in isPlural
+            if (note.ingredient.name.length > sameUoM.ingredient.name.length) {
+              sameUoM.ingredient.name = note.ingredient.name;
             }
           }
           sameUoM.amount = (sameUoM.amount ?? 1) + (note.amount ?? 1) * ratio;
