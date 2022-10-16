@@ -177,11 +177,12 @@ Widget _getMealPlanGroupDropDown(
                 .map((item) => DropdownMenuItem<MealPlanCollectionEntity>(
                     value: item, child: Text(item.name)))
                 .toList();
-
-            model.groupID = collections.first.id!;
+            if (model.groupID.isEmpty) {
+              model.groupID = collections.first.id!;
+            }
 
             return DropdownButtonFormField<MealPlanCollectionEntity>(
-              value: collections.first,
+              value: collections.firstWhere((e) => e.id == model.groupID),
               items: items,
               decoration: InputDecoration(
                 isDense: true,
