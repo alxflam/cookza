@@ -58,7 +58,7 @@ void main() {
     final observer = MockNavigatorObserver();
     await _initApp(tester, observer);
 
-    var tile = find.text('© 2021 Alexander Flammer');
+    var tile = find.text('© 2022 Alexander Flammer');
     expect(tile, findsOneWidget);
   });
 
