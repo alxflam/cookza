@@ -81,6 +81,31 @@ class ChefkochImporterImpl implements ChefkochImporter {
         .map((e) => MutableInstruction.withValues(text: e))
         .toList();
 
+    // map UOMs from chefkoch to cookza
+    final uomProvider = sl.get<UnitOfMeasureProvider>();
+    final unitMap = {
+      '4': uomProvider.getUnitOfMeasureById('MLT'),
+      '13': uomProvider.getUnitOfMeasureById('G24'),
+      '14': uomProvider.getUnitOfMeasureById('G25'),
+      '164': uomProvider.getUnitOfMeasureById('G25'),
+      '58': uomProvider.getUnitOfMeasureById('G25'),
+      '156': uomProvider.getUnitOfMeasureById('CA'),
+      '48': uomProvider.getUnitOfMeasureById('HAN'),
+      '224': uomProvider.getUnitOfMeasureById('G21'),
+      '165': uomProvider.getUnitOfMeasureById('LTR'),
+      '3': uomProvider.getUnitOfMeasureById('GRM'),
+      '169': uomProvider.getUnitOfMeasureById('PA'),
+      '179': uomProvider.getUnitOfMeasureById('LEF'),
+      '11': uomProvider.getUnitOfMeasureById('G21'),
+      '26': uomProvider.getUnitOfMeasureById('CLO'),
+      '16': uomProvider.getUnitOfMeasureById('X2'),
+      '106': uomProvider.getUnitOfMeasureById('PIN'),
+      '150': uomProvider.getUnitOfMeasureById('TWG'),
+      '126': uomProvider.getUnitOfMeasureById('14'),
+      '31': uomProvider.getUnitOfMeasureById('GLA'),
+      '87': uomProvider.getUnitOfMeasureById('H87'),
+    };
+
     var groupCounter = 0;
     final ingGroupList = <IngredientGroupEntity>[];
     for (var group in json['ingredientGroups']) {
@@ -93,7 +118,18 @@ class ChefkochImporterImpl implements ChefkochImporter {
       final groupIngredients = <MutableIngredientNote>[];
       for (var ingredient in group['ingredients']) {
         var unit = ingredient['unit'] as String;
-        var targetUom = uoms.firstWhereOrNull((e) => e.displayName == unit);
+        var unitId = ingredient['unitId'] as String?;
+        UnitOfMeasure? targetUom;
+
+        // try to get the UOM by the mapping table, if the ID is known
+        if (unitId?.isNotEmpty ?? false) {
+          targetUom = unitMap[unitId];
+        }
+
+        // else try to find a matching UOM by its label
+        targetUom ??= uoms.firstWhereOrNull(
+            (e) => e.displayName.toLowerCase() == unit.toLowerCase());
+
         final note = MutableIngredientNote.of(
           IngredientNoteEntityJson.of(
             IngredientNote(
