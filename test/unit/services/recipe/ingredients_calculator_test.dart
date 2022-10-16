@@ -179,4 +179,38 @@ void main() {
     expect(result[0].amount, 5.5);
     expect(result[0].ingredient.name, 'Apples');
   });
+
+  test(
+      'Calculate ingredients for ingredient with plural and singular entry - diacritics',
+      () async {
+    var recipe = RecipeCreator.createRecipe('First Recipe');
+    recipe.servings = 2;
+    var oneApple =
+        RecipeCreator.createIngredient('Apfel', amount: 1, uom: 'H87');
+    var someApples =
+        RecipeCreator.createIngredient('Äpfel', amount: 5, uom: 'H87');
+
+    recipe.ingredientGroupList = [
+      MutableIngredientGroup.forValues(1, 'Test', [oneApple])
+    ];
+
+    await rm.createOrUpdate(recipe);
+
+    var recipe2 = RecipeCreator.createRecipe('Second Recipe');
+    recipe2.servings = 1;
+
+    recipe2.ingredientGroupList = [
+      MutableIngredientGroup.forValues(1, 'Test', [someApples])
+    ];
+
+    await rm.createOrUpdate(recipe2);
+
+    var cut = IngredientsCalculatorImpl();
+
+    var result = await cut.getIngredients({recipe.id!: 1, recipe2.id!: 1});
+
+    expect(result.length, 1);
+    expect(result[0].amount, 5.5);
+    expect(result[0].ingredient.name, 'Äpfel');
+  });
 }

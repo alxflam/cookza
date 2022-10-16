@@ -16,8 +16,26 @@ final knownPluralSuffixes = HashSet.of([
   'x', 'z', 'sh', 'ch', 'es'
 ]);
 
-/// checks whether two strings are potentially singular and plural of the same noun
-bool isPlural(final String first, final String second) {
+/// checks whether [expectedPlural] could potentially be the plural
+/// of [expectedSingular]
+bool isPlural(final String expectedPlural, final String expectedSingular) {
+  if (!isPluralAndSingular(expectedPlural, expectedSingular)) {
+    return false;
+  }
+
+  var removedDiacritics = removeDiacritics(expectedPlural);
+
+  if (removedDiacritics.compareTo(expectedPlural) != 0 ||
+      expectedPlural.length > expectedSingular.length) {
+    return true;
+  }
+
+  return false;
+}
+
+/// checks whether two strings are potentially singular and plural
+/// of the same noun
+bool isPluralAndSingular(final String first, final String second) {
   final firstWithoutDiacritics = removeDiacritics(first);
   final secondWithoutDiacritics = removeDiacritics(second);
 

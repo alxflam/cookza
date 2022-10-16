@@ -71,7 +71,7 @@ class IngredientsCalculatorImpl implements IngredientsCalculator {
         var sameIngredient = result
             .where((e) =>
                 e.ingredient.name == note.ingredient.name ||
-                isPlural(e.ingredient.name, note.ingredient.name))
+                isPluralAndSingular(e.ingredient.name, note.ingredient.name))
             .toList();
 
         // if it does not exist yet, directly add it
@@ -88,10 +88,8 @@ class IngredientsCalculatorImpl implements IngredientsCalculator {
             .firstWhereOrNull((e) => e.unitOfMeasure == note.unitOfMeasure);
         if (sameUoM != null) {
           if (sameUoM.ingredient.name != note.ingredient.name) {
-            // then use the plural name instead now, for now only check by
-            // length as plural is usually longer, diacritics not taken into
-            // account like in isPlural
-            if (note.ingredient.name.length > sameUoM.ingredient.name.length) {
+            // then use the plural name instead now
+            if (isPlural(note.ingredient.name, sameUoM.ingredient.name)) {
               sameUoM.ingredient.name = note.ingredient.name;
             }
           }

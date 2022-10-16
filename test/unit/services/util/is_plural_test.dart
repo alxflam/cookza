@@ -18,20 +18,31 @@ const nonPlurals = {
 
 void main() {
   test(
-    'Plural test',
+    'isPluralAndSingular test',
     () async {
       for (var plural in plurals.entries) {
-        expect(isPlural(plural.key, plural.value), true, reason: plural.key);
-        expect(isPlural(plural.value, plural.key), true);
+        expect(isPluralAndSingular(plural.key, plural.value), true,
+            reason: plural.key);
+        expect(isPluralAndSingular(plural.value, plural.key), true);
       }
     },
   );
 
   test(
-    'Non-plural test',
+    'Non-plural isPluralAndSingular test',
     () async {
       for (var plural in nonPlurals.entries) {
-        expect(isPlural(plural.key, plural.value), false);
+        expect(isPluralAndSingular(plural.key, plural.value), false);
+        expect(isPluralAndSingular(plural.value, plural.key), false);
+      }
+    },
+  );
+
+  test(
+    'isPlural test',
+    () async {
+      for (var plural in plurals.entries) {
+        expect(isPlural(plural.key, plural.value), true, reason: plural.key);
         expect(isPlural(plural.value, plural.key), false);
       }
     },
