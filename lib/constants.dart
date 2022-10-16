@@ -44,6 +44,19 @@ const kVegetarianTag = 'vegetarian';
 const kFishTag = 'fish';
 const kMeatTag = 'meat';
 
+const kMinRecipeDuration = 15;
+const kMaxRecipeDuration = 120;
+
+int adaptRecipeDuration(final int duration) {
+  var result = duration;
+  if (result < kMinRecipeDuration) {
+    result = kMinRecipeDuration;
+  } else if (result > kMaxRecipeDuration) {
+    result = kMaxRecipeDuration;
+  }
+  return result;
+}
+
 /// custom image assets
 const kIconTransparent = 'assets/images/icon_transparent_small.png';
 

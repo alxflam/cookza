@@ -1,3 +1,4 @@
+import 'package:cookza/constants.dart';
 import 'package:cookza/model/entities/abstract/recipe_collection_entity.dart';
 import 'package:cookza/model/entities/abstract/recipe_entity.dart';
 import 'package:cookza/services/recipe/recipe_manager.dart';
@@ -89,8 +90,8 @@ Step getOverviewStep(BuildContext context) {
                         Flexible(
                           flex: 1,
                           child: Slider(
-                            min: 1,
-                            max: 120,
+                            min: kMinRecipeDuration.toDouble(),
+                            max: kMaxRecipeDuration.toDouble(),
                             divisions: 12,
                             label: '${model.duration}',
                             onChanged: (double value) {

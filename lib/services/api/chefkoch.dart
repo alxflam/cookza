@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cookza/constants.dart';
 import 'package:cookza/model/entities/abstract/ingredient_group_entity.dart';
 import 'package:cookza/model/entities/abstract/recipe_entity.dart';
 import 'package:cookza/model/entities/json/ingredient_note_entity.dart';
@@ -55,12 +56,14 @@ class ChefkochImporterImpl implements ChefkochImporter {
             ? DIFFICULTY.HARD
             : DIFFICULTY.MEDIUM;
 
+    var duration = adaptRecipeDuration((json['totalTime']));
+
     var recipe = Recipe(
       name: json['title'],
       shortDescription: json['subtitle'],
       diff: diff,
       servings: (json['servings']),
-      duration: (json['totalTime']),
+      duration: duration,
       instructions: [],
       ingredientGroups: [],
       tags: [],
