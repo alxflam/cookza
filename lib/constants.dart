@@ -44,7 +44,7 @@ const kVegetarianTag = 'vegetarian';
 const kFishTag = 'fish';
 const kMeatTag = 'meat';
 
-const kMinRecipeDuration = 15;
+const kMinRecipeDuration = 0;
 const kMaxRecipeDuration = 120;
 
 int adaptRecipeDuration(final int duration) {
