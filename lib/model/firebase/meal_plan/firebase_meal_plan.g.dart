@@ -43,7 +43,9 @@ FirebaseMealPlanDate _$FirebaseMealPlanDateFromJson(
 
 Map<String, dynamic> _$FirebaseMealPlanDateToJson(
     FirebaseMealPlanDate instance) {
-  final val = <String, dynamic>{};
+  final val = <String, dynamic>{
+    'date': kDateToJson(instance.date),
+  };
 
   void writeNotNull(String key, dynamic value) {
     if (value != null) {
@@ -51,7 +53,6 @@ Map<String, dynamic> _$FirebaseMealPlanDateToJson(
     }
   }
 
-  writeNotNull('date', kDateToJson(instance.date));
   writeNotNull('recipes', kListToJson(instance.recipes));
   return val;
 }

@@ -56,8 +56,8 @@ Map<String, dynamic> _$FirebaseShoppingListDocumentToJson(
   }
 
   writeNotNull('items', kListToJson(instance.items));
-  writeNotNull('dateFrom', kDateToJson(instance.dateFrom));
-  writeNotNull('dateUntil', kDateToJson(instance.dateUntil));
+  val['dateFrom'] = kDateToJson(instance.dateFrom);
+  val['dateUntil'] = kDateToJson(instance.dateUntil);
   val['groupID'] = instance.groupID;
   return val;
 }

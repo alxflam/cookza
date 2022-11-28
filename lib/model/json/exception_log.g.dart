@@ -13,21 +13,12 @@ ExceptionItem _$ExceptionItemFromJson(Map<String, dynamic> json) =>
       date: kDateFromJson(json['date'] as String),
     );
 
-Map<String, dynamic> _$ExceptionItemToJson(ExceptionItem instance) {
-  final val = <String, dynamic>{
-    'error': instance.error,
-    'stackTrace': instance.stackTrace,
-  };
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('date', kDateToJson(instance.date));
-  return val;
-}
+Map<String, dynamic> _$ExceptionItemToJson(ExceptionItem instance) =>
+    <String, dynamic>{
+      'error': instance.error,
+      'stackTrace': instance.stackTrace,
+      'date': kDateToJson(instance.date),
+    };
 
 ExceptionLog _$ExceptionLogFromJson(Map<String, dynamic> json) => ExceptionLog(
       errors: (json['errors'] as List<dynamic>)

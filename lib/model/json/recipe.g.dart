@@ -31,6 +31,9 @@ Map<String, dynamic> _$RecipeToJson(Recipe instance) {
   final val = <String, dynamic>{
     'id': instance.id,
     'recipeCollection': instance.recipeCollection,
+    'creationDate': kDateToJson(instance.creationDate),
+    'modificationDate': kDateToJson(instance.modificationDate),
+    'name': instance.name,
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -39,9 +42,6 @@ Map<String, dynamic> _$RecipeToJson(Recipe instance) {
     }
   }
 
-  writeNotNull('creationDate', kDateToJson(instance.creationDate));
-  writeNotNull('modificationDate', kDateToJson(instance.modificationDate));
-  val['name'] = instance.name;
   writeNotNull('shortDescription', instance.shortDescription);
   val['duration'] = instance.duration;
   val['servings'] = instance.servings;
