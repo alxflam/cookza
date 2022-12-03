@@ -125,7 +125,7 @@ void main() {
 
       mock.items = [item, secondItem];
 
-      var model = MealPlanViewModel.of(mock);
+      var model = MealPlanViewModel.of(mock, startDate: today);
 
       expect(
           isSameDay(model.entries[9].date,
@@ -247,7 +247,7 @@ void main() {
           MutableMealPlanRecipeEntity.fromValues('A', 'TestRecipe', 2));
       mock.items = [item];
 
-      var model = MealPlanViewModel.of(mock);
+      var model = MealPlanViewModel.of(mock, startDate: today);
       var recipeModel = model.entries[10].recipes.first;
 
       expect(model.entries[10].recipes.length, 1);
