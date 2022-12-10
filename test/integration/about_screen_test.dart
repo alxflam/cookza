@@ -12,6 +12,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mockito/mockito.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -20,18 +21,13 @@ import '../mocks/shared_mocks.mocks.dart';
 
 void main() {
   setUpAll(() {
-    const MethodChannel('plugins.flutter.io/package_info')
-        .setMockMethodCallHandler((MethodCall methodCall) async {
-      if (methodCall.method == 'getAll') {
-        return <String, dynamic>{
-          'appName': kAppName,
-          'packageName': 'test',
-          'version': '0.42.0',
-          'buildNumber': '42'
-        };
-      }
-      return null;
-    });
+    PackageInfo.setMockInitialValues(
+        appName: kAppName,
+        packageName: 'test',
+        version: '0.42.0',
+        buildNumber: '42',
+        buildSignature: '',
+        installerStore: '');
 
     SharedPreferences.setMockInitialValues({});
     GetIt.I.registerSingletonAsync<SharedPreferencesProvider>(
@@ -167,9 +163,8 @@ void main() {
     await _initApp(tester, observer);
     await tester.pumpAndSettle();
 
-    // TODO: maybe method channel API changed, version is no longer shown in test as future does not complete
-    // var tile = find.text('v0.42.0');
-    // expect(tile, findsOneWidget);
+    var tile = find.text('v0.42.0');
+    expect(tile, findsOneWidget);
     expect(find.byType(VersionText), findsOneWidget);
   });
 }
