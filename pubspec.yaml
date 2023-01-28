@@ -28,9 +28,9 @@ dependencies:
   introduction_screen: ^3.0.0
   get_it: ^7.1.3
   file_picker: ^5.2.2
-  pdf: ^3.1.0
+  pdf: ^3.8.0
   barcode_widget: ^2.0.1
-  collection: ^1.16.0
+  collection: ^1.17.0
   uuid: ^3.0.6
 
   firebase_core: ^2.3.0
