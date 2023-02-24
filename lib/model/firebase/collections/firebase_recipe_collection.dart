@@ -6,7 +6,7 @@ part 'firebase_recipe_collection.g.dart';
 
 @JsonSerializable(includeIfNull: false)
 class FirebaseRecipeCollection {
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   String? documentID;
   @JsonKey()
   String name;

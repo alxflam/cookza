@@ -53,7 +53,7 @@ class FirebaseMealPlanDate {
 
 @JsonSerializable(includeIfNull: false)
 class FirebaseMealPlanDocument {
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   String? documentID;
 
   @JsonKey(toJson: kListToJson)

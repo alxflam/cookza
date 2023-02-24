@@ -21,7 +21,7 @@ class WebLandingPage extends StatelessWidget {
     var size = MediaQuery.of(context).size;
 
     return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: PreferredSize(
         preferredSize: Size(size.width, 1000),
         child: const TopBar(),
@@ -69,7 +69,7 @@ class BottomBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(30),
-      color: Theme.of(context).bottomAppBarColor,
+      color: Theme.of(context).bottomAppBarTheme.color,
       child: ResponsiveWidget.isSmallScreen(context)
           ? Column(
               children: [
@@ -127,7 +127,7 @@ class MainInfoBar extends StatelessWidget {
             'Cookza',
             style: Theme.of(context)
                 .textTheme
-                .headline2!
+                .displayMedium!
                 .copyWith(color: Colors.black, fontWeight: FontWeight.w900),
           ),
         ),
@@ -135,7 +135,7 @@ class MainInfoBar extends StatelessWidget {
           'Manage recipes the easy way',
           style: Theme.of(context)
               .textTheme
-              .headline3!
+              .displaySmall!
               .copyWith(color: Colors.black),
         )
       ],

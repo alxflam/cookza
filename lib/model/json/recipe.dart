@@ -59,7 +59,7 @@ class Recipe {
 
   Map<String, dynamic> toJson() => _$RecipeToJson(this);
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   String? documentID;
   @JsonKey()
   String id;

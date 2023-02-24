@@ -80,7 +80,7 @@ class FirebaseIngredientGroup {
 
 @JsonSerializable(includeIfNull: false)
 class FirebaseIngredientDocument {
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   String? documentID;
   @JsonKey()
   String recipeID;

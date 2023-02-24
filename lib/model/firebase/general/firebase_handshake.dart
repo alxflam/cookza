@@ -6,7 +6,7 @@ part 'firebase_handshake.g.dart';
 
 @JsonSerializable()
 class FirebaseHandshake {
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   String? documentID;
   @JsonKey()
   String requestor;

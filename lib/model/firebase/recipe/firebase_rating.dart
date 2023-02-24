@@ -4,7 +4,7 @@ part 'firebase_rating.g.dart';
 
 @JsonSerializable(includeIfNull: false)
 class FirebaseRating {
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   String? documentID;
   @JsonKey()
   String userId;

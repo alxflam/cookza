@@ -4,7 +4,7 @@ part 'firebase_user.g.dart';
 
 @JsonSerializable(includeIfNull: false)
 class FirebaseRecipeUser {
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   String? documentID;
   @JsonKey()
   String id;

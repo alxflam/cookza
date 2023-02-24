@@ -16,7 +16,7 @@ class FirebaseRecipe {
 
   Map<String, dynamic> toJson() => _$FirebaseRecipeToJson(this);
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   String? documentID;
   @JsonKey(fromJson: kTimestampFromJson, toJson: kTimestampToJson)
   Timestamp creationDate;

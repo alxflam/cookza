@@ -120,7 +120,7 @@ class LeftoversBodyState extends State<LeftoversBody> {
     for (var ingredient in this._ingredients) {
       var chip = InputChip(
         label: Text(ingredient),
-        deleteIconColor: Theme.of(context).errorColor,
+        deleteIconColor: Theme.of(context).colorScheme.error,
         onDeleted: () => this._removeIngredient(ingredient),
       );
       result.add(chip);

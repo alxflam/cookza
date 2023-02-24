@@ -54,7 +54,7 @@ class FirebaseShoppingListItem {
 
 @JsonSerializable(includeIfNull: false)
 class FirebaseShoppingListDocument {
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   String? documentID;
 
   @JsonKey(toJson: kListToJson)

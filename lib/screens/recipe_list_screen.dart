@@ -117,7 +117,8 @@ class RecipeListScreen extends StatelessWidget {
         ),
         actions: [
           IconButton(
-              icon: Icon(Icons.cancel, color: Theme.of(context).errorColor),
+              icon: Icon(Icons.cancel,
+                  color: Theme.of(context).colorScheme.error),
               onPressed: () {
                 Provider.of<RecipeListViewModel>(context, listen: false)
                     .isSearchEnabled = false;

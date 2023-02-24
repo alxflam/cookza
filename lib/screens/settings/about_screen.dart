@@ -21,7 +21,7 @@ class AboutScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final subtitle = Theme.of(context).textTheme.subtitle1;
+    final subtitle = Theme.of(context).textTheme.titleMedium;
 
     return Scaffold(
       appBar: AppBar(

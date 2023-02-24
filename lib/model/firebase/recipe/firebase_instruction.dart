@@ -41,7 +41,7 @@ class FirebaseInstruction {
 
 @JsonSerializable(includeIfNull: false)
 class FirebaseInstructionDocument {
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   String? documentID;
   @JsonKey()
   String recipeID;
