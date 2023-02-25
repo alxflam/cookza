@@ -137,17 +137,19 @@ class AboutScreen extends StatelessWidget {
               onTap: () async {
                 final localizations = AppLocalizations.of(context);
                 final platformInfo = await PackageInfo.fromPlatform();
-                showLicensePage(
-                  context: context,
-                  applicationVersion: platformInfo.version,
-                  applicationIcon: ConstrainedBox(
-                    constraints: const BoxConstraints.tightFor(width: 40),
-                    child: const Image(
-                      image: AssetImage(kIconTransparent),
+                if (context.mounted) {
+                  showLicensePage(
+                    context: context,
+                    applicationVersion: platformInfo.version,
+                    applicationIcon: ConstrainedBox(
+                      constraints: const BoxConstraints.tightFor(width: 40),
+                      child: const Image(
+                        image: AssetImage(kIconTransparent),
+                      ),
                     ),
-                  ),
-                  applicationLegalese: localizations.copyright,
-                );
+                    applicationLegalese: localizations.copyright,
+                  );
+                }
               },
             ),
             const AboutScreenDivider(),

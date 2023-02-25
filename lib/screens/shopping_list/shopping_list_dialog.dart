@@ -22,7 +22,8 @@ Future<void> openShoppingListDialog(BuildContext context) async {
 
   var collections = await sl.get<MealPlanManager>().collections;
 
-  if (collections.isEmpty) {
+  // ignore: use_build_context_synchronously
+  if (collections.isEmpty || !context.mounted) {
     scaffoldMessenger
         .showSnackBar(SnackBar(content: Text(localizations.noMealPlan)));
     return;
