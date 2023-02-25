@@ -20,6 +20,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mockito/mockito.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../mocks/shared_mocks.mocks.dart';
 
@@ -31,12 +32,14 @@ final cut = ShareReceiveHandler();
 
 void main() {
   setUpAll(() async {
+    SharedPreferences.setMockInitialValues({});
     GetIt.I.registerSingleton<NavigatorService>(navigatorService);
     GetIt.I.registerSingleton<ImageManager>(imageManager);
     GetIt.I.registerSingleton<ChefkochImporter>(chefkoch);
     GetIt.I.registerSingleton<RecipeManager>(recipeManager);
     GetIt.I.registerSingletonAsync<SharedPreferencesProvider>(
         () async => SharedPreferencesProviderImpl().init());
+    await GetIt.I.allReady();
   });
 
   setUp(() {

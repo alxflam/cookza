@@ -44,13 +44,15 @@ void main() {
         .thenAnswer((_) => Future.value(null));
   });
 
-  setUpAll(() {
+  setUpAll(() async {
+    TestWidgetsFlutterBinding.ensureInitialized();
     SharedPreferences.setMockInitialValues({});
     GetIt.I.registerSingletonAsync<SharedPreferencesProvider>(
         () async => SharedPreferencesProviderImpl().init());
     GetIt.I.registerSingleton<ReceiveIntentHandler>(ReceiveIntentHandlerMock());
     GetIt.I.registerSingleton<UnitOfMeasureProvider>(UoMMock());
     GetIt.I.registerSingleton<NavigatorService>(NavigatorService());
+    await GetIt.I.allReady();
   });
 
   testWidgets('Modify a recipe', (WidgetTester tester) async {
@@ -107,14 +109,14 @@ void main() {
     await inputFormField(tester, descInput, 'My Desc');
 
     /// navigate to next page
-    await tester.tap(find.text('CONTINUE'));
+    await tester.tap(find.text('Continue'));
     await tester.pumpAndSettle();
 
     /// then verify we're on the image step
     expect(find.byType(SelectImageWidget), findsOneWidget);
 
     /// then proceed
-    await tester.tap(find.text('CONTINUE'));
+    await tester.tap(find.text('Continue'));
     await tester.pumpAndSettle();
 
     /// then verify we're on the tag step
@@ -245,7 +247,7 @@ void main() {
 }
 
 Future _proceedStep(WidgetTester tester) async {
-  await tester.tap(find.text('CONTINUE'));
+  await tester.tap(find.text('Continue'));
   await tester.pump();
 }
 

@@ -7,16 +7,22 @@ import 'package:cookza/viewmodel/recipe_edit/recipe_ingredient_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mockito/mockito.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../mocks/file_mock.dart';
 import '../../mocks/shared_mocks.mocks.dart';
+import '../../utils/path.dart';
 
 void main() {
   var mock = MockImageTextExtractor();
-  setUpAll(() {
+  setUpAll(() async {
+    TestWidgetsFlutterBinding.ensureInitialized();
+    SharedPreferences.setMockInitialValues({});
+    await setupTmpAndDocumentsDir();
     GetIt.I.registerSingleton<ImageTextExtractor>(mock);
     GetIt.I.registerSingletonAsync<SharedPreferencesProvider>(
         () async => SharedPreferencesProviderImpl().init());
+    await GetIt.I.allReady();
   });
 
   test('Overview step', () async {

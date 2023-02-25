@@ -41,11 +41,8 @@ class ShoppingListModel extends ChangeNotifier {
 
   Future<List<ShoppingListItemModel>> getItems() async {
     // lazy initialize on first get call
-    // TODO PRIO1 stable sort order
     if (this.initialized) {
       // sort items
-      // TODO: should be added again?
-      // this._sortItems();
       // create the viewmodels
       var viewModels =
           this._items.map((e) => ShoppingListItemModel.ofEntity(e)).toList();
@@ -196,7 +193,6 @@ class ShoppingListModel extends ChangeNotifier {
     // add to entity
     this._listEntity.addItem(entity);
     // add to transient items list
-    // TODO at always on top?
     this._items.insert(0, entity);
     entity.index = 0;
     // save changes

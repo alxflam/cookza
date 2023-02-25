@@ -85,14 +85,14 @@ void main() {
     await inputFormField(tester, descInput, 'My Desc');
 
     /// navigate to next page
-    await tester.tap(find.text('CONTINUE'));
+    await tester.tap(find.text('Continue'));
     await tester.pumpAndSettle();
 
     /// then verify we're on the image step
     expect(find.byType(SelectImageWidget), findsOneWidget);
 
     /// then proceed
-    await tester.tap(find.text('CONTINUE'));
+    await tester.tap(find.text('Continue'));
     await tester.pumpAndSettle();
 
     /// then verify we're on the tag step
@@ -224,14 +224,14 @@ void main() {
     expect(find.byType(OCROverviewImageScreen), findsNothing);
 
     /// navigate to next page
-    await tester.tap(find.text('CONTINUE'));
+    await tester.tap(find.text('Continue'));
     await tester.pumpAndSettle();
 
     /// then verify we're on the image step
     expect(find.byType(SelectImageWidget), findsOneWidget);
 
     /// then proceed
-    await tester.tap(find.text('CONTINUE'));
+    await tester.tap(find.text('Continue'));
     await tester.pumpAndSettle();
 
     /// then verify we're on the tag step
@@ -267,7 +267,7 @@ void main() {
 }
 
 Future _proceedStep(WidgetTester tester) async {
-  await tester.tap(find.text('CONTINUE'));
+  await tester.tap(find.text('Continue'));
   await tester.pumpAndSettle();
 }
 

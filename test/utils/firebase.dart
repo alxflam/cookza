@@ -16,8 +16,8 @@ Future<void> mockFirestore() async {
   TestWidgetsFlutterBinding.ensureInitialized();
   await GetIt.I.reset();
 
-  var prefProvider = await SharedPreferencesProviderImpl().init();
   SharedPreferences.setMockInitialValues({});
+  var prefProvider = await SharedPreferencesProviderImpl().init();
   GetIt.I.registerSingleton<SharedPreferencesProvider>(prefProvider);
 
   var auth = MockFirebaseAuth();

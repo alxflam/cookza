@@ -85,8 +85,7 @@ class CookzaMaterialApp extends StatelessWidget {
       title: kAppName,
       localizationsDelegates: const [
         AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
+        ...GlobalMaterialLocalizations.delegates,
       ],
       supportedLocales: AppLocalizations.supportedLocales,
       debugShowCheckedModeBanner: kDebugMode,

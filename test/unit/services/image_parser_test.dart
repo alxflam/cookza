@@ -5,6 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:mockito/mockito.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../mocks/unit_of_measure_provider_mock.dart';
 
@@ -27,6 +28,7 @@ class TextLineMock extends Mock implements TextLine {}
 
 void main() {
   setUpAll(() {
+    SharedPreferences.setMockInitialValues({});
     GetIt.I
         .registerSingleton<UnitOfMeasureProvider>(UnitOfMeasureProviderMock());
     GetIt.I.registerSingletonAsync<SharedPreferencesProvider>(
