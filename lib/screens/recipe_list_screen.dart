@@ -76,11 +76,9 @@ class RecipeListScreen extends StatelessWidget {
                         }
 
                         return ListView.separated(
-                          separatorBuilder: (context, index) => Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
-                            child: Divider(
-                              color: Theme.of(context).primaryColorLight,
-                            ),
+                          separatorBuilder: (context, index) => const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            child: Divider(),
                           ),
                           itemCount: recipes.length,
                           itemBuilder: (context, index) {
@@ -113,7 +111,6 @@ class RecipeListScreen extends StatelessWidget {
           decoration: const InputDecoration(
             prefixIcon: Icon(Icons.search),
           ),
-          style: TextStyle(color: Theme.of(context).colorScheme.onBackground),
         ),
         actions: [
           IconButton(

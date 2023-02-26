@@ -61,9 +61,7 @@ class RecipeScreen extends StatelessWidget {
           child: Consumer<RecipeViewModel>(
             builder: (context, model, child) {
               var theme = Theme.of(context);
-              var color = theme.brightness == Brightness.dark
-                  ? theme.colorScheme.primary
-                  : theme.colorScheme.onPrimary;
+              var color = theme.colorScheme.primary;
 
               return Scaffold(
                 appBar: AppBar(

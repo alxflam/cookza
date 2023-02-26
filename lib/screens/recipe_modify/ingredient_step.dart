@@ -121,8 +121,6 @@ class IngredientStepContent extends StatelessWidget {
   Widget _getAddRowButton(
       BuildContext context, RecipeIngredientEditStep model) {
     return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-          backgroundColor: Theme.of(context).colorScheme.primary),
       onPressed: () async => await _addNewIngredient(context, model),
       child: Text(AppLocalizations.of(context).addIngredient),
     );

@@ -41,11 +41,9 @@ class FavoriteRecipesScreen extends StatelessWidget {
               }
 
               return ListView.separated(
-                separatorBuilder: (context, index) => Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Divider(
-                    color: Theme.of(context).primaryColorLight,
-                  ),
+                separatorBuilder: (context, index) => const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: Divider(),
                 ),
                 itemCount: favorites.length,
                 itemBuilder: (context, index) {

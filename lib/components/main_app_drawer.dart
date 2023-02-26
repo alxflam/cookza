@@ -44,11 +44,8 @@ class MainAppDrawer extends StatelessWidget {
     ];
 
     items.add(
-      DrawerHeader(
-        decoration: BoxDecoration(
-          color: Theme.of(context).cardColor,
-        ),
-        child: const AppIconTextWidget(),
+      const DrawerHeader(
+        child: AppIconTextWidget(),
       ),
     );
 

@@ -43,16 +43,10 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     init(context);
-
-    var tileColor = Theme.of(context).cardColor;
-
     return Scaffold(
       drawer: const MainAppDrawer(),
       appBar: AppBar(
-        title: const Text(
-          kAppName,
-          style: TextStyle(),
-        ),
+        title: const Text(kAppName),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -65,7 +59,6 @@ class HomeScreen extends StatelessWidget {
                     onPress: () => Navigator.pushNamed(
                         context, NewRecipeScreen.id,
                         arguments: RecipeEditModel.create()),
-                    color: tileColor,
                     cardChild: IconContent(
                       icon: kNewRecipe,
                       label: AppLocalizations.of(context).functionsAddRecipe,
@@ -76,7 +69,6 @@ class HomeScreen extends StatelessWidget {
                   child: MainFunctionCard(
                     onPress: () =>
                         Navigator.pushNamed(context, FavoriteRecipesScreen.id),
-                    color: tileColor,
                     cardChild: IconContent(
                       icon: kFavoriteRecipes,
                       label: AppLocalizations.of(context).functionsFavorites,
@@ -93,7 +85,6 @@ class HomeScreen extends StatelessWidget {
                   child: MainFunctionCard(
                     onPress: () =>
                         Navigator.pushNamed(context, LeftoversScreen.id),
-                    color: tileColor,
                     cardChild: IconContent(
                       icon: kLeftoversIconData,
                       label: AppLocalizations.of(context).functionsLeftovers,
@@ -104,7 +95,6 @@ class HomeScreen extends StatelessWidget {
                   child: MainFunctionCard(
                     onPress: () =>
                         Navigator.pushNamed(context, RecipeListScreen.id),
-                    color: tileColor,
                     cardChild: IconContent(
                       icon: kRecipesIconData,
                       label: AppLocalizations.of(context).functionsListRecipes,
@@ -121,7 +111,6 @@ class HomeScreen extends StatelessWidget {
                   child: MainFunctionCard(
                     onPress: () => Navigator.pushNamed(
                         context, ShoppingListOverviewScreen.id),
-                    color: tileColor,
                     cardChild: IconContent(
                       icon: kShoppingListIconData,
                       label: AppLocalizations.of(context).functionsShoppingList,
@@ -132,7 +121,6 @@ class HomeScreen extends StatelessWidget {
                   child: MainFunctionCard(
                     onPress: () =>
                         Navigator.pushNamed(context, MealPlanScreen.id),
-                    color: tileColor,
                     cardChild: IconContent(
                       icon: kMealPlannerIconData,
                       label: AppLocalizations.of(context).functionsMealPlanner,
@@ -150,13 +138,9 @@ class HomeScreen extends StatelessWidget {
 
 class MainFunctionCard extends StatelessWidget {
   const MainFunctionCard(
-      {required this.color,
-      required this.cardChild,
-      required this.onPress,
-      Key? key})
+      {required this.cardChild, required this.onPress, Key? key})
       : super(key: key);
 
-  final Color color;
   final Widget cardChild;
   final GestureTapCallback onPress;
 
@@ -167,7 +151,6 @@ class MainFunctionCard extends StatelessWidget {
       child: Container(
         margin: const EdgeInsets.all(15),
         decoration: BoxDecoration(
-          color: this.color,
           borderRadius: BorderRadius.circular(10),
         ),
         child: cardChild,

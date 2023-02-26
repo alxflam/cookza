@@ -100,6 +100,7 @@ class AboutScreen extends StatelessWidget {
                 launchUrl(Uri.parse(kPlayStoreLink));
               },
             ),
+            const AboutScreenDivider(),
             ListTile(
               title: Text(AppLocalizations.of(context).sourceCode),
               leading: const FaIcon(FontAwesomeIcons.code),
@@ -249,7 +250,7 @@ class AboutScreenDivider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20),
+      padding: EdgeInsets.symmetric(horizontal: 5),
       child: Divider(
         height: 1,
       ),

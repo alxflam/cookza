@@ -21,7 +21,6 @@ class WebLandingPage extends StatelessWidget {
     var size = MediaQuery.of(context).size;
 
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: PreferredSize(
         preferredSize: Size(size.width, 1000),
         child: const TopBar(),
@@ -170,7 +169,6 @@ class FloatingBar extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(top: size.height / 80),
       child: Card(
-        color: Theme.of(context).cardColor,
         elevation: 4,
         child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
@@ -239,17 +237,14 @@ class TopBar extends StatelessWidget {
 
     return PreferredSize(
       preferredSize: Size(screenSize.width, 1000),
-      child: Container(
-        color: Theme.of(context).colorScheme.background,
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              // top bar entries if any needed
-            ],
-          ),
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const [
+            // top bar entries if any needed
+          ],
         ),
       ),
     );

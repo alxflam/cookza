@@ -6,7 +6,8 @@
 
 Cookza is a flutter app which let's you store and share your favorite recipes.
 
-![Home Screen](img/home_screen.jpg)
+![Home Screen Dark](img/home_screen_dark.png)
+![Home Screen Light](img/home_screen_light.png)
 
 ## Building the app
 
