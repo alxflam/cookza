@@ -100,8 +100,8 @@ class LogIns extends StatelessWidget {
         children: [
           Builder(
             builder: (context) {
-              var col = Column(
-                children: const [],
+              var col = const Column(
+                children: [],
               );
               for (var hs in handshakes) {
                 var date = kDateFormatter.format(hs.creationTimestamp.toDate());

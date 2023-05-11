@@ -344,8 +344,8 @@ void main() {
     // a meal plan is selected
     expect(find.byType(OpenDrawerButton), findsNothing);
 
-    find.descendant(of: find.byType(Card), matching: find.text('Spätzle'));
-    find.descendant(of: find.byType(Card), matching: find.text('2'));
+    find.descendant(of: find.byType(ListTile), matching: find.text('Spätzle'));
+    find.descendant(of: find.byType(ListTile), matching: find.text('2'));
 
     // press add button on next day (next enabled day, not in the past)
     var targetDate = DateTime.now().add(const Duration(days: 1));

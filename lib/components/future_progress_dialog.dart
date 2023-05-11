@@ -13,8 +13,8 @@ class FutureProgressDialog extends StatelessWidget {
       Navigator.of(context).pop(error);
     });
 
-    return Column(
-      children: const [CircularProgressIndicator()],
+    return const Column(
+      children: [CircularProgressIndicator()],
     );
   }
 }

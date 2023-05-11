@@ -26,11 +26,11 @@ Future<void> saveModel(BuildContext context, RecipeEditModel model) async {
     context: context,
     barrierDismissible: false,
     builder: (BuildContext context) {
-      return SimpleDialog(
+      return const SimpleDialog(
         children: [
           Center(
             child: Column(
-              children: const [
+              children: [
                 Padding(
                   padding: EdgeInsets.all(25),
                   child: CircularProgressIndicator(),
@@ -102,8 +102,8 @@ class NewRecipeScreen extends StatelessWidget {
       ),
       body: ChangeNotifierProvider(
         create: (context) => model,
-        child: Column(
-          children: const <Widget>[
+        child: const Column(
+          children: <Widget>[
             NewRecipeStepper(),
           ],
         ),

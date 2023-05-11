@@ -6,10 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.0.33] - 2022-03-20
+## [0.0.40] - 2023-05-11
 ### Updated
-- Updated Flutter to 2.10
-- Updated dependencies
+- Updated Flutter to version 3.10
+- Updated Dart to version 3.0.0
+- Use Material3 design
 
 ## [0.0.32] - 2021-11-22
 ### Updated

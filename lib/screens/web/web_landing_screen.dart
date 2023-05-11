@@ -35,8 +35,8 @@ class WebLandingPage extends StatelessWidget {
                   width: size.width,
                   child: Container(
                     color: Theme.of(context).colorScheme.primary,
-                    child: Column(
-                      children: const [
+                    child: const Column(
+                      children: [
                         MainInfoBar(),
                       ],
                     ),
@@ -175,11 +175,11 @@ class FloatingBar extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(10),
+                const Padding(
+                  padding: EdgeInsets.all(10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
+                    children: [
                       InstructionText('1. Open Cookza on your phone'),
                       InstructionText(
                         '2. Select Cookza Web',
@@ -237,12 +237,12 @@ class TopBar extends StatelessWidget {
 
     return PreferredSize(
       preferredSize: Size(screenSize.width, 1000),
-      child: Padding(
-        padding: const EdgeInsets.all(20),
+      child: const Padding(
+        padding: EdgeInsets.all(20),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
+          children: [
             // top bar entries if any needed
           ],
         ),

@@ -125,7 +125,7 @@ class ExceptionEntry extends StatelessWidget {
               content: Padding(
                 padding: const EdgeInsets.only(top: 10),
                 child: SingleChildScrollView(
-                  child: Text(exception.stackTrace),
+                  child: Text(exception.stackTrace ?? ''),
                 ),
               ),
             );

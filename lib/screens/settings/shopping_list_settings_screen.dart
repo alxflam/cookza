@@ -22,8 +22,8 @@ class ShoppingListSettingsScreen extends StatelessWidget {
           child: SingleChildScrollView(
             child: Consumer<ShoppingListSettingsModel>(
               builder: (context, model, widget) {
-                var column = Column(
-                  children: const [],
+                var column = const Column(
+                  children: [],
                 );
                 // var tile = SwitchListTile(
                 //     title: Text('§Group items'),

@@ -7,15 +7,15 @@ import 'package:cookza/services/flutter/service_locator.dart';
 
 abstract class ExceptionHandler {
   Future<void> reportException(
-      Object error, StackTrace stackTrace, DateTime dateTime);
+      Object error, StackTrace? stackTrace, DateTime dateTime);
 }
 
 class ExceptionHandlerImpl implements ExceptionHandler {
   @override
   Future<void> reportException(
-      Object error, StackTrace stackTrace, DateTime dateTime) async {
+      Object error, StackTrace? stackTrace, DateTime dateTime) async {
     /// serialize stack trace
-    var stackString = stackTrace.toString();
+    var stackString = stackTrace?.toString();
 
     /// create a model
     var newError = ExceptionItem(

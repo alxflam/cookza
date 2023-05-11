@@ -46,7 +46,7 @@ Column _getInstructionRows(
     BuildContext context, RecipeInstructionEditStep model) {
   List<Widget> rows = [];
   if (model.instructions.isEmpty) {
-    return Column();
+    return const Column();
   }
 
   for (var i = 0; i < model.instructions.length; i++) {

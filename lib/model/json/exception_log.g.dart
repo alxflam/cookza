@@ -9,16 +9,25 @@ part of 'exception_log.dart';
 ExceptionItem _$ExceptionItemFromJson(Map<String, dynamic> json) =>
     ExceptionItem(
       error: json['error'] as String,
-      stackTrace: json['stackTrace'] as String,
+      stackTrace: json['stackTrace'] as String?,
       date: kDateFromJson(json['date'] as String),
     );
 
-Map<String, dynamic> _$ExceptionItemToJson(ExceptionItem instance) =>
-    <String, dynamic>{
-      'error': instance.error,
-      'stackTrace': instance.stackTrace,
-      'date': kDateToJson(instance.date),
-    };
+Map<String, dynamic> _$ExceptionItemToJson(ExceptionItem instance) {
+  final val = <String, dynamic>{
+    'error': instance.error,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('stackTrace', instance.stackTrace);
+  val['date'] = kDateToJson(instance.date);
+  return val;
+}
 
 ExceptionLog _$ExceptionLogFromJson(Map<String, dynamic> json) => ExceptionLog(
       errors: (json['errors'] as List<dynamic>)

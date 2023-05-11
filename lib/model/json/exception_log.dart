@@ -9,7 +9,7 @@ class ExceptionItem {
   String error;
 
   @JsonKey()
-  String stackTrace;
+  String? stackTrace;
 
   @JsonKey(fromJson: kDateFromJson, toJson: kDateToJson)
   DateTime date;

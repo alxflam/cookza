@@ -40,19 +40,23 @@ void main() async {
     });
   }
 
+  FlutterError.onError = (details) {
+    FlutterError.presentError(details);
+    GetIt.I
+        .get<ExceptionHandler>()
+        .reportException(details.exception, details.stack, DateTime.now());
+  };
+  PlatformDispatcher.instance.onError = (error, stack) {
+    GetIt.I
+        .get<ExceptionHandler>()
+        .reportException(error, stack, DateTime.now());
+    return true;
+  };
+
   /// use a custom guarded zone to run the app
   /// this enables custom handling of uncatched exceptions
-  runZonedGuarded(
-    () => runApp(
-      const ProviderChainApp(),
-    ),
-    // TODO: remove for web or prevent log file usage
-    (Object error, StackTrace stackTrace) => {
-      // delegate exception to service
-      GetIt.I
-          .get<ExceptionHandler>()
-          .reportException(error, stackTrace, DateTime.now())
-    },
+  runApp(
+    const ProviderChainApp(),
   );
 }
 
