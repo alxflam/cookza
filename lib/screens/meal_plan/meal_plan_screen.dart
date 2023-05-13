@@ -116,7 +116,6 @@ class MealPlanScreen extends StatelessWidget {
   List<Widget> _buildMainLayout(BuildContext context, MealPlanViewModel model,
       GlobalKey firstVisibleWidget) {
     var tileColor = Theme.of(context).colorScheme.primary;
-    final now = DateUtils.dateOnly(DateTime.now());
 
     List<Widget> tiles = [];
     int? previousWeek;
@@ -125,11 +124,7 @@ class MealPlanScreen extends StatelessWidget {
       var currentWeek = model.entries[i].week;
       if (currentWeek != previousWeek) {
         if (currentWeek == todaysWeek) {
-          tiles.add(WeekNumber(
-            currentWeek,
-            tileColor,
-            key: firstVisibleWidget,
-          ));
+          tiles.add(WeekNumber(currentWeek, tileColor));
         } else {
           tiles.add(WeekNumber(
             currentWeek,
@@ -138,21 +133,32 @@ class MealPlanScreen extends StatelessWidget {
         }
         previousWeek = currentWeek;
       }
+
+      final now = DateUtils.dateOnly(DateTime.now());
       var isEnabled = !DateUtils.dateOnly(model.entries[i].date).isBefore(now);
-      var tile = _createTileForWeekDay(model, i, context, tileColor, isEnabled);
+      var isToday = DateUtils.isSameDay(now, model.entries[i].date);
+      var tile = _createTileForWeekDay(
+          model, i, context, tileColor, isEnabled, isToday, firstVisibleWidget);
       tiles.add(tile);
     }
     return tiles;
   }
 
-  Widget _createTileForWeekDay(MealPlanViewModel model, int i,
-      BuildContext context, Color accentColor, bool isEnabled) {
+  Widget _createTileForWeekDay(
+      MealPlanViewModel model,
+      int i,
+      BuildContext context,
+      Color accentColor,
+      bool isEnabled,
+      bool isToday,
+      GlobalKey firstVisibleWidget) {
     var body = DragTarget<MealDragModel>(
       builder: (context, accepted, rejected) {
         // set different color to highlight where a drop would take place
         var color = accepted.isNotEmpty ? accentColor : null;
         return Card(
           color: color,
+          key: isToday ? firstVisibleWidget : null,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
