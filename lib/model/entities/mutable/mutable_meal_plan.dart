@@ -55,9 +55,8 @@ class MutableMealPlan implements MealPlanEntity {
     // therefore if we open the meal plan on a wednesday and targetWeeks is two, we will have the rest of the week (5 days) + two weeks shown
     var offset =
         DateTime.monday == currentDate.weekday ? -1 : 7 - currentDate.weekday;
-    var minLastDate = currentDate
-        .add(Duration(days: offset))
-        .add(Duration(days: weeks * 7 - 1));
+    var minLastDate =
+        currentDate.add(Duration(days: offset)).add(Duration(days: weeks * 7));
     if (minLastDate.isAfter(lastDate)) {
       lastDate = minLastDate;
     }
