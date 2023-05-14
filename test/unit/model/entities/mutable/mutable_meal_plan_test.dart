@@ -88,4 +88,32 @@ void main() {
       }
     },
   );
+
+  group('End date calculation tests', () {
+    var testData = {
+      DateTime(2023, 05, 15): DateTime(2023, 05, 28), // monday
+      DateTime(2023, 05, 16): DateTime(2023, 06, 04), // truesday
+      DateTime(2023, 05, 17): DateTime(2023, 06, 04), // wednesday
+      DateTime(2023, 05, 18): DateTime(2023, 06, 04), // thursday
+      DateTime(2023, 05, 19): DateTime(2023, 06, 04), // friday
+      DateTime(2023, 05, 20): DateTime(2023, 06, 04), // saturday
+      DateTime(2023, 05, 21): DateTime(2023, 06, 04) // sunday
+    };
+
+    for (var entry in testData.entries) {
+      test(
+        'Calculate meal plan end day',
+        () async {
+          var startDate = entry.key;
+
+          var mealPlanDate = MutableMealPlanDateEntity.empty(startDate);
+          var cut = MutableMealPlan.of('id1', 'group1', [mealPlanDate], 2,
+              startDate: startDate);
+
+          expect(cut.items.first.date.isBefore(startDate), true);
+          expect(cut.items.last.date, entry.value);
+        },
+      );
+    }
+  });
 }
