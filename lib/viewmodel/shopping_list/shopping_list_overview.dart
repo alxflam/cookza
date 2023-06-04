@@ -18,7 +18,9 @@ class ShoppingListOverviewModel extends ChangeNotifier {
     var lists = await sl.get<ShoppingListManager>().shoppingListsAsList;
     this._mealPlans = await sl.get<MealPlanManager>().collections;
 
-    return lists.where((e) => e.dateUntil.isAfter(DateTime.now())).toList();
+    final yesterday =
+        DateUtils.dateOnly(DateTime.now()).subtract(const Duration(days: 1));
+    return lists.where((e) => e.dateUntil.isAfter(yesterday)).toList();
   }
 
   String getMealPlanName(String id) {
