@@ -195,26 +195,15 @@ class CameraViewState extends State<CameraView> {
         InputImageFormatValue.fromRawValue(image.format.raw) ??
             InputImageFormat.nv21;
 
-    final planeData = image.planes.map(
-      (Plane plane) {
-        return InputImagePlaneMetadata(
-          bytesPerRow: plane.bytesPerRow,
-          // bytesPerRow may not be equal to the planes width, hence use bytesPerRow
-          width: plane.bytesPerRow,
-          height: plane.height,
-        );
-      },
-    ).toList();
-
-    final inputImageData = InputImageData(
+    final inputImageData = InputImageMetadata(
       size: imageSize,
-      imageRotation: imageRotation,
-      inputImageFormat: inputImageFormat,
-      planeData: planeData,
+      rotation: imageRotation,
+      format: inputImageFormat,
+      bytesPerRow: width,
     );
 
     final inputImage =
-        InputImage.fromBytes(bytes: bytes, inputImageData: inputImageData);
+        InputImage.fromBytes(bytes: bytes, metadata: inputImageData);
 
     widget.onImage(inputImage);
   }
