@@ -338,7 +338,8 @@ class NewIngredientScreen extends StatelessWidget {
 }
 
 class IngredientNameTextInput extends StatelessWidget {
-  const IngredientNameTextInput({required this.ingredientController, super.key});
+  const IngredientNameTextInput(
+      {required this.ingredientController, super.key});
 
   final TextEditingController ingredientController;
 
