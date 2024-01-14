@@ -5,7 +5,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 class LocalizationParent extends StatelessWidget {
   final Widget _child;
 
-  const LocalizationParent(this._child, {Key? key}) : super(key: key);
+  const LocalizationParent(this._child, {super.key});
 
   @override
   Widget build(BuildContext context) {

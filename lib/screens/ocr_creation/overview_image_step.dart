@@ -7,7 +7,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class OCROverviewImageScreen extends StatelessWidget {
   static const String id = 'overviewImage';
 
-  const OCROverviewImageScreen({Key? key}) : super(key: key);
+  const OCROverviewImageScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

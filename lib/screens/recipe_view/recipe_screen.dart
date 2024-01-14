@@ -37,20 +37,20 @@ class PopupMenuButtonChoices {
 class RecipeScreen extends StatelessWidget {
   static const String id = 'recipe';
 
-  const RecipeScreen({Key? key}) : super(key: key);
+  const RecipeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     final recipe = ModalRoute.of(context)!.settings.arguments as RecipeEntity;
     RecipeViewModel baseModel = RecipeViewModel.of(recipe);
 
-    return WillPopScope(
-      onWillPop: () {
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (didPop) {
         // prevent the back button from popping the screen as we need to return the new recipe entity
         // then the caller may update its screen if the recipe has changed
         final future = Future.value(false);
         future.then((value) => Navigator.pop(context, baseModel.recipe));
-        return future;
       },
       child: ChangeNotifierProvider<RecipeViewModel>(
         create: (BuildContext context) {

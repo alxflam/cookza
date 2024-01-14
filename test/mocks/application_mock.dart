@@ -8,8 +8,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'shared_mocks.mocks.dart';
 
 class MockApplication extends StatelessWidget {
-  const MockApplication({required this.mockObserver, Key? key})
-      : super(key: key);
+  const MockApplication({required this.mockObserver, super.key});
 
   final MockNavigatorObserver mockObserver;
 

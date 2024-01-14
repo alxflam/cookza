@@ -14,7 +14,7 @@ import 'package:provider/provider.dart';
 class RecipeListScreen extends StatelessWidget {
   static const String id = 'recipes';
 
-  const RecipeListScreen({Key? key}) : super(key: key);
+  const RecipeListScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

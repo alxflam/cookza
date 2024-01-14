@@ -101,7 +101,7 @@ Future<void> _initApp(WidgetTester tester, NavigatorObserver observer) async {
 }
 
 class TestHomeScreen extends StatelessWidget {
-  const TestHomeScreen({Key? key}) : super(key: key);
+  const TestHomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

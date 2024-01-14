@@ -11,7 +11,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class ExportSettingsScreen extends StatelessWidget {
   static const String id = 'exportSettings';
 
-  const ExportSettingsScreen({Key? key}) : super(key: key);
+  const ExportSettingsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

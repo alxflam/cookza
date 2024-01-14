@@ -13,7 +13,7 @@ import 'package:provider/provider.dart';
 class ShoppingListOverviewScreen extends StatelessWidget {
   static const String id = 'shoppingLists';
 
-  const ShoppingListOverviewScreen({Key? key}) : super(key: key);
+  const ShoppingListOverviewScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

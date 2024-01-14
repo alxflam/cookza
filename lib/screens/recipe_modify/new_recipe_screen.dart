@@ -50,7 +50,7 @@ Future<void> saveModel(BuildContext context, RecipeEditModel model) async {
     id = await model.save(context);
   } catch (e) {
     // close progress dialog
-    Navigator.pop(context);
+    navigator.pop(context);
     // show errors and exit
     kErrorDialog(context, AppLocalizations.of(context).saveRecipeValidation,
         e.toString());
@@ -80,7 +80,7 @@ Future<void> saveModel(BuildContext context, RecipeEditModel model) async {
 class NewRecipeScreen extends StatelessWidget {
   static const String id = 'newRecipe';
 
-  const NewRecipeScreen({Key? key}) : super(key: key);
+  const NewRecipeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -113,7 +113,7 @@ class NewRecipeScreen extends StatelessWidget {
 }
 
 class NewRecipeStepper extends StatelessWidget {
-  const NewRecipeStepper({Key? key}) : super(key: key);
+  const NewRecipeStepper({super.key});
 
   void nextButtonPressed(BuildContext context) async {
     RecipeEditModel model =

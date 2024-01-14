@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MealPlanGroupsDrawer extends StatelessWidget {
-  const MealPlanGroupsDrawer({Key? key}) : super(key: key);
+  const MealPlanGroupsDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class MealPlanGroupsDrawer extends StatelessWidget {
 }
 
 class MealPlanGroupsTiles extends StatelessWidget {
-  const MealPlanGroupsTiles({Key? key}) : super(key: key);
+  const MealPlanGroupsTiles({super.key});
 
   @override
   Widget build(BuildContext context) {

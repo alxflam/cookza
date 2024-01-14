@@ -9,7 +9,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class LeftoversScreen extends StatelessWidget {
   static const String id = 'leftovers';
 
-  const LeftoversScreen({Key? key}) : super(key: key);
+  const LeftoversScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class LeftoversScreen extends StatelessWidget {
 }
 
 class LeftoversBody extends StatefulWidget {
-  const LeftoversBody({Key? key}) : super(key: key);
+  const LeftoversBody({super.key});
 
   @override
   LeftoversBodyState createState() => LeftoversBodyState();

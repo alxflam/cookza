@@ -26,7 +26,7 @@ Step getIngredientsStep(BuildContext context) {
 class IngredientStepContent extends StatelessWidget {
   final _leastRecentlyUsedGroup = Wrapper<IngredientGroupEntity>(null);
 
-  IngredientStepContent({Key? key}) : super(key: key);
+  IngredientStepContent({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -19,7 +19,7 @@ import 'package:provider/provider.dart';
 class NewIngredientScreen extends StatelessWidget {
   static const String id = 'ingredient';
 
-  const NewIngredientScreen({Key? key}) : super(key: key);
+  const NewIngredientScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -338,8 +338,7 @@ class NewIngredientScreen extends StatelessWidget {
 }
 
 class IngredientNameTextInput extends StatelessWidget {
-  const IngredientNameTextInput({required this.ingredientController, Key? key})
-      : super(key: key);
+  const IngredientNameTextInput({required this.ingredientController, super.key});
 
   final TextEditingController ingredientController;
 

@@ -11,11 +11,10 @@ enum ScreenMode { liveFeed, gallery }
 
 class CameraView extends StatefulWidget {
   const CameraView(
-      {Key? key,
+      {super.key,
       required this.title,
       required this.onImage,
-      required this.hasQrCode})
-      : super(key: key);
+      required this.hasQrCode});
 
   final String title;
   final Function(InputImage inputImage) onImage;

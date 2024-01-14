@@ -8,7 +8,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MealPlanItemDialog extends StatelessWidget {
   final MealPlanItemDialogModel _model;
-  const MealPlanItemDialog(this._model, {Key? key}) : super(key: key);
+  const MealPlanItemDialog(this._model, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class MealPlanItemDialog extends StatelessWidget {
 }
 
 class RecipeItemDialog extends StatelessWidget {
-  const RecipeItemDialog({Key? key}) : super(key: key);
+  const RecipeItemDialog({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +70,7 @@ class RecipeItemDialog extends StatelessWidget {
 }
 
 class NoteItemDialog extends StatelessWidget {
-  const NoteItemDialog({Key? key}) : super(key: key);
+  const NoteItemDialog({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +99,7 @@ class NoteItemDialog extends StatelessWidget {
 }
 
 class DialogButtonRow extends StatelessWidget {
-  const DialogButtonRow({Key? key}) : super(key: key);
+  const DialogButtonRow({super.key});
 
   @override
   Widget build(BuildContext context) {

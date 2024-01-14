@@ -16,7 +16,7 @@ typedef OnActionButtonPressed = void Function(
 class RecipeSelectionScreen extends StatelessWidget {
   static const String id = 'selection';
 
-  const RecipeSelectionScreen({Key? key}) : super(key: key);
+  const RecipeSelectionScreen({super.key});
 
   Text _getTitle(RecipeSelectionModel model, BuildContext context) {
     return model.countSelected == 0
@@ -191,8 +191,7 @@ class SelectButton extends StatelessWidget {
   final VoidCallback onTap;
 
   const SelectButton(
-      {required this.icon, required this.text, required this.onTap, Key? key})
-      : super(key: key);
+      {required this.icon, required this.text, required this.onTap, super.key});
 
   @override
   Widget build(BuildContext context) {

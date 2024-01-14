@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 class NewRecipeSettingsScreen extends StatelessWidget {
   static const String id = 'newRecipeSettings';
 
-  const NewRecipeSettingsScreen({Key? key}) : super(key: key);
+  const NewRecipeSettingsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

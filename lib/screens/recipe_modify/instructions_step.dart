@@ -16,7 +16,7 @@ Step getInstructionsStep(BuildContext context) {
 }
 
 class InstructionsStepContent extends StatelessWidget {
-  const InstructionsStepContent({Key? key}) : super(key: key);
+  const InstructionsStepContent({super.key});
 
   @override
   Widget build(BuildContext context) {

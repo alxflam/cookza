@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 class FavoriteRecipesScreen extends StatelessWidget {
   static const String id = 'favorites';
 
-  const FavoriteRecipesScreen({Key? key}) : super(key: key);
+  const FavoriteRecipesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

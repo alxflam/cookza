@@ -16,7 +16,7 @@ import 'package:provider/provider.dart';
 class WebLoginOnAppScreen extends StatelessWidget {
   static const String id = 'webLoginOnApp';
 
-  const WebLoginOnAppScreen({Key? key}) : super(key: key);
+  const WebLoginOnAppScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +83,7 @@ class WebLoginOnAppScreen extends StatelessWidget {
 }
 
 class LogIns extends StatelessWidget {
-  const LogIns({Key? key}) : super(key: key);
+  const LogIns({super.key});
 
   @override
   Widget build(BuildContext context) {

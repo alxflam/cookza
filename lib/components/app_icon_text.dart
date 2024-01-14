@@ -6,8 +6,7 @@ class AppIconTextWidget extends StatelessWidget {
   final double size;
 
   const AppIconTextWidget(
-      {this.alignment = MainAxisAlignment.start, this.size = 24, Key? key})
-      : super(key: key);
+      {this.alignment = MainAxisAlignment.start, this.size = 24, super.key});
 
   @override
   Widget build(BuildContext context) {

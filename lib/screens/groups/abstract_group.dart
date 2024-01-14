@@ -24,7 +24,7 @@ class PopupMenuButtonChoices {
 }
 
 abstract class AbstractGroupScreen extends StatelessWidget {
-  const AbstractGroupScreen({Key? key}) : super(key: key);
+  const AbstractGroupScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

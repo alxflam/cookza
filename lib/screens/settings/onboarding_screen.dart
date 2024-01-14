@@ -14,7 +14,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class OnBoardingScreen extends StatelessWidget {
   static const String id = 'onBoarding';
 
-  const OnBoardingScreen({Key? key}) : super(key: key);
+  const OnBoardingScreen({super.key});
 
   void _onIntroEnd(context) {
     // proceed to app and don't show onboarding anymore
@@ -223,8 +223,7 @@ class TextCheckbox extends StatelessWidget {
   final Function setValue;
 
   const TextCheckbox(this.title, this.onTap, this.getValue, this.setValue,
-      {Key? key})
-      : super(key: key);
+      {super.key});
 
   @override
   Widget build(BuildContext context) {

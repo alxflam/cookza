@@ -26,7 +26,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class MealPlanScreen extends StatelessWidget {
   static const String id = 'mealPlan';
 
-  const MealPlanScreen({Key? key}) : super(key: key);
+  const MealPlanScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -401,8 +401,7 @@ class MealPlanScreen extends StatelessWidget {
 class WeekNumber extends StatelessWidget {
   final int week;
   final Color backgroundColor;
-  const WeekNumber(this.week, this.backgroundColor, {Key? key})
-      : super(key: key);
+  const WeekNumber(this.week, this.backgroundColor, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -426,7 +425,7 @@ class WeekNumber extends StatelessWidget {
 class WeekdayHeaderTitle extends StatelessWidget {
   final MealPlanDateEntry entry;
 
-  const WeekdayHeaderTitle({required this.entry, Key? key}) : super(key: key);
+  const WeekdayHeaderTitle({required this.entry, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -449,8 +448,7 @@ class DragFeedbackTile extends StatelessWidget {
   final MealPlanRecipeModel model;
 
   const DragFeedbackTile(
-      {required this.accentColor, required this.model, Key? key})
-      : super(key: key);
+      {required this.accentColor, required this.model, super.key});
 
   @override
   Widget build(BuildContext context) {

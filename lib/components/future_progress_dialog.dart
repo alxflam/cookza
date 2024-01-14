@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class FutureProgressDialog extends StatelessWidget {
   final Future _future;
 
-  const FutureProgressDialog(this._future, {Key? key}) : super(key: key);
+  const FutureProgressDialog(this._future, {super.key});
 
   @override
   Widget build(BuildContext context) {

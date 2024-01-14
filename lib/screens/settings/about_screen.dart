@@ -17,7 +17,7 @@ import 'package:url_launcher/url_launcher.dart';
 class AboutScreen extends StatelessWidget {
   static const String id = 'about';
 
-  const AboutScreen({Key? key}) : super(key: key);
+  const AboutScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -177,7 +177,7 @@ class AboutScreen extends StatelessWidget {
 }
 
 class DeleteAllDataDialog extends StatelessWidget {
-  const DeleteAllDataDialog({Key? key}) : super(key: key);
+  const DeleteAllDataDialog({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -245,7 +245,7 @@ class DeleteAllDataDialog extends StatelessWidget {
 }
 
 class AboutScreenDivider extends StatelessWidget {
-  const AboutScreenDivider({Key? key}) : super(key: key);
+  const AboutScreenDivider({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -261,7 +261,7 @@ class AboutScreenDivider extends StatelessWidget {
 class SettingSectionHeader extends StatelessWidget {
   final String _title;
 
-  const SettingSectionHeader(this._title, {Key? key}) : super(key: key);
+  const SettingSectionHeader(this._title, {super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -17,7 +17,7 @@ class PopupMenuButtonChoices {
 class ErrorLogScreen extends StatelessWidget {
   static const String id = 'errorLog';
 
-  const ErrorLogScreen({Key? key}) : super(key: key);
+  const ErrorLogScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +103,7 @@ class ExceptionEntry extends StatelessWidget {
   static const kTitleStyle =
       TextStyle(fontWeight: FontWeight.bold, fontStyle: FontStyle.italic);
 
-  const ExceptionEntry(this.exception, {Key? key}) : super(key: key);
+  const ExceptionEntry(this.exception, {super.key});
 
   @override
   Widget build(BuildContext context) {

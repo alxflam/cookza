@@ -69,7 +69,7 @@ void setupFlutterErrorHandling() {
 }
 
 class ProviderChainApp extends StatelessWidget {
-  const ProviderChainApp({Key? key}) : super(key: key);
+  const ProviderChainApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +81,7 @@ class ProviderChainApp extends StatelessWidget {
 }
 
 class CookzaMaterialApp extends StatelessWidget {
-  const CookzaMaterialApp({Key? key}) : super(key: key);
+  const CookzaMaterialApp({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -11,7 +11,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 class IngredientsTab extends StatelessWidget {
-  const IngredientsTab({Key? key}) : super(key: key);
+  const IngredientsTab({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +107,7 @@ class IngredientsTab extends StatelessWidget {
 }
 
 class ListOfIngredientsHeader extends StatelessWidget {
-  const ListOfIngredientsHeader({Key? key}) : super(key: key);
+  const ListOfIngredientsHeader({super.key});
 
   @override
   Widget build(BuildContext context) {

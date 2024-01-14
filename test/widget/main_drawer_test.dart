@@ -99,8 +99,7 @@ Future<void> testTile(WidgetTester tester, String name, Type target) async {
 }
 
 class MockApplication extends StatelessWidget {
-  const MockApplication({required this.mockObserver, Key? key})
-      : super(key: key);
+  const MockApplication({required this.mockObserver, super.key});
 
   final MockNavigatorObserver mockObserver;
 

@@ -5,8 +5,7 @@ class PaddedQRCode extends StatelessWidget {
   final String data;
   final int width;
   final int height;
-  const PaddedQRCode(this.data, this.width, this.height, {Key? key})
-      : super(key: key);
+  const PaddedQRCode(this.data, this.width, this.height, {super.key});
 
   @override
   Widget build(BuildContext context) {

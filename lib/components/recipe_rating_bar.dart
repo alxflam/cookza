@@ -6,8 +6,7 @@ class RecipeRatingBar extends StatelessWidget {
   final ValueChanged<double> onUpdate;
 
   const RecipeRatingBar(
-      {Key? key, required this.initialRating, required this.onUpdate})
-      : super(key: key);
+      {super.key, required this.initialRating, required this.onUpdate});
 
   @override
   Widget build(BuildContext context) {

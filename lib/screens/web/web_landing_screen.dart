@@ -14,7 +14,7 @@ import 'package:logging/logging.dart';
 class WebLandingPage extends StatelessWidget {
   static const String id = 'landingPage';
 
-  const WebLandingPage({Key? key}) : super(key: key);
+  const WebLandingPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +62,7 @@ class WebLandingPage extends StatelessWidget {
 }
 
 class BottomBar extends StatelessWidget {
-  const BottomBar({Key? key}) : super(key: key);
+  const BottomBar({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -114,7 +114,7 @@ class BottomBar extends StatelessWidget {
 }
 
 class MainInfoBar extends StatelessWidget {
-  const MainInfoBar({Key? key}) : super(key: key);
+  const MainInfoBar({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -145,7 +145,7 @@ class MainInfoBar extends StatelessWidget {
 class FloatingBar extends StatelessWidget {
   final Size size;
 
-  const FloatingBar({Key? key, required this.size}) : super(key: key);
+  const FloatingBar({super.key, required this.size});
 
   @override
   Widget build(BuildContext context) {
@@ -211,8 +211,8 @@ class FloatingBar extends StatelessWidget {
 class InstructionText extends StatelessWidget {
   const InstructionText(
     this.text, {
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final String text;
 
@@ -229,7 +229,7 @@ class InstructionText extends StatelessWidget {
 }
 
 class TopBar extends StatelessWidget {
-  const TopBar({Key? key}) : super(key: key);
+  const TopBar({super.key});
 
   @override
   Widget build(BuildContext context) {

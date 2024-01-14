@@ -16,7 +16,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../constants.dart';
 
 class MainAppDrawer extends StatelessWidget {
-  const MainAppDrawer({Key? key}) : super(key: key);
+  const MainAppDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {

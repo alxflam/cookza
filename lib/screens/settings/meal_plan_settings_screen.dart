@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 class MealPlanSettingsScreen extends StatelessWidget {
   static const String id = 'mealPlanSettings';
 
-  const MealPlanSettingsScreen({Key? key}) : super(key: key);
+  const MealPlanSettingsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

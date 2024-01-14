@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class RecipeGroupsDrawer extends StatelessWidget {
-  const RecipeGroupsDrawer({Key? key}) : super(key: key);
+  const RecipeGroupsDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class RecipeGroupsDrawer extends StatelessWidget {
 }
 
 class RecipeGroupsTiles extends StatelessWidget {
-  const RecipeGroupsTiles({Key? key}) : super(key: key);
+  const RecipeGroupsTiles({super.key});
 
   @override
   Widget build(BuildContext context) {

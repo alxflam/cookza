@@ -181,8 +181,7 @@ class MetricUnitOfMeasure extends UnitOfMeasure {
   final String _baseUnit;
   final double _conversionFactor;
 
-  MetricUnitOfMeasure(String id, this._baseUnit, this._conversionFactor)
-      : super(id);
+  MetricUnitOfMeasure(super.id, this._baseUnit, this._conversionFactor);
 
   String get baseUnit => _baseUnit;
 

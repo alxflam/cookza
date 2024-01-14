@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 class ThemeSettingsScreen extends StatelessWidget {
   static const String id = 'theme';
 
-  const ThemeSettingsScreen({Key? key}) : super(key: key);
+  const ThemeSettingsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +19,7 @@ class ThemeSettingsScreen extends StatelessWidget {
           return ListView.builder(
             itemCount: model.countThemes,
             itemBuilder: (context, index) {
+              // TODO add system default theme entry
               var theme = model.getAvailableThemes()[index];
               return RadioListTile(
                 title: Text(theme.displayName),

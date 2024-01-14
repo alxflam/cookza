@@ -17,7 +17,7 @@ Step getTagStep(BuildContext context) {
 }
 
 class TagColumn extends StatelessWidget {
-  const TagColumn({Key? key}) : super(key: key);
+  const TagColumn({super.key});
 
   @override
   Widget build(BuildContext context) {

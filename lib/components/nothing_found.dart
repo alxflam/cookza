@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class NothingFound extends StatelessWidget {
   final String _text;
 
-  const NothingFound(this._text, {Key? key}) : super(key: key);
+  const NothingFound(this._text, {super.key});
 
   @override
   Widget build(BuildContext context) {

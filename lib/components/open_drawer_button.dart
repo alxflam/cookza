@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class OpenDrawerButton extends StatelessWidget {
   final String _buttonMsg;
 
-  const OpenDrawerButton(this._buttonMsg, {Key? key}) : super(key: key);
+  const OpenDrawerButton(this._buttonMsg, {super.key});
 
   @override
   Widget build(BuildContext context) {

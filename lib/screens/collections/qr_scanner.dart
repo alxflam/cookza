@@ -7,7 +7,7 @@ import 'package:google_mlkit_barcode_scanning/google_mlkit_barcode_scanning.dart
 class QrScannerScreen extends StatefulWidget {
   static const String id = 'liveCameraScanner';
 
-  const QrScannerScreen({Key? key}) : super(key: key);
+  const QrScannerScreen({super.key});
 
   @override
   QrScannerScreenState createState() => QrScannerScreenState();

@@ -13,8 +13,7 @@ class RecipeListTile extends StatelessWidget {
   final bool replaceRoute;
 
   const RecipeListTile(
-      {required this.item, this.replaceRoute = false, Key? key})
-      : super(key: key);
+      {required this.item, this.replaceRoute = false, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -147,8 +146,8 @@ class RecipeListTile extends StatelessWidget {
 
 class ImagePlaceholder extends StatelessWidget {
   const ImagePlaceholder({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
