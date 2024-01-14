@@ -85,10 +85,10 @@ void main() {
         .text(DateTime.now().add(const Duration(days: 2)).day.toString())
         .first);
 
-    expect(find.text('SAVE'), findsOneWidget);
+    expect(find.text('Save'), findsOneWidget);
     expect(find.byType(Semantics), findsWidgets);
     // then press confirm
-    await tester.tap(find.text('SAVE').first);
+    await tester.tap(find.text('Save').first);
     await tester.pumpAndSettle();
 
     expect(find.byType(MultipeGroupSelectionDialog), findsOneWidget);
@@ -106,10 +106,10 @@ void main() {
     await tester.pumpAndSettle();
     // date range dialog opened - has only private widgets
     // therefore check for semantics widget which is used there internally
-    expect(find.text('SAVE'), findsOneWidget);
+    expect(find.text('Save'), findsOneWidget);
     expect(find.byType(Semantics), findsWidgets);
     // then press confirm
-    await tester.tap(find.text('SAVE'));
+    await tester.tap(find.text('Save'));
     await tester.pump();
     verify(observer.didPush(any, any));
     await tester.pumpAndSettle();
@@ -161,11 +161,11 @@ void main() {
     }
 
     await tester.tap(lastDayFinder);
-    expect(find.text('SAVE'), findsOneWidget);
+    expect(find.text('Save'), findsOneWidget);
     expect(find.byType(Semantics), findsWidgets);
 
     // then press confirm
-    await tester.tap(find.text('SAVE').first);
+    await tester.tap(find.text('Save').first);
     await tester.pump();
     verify(observer.didPush(any, any));
     await tester.pumpAndSettle();
@@ -217,10 +217,10 @@ void main() {
 
     await tester.tap(lastDayFinder);
 
-    expect(find.text('SAVE'), findsOneWidget);
+    expect(find.text('Save'), findsOneWidget);
     expect(find.byType(Semantics), findsWidgets);
     // then press confirm
-    await tester.tap(find.text('SAVE').first);
+    await tester.tap(find.text('Save').first);
     await tester.pump();
     verify(observer.didPush(any, any));
     await tester.pumpAndSettle();

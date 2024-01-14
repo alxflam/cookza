@@ -48,9 +48,10 @@ void main() {
   testWidgets('Shopping lists in the past are not shown',
       (WidgetTester tester) async {
     MutableShoppingList list = MutableShoppingList.newList(
-        '1',
-        DateTime.now().subtract(const Duration(days: 7)),
-        DateTime.now().subtract(const Duration(days: 1)));
+      '1',
+      DateUtils.dateOnly(DateTime.now().subtract(const Duration(days: 7))),
+      DateUtils.dateOnly(DateTime.now().subtract(const Duration(days: 1))),
+    );
     list.id = '1';
 
     await shoppingListManager.createOrUpdate(list);
