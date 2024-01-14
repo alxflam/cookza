@@ -228,9 +228,11 @@ class DeleteAllDataDialog extends StatelessWidget {
                   scaffoldMessenger.showSnackBar(SnackBar(
                       content: Text(localizations.deleteAllDataSuccess)));
                 } catch (e) {
-                  Navigator.pop(context);
-                  ScaffoldMessenger.of(context)
-                      .showSnackBar(SnackBar(content: Text(e.toString())));
+                  if (context.mounted) {
+                    Navigator.pop(context);
+                    ScaffoldMessenger.of(context)
+                        .showSnackBar(SnackBar(content: Text(e.toString())));
+                  }
                 }
               },
               child: Text(

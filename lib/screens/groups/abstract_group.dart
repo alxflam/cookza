@@ -317,14 +317,16 @@ abstract class AbstractGroupScreen extends StatelessWidget {
         ),
       );
     } catch (e) {
-      await showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) => AlertDialog(
-          title: AlertDialogTitle(title: AppLocalizations.of(context).error),
-          content: Text(AppLocalizations.of(context).invalidQRCode),
-        ),
-      );
+      if (context.mounted) {
+        await showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) => AlertDialog(
+            title: AlertDialogTitle(title: AppLocalizations.of(context).error),
+            content: Text(AppLocalizations.of(context).invalidQRCode),
+          ),
+        );
+      }
     }
   }
 

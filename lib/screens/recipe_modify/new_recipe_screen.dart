@@ -49,11 +49,13 @@ Future<void> saveModel(BuildContext context, RecipeEditModel model) async {
   try {
     id = await model.save(context);
   } catch (e) {
-    // close progress dialog
-    navigator.pop(context);
-    // show errors and exit
-    kErrorDialog(context, AppLocalizations.of(context).saveRecipeValidation,
-        e.toString());
+    if (context.mounted) {
+      // close progress dialog
+      navigator.pop(context);
+      // show errors and exit
+      kErrorDialog(context, AppLocalizations.of(context).saveRecipeValidation,
+          e.toString());
+    }
     return;
   }
 

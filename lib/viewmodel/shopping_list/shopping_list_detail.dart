@@ -66,17 +66,22 @@ class ShoppingListModel extends ChangeNotifier {
           .generateItems(this._listEntity);
     } on FirebaseException catch (e) {
       var context = sl.get<NavigatorService>().currentContext;
-      final scaffoldMessenger = ScaffoldMessenger.of(context!);
-      final localizations = AppLocalizations.of(context);
+      if (context?.mounted ?? false) {
+        // ignore: use_build_context_synchronously
+        final scaffoldMessenger = ScaffoldMessenger.of(context!);
+        // ignore: use_build_context_synchronously
+        final localizations = AppLocalizations.of(context);
 
-      // make sure that case is logged
-      await sl.get<ExceptionHandler>().reportException(
-          '${AppLocalizations.of(context).missingRecipeAccess}: ${e.toString()}',
-          StackTrace.current,
-          DateTime.now());
-      // may happen if the shopping list contains a recipe from a group the current user does not have read access to
-      scaffoldMessenger.showSnackBar(
-          SnackBar(content: Text(localizations.missingRecipeAccess)));
+        // make sure that case is logged
+        await sl.get<ExceptionHandler>().reportException(
+            // ignore: use_build_context_synchronously
+            '${AppLocalizations.of(context).missingRecipeAccess}: ${e.toString()}',
+            StackTrace.current,
+            DateTime.now());
+        // may happen if the shopping list contains a recipe from a group the current user does not have read access to
+        scaffoldMessenger.showSnackBar(
+            SnackBar(content: Text(localizations.missingRecipeAccess)));
+      }
     }
 
     // processed generated already bought and/or reordered items
