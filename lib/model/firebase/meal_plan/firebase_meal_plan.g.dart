@@ -11,25 +11,16 @@ FirebaseMealPlanRecipe _$FirebaseMealPlanRecipeFromJson(
     FirebaseMealPlanRecipe(
       name: json['name'] as String,
       id: json['id'] as String?,
-      servings: json['servings'] as int?,
+      servings: (json['servings'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$FirebaseMealPlanRecipeToJson(
-    FirebaseMealPlanRecipe instance) {
-  final val = <String, dynamic>{
-    'name': instance.name,
-  };
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('id', instance.id);
-  writeNotNull('servings', instance.servings);
-  return val;
-}
+        FirebaseMealPlanRecipe instance) =>
+    <String, dynamic>{
+      'name': instance.name,
+      if (instance.id case final value?) 'id': value,
+      if (instance.servings case final value?) 'servings': value,
+    };
 
 FirebaseMealPlanDate _$FirebaseMealPlanDateFromJson(
         Map<String, dynamic> json) =>
@@ -42,20 +33,11 @@ FirebaseMealPlanDate _$FirebaseMealPlanDateFromJson(
     );
 
 Map<String, dynamic> _$FirebaseMealPlanDateToJson(
-    FirebaseMealPlanDate instance) {
-  final val = <String, dynamic>{
-    'date': kDateToJson(instance.date),
-  };
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('recipes', kListToJson(instance.recipes));
-  return val;
-}
+        FirebaseMealPlanDate instance) =>
+    <String, dynamic>{
+      'date': kDateToJson(instance.date),
+      if (kListToJson(instance.recipes) case final value?) 'recipes': value,
+    };
 
 FirebaseMealPlanDocument _$FirebaseMealPlanDocumentFromJson(
         Map<String, dynamic> json) =>
@@ -67,16 +49,8 @@ FirebaseMealPlanDocument _$FirebaseMealPlanDocumentFromJson(
     );
 
 Map<String, dynamic> _$FirebaseMealPlanDocumentToJson(
-    FirebaseMealPlanDocument instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('items', kListToJson(instance.items));
-  val['groupID'] = instance.groupID;
-  return val;
-}
+        FirebaseMealPlanDocument instance) =>
+    <String, dynamic>{
+      if (kListToJson(instance.items) case final value?) 'items': value,
+      'groupID': instance.groupID,
+    };

@@ -13,25 +13,17 @@ FirebaseShoppingListItem _$FirebaseShoppingListItemFromJson(
           json['ingredient'] as Map<String, dynamic>),
       bought: json['bought'] as bool? ?? false,
       customItem: json['customItem'] as bool? ?? false,
-      index: json['index'] as int?,
+      index: (json['index'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$FirebaseShoppingListItemToJson(
-    FirebaseShoppingListItem instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('ingredient', _toJson(instance.ingredient));
-  val['bought'] = instance.bought;
-  val['customItem'] = instance.customItem;
-  writeNotNull('index', instance.index);
-  return val;
-}
+        FirebaseShoppingListItem instance) =>
+    <String, dynamic>{
+      if (_toJson(instance.ingredient) case final value?) 'ingredient': value,
+      'bought': instance.bought,
+      'customItem': instance.customItem,
+      if (instance.index case final value?) 'index': value,
+    };
 
 FirebaseShoppingListDocument _$FirebaseShoppingListDocumentFromJson(
         Map<String, dynamic> json) =>
@@ -46,18 +38,10 @@ FirebaseShoppingListDocument _$FirebaseShoppingListDocumentFromJson(
     );
 
 Map<String, dynamic> _$FirebaseShoppingListDocumentToJson(
-    FirebaseShoppingListDocument instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('items', kListToJson(instance.items));
-  val['dateFrom'] = kDateToJson(instance.dateFrom);
-  val['dateUntil'] = kDateToJson(instance.dateUntil);
-  val['groupID'] = instance.groupID;
-  return val;
-}
+        FirebaseShoppingListDocument instance) =>
+    <String, dynamic>{
+      if (kListToJson(instance.items) case final value?) 'items': value,
+      'dateFrom': kDateToJson(instance.dateFrom),
+      'dateUntil': kDateToJson(instance.dateUntil),
+      'groupID': instance.groupID,
+    };

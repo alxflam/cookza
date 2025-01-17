@@ -14,17 +14,9 @@ IngredientNote _$IngredientNoteFromJson(Map<String, dynamic> json) =>
       amount: (json['amount'] as num?)?.toDouble(),
     );
 
-Map<String, dynamic> _$IngredientNoteToJson(IngredientNote instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('ingredient', _toJson(instance.ingredient));
-  writeNotNull('unitOfMeasure', instance.unitOfMeasure);
-  writeNotNull('amount', instance.amount);
-  return val;
-}
+Map<String, dynamic> _$IngredientNoteToJson(IngredientNote instance) =>
+    <String, dynamic>{
+      if (_toJson(instance.ingredient) case final value?) 'ingredient': value,
+      if (instance.unitOfMeasure case final value?) 'unitOfMeasure': value,
+      if (instance.amount case final value?) 'amount': value,
+    };

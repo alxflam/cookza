@@ -14,19 +14,10 @@ FirebaseMealPlanCollection _$FirebaseMealPlanCollectionFromJson(
     )..creationTimestamp = kTimestampFromJson(json['creationTimestamp']);
 
 Map<String, dynamic> _$FirebaseMealPlanCollectionToJson(
-    FirebaseMealPlanCollection instance) {
-  final val = <String, dynamic>{
-    'name': instance.name,
-  };
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull(
-      'creationTimestamp', kTimestampToJson(instance.creationTimestamp));
-  val['users'] = instance.users;
-  return val;
-}
+        FirebaseMealPlanCollection instance) =>
+    <String, dynamic>{
+      'name': instance.name,
+      if (kTimestampToJson(instance.creationTimestamp) case final value?)
+        'creationTimestamp': value,
+      'users': instance.users,
+    };

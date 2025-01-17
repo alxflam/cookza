@@ -14,16 +14,9 @@ IngredientGroup _$IngredientGroupFromJson(Map<String, dynamic> json) =>
           .toList(),
     );
 
-Map<String, dynamic> _$IngredientGroupToJson(IngredientGroup instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('ingredients', kListToJson(instance.ingredients));
-  val['name'] = instance.name;
-  return val;
-}
+Map<String, dynamic> _$IngredientGroupToJson(IngredientGroup instance) =>
+    <String, dynamic>{
+      if (kListToJson(instance.ingredients) case final value?)
+        'ingredients': value,
+      'name': instance.name,
+    };

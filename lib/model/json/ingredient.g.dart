@@ -11,17 +11,8 @@ Ingredient _$IngredientFromJson(Map<String, dynamic> json) => Ingredient(
       recipeReference: json['recipeReference'] as String?,
     );
 
-Map<String, dynamic> _$IngredientToJson(Ingredient instance) {
-  final val = <String, dynamic>{
-    'name': instance.name,
-  };
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('recipeReference', instance.recipeReference);
-  return val;
-}
+Map<String, dynamic> _$IngredientToJson(Ingredient instance) =>
+    <String, dynamic>{
+      'name': instance.name,
+      if (instance.recipeReference case final value?) 'recipeReference': value,
+    };

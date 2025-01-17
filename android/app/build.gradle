@@ -1,118 +1,48 @@
-def localProperties = new Properties()
-def localPropertiesFile = rootProject.file('local.properties')
-if (localPropertiesFile.exists()) {
-    localPropertiesFile.withReader('UTF-8') { reader ->
-        localProperties.load(reader)
-    }
-}
-
-def flutterRoot = localProperties.getProperty('flutter.sdk')
-if (flutterRoot == null) {
-    throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
-}
-
-def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
-if (flutterVersionCode == null) {
-    flutterVersionCode = '1'
-}
-
-def flutterVersionName = localProperties.getProperty('flutter.versionName')
-if (flutterVersionName == null) {
-    flutterVersionName = '1.0'
-}
-
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'com.google.gms.google-services'
-apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
-
-def keystoreProperties = new Properties()
-def keystorePropertiesFile = rootProject.file('key.properties')
-if (keystorePropertiesFile.exists()) {
-    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+plugins {
+    id "com.android.application"
+    id "kotlin-android"
+    id "com.google.gms.google-services"
+    // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
+    id "dev.flutter.flutter-gradle-plugin"
 }
 
 android {
-    compileSdkVersion 33 // 33 = Android 13
+    namespace = "com.flammer.cookza"
+    compileSdk = flutter.compileSdkVersion
+    ndkVersion = flutter.ndkVersion
 
-    sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
 
-    lintOptions {
-        disable 'InvalidPackage'
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
     }
 
     defaultConfig {
-        applicationId "com.flammer.cookza"
-        minSdkVersion 28 // 28 = Android 9
-        targetSdkVersion 31 // 31 = Android 12
-        versionCode flutterVersionCode.toInteger()
-        versionName flutterVersionName
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        applicationId = "com.flammer.cookza"
+        // You can update the following values to match your application needs.
+        // For more information, see: https://flutter.dev/to/review-gradle-config.
+        minSdk = 33
+        targetSdk = flutter.targetSdkVersion
+        versionCode = flutter.versionCode
+        versionName = flutter.versionName
     }
-
-   signingConfigs {
-       release {
-           keyAlias keystoreProperties['keyAlias']
-           keyPassword keystoreProperties['keyPassword']
-           storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
-           storePassword keystoreProperties['storePassword']
-       }
-   }
 
     buildTypes {
         release {
-            signingConfig signingConfigs.release
-
-            aaptOptions {
-                ignoreAssetsPattern '!mlkit_pose:!mlkit_label_default_model:!hobbes.tflite:'
-            }
+            // TODO: Add your own signing config for the release build.
+            // Signing with the debug keys for now, so `flutter run --release` works.
+            signingConfig = signingConfigs.debug
         }
-
-        debug {
-            applicationIdSuffix = ".debug"
-
-            aaptOptions {
-                ignoreAssetsPattern '!mlkit_pose:!mlkit_label_default_model:!hobbes.tflite:'
-            }
-        }
-    }
-
-    // exclude unnecessary assets: https://github.com/bharat-biradar/Google-Ml-Kit-plugin/issues/26
-    packagingOptions {
-        exclude 'lib/**/libtranslate_jni.so'
-        exclude 'lib/**/libdigitalink.so'
-        exclude 'lib/**/libxeno_native.so'
-        exclude 'lib/**/libmlkitcommonpipeline.so'
-        // exclude 'lib/**/libbarhopper_v2.so' -> barcode scanning
-        exclude 'lib/**/libclassifier_jni.so'
-        exclude 'lib/**/libface_detector_v2_jni.so'
-        exclude 'lib/**/libtensorflowlite_jni.so'
-        exclude 'lib/**/liblanguage_id_jni.so' 
-        exclude 'lib/**/libpredictor_jni.so' 
-        exclude 'assets/**/fssd_100_8bit_v1.tflite'
-        exclude 'assets/**/fssd_100_8bit_gray_v1.tflite'
     }
 }
 
 flutter {
-    source '../..'
-}
-
-// temp fix, see https://github.com/firebase/flutterfire/issues/8501
-// for progress of upstream fix, see https://github.com/bharat-biradar/Google-Ml-Kit-plugin/issues/286
-configurations.all {
-    resolutionStrategy {
-        force 'com.squareup.okhttp:okhttp:2.7.5'
-        force 'com.squareup.okio:okio:1.17.5'
-    }
+    source = "../.."
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
-    implementation 'com.google.mlkit:barcode-scanning:17.0.0'
+    implementation 'com.google.mlkit:barcode-scanning:17.3.0'
 }

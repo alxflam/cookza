@@ -14,39 +14,33 @@ FirebaseRecipe _$FirebaseRecipeFromJson(Map<String, dynamic> json) =>
       description: json['description'] as String? ?? '',
       creationDate: kTimestampFromJson(json['creationDate']),
       modificationDate: kTimestampFromJson(json['modificationDate']),
-      duration: json['duration'] as int,
+      duration: (json['duration'] as num).toInt(),
       difficulty:
           $enumDecodeNullable(_$DIFFICULTYEnumMap, json['difficulty']) ??
               DIFFICULTY.MEDIUM,
       tags: (json['tags'] as List<dynamic>).map((e) => e as String).toList(),
-      servings: json['servings'] as int? ?? 1,
+      servings: (json['servings'] as num?)?.toInt() ?? 1,
       image: json['image'] as String?,
       recipeGroupID: json['recipeGroupID'] as String,
     );
 
-Map<String, dynamic> _$FirebaseRecipeToJson(FirebaseRecipe instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('creationDate', kTimestampToJson(instance.creationDate));
-  writeNotNull('modificationDate', kTimestampToJson(instance.modificationDate));
-  writeNotNull('ingredientsID', instance.ingredientsID);
-  writeNotNull('instructionsID', instance.instructionsID);
-  val['name'] = instance.name;
-  writeNotNull('description', instance.description);
-  val['duration'] = instance.duration;
-  val['servings'] = instance.servings;
-  writeNotNull('image', instance.image);
-  val['recipeGroupID'] = instance.recipeGroupID;
-  val['difficulty'] = _$DIFFICULTYEnumMap[instance.difficulty]!;
-  val['tags'] = instance.tags;
-  return val;
-}
+Map<String, dynamic> _$FirebaseRecipeToJson(FirebaseRecipe instance) =>
+    <String, dynamic>{
+      if (kTimestampToJson(instance.creationDate) case final value?)
+        'creationDate': value,
+      if (kTimestampToJson(instance.modificationDate) case final value?)
+        'modificationDate': value,
+      if (instance.ingredientsID case final value?) 'ingredientsID': value,
+      if (instance.instructionsID case final value?) 'instructionsID': value,
+      'name': instance.name,
+      if (instance.description case final value?) 'description': value,
+      'duration': instance.duration,
+      'servings': instance.servings,
+      if (instance.image case final value?) 'image': value,
+      'recipeGroupID': instance.recipeGroupID,
+      'difficulty': _$DIFFICULTYEnumMap[instance.difficulty]!,
+      'tags': instance.tags,
+    };
 
 const _$DIFFICULTYEnumMap = {
   DIFFICULTY.EASY: 'EASY',

@@ -14,20 +14,12 @@ FirebaseIngredient _$FirebaseIngredientFromJson(Map<String, dynamic> json) =>
       unitOfMeasure: json['unitOfMeasure'] as String? ?? '',
     );
 
-Map<String, dynamic> _$FirebaseIngredientToJson(FirebaseIngredient instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('ingredient', _toJson(instance.ingredient));
-  writeNotNull('unitOfMeasure', instance.unitOfMeasure);
-  writeNotNull('amount', instance.amount);
-  return val;
-}
+Map<String, dynamic> _$FirebaseIngredientToJson(FirebaseIngredient instance) =>
+    <String, dynamic>{
+      if (_toJson(instance.ingredient) case final value?) 'ingredient': value,
+      if (instance.unitOfMeasure case final value?) 'unitOfMeasure': value,
+      if (instance.amount case final value?) 'amount': value,
+    };
 
 FirebaseIngredientGroup _$FirebaseIngredientGroupFromJson(
         Map<String, dynamic> json) =>
@@ -39,19 +31,12 @@ FirebaseIngredientGroup _$FirebaseIngredientGroupFromJson(
     );
 
 Map<String, dynamic> _$FirebaseIngredientGroupToJson(
-    FirebaseIngredientGroup instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('ingredients', kListToJson(instance.ingredients));
-  val['name'] = instance.name;
-  return val;
-}
+        FirebaseIngredientGroup instance) =>
+    <String, dynamic>{
+      if (kListToJson(instance.ingredients) case final value?)
+        'ingredients': value,
+      'name': instance.name,
+    };
 
 FirebaseIngredientDocument _$FirebaseIngredientDocumentFromJson(
         Map<String, dynamic> json) =>
@@ -67,19 +52,10 @@ FirebaseIngredientDocument _$FirebaseIngredientDocumentFromJson(
     );
 
 Map<String, dynamic> _$FirebaseIngredientDocumentToJson(
-    FirebaseIngredientDocument instance) {
-  final val = <String, dynamic>{
-    'recipeID': instance.recipeID,
-  };
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  // ignore: deprecated_member_use_from_same_package
-  writeNotNull('ingredients', kListToJson(instance.ingredients));
-  writeNotNull('groups', kListToJson(instance.groups));
-  return val;
-}
+        FirebaseIngredientDocument instance) =>
+    <String, dynamic>{
+      'recipeID': instance.recipeID,
+      if (kListToJson(instance.ingredients) case final value?)
+        'ingredients': value,
+      if (kListToJson(instance.groups) case final value?) 'groups': value,
+    };

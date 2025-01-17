@@ -13,7 +13,7 @@ Recipe _$RecipeFromJson(Map<String, dynamic> json) => Recipe(
       shortDescription: json['shortDescription'] as String? ?? '',
       creationDate: kDateFromJson(json['creationDate'] as String),
       modificationDate: kDateFromJson(json['modificationDate'] as String),
-      duration: json['duration'] as int,
+      duration: (json['duration'] as num).toInt(),
       diff: $enumDecodeNullable(_$DIFFICULTYEnumMap, json['diff']) ??
           DIFFICULTY.MEDIUM,
       tags: (json['tags'] as List<dynamic>).map((e) => e as String).toList(),
@@ -23,35 +23,27 @@ Recipe _$RecipeFromJson(Map<String, dynamic> json) => Recipe(
       instructions: (json['instructions'] as List<dynamic>)
           .map((e) => e as String)
           .toList(),
-      servings: json['servings'] as int? ?? 1,
+      servings: (json['servings'] as num?)?.toInt() ?? 1,
       serializedImage: json['serializedImage'] as String?,
     );
 
-Map<String, dynamic> _$RecipeToJson(Recipe instance) {
-  final val = <String, dynamic>{
-    'id': instance.id,
-    'recipeCollection': instance.recipeCollection,
-    'creationDate': kDateToJson(instance.creationDate),
-    'modificationDate': kDateToJson(instance.modificationDate),
-    'name': instance.name,
-  };
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('shortDescription', instance.shortDescription);
-  val['duration'] = instance.duration;
-  val['servings'] = instance.servings;
-  writeNotNull('serializedImage', instance.serializedImage);
-  val['diff'] = _$DIFFICULTYEnumMap[instance.diff]!;
-  val['tags'] = instance.tags;
-  writeNotNull('ingredientGroups', kListToJson(instance.ingredientGroups));
-  val['instructions'] = instance.instructions;
-  return val;
-}
+Map<String, dynamic> _$RecipeToJson(Recipe instance) => <String, dynamic>{
+      'id': instance.id,
+      'recipeCollection': instance.recipeCollection,
+      'creationDate': kDateToJson(instance.creationDate),
+      'modificationDate': kDateToJson(instance.modificationDate),
+      'name': instance.name,
+      if (instance.shortDescription case final value?)
+        'shortDescription': value,
+      'duration': instance.duration,
+      'servings': instance.servings,
+      if (instance.serializedImage case final value?) 'serializedImage': value,
+      'diff': _$DIFFICULTYEnumMap[instance.diff]!,
+      'tags': instance.tags,
+      if (kListToJson(instance.ingredientGroups) case final value?)
+        'ingredientGroups': value,
+      'instructions': instance.instructions,
+    };
 
 const _$DIFFICULTYEnumMap = {
   DIFFICULTY.EASY: 'EASY',

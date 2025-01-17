@@ -13,21 +13,12 @@ ExceptionItem _$ExceptionItemFromJson(Map<String, dynamic> json) =>
       date: kDateFromJson(json['date'] as String),
     );
 
-Map<String, dynamic> _$ExceptionItemToJson(ExceptionItem instance) {
-  final val = <String, dynamic>{
-    'error': instance.error,
-  };
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('stackTrace', instance.stackTrace);
-  val['date'] = kDateToJson(instance.date);
-  return val;
-}
+Map<String, dynamic> _$ExceptionItemToJson(ExceptionItem instance) =>
+    <String, dynamic>{
+      'error': instance.error,
+      if (instance.stackTrace case final value?) 'stackTrace': value,
+      'date': kDateToJson(instance.date),
+    };
 
 ExceptionLog _$ExceptionLogFromJson(Map<String, dynamic> json) => ExceptionLog(
       errors: (json['errors'] as List<dynamic>)
@@ -35,15 +26,7 @@ ExceptionLog _$ExceptionLogFromJson(Map<String, dynamic> json) => ExceptionLog(
           .toList(),
     );
 
-Map<String, dynamic> _$ExceptionLogToJson(ExceptionLog instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('errors', kListToJson(instance.errors));
-  return val;
-}
+Map<String, dynamic> _$ExceptionLogToJson(ExceptionLog instance) =>
+    <String, dynamic>{
+      if (kListToJson(instance.errors) case final value?) 'errors': value,
+    };

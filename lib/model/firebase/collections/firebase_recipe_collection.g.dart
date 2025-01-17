@@ -15,19 +15,10 @@ FirebaseRecipeCollection _$FirebaseRecipeCollectionFromJson(
     );
 
 Map<String, dynamic> _$FirebaseRecipeCollectionToJson(
-    FirebaseRecipeCollection instance) {
-  final val = <String, dynamic>{
-    'name': instance.name,
-  };
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull(
-      'creationTimestamp', kTimestampToJson(instance.creationTimestamp));
-  val['users'] = instance.users;
-  return val;
-}
+        FirebaseRecipeCollection instance) =>
+    <String, dynamic>{
+      'name': instance.name,
+      if (kTimestampToJson(instance.creationTimestamp) case final value?)
+        'creationTimestamp': value,
+      'users': instance.users,
+    };

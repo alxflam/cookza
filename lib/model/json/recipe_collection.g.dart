@@ -12,19 +12,10 @@ RecipeCollection _$RecipeCollectionFromJson(Map<String, dynamic> json) =>
       name: json['name'] as String,
     )..creationTimestamp = kTimestampFromJson(json['creationTimestamp']);
 
-Map<String, dynamic> _$RecipeCollectionToJson(RecipeCollection instance) {
-  final val = <String, dynamic>{
-    'id': instance.id,
-    'name': instance.name,
-  };
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull(
-      'creationTimestamp', kTimestampToJson(instance.creationTimestamp));
-  return val;
-}
+Map<String, dynamic> _$RecipeCollectionToJson(RecipeCollection instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      if (kTimestampToJson(instance.creationTimestamp) case final value?)
+        'creationTimestamp': value,
+    };

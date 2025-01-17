@@ -10,7 +10,7 @@ FirebaseRating _$FirebaseRatingFromJson(Map<String, dynamic> json) =>
     FirebaseRating(
       userId: json['userId'] as String,
       recipeId: json['recipeId'] as String,
-      rating: json['rating'] as int,
+      rating: (json['rating'] as num).toInt(),
     );
 
 Map<String, dynamic> _$FirebaseRatingToJson(FirebaseRating instance) =>

@@ -197,11 +197,11 @@ class MealPlanScreen extends StatelessWidget {
           ),
         );
       },
-      onWillAccept: (data) {
-        return data is MealDragModel && isEnabled;
+      onWillAcceptWithDetails: (target) {
+        return isEnabled;
       },
-      onAccept: (data) {
-        model.moveRecipe(data, i);
+      onAcceptWithDetails: (drop) {
+        model.moveRecipe(drop.data, i);
       },
       onLeave: (data) {},
     );

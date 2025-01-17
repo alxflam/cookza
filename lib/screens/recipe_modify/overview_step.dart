@@ -184,8 +184,6 @@ class DifficultyChip extends StatelessWidget {
         return Text(AppLocalizations.of(context).difficultyMedium);
       case DIFFICULTY.HARD:
         return Text(AppLocalizations.of(context).difficultyHard);
-      default:
-        return const Text('unknown');
     }
   }
 }
