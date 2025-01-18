@@ -1,4 +1,5 @@
 import 'package:cookza/services/api/chefkoch.dart';
+import 'package:cookza/services/api/home_connect.dart';
 import 'package:cookza/services/firebase_provider.dart';
 import 'package:cookza/services/flutter/navigator_service.dart';
 import 'package:cookza/services/image_parser.dart';
@@ -23,6 +24,7 @@ import 'package:mockito/annotations.dart';
   MockSpec<FirebaseAuth>(),
   MockSpec<User>(),
   MockSpec<ChefkochImporter>(),
+  MockSpec<HomeConnectImporter>(),
   MockSpec<NavigatorObserver>(),
   MockSpec<MealPlanManager>(),
   MockSpec<ImageManager>(),

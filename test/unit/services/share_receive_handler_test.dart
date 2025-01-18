@@ -10,6 +10,7 @@ import 'package:cookza/routes.dart';
 import 'package:cookza/screens/recipe_modify/new_recipe_screen.dart';
 import 'package:cookza/screens/recipe_selection_screen.dart';
 import 'package:cookza/services/api/chefkoch.dart';
+import 'package:cookza/services/api/home_connect.dart';
 import 'package:cookza/services/flutter/navigator_service.dart';
 import 'package:cookza/services/recipe/image_manager.dart';
 import 'package:cookza/services/recipe/recipe_manager.dart';
@@ -27,6 +28,7 @@ import '../../mocks/shared_mocks.mocks.dart';
 var imageManager = MockImageManager();
 var navigatorService = NavigatorService();
 var chefkoch = MockChefkochImporter();
+var homeConnect = MockHomeConnectImporter();
 var recipeManager = MockRecipeManager();
 final cut = ShareReceiveHandler();
 
@@ -36,6 +38,7 @@ void main() {
     GetIt.I.registerSingleton<NavigatorService>(navigatorService);
     GetIt.I.registerSingleton<ImageManager>(imageManager);
     GetIt.I.registerSingleton<ChefkochImporter>(chefkoch);
+    GetIt.I.registerSingleton<HomeConnectImporter>(homeConnect);
     GetIt.I.registerSingleton<RecipeManager>(recipeManager);
     GetIt.I.registerSingletonAsync<SharedPreferencesProvider>(
         () async => SharedPreferencesProviderImpl().init());

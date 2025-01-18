@@ -8,6 +8,7 @@ import 'package:cookza/services/abstract/recipe_file_import.dart';
 import 'package:cookza/services/abstract/recipe_text_export.dart';
 import 'package:cookza/services/abstract/shopping_list_text_export.dart';
 import 'package:cookza/services/api/chefkoch.dart';
+import 'package:cookza/services/api/home_connect.dart';
 import 'package:cookza/services/flutter/exception_handler.dart';
 import 'package:cookza/services/firebase_provider.dart';
 import 'package:cookza/services/recipe/image_manager.dart';
@@ -79,6 +80,7 @@ void setupServiceLocator() {
       ShoppingListItemsGeneratorImpl());
   sl.registerSingleton<ExceptionHandler>(ExceptionHandlerImpl());
   sl.registerSingleton<ChefkochImporter>(ChefkochImporterImpl());
+  sl.registerSingleton<HomeConnectImporter>(HomeConnectImporterImpl());
 
   sl.registerSingletonAsync<SharedPreferencesProvider>(
       () async => SharedPreferencesProviderImpl().init());
