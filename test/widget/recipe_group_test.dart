@@ -69,12 +69,15 @@ void main() {
     await tester.tap(moreFinder);
     await tester.pumpAndSettle();
     await tester.tap(find.text('Rename'));
+    verify(observer.didPush(any, any));
     await tester.pumpAndSettle();
 
     await inputFormField(tester, find.byType(TextFormField), 'WoopWoop');
     await tester.tap(find.byIcon(Icons.save));
+    verify(observer.didPop(any, any));
+
     await tester.pumpAndSettle();
-    expect(find.text('WoopWoop'), findsOneWidget);
+    expect(find.byType(RecipeGroupScreen), findsOneWidget);
   });
 
   testWidgets('Leave group', (WidgetTester tester) async {
