@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:camera/camera.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_mlkit_barcode_scanning/google_mlkit_barcode_scanning.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -14,10 +14,12 @@ class CameraView extends StatefulWidget {
       {super.key,
       required this.title,
       required this.onImage,
+      required this.onInputModeChanged,
       required this.hasQrCode});
 
   final String title;
   final Function(InputImage inputImage) onImage;
+  final Function() onInputModeChanged;
   final Future<bool> Function(InputImage inputImage) hasQrCode;
 
   @override
@@ -125,9 +127,11 @@ class CameraViewState extends State<CameraView> {
     if (_mode == ScreenMode.liveFeed) {
       _mode = ScreenMode.gallery;
       await _stopLiveFeed();
+      widget.onInputModeChanged();
       await _getImage();
     } else {
       _mode = ScreenMode.liveFeed;
+      widget.onInputModeChanged();
       await _startLiveFeed();
       setState(() {});
     }

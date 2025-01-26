@@ -29,6 +29,7 @@ class QrScannerScreenState extends State<QrScannerScreen> {
     return CameraView(
       title: AppLocalizations.of(context).scanQRCode,
       onImage: (inputImage) => processImage(inputImage),
+      onInputModeChanged: () => isBusy = false,
       hasQrCode: (inputImage) async =>
           (await barcodeScanner.processImage(inputImage)).isEmpty,
     );
