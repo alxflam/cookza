@@ -6,7 +6,7 @@ import 'package:cookza/screens/settings/shopping_list_settings_screen.dart';
 import 'package:cookza/screens/settings/theme_settings_screen.dart';
 import 'package:cookza/screens/settings/uom_visibility_settings_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:cookza/l10n/app_localizations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class SettingsScreen extends StatelessWidget {

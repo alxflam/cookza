@@ -14,5 +14,5 @@ const String kBucket = 'gs://fake-storage-bucket-url.com';
 void setupMockFirebaseApp([Callback? customHandlers]) {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  TestFirebaseCoreHostApi.setup(MockFirebaseApp());
+  TestFirebaseCoreHostApi.setUp(MockFirebaseApp());
 }

@@ -21,7 +21,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:cookza/l10n/app_localizations.dart';
 
 class MealPlanScreen extends StatelessWidget {
   static const String id = 'mealPlan';

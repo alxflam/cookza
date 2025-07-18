@@ -2,7 +2,7 @@ import 'package:cookza/services/flutter/navigator_service.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:cookza/services/shared_preferences_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:cookza/l10n/app_localizations.dart';
 import 'package:collection/collection.dart';
 
 final uomDisplayTexts = {

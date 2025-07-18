@@ -8,7 +8,7 @@ import 'package:cookza/services/recipe/recipe_manager.dart';
 import 'package:cookza/viewmodel/recipe_edit/recipe_edit_model.dart';
 import 'package:cookza/viewmodel/recipe_list/recipe_list_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:cookza/l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 class RecipeListScreen extends StatelessWidget {

@@ -16,7 +16,7 @@ import 'package:intl/intl.dart';
 import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:cookza/l10n/app_localizations.dart';
 
 import '../mocks/meal_plan_manager_mock.dart';
 import '../mocks/recipe_manager_mock.dart';

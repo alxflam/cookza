@@ -11,7 +11,7 @@ import 'package:cookza/services/local_storage.dart';
 import 'package:cookza/viewmodel/collections/share_account_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:cookza/l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 

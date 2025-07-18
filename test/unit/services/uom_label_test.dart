@@ -2,7 +2,7 @@ import 'package:cookza/services/flutter/navigator_service.dart';
 import 'package:cookza/services/unit_of_measure.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:cookza/l10n/app_localizations.dart';
 import 'package:get_it/get_it.dart';
 
 var navigatorService = NavigatorService();

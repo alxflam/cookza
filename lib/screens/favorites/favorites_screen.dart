@@ -4,7 +4,7 @@ import 'package:cookza/components/recipe_rating_bar.dart';
 import 'package:cookza/model/entities/abstract/recipe_entity.dart';
 import 'package:cookza/viewmodel/favorites/favorite_recipes_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:cookza/l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 class FavoriteRecipesScreen extends StatelessWidget {

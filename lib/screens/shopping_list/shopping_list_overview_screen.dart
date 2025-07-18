@@ -7,7 +7,7 @@ import 'package:cookza/screens/shopping_list/shopping_list_dialog.dart';
 import 'package:cookza/viewmodel/shopping_list/shopping_list_detail.dart';
 import 'package:cookza/viewmodel/shopping_list/shopping_list_overview.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:cookza/l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 class ShoppingListOverviewScreen extends StatelessWidget {

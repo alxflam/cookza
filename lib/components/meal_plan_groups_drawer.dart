@@ -6,7 +6,7 @@ import 'package:cookza/services/meal_plan_manager.dart';
 import 'package:cookza/services/flutter/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:cookza/l10n/app_localizations.dart';
 
 class MealPlanGroupsDrawer extends StatelessWidget {
   const MealPlanGroupsDrawer({super.key});

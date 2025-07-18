@@ -3,7 +3,7 @@ import 'package:cookza/screens/home_screen.dart';
 import 'package:cookza/viewmodel/settings/theme_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:cookza/l10n/app_localizations.dart';
 
 import 'shared_mocks.mocks.dart';
 
